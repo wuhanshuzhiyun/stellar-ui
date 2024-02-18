@@ -1,0 +1,8 @@
+/node_modules/*
+/.idea/*
+deploy.sh
+/.hbuilderx/
+/.vscode/
+/subpackages_test/test.vue
+/unpackage
+/package-lock.json

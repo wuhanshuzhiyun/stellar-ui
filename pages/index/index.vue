@@ -1,52 +1,27 @@
 <template>
-	<view class="content">
-		<image class="logo" src="/static/logo.png"></image>
-		<view class="text-area">
-			<text class="title">{{title}}</text>
-		</view>
-	</view>
+    <view class="content" v-html="html"></view>
 </template>
 
 <script>
-	export default {
-		data() {
-			return {
-				title: 'Hello'
-			}
-		},
-		onLoad() {
-
-		},
-		methods: {
-
-		}
-	}
+import md from './test.md';
+import md2html from '@/utils/md2html.js';
+export default {
+    data() {
+        return {
+            html: 'Hello'
+        };
+    },
+    onLoad() {
+        uni.request({
+            url: md
+        }).then((v) => {
+            console.log(md);
+            const h = md2html(v.data);
+            this.html = h;
+        });
+    },
+    methods: {}
+};
 </script>
 
-<style>
-	.content {
-		display: flex;
-		flex-direction: column;
-		align-items: center;
-		justify-content: center;
-	}
-
-	.logo {
-		height: 200rpx;
-		width: 200rpx;
-		margin-top: 200rpx;
-		margin-left: auto;
-		margin-right: auto;
-		margin-bottom: 50rpx;
-	}
-
-	.text-area {
-		display: flex;
-		justify-content: center;
-	}
-
-	.title {
-		font-size: 36rpx;
-		color: #8f8f94;
-	}
-</style>
+<style></style>
