@@ -55,7 +55,9 @@ export default {
 
 <style lang="scss" scoped>
 .top {
-	padding: 28rpx;
+	padding-left: 28rpx;
+	padding-right: 28rpx;
+	padding-bottom: 28rpx;
 	.top-1 {
 		display: flex;
 		image {
