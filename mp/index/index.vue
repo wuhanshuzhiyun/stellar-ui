@@ -1,5 +1,7 @@
 <template>
 	<view class="page">
+		<page-nav title="Stellar UI" :autoBack="true" backColor="#000"></page-nav>
+
 		<view class="top">
 			<view class="top-1">
 				<image :src="joinSrc('中百钱包/payment/logo.png')" style="width: 100rpx" mode="widthFix" />
@@ -13,6 +15,7 @@
 			</view>
 		</view>
 
+
 		<view class="group-title">基础组件</view>
 		<view class="com-box" @click="nav('button')">
 			<view class="com-title">
@@ -21,7 +24,6 @@
 			</view>
 			<view class="com-arrow"><image :src="joinSrc('img/r-arrow.png')" mode="widthFix" /></view>
 		</view>
-
 		<view class="group-title">表单组件</view>
 		<view class="com-box" @click="nav('search')">
 			<view class="com-title">

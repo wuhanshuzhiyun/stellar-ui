@@ -10,12 +10,12 @@ export default {
 	},
 	onLoad() {
 		// #ifdef H5
-		uni.navigateTo({
+		uni.redirectTo({
 			url: '/pc/index/index',
 		});
 		// #endif
 		// #ifdef MP
-		uni.navigateTo({
+		uni.redirectTo({
 			url: '/mp/index/index',
 		});
 		// #endif
@@ -32,6 +32,5 @@ export default {
 	height: 160rpx;
 	line-height: 160rpx;
 	width: 100%;
-	background-color: red;
 }
 </style>

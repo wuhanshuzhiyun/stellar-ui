@@ -3,7 +3,7 @@
 		{
 			"path": "pages/index/index",
 			"style": {
-				"navigationBarTitleText": "Stellar UI"
+				"navigationStyle": "custom"
 			}
 		},
 		{
@@ -18,19 +18,19 @@
 		{
 			"path": "mp/index/index",
 			"style": {
-				"navigationBarTitleText": "mp index"
+				"navigationStyle": "custom"
 			}
 		},
 		{
 			"path": "mp/button-demo/button-demo",
 			"style": {
-				"navigationBarTitleText": "mp button"
+				"navigationStyle": "custom"
 			}
 		},
 		{
 			"path": "mp/search-demo/search-demo",
 			"style": {
-				"navigationBarTitleText": "mp search"
+				"navigationStyle": "custom"
 			}
 		}
 	],
