@@ -2,6 +2,10 @@
 	<view class="content">button</view>
 </template>
 
-<script></script>
+<script>
+export default {
+	group: '基础组件',
+};
+</script>
 
 <style></style>

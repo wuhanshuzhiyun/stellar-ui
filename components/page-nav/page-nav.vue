@@ -1,7 +1,7 @@
 <template>
 	<div class="nav-box" :style="[pageStyle, { paddingTop: navbarTop + 'rpx' }]">
 		<div class="nav" :style="{ width: navbarWidth + 'rpx', height: navbarHeight + 'rpx' }">
-			<!-- #ifdef MP-WEIXIN -->
+			<!-- #ifdef MP-WEIXIN || H5 -->
 			<div v-if="autoBack" class="back-box">
 				<div
 					class="back"
