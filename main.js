@@ -1,14 +1,10 @@
-import App from "./App";
+import App from './App';
 
-import Vue from "vue";
-import "./uni.promisify.adaptor";
-// #ifdef H5
-import { router, RouterMount } from "./router/index.js";
-Vue.use(router);
-// #endif
+import Vue from 'vue';
+import './uni.promisify.adaptor';
 Vue.config.productionTip = false;
-App.mpType = "app";
+App.mpType = 'app';
 const app = new Vue({
-    ...App,
+	...App,
 });
 app.$mount();

@@ -9,7 +9,10 @@
 		{
 			"path": "pc/index/index",
 			"style": {
-				"navigationBarTitleText": "pc index"
+				"navigationBarTitleText": "pc index",
+				"h5": {
+					"titleNView": false
+				}
 			}
 		},
 		{
