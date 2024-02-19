@@ -3,7 +3,19 @@
 		{
 			"path": "pages/index/index",
 			"style": {
-				"navigationBarTitleText": "uni-app"
+				"navigationBarTitleText": "Stellar UI"
+			}
+		},
+		{
+			"path": "pc/index/index",
+			"style": {
+				"navigationBarTitleText": "pc index"
+			}
+		},
+		{
+			"path": "mp/index/index",
+			"style": {
+				"navigationBarTitleText": "mp index"
 			}
 		}
 	],
@@ -13,5 +25,11 @@
 		"navigationBarBackgroundColor": "#F8F8F8",
 		"backgroundColor": "#F8F8F8"
 	},
-	"uniIdRouter": {}
+	"uniIdRouter": {},
+	"easycom": {
+		"autoscan": true,
+		"custom": {
+			"ste-(.*)": "@/uni_modules/stellar-ui/components/ste-$1.vue"
+		}
+	}
 }

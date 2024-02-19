@@ -1,27 +1,18 @@
 <template>
-	<view class="page">loading</view>
+	<view class="page">
+		<view class="top">Stellar UI 1.0.0</view>
+		<view class="group-title">基础组件</view>
+		<view class="com-title">button 按钮</view>
+	</view>
 </template>
 <script>
-import md from './test.md';
-import md2html from '@/utils/md2html.js';
 export default {
 	data() {
 		return {
 			html: 'Hello',
 		};
 	},
-	onLoad() {
-		// #ifdef H5
-		uni.navigateTo({
-			url: '/pc/index/index',
-		});
-		// #endif
-		// #ifdef MP
-		uni.navigateTo({
-			url: '/mp/index/index',
-		});
-		// #endif
-	},
+	onLoad() {},
 	methods: {},
 };
 </script>
