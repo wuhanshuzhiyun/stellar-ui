@@ -1,18 +1,5 @@
 <template>
-	<view class="page">
-		<view class="top">Stellar UI 1.0.0</view>
-		<view class="group-title">基础组件</view>
-		<view class="com-box">
-			<view class="com-title">button 按钮</view>
-			<view class="com-arrow" @click="nav('button')">></view>
-		</view>
-
-		<view class="group-title">表单组件</view>
-		<view class="com-box">
-			<view class="com-title">search 按钮</view>
-			<view class="com-arrow" @click="nav('search')">></view>
-		</view>
-	</view>
+	<view class="page">button demo</view>
 </template>
 <script>
 export default {
@@ -20,15 +7,7 @@ export default {
 		return {};
 	},
 	onLoad() {},
-	methods: {
-		nav(routerName) {
-			const path = '/mp/' + routerName + '-demo/' + routerName + '-demo';
-			console.log(path);
-			uni.navigateTo({
-				url: path,
-			});
-		},
-	},
+	methods: {},
 };
 </script>
 
