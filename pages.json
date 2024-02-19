@@ -20,6 +20,18 @@
 			"style": {
 				"navigationBarTitleText": "mp index"
 			}
+		},
+		{
+			"path": "mp/button-demo/button-demo",
+			"style": {
+				"navigationBarTitleText": "mp button"
+			}
+		},
+		{
+			"path": "mp/search-demo/search-demo",
+			"style": {
+				"navigationBarTitleText": "mp search"
+			}
 		}
 	],
 	"globalStyle": {
@@ -32,7 +44,7 @@
 	"easycom": {
 		"autoscan": true,
 		"custom": {
-			"ste-(.*)": "@/uni_modules/stellar-ui/components/ste-$1.vue"
+			"ste-(.*)": "@/uni_modules/stellar-ui/components/ste-$1/ste-$1.vue"
 		}
 	}
 }
