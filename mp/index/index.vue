@@ -1,6 +1,6 @@
 <template>
 	<view class="page">
-		<page-nav title="Stellar UI" :autoBack="true" backColor="#000"></page-nav>
+		<page-nav></page-nav>
 
 		<view class="top">
 			<view class="top-1">
@@ -14,7 +14,6 @@
 				<text>Stellar UI，全面的组件和便捷的工具会让您信手拈来，如鱼得水。</text>
 			</view>
 		</view>
-
 
 		<view class="group-title">基础组件</view>
 		<view class="com-box" @click="nav('button')">

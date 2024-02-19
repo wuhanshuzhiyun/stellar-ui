@@ -35,15 +35,26 @@ let windowWidth = utils.px2rpx(systemInfo.windowWidth);
 // 手机可使用区域的宽度 单位px
 let pxWindowWidth = systemInfo.windowWidth;
 let flag = false;
-
 function getData(menuButtonInfo) {
 	if (pxMenuButtonTop === -1) {
+		// #ifdef H5
+
+		pxMenuButtonTop = 55;
+		pxMenuBottonBottom = 92;
+		pxMenuButtonWidth = 87;
+		pxMenuButtonHeight = 26;
+		pxMenuButtonLeft = 281;
+		pxMenuBottomRight = 368;
+		// #endif
+
+		// #ifdef MP
 		pxMenuButtonTop = menuButtonInfo.top;
 		pxMenuBottonBottom = menuButtonInfo.bottom;
 		pxMenuButtonWidth = menuButtonInfo.width;
 		pxMenuButtonHeight = menuButtonInfo.height;
 		pxMenuButtonLeft = menuButtonInfo.left;
 		pxMenuBottomRight = menuButtonInfo.right;
+		// #endif
 		// 支付宝开发工具的胶囊按钮数据是错误的，使用固定数据适配开发工具
 		// #ifdef MP-ALIPAY
 		if (systemInfo.platform === 'devtools') {
@@ -76,7 +87,7 @@ function getData(menuButtonInfo) {
 // 仅支付宝用，支付宝偶尔会在第一时间拿不到数据，通过延迟方法得到数据
 function refreshData(pageThis) {
 	setTimeout(() => {
-		let menuButtonInfo = my.getMenuButtonBoundingClientRect();
+		let menuButtonInfo = uni.getMenuButtonBoundingClientRect();
 		if (menuButtonInfo.error == 1111) {
 			// 支付宝有可能得不到胶囊按钮信息
 			refreshData(pageThis);
@@ -99,6 +110,9 @@ function refreshData(pageThis) {
 let usePosition = function () {
 	if (pxMenuButtonTop === -1) {
 		let menuButtonInfo = null;
+		// #ifdef H5
+		getData(menuButtonInfo);
+		// #endif
 		// #ifdef MP-WEIXIN
 		menuButtonInfo = wx.getMenuButtonBoundingClientRect();
 		getData(menuButtonInfo);
