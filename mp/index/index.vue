@@ -1,26 +1,48 @@
 <template>
 	<view class="page">
 		<page-nav title="Stellar UI" :autoBack="true" backColor="#000"></page-nav>
-		<view class="top">Stellar UI 1.0.0</view>
+
+		<view class="top">
+			<view class="top-1">
+				<image :src="joinSrc('中百钱包/payment/logo.png')" style="width: 100rpx" mode="widthFix" />
+				<view class="title">
+					<view class="title-1">Stellar UI 1.0.0</view>
+					<view class="title-2">微信平台快速开发的UI框架</view>
+				</view>
+			</view>
+			<view class="top-2">
+				<text>Stellar UI，全面的组件和便捷的工具会让您信手拈来，如鱼得水。</text>
+			</view>
+		</view>
+
+
 		<view class="group-title">基础组件</view>
-		<view class="com-box">
-			<view class="com-title">button 按钮</view>
-			<view class="com-arrow" @click="nav('button')">></view>
+		<view class="com-box" @click="nav('button')">
+			<view class="com-title">
+				<image src="https://cdn.uviewui.com/uview/example/button.png" style="width: 18px" mode="widthFix" />
+				<text>Button 按钮</text>
+			</view>
+			<view class="com-arrow"><image :src="joinSrc('img/r-arrow.png')" mode="widthFix" /></view>
 		</view>
 		<view class="group-title">表单组件</view>
-		<view class="com-box">
-			<view class="com-title">search 按钮</view>
-			<view class="com-arrow" @click="nav('search')">></view>
+		<view class="com-box" @click="nav('search')">
+			<view class="com-title">
+				<image src="https://cdn.uviewui.com/uview/example/search.png" style="width: 18px" mode="widthFix" />
+				<text>Search 搜索</text>
+			</view>
+			<view class="com-arrow"><image :src="joinSrc('img/r-arrow.png')" mode="widthFix" /></view>
 		</view>
 	</view>
 </template>
 <script>
+import utils from '@/common/utils';
 export default {
 	data() {
 		return {};
 	},
 	onLoad() {},
 	methods: {
+		joinSrc: utils.joinSrc, // 拼接图片src地址
 		nav(routerName) {
 			const path = '/mp/' + routerName + '-demo/' + routerName + '-demo';
 			console.log(path);
@@ -34,35 +56,65 @@ export default {
 
 <style lang="scss" scoped>
 .top {
-	font-size: 48rpx;
-	font-weight: bold;
-	text-align: center;
-	height: 160rpx;
-	line-height: 160rpx;
-	width: 100%;
+	padding: 28rpx;
+	.top-1 {
+		display: flex;
+		image {
+			margin-right: 28rpx;
+		}
+
+		.title {
+			display: flex;
+			flex-direction: column;
+			justify-content: center;
+		}
+		.title-1 {
+			font-size: 36rpx;
+			font-weight: bold;
+			margin-bottom: 10rpx;
+		}
+		.title-2 {
+			color: #909193;
+			font-size: 28rpx;
+		}
+	}
+
+	.top-2 {
+		margin-top: 28rpx;
+		color: #606266;
+		font-size: 28rpx;
+	}
 }
 .group-title {
-	margin-top: 40rpx;
-	margin-bottom: 20rpx;
-	padding-left: 20rpx;
-	height: 80rpx;
-	line-height: 80rpx;
-	font-size: 40rpx;
+	padding: 32rpx;
+	padding-bottom: 8rpx;
 	border-bottom: 1px solid #eee;
+
+	font-weight: bold;
 }
 .com-box {
 	display: flex;
-	height: 80rpx;
-	line-height: 80rpx;
 	justify-content: center;
 	align-items: center;
 	border-bottom: 1px solid #eee;
-	padding-left: 20rpx;
-	padding-right: 20rpx;
+	padding: 20rpx 32rpx;
 	.com-title {
 		flex: 1;
+
+		font-size: 28rpx;
+		display: flex;
+		align-items: center;
+		image {
+			margin-right: 12rpx;
+		}
+		line-height: 100%;
 	}
 	.com-arrow {
+		image {
+			width: 32rpx;
+			position: relative;
+			top: 6rpx;
+		}
 	}
 }
 </style>

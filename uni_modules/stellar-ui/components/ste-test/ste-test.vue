@@ -1,7 +1,11 @@
 <template>
-    <view class="content">测试组件</view>
+	<view class="content">测试组件</view>
 </template>
 
-<script></script>
+<script>
+export default {
+	group: '组件',
+};
+</script>
 
 <style></style>

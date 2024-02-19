@@ -2,8 +2,6 @@
 	<view class="page">loading</view>
 </template>
 <script>
-import md from './test.md';
-import md2html from '@/utils/md2html.js';
 export default {
 	data() {
 		return {
