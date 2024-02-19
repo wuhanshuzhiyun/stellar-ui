@@ -17,7 +17,28 @@
 		font-weight: 600;
 		font-size: 20px;
 	}
+	h4 {
+		margin-bottom: 14px;
+		font-weight: 600;
+		font-size: 18px;
+	}
+	h5 {
+		margin-bottom: 12px;
+		font-weight: 600;
+		font-size: 16px;
+	}
+	h6 {
+		margin-bottom: 10px;
+		font-weight: 600;
+		font-size: 14px;
+	}
+	p {
+		margin-bottom: 16px;
+	}
+
+	table,
 	ul,
+	ol,
 	pre {
 		background-color: #ffffff;
 		border-radius: 10px;
@@ -28,7 +49,31 @@
 			border-radius: 5px;
 		}
 	}
+	table {
+		thead {
+			tr {
+				th {
+					padding: 10px;
+					border-bottom: 1px solid #ddd;
+					text-align: left;
+				}
+			}
+		}
+		tbody {
+			tr {
+				td {
+					border-bottom: 1px solid #ddd;
+					padding: 5px 10px;
+					text-align: left;
+				}
+			}
+		}
+	}
+	ol,
 	ul {
 		padding-left: 40px;
+		li {
+			line-height: 30px;
+		}
 	}
 }

@@ -42,7 +42,7 @@ const handbookMds = require.context('@/pc/handbook/', true, /.+\.md$/);
 const handbookMdMap = requireAll(handbookMds);
 console.log(handbookMdMap);
 const handbooks = Object.keys(handbookMdMap).map((key) => {
-	return { name: key.replace(/\.\/\d\-(.+)\.md$/, '$1'), key };
+	return { name: key.replace(/\.\/(\d\-)?(.+)\.md$/, '$2'), key };
 });
 console.log(handbooks);
 /** ====================== 开发指南markdown文件 End ====================== */
