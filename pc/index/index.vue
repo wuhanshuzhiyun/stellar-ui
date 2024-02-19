@@ -139,7 +139,7 @@ export default {
 		position: absolute;
 		z-index: 10;
 		top: 40px;
-		right: 30px;
+		right: 15px;
 
 		.view-iframe {
 			width: 360px;
