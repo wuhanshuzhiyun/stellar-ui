@@ -44,7 +44,6 @@ export default {
 		joinSrc: utils.joinSrc, // 拼接图片src地址
 		nav(routerName) {
 			const path = '/mp/' + routerName + '-demo/' + routerName + '-demo';
-			console.log(path);
 			uni.navigateTo({
 				url: path,
 			});
