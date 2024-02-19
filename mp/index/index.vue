@@ -1,12 +1,12 @@
 <template>
 	<view class="page">
+		<page-nav title="Stellar UI" :autoBack="true" backColor="#000"></page-nav>
 		<view class="top">Stellar UI 1.0.0</view>
 		<view class="group-title">基础组件</view>
 		<view class="com-box">
 			<view class="com-title">button 按钮</view>
 			<view class="com-arrow" @click="nav('button')">></view>
 		</view>
-
 		<view class="group-title">表单组件</view>
 		<view class="com-box">
 			<view class="com-title">search 按钮</view>
@@ -40,7 +40,6 @@ export default {
 	height: 160rpx;
 	line-height: 160rpx;
 	width: 100%;
-	background-color: red;
 }
 .group-title {
 	margin-top: 40rpx;

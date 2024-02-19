@@ -1,0 +1,147 @@
+<template>
+	<div class="page-iconfont" :style="[computedCssVar]">
+		<view class="iconfont">{{ computedCode }}</view>
+		<div class="text">{{ text }}</div>
+	</div>
+</template>
+
+<script>
+import utils from '@/common/utils.js';
+export default {
+	options: {
+		virtualHost: true,
+	},
+	name: 'icon-font',
+	props: {
+		// iconfont unicode
+		code: {
+			type: String,
+			default: '',
+		},
+		// 颜色
+		color: {
+			type: String,
+			default: '',
+		},
+		// 字体大小
+		size: {
+			type: [Number, String],
+			default: 28,
+		},
+		// 字体粗细
+		weight: {
+			type: [Number, String],
+			default: 'normal',
+		},
+		// 左外边距
+		marginLeft: {
+			type: [Number, String],
+			default: 0,
+		},
+		// 右外边距
+		marginRight: {
+			type: [Number, String],
+			default: 0,
+		},
+		// 上外边距
+		marginTop: {
+			type: [Number, String],
+			default: 0,
+		},
+		// 下外边距
+		marginBottom: {
+			type: [Number, String],
+			default: 0,
+		},
+		// 内嵌文字
+		text: {
+			type: String,
+			default: '',
+		},
+		// 内嵌文字颜色
+		textColor: {
+			type: String,
+			default: '#fff',
+		},
+		// 内嵌字体大小
+		textSize: {
+			type: [Number, String],
+			default: 24,
+		},
+		// 内嵌字体粗细
+		textWeight: {
+			type: [Number, String],
+			default: 400,
+		},
+	},
+	data() {
+		return {};
+	},
+	methods: {},
+	computed: {
+		computedCode() {
+			// unicode编码转字符
+			return String.fromCharCode(this.code.replace('&#', '0').replace(';', ''));
+		},
+		computedCssVar() {
+			return {
+				'--color': this.color,
+				'--size': utils.addUnit(this.size),
+				'--weight': this.weight,
+				'--margin-left': utils.addUnit(this.marginLeft),
+				'--margin-right': utils.addUnit(this.marginRight),
+				'--margin-top': utils.addUnit(this.marginTop),
+				'--margin-bottom': utils.addUnit(this.marginBottom),
+				'--text-color': this.textColor,
+				'--text-size': utils.addUnit(this.textSize),
+				'--text-weight': this.textWeight,
+			};
+		},
+	},
+};
+</script>
+
+<style lang="scss" scoped>
+@import './iconfont.css';
+.page-iconfont {
+	position: relative;
+	display: inline-block;
+	width: calc(var(--size) + var(--margin-left) + var(--margin-right)) !important;
+	height: var(--size) !important;
+	line-height: var(--size) !important;
+}
+
+.iconfont {
+	display: inline-block;
+	vertical-align: bottom;
+	font-family: 'iconfont' !important;
+	font-style: normal;
+	width: var(--size) !important;
+	height: var(--size) !important;
+	line-height: var(--size) !important;
+	font-size: var(--size) !important;
+	color: var(--color);
+	font-weight: var(--weight) !important;
+	margin-left: var(--margin-left) !important;
+	margin-right: var(--margin-right) !important;
+	margin-top: var(--margin-top) !important;
+	margin-bottom: var(--margin-bottom) !important;
+}
+
+.text {
+	position: absolute;
+	left: 0;
+	top: 0;
+	width: var(--size) !important;
+	height: var(--size) !important;
+	line-height: var(--size) !important;
+	margin-left: var(--margin-left) !important;
+	margin-right: var(--margin-right) !important;
+	margin-top: var(--margin-top) !important;
+	margin-bottom: var(--margin-bottom) !important;
+	text-align: center;
+	color: var(--text-color) !important;
+	font-size: var(--text-size) !important;
+	font-weight: var(--text-weight) !important;
+}
+</style>

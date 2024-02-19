@@ -1,5 +1,7 @@
 <template>
-	<view class="page">search demo</view>
+	<view class="page">
+		<page-nav :autoBack="true" backColor="#000"></page-nav>
+	</view>
 </template>
 <script>
 export default {
