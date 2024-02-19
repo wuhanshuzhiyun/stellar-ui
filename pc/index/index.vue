@@ -75,14 +75,24 @@ export default {
 .pc-page-body {
 	width: 100vw;
 	height: 100vh;
-	padding-right: 20px;
-	overflow: hidden;
+	min-width: 1400px;
 	display: flex;
 	flex-direction: row;
 	background-color: #eff2f5;
+	position: relative;
 	&,
 	view {
 		box-sizing: border-box;
+		::-webkit-scrollbar {
+			width: 10px;
+		}
+		::-webkit-scrollbar-track {
+			background-color: #f1f1f1;
+		}
+		::-webkit-scrollbar-thumb {
+			background-color: #ccc;
+			border-radius: 5px;
+		}
 	}
 	.pc-nav {
 		width: 300px;
@@ -119,14 +129,18 @@ export default {
 		}
 	}
 	.pc-content {
-		width: calc(100% - 660px);
+		width: calc(100% - 300px);
 		height: 100%;
-		padding: 40px 20px 10px 20px;
+		padding: 40px 390px 10px 20px;
 		overflow-y: auto;
 	}
 	.pc-view {
 		width: 360px;
-		padding-top: 40px;
+		position: absolute;
+		z-index: 10;
+		top: 40px;
+		right: 15px;
+
 		.view-iframe {
 			width: 360px;
 			height: 640px;
