@@ -1,0 +1,15 @@
+{
+	"name": "stellar-ui",
+	"version": "1.0.0",
+	"description": "StellarUI组件库",
+	"main": "index.js",
+	"scripts": {},
+	"repository": {
+		"type": "git",
+		"url": "http://172.16.108.253:8001/Mall/StellarUI.git"
+	},
+	"keywords": [],
+	"author": "",
+	"license": "ISC",
+	"dependencies": {}
+}
