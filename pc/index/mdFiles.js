@@ -1,7 +1,6 @@
 function requireAll(requre) {
 	const map = {};
 	requre.keys().forEach((path) => {
-		console.log(path);
 		const key = path.replace(/^.*\/(.+)\/[\w\-]+\.(md|vue)+$/, '$1');
 		const model = requre(path);
 		map[key] = model;
@@ -40,14 +39,11 @@ const componentsData = Object.keys(comGroups).map((group) => {
 /** ====================== 开发指南markdown文件 Start ====================== */
 const handbookMds = require.context('@/pc/handbook/', true, /.+\.md$/);
 const handbookMdMap = requireAll(handbookMds);
-console.log(handbookMdMap);
 const handbooks = Object.keys(handbookMdMap).map((key) => {
 	return { name: key.replace(/\.\/(\d\-)?(.+)\.md$/, '$2'), key };
 });
-console.log(handbooks);
 /** ====================== 开发指南markdown文件 End ====================== */
 
 export const datas = [{ name: '开发指南', children: handbooks }, ...componentsData];
 
 export const mdMap = { ...comMdMap, ...handbookMdMap };
-console.log('md-map', mdMap);
