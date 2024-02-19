@@ -22,16 +22,18 @@ const vueMap = requireAll(vues);
 /** ====================== 组装组件数据 Start ====================== */
 const comGroups = {};
 const components = Object.keys(comMdMap).map((key) => {
-	const group = vueMap[key]?.default?.group;
+	const obj = vueMap[key]?.default || {};
+	const { group, title } = obj;
+
 	comGroups[group] = group || '其他';
 
-	return { name: key, key, group };
+	return { name: title || key, key, group };
 });
 
 const componentsData = Object.keys(comGroups).map((group) => {
 	return {
-		name: group,
-		children: components.filter((data) => data.group === group),
+		name: group && group !== 'undefined' ? group : '其他',
+		children: components.filter((data) => String(data.group) === group),
 	};
 });
 /** ====================== 组装组件数据 End ====================== */
