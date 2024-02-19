@@ -30,6 +30,7 @@
 <script>
 import { mdMap, datas } from './mdFiles.js';
 import md2html from './md2html.js';
+import './mdStyle.scss';
 
 export default {
 	data() {
@@ -71,7 +72,6 @@ export default {
 </script>
 
 <style lang="scss">
-@import url(./mdStyle.scss);
 .pc-page-body {
 	width: 100vw;
 	height: 100vh;
