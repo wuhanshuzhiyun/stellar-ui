@@ -1,9 +1,11 @@
 .pc-content.markdown-view {
 	h1 {
-		margin: 0 0 30px;
+		margin-bottom: 15px;
+		padding-bottom: 15px;
 		font-size: 30px;
 		cursor: default;
 		font-weight: 400;
+		border-bottom: 1px solid #ddd;
 		a {
 			display: none;
 		}
@@ -33,43 +35,31 @@
 		font-weight: 600;
 		font-size: 14px;
 	}
-	p {
-		margin-bottom: 16px;
-	}
 
+	p,
 	table,
 	ul,
 	ol,
 	pre {
 		background-color: #ffffff;
 		border-radius: 10px;
-		padding: 28px;
+		padding: 20px;
 		margin-bottom: 28px;
+		line-height: 1.8;
 		code {
 			padding: 10px;
 			border-radius: 5px;
 		}
 	}
+	p {
+		margin-bottom: 16px;
+	}
 	table {
-		thead {
-			tr {
-				th {
-					padding: 10px;
-					border-bottom: 1px solid #ddd;
-					text-align: left;
-					line-height: 30px;
-				}
-			}
-		}
-		tbody {
-			tr {
-				td {
-					border-bottom: 1px solid #ddd;
-					padding: 5px 10px;
-					text-align: left;
-					line-height: 30px;
-				}
-			}
+		border-collapse: collapse;
+		border-color: #ddd;
+		th,
+		td {
+			padding: 5px 10px;
 		}
 	}
 	ol,
@@ -77,6 +67,26 @@
 		padding-left: 40px;
 		li {
 			line-height: 30px;
+		}
+	}
+	pre {
+		position: relative;
+
+		code {
+			tab-size: 4; /* 这可能不起作用，取决于浏览器支持 */
+			-moz-tab-size: 4; /* Firefox */
+			-o-tab-size: 4; /* Opera */
+		}
+
+		& > .code-copy-button {
+			position: absolute;
+			top: 26px;
+			right: 26px;
+			background-color: rgba(0, 0, 0, 0);
+			border: 0;
+			outline: 0;
+			cursor: pointer;
+			color: #888;
 		}
 	}
 }

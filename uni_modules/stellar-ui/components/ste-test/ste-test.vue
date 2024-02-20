@@ -5,6 +5,7 @@
 <script>
 export default {
 	group: '组件',
+	name: 'ste-test',
 	title: 'Test 测试组件',
 };
 </script>
