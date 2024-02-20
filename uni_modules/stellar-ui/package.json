@@ -8,6 +8,9 @@
 		"type": "git",
 		"url": "http://172.16.108.253:8001/Mall/StellarUI.git"
 	},
+	"publishConfig": {
+		"registry": "http://172.16.109.59:8010/repository/npm-hosted/"
+	},
 	"keywords": [],
 	"author": "",
 	"license": "ISC",
