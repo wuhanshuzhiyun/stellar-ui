@@ -70,7 +70,6 @@ export default {
 			});
 		},
 		toView(key) {
-			console.log(key);
 			this.activeName = key;
 			// 修改URL地址参数，不刷新当前页面
 			history.replaceState({}, '', `/pc/index/index?name=${key}`);

@@ -6,3 +6,4 @@ deploy.sh
 /subpackages_test/test.vue
 /unpackage
 /package-lock.json
+yarn.lock
