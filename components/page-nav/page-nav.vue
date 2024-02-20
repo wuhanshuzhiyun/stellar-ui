@@ -109,7 +109,13 @@ export default {
 	},
 	data() {
 		return {
+			// #ifdef H5
+			navbarTop: 16, // 自定义导航栏 top
+			// #endif
+
+			//  #ifdef MP
 			navbarTop: pos.navbarTop, // 自定义导航栏 top
+			// #endif
 			navbarBottom: pos.navbarBottom, // 自定义导航栏 bottom
 			navbarWidth: pos.navbarWidth, // 自定义导航栏 width
 			navbarHeight: pos.navbarHeight, // 自定义导航栏 height
