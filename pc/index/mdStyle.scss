@@ -55,11 +55,16 @@
 		margin-bottom: 16px;
 	}
 	table {
+		width: 100%;
 		border-collapse: collapse;
 		border-color: #ddd;
 		th,
 		td {
 			padding: 5px 10px;
+			text-align: center;
+		}
+		th {
+			background-color: #f7f7f7;
 		}
 	}
 	ol,
