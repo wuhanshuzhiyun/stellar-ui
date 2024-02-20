@@ -20,7 +20,7 @@ const comMdMap = requireAll(_comMds);
 
 /** ====================== 组件VUE文件 Start ====================== */
 const vues = require.context('@/uni_modules/stellar-ui/components/', true, /ste\-\w+\.vue$/);
-const vueMap = requireAll(vues);
+export const vueMap = requireAll(vues);
 /** ====================== 组件VUE文件 End ====================== */
 
 /** ====================== 组装组件数据 Start ====================== */

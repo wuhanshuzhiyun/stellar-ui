@@ -22,15 +22,17 @@
 		</view>
 		<view class="pc-content markdown-view" v-html="content"></view>
 		<view class="pc-view">
-			<iframe class="view-iframe" src="/mp/index/index" frameborder="0" />
+			<iframe class="view-iframe" :src="viewUrl" frameborder="0" />
 		</view>
 	</view>
 </template>
 
 <script>
-import { mdMap, datas } from './mdFiles.js';
+import { mdMap, vueMap, datas } from './mdFiles.js';
 import md2html from './md2html.js';
 import './mdStyle.scss';
+
+let timeout = 0;
 
 export default {
 	data() {
@@ -38,14 +40,30 @@ export default {
 			content: '',
 			activeName: '介绍',
 			datas,
+			viewUrl: '/mp/index/index',
 		};
 	},
 	watch: {
 		activeName: {
 			handler(v) {
-				if (v && mdMap[v]) {
-					this.viewContent(mdMap[v]);
-				}
+				clearTimeout(timeout);
+				timeout = setTimeout(() => {
+					if (v && mdMap[v]) {
+						this.viewContent(mdMap[v]);
+					}
+					// 加载预览地址
+					const com = vueMap[v];
+					let src = '/mp/index/index';
+					if (com) {
+						// 如果是组件，获取组件预览地址
+						const name = v.slice(4);
+						src = `/mp/${name}-demo/${name}-demo`;
+					}
+					if (this.viewUrl === src) return;
+					this.$nextTick(() => {
+						this.viewUrl = src;
+					});
+				}, 100);
 			},
 			immediate: true,
 		},
@@ -57,6 +75,7 @@ export default {
 	},
 	methods: {
 		viewContent(url) {
+			// 加载文档
 			uni.request({
 				url,
 			}).then((res) => {

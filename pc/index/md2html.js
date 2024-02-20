@@ -21,7 +21,6 @@ export default function (mdstr) {
 	pres.forEach((pre) => {
 		const codedom = pre.querySelector('code');
 		const code = codedom.textContent;
-		console.log(code);
 		const btn = document.createElement('button');
 		btn.innerText = '复制';
 		btn.setAttribute('content', code);

@@ -22,6 +22,12 @@
 			}
 		},
 		{
+			"path": "mp/test-demo/test-demo",
+			"style": {
+				"navigationStyle": "custom"
+			}
+		},
+		{
 			"path": "mp/button-demo/button-demo",
 			"style": {
 				"navigationStyle": "custom"
