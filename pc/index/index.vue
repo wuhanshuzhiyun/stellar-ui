@@ -20,7 +20,9 @@
 				</view>
 			</view>
 		</view>
-		<view class="pc-content markdown-view" v-html="content"></view>
+		<view class="pc-content">
+			<view v-html="content" class="markdown-view"></view>
+		</view>
 		<view class="pc-view">
 			<iframe class="view-iframe" :src="viewUrl" frameborder="0" />
 		</view>
@@ -110,40 +112,25 @@ export default {
 };
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
 .pc-page-body {
 	width: 100vw;
 	height: 100vh;
-	min-width: 1400px;
 	display: flex;
 	flex-direction: row;
 	background-color: #eff2f5;
 	position: relative;
 
-	&,
-	view {
-		box-sizing: border-box;
-
-		::-webkit-scrollbar {
-			width: 10px;
-		}
-
-		::-webkit-scrollbar-track {
-			background-color: #f1f1f1;
-		}
-
-		::-webkit-scrollbar-thumb {
-			background-color: #ccc;
-			border-radius: 5px;
-		}
-	}
-
 	.pc-nav {
-		width: 300px;
 		height: 100%;
 		background-color: #ffffff;
 		padding: 8px 0;
 		overflow-y: auto;
+		min-width: var(--pc-nav-width);
+		max-width: var(--pc-nav-width);
+		position: absolute;
+		left: 0;
+		bottom: 0;
 
 		.group {
 			.name {
@@ -179,25 +166,37 @@ export default {
 	}
 
 	.pc-content {
-		width: calc(100% - 300px);
-		height: 100%;
-		padding: 40px 390px 10px 20px;
-		overflow-y: auto;
+		width: 100%;
+		padding-left: var(--pc-nav-width);
+		padding-right: calc(var(--pc-view-width) + var(--pc-padding));
+		overflow: auto;
+
+		.markdown-view {
+			padding: var(--pc-padding);
+		}
+	}
+	@media (max-width: 1100px) {
+		.pc-content {
+			padding-right: calc(-8px + var(--pc-view-width));
+		}
 	}
 
 	.pc-view {
-		width: 360px;
-		position: absolute;
+		position: fixed;
 		z-index: 10;
-		top: 40px;
-		right: 15px;
+		top: 20px;
+		right: var(--pc-padding);
+		width: var(--pc-view-width);
+		min-width: var(--pc-view-width);
+		height: var(--pc-view-height);
+		overflow: hidden;
+		box-shadow: 0 2px 10px 0 #ddd;
+		border-radius: 16px;
+		background-color: #fff;
 
 		.view-iframe {
-			width: 360px;
-			height: 640px;
-			box-shadow: 0 2px 10px 0 #ddd;
-			border-radius: 16px;
-			background-color: #fff;
+			width: 100%;
+			height: 100%;
 		}
 	}
 }

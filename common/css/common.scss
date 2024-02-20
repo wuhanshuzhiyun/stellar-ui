@@ -7,5 +7,23 @@
 html,
 body {
 	user-select: auto;
+}
+body {
+	min-width: 1100px;
 	overflow: auto;
+	font-size: 16px;
+}
+
+::-webkit-scrollbar {
+	width: 10px;
+	height: 10px;
+}
+
+::-webkit-scrollbar-track {
+	background-color: #f1f1f1;
+}
+
+::-webkit-scrollbar-thumb {
+	background-color: #ccc;
+	border-radius: 5px;
 }

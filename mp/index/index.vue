@@ -1,7 +1,5 @@
 <template>
 	<view class="page">
-		<page-nav></page-nav>
-
 		<view class="top">
 			<view class="top-1">
 				<image :src="joinSrc('中百钱包/payment/logo.png')" style="width: 100rpx" mode="widthFix" />
@@ -53,9 +51,10 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.page {
+	padding: 46px 20px 20px;
+}
 .top {
-	padding-left: 28rpx;
-	padding-right: 28rpx;
 	padding-bottom: 28rpx;
 	.top-1 {
 		display: flex;
@@ -86,10 +85,9 @@ export default {
 	}
 }
 .group-title {
-	padding: 32rpx;
+	padding: 32rpx 0;
 	padding-bottom: 8rpx;
 	border-bottom: 1px solid #eee;
-
 	font-weight: bold;
 }
 .com-box {
@@ -97,7 +95,7 @@ export default {
 	justify-content: center;
 	align-items: center;
 	border-bottom: 1px solid #eee;
-	padding: 20rpx 32rpx;
+	padding: 20rpx 0;
 	.com-title {
 		flex: 1;
 
