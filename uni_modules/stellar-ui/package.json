@@ -2,7 +2,8 @@
 	"name": "stellar-ui",
 	"version": "0.0.1",
 	"description": "StellarUI组件库",
-	"main": "index.js",
+	"main": "stellar-ui/index.js",
+	"private": false,
 	"scripts": {},
 	"repository": {
 		"type": "git",
