@@ -1,7 +1,11 @@
-function requireAll(requre) {
+function requireAll(requre, isHandbooks) {
 	const map = {};
 	requre.keys().forEach((path) => {
-		const key = path.replace(/^.*\/(.+)\/[\w\-]+\.(md|vue)+$/, '$1');
+		let key = path.replace(/^.*\/(.+)\/[\w\-]+\.(md|vue)+$/, '$1');
+		// 如果是开发指南，则没有上级文件夹，直接读取文件名
+		if (isHandbooks) {
+			key = path.replace(/\.\/(\d\-)?(.+)\.md$/, '$2');
+		}
 		const model = requre(path);
 		map[key] = model;
 	});
@@ -23,16 +27,16 @@ const vueMap = requireAll(vues);
 const comGroups = {};
 const components = Object.keys(comMdMap).map((key) => {
 	const obj = vueMap[key]?.default || {};
-	const { group, title } = obj;
+	const { group, title, name } = obj;
 
 	comGroups[group] = group || '其他';
 
-	return { name: title || key, key, group };
+	return { title, name: name || key, key, group };
 });
 
 const componentsData = Object.keys(comGroups).map((group) => {
 	return {
-		name: group && group !== 'undefined' ? group : '其他',
+		title: group && group !== 'undefined' ? group : '其他',
 		children: components.filter((data) => String(data.group) === group),
 	};
 });
@@ -40,12 +44,10 @@ const componentsData = Object.keys(comGroups).map((group) => {
 
 /** ====================== 开发指南markdown文件 Start ====================== */
 const handbookMds = require.context('@/pc/handbook/', true, /.+\.md$/);
-const handbookMdMap = requireAll(handbookMds);
-const handbooks = Object.keys(handbookMdMap).map((key) => {
-	return { name: key.replace(/\.\/(\d\-)?(.+)\.md$/, '$2'), key };
-});
+const handbookMdMap = requireAll(handbookMds, true);
+const handbooks = Object.keys(handbookMdMap).map((key) => ({ title: key, key }));
 /** ====================== 开发指南markdown文件 End ====================== */
 
-export const datas = [{ name: '开发指南', children: handbooks }, ...componentsData];
+export const datas = [{ title: '开发指南', children: handbooks }, ...componentsData];
 
 export const mdMap = { ...comMdMap, ...handbookMdMap };
