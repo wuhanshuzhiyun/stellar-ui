@@ -1,23 +1,25 @@
 {
-  "name": "stellarui",
-  "version": "1.0.0",
-  "description": "",
-  "main": "main.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "repository": {
-    "type": "git",
-    "url": "http://172.16.108.253:8001/Mall/StellarUI.git"
-  },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
-  "dependencies": {
-    "file-loader": "^6.2.0",
-    "highlight.js": "^11.9.0",
-    "markdown-it": "^14.0.0",
-    "markdown-it-anchor": "^8.6.7",
-    "markdown-it-highlightjs": "^4.0.1"
-  }
+	"name": "stellarui",
+	"version": "1.0.0",
+	"description": "",
+	"main": "main.js",
+	"scripts": {
+		"test": "echo \"Error: no test specified\" && exit 1"
+	},
+	"repository": {
+		"type": "git",
+		"url": "http://172.16.108.253:8001/Mall/StellarUI.git"
+	},
+	"keywords": [],
+	"author": "",
+	"license": "ISC",
+	"dependencies": {
+		"highlight.js": "^11.9.0",
+		"markdown-it": "^14.0.0",
+		"markdown-it-anchor": "^8.6.7",
+		"markdown-it-highlightjs": "^4.0.1"
+	},
+	"devDependencies": {
+		"file-loader": "^6.2.0"
+	}
 }
