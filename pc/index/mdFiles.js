@@ -48,6 +48,23 @@ const handbookMdMap = requireAll(handbookMds, true);
 const handbooks = Object.keys(handbookMdMap).map((key) => ({ title: key, key }));
 /** ====================== 开发指南markdown文件 End ====================== */
 
-export const datas = [{ title: '开发指南', children: handbooks }, ...componentsData];
+function sortData() {
+	const dataSort = ['基础组件', '表单组件'];
+
+	const result = [{ title: '开发指南', children: handbooks }];
+
+	dataSort.forEach((title) => {
+		const data = componentsData.find((g) => title === g.title);
+		if (data) {
+			result.push(data);
+		}
+	});
+
+	const r = componentsData.filter((g) => dataSort.indexOf(g.title) === -1);
+
+	return result.concat(r);
+}
+
+export const datas = sortData();
 
 export const mdMap = { ...comMdMap, ...handbookMdMap };
