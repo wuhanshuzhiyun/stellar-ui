@@ -71,16 +71,16 @@ export default {
 
 ## API
 ### Props
-| 属性名			| 说明			|类型			|默认值		| 可选值					|说明									|
-| ------			| -----------	|	-----------	|-----------|-----------			|	---------							|
-| mode				|设置按钮的大小	|String			|middle		|mini / small / large	|										|
-| color				|文本颜色		|String			|```#fff```	|-						|										|
-| fontWeight		|文本字体字重	|String			|bold		|-						|										|
-| marginTop			|上边距			|Number			|0			|						|	如果垂直无法对齐，使用负值进行对齐	|
-| disabled			|是否禁用按钮	|Boolean		|false		|true					|										|
-| auto				|是否自适应		|Boolean		|false		|true					|										|
-| backgroundColor	|背景颜色		|String			|#0090FF	|-						|										|
-| borderRadius		|圆角			|Number			|48			|-						|										|
+| 属性名			| 说明			|类型			|默认值		| 可选值					|说明															|
+| ------			| -----------	|	-----------	|-----------|-----------			|	---------													|
+| mode				|设置按钮的大小	|String			|middle		|mini / small / large	|																|
+| color				|文本颜色		|String			|```#fff```	|-						|																|
+| fontWeight		|文本字体字重	|String			|bold		|-						|																|
+| marginTop			|上边距			|Number			|0			|						|	给按钮内容添加margin-top，如果垂直无法对齐，使用负值进行对齐	|
+| disabled			|是否禁用按钮	|Boolean		|false		|true					|																|
+| auto				|是否自适应		|Boolean		|false		|true					|																|
+| backgroundColor	|背景颜色		|String			|#0090FF	|-						|																|
+| borderRadius		|圆角			|Number			|48			|-						|																|
 
 ### Events
 | 属性名| 说明			|类型			|默认值		| 可选值		|说明			|
