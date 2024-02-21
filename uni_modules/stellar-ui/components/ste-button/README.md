@@ -27,33 +27,13 @@
 
 <template>
 	<view style="padding: 20px;">
-		<ste-button mode="large">超大型按钮</ste-button>
-		<ste-button mode="middle">中型按钮</ste-button>
-		<ste-button mode="small">常规按钮</ste-button>
-		<ste-button mode="mini">小型按钮</ste-button>
-		
-		<ste-button mode="middle">默认按钮</ste-button>
-		<ste-button type="line" mode="middle">线性按钮</ste-button>
-		<ste-button type="disabled" mode="middle">禁止按钮</ste-button>
-		
-		<ste-button mode="small" backgroundColor="#FF1E19">领取</ste-button>
-		<ste-button type="line" mode="small" backgroundColor="#FF1E19">领取</ste-button>
-
-		<ste-button mode="small" color="#000000">已领完</ste-button>
-		<ste-button type="line" mode="small" color="#000000">已领完</ste-button>
-
-		<ste-button
-			mode="small"
-			backgroundColor="linear-gradient(to right, rgb(66, 83, 216), rgb(213, 51, 186))"
-		>
-			渐变
-		</ste-button>
-		
-		<ste-button mode="middle" :auto="true">自适应宽度</ste-button>
-		
-		<ste-button mode="middle" :auto="true">
-			文字超长-提交-按钮按钮按钮按钮按钮按钮按钮按钮按钮按钮按钮按钮
-		</ste-button>
+		<ste-button type="primary" >确定</ste-button>
+		<ste-button type="primary" :plain="true" >镂空</ste-button>
+		<ste-button type="primary" :plain="true" :hairline="true" >细边</ste-button>
+		<ste-button type="primary" :disabled="disabled" >禁用</ste-button>
+		<ste-button type="primary" shape="circle" >按钮形状</ste-button>
+		<ste-button  color="linear-gradient(to right, rgb(66, 83, 216), rgb(213, 51, 186))">渐变色按钮</ste-button>
+		<ste-button type="primary" size="small" >大小尺寸</ste-button>
 	</view>
 </template>
 
@@ -67,20 +47,20 @@ export default {
 };
 </script>
 
+
 ```
 
 ## API
 ### Props
-| 属性名			| 说明			|类型			|默认值		| 可选值					|说明															|
-| ------			| -----------	|	-----------	|-----------|-----------			|	---------													|
-| mode				|设置按钮的大小	|String			|middle		|mini / small / large	|																|
-| color				|文本颜色		|String			|```#fff```	|-						|																|
-| fontWeight		|文本字体字重	|String			|bold		|-						|																|
-| marginTop			|上边距			|Number			|0			|						|	给按钮内容添加margin-top，如果垂直无法对齐，使用负值进行对齐	|
-| disabled			|是否禁用按钮	|Boolean		|false		|true					|																|
-| auto				|是否自适应		|Boolean		|false		|true					|																|
-| backgroundColor	|背景颜色		|String			|#0090FF	|-						|																|
-| borderRadius		|圆角			|Number			|48			|-						|																|
+| 属性名	| 说明									|类型			|默认值		| 可选值										|说明			|
+| ------	| -----------							|	-----------	|-----------|-----------								|	---------	|
+| hairline	|是否显示按钮的细边框						|Boolean		|true		|false										|				|
+| type		|按钮的样式类型							|String			|info		|info / primary / error/ warning / success	|				|
+| size		|按钮的大小								|String			|normal		|info，primary，error，warning，success		|				|
+| shape		|按钮外观形状							|String			|square		|	circle									|				|
+| plain		|按钮是否镂空，背景色透明					|Boolean		|false		|true										|				|
+| disabled	|是否禁用								|Boolean		|false		|true										|				|
+| color		|按钮颜色，支持传入linear-gradient渐变色	|String			|-			|-											|				|
 
 ### Events
 | 属性名| 说明			|类型			|默认值		| 可选值		|说明			|

@@ -5,54 +5,120 @@
 			<view class="demo-block">
 				<view class="title">按钮类型</view>
 				<view class="block-content">
-					<ste-button mode="middle" @click="handleClick('默认按钮')">默认按钮</ste-button>
-					<ste-button type="line" mode="middle" @click="handleClick('线性按钮')">线性按钮</ste-button>
-					<ste-button type="disabled" mode="middle">禁止按钮</ste-button>
+					<view>
+						<ste-button>默认按钮</ste-button>
+					</view>
+					<view>
+						<ste-button :type="'success'">成功按钮</ste-button>
+					</view>
+
+					<view>
+						<ste-button type="error">危险按钮</ste-button>
+					</view>
+
+					<view>
+						<ste-button type="primary">主要按钮</ste-button>
+					</view>
+
+					<view>
+						<ste-button type="warning">警告按钮</ste-button>
+					</view>
+				</view>
+			</view>
+			<view class="demo-block">
+				<view class="title">镂空按钮</view>
+				<view class="block-content">
+					<view>
+						<ste-button :plain="true">镂空按钮</ste-button>
+					</view>
+					<view>
+						<ste-button :type="'success'" :plain="true">镂空按钮</ste-button>
+					</view>
+					<view>
+						<ste-button type="error" :plain="true">镂空按钮</ste-button>
+					</view>
+					<view>
+						<ste-button type="primary" :plain="true">镂空按钮</ste-button>
+					</view>
+					<view>
+						<ste-button type="warning" :plain="true">镂空按钮</ste-button>
+					</view>
+				</view>
+			</view>
+			<view class="demo-block">
+				<view class="title">细边按钮</view>
+				<view class="block-content">
+					<view>
+						<ste-button :plain="true">细边按钮</ste-button>
+					</view>
+					<view>
+						<ste-button :type="'success'" :plain="true" :hairline="true">细边按钮</ste-button>
+					</view>
+					<view>
+						<ste-button type="error" :plain="true" :hairline="true">细边按钮</ste-button>
+					</view>
+					<view>
+						<ste-button type="primary" :plain="true" :hairline="true">细边按钮</ste-button>
+					</view>
+					<view>
+						<ste-button type="warning" :plain="true" :hairline="true">细边按钮</ste-button>
+					</view>
+				</view>
+			</view>
+			<view class="demo-block">
+				<view class="title">禁用按钮</view>
+				<view class="block-content">
+					<view>
+						<ste-button :plain="true" disabled="true">禁用按钮</ste-button>
+					</view>
+					<view>
+						<ste-button :type="'success'" disabled="true">禁用按钮</ste-button>
+					</view>
+					<view>
+						<ste-button type="error" disabled="true">禁用按钮</ste-button>
+					</view>
+					<view>
+						<ste-button type="primary" disabled="true">禁用按钮</ste-button>
+					</view>
+					<view>
+						<ste-button type="warning" disabled="true">禁用按钮</ste-button>
+					</view>
+				</view>
+			</view>
+			<view class="demo-block">
+				<view class="title">按钮形状 & 按钮图标</view>
+				<view class="block-content">
+					<view>
+						<ste-button type="success" :plain="true" shape="circle">按钮形状</ste-button>
+					</view>
 				</view>
 			</view>
 			<view class="demo-block">
 				<view class="title">自定义颜色</view>
 				<view class="block-content">
-					<ste-button mode="small" backgroundColor="#FF1E19" @click="handleClick('领取')">领取</ste-button>
-					<ste-button type="line" mode="small" backgroundColor="#FF1E19" @click="handleClick('领取')">
-						领取
-					</ste-button>
+					<view>
+						<ste-button color="linear-gradient(to right, rgb(66, 83, 216), rgb(213, 51, 186))">
+							渐变色按钮
+						</ste-button>
+					</view>
+					<view>
+						<ste-button color="linear-gradient(to right, rgb(220, 194, 11), rgb(4, 151, 99))">
+							渐变色按钮
+						</ste-button>
+					</view>
 
-					<ste-button mode="small" color="#000000" @click="handleClick('已领完')">已领完</ste-button>
-					<ste-button type="line" mode="small" color="#000000" @click="handleClick('已领完')">
-						已领完
-					</ste-button>
-
-					<ste-button
-						mode="small"
-						backgroundColor="linear-gradient(to right, rgb(66, 83, 216), rgb(213, 51, 186))"
-						@click="handleClick('渐变')"
-					>
-						渐变
-					</ste-button>
+					<view>
+						<ste-button color="rgb(10, 185, 156)">青绿色按钮</ste-button>
+					</view>
 				</view>
 			</view>
 			<view class="demo-block">
 				<view class="title">自定义大小</view>
 				<view class="block-content">
-					<ste-button mode="large" @click="handleClick('超大')">超大型按钮</ste-button>
-					<ste-button mode="middle" @click="handleClick('中型')">中型按钮</ste-button>
-					<ste-button mode="small" @click="handleClick('常规')">常规按钮</ste-button>
-					<ste-button mode="mini" @click="handleClick('小型')">小型按钮</ste-button>
-				</view>
-			</view>
-			<view class="demo-block">
-				<view class="title">自适应宽度</view>
-				<view class="block-content" style="display: block">
-					<ste-button mode="middle" :auto="true" @click="handleClick('自适应')">按钮</ste-button>
-				</view>
-			</view>
-			<view class="demo-block">
-				<view class="title">文字超长</view>
-				<view class="block-content" style="display: block; width: 50%">
-					<ste-button mode="middle" :auto="true" @click="handleClick('文字超长')">
-						提交-按钮按钮按钮按钮按钮按钮按钮按钮按钮按钮按钮按钮
-					</ste-button>
+					<ste-button type="success" size="large">超大尺寸</ste-button>
+					<view><ste-button type="error" size="normal">普通尺寸</ste-button></view>
+					<view><ste-button type="primary" size="small">小型尺寸</ste-button></view>
+					<view><ste-button type="warning" size="mini">超小尺寸</ste-button></view>
 				</view>
 			</view>
 		</view>

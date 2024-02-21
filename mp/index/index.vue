@@ -28,13 +28,6 @@
 			</view>
 			<view class="com-arrow"><image :src="joinSrc('img/r-arrow.png')" mode="widthFix" /></view>
 		</view>
-		<view class="com-box" @click="nav('price')">
-			<view class="com-title">
-				<image :src="joinSrc('img/price-2.png')" style="width: 18px" mode="widthFix" />
-				<text>Price 价格</text>
-			</view>
-			<view class="com-arrow"><image :src="joinSrc('img/r-arrow.png')" mode="widthFix" /></view>
-		</view>
 		<!-- ***表单组件*** -->
 		<view class="group-title">表单组件</view>
 		<view class="com-box" @click="nav('search')">
