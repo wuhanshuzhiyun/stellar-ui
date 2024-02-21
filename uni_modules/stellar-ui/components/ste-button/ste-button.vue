@@ -12,6 +12,7 @@
 import utils from '@/common/utils';
 export default {
 	group: '基础组件',
+	title: 'Button 按钮',
 	name: 'ste-button',
 	props: {
 		mode: {

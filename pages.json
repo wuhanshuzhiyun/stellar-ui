@@ -28,6 +28,12 @@
 			}
 		},
 		{
+			"path": "mp/icon-demo/icon-demo",
+			"style": {
+				"navigationStyle": "custom"
+			}
+		},
+		{
 			"path": "mp/button-demo/button-demo",
 			"style": {
 				"navigationStyle": "custom"

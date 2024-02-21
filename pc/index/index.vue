@@ -118,12 +118,12 @@ export default {
 	height: 100vh;
 	display: flex;
 	flex-direction: row;
-	background-color: #eff2f5;
+	background-color: #fff;
 	position: relative;
 
 	.pc-nav {
 		height: 100%;
-		background-color: #ffffff;
+		border-right: 1px solid #ddd;
 		padding: 8px 0;
 		overflow-y: auto;
 		min-width: var(--pc-nav-width);
