@@ -1,7 +1,14 @@
 <template>
 	<view class="page">
 		<page-nav :autoBack="true" backColor="#000" titleAlignment="2" title="价格"></page-nav>
-		<view class="wrapper"></view>
+		<view class="wrapper">
+			<view class="demo-block">
+				<view class="title">常规价格</view>
+				<view class="block-content">
+					<ste-price :value="120 * 100" :fontSize="26" styleType="2" :digits="2"></ste-price>
+				</view>
+			</view>
+		</view>
 	</view>
 </template>
 <script>
