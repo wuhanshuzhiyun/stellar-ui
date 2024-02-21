@@ -186,17 +186,20 @@ export default {
 		z-index: 10;
 		top: 20px;
 		right: var(--pc-padding);
-		width: var(--pc-view-width);
-		min-width: var(--pc-view-width);
-		height: var(--pc-view-height);
+		width: calc(var(--pc-view-width) + 28px);
+		min-width: calc(var(--pc-view-width) + 28px);
+		height: calc(var(--pc-view-height) + 80px);
+		padding: 50px 14px 30px;
 		overflow: hidden;
-		box-shadow: 0 2px 10px 0 #ddd;
 		border-radius: 16px;
-		background-color: #fff;
+		background-image: url(./iPhone13.png);
+		background-repeat: no-repeat;
+		background-size: 100% 100%;
 
 		.view-iframe {
 			width: 100%;
 			height: 100%;
+			border-radius: 0 0 20px 20px;
 		}
 	}
 }
