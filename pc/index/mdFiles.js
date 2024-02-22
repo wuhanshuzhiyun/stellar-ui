@@ -4,7 +4,7 @@ function requireAll(requre, isHandbooks) {
 		let key = path.replace(/^.*\/(.+)\/[\w\-]+\.(md|vue)+$/, '$1');
 		// 如果是开发指南，则没有上级文件夹，直接读取文件名
 		if (isHandbooks) {
-			key = path.replace(/\.\/(\d\-)?(.+)\.md$/, '$2');
+			key = path.replace(/\.\/(\d+\-)?(.+)\.md$/, '$2');
 		}
 		const model = requre(path);
 		map[key] = model;
