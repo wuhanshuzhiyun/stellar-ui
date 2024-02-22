@@ -1,5 +1,11 @@
 <template>
-	<button :class="bemClass" :hover-class="!disabled ? 'ste-button--active' : ''" :style="[baseColor]">
+	<button
+		:class="bemClass"
+		:hover-class="!disabled ? 'ste-button--active' : ''"
+		:style="[baseColor]"
+		:open-type="openType"
+		@tap="thro(handleClick, { delay: throttleTime })"
+	>
 		<view class="u-button__text" :style="[{ fontSize: textSize + 'px' }]">
 			<slot></slot>
 		</view>
@@ -71,8 +77,8 @@ export default {
 		},
 	},
 	methods: {
-		click(e) {
-			if (this.computedType != 'disabled') {
+		handleClick(e) {
+			if (!this.disabled) {
 				this.$emit('click', e);
 			}
 		},

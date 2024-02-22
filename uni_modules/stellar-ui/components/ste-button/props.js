@@ -34,6 +34,12 @@ export default {
 		color: {
 			type: String,
 			default: ''
+		},
+		// 开放能力，具体请看uniapp稳定关于button组件部分说明
+		// https://uniapp.dcloud.io/component/button
+		openType: {
+			type: String,
+			default: ''
 		}
 	}
 }
