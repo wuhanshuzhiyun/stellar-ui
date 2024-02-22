@@ -13,16 +13,23 @@
 </template>
 
 <script>
-import utils from '@/common/utils';
+import utils from '../../utils/utils.js';
 /**
  * button 按钮
  * @description Button 按钮
- * @tutorial /pc/index/index?name=ste-button
- *
- * @property {Boolean}			hairline				是否显示按钮的细边框 (默认 true )
- * @property {String}			type					按钮的预置样式，info，primary，error，warning，success (默认 'info' )
- * @property {String}			size					按钮尺寸，large，normal，mini （默认 normal）
- * @property {String}			shape					按钮形状，circle（两边为半圆），square（带圆角） （默认 'square' ）
+ * @tutorial http://172.16.114.51:5050/pc/index/index?name=ste-button
+ * @property {Boolean}			hairline				是否显示按钮的细边框 (默认 true)
+ * @value true 显示细边框
+ * @value false 显示细边框
+ * @property {String}			type					按钮的预置样式 (默认 'info')
+ * @property {String}			size					按钮尺寸 (默认 normal）
+ * @value large 超大按钮
+ * @value normal 普通按钮
+ * @value small 小型按钮
+ * @value mini 超小按钮
+ * @property {String}			shape					按钮形状（默认 'square'）
+ * @value circle 两边半圆
+ * @value square 方形带圆角
  * @property {Boolean}			plain					按钮是否镂空，背景色透明 （默认 false）
  * @property {Boolean}			disabled				是否禁用 （默认 false）
  * @property {String}			color					按钮颜色，支持传入linear-gradient渐变色

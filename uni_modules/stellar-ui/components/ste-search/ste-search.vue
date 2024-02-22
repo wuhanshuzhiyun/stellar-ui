@@ -27,7 +27,7 @@
 					:size="searchIconSize"
 					:name="searchIcon"
 					:color="searchIconColor ? searchIconColor : color"
-					code="&#xe66d;"
+					:code="searchIcon"
 				></ste-icon>
 			</view>
 			<input
@@ -78,31 +78,35 @@
 /**
  * search 搜索框
  * @description 搜索组件，集成了常见搜索框所需功能，用户可以一键引入，开箱即用。
- * @tutorial /pc/index/index?name=ste-search
- * @property {String}			shape				搜索框形状，round-圆形，square-方形（默认 'round' ）
- * @property {String}			bgColor				搜索框背景颜色（默认 '#f2f2f2' ）
- * @property {String}			placeholder			占位文字内容（默认 '请输入关键字' ）
- * @property {Boolean}			clearabled			是否启用清除控件（默认 true ）
- * @property {Boolean}			focus				是否自动获得焦点（默认 false ）
- * @property {Boolean}			showAction			是否显示右侧控件（默认 true ）
+ * @tutorial http://172.16.114.51:5050/pc/index/index?name=ste-search
+ * @property {String}			shape				搜索框形状（默认 'round' ）
+ * @value round 圆形
+ * @value normal 方形带圆角
+ * @property {String}			bgColor				搜索框背景颜色（默认 '#f2f2f2'）
+ * @property {String}			placeholder			占位文字内容（默认 '请输入关键字'）
+ * @property {Boolean}			clearabled			是否启用清除控件（默认 true）
+ * @property {Boolean}			focus				是否自动获得焦点（默认 false）
+ * @property {Boolean}			showAction			是否显示右侧控件（默认 true）
  * @property {Object}			actionStyle			右侧控件的样式，对象形式
- * @property {String}			actionText			右侧控件文字（默认 '搜索' ）
- * @property {String}			inputAlign			输入框内容水平对齐方式 （默认 'left' ）
+ * @property {String}			actionText			右侧控件文字（默认 '搜索'）
+ * @property {String}			inputAlign			输入框内容水平对齐方式 （默认 'left'）
+ * @value left 居左
+ * @value center 居中
+ * @value right 居右
  * @property {Object}			inputStyle			自定义输入框样式，对象形式
  * @property {Boolean}			disabled			是否启用输入框（默认 false ）
- * @property {String}			borderColor			边框颜色，配置了颜色，才会有边框 (默认 'transparent' )
- * @property {String}			searchIconColor		搜索图标的颜色，默认同输入框字体颜色 (默认 '#909399' )
- * @property {Number | String}	searchIconSize 搜索图标的字体，默认22
- * @property {String}			color				输入框字体颜色（默认 '#606266' ）
- * @property {String}			placeholderColor	placeholder的颜色（默认 '#909399' ）
- * @property {String}			searchIcon			输入框左边的图标，可以为uView图标名称或图片路径  (默认 'search' )
- * @property {String}			margin				组件与其他上下左右元素之间的距离，带单位的字符串形式，如"30px"   (默认 '0' )
- * @property {Boolean} 			animation			是否开启动画，见上方说明（默认 false ）
+ * @property {String}			borderColor			边框颜色，配置了颜色，才会有边框 (默认 'transparent')
+ * @property {String}			searchIconColor		搜索图标的颜色，默认同输入框字体颜色 (默认 '#909399')
+ * @property {Number | String}	searchIconSize      搜索图标的字体，默认22
+ * @property {String}			color				输入框字体颜色（默认 '#606266'）
+ * @property {String}			placeholderColor	placeholder的颜色（默认 '#909399'）
+ * @property {String}			searchIcon			输入框左边的图标，可以为icon-font图标名称的code
+ * @property {String}			margin				组件与其他上下左右元素之间的距离，带单位的字符串形式，如"30px"   (默认 '0')
+ * @property {Boolean} 			animation			是否开启动画，见上方说明（默认 false）
  * @property {String}			value				输入框初始值
- * @property {String | Number}	maxlength			输入框最大能输入的长度，-1为不限制长度  (默认 '-1' )
- * @property {String | Number}	height				输入框高度，单位px（默认 64 ）
+ * @property {String | Number}	maxlength			输入框最大能输入的长度，-1为不限制长度  (默认 '-1')
+ * @property {String | Number}	height				输入框高度，单位px（默认 64）
  * @property {String | Number}	label				搜索框左边显示内容
- * @property {Object}			customStyle			定义需要用到的外部样式
  *
  * @event {Function} change 输入框内容发生变化时触发
  * @event {Function} search 用户确定搜索时触发，用户按回车键，或者手机键盘右下角的"搜索"键时触发
@@ -193,7 +197,7 @@ export default {
 		// 左边输入框的图标，可以为uView图标名称或图片路径
 		searchIcon: {
 			type: String,
-			default: 'search',
+			default: '&#xe66d;',
 		},
 		searchIconSize: {
 			type: [Number, String],
