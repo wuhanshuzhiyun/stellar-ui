@@ -1,12 +1,12 @@
 <template>
 	<button
-		:class="bemClass"
+		:class="btnClass"
 		:hover-class="!disabled ? 'ste-button--active' : ''"
 		:style="[baseColor]"
 		:open-type="openType"
 		@tap="thro(handleClick, { delay: throttleTime })"
 	>
-		<view class="u-button__text" :style="[{ fontSize: textSize + 'px' }]">
+		<view class="u-button-text" :style="[{ fontSize: textSize + 'px' }]">
 			<slot></slot>
 		</view>
 	</button>
@@ -14,9 +14,6 @@
 
 <script>
 import utils from '@/common/utils';
-import props from './props.js';
-import mixin from '../../libs/mixin/mixin.js';
-
 /**
  * 按钮组件
  * @description 按钮组件
@@ -29,13 +26,76 @@ export default {
 	group: '基础组件',
 	title: 'Button 按钮',
 	name: 'ste-button',
-	mixins: [mixin, props],
+	props: {
+		// 是否细边框
+		hairline: {
+			type: Boolean,
+			default: true,
+		},
+		// 按钮的预置样式，info，primary，error，warning，success
+		type: {
+			type: String,
+			default: 'info',
+		},
+		// 按钮尺寸，large，normal，small，mini
+		size: {
+			type: String,
+			default: 'normal',
+		},
+		// 按钮形状，circle（两边为半圆），square（带圆角）
+		shape: {
+			type: String,
+			default: 'square',
+		},
+		// 按钮是否镂空
+		plain: {
+			type: Boolean,
+			default: false,
+		},
+		// 是否禁止状态
+		disabled: {
+			type: Boolean,
+			default: false,
+		},
+		// 按钮颜色，支持传入linear-gradient渐变色
+		color: {
+			type: String,
+			default: '',
+		},
+		// 开放能力，具体请看uniapp稳定关于button组件部分说明
+		// https://uniapp.dcloud.io/component/button
+		openType: {
+			type: String,
+			default: '',
+		},
+		// 节流，一定时间内只能触发一次
+		throttleTime: {
+			type: [String, Number],
+			default: 0,
+		},
+	},
+	data() {
+		return {};
+	},
 	created() {},
 	computed: {
-		// 生成bem风格的类名
-		bemClass() {
+		btnClass() {
 			// this.bem为一个computed变量，在mixin中
-			return this.bem('button', ['type', 'shape', 'size'], ['disabled', 'plain', 'hairline']);
+			//ste-button, ste-button--success u-button--square u-button--normal
+			//-disabled
+			//u-button--plain
+			const prefix = 'ste-button';
+			const classArr = [prefix, `${prefix}-${this.type}`, `${prefix}-${this.shape}`, `${prefix}-${this.size}`];
+			if (this.disabled) {
+				classArr.push(`${prefix}-disabled`);
+			}
+			if (this.hairline) {
+				classArr.push(`${prefix}-hairline`);
+			}
+			if (this.plain) {
+				classArr.push(`${prefix}-plain`);
+			}
+			return classArr;
 		},
 		textSize() {
 			let fontSize = 14,
@@ -77,6 +137,7 @@ export default {
 		},
 	},
 	methods: {
+		thro: utils.thro,
 		handleClick(e) {
 			if (!this.disabled) {
 				this.$emit('click', e);
@@ -103,7 +164,7 @@ export default {
 		border: none;
 	}
 
-	&__text {
+	&-text {
 		white-space: nowrap;
 		line-height: 1;
 	}
@@ -130,36 +191,36 @@ export default {
 		}
 	}
 
-	&--large {
+	&-large {
 		width: 100%;
 		height: 50px;
 		padding: 0 15px;
 	}
 
-	&--normal {
+	&-normal {
 		padding: 0 12px;
 		font-size: 14px;
 	}
 
-	&--small {
+	&-small {
 		min-width: 60px;
 		height: 30px;
 		padding: 0 8px;
 		font-size: 12px;
 	}
 
-	&--mini {
+	&-mini {
 		height: 22px;
 		font-size: 10px;
 		min-width: 50px;
 		padding: 0 8px;
 	}
 
-	&--disabled {
+	&-disabled {
 		opacity: 0.5;
 	}
 
-	&--info {
+	&-info {
 		color: #323233;
 		background-color: #fff;
 
@@ -168,82 +229,82 @@ export default {
 		border-style: solid;
 	}
 
-	&--success {
+	&-success {
 		color: #fff;
 		background-color: #5ac725;
 
 		border: 1px solid #5ac725;
 	}
 
-	&--primary {
+	&-primary {
 		color: #fff;
 		background-color: #3c9cff;
 
 		border: 1px solid #3c9cff;
 	}
 
-	&--error {
+	&-error {
 		color: #fff;
 		background-color: #f56c6c;
 
 		border: 1px solid #f56c6c;
 	}
 
-	&--warning {
+	&-warning {
 		color: #fff;
 		background-color: #f9ae3d;
 
 		border: 1px solid #f9ae3d;
 	}
 
-	&--square {
+	&-square {
 		border-bottom-left-radius: 3px;
 		border-bottom-right-radius: 3px;
 		border-top-left-radius: 3px;
 		border-top-right-radius: 3px;
 	}
 
-	&--circle {
+	&-circle {
 		border-top-right-radius: 100px;
 		border-top-left-radius: 100px;
 		border-bottom-left-radius: 100px;
 		border-bottom-right-radius: 100px;
 	}
 
-	&--plain {
+	&-plain {
 		background-color: #fff;
 	}
 
-	&--hairline {
+	&-hairline {
 		border-width: 0.5px !important;
 	}
 
-	&--plain {
-		&.ste-button--primary {
+	&-plain {
+		&.ste-button-primary {
 			color: #3c9cff;
 		}
 	}
 
-	&--plain {
-		&.ste-button--info {
+	&-plain {
+		&.ste-button-info {
 			color: #909399;
 		}
 	}
 
-	&--plain {
-		&.ste-button--success {
+	&-plain {
+		&.ste-button-success {
 			color: #5ac725;
 		}
 	}
 
-	&--plain {
-		&.ste-button--error {
+	&-plain {
+		&.ste-button-error {
 			color: #f56c6c;
 		}
 	}
 
-	&--plain {
-		&.ste-button--warning {
+	&-plain {
+		&.ste-button-warning {
 			color: #f9ae3d;
 		}
 	}

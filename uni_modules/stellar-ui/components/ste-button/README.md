@@ -1,5 +1,7 @@
 # Button 按钮
-- 这是一个基础按钮组件
+该组件内部实现以uni-app的```button```组件为基础，进行二次封装，主要区别在于：
+- 按钮```type```值有更多的主题颜色
+- 按钮```size```值有更多的尺寸可选
 
 ## 兼容性
 #### VUE支持 
@@ -19,7 +21,7 @@
 ```
 
 ## 设置按钮的多种形态
-- ```type```值可选有```info```(默认)、```primary```、```success```、```warning```、```error```
+- ```type```值可选有```info```(默认)、```success```、```error```、```primary```、、```warning```、
 - 通过```plain```值设置是否镂空
 - 通过```hairline```值设置是否细边
 - 通过```disabled```值设置是否禁用
@@ -61,7 +63,7 @@ export default {
 | 属性名		| 说明									|类型			|默认值		| 可选值										|说明			|
 | ------		| -----------							|	-----------	|-----------|-----------								|	---------	|
 | hairline		|是否显示按钮的细边框						|Boolean		|true		|false										|				|
-| type			|按钮的样式类型							|String			|info		|info / primary / error/ warning / success	|				|
+| type			|按钮的样式类型							|String			|info		|info / success / error/ primary / warning	|				|
 | size			|按钮的大小								|String			|normal		|large / normal / small / mini				|				|
 | shape			|按钮外观形状							|String			|square		|	circle									|				|
 | plain			|按钮是否镂空，背景色透明					|Boolean		|false		|true										|				|

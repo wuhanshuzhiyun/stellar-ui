@@ -1,5 +1,8 @@
 import config from './config.js';
 
+let throLast = 0; // 节流方法用变量
+let throTimer = null; // 节流方法用的变量
+
 let utils = {
 	/**px转rpx*/
 	px2rpx(px) {
