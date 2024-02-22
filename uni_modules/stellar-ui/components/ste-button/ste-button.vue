@@ -15,13 +15,21 @@
 <script>
 import utils from '@/common/utils';
 /**
- * 按钮组件
- * @description 按钮组件
- * @tutorial pc/index/index?name=ste-button
- * @event {(e:MouseEvent)=>void} click 点击事件
- * @example <ste-button>按钮</ste-button>
+ * button 按钮
+ * @description Button 按钮
+ * @tutorial /pc/index/index?name=ste-button
  *
- **/
+ * @property {Boolean}			hairline				是否显示按钮的细边框 (默认 true )
+ * @property {String}			type					按钮的预置样式，info，primary，error，warning，success (默认 'info' )
+ * @property {String}			size					按钮尺寸，large，normal，mini （默认 normal）
+ * @property {String}			shape					按钮形状，circle（两边为半圆），square（带圆角） （默认 'square' ）
+ * @property {Boolean}			plain					按钮是否镂空，背景色透明 （默认 false）
+ * @property {Boolean}			disabled				是否禁用 （默认 false）
+ * @property {String}			color					按钮颜色，支持传入linear-gradient渐变色
+ *
+ * @event {Function}	click			非禁止并且非加载中，才能点击
+ * @example <ste-button>按钮</ste-button>
+ */
 export default {
 	group: '基础组件',
 	title: 'Button 按钮',
@@ -29,7 +37,7 @@ export default {
 	props: {
 		// 是否细边框
 		hairline: {
-			type: Boolean,
+			type: [Boolean, String],
 			default: true,
 		},
 		// 按钮的预置样式，info，primary，error，warning，success
@@ -49,12 +57,12 @@ export default {
 		},
 		// 按钮是否镂空
 		plain: {
-			type: Boolean,
+			type: [Boolean, String],
 			default: false,
 		},
 		// 是否禁止状态
 		disabled: {
-			type: Boolean,
+			type: [Boolean, String],
 			default: false,
 		},
 		// 按钮颜色，支持传入linear-gradient渐变色

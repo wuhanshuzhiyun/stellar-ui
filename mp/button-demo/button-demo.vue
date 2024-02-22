@@ -157,12 +157,7 @@
 	</view>
 </template>
 <script>
-import steButton from '@/uni_modules/stellar-ui/components/ste-button/ste-button.vue';
-
 export default {
-	components: {
-		steButton,
-	},
 	data() {
 		return {};
 	},
