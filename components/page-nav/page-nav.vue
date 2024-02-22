@@ -7,14 +7,8 @@
 					class="back"
 					:style="{ backgroundColor: backBackgroundColor, borderColor: backBorderColor, opacity: opacity }"
 				>
-					<icon-font
-						v-if="isFirstPage"
-						code="&#xe665;"
-						weight="bold"
-						:size="28"
-						:color="backColor"
-					></icon-font>
-					<icon-font v-else code="&#xe688;" weight="bold" :size="28" :color="backColor"></icon-font>
+					<ste-icon v-if="isFirstPage" code="&#xe665;" weight="bold" :size="28" :color="backColor"></ste-icon>
+					<ste-icon v-else code="&#xe688;" weight="bold" :size="28" :color="backColor"></ste-icon>
 				</div>
 				<div class="back-click-hot" @click="navBack"></div>
 			</div>
