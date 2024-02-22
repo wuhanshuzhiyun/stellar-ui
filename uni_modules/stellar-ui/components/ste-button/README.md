@@ -1,5 +1,7 @@
 # Button 按钮
-- 这是一个基础按钮组件
+该组件内部实现以uni-app的```button```组件为基础，进行二次封装，主要区别在于：
+- 按钮```type```值有更多的主题颜色
+- 按钮```size```值有更多的尺寸可选
 
 ## 兼容性
 #### VUE支持 
@@ -19,41 +21,27 @@
 ```
 
 ## 设置按钮的多种形态
-- ```mode```值可选有```small```(默认)、```mini```、```middle```、```large```
-- ```type```值设置为```line```为线性，设置为```disabled```为禁用
-- 通过```backgroundColor```设置背景色或线性按钮线的颜色
-- 通过```color```设置文字颜色
+- ```type```值可选有```info```(默认)、```success```、```error```、```primary```、、```warning```、
+- 通过```plain```值设置是否镂空
+- 通过```hairline```值设置是否细边
+- 通过```disabled```值设置是否禁用
+- 通过```shape```值设置按钮形状，```circle```为圆角
+- 通过```color```值设置按钮渐变颜色
+- 通过```size```值设置按钮的大小
+
+
+
 ```
 
 <template>
 	<view style="padding: 20px;">
-		<ste-button mode="large">超大型按钮</ste-button>
-		<ste-button mode="middle">中型按钮</ste-button>
-		<ste-button mode="small">常规按钮</ste-button>
-		<ste-button mode="mini">小型按钮</ste-button>
-		
-		<ste-button mode="middle">默认按钮</ste-button>
-		<ste-button type="line" mode="middle">线性按钮</ste-button>
-		<ste-button type="disabled" mode="middle">禁止按钮</ste-button>
-		
-		<ste-button mode="small" backgroundColor="#FF1E19">领取</ste-button>
-		<ste-button type="line" mode="small" backgroundColor="#FF1E19">领取</ste-button>
-
-		<ste-button mode="small" color="#000000">已领完</ste-button>
-		<ste-button type="line" mode="small" color="#000000">已领完</ste-button>
-
-		<ste-button
-			mode="small"
-			backgroundColor="linear-gradient(to right, rgb(66, 83, 216), rgb(213, 51, 186))"
-		>
-			渐变
-		</ste-button>
-		
-		<ste-button mode="middle" :auto="true">自适应宽度</ste-button>
-		
-		<ste-button mode="middle" :auto="true">
-			文字超长-提交-按钮按钮按钮按钮按钮按钮按钮按钮按钮按钮按钮按钮
-		</ste-button>
+		<ste-button type="primary" >确定</ste-button>
+		<ste-button type="primary" :plain="true" >镂空</ste-button>
+		<ste-button type="primary" :plain="true" :hairline="true" >细边</ste-button>
+		<ste-button type="primary" :disabled="disabled" >禁用</ste-button>
+		<ste-button type="primary" shape="circle" >按钮形状</ste-button>
+		<ste-button  color="linear-gradient(to right, rgb(66, 83, 216), rgb(213, 51, 186))">渐变色按钮</ste-button>
+		<ste-button type="primary" size="small" >大小尺寸</ste-button>
 	</view>
 </template>
 
@@ -67,22 +55,23 @@ export default {
 };
 </script>
 
+
 ```
 
 ## API
 ### Props
-| 属性名			| 说明			|类型			|默认值		| 可选值					|说明															|
-| ------			| -----------	|	-----------	|-----------|-----------			|	---------													|
-| mode				|设置按钮的大小	|String			|middle		|mini / small / large	|																|
-| color				|文本颜色		|String			|```#fff```	|-						|																|
-| fontWeight		|文本字体字重	|String			|bold		|-						|																|
-| marginTop			|上边距			|Number			|0			|						|	给按钮内容添加margin-top，如果垂直无法对齐，使用负值进行对齐	|
-| disabled			|是否禁用按钮	|Boolean		|false		|true					|																|
-| auto				|是否自适应		|Boolean		|false		|true					|																|
-| backgroundColor	|背景颜色		|String			|#0090FF	|-						|																|
-| borderRadius		|圆角			|Number			|48			|-						|																|
+| 属性名		| 说明									|类型			|默认值		| 可选值										|说明			|
+| ------		| -----------							|	-----------	|-----------|-----------								|	---------	|
+| hairline		|是否显示按钮的细边框						|Boolean		|true		|false										|				|
+| type			|按钮的样式类型							|String			|info		|info / success / error/ primary / warning	|				|
+| size			|按钮的大小								|String			|normal		|large / normal / small / mini				|				|
+| shape			|按钮外观形状							|String			|square		|	circle									|				|
+| plain			|按钮是否镂空，背景色透明					|Boolean		|false		|true										|				|
+| disabled		|是否禁用								|Boolean		|false		|true										|				|
+| color			|按钮颜色，支持传入linear-gradient渐变色	|String			|-			|-											|				|
+| throttleTime	|节流，一定时间内只能触发一次，单位毫秒	|String			| Number	|0											|-				||
 
 ### Events
-| 属性名| 说明			|类型			|默认值		| 可选值		|说明			|
-| ------| -----------	|	-----------	|-----------|-----------|	---------	|
-| click	|按钮点击		|Handler		|-			|-			|				|
+| 属性名| 说明																|类型			|默认值		| 可选值		|说明			|
+| ------| -----------														|	-----------	|-----------|-----------|	---------	|
+| click	|按钮点击，请勿使用@tap点击事件，微信小程序无效，返回值为点击事件及参数	|Handler		|-			|-			|				|
