@@ -3,54 +3,90 @@
 		<page-nav :autoBack="true" backColor="#000" titleAlignment="2" title="搜索"></page-nav>
 		<view class="wrapper">
 			<view class="demo-block">
-				<view class="title">基础用法</view>
+				<view class="title">基础功能</view>
 				<view class="block-content">
-					<ste-search @search="onSearch" />
+					<ste-search v-model="value1" :show-action="false" @change="change"></ste-search>
 				</view>
 			</view>
 			<view class="demo-block">
-				<view class="title">双向绑定</view>
+				<view class="title">设置初始值</view>
 				<view class="block-content">
-					<ste-search v-model="keyword" @search="onSearch" />
+					<ste-search v-model="value2" :show-action="false"></ste-search>
 				</view>
 			</view>
 			<view class="demo-block">
-				<view class="title">隐藏清除图标</view>
+				<view class="title">搜索框形状</view>
 				<view class="block-content">
-					<ste-search :show-clear="0" @search="onSearch" />
+					<ste-search v-model="value3" :show-action="false" shape="round"></ste-search>
+					<ste-search v-model="value4" :show-action="false" shape="square" :margin="margin"></ste-search>
 				</view>
 			</view>
 			<view class="demo-block">
-				<view class="title">禁用</view>
+				<view class="title">右侧控件</view>
 				<view class="block-content">
-					<ste-search disabled />
+					<ste-search v-model="value5"></ste-search>
 				</view>
 			</view>
 			<view class="demo-block">
-				<view class="title">隐藏分割线</view>
+				<view class="title">禁用输入框</view>
 				<view class="block-content">
-					<ste-search :show-line="0" @search="onSearch" />
+					<ste-search
+						placeholder="输入框被禁用,可以监听点击事件进行跳转"
+						disabled
+						:show-action="false"
+					></ste-search>
 				</view>
 			</view>
 			<view class="demo-block">
-				<view class="title">隐藏按钮</view>
+				<view class="title">点击左侧图标</view>
 				<view class="block-content">
-					<ste-search :show-button="0" />
+					<ste-search v-model="value6" :show-action="false" @clickIcon="clickIcon"></ste-search>
 				</view>
 			</view>
 			<view class="demo-block">
-				<view class="title">自定义按钮文字</view>
+				<view class="title">搜索框内容水平对齐</view>
 				<view class="block-content">
-					<ste-search button-text="查询" @search="onSearch" />
+					<ste-search v-model="value7" :show-action="false" input-align="left"></ste-search>
+					<ste-search
+						v-model="value8"
+						:show-action="false"
+						input-align="center"
+						:margin="margin"
+					></ste-search>
+					<ste-search v-model="value9" :show-action="false" input-align="right" :margin="margin"></ste-search>
 				</view>
 			</view>
 			<view class="demo-block">
-				<view class="title">自定义占位符</view>
+				<view class="title">自定义</view>
 				<view class="block-content">
-					<ste-search placeholder="自定义占位符" @search="onSearch" />
+					<ste-search
+						v-model="value10"
+						:show-action="false"
+						borderColor="rgb(230, 230, 230)"
+						bgColor="#fff"
+					></ste-search>
+					<ste-search
+						v-model="value11"
+						:show-action="false"
+						search-icon-color="#FF0000"
+						:margin="margin"
+					></ste-search>
+
+					<ste-search
+						v-model="value12"
+						:show-action="false"
+						placeholder-color="#FF0000"
+						:margin="margin"
+					></ste-search>
+
+					<ste-search v-model="value13" :show-action="false" color="#FF0000" :margin="margin"></ste-search>
+
+					<ste-search v-model="value14" label="手机" :show-action="false" :margin="margin"></ste-search>
+					<ste-search v-model="value15" search-icon="scan" :show-action="false" :margin="margin"></ste-search>
 				</view>
 			</view>
-			<view class="demo-block">
+
+			<!-- view class="demo-block">
 				<view class="title">热词列表</view>
 				<view class="block-content">
 					<ste-search :hot-words="hotWords" @search="onSearch" />
@@ -61,7 +97,7 @@
 				<view class="block-content">
 					<ste-search :style-type="2" @nav-address="onNavAddress" />
 				</view>
-			</view>
+			</view> -->
 		</view>
 	</view>
 </template>
@@ -71,6 +107,24 @@ export default {
 		return {
 			keyword: '一夜暴富',
 			hotWords: ['中百集团', '数智云科技', '一夜暴富'],
+
+			value1: '',
+			value2: '天山雪莲',
+			value3: '',
+			value4: '',
+			value5: '',
+			value6: '',
+			value7: '',
+			value8: '',
+			value9: '',
+			value10: '',
+			value11: '',
+			value12: '',
+			value13: '',
+			value14: '',
+			value15: '',
+
+			margin: '10px 0 0 0',
 		};
 	},
 	onLoad() {},
@@ -87,6 +141,12 @@ export default {
 				title: '触发导航',
 			});
 		},
+		change(e) {
+			console.log(e);
+		},
+		clickIcon() {
+			uni.$u.toast('点击了左侧图标');
+		},
 	},
 };
 </script>
@@ -94,25 +154,11 @@ export default {
 <style lang="scss" scoped>
 .page {
 	.wrapper {
-		padding: 16rpx;
-
 		.demo-block {
-			margin-bottom: 16rpx;
-
-			.title {
-				font-size: 30rpx;
-				color: #8f9ca2;
-				margin-bottom: 8rpx;
-			}
-
 			.block-content {
-				display: flex;
-				flex-direction: row;
-				flex-wrap: wrap;
-				align-items: center;
-
-				> * {
-					margin: 0 16rpx 16rpx 0;
+				display: block;
+				> .ste-search {
+					margin: 0 8px 8px 0;
 				}
 			}
 		}

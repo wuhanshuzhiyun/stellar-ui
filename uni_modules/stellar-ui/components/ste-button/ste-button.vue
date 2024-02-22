@@ -6,7 +6,7 @@
 		:open-type="openType"
 		@tap="thro(handleClick, { delay: throttleTime })"
 	>
-		<view class="u-button-text" :style="[{ fontSize: textSize + 'px' }]">
+		<view class="ste-button-text" :style="[{ fontSize: textSize + 'px' }]">
 			<slot></slot>
 		</view>
 	</button>
@@ -88,10 +88,6 @@ export default {
 	created() {},
 	computed: {
 		btnClass() {
-			// this.bem为一个computed变量，在mixin中
-			//ste-button, ste-button--success u-button--square u-button--normal
-			//-disabled
-			//u-button--plain
 			const prefix = 'ste-button';
 			const classArr = [prefix, `${prefix}-${this.type}`, `${prefix}-${this.shape}`, `${prefix}-${this.size}`];
 			if (this.disabled) {
@@ -156,6 +152,11 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+$ste-success-color: #5ac725;
+$ste-error-color: #f56c6c;
+$ste-primary-color: #3c9cff;
+$ste-warning-color: #f9ae3d;
+
 .ste-button {
 	height: 40px;
 	position: relative;
@@ -239,30 +240,30 @@ export default {
 
 	&-success {
 		color: #fff;
-		background-color: #5ac725;
+		background-color: $ste-success-color;
 
-		border: 1px solid #5ac725;
+		border: 1px solid $ste-success-color;
 	}
 
 	&-primary {
 		color: #fff;
-		background-color: #3c9cff;
+		background-color: $ste-primary-color;
 
-		border: 1px solid #3c9cff;
+		border: 1px solid $ste-primary-color;
 	}
 
 	&-error {
 		color: #fff;
-		background-color: #f56c6c;
+		background-color: $ste-error-color;
 
-		border: 1px solid #f56c6c;
+		border: 1px solid $ste-error-color;
 	}
 
 	&-warning {
 		color: #fff;
-		background-color: #f9ae3d;
+		background-color: $ste-warning-color;
 
-		border: 1px solid #f9ae3d;
+		border: 1px solid $ste-warning-color;
 	}
 
 	&-square {
@@ -289,7 +290,7 @@ export default {
 
 	&-plain {
 		&.ste-button-primary {
-			color: #3c9cff;
+			color: $ste-primary-color;
 		}
 	}
 
@@ -301,19 +302,19 @@ export default {
 
 	&-plain {
 		&.ste-button-success {
-			color: #5ac725;
+			color: $ste-success-color;
 		}
 	}
 
 	&-plain {
 		&.ste-button-error {
-			color: #f56c6c;
+			color: $ste-error-color;
 		}
 	}
 
 	&-plain {
 		&.ste-button-warning {
-			color: #f9ae3d;
+			color: $ste-warning-color;
 		}
 	}
 }

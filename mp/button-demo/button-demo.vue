@@ -100,7 +100,7 @@
 				<view class="block-content">
 					<view>
 						<ste-button type="warning" :plain="true" shape="circle" @click="handleClick('按钮图标')">
-							<ste-icon code="&#xe670;" color="rgb(66, 83, 216)" />
+							<ste-icon code="&#xe63b;" color="#f9ae3d" />
 							<text style="margin-left: 8px">按钮图标</text>
 						</ste-button>
 					</view>
@@ -177,27 +177,10 @@ export default {
 <style lang="scss" scoped>
 .page {
 	.wrapper {
-		padding: 16rpx;
-		height: calc(100vh - 50px);
-		overflow-y: auto;
-
 		.demo-block {
-			margin-bottom: 16rpx;
-
-			.title {
-				font-size: 30rpx;
-				color: #8f9ca2;
-				margin-bottom: 8rpx;
-			}
-
 			.block-content {
-				display: flex;
-				flex-direction: row;
-				flex-wrap: wrap;
-				align-items: center;
-
 				> view {
-					margin: 0 16rpx 16rpx 0;
+					margin: 0 8px 8px 0;
 				}
 			}
 		}
