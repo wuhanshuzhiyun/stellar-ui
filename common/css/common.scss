@@ -27,3 +27,40 @@ body {
 	background-color: #ccc;
 	border-radius: 5px;
 }
+
+/*
+  demo页通用样式 
+*/
+
+.page {
+	::-webkit-scrollbar {
+		display: none;
+		width: 0 !important;
+		height: 0 !important;
+		-webkit-appearance: none;
+		background: transparent;
+		color: transparent;
+	}
+	.wrapper {
+		padding: 8px;
+		height: calc(100vh - 50px);
+		overflow-y: auto;
+
+		.demo-block {
+			margin-bottom: 16px;
+
+			.title {
+				font-size: 14px;
+				color: #8f9ca2;
+				margin-bottom: 8px;
+			}
+
+			.block-content {
+				display: flex;
+				flex-direction: row;
+				flex-wrap: wrap;
+				align-items: center;
+			}
+		}
+	}
+}
