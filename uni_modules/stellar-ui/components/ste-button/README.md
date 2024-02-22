@@ -19,7 +19,7 @@
 ```
 
 ## 设置按钮的多种形态
-- ```type```值可选有```default```(默认)、```primary```、```success```、```info```、```warning```、```error```
+- ```type```值可选有```info```(默认)、```primary```、```success```、```warning```、```error```
 - 通过```plain```值设置是否镂空
 - 通过```hairline```值设置是否细边
 - 通过```disabled```值设置是否禁用
@@ -62,7 +62,7 @@ export default {
 | ------		| -----------							|	-----------	|-----------|-----------								|	---------	|
 | hairline		|是否显示按钮的细边框						|Boolean		|true		|false										|				|
 | type			|按钮的样式类型							|String			|info		|info / primary / error/ warning / success	|				|
-| size			|按钮的大小								|String			|normal		|info，primary，error，warning，success		|				|
+| size			|按钮的大小								|String			|normal		|large / normal / small / mini				|				|
 | shape			|按钮外观形状							|String			|square		|	circle									|				|
 | plain			|按钮是否镂空，背景色透明					|Boolean		|false		|true										|				|
 | disabled		|是否禁用								|Boolean		|false		|true										|				|

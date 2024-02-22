@@ -40,6 +40,11 @@ export default {
 		openType: {
 			type: String,
 			default: ''
-		}
+		},
+		// 节流，一定时间内只能触发一次
+		throttleTime: {
+			type: [String, Number],
+			default: 0
+		},
 	}
 }
