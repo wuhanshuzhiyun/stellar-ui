@@ -168,7 +168,7 @@ export default {
 	.pc-content {
 		width: 100%;
 		padding-left: var(--pc-nav-width);
-		padding-right: calc(var(--pc-view-width) + var(--pc-padding));
+		padding-right: calc(var(--pc-view-width) + var(--pc-padding) + 20px);
 		overflow: auto;
 
 		.markdown-view {

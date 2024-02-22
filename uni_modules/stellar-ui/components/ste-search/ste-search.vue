@@ -44,16 +44,21 @@
 
 <script>
 /**
- * styleType 组件类型,1-正常搜索,2-点击任意区域触发事件
- * value 默认值，支持双向绑定
- * placeholder 占位符
- * hotWords 热词列表
- * interval 自动切换时间间隔，单位ms，默认3000ms
- * disabled 是否禁用
- * showLine 是否显示分割线 0-不显示 1-显示
- * showButton 是否显示按钮 0-不显示 1-显示
- * buttonText 按钮文字
- * showClear 是否显示清除图标 0-不显示 1-显示
+ * search 搜索框
+ * @description 搜索框组件
+ * @property {Number} styleType 组件类型,1-正常搜索,2-点击任意区域触发事件
+ * @property {String} value 默认值，支持双向绑定
+ * @property {String} placeholder 占位符
+ * @property {String[]} hotWords 热词列表
+ * @property {Number} interval 自动切换时间间隔，单位ms，默认3000ms
+ * @property {Boolean} disabled 是否禁用
+ * @property {Number} showLine 是否显示分割线 0-不显示 1-显示
+ * @property {Number} showButton 是否显示按钮 0-不显示 1-显示
+ * @property {String} buttonText 按钮文字
+ * @property {Number} showClear 是否显示清除图标 0-不显示 1-显示
+ * @event {(v:String)=>void} search
+ * @event {(v:String)=>void} input
+ * @event {()=>void} navAddress
  */
 export default {
 	group: '表单组件',

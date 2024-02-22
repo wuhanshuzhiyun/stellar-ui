@@ -65,22 +65,22 @@ export default {
 ```
 ## API
 ### Props
-|属性名| 说明	|类型		|默认值	| 可选值	|其他说明		|
-|--| --	|	--	|--	|--	|--		|
-|typeStyle| 组件类型,1-正常搜索,2-导航	|	Number	|1	| 1/2	|	当typeStyle值为2时，点击任意区域触发导航事件	|
-|value| 默认值（支持v-model双向绑定）	|	String	| ''	|	|		|
-|placeholder| 占位提示符	|	String	| '搜索商品'	|	|		|
-|hotWords| 热词列表	|	string[]	| []	|	|		|
-|interval| 热词列表自动切换时间间隔	|	Number	| 3000	|	|		|
-|disabled| 禁用	|	Boolean	| false	| false / true	|		|
-|showLine| 是否显示分割线 0-不显示 1-显示	|	Number	| 1	| 0/1	|		|
-|showButton| 是否显示按钮 0-不显示 1-显示	|	Number	| 1	| 0/1	|		|
-|buttonText| 按钮文字	|	String	| '搜索'	|	|		|
-|showClear| 是否显示清除图标 0-不显示 1-显示	|	Number	| 1	| 0/1	|		|
+|属性名			| 说明														|类型			|默认值			| 可选值			|其他说明																							|
+|--					| --														|	--			|--					|--					|--																										|
+|typeStyle	| 组件类型,1-正常搜索,2-导航				|	Number	|1					| 1/2				|	当`typeStyle`值为2时，点击任意区域触发`navAddress`事件	|
+|value			| 默认值（支持v-model双向绑定）		|	String	| ''				|						|																											|
+|placeholder| 占位提示符											|	String	| '搜索商品'	|						|																											|
+|hotWords		| 热词列表												|	string[]| []				|						|																											|
+|interval		| 热词列表自动切换时间间隔					|	Number	| 3000			|						|																											|
+|disabled		| 禁用														|	Boolean	| false			| false/true|																											|
+|showLine		| 是否显示分割线 0-不显示 1-显示		|	Number	| 1					| 0/1				|																											|
+|showButton	| 是否显示按钮 0-不显示 1-显示			|	Number	| 1					| 0/1				|																											|
+|buttonText	| 按钮文字												|	String	| '搜索'			|						|																											|
+|showClear	| 是否显示清除图标 0-不显示 1-显示	|	Number	| 1					| 0/1				|																											|
 
-
-|属性名| 说明	|事件参数类型		|参数说明	|
-|-----| ---	|	--------	|-------	|
-|input|输入触发事件	|string		|输入框的文本	|
-|search|点击搜索按钮触发事件	|string		|输入框的文本	|
-|navAddress|导航事件`当typeStyle值为2时，点击任意区域触发`	|		|	|
+### Events
+|属性名			| 说明								|事件参数类型	|参数说明		|
+|-----			| ---								|	--------	|-------		|
+|input			|输入触发事件					|string			|输入框的文本	|
+|search			|点击搜索按钮触发事件	|string			|输入框的文本	|
+|navAddress	|导航事件						|						|						|
