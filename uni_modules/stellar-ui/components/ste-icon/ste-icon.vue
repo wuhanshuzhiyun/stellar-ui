@@ -6,7 +6,7 @@
 </template>
 
 <script>
-import { rpx2px } from '../../utils/format.js';
+import utils from '../../utils/utils.js';
 export default {
 	group: '基础组件',
 	title: 'Icon 图标',
@@ -79,7 +79,9 @@ export default {
 	data() {
 		return {};
 	},
-	methods: {},
+	methods: {
+		rpx2px: utils.rpx2px,
+	},
 	computed: {
 		computedCode() {
 			// unicode编码转字符
@@ -88,14 +90,14 @@ export default {
 		computedCssVar() {
 			return {
 				'--color': this.color,
-				'--size': rpx2px(this.size),
+				'--size': this.rpx2px(this.size),
 				'--weight': this.weight,
-				'--margin-left': rpx2px(this.marginLeft),
-				'--margin-right': rpx2px(this.marginRight),
-				'--margin-top': rpx2px(this.marginTop),
-				'--margin-bottom': rpx2px(this.marginBottom),
+				'--margin-left': this.rpx2px(this.marginLeft),
+				'--margin-right': this.rpx2px(this.marginRight),
+				'--margin-top': this.rpx2px(this.marginTop),
+				'--margin-bottom': this.rpx2px(this.marginBottom),
 				'--text-color': this.textColor,
-				'--text-size': rpx2px(this.textSize),
+				'--text-size': this.rpx2px(this.textSize),
 				'--text-weight': this.textWeight,
 			};
 		},

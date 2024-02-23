@@ -2,6 +2,11 @@ let throLast = 0; // 节流方法用变量
 let throTimer = null; // 节流方法用的变量
 
 let utils = {
+	rpx2px(rpx) {
+		let windowWidth = uni.getSystemInfoSync().windowWidth;
+		let px = (parseInt(rpx) * windowWidth) / 750;
+		return `${px}px`;
+	},
 	/**节流
 	 *@fn 要节流的方法
 	 *@args 要节流方法的参数，如果最后一个参数是 {delay:2000}，则该参数为节流时间参数，不记入方法参数
