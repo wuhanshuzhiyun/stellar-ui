@@ -4,7 +4,7 @@
 		:hover-class="!disabled ? 'ste-button--active' : ''"
 		:style="[baseColor]"
 		:open-type="openType"
-		@tap="thro(handleClick, { delay: throttleTime })"
+		@click="thro(handleClick, { delay: throttleTime })"
 	>
 		<view class="ste-button-text" :style="[{ fontSize: textSize + 'px' }]">
 			<slot></slot>
@@ -13,7 +13,6 @@
 </template>
 
 <script>
-import utils from '../../utils/utils.js';
 /**
  * button 按钮
  * @description Button 按钮
@@ -37,6 +36,7 @@ import utils from '../../utils/utils.js';
  * @event {Function}	click			非禁止并且非加载中，才能点击
  * @example <ste-button>按钮</ste-button>
  */
+import utils from '../../utils/utils.js';
 export default {
 	group: '基础组件',
 	title: 'Button 按钮',
