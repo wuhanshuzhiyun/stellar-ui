@@ -3,7 +3,7 @@
 		:class="btnClass"
 		:hover-class="!disabled ? 'ste-button--active' : ''"
 		:style="[baseColor]"
-		@tap="clickHandler"
+		@click="clickHandler"
 	>
 		<view class="ste-button-text" :style="[{ fontSize: textSize + 'px' }]">
 			<slot></slot>
@@ -32,9 +32,7 @@ import utils from '../../utils/utils.js';
  * @property {Boolean}			plain					按钮是否镂空，背景色透明 （默认 false）
  * @property {Boolean}			disabled				是否禁用 （默认 false）
  * @property {String}			color					按钮颜色，支持传入linear-gradient渐变色
- *
- * @event {Function}	click			非禁止并且非加载中，才能点击
- * @example <ste-button>按钮</ste-button>
+ * @event {Function}			click			非禁止并且非加载中，才能点击
  */
 export default {
 	group: '基础组件',
@@ -136,10 +134,9 @@ export default {
 		},
 	},
 	methods: {
-		clickHandler(e) {
-			console.log('点击了按钮');
+		clickHandler() {
 			if (!this.disabled) {
-				this.$emit('click', e);
+				this.$emit('click');
 			}
 		},
 	},

@@ -74,20 +74,20 @@
 
 ### API
 #### Props
-| 属性名	| 说明									|类型			|默认值		| 可选值										|
-| ------	| -----------							|	-----------	|-----------|-----------								|
-| hairline	|是否显示按钮的细边框						|Boolean		|true		|true / false								|
-| type		|按钮的样式类型							|String			|info		|info / success / error/ primary / warning	|
-| size		|按钮的大小								|String			|normal		|large / normal / small / mini				|
-| shape		|按钮外观形状							|String			|square		|circle / square							||
-| plain		|按钮是否镂空，背景色透明					|Boolean		|false		|true / false								|
-| disabled	|是否禁用								|Boolean		|false		|true / false								|
-| color		|按钮颜色，支持传入linear-gradient渐变色	|String			|-			|-											|
+| 属性名		|说明									|类型		|默认值		|可选值										|
+| -----------	|-----------							|-----------|-----------|-----------								|
+| hairline		|是否显示按钮的细边框						|Boolean	|true		|true / false								|
+| type			|按钮的样式类型							|String		|info		|info / success / error/ primary / warning	|
+| size			|按钮的大小								|String		|normal		|large / normal / small / mini				|
+| shape			|按钮外观形状								|String		|square		|circle / square							|
+| plain			|按钮是否镂空，背景色透明					|Boolean	|false		|true / false								|
+| disabled		|是否禁用								|Boolean	|false		|true / false								|
+| color			|按钮颜色，支持传入linear-gradient渐变色	|String		|-			|-											|
 
 #### Events
-| 属性名| 说明																|类型			|默认值		| 可选值		|
-| ------| -----------														|	-----------	|-----------|-----------|
-| click	|按钮点击，请勿使用@tap点击事件，微信小程序无效，返回值为点击事件及参数	|Handler		|-			|-			|
+| 属性名| 说明			|类型			|默认值		| 可选值		|
+| ------| -----------	|	-----------	|-----------|-----------|
+| click	|按钮点击回调事件	|Handler		|-			|-			|
 
 #### Solts
 | 名称		| 说明			|

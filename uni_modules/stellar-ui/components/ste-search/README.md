@@ -86,7 +86,7 @@
 #### Props
 | 参数			| 说明										| 类型		| 默认值			| 可选值	|
 |---			|---										|---		|---			|---	|
-| v-model		| 双向绑定输入框搜索值						| String	| -				| -		|
+| v-model		| 双向绑定输入框搜索值							| String	| -				| -		|
 | shape			| 搜索框形状，round-圆形，square-方形			| String	| round			| square|
 | bgColor		| 搜索框背景颜色								| String	| #f2f2f2		| -		|
 | placeholder	| 占位文字内容								| String	| 请输入关键字	| -		|
@@ -94,19 +94,19 @@
 | showAction	| 是否显示右侧控件(右侧的"搜索"按钮)			| Boolean	| true			| false	|
 | actionText	| 右侧控件文字								| String	| 搜索			| -		|
 | disabled		| 是否启用输入框								| Boolean	| false			| true	|
-| borderColor	| 边框颜色，配置了颜色，才会有边框			| String	| transparent	| -		|
+| borderColor	| 边框颜色，配置了颜色，才会有边框				| String	| transparent	| -		|
 | searchIcon	| 输入框左侧的图标，为ste-icon图标名称的code	| String	|`&#xe66d;`		| -		|
 
 
 #### Events
 您可以通过监听`change`事件，在回调中将返回的结果绑定一个变量去获得用户的输入内容。
 但如"基本使用"中的说明一样，您双向绑定了一个变量后，无需监听`change`事件也是可以的。
-| 事件名		| 说明																| 回调参数					| 版本	|
-|-------------	|------------------------------------------							|--------------------------	|-------|
+| 事件名		| 说明															| 回调参数					| 版本	|
+|-------------	|------------------------------------------						|--------------------------	|-------|
 | change		| 输入框内容发生变化时触发											| value: 输入框的值			| -		|
 | search		| 用户确定搜索时触发，用户按回车键，或者手机键盘右下角的"搜索"键时触发	| value: 输入框的值			| -		|
-| custom		| 用户点击右侧控件时触发												| value: 输入框的值			| -		|
-| clear			| 配置了clearabled后，清空内容时会发出此事件							| -							| -		|
-| click			| disabled为true时，点击输入框，发出此事件，用于跳转搜索页				| -							| -		|
+| custom		| 用户点击右侧控件时触发											| value: 输入框的值			| -		|
+| clear			| 配置了clearabled后，清空内容时会发出此事件						| -							| -		|
+| click			| disabled为true时，点击输入框，发出此事件，用于跳转搜索页			| -							| -		|
 
 
