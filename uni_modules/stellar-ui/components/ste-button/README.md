@@ -14,64 +14,82 @@
 |x	|×		|√			|×				|×			|×			|×			|
 
 
-### 基本使用
+### 代码演示
+#### 按钮类型
 
-```
-<ste-button>按钮</ste-button>
-```
-
-### 设置按钮的多种形态
-- ```type```值可选有```info```(默认)、```success```、```error```、```primary```、、```warning```、
-- 通过```plain```值设置是否镂空
-- 通过```hairline```值设置是否细边
-- 通过```disabled```值设置是否禁用
-- 通过```shape```值设置按钮形状，```circle```为圆角
-- 通过```color```值设置按钮渐变颜色
-- 通过```size```值设置按钮的大小
-
-
-
+```html
+<ste-button >默认按钮</ste-button>
+<ste-button type="success" >成功按钮</ste-button>
+<ste-button type="error" >危险按钮</ste-button>
+<ste-button type="primary" >主要按钮</ste-button>
+<ste-button type="warning" >警告按钮</ste-button>
 ```
 
-<template>
-	<view style="padding: 20px;">
-		<ste-button type="primary" >确定</ste-button>
-		<ste-button type="primary" :plain="true" >镂空</ste-button>
-		<ste-button type="primary" :plain="true" :hairline="true" >细边</ste-button>
-		<ste-button type="primary" :disabled="disabled" >禁用</ste-button>
-		<ste-button type="primary" shape="circle" >按钮形状</ste-button>
-		<ste-button  color="linear-gradient(to right, rgb(66, 83, 216), rgb(213, 51, 186))">渐变色按钮</ste-button>
-		<ste-button type="primary" size="small" >大小尺寸</ste-button>
-	</view>
-</template>
+#### 镂空按钮
 
-<script>
-export default {
-	data() {
-		return {
-			disabled: true
-		};
-	}
-};
-</script>
+```html
+<ste-button plain>镂空按钮</ste-button>
+<ste-button plain type="success" >成功按钮</ste-button>
+<ste-button plain type="error" >危险按钮</ste-button>
+<ste-button plain type="primary" >主要按钮</ste-button>
+<ste-button plain type="warning" >警告按钮</ste-button>
+```
 
+#### 禁用按钮
 
+```html
+<ste-button disabled>禁用按钮</ste-button>
+<ste-button disabled type="success" >成功按钮</ste-button>
+<ste-button disabled type="error" >危险按钮</ste-button>
+<ste-button disabled type="primary" >主要按钮</ste-button>
+<ste-button disabled type="warning" >警告按钮</ste-button>
+```
+
+#### 按钮形状 & 按钮图标
+
+```html
+<ste-button type="warning" plain shape="circle">
+	<ste-icon code="&#xe63b;" color="#f9ae3d" />
+	<text style="margin-left: 8px">按钮图标</text>
+</ste-button>
+
+<ste-button type="success" plain shape="circle" >按钮形状</ste-button>
+```
+
+#### 自定义颜色
+```html
+<ste-button color="linear-gradient(to right, rgb(66, 83, 216), rgb(213, 51, 186))">渐变色按钮</ste-button>
+<ste-button color="linear-gradient(to right, rgb(220, 194, 11), rgb(4, 151, 99))">渐变色按钮</ste-button>
+<ste-button color="rgb(10, 185, 156)"">青绿色按钮</ste-button>
+```
+
+#### 自定义大小
+
+```html
+<ste-button size="large" type="success" >超大尺寸</ste-button>
+<ste-button size="large" type="error" >普通尺寸</ste-button>
+<ste-button size="large" type="primary" >小型尺寸</ste-button>
+<ste-button size="large" type="warning" >超小尺寸</ste-button>
 ```
 
 ### API
 #### Props
-| 属性名		| 说明									|类型			|默认值		| 可选值										|说明			|
-| ------		| -----------							|	-----------	|-----------|-----------								|	---------	|
-| hairline		|是否显示按钮的细边框						|Boolean		|true		|false										|				|
-| type			|按钮的样式类型							|String			|info		|info / success / error/ primary / warning	|				|
-| size			|按钮的大小								|String			|normal		|large / normal / small / mini				|				|
-| shape			|按钮外观形状							|String			|square		|	circle									|				|
-| plain			|按钮是否镂空，背景色透明					|Boolean		|false		|true										|				|
-| disabled		|是否禁用								|Boolean		|false		|true										|				|
-| color			|按钮颜色，支持传入linear-gradient渐变色	|String			|-			|-											|				|
-| throttleTime	|节流，一定时间内只能触发一次，单位毫秒	|String			| Number	|0											|-				||
+| 属性名	| 说明									|类型			|默认值		| 可选值										|
+| ------	| -----------							|	-----------	|-----------|-----------								|
+| hairline	|是否显示按钮的细边框						|Boolean		|true		|true / false								|
+| type		|按钮的样式类型							|String			|info		|info / success / error/ primary / warning	|
+| size		|按钮的大小								|String			|normal		|large / normal / small / mini				|
+| shape		|按钮外观形状							|String			|square		|circle / square							||
+| plain		|按钮是否镂空，背景色透明					|Boolean		|false		|true / false								|
+| disabled	|是否禁用								|Boolean		|false		|true / false								|
+| color		|按钮颜色，支持传入linear-gradient渐变色	|String			|-			|-											|
 
 #### Events
-| 属性名| 说明																|类型			|默认值		| 可选值		|说明			|
-| ------| -----------														|	-----------	|-----------|-----------|	---------	|
-| click	|按钮点击，请勿使用@tap点击事件，微信小程序无效，返回值为点击事件及参数	|Handler		|-			|-			|				|
+| 属性名| 说明																|类型			|默认值		| 可选值		|
+| ------| -----------														|	-----------	|-----------|-----------|
+| click	|按钮点击，请勿使用@tap点击事件，微信小程序无效，返回值为点击事件及参数	|Handler		|-			|-			|
+
+#### Solts
+| 名称		| 说明			|
+| ------	| -----------	|
+| default	|按钮内容		|
