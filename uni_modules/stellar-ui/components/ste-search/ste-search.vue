@@ -76,7 +76,7 @@
 
 <script>
 /**
- * search 搜索框
+ * ste-search 搜索框
  * @description 搜索组件，集成了常见搜索框所需功能，用户可以一键引入，开箱即用。
  * @tutorial http://172.16.114.51:5050/pc/index/index?name=ste-search
  * @property {String}			shape				搜索框形状（默认 'round' ）
