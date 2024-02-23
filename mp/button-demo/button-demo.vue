@@ -9,7 +9,7 @@
 						<ste-button @click="handleClick('默认按钮')">默认按钮</ste-button>
 					</view>
 					<view>
-						<ste-button :type="'success'" @click="handleClick('成功按钮')">成功按钮</ste-button>
+						<ste-button type="success" @click="handleClick('成功按钮')">成功按钮</ste-button>
 					</view>
 
 					<view>
@@ -29,49 +29,19 @@
 				<view class="title">镂空按钮</view>
 				<view class="block-content">
 					<view>
-						<ste-button :plain="true" @click="handleClick('镂空按钮')">镂空按钮</ste-button>
+						<ste-button plain @click="handleClick('镂空按钮')">镂空按钮</ste-button>
 					</view>
 					<view>
-						<ste-button :type="'success'" :plain="true" @click="handleClick('镂空按钮')">
-							镂空按钮
-						</ste-button>
+						<ste-button type="success" plain @click="handleClick('镂空按钮')">镂空按钮</ste-button>
 					</view>
 					<view>
-						<ste-button type="error" :plain="true" @click="handleClick('镂空按钮')">镂空按钮</ste-button>
+						<ste-button type="error" plain @click="handleClick('镂空按钮')">镂空按钮</ste-button>
 					</view>
 					<view>
-						<ste-button type="primary" :plain="true" @click="handleClick('镂空按钮')">镂空按钮</ste-button>
+						<ste-button type="primary" plain @click="handleClick('镂空按钮')">镂空按钮</ste-button>
 					</view>
 					<view>
-						<ste-button type="warning" :plain="true" @click="handleClick('镂空按钮')">镂空按钮</ste-button>
-					</view>
-				</view>
-			</view>
-			<view class="demo-block">
-				<view class="title">细边按钮</view>
-				<view class="block-content">
-					<view>
-						<ste-button :plain="true" @click="handleClick('细边按钮')">细边按钮</ste-button>
-					</view>
-					<view>
-						<ste-button :type="'success'" :plain="true" :hairline="true" @click="handleClick('细边按钮')">
-							细边按钮
-						</ste-button>
-					</view>
-					<view>
-						<ste-button type="error" :plain="true" :hairline="true" @click="handleClick('细边按钮')">
-							细边按钮
-						</ste-button>
-					</view>
-					<view>
-						<ste-button type="primary" :plain="true" :hairline="true" @click="handleClick('细边按钮')">
-							细边按钮
-						</ste-button>
-					</view>
-					<view>
-						<ste-button type="warning" :plain="true" :hairline="true" @click="handleClick('细边按钮')">
-							细边按钮
-						</ste-button>
+						<ste-button type="warning" plain @click="handleClick('镂空按钮')">镂空按钮</ste-button>
 					</view>
 				</view>
 			</view>
@@ -79,19 +49,19 @@
 				<view class="title">禁用按钮</view>
 				<view class="block-content">
 					<view>
-						<ste-button :plain="true" disabled="true">禁用按钮</ste-button>
+						<ste-button plain disabled>禁用按钮</ste-button>
 					</view>
 					<view>
-						<ste-button :type="'success'" disabled="true">禁用按钮</ste-button>
+						<ste-button type="success" disabled>禁用按钮</ste-button>
 					</view>
 					<view>
-						<ste-button type="error" disabled="true">禁用按钮</ste-button>
+						<ste-button type="error" disabled>禁用按钮</ste-button>
 					</view>
 					<view>
-						<ste-button type="primary" disabled="true">禁用按钮</ste-button>
+						<ste-button type="primary" disabled>禁用按钮</ste-button>
 					</view>
 					<view>
-						<ste-button type="warning" disabled="true">禁用按钮</ste-button>
+						<ste-button type="warning" disabled>禁用按钮</ste-button>
 					</view>
 				</view>
 			</view>
@@ -99,13 +69,13 @@
 				<view class="title">按钮形状 & 按钮图标</view>
 				<view class="block-content">
 					<view>
-						<ste-button type="warning" :plain="true" shape="circle" @click="handleClick('按钮图标')">
+						<ste-button type="warning" plain shape="circle" @click="handleClick('按钮图标')">
 							<ste-icon code="&#xe63b;" color="#f9ae3d" />
 							<text style="margin-left: 8px">按钮图标</text>
 						</ste-button>
 					</view>
 					<view>
-						<ste-button type="success" :plain="true" shape="circle" @click="handleClick('按钮形状')">
+						<ste-button type="success" plain shape="circle" @click="handleClick('按钮形状')">
 							按钮形状
 						</ste-button>
 					</view>
@@ -164,6 +134,7 @@ export default {
 	onLoad() {},
 	methods: {
 		handleClick(v) {
+			console.log('demo 点击按钮');
 			uni.showToast({
 				title: '点击按钮' + ' ' + v,
 				icon: 'none',

@@ -3,8 +3,7 @@
 		:class="btnClass"
 		:hover-class="!disabled ? 'ste-button--active' : ''"
 		:style="[baseColor]"
-		:open-type="openType"
-		@click="thro(handleClick, { delay: throttleTime })"
+		@tap="clickHandler"
 	>
 		<view class="ste-button-text" :style="[{ fontSize: textSize + 'px' }]">
 			<slot></slot>
@@ -77,17 +76,6 @@ export default {
 			type: String,
 			default: '',
 		},
-		// 开放能力，具体请看uniapp稳定关于button组件部分说明
-		// https://uniapp.dcloud.io/component/button
-		openType: {
-			type: String,
-			default: '',
-		},
-		// 节流，一定时间内只能触发一次
-		throttleTime: {
-			type: [String, Number],
-			default: 0,
-		},
 	},
 	data() {
 		return {};
@@ -148,8 +136,8 @@ export default {
 		},
 	},
 	methods: {
-		thro: utils.thro,
-		handleClick(e) {
+		clickHandler(e) {
+			console.log('点击了按钮');
 			if (!this.disabled) {
 				this.$emit('click', e);
 			}
@@ -163,6 +151,7 @@ $ste-success-color: #5ac725;
 $ste-error-color: #f56c6c;
 $ste-primary-color: #3c9cff;
 $ste-warning-color: #f9ae3d;
+$ste-button-border-width: 1px;
 
 .ste-button {
 	height: 40px;
@@ -240,7 +229,7 @@ $ste-warning-color: #f9ae3d;
 		color: #323233;
 		background-color: #fff;
 
-		border: 1px;
+		border-width: $ste-button-border-width;
 		border-color: #ebedf0;
 		border-style: solid;
 	}
@@ -248,29 +237,27 @@ $ste-warning-color: #f9ae3d;
 	&-success {
 		color: #fff;
 		background-color: $ste-success-color;
-
-		border: 1px solid $ste-success-color;
+		border: $ste-button-border-width solid $ste-success-color;
 	}
 
 	&-primary {
 		color: #fff;
 		background-color: $ste-primary-color;
-
-		border: 1px solid $ste-primary-color;
+		border: $ste-button-border-width solid $ste-primary-color;
 	}
 
 	&-error {
 		color: #fff;
 		background-color: $ste-error-color;
 
-		border: 1px solid $ste-error-color;
+		border: $ste-button-border-width solid $ste-error-color;
 	}
 
 	&-warning {
 		color: #fff;
 		background-color: $ste-warning-color;
 
-		border: 1px solid $ste-warning-color;
+		border: $ste-button-border-width solid $ste-warning-color;
 	}
 
 	&-square {
