@@ -1,13 +1,18 @@
 <template>
 	<view class="page">
 		<page-nav :autoBack="true" backColor="#000" titleAlignment="2" title="图标"></page-nav>
-		<view class="icon-box">
-			<view v-for="item in glyphs" class="icon-item">
-				<view class="icon-content">
-					<ste-icon :code="item.unicode" :size="40"></ste-icon>
+		<view class="wrapper">
+			<view class="demo-block">
+				<view class="title">基础功能</view>
+				<view class="block-content">
+					<view v-for="item in glyphs" class="icon-item">
+						<view class="icon-content">
+							<ste-icon :code="item.unicode" :size="40"></ste-icon>
+						</view>
+						<view class="icon-name">{{ item.name }}</view>
+						<view class="icon-unicode">{{ item.unicode }}</view>
+					</view>
 				</view>
-				<view class="icon-name">{{ item.name }}</view>
-				<view class="icon-unicode">{{ item.unicode }}</view>
 			</view>
 		</view>
 	</view>
@@ -38,35 +43,32 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.page {
-	padding-bottom: 40rpx;
-}
-.icon-box {
+.block-content {
 	display: flex;
 	flex-wrap: wrap;
 	row-gap: 60rpx;
 	justify-content: center;
 	align-items: center;
-}
-.icon-item {
-	width: 25%;
-	.icon-content {
-		display: flex;
-		flex-wrap: wrap;
-		justify-content: center;
-		align-items: center;
-		padding-bottom: 20rpx;
-	}
+	.icon-item {
+		width: 25%;
+		.icon-content {
+			display: flex;
+			flex-wrap: wrap;
+			justify-content: center;
+			align-items: center;
+			padding-bottom: 20rpx;
+		}
 
-	.icon-name {
-		text-align: center;
-		overflow: hidden;
-		height: 40rpx;
-		line-height: 40rpx;
-		font-size: 28rpx;
-	}
-	.icon-unicode {
-		text-align: center;
+		.icon-name {
+			text-align: center;
+			overflow: hidden;
+			height: 40rpx;
+			line-height: 40rpx;
+			font-size: 28rpx;
+		}
+		.icon-unicode {
+			text-align: center;
+		}
 	}
 }
 </style>
