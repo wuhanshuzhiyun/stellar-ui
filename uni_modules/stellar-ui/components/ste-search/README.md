@@ -75,7 +75,7 @@
 <ste-search disabled ></ste-search>
 ```
 
-### 自定义样式
+### 自定义
 - 通过`borderColor`设置整个搜索组件的边框，只要配置了颜色，才会出现边框
 - 通过`bgColor`设置是搜索组件背景颜色
 ```html
