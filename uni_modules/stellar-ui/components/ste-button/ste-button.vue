@@ -13,6 +13,7 @@
 </template>
 
 <script>
+import utils from '../../utils/utils.js';
 /**
  * ste-button 按钮
  * @description 按钮组件
@@ -36,7 +37,6 @@
  * @event {Function}	click			非禁止并且非加载中，才能点击
  * @example <ste-button>按钮</ste-button>
  */
-import utils from '../../utils/utils.js';
 export default {
 	group: '基础组件',
 	title: 'Button 按钮',
