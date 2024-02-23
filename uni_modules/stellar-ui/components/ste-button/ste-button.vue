@@ -14,8 +14,8 @@
 
 <script>
 /**
- * ste-search 按钮
- * @description Button 按钮
+ * ste-button 按钮
+ * @description 按钮组件
  * @tutorial http://172.16.114.51:5050/pc/index/index?name=ste-button
  * @property {Boolean}			hairline				是否显示按钮的细边框 (默认 true)
  * @value true 显示细边框
