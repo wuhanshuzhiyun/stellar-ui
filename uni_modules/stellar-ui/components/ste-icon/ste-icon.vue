@@ -13,7 +13,7 @@ import utils from '../../utils/utils.js';
  * @tutorial http://172.16.114.51:5050/pc/index/index?name=ste-icon
  * @property {String}			code				图标名称
  * @property {String}			color				图标颜色
- * @property {String}			size				图标大小（单位rpx）（默认0）
+ * @property {String}			size				图标大小（单位rpx）（默认28）
  * @property {Number|String}	weight				图标粗细（默认 normal）
  * @value normal 默认值
  * @value bold 加粗
@@ -22,7 +22,7 @@ import utils from '../../utils/utils.js';
  * @property {Number|String}	marginTop			上外边距（单位rpx）（默认0）
  * @property {Number|String}	marginBottom		下外边距（单位rpx）（默认0）
  * @property {String}			text				内嵌文字
- * @property {String}	        marginBottom		内嵌文字颜色（默认 #fff）
+ * @property {String}	        textColor			内嵌文字颜色（默认 #fff）
  * @property {Number|String}	textSize			内嵌字体大小（单位rpx）（默认24）
  * @property {String}	        textWeight			内嵌字体粗细（默认 normal）
  * @event {Function} click 图标点击回调事件
