@@ -54,8 +54,8 @@
 ### 搜索框形状
 通过`shape`设置输入框两端的形状，`square`-方形带圆角，`round`(默认)-半圆形
 ```html
-<ste-search shape="round" placeholder="请输入关键字"></ste-search>
-<ste-search shape="square" placeholder="请输入关键字"></ste-search>
+<ste-search shape="round" placeholder="请输入关键字" :showAction="false"></ste-search>
+<ste-search shape="square" placeholder="请输入关键字" :showAction="false"></ste-search>
 ```
 
 
@@ -90,15 +90,13 @@
 ### 禁用输入框
 ```html
 <template>
-	<ste-search disabled @click="click"></ste-search>
+	<ste-search disabled @click="click" placeholder="输入框被禁用,可以监听点击事件进行跳转" :showAction="false"></ste-search>
 </template>
 
 <script>
 	export default {
 		data() {
-			return {
-				value1: '天山雪莲'
-			}
+			return {}
 		},
 		methods: {
 			click() {
