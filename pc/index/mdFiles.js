@@ -40,12 +40,15 @@ const componentsData = Object.keys(comGroups).map((group) => {
 
 /** ====================== 开发指南markdown文件 Start ====================== */
 const handbookMds = require.context('@/pc/handbook/', true, /.+\.md$/);
-const handbookMdMap = requireAll(handbookMds, true);
-const handbooks = Object.keys(handbookMdMap).map((path) => {
+const _handbookMdMap = requireAll(handbookMds, true);
+const handbookMdMap = {};
+const handbooks = Object.keys(_handbookMdMap).map((path) => {
 	const sort = path.replace(/\.\/(\d+)?\-?.+\.md$/, '$1') || 1000;
 	const key = path.replace(/\.\/(\d+\-)?(.+)\.md$/, '$2');
+	handbookMdMap[key] = _handbookMdMap[path];
 	return { title: key, key, sort };
 });
+
 console.log(handbooks);
 /** ====================== 开发指南markdown文件 End ====================== */
 
