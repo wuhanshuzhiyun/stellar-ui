@@ -1,12 +1,32 @@
 <template>
-	<div class="page-iconfont" :style="[computedCssVar]">
+	<div class="page-iconfont" :style="[computedCssVar]" @click="handleClick">
 		<view class="iconfont">{{ computedCode }}</view>
 		<div class="text">{{ text }}</div>
 	</div>
 </template>
 
 <script>
-import { rpx2px } from '../../utils/format.js';
+import utils from '../../utils/utils.js';
+/**
+ * ste-icon 图标
+ * @description  图标组件 基于字体的图标集，包含了大多数常见场景的图标
+ * @tutorial http://172.16.114.51:5050/pc/index/index?name=ste-icon
+ * @property {String}			code				图标名称
+ * @property {String}			color				图标颜色
+ * @property {String}			size				图标大小（单位rpx）（默认28）
+ * @property {Number|String}	weight				图标粗细（默认 normal）
+ * @value normal 默认值
+ * @value bold 加粗
+ * @property {Number|String}	marginLeft			左外边距（单位rpx）（默认0）
+ * @property {Number|String}	marginRight			右外边距（单位rpx）（默认0）
+ * @property {Number|String}	marginTop			上外边距（单位rpx）（默认0）
+ * @property {Number|String}	marginBottom		下外边距（单位rpx）（默认0）
+ * @property {String}			text				内嵌文字
+ * @property {String}	        textColor			内嵌文字颜色（默认 #fff）
+ * @property {Number|String}	textSize			内嵌字体大小（单位rpx）（默认24）
+ * @property {String}	        textWeight			内嵌字体粗细（默认 normal）
+ * @event {Function} click 图标点击回调事件
+ */
 export default {
 	group: '基础组件',
 	title: 'Icon 图标',
@@ -73,13 +93,18 @@ export default {
 		// 内嵌字体粗细
 		textWeight: {
 			type: [Number, String],
-			default: 400,
+			default: 'normal',
 		},
 	},
 	data() {
 		return {};
 	},
-	methods: {},
+	methods: {
+		rpx2px: utils.rpx2px,
+		handleClick() {
+			this.$emit('click');
+		},
+	},
 	computed: {
 		computedCode() {
 			// unicode编码转字符
@@ -88,14 +113,14 @@ export default {
 		computedCssVar() {
 			return {
 				'--color': this.color,
-				'--size': rpx2px(this.size),
+				'--size': this.rpx2px(this.size),
 				'--weight': this.weight,
-				'--margin-left': rpx2px(this.marginLeft),
-				'--margin-right': rpx2px(this.marginRight),
-				'--margin-top': rpx2px(this.marginTop),
-				'--margin-bottom': rpx2px(this.marginBottom),
+				'--margin-left': this.rpx2px(this.marginLeft),
+				'--margin-right': this.rpx2px(this.marginRight),
+				'--margin-top': this.rpx2px(this.marginTop),
+				'--margin-bottom': this.rpx2px(this.marginBottom),
 				'--text-color': this.textColor,
-				'--text-size': rpx2px(this.textSize),
+				'--text-size': this.rpx2px(this.textSize),
 				'--text-weight': this.textWeight,
 			};
 		},

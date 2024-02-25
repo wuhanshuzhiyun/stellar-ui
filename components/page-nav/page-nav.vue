@@ -144,7 +144,14 @@ export default {
 		// 返回上一页
 		async navBack() {
 			if (!this.stopNavigateBack) {
-				uni.navigateBack();
+				let pages = getCurrentPages();
+				if (pages.length > 2) {
+					uni.navigateBack();
+				} else {
+					uni.redirectTo({
+						url: '/mp/index/index',
+					});
+				}
 			}
 			this.$emit('navBack');
 		},

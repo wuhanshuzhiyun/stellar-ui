@@ -1,6 +1,7 @@
 <template>
 	<view
 		class="ste-search"
+		:class="[disabled ? 'ste-search-disabled' : '']"
 		@tap="clickHandler"
 		:style="[
 			{
@@ -76,7 +77,7 @@
 
 <script>
 /**
- * search 搜索框
+ * ste-search 搜索框
  * @description 搜索组件，集成了常见搜索框所需功能，用户可以一键引入，开箱即用。
  * @tutorial http://172.16.114.51:5050/pc/index/index?name=ste-search
  * @property {String}			shape				搜索框形状（默认 'round' ）
@@ -100,9 +101,8 @@
  * @property {Number | String}	searchIconSize      搜索图标的字体，默认22
  * @property {String}			color				输入框字体颜色（默认 '#606266'）
  * @property {String}			placeholderColor	placeholder的颜色（默认 '#909399'）
- * @property {String}			searchIcon			输入框左边的图标，可以为icon-font图标名称的code
+ * @property {String}			searchIcon			输入框左边的图标，为ste-icon图标名称的code
  * @property {String}			margin				组件与其他上下左右元素之间的距离，带单位的字符串形式，如"30px"   (默认 '0')
- * @property {Boolean} 			animation			是否开启动画，见上方说明（默认 false）
  * @property {String}			value				输入框初始值
  * @property {String | Number}	maxlength			输入框最大能输入的长度，-1为不限制长度  (默认 '-1')
  * @property {String | Number}	height				输入框高度，单位px（默认 64）
@@ -208,11 +208,6 @@ export default {
 			type: [Number, String],
 			default: 0,
 		},
-		// 开启showAction时，是否在input获取焦点时才显示
-		animation: {
-			type: Boolean,
-			default: false,
-		},
 		// 输入框的初始化内容
 		value: {
 			type: String,
@@ -261,7 +256,7 @@ export default {
 	},
 	computed: {
 		showActionBtn() {
-			return !this.animation && this.showAction;
+			return this.showAction;
 		},
 	},
 	methods: {
@@ -298,7 +293,7 @@ export default {
 		getFocus() {
 			this.focused = true;
 			// 开启右侧搜索按钮展开的动画效果
-			if (this.animation && this.showAction) this.show = true;
+			if (this.showAction) this.show = true;
 			this.$emit('focus', this.keyword);
 		},
 		// 失去焦点
@@ -358,6 +353,12 @@ $ste-search-action-margin-left: 5px !default;
 
 	align-items: center;
 	flex: 1;
+
+	&.ste-search-disabled {
+		.ste-search-content-input {
+			pointer-events: none;
+		}
+	}
 
 	&-content {
 		display: flex;

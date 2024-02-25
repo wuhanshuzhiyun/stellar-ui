@@ -131,6 +131,8 @@ export default {
 		position: absolute;
 		left: 0;
 		bottom: 0;
+		z-index: 1;
+		background-color: #ffffff;
 
 		.group {
 			.name {
@@ -188,7 +190,7 @@ export default {
 		right: var(--pc-padding);
 		width: calc(var(--pc-view-width) + 28px);
 		min-width: calc(var(--pc-view-width) + 28px);
-		height: calc(var(--pc-view-height) + 80px);
+		height: calc(var(--pc-view-height));
 		padding: 50px 14px 30px;
 		overflow: hidden;
 		border-radius: 16px;

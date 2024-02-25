@@ -54,8 +54,6 @@ function sortData() {
 
 	const result = [{ title: '开发指南', children: handbooks.sort((a, b) => a.sort - b.sort) }];
 
-	console.log(result);
-
 	dataSort.forEach((title) => {
 		const data = componentsData.find((g) => title === g.title);
 		if (data) {

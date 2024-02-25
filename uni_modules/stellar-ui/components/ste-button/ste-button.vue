@@ -3,8 +3,7 @@
 		:class="btnClass"
 		:hover-class="!disabled ? 'ste-button--active' : ''"
 		:style="[baseColor]"
-		:open-type="openType"
-		@tap="thro(handleClick, { delay: throttleTime })"
+		@click="clickHandler"
 	>
 		<view class="ste-button-text" :style="[{ fontSize: textSize + 'px' }]">
 			<slot></slot>
@@ -15,8 +14,8 @@
 <script>
 import utils from '../../utils/utils.js';
 /**
- * button 按钮
- * @description Button 按钮
+ * ste-button 按钮
+ * @description 按钮组件
  * @tutorial http://172.16.114.51:5050/pc/index/index?name=ste-button
  * @property {Boolean}			hairline				是否显示按钮的细边框 (默认 true)
  * @value true 显示细边框
@@ -33,9 +32,7 @@ import utils from '../../utils/utils.js';
  * @property {Boolean}			plain					按钮是否镂空，背景色透明 （默认 false）
  * @property {Boolean}			disabled				是否禁用 （默认 false）
  * @property {String}			color					按钮颜色，支持传入linear-gradient渐变色
- *
- * @event {Function}	click			非禁止并且非加载中，才能点击
- * @example <ste-button>按钮</ste-button>
+ * @event {Function}			click			非禁止并且非加载中，才能点击
  */
 export default {
 	group: '基础组件',
@@ -76,17 +73,6 @@ export default {
 		color: {
 			type: String,
 			default: '',
-		},
-		// 开放能力，具体请看uniapp稳定关于button组件部分说明
-		// https://uniapp.dcloud.io/component/button
-		openType: {
-			type: String,
-			default: '',
-		},
-		// 节流，一定时间内只能触发一次
-		throttleTime: {
-			type: [String, Number],
-			default: 0,
 		},
 	},
 	data() {
@@ -148,10 +134,9 @@ export default {
 		},
 	},
 	methods: {
-		thro: utils.thro,
-		handleClick(e) {
+		clickHandler() {
 			if (!this.disabled) {
-				this.$emit('click', e);
+				this.$emit('click');
 			}
 		},
 	},
@@ -163,6 +148,7 @@ $ste-success-color: #5ac725;
 $ste-error-color: #f56c6c;
 $ste-primary-color: #3c9cff;
 $ste-warning-color: #f9ae3d;
+$ste-button-border-width: 1px;
 
 .ste-button {
 	height: 40px;
@@ -240,7 +226,7 @@ $ste-warning-color: #f9ae3d;
 		color: #323233;
 		background-color: #fff;
 
-		border: 1px;
+		border-width: $ste-button-border-width;
 		border-color: #ebedf0;
 		border-style: solid;
 	}
@@ -248,29 +234,27 @@ $ste-warning-color: #f9ae3d;
 	&-success {
 		color: #fff;
 		background-color: $ste-success-color;
-
-		border: 1px solid $ste-success-color;
+		border: $ste-button-border-width solid $ste-success-color;
 	}
 
 	&-primary {
 		color: #fff;
 		background-color: $ste-primary-color;
-
-		border: 1px solid $ste-primary-color;
+		border: $ste-button-border-width solid $ste-primary-color;
 	}
 
 	&-error {
 		color: #fff;
 		background-color: $ste-error-color;
 
-		border: 1px solid $ste-error-color;
+		border: $ste-button-border-width solid $ste-error-color;
 	}
 
 	&-warning {
 		color: #fff;
 		background-color: $ste-warning-color;
 
-		border: 1px solid $ste-warning-color;
+		border: $ste-button-border-width solid $ste-warning-color;
 	}
 
 	&-square {
