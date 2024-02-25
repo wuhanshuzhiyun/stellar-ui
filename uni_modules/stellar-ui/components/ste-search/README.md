@@ -1,5 +1,5 @@
 # Search 搜索
-搜索组件，集成了常见搜索框所需功能，用户可以一键引入，开箱即用。
+搜索组件，集成了常见搜索框所需功能。
 
 ### 兼容性
 #### VUE支持 
@@ -44,7 +44,7 @@
 	export default {
 		data() {
 			return {
-				value1: '天山雪莲'
+				value1: '卫生纸'
 			}
 		}
 	}
@@ -64,15 +64,49 @@
 - `showAction`配置是否开启右边按钮控件
 - `actionText`配置控件内容
 
-> 右侧控件的默认文字为"搜索"(它本意为控件，碰巧内容为"搜索"二字，并非说它就是一个搜索按钮)，点击它的时候触发的是`custom`事件，而不是`search`事件
+> 右侧控件的默认文字为"搜索"，点击它的时候触发的是`custom`事件，而不是`search`事件
 
 ```html
-<ste-search showAction actionText="搜索" ></ste-search>
+<template>
+	<ste-search showAction actionText="搜索" @custom="customClick"></ste-search>
+</template>
+
+<script>
+	export default {
+		data() {
+			return {
+				value1: '搜索'
+			}
+		}，
+		methods: {
+			customClick() {
+				console.log('点击搜索按钮')
+			}
+		}
+	}
+</script>
 ```
 
 ### 禁用输入框
 ```html
-<ste-search disabled ></ste-search>
+<template>
+	<ste-search disabled @click="click"></ste-search>
+</template>
+
+<script>
+	export default {
+		data() {
+			return {
+				value1: '天山雪莲'
+			}
+		},
+		methods: {
+			click() {
+				console.log('点击搜索按钮')
+			}
+		}
+	}
+</script>
 ```
 
 ### 自定义

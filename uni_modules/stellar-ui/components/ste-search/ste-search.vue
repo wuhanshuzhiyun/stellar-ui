@@ -194,7 +194,7 @@ export default {
 			type: String,
 			default: '#909399',
 		},
-		// 左边输入框的图标，可以为uView图标名称或图片路径
+		// 左边输入框的图标，为ste-icon的code
 		searchIcon: {
 			type: String,
 			default: '&#xe66d;',
@@ -260,7 +260,6 @@ export default {
 		},
 	},
 	methods: {
-		// 目前HX2.6.9 v-model双向绑定无效，故监听input事件获取输入框内容的变化
 		inputChange(e) {
 			this.keyword = e.detail.value;
 		},
@@ -292,8 +291,9 @@ export default {
 		// 获取焦点
 		getFocus() {
 			this.focused = true;
-			// 开启右侧搜索按钮展开的动画效果
-			if (this.showAction) this.show = true;
+			if (this.showAction) {
+				this.show = true;
+			}
 			this.$emit('focus', this.keyword);
 		},
 		// 失去焦点
@@ -308,7 +308,9 @@ export default {
 		},
 		// 点击搜索框，只有disabled=true时才发出事件，因为禁止了输入，意味着是想跳转真正的搜索页
 		clickHandler() {
-			if (this.disabled) this.$emit('click');
+			if (this.disabled) {
+				this.$emit('click');
+			}
 		},
 		// 点击左边图标
 		clickIcon() {

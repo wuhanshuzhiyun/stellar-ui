@@ -16,14 +16,14 @@
 		<view class="group-title">基础组件</view>
 		<view class="com-box" @click="nav('button')">
 			<view class="com-title">
-				<image src="https://cdn.uviewui.com/uview/example/button.png" style="width: 18px" mode="widthFix" />
+				<image :src="joinSrc('img/button.png')" style="width: 18px" mode="widthFix" />
 				<text>Button 按钮</text>
 			</view>
 			<view class="com-arrow"><image :src="joinSrc('img/r-arrow.png')" mode="widthFix" /></view>
 		</view>
 		<view class="com-box" @click="nav('icon')">
 			<view class="com-title">
-				<image src="https://cdn.uviewui.com/uview/example/icon.png" style="width: 18px" mode="widthFix" />
+				<image :src="joinSrc('img/icon.png')" style="width: 18px" mode="widthFix" />
 				<text>Icon 图标</text>
 			</view>
 			<view class="com-arrow"><image :src="joinSrc('img/r-arrow.png')" mode="widthFix" /></view>
@@ -32,7 +32,7 @@
 		<view class="group-title">表单组件</view>
 		<view class="com-box" @click="nav('search')">
 			<view class="com-title">
-				<image src="https://cdn.uviewui.com/uview/example/search.png" style="width: 18px" mode="widthFix" />
+				<image :src="joinSrc('img/search.png')" style="width: 18px" mode="widthFix" />
 				<text>Search 搜索</text>
 			</view>
 			<view class="com-arrow"><image :src="joinSrc('img/r-arrow.png')" mode="widthFix" /></view>

@@ -16,7 +16,7 @@
 
 ### 代码演示
 #### 按钮类型
-
+通过`type`设置按钮的类型，主要区别是按钮的颜色，默认值是`info`
 ```html
 <ste-button >默认按钮</ste-button>
 <ste-button type="success" >成功按钮</ste-button>
@@ -26,7 +26,7 @@
 ```
 
 #### 镂空按钮
-
+通过`plain`设置按钮是否镂空，默认值是`false`
 ```html
 <ste-button plain>镂空按钮</ste-button>
 <ste-button plain type="success" >成功按钮</ste-button>
@@ -36,7 +36,7 @@
 ```
 
 #### 禁用按钮
-
+通过`disabled`设置按钮是否禁用，默认值是`false`
 ```html
 <ste-button disabled>禁用按钮</ste-button>
 <ste-button disabled type="success" >成功按钮</ste-button>
@@ -46,7 +46,8 @@
 ```
 
 #### 按钮形状 & 按钮图标
-
+- 通过`shape`设置按钮的形状，`square`(默认)方形带圆角，`circle`半圆形
+- 通过自定义按钮内部的内容来实现自定义图标
 ```html
 <ste-button type="warning" plain shape="circle">
 	<ste-icon code="&#xe63b;" color="#f9ae3d" />
@@ -64,12 +65,12 @@
 ```
 
 #### 自定义大小
-
+通过`size`设置按钮的大小，默认值是`normal`
 ```html
 <ste-button size="large" type="success" >超大尺寸</ste-button>
-<ste-button size="large" type="error" >普通尺寸</ste-button>
-<ste-button size="large" type="primary" >小型尺寸</ste-button>
-<ste-button size="large" type="warning" >超小尺寸</ste-button>
+<ste-button size="normal" type="error" >普通尺寸</ste-button>
+<ste-button size="small" type="primary" >小型尺寸</ste-button>
+<ste-button size="mini" type="warning" >超小尺寸</ste-button>
 ```
 
 ### API

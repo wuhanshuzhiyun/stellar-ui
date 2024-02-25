@@ -120,7 +120,7 @@ export default {
 			hotWords: ['中百集团', '数智云科技', '一夜暴富'],
 
 			value1: '',
-			value2: '天山雪莲',
+			value2: '卫生纸',
 			value3: '',
 			value4: '',
 			value5: '',
