@@ -79,7 +79,7 @@
 			<view class="demo-block">
 				<view class="title">图标库</view>
 				<view class="block-content">
-					<view v-for="item in glyphs" class="icon-item">
+					<view v-for="item in glyphs" class="icon-item" @click="copy(item.unicode)">
 						<view class="icon-content">
 							<ste-icon :code="item.unicode" :size="40"></ste-icon>
 						</view>
@@ -112,7 +112,20 @@ export default {
 			},
 		});
 	},
-	methods: {},
+	methods: {
+		copy(data) {
+			uni.setClipboardData({
+				data,
+				showToast: false,
+				success: function () {
+					uni.showToast({
+						icon: 'none',
+						title: 'code复制到剪切板',
+					});
+				},
+			});
+		},
+	},
 };
 </script>
 
@@ -123,6 +136,7 @@ export default {
 	row-gap: 60rpx;
 	justify-content: center;
 	align-items: center;
+
 	.icon-item {
 		width: 25%;
 		.icon-content {
@@ -141,6 +155,7 @@ export default {
 			font-size: 28rpx;
 		}
 		.icon-unicode {
+			font-size: 28rpx;
 			text-align: center;
 		}
 	}
