@@ -19,20 +19,8 @@
 	}
 }
 
-// 90%
-@media (max-width: 1600px) {
-	:root,
-	:host {
-		// sizes
-		--pc-nav-width: 220px;
-		--pc-view-width: 338px;
-		--pc-view-height: 730px;
-		--pc-padding: 32px;
-	}
-}
-
 // 80%
-@media (max-width: 1440px) {
+@media (max-width: 1600px) {
 	:root,
 	:host {
 		// sizes
