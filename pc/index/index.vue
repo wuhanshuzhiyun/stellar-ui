@@ -98,8 +98,26 @@ export default {
 		async copy(btn) {
 			try {
 				const data = btn.getAttribute('content');
-				console.info('copy code----', data);
-				uni.setClipboardData({ data });
+				uni.setClipboardData({
+					data,
+					showToast: false,
+					success: function () {
+						btn.innerText = '复制成功';
+						btn.disabled = true;
+						setTimeout(() => {
+							btn.innerText = '复制';
+							btn.disabled = false;
+						}, 1000);
+					},
+					fail: function () {
+						btn.innerText = '复制失败';
+						btn.disabled = true;
+						setTimeout(() => {
+							btn.innerText = '复制';
+							btn.disabled = false;
+						}, 1000);
+					},
+				});
 			} catch (err) {
 				console.error('无法复制文本: ', err);
 			}
