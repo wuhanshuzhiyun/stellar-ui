@@ -1,7 +1,7 @@
 <template>
 	<button
 		:class="btnClass"
-		:hover-class="!disabled ? 'ste-button--active' : ''"
+		:hover-class="!disabled ? 'ste-button-active' : ''"
 		:style="[baseColor]"
 		@click="clickHandler"
 	>
@@ -187,7 +187,7 @@ $ste-button-border-width: 1px;
 		border-color: #000;
 	}
 
-	&--active {
+	&-active {
 		&:before {
 			opacity: 0.15;
 		}
