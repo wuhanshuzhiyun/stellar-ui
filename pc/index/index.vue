@@ -97,16 +97,9 @@ export default {
 		},
 		async copy(btn) {
 			try {
-				const text = btn.getAttribute('content');
-				console.info('copy code----', text);
-				await navigator.clipboard.writeText(text);
-				console.info('copy success----');
-				btn.innerText = '复制成功';
-				btn.disabled = true;
-				setTimeout(() => {
-					btn.innerText = '复制';
-					btn.disabled = false;
-				}, 1000);
+				const data = btn.getAttribute('content');
+				console.info('copy code----', data);
+				uni.setClipboardData({ data });
 			} catch (err) {
 				console.error('无法复制文本: ', err);
 			}
