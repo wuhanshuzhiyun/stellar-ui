@@ -10,8 +10,8 @@ function requireAll(requre, isHandbooks) {
 }
 
 /** ====================== 父级markdown Start ====================== */
-const parentMds = require.context('@/pc/parent/', true, /.+\.md$/);
-const parentMdMap = requireAll(parentMds, true);
+const templateMds = require.context('@/pc/template/', true, /.+\.md$/);
+const templateMdMap = requireAll(templateMds, true);
 function formatParentMap(map) {
 	const result = {};
 	Object.keys(map).forEach((path) => {
@@ -20,7 +20,7 @@ function formatParentMap(map) {
 	});
 	return result;
 }
-export const parentMap = formatParentMap(parentMdMap);
+export const templateMap = formatParentMap(templateMdMap);
 /** ====================== 父级markdown End ====================== */
 
 /** ====================== 组件markdown文件 Start ====================== */
@@ -63,7 +63,6 @@ const handbooks = Object.keys(_handbookMdMap).map((path) => {
 	return { title: key, key, sort };
 });
 
-console.log(handbooks);
 /** ====================== 开发指南markdown文件 End ====================== */
 
 function sortData() {

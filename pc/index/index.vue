@@ -80,8 +80,8 @@ export default {
 			// 加载文档
 			uni.request({
 				url,
-			}).then((res) => {
-				this.content = md2html(res.data);
+			}).then(async (res) => {
+				this.content = await md2html(res.data);
 				// 渲染完成后，为所有的代码按钮加载复制功能
 				this.$nextTick(() => {
 					document.querySelectorAll('.code-copy-button').forEach((btn) => {

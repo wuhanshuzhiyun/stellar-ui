@@ -1,7 +1,7 @@
 import MarkdownIt from 'markdown-it';
 import highlight from 'markdown-it-highlightjs';
 import 'highlight.js/styles/default.css';
-import { parentMap } from './mdFiles.js';
+import { templateMap } from './mdFiles.js';
 
 const md = new MarkdownIt({
 	html: true,
@@ -14,10 +14,17 @@ md.use(highlight);
 
 /**
  * @param {string} mdstr md的内容字符串
- * @return {HTMLAnchorElement}
+ * @return {string} str类型的html字符串
  */
-export default function (mdstr) {
-	const htmlStr = md.render(insetParentMdStr(mdstr));
+export default async function (mdstr) {
+	let str = mdstr;
+	try {
+		str = await insetTemplateMdStr(mdstr);
+	} catch (e) {
+		//TODO handle the exception
+		console.error('插入公共元素失败', e);
+	}
+	const htmlStr = md.render(str);
 	const doc = parser.parseFromString(htmlStr, 'text/html');
 	const pres = doc.querySelectorAll('body>pre');
 	pres.forEach((pre) => {
@@ -37,13 +44,20 @@ export default function (mdstr) {
 	return doc.body.innerHTML;
 }
 
-function insetParentMdStr(mdStr) {
-	const getParentMdStr = (keyword) => {
-		console.log(keyword);
-		return parentMap[keyword] || '';
-	};
-	const keywords = mdStr.match(/\{\{.*\}\}/g);
-	console.log(keywords);
-	return mdStr;
+// 插入公共模版文档内容
+async function insetTemplateMdStr(mdStr) {
+	const kReg = /\{\{.+\}\}/;
+	let result = mdStr;
+	// 查找所有的{{}}
+	while (kReg.test(result)) {
+		let key = result.match(kReg);
+		key = key[0].replace(/\{\{(.+)\}\}/, '$1');
+		const url = templateMap[key];
+		if (!url) {
+			console.error(`${key}公共文件不存在，请检查语法！`);
+			return result;
+		}
+		result = result.replace(kReg, (await uni.request({ url })).data);
+	}
+	return result;
 }
-console.log(parentMap);
