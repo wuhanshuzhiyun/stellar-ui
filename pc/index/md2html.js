@@ -43,11 +43,8 @@ async function insetTemplateMdStr(htmlStr) {
 	let result = htmlStr;
 	// 查找所有的{{}}
 	while (kReg.test(result)) {
-		console.log('????????');
 		let key = result.match(kReg);
-		console.log(key);
 		key = key[0].replace(kReg, '$1');
-		console.log(key);
 		const url = templateMap[key];
 		if (!url) {
 			console.error(`${key}公共文件不存在，请检查语法！`);
@@ -61,6 +58,5 @@ async function insetTemplateMdStr(htmlStr) {
 
 export default async function (mdstr) {
 	const htmlStr = await _md2html(mdstr);
-	console.log(htmlStr);
 	return insetTemplateMdStr(htmlStr);
 }

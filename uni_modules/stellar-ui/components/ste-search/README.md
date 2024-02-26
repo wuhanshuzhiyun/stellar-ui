@@ -72,7 +72,6 @@
 		}，
 		methods: {
 			customClick() {
-				console.log('点击搜索按钮')
 			}
 		}
 	}
@@ -92,7 +91,6 @@
 		},
 		methods: {
 			click() {
-				console.log('点击搜索按钮')
 			}
 		}
 	}

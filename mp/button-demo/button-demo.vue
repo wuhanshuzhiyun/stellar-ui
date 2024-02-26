@@ -134,7 +134,6 @@ export default {
 	onLoad() {},
 	methods: {
 		handleClick(v) {
-			console.log('demo 点击按钮');
 			uni.showToast({
 				title: '点击按钮' + ' ' + v,
 				icon: 'none',
