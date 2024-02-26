@@ -97,7 +97,9 @@ export default {
 		},
 		async copy(btn) {
 			try {
-				await navigator.clipboard.writeText(btn.getAttribute('content'));
+				const text = btn.getAttribute('content');
+				console.info('copy code----', text);
+				await navigator.clipboard.writeText(text);
 				btn.innerText = '复制成功';
 				btn.disabled = true;
 				setTimeout(() => {

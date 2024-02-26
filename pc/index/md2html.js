@@ -1,9 +1,11 @@
 import MarkdownIt from 'markdown-it';
 import highlight from 'markdown-it-highlightjs';
 import 'highlight.js/styles/default.css';
+import { parentMap } from './mdFiles.js';
 
 const md = new MarkdownIt({
 	html: true,
+	xhtmlOut: true,
 });
 const parser = new DOMParser();
 
@@ -15,7 +17,7 @@ md.use(highlight);
  * @return {HTMLAnchorElement}
  */
 export default function (mdstr) {
-	const htmlStr = md.render(mdstr);
+	const htmlStr = md.render(insetParentMdStr(mdstr));
 	const doc = parser.parseFromString(htmlStr, 'text/html');
 	const pres = doc.querySelectorAll('body>pre');
 	pres.forEach((pre) => {
@@ -34,3 +36,14 @@ export default function (mdstr) {
 	// 返回转换后的html
 	return doc.body.innerHTML;
 }
+
+function insetParentMdStr(mdStr) {
+	const getParentMdStr = (keyword) => {
+		console.log(keyword);
+		return parentMap[keyword] || '';
+	};
+	const keywords = mdStr.match(/\{\{.*\}\}/g);
+	console.log(keywords);
+	return mdStr;
+}
+console.log(parentMap);

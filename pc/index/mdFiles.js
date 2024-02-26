@@ -9,6 +9,20 @@ function requireAll(requre, isHandbooks) {
 	return map;
 }
 
+/** ====================== 父级markdown Start ====================== */
+const parentMds = require.context('@/pc/parent/', true, /.+\.md$/);
+const parentMdMap = requireAll(parentMds, true);
+function formatParentMap(map) {
+	const result = {};
+	Object.keys(map).forEach((path) => {
+		const key = path.replace(/\.\/(.+)\.md$/, '$1');
+		result[key] = map[path];
+	});
+	return result;
+}
+export const parentMap = formatParentMap(parentMdMap);
+/** ====================== 父级markdown End ====================== */
+
 /** ====================== 组件markdown文件 Start ====================== */
 const _comMds = require.context('@/uni_modules/stellar-ui/components/', true, /README\.md$/);
 const comMdMap = requireAll(_comMds);
