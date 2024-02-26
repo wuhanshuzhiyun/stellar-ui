@@ -4,7 +4,7 @@
 			<view class="top-1">
 				<image :src="joinSrc('中百钱包/payment/logo.png')" style="width: 100rpx" mode="widthFix" />
 				<view class="title">
-					<view class="title-1">Stellar UI 1.0.0</view>
+					<view class="title-1">Stellar UI {{ version }}</view>
 					<view class="title-2">微信平台快速开发的UI框架</view>
 				</view>
 			</view>
@@ -41,11 +41,14 @@
 </template>
 <script>
 import utils from '@/common/utils';
+import config from '@/uni_modules/stellar-ui/package.json';
 export default {
 	data() {
-		return {};
+		return {
+			version: config.version ?? '',
+		};
 	},
-	onLoad() {},
+	created() {},
 	methods: {
 		joinSrc: utils.joinSrc, // 拼接图片src地址
 		nav(routerName) {
