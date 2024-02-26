@@ -100,6 +100,7 @@ export default {
 				const text = btn.getAttribute('content');
 				console.info('copy code----', text);
 				await navigator.clipboard.writeText(text);
+				console.info('copy success----');
 				btn.innerText = '复制成功';
 				btn.disabled = true;
 				setTimeout(() => {
