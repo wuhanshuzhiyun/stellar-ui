@@ -2,7 +2,9 @@ import MarkdownIt from 'markdown-it';
 import highlight from 'markdown-it-highlightjs';
 import 'highlight.js/styles/default.css';
 
-const md = new MarkdownIt();
+const md = new MarkdownIt({
+	html: true,
+});
 const parser = new DOMParser();
 
 // 使用 markdown-it-highlightjs 插件
