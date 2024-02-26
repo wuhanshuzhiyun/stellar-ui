@@ -16,15 +16,8 @@ md.use(highlight);
  * @param {string} mdstr md的内容字符串
  * @return {string} str类型的html字符串
  */
-export default async function (mdstr) {
-	let str = mdstr;
-	try {
-		str = await insetTemplateMdStr(mdstr);
-	} catch (e) {
-		//TODO handle the exception
-		console.error('插入公共元素失败', e);
-	}
-	const htmlStr = md.render(str);
+function _md2html(mdstr) {
+	const htmlStr = md.render(mdstr);
 	const doc = parser.parseFromString(htmlStr, 'text/html');
 	const pres = doc.querySelectorAll('body>pre');
 	pres.forEach((pre) => {
@@ -45,19 +38,29 @@ export default async function (mdstr) {
 }
 
 // 插入公共模版文档内容
-async function insetTemplateMdStr(mdStr) {
-	const kReg = /\{\{.+\}\}/;
-	let result = mdStr;
+async function insetTemplateMdStr(htmlStr) {
+	const kReg = /\<p\>\{\{(\w+)\}\}\<\/p\>/;
+	let result = htmlStr;
 	// 查找所有的{{}}
 	while (kReg.test(result)) {
+		console.log('????????');
 		let key = result.match(kReg);
-		key = key[0].replace(/\{\{(.+)\}\}/, '$1');
+		console.log(key);
+		key = key[0].replace(kReg, '$1');
+		console.log(key);
 		const url = templateMap[key];
 		if (!url) {
 			console.error(`${key}公共文件不存在，请检查语法！`);
 			return result;
 		}
-		result = result.replace(kReg, (await uni.request({ url })).data);
+		const md = await uni.request({ url });
+		result = result.replace(kReg, _md2html(md.data));
 	}
 	return result;
+}
+
+export default async function (mdstr) {
+	const htmlStr = await _md2html(mdstr);
+	console.log(htmlStr);
+	return insetTemplateMdStr(htmlStr);
 }

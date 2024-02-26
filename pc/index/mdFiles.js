@@ -10,7 +10,7 @@ function requireAll(requre, isHandbooks) {
 }
 
 /** ====================== 父级markdown Start ====================== */
-const templateMds = require.context('@/pc/template/', true, /.+\.md$/);
+const templateMds = require.context('@/uni_modules/stellar-ui/template/', true, /.+\.md$/);
 const templateMdMap = requireAll(templateMds, true);
 function formatParentMap(map) {
 	const result = {};
