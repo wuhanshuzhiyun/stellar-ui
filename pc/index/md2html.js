@@ -27,6 +27,11 @@ function _md2html(mdstr) {
 		btn.innerText = '复制';
 		btn.setAttribute('content', code);
 		btn.classList.add('code-copy-button');
+		pre.innerHTML = '';
+		const div = document.createElement('div');
+		div.classList.add('code-body-box');
+		div.appendChild(codedom);
+		pre.appendChild(div);
 		pre.appendChild(btn);
 	});
 	const tables = doc.querySelectorAll('table');

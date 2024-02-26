@@ -93,11 +93,14 @@
 			white-space: pre-wrap;
 			word-wrap: break-word;
 			-webkit-font-smoothing: auto;
-
-			code {
-				tab-size: 4; /* 这可能不起作用，取决于浏览器支持 */
-				-moz-tab-size: 4; /* Firefox */
-				-o-tab-size: 4; /* Opera */
+			div.code-body-box {
+				max-height: 400px;
+				overflow: auto;
+				code {
+					tab-size: 4; /* 这可能不起作用，取决于浏览器支持 */
+					-moz-tab-size: 4; /* Firefox */
+					-o-tab-size: 4; /* Opera */
+				}
 			}
 
 			& > .code-copy-button {
