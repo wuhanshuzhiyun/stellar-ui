@@ -1,6 +1,6 @@
 <template>
 	<view class="test-demo">
-		<ste-test></ste-test>
+		<!-- <ste-test></ste-test> -->
 	</view>
 </template>
 
