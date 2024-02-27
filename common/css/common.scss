@@ -40,12 +40,12 @@ body {
 		background: transparent;
 		color: transparent;
 	}
-	.wrapper {
+	.content {
 		padding: 8px;
 		height: calc(100vh - 50px);
 		overflow-y: auto;
 
-		.demo-block {
+		.demo-item {
 			margin-bottom: 16px;
 
 			.title {
@@ -54,7 +54,7 @@ body {
 				margin-bottom: 8px;
 			}
 
-			.block-content {
+			.item-block {
 				display: flex;
 				flex-direction: row;
 				flex-wrap: wrap;
