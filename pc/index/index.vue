@@ -22,6 +22,29 @@
 		</view>
 		<view class="pc-content">
 			<view v-html="content" class="markdown-view"></view>
+			<view v-show="isComponent" class="comment-view">
+				<view class="comment-title">意见反馈</view>
+				<input class="user-input" placeholder="姓名" v-model="commentParams.user" maxlength="8" />
+				<textarea
+					class="comment-input"
+					v-model="commentParams.content"
+					rows="10"
+					placeholder="反馈意见"
+					maxlength="300"
+				/>
+				<ste-button style="margin-top: 24rpx" type="primary" @click="setComment">提交</ste-button>
+				<view class="comment-list">
+					<view class="comment-item" v-for="item in commentList" :key="item.id">
+						<view class="comment-time">
+							{{ item.time }}
+						</view>
+						<view class="comment-content">
+							<text class="content-user">{{ item.user }}</text>
+							<text class="content">{{ item.content }}</text>
+						</view>
+					</view>
+				</view>
+			</view>
 		</view>
 		<view class="pc-view">
 			<iframe class="view-iframe" :src="viewUrl" frameborder="0" />
@@ -34,6 +57,8 @@ import { mdMap, vueMap, datas } from './mdFiles.js';
 import md2html from './md2html.js';
 import './mdStyle.scss';
 
+const baseUrl = 'http://172.16.114.51:3000';
+
 let timeout = 0;
 
 export default {
@@ -43,6 +68,12 @@ export default {
 			activeName: '介绍',
 			datas,
 			viewUrl: '/mp/index/index',
+			commentList: [],
+			isComponent: false,
+			commentParams: {
+				user: '',
+				content: '',
+			},
 		};
 	},
 	watch: {
@@ -55,11 +86,13 @@ export default {
 					}
 					// 加载预览地址
 					const com = vueMap[v];
+					this.isComponent = !!com;
 					let src = '/mp/index/index';
 					if (com) {
 						// 如果是组件，获取组件预览地址
 						const name = v.slice(4);
 						src = `/mp/${name}-demo/${name}-demo`;
+						this.getComment(v);
 					}
 					if (this.viewUrl === src) return;
 					this.$nextTick(() => {
@@ -121,6 +154,28 @@ export default {
 			} catch (err) {
 				console.error('无法复制文本: ', err);
 			}
+		},
+		getComment(name) {
+			uni.request({
+				url: `${baseUrl}/list?name=${name}`,
+				success: ({ data }) => {
+					if (data.code === 0) {
+						this.commentList = data.data.reverse();
+					}
+				},
+			});
+		},
+		setComment() {
+			uni.request({
+				url: `${baseUrl}/create`,
+				data: Object.assign({ name: this.activeName }, this.commentParams),
+				method: 'POST',
+				success: ({ data }) => {
+					if (data.code === 0) {
+						this.getComment(this.activeName);
+					}
+				},
+			});
 		},
 	},
 };
@@ -187,8 +242,59 @@ export default {
 		padding-right: calc(var(--pc-view-width) + var(--pc-padding) + 20px);
 		overflow: auto;
 
-		.markdown-view {
-			padding: var(--pc-padding);
+		.markdown-view,
+		.comment-view {
+			padding: 24rpx var(--pc-padding);
+		}
+		.comment-view {
+			border-top: 1px solid #ddd;
+			.comment-title {
+				font-size: 42rpx;
+				font-weight: 600;
+				border-left: 4px solid #1989fa;
+				padding-left: 12rpx;
+			}
+			.comment-input,
+			.user-input {
+				margin-top: 24rpx;
+				border: 1px solid #ddd;
+				padding: 12rpx;
+				border-radius: 6rpx;
+			}
+			.user-input {
+				height: 60rpx;
+			}
+			.comment-input {
+				width: 100%;
+			}
+			.comment-list {
+				border: 1px solid #ddd;
+				padding: 24rpx;
+				margin-top: 24rpx;
+				.comment-item {
+					& + .comment-item {
+						border-top: 1px solid #ddd;
+						margin-top: 24rpx;
+						padding-top: 24rpx;
+					}
+					.comment-time {
+						font-size: 24rpx;
+						color: #aaa;
+					}
+					.comment-content {
+						margin-top: 12rpx;
+						font-size: 32rpx;
+						.content-user {
+							font-zise: 36rpx;
+							padding-right: 12rpx;
+						}
+						.content {
+							font-size: 30rpx;
+							color: #666;
+						}
+					}
+				}
+			}
 		}
 	}
 	@media (max-width: 1100px) {
