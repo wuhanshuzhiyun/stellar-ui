@@ -35,12 +35,12 @@
 				<ste-button style="margin-top: 24rpx" type="primary" @click="setComment">提交</ste-button>
 				<view class="comment-list">
 					<view class="comment-item" v-for="item in commentList" :key="item.id">
-						<view class="comment-time">
-							{{ item.time }}
+						<view class="comment-head">
+							<text class="head-user" v-if="item.user">{{ item.user }}</text>
+							<text class="head-time">{{ item.time }}</text>
 						</view>
 						<view class="comment-content">
-							<text class="content-user">{{ item.user }}</text>
-							<text class="content">{{ item.content }}</text>
+							{{ item.content }}
 						</view>
 					</view>
 				</view>
@@ -162,6 +162,8 @@ export default {
 				success: ({ data }) => {
 					if (data.code === 0) {
 						this.commentList = data.data.reverse();
+						this.commentParams.content = '';
+						this.commentParams.user = '';
 					}
 				},
 			});
@@ -278,21 +280,20 @@ export default {
 						margin-top: 24rpx;
 						padding-top: 24rpx;
 					}
-					.comment-time {
-						font-size: 24rpx;
-						color: #aaa;
-					}
-					.comment-content {
-						margin-top: 12rpx;
-						font-size: 32rpx;
-						.content-user {
+					.comment-head {
+						.head-user {
 							font-zise: 36rpx;
 							padding-right: 12rpx;
 						}
-						.content {
-							font-size: 30rpx;
-							color: #666;
+						.head-time {
+							font-size: 24rpx;
+							color: #aaa;
 						}
+					}
+					.comment-content {
+						margin-top: 12rpx;
+						font-size: 30rpx;
+						color: #666;
 					}
 				}
 			}
