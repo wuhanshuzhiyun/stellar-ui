@@ -33,7 +33,7 @@
 					maxlength="300"
 				/>
 				<ste-button style="margin-top: 24rpx" type="primary" @click="setComment">提交</ste-button>
-				<view class="comment-list">
+				<view class="comment-list" v-show="commentList.length">
 					<view class="comment-item" v-for="item in commentList" :key="item.id">
 						<view class="comment-head">
 							<text class="head-user" v-if="item.user">{{ item.user }}</text>
