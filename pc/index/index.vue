@@ -110,6 +110,7 @@ export default {
 	},
 	methods: {
 		viewContent(url) {
+			this.content = '';
 			// 加载文档
 			uni.request({
 				url,
