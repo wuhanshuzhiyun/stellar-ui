@@ -1,10 +1,10 @@
 <template>
 	<view class="page">
 		<page-nav :autoBack="true" backColor="#000" titleAlignment="2" title="按钮"></page-nav>
-		<view class="wrapper">
-			<view class="demo-block">
+		<view class="content">
+			<view class="demo-item">
 				<view class="title">按钮类型</view>
-				<view class="block-content">
+				<view class="item-block">
 					<view>
 						<ste-button @click="handleClick('默认按钮')">默认按钮</ste-button>
 					</view>
@@ -25,9 +25,9 @@
 					</view>
 				</view>
 			</view>
-			<view class="demo-block">
+			<view class="demo-item">
 				<view class="title">镂空按钮</view>
-				<view class="block-content">
+				<view class="item-block">
 					<view>
 						<ste-button plain @click="handleClick('镂空按钮')">镂空按钮</ste-button>
 					</view>
@@ -45,9 +45,9 @@
 					</view>
 				</view>
 			</view>
-			<view class="demo-block">
+			<view class="demo-item">
 				<view class="title">禁用按钮</view>
-				<view class="block-content">
+				<view class="item-block">
 					<view>
 						<ste-button plain disabled>禁用按钮</ste-button>
 					</view>
@@ -65,9 +65,9 @@
 					</view>
 				</view>
 			</view>
-			<view class="demo-block">
+			<view class="demo-item">
 				<view class="title">按钮形状 & 按钮图标</view>
-				<view class="block-content">
+				<view class="item-block">
 					<view>
 						<ste-button type="warning" plain shape="circle" @click="handleClick('按钮图标')">
 							<ste-icon code="&#xe63b;" color="#f9ae3d" />
@@ -81,9 +81,9 @@
 					</view>
 				</view>
 			</view>
-			<view class="demo-block">
+			<view class="demo-item">
 				<view class="title">自定义颜色</view>
-				<view class="block-content">
+				<view class="item-block">
 					<view>
 						<ste-button
 							color="linear-gradient(to right, rgb(66, 83, 216), rgb(213, 51, 186))"
@@ -106,9 +106,9 @@
 					</view>
 				</view>
 			</view>
-			<view class="demo-block">
+			<view class="demo-item">
 				<view class="title">自定义大小</view>
-				<view class="block-content">
+				<view class="item-block">
 					<view style="width: 100%">
 						<ste-button type="success" size="large" @click="handleClick('超大尺寸')">超大尺寸</ste-button>
 					</view>
@@ -147,8 +147,8 @@ export default {
 <style lang="scss" scoped>
 .page {
 	.wrapper {
-		.demo-block {
-			.block-content {
+		.demo-item {
+			.item-block {
 				> view {
 					margin: 0 8px 8px 0;
 				}

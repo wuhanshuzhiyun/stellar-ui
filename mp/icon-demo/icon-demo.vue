@@ -1,37 +1,37 @@
 <template>
 	<view class="page">
 		<page-nav :autoBack="true" backColor="#000" titleAlignment="2" title="图标"></page-nav>
-		<view class="wrapper">
-			<view class="demo-block">
+		<view class="content">
+			<view class="demo-item">
 				<view class="title">基础用法</view>
-				<view class="block-content" style="justify-content: flex-start">
+				<view class="item-block" style="justify-content: flex-start">
 					<ste-icon code="&#xe6fa;" size="60"></ste-icon>
 				</view>
 			</view>
-			<view class="demo-block">
+			<view class="demo-item">
 				<view class="title">图标颜色</view>
-				<view class="block-content" style="justify-content: flex-start">
+				<view class="item-block" style="justify-content: flex-start">
 					<ste-icon code="&#xe6fa;" color="#1989fa" size="60" marginRight="30"></ste-icon>
 					<ste-icon code="&#xe6fa;" color="#ee0a24" size="60"></ste-icon>
 				</view>
 			</view>
-			<view class="demo-block">
+			<view class="demo-item">
 				<view class="title">图标大小</view>
-				<view class="block-content" style="justify-content: flex-start">
+				<view class="item-block" style="justify-content: flex-start">
 					<ste-icon code="&#xe6fa;" marginRight="30"></ste-icon>
 					<ste-icon code="&#xe6fa;" size="100"></ste-icon>
 				</view>
 			</view>
-			<view class="demo-block">
+			<view class="demo-item">
 				<view class="title">图标粗细</view>
-				<view class="block-content" style="justify-content: flex-start">
+				<view class="item-block" style="justify-content: flex-start">
 					<ste-icon code="&#xe6fa;" size="60" marginRight="30"></ste-icon>
 					<ste-icon code="&#xe6fa;" size="60" weight="bold"></ste-icon>
 				</view>
 			</view>
-			<view class="demo-block">
+			<view class="demo-item">
 				<view class="title">图标边距</view>
-				<view class="block-content" style="justify-content: flex-start">
+				<view class="item-block" style="justify-content: flex-start">
 					<view>
 						<ste-icon code="&#xe6fa;" size="60" marginTop="30"></ste-icon>
 						上边距
@@ -50,35 +50,35 @@
 					</view>
 				</view>
 			</view>
-			<view class="demo-block">
+			<view class="demo-item">
 				<view class="title">内嵌文字</view>
-				<view class="block-content" style="justify-content: flex-start">
+				<view class="item-block" style="justify-content: flex-start">
 					<ste-icon code="&#xe6fa;" size="60" text="图标" textColor="#000"></ste-icon>
 				</view>
 			</view>
-			<view class="demo-block">
+			<view class="demo-item">
 				<view class="title">内嵌文字颜色</view>
-				<view class="block-content" style="justify-content: flex-start">
+				<view class="item-block" style="justify-content: flex-start">
 					<ste-icon code="&#xe6fa;" size="60" text="图标" textColor="red"></ste-icon>
 				</view>
 			</view>
-			<view class="demo-block">
+			<view class="demo-item">
 				<view class="title">内嵌字体大小</view>
-				<view class="block-content" style="justify-content: flex-start">
+				<view class="item-block" style="justify-content: flex-start">
 					<ste-icon code="&#xe6fa;" size="60" text="图标" textColor="#000" marginRight="30"></ste-icon>
 					<ste-icon code="&#xe6fa;" size="60" text="图标" textColor="#000" textSize="30"></ste-icon>
 				</view>
 			</view>
-			<view class="demo-block">
+			<view class="demo-item">
 				<view class="title">内嵌字体粗细</view>
-				<view class="block-content" style="justify-content: flex-start">
+				<view class="item-block" style="justify-content: flex-start">
 					<ste-icon code="&#xe6fa;" size="60" text="图标" textColor="#000" marginRight="30"></ste-icon>
 					<ste-icon code="&#xe6fa;" size="60" text="图标" textColor="#000" textWeight="bold"></ste-icon>
 				</view>
 			</view>
-			<view class="demo-block">
+			<view class="demo-item">
 				<view class="title">图标库</view>
-				<view class="block-content">
+				<view class="item-block">
 					<view v-for="item in glyphs" class="icon-item" @click="copy(item.unicode)">
 						<view class="icon-content">
 							<ste-icon :code="item.unicode" :size="40"></ste-icon>
@@ -130,7 +130,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.block-content {
+.item-block {
 	display: flex;
 	flex-wrap: wrap;
 	row-gap: 60rpx;
