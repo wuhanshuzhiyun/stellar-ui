@@ -32,7 +32,7 @@
 					placeholder="反馈意见"
 					maxlength="300"
 				/>
-				<ste-button style="margin-top: 24rpx" type="primary" @click="setComment">提交</ste-button>
+				<ste-button style="margin-top: 12px" type="primary" @click="setComment">提交</ste-button>
 				<view class="comment-list" v-show="commentList.length">
 					<view class="comment-item" v-for="item in commentList" :key="item.id">
 						<view class="comment-head">
@@ -247,52 +247,52 @@ export default {
 
 		.markdown-view,
 		.comment-view {
-			padding: 24rpx var(--pc-padding);
+			padding: 12px var(--pc-padding);
 		}
 		.comment-view {
 			border-top: 1px solid #ddd;
 			.comment-title {
-				font-size: 42rpx;
+				font-size: 20px;
 				font-weight: 600;
 				border-left: 4px solid #1989fa;
-				padding-left: 12rpx;
+				padding-left: 5px;
 			}
 			.comment-input,
 			.user-input {
-				margin-top: 24rpx;
+				margin-top: 12px;
 				border: 1px solid #ddd;
-				padding: 12rpx;
-				border-radius: 6rpx;
+				padding: 5px;
+				border-radius: 4px;
 			}
 			.user-input {
-				height: 60rpx;
+				height: 30px;
 			}
 			.comment-input {
 				width: 100%;
 			}
 			.comment-list {
 				border: 1px solid #ddd;
-				padding: 24rpx;
-				margin-top: 24rpx;
+				padding: 12px;
+				margin-top: 12px;
 				.comment-item {
 					& + .comment-item {
 						border-top: 1px solid #ddd;
-						margin-top: 24rpx;
-						padding-top: 24rpx;
+						margin-top: 12px;
+						padding-top: 12px;
 					}
 					.comment-head {
 						.head-user {
-							font-zise: 36rpx;
-							padding-right: 12rpx;
+							font-zise: 18px;
+							padding-right: 5px;
 						}
 						.head-time {
-							font-size: 24rpx;
+							font-size: 12px;
 							color: #aaa;
 						}
 					}
 					.comment-content {
-						margin-top: 12rpx;
-						font-size: 30rpx;
+						margin-top: 5px;
+						font-size: 14px;
 						color: #666;
 					}
 				}
