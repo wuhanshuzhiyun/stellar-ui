@@ -53,7 +53,7 @@
 </template>
 
 <script>
-import { mdMap, vueMap, datas } from './mdFiles.js';
+import { mdMap, vueMap, datas } from '../markdown/index.js';
 import md2html from './md2html.js';
 import './mdStyle.scss';
 
@@ -65,7 +65,7 @@ export default {
 	data() {
 		return {
 			content: '',
-			activeName: '介绍',
+			activeName: 'handbook-介绍',
 			datas,
 			viewUrl: '/mp/index/index',
 			commentList: [],

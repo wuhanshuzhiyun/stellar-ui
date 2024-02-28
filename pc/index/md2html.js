@@ -1,7 +1,7 @@
 import MarkdownIt from 'markdown-it';
 import highlight from 'markdown-it-highlightjs';
 import 'highlight.js/styles/default.css';
-import { templateMap } from './mdFiles.js';
+import { templateMap } from '../markdown/index.js';
 
 const md = new MarkdownIt({
 	html: true,
