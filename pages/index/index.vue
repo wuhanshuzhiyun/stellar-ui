@@ -1,5 +1,5 @@
 <template>
-	<view class="page">loading</view>
+	<view class="page"></view>
 </template>
 <script>
 export default {
