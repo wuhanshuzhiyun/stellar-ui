@@ -70,7 +70,6 @@ export function restsFiles() {
 	});
 	const jsons = require.context('@/pc/markdown/', true, /.+\.json$/);
 	const jsonMap = requireFiles(jsons, (path) => path.replace(deg, '$1'));
-	console.log(restsList);
 	const restsData = Object.keys(jsonMap)
 		.map((key) => {
 			const { group, sort } = jsonMap[key];
