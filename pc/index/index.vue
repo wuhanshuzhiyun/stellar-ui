@@ -117,11 +117,13 @@ export default {
 			}).then(async (res) => {
 				this.content = await md2html(res.data);
 				// 渲染完成后，为所有的代码按钮加载复制功能
+				// #ifdef H5
 				this.$nextTick(() => {
 					document.querySelectorAll('.code-copy-button').forEach((btn) => {
 						btn.addEventListener('click', () => this.copy(btn));
 					});
 				});
+				// #endif
 			});
 		},
 		toView(key) {
@@ -130,6 +132,7 @@ export default {
 			history.replaceState({}, '', `/pc/index/index?name=${key}`);
 		},
 		async copy(btn) {
+			// #ifdef H5
 			try {
 				const data = btn.getAttribute('content');
 				uni.setClipboardData({
@@ -155,6 +158,7 @@ export default {
 			} catch (err) {
 				console.error('无法复制文本: ', err);
 			}
+			// #endif
 		},
 		getComment(name) {
 			uni.request({

@@ -7,17 +7,24 @@ const md = new MarkdownIt({
 	html: true,
 	xhtmlOut: true,
 });
-const parser = new DOMParser();
 
 // 使用 markdown-it-highlightjs 插件
 md.use(highlight);
 
+// #ifdef H5
+const parser = new DOMParser();
+// #endif
 /**
  * @param {string} mdstr md的内容字符串
  * @return {string} str类型的html字符串
  */
 function _md2html(mdstr) {
 	const htmlStr = md.render(mdstr);
+	// #ifndef H5
+	return htmlStr;
+	// #endif
+
+	// #ifdef H5
 	const doc = parser.parseFromString(htmlStr, 'text/html');
 	const pres = doc.querySelectorAll('body>pre');
 	pres.forEach((pre) => {
@@ -40,12 +47,14 @@ function _md2html(mdstr) {
 	});
 	// 返回转换后的html
 	return doc.body.innerHTML;
+	// #endif
 }
 
 // 插入公共模版文档内容
 async function insetTemplateMdStr(htmlStr) {
 	const kReg = /\<p\>\{\{(\w+)\}\}\<\/p\>/;
 	let result = htmlStr;
+	// #ifdef H5
 	// 查找所有的{{}}
 	while (kReg.test(result)) {
 		let key = result.match(kReg);
@@ -58,6 +67,7 @@ async function insetTemplateMdStr(htmlStr) {
 		const md = await uni.request({ url });
 		result = result.replace(kReg, _md2html(md.data));
 	}
+	// #endif
 	return result;
 }
 
