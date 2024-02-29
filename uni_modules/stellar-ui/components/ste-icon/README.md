@@ -12,7 +12,7 @@
 可以直接传入对应的名称来使用。
 
 ```html
-<ste-icon code="&#e6fa;"></ste-icon>
+<ste-icon code="&#xe653;"></ste-icon>
 ```
 
 ### 图标颜色
@@ -20,8 +20,8 @@
 通过 `color` 属性来设置图标的颜色。
 
 ```html
-<ste-icon code="&#xe6fa;" color="#1989fa"></ste-icon>
-<ste-icon code="&#xe6fa;" color="#ee0a24"></ste-icon>
+<ste-icon code="&#xe64b;" color="#1989fa"></ste-icon>
+<ste-icon code="&#xe64b;" color="#ee0a24"></ste-icon>
 ```
 
 ### 图标大小
@@ -29,55 +29,9 @@
 通过 `size` 属性来设置图标的尺寸大小， 单位为rpx。
 ```html
 <!--默认size 28-->
-<ste-icon code="&#xe6fa;"></ste-icon>
-<ste-icon code="&#xe6fa;" size="100"></ste-icon>
-```
-### 图标粗细
-
-通过 `weight` 属性来设置图标的粗细。
-```html
-<!--默认weight normal-->
-<ste-icon code="&#xe6fa;" ></ste-icon>
-<ste-icon code="&#xe6fa;" weight="bold"></ste-icon>
-```
-### 图标边距
-
-通过 `marginLeft marginRight marginTop marginBottom` 属性来设置图标的边距。
-```html
-<ste-icon code="&#xe6fa;" marginTop="30"></ste-icon>
-<ste-icon code="&#xe6fa;" marginRight="30"></ste-icon>
-<ste-icon code="&#xe6fa;" marginBottom="30"></ste-icon>
-<ste-icon code="&#xe6fa;" marginLeft="30"></ste-icon>
-```
-### 内嵌文字
-
-通过 `text` 属性来设置图标的内嵌文字。
-```html
-<ste-icon code="&#xe6fa;" text="图标"></ste-icon>
-```
-### 内嵌文字颜色
-
-通过 `textColor` 属性来设置图标的内嵌文字颜色。
-```html
-<ste-icon code="&#xe6fa;" text="图标" textColor="red"></ste-icon>
-```
-
-### 内嵌字体大小
-
-通过 `textSize` 属性来设置图标的内嵌字体大小， 单位为rpx。
-```html
-<!--默认textSize 24-->
-<ste-icon code="&#xe6fa;" text="图标" ></ste-icon>
-<ste-icon code="&#xe6fa;" text="图标" textSize="30"></ste-icon>
-```
-
-### 内嵌字体粗细
-
-通过 `textWeight` 属性来设置图标的粗细。
-```html
-<!--默认textWeight normal-->
-<ste-icon code="&#xe6fa;" text="图标" ></ste-icon>
-<ste-icon code="&#xe6fa;" text="图标" textWeight="bold"></ste-icon>
+<ste-icon code="&#xe628;"></ste-icon>
+<ste-icon code="&#xe628;" size="50"></ste-icon>
+<ste-icon code="&#xe628;" size="70"></ste-icon>
 ```
 
 ### API
@@ -92,10 +46,6 @@
 | marginRight	|右外边距（单位rpx）		|Number String	|0		|	-		|-			|
 | marginTop		|上外边距（单位rpx）		|Number String	|0		|	-		|-			|
 | marginBottom	|下外边距（单位rpx）		|Number String	|0		|	-		|-			|
-| text			|内嵌文字				|String			|-		|	-		|-			|
-| textColor		|内嵌文字颜色				|String			|#fff	|	-		|-			|
-| textSize		|内嵌字体大小	（单位rpx）	|Number String	|24		|	-		|-			|
-| textWeight	|内嵌字体粗细				|String			|normal	|normal/bold|-			|
 
 
 #### Events
