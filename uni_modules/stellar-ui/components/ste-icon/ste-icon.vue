@@ -1,7 +1,6 @@
 <template>
 	<div class="page-iconfont" :style="[computedCssVar]" @click="handleClick">
 		<view class="iconfont">{{ computedCode }}</view>
-		<div class="text">{{ text }}</div>
 	</div>
 </template>
 
