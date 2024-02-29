@@ -7,6 +7,20 @@ let utils = {
 		let px = (parseInt(rpx) * windowWidth) / 750;
 		return `${px}px`;
 	},
+
+	/**
+	 * 背景值转样式
+	 * @param {String} value
+	 */
+	bg2style(value) {
+		if (!value) return {};
+		if (value.indexOf('url(') === 0) {
+			return { backgroundImage: value };
+		} else {
+			return { backgroundColor: value };
+		}
+	},
+
 	/**节流
 	 *@fn 要节流的方法
 	 *@args 要节流方法的参数，如果最后一个参数是 {delay:2000}，则该参数为节流时间参数，不记入方法参数

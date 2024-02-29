@@ -1,435 +1,388 @@
 <template>
-	<view
-		class="ste-search"
-		:class="[disabled ? 'ste-search-disabled' : '']"
-		@tap="clickHandler"
-		:style="[
-			{
-				margin: margin,
-			},
-		]"
-	>
-		<view
-			class="ste-search-content"
-			:style="{
-				backgroundColor: bgColor,
-				borderRadius: shape == 'round' ? '100px' : '4px',
-				borderColor: borderColor,
-			}"
-		>
-			<template v-if="$slots.label || label !== null">
-				<slot name="label">
-					<text class="ste-search-content-label">{{ label }}</text>
-				</slot>
-			</template>
-			<view class="ste-search-content-icon">
-				<ste-icon
-					@tap="clickIcon"
-					:size="searchIconSize"
-					:name="searchIcon"
-					:color="searchIconColor ? searchIconColor : color"
-					:code="searchIcon"
-				></ste-icon>
+	<view class="root" :style="[comStyleVar, comBackground]" @click="onClick">
+		<view class="content">
+			<view class="icon-box">
+				<ste-icon code="&#xe66d;" color="#BBBBBB" />
 			</view>
-			<input
-				confirm-type="search"
-				@blur="blur"
-				:value="value"
-				@confirm="search"
-				@input="inputChange"
-				:disabled="disabled"
-				@focus="getFocus"
-				:focus="focus"
-				:maxlength="maxlength"
-				placeholder-class="ste-search-content-input-placeholder"
-				:placeholder="placeholder"
-				:placeholder-style="`color: ${placeholderColor}`"
-				class="ste-search-content-input"
-				type="text"
-				:style="[
-					{
-						textAlign: inputAlign,
-						color: color,
-						backgroundColor: bgColor,
-						height: height + 'px',
-					},
-					inputStyle,
-				]"
-			/>
+			<view class="input-box" v-if="!hiddenInput">
+				<input
+					class="search-input"
+					placeholder-class="search-input-placeholder"
+					:disabled="disabled"
+					:placeholder="comPlaceholder"
+					:style="{ paddingRight: comShowClear ? '48rpx' : '8rpx' }"
+					v-model="dataValue"
+					@input="onInput"
+					@confirm="onSearch"
+					@focus="onFocus"
+					@blur="onBlur"
+				/>
+				<swiper
+					v-if="comShowSwitch"
+					class="placeholder-list"
+					:current="switchIndex"
+					autoplay
+					:interval="interval"
+					circular
+					vertical
+					@change="onSwitchChange"
+				>
+					<swiper-item class="placeholder-item" v-for="(item, i) in hotWords" :key="i">
+						{{ item }}
+					</swiper-item>
+				</swiper>
+				<view v-if="comShowClear" class="clear-icon" @click="onClear">
+					<ste-icon code="&#xe68b;" color="#BBBBBB" size="32rpx" />
+				</view>
+			</view>
+			<view v-if="!comHiddenLine" class="secrch-line" :class="disabled ? 'disabled' : ''" />
 			<view
-				class="ste-search-content-icon ste-search-content-close"
-				v-if="keyword && clearabled && focused"
-				@tap="clear"
+				v-if="!hiddenBtn"
+				class="search-button"
+				:class="disabled ? 'disabled' : ''"
+				:style="[comBtnBg]"
+				@click="onSearch"
 			>
-				<ste-icon code="&#xe6a7;" color="#ffffff" size="16" />
+				{{ btnText }}
 			</view>
 		</view>
-		<text
-			:style="[actionStyle]"
-			class="ste-search-action"
-			:class="[(showActionBtn || show) && 'ste-search-action-active']"
-			@tap.stop.prevent="custom"
-		>
-			{{ actionText }}
-		</text>
+		<view class="nav-box" v-if="type === 'nav'" />
 	</view>
 </template>
 
 <script>
+import utils from '../../utils/utils.js';
 /**
- * ste-search 搜索框
- * @description 搜索组件，集成了常见搜索框所需功能，用户可以一键引入，开箱即用。
+ * ste-search 搜索
+ * @description 搜索组件
  * @tutorial http://172.16.114.51:5050/pc/index/index?name=ste-search
- * @property {String}			shape				搜索框形状（默认 'round' ）
- * @value round 圆形
- * @value normal 方形带圆角
- * @property {String}			bgColor				搜索框背景颜色（默认 '#f2f2f2'）
- * @property {String}			placeholder			占位文字内容（默认 '请输入关键字'）
- * @property {Boolean}			clearabled			是否启用清除控件（默认 true）
- * @property {Boolean}			focus				是否自动获得焦点（默认 false）
- * @property {Boolean}			showAction			是否显示右侧控件（默认 true）
- * @property {Object}			actionStyle			右侧控件的样式，对象形式
- * @property {String}			actionText			右侧控件文字（默认 '搜索'）
- * @property {String}			inputAlign			输入框内容水平对齐方式 （默认 'left'）
- * @value left 居左
- * @value center 居中
- * @value right 居右
- * @property {Object}			inputStyle			自定义输入框样式，对象形式
- * @property {Boolean}			disabled			是否启用输入框（默认 false ）
- * @property {String}			borderColor			边框颜色，配置了颜色，才会有边框 (默认 'transparent')
- * @property {String}			searchIconColor		搜索图标的颜色，默认同输入框字体颜色 (默认 '#909399')
- * @property {Number | String}	searchIconSize      搜索图标的字体，默认22
- * @property {String}			color				输入框字体颜色（默认 '#606266'）
- * @property {String}			placeholderColor	placeholder的颜色（默认 '#909399'）
- * @property {String}			searchIcon			输入框左边的图标，为ste-icon图标名称的code
- * @property {String}			margin				组件与其他上下左右元素之间的距离，带单位的字符串形式，如"30px"   (默认 '0')
- * @property {String}			value				输入框初始值
- * @property {String | Number}	maxlength			输入框最大能输入的长度，-1为不限制长度  (默认 '-1')
- * @property {String | Number}	height				输入框高度，单位px（默认 64）
- * @property {String | Number}	label				搜索框左边显示内容
- *
- * @event {Function} change 输入框内容发生变化时触发
- * @event {Function} search 用户确定搜索时触发，用户按回车键，或者手机键盘右下角的"搜索"键时触发
- * @event {Function} custom 用户点击右侧控件时触发
- * @event {Function} clear 用户点击清除按钮时触发
- * @example <ste-search placeholder="请搜索" v-model="keyword"></ste-search>
+ * @property {String}			type				组件类型
+ * @value default	正常搜索{String}
+ * @value nav 		导航栏{String}
+ * @property {String}			value				当前值（支持v-model双向绑定）
+ * @property {String}			placeholder				占位提示符
+ * @property {String}			placeholderColor	占位符字体颜色，默认值 #BBBBBB
+ * @property {String}			inputColor	输入框文字颜色，默认值 #000000
+ * @property {String[]}		hotWords	热词列表，默认值 []
+ * @property {Number}			interval	热词列表自动切换时间间隔，默认值 3000
+ * @property {Boolean}		disabled	是否禁用状态，默认值 false
+ * @property {Boolean}		hiddenLine	是否隐藏分割线 ，默认值 false
+ * @property {Boolean}		hiddenBtn	是否隐藏搜索按钮 ，默认值 false
+ * @property {String}			btnText	搜索按钮文字 ，默认值 搜索
+ * @property {String}			btnTextColor	搜索按钮文字颜色 ，默认值 #0090FF
+ * @property {String}			btnBg	搜索按钮背景
+ * @property {Boolean}		hiddenInput	是否隐藏输入框，默认值 false
+ * @property {Boolean}		clearable	是否可清空，默认值 true
+ * @property {String}			borderColor	边框颜色，默认值 #eeeeee66
+ * @property {String}			background	背景，默认值 #ffffff
+ * @property {Number}			height	高度，单位rpx，默认值 64
+ * @property {Number}			radius	圆角弧度，单位rpx，默认值 32
+
+ * @event {Function}			input 输入事件
+ * @event {Function}			focus 聚焦焦点事件
+ * @event {Function}			blur 失去焦点事件
+ * @event {Function}			search 确定搜索时触发
+ * @event {Function}			clear 点击清除按钮后触发
+ * @event {Function}			click 点击事件
  */
 export default {
 	group: '表单组件',
 	title: 'Search 搜索',
 	name: 'ste-search',
 	props: {
-		// 搜索框形状，round-圆形，square-方形
-		shape: {
+		// 组件类型,"default"：正常搜索，"nav":导航栏
+		type: {
 			type: String,
-			default: 'round',
+			default: () => 'default',
 		},
-		// 搜索框背景色，默认值#f2f2f2
-		bgColor: {
+		// 当前值（支持v-model双向绑定）
+		value: {
 			type: String,
-			default: '#f2f2f2',
+			default: () => '',
 		},
-		// 占位提示文字
+		// 占位提示符
 		placeholder: {
 			type: String,
-			default: '请输入关键字',
+			default: () => '',
 		},
-		// 是否启用清除控件
-		clearabled: {
-			type: Boolean,
-			default: true,
-		},
-		// 是否自动聚焦
-		focus: {
-			type: Boolean,
-			default: false,
-		},
-		// 是否在搜索框右侧显示取消按钮
-		showAction: {
-			type: Boolean,
-			default: true,
-		},
-		// 右边控件的样式
-		actionStyle: {
-			type: Object,
-			default: () => ({}),
-		},
-		// 取消按钮文字
-		actionText: {
+		// 占位符字体颜色
+		placeholderColor: {
 			type: String,
-			default: '搜索',
+			default: () => '#bbbbbb',
 		},
-		// 输入框内容对齐方式，可选值为 left|center|right
-		inputAlign: {
+		// 输入框文字颜色
+		inputColor: {
 			type: String,
-			default: 'left',
+			default: () => '#000000',
 		},
-		// input输入框的样式，可以定义文字颜色，大小等，对象形式
-		inputStyle: {
-			type: Object,
-			default: () => ({}),
+		// 热词列表
+		hotWords: {
+			type: Array,
+			default: () => [],
 		},
-		// 是否启用输入框
+		// 热词列表自动切换时间间隔
+		interval: {
+			type: Number,
+			default: () => 3000,
+		},
+		// 是否禁用状态
 		disabled: {
 			type: Boolean,
-			default: false,
+			default: () => false,
+		},
+		// 是否隐藏分割线
+		hiddenLine: {
+			type: Boolean,
+			default: () => false,
+		},
+		// 是否隐藏搜索按钮
+		hiddenBtn: {
+			type: Boolean,
+			default: () => false,
+		},
+		// 搜索按钮文字
+		btnText: {
+			type: String,
+			default: () => '搜索',
+		},
+		// 搜索按钮文字颜色
+		btnTextColor: {
+			type: String,
+			default: () => '#0090FF',
+		},
+		// 搜索按钮背景
+		btnBg: {
+			type: String,
+		},
+		// 是否隐藏输入框
+		hiddenInput: {
+			type: Boolean,
+			default: () => false,
+		},
+		// 是否可清空
+		clearable: {
+			type: Boolean,
+			default: () => true,
 		},
 		// 边框颜色
 		borderColor: {
 			type: String,
-			default: 'transparent',
+			default: () => '#eeeeee66',
 		},
-		// 搜索图标的颜色，默认同输入框字体颜色
-		searchIconColor: {
+		// 背景
+		background: {
 			type: String,
-			default: '#909399',
+			default: () => '#ffffff',
 		},
-		// 输入框字体颜色
-		color: {
-			type: String,
-			default: '#606266',
-		},
-		// placeholder的颜色
-		placeholderColor: {
-			type: String,
-			default: '#909399',
-		},
-		// 左边输入框的图标，为ste-icon的code
-		searchIcon: {
-			type: String,
-			default: '&#xe66d;',
-		},
-		searchIconSize: {
-			type: [Number, String],
-			default: 22,
-		},
-		// 组件与其他上下左右元素之间的距离，带单位的字符串形式，如"30px"、"30px 20px"等写法
-		margin: {
-			type: [Number, String],
-			default: 0,
-		},
-		// 输入框的初始化内容
-		value: {
-			type: String,
-			default: '',
-		},
-		// 输入框最大能输入的长度，-1为不限制长度(来自uniapp文档)
-		maxlength: {
-			type: [String, Number],
-			default: -1,
-		},
-		// 搜索框高度，单位px
+		// 高度
 		height: {
-			type: [String, Number],
-			default: 32,
+			type: Number,
+			default: () => 64,
 		},
-		// 搜索框左侧文本
-		label: {
-			type: [String, Number, null],
-			default: null,
+		// 圆角弧度
+		radius: {
+			type: Number,
+			default: () => 32,
 		},
+	},
+	model: {
+		prop: 'value',
+		event: 'input',
 	},
 	data() {
 		return {
-			keyword: '',
-			showClear: false, // 是否显示右边的清除图标
-			show: false,
-			// 标记input当前状态是否处于聚焦中，如果是，才会显示右侧的清除控件
-			focused: this.focus,
-			// 绑定输入框的值
-			// inputValue: this.value
+			dataValue: '',
+			switchIndex: 0,
 		};
 	},
-	watch: {
-		keyword(nVal) {
-			// 双向绑定值，让v-model绑定的值双向变化
-			this.$emit('input', nVal);
-			// 触发change事件，事件效果和v-model双向绑定的效果一样，让用户多一个选择
-			this.$emit('change', nVal);
+	computed: {
+		comStyleVar() {
+			return {
+				'--root-height': utils.rpx2px(this.height),
+				'--root-radius': utils.rpx2px(this.radius),
+				'--btn-text-color': this.btnTextColor,
+				'--placeholder-color': this.placeholderColor,
+				'--input-color': this.inputColor,
+				'--border-color': this.borderColor,
+			};
 		},
-		value: {
-			immediate: true,
-			handler(nVal) {
-				this.keyword = nVal;
-			},
+		comPlaceholder() {
+			return this.hotWords?.length ? '' : this.placeholder;
+		},
+		comHiddenLine() {
+			return this.hiddenLine || this.hiddenBtn;
+		},
+		comShowClear() {
+			return this.clearable && this.dataValue;
+		},
+		comShowSwitch() {
+			return this.hotWords?.length && !this.dataValue;
+		},
+		comBackground() {
+			return utils.bg2style(this.background);
+		},
+		comBtnBg() {
+			return utils.bg2style(this.btnBg);
 		},
 	},
-	computed: {
-		showActionBtn() {
-			return this.showAction;
+	watch: {
+		value: {
+			handler(val) {
+				console.log('value', val);
+				this.dataValue = val;
+			},
+			immediate: true,
+		},
+		hotWords() {
+			this.switchIndex = 0;
 		},
 	},
 	methods: {
-		inputChange(e) {
-			this.keyword = e.detail.value;
+		onInput() {
+			this.$emit('input', this.dataValue);
 		},
-		// 清空输入
-		// 也可以作为用户通过this.$refs形式调用清空输入框内容
-		clear() {
-			this.keyword = '';
-			// 延后发出事件，避免在父组件监听clear事件时，value为更新前的值(不为空)
-			this.$nextTick(() => {
-				this.$emit('clear');
-			});
+		onFocus() {
+			this.$emit('focus', this.dataValue);
 		},
-		// 确定搜索
-		search(e) {
-			this.$emit('search', e.detail.value);
-			try {
-				// 收起键盘
-				uni.hideKeyboard();
-			} catch (e) {}
+		onBlur() {
+			this.$emit('blur', this.dataValue);
 		},
-		// 点击右边自定义按钮的事件
-		custom() {
-			this.$emit('custom', this.keyword);
-			try {
-				// 收起键盘
-				uni.hideKeyboard();
-			} catch (e) {}
-		},
-		// 获取焦点
-		getFocus() {
-			this.focused = true;
-			if (this.showAction) {
-				this.show = true;
+		onSearch() {
+			if (this.disabled) return;
+			let searchValue = this.dataValue;
+			if (!searchValue && this.hotWords.length) {
+				searchValue = this.hotWords[this.switchIndex];
 			}
-			this.$emit('focus', this.keyword);
+			this.$emit('search', searchValue);
 		},
-		// 失去焦点
-		blur() {
-			// 最开始使用的是监听图标@touchstart事件，自从hx2.8.4后，此方法在微信小程序出错
-			// 这里改为监听点击事件，手点击清除图标时，同时也发生了@blur事件，导致图标消失而无法点击，这里做一个延时
-			setTimeout(() => {
-				this.focused = false;
-			}, 100);
-			this.show = false;
-			this.$emit('blur', this.keyword);
+		onSwitchChange(v) {
+			this.switchIndex = v.detail.current;
 		},
-		// 点击搜索框，只有disabled=true时才发出事件，因为禁止了输入，意味着是想跳转真正的搜索页
-		clickHandler() {
-			if (this.disabled) {
-				this.$emit('click');
-			}
+		onClick(v) {
+			this.$emit('click', this.dataValue);
 		},
-		// 点击左边图标
-		clickIcon() {
-			this.$emit('clickIcon');
+		onClear() {
+			this.dataValue = '';
+			this.$emit('input', this.dataValue);
+			this.$emit('clear');
 		},
 	},
 };
 </script>
 
 <style lang="scss" scoped>
-$ste-main-color: #303133;
-$ste-tips-color: #909193;
+.root {
+	width: 100%;
+	height: var(--root-height);
+	background-color: #fff;
+	border-radius: var(--root-radius);
+	border: 1rpx solid var(--border-color);
+	padding: 0 16rpx;
+	position: relative;
 
-$ste-search-content-padding: 0 10px !default;
-$ste-search-label-color: $ste-main-color !default;
-$ste-search-label-font-size: 14px !default;
-$ste-search-label-margin: 0 4px !default;
-$ste-search-close-size: 20px !default;
-$ste-search-close-radius: 100px !default;
-$ste-search-close-bgColor: #c6c7cb !default;
-$ste-search-close-transform: scale(0.82) !default;
-$ste-search-input-font-size: 14px !default;
-$ste-search-input-margin: 0 5px !default;
-$ste-search-input-color: $ste-main-color !default;
-$ste-search-input-placeholder-color: $ste-tips-color !default;
-$ste-search-action-font-size: 14px !default;
-$ste-search-action-color: $ste-main-color !default;
-$ste-search-action-width: 0 !default;
-$ste-search-action-active-width: 40px !default;
-$ste-search-action-margin-left: 5px !default;
-
-/* #ifdef H5 */
-// iOS15在H5下，hx的某些版本，input type=search时，会多了一个搜索图标，进行移除
-[type='search']::-webkit-search-decoration {
-	display: none;
-}
-/* #endif */
-
-.ste-search {
-	display: flex;
-	flex-direction: row;
-
-	align-items: center;
-	flex: 1;
-
-	&.ste-search-disabled {
-		.ste-search-content-input {
-			pointer-events: none;
-		}
+	&,
+	view {
+		box-sizing: border-box;
 	}
-
-	&-content {
+	.content {
+		width: 100%;
+		height: 100%;
 		display: flex;
 		flex-direction: row;
 		align-items: center;
-		padding: $ste-search-content-padding;
-		flex: 1;
-		justify-content: space-between;
-		border-width: 1px;
-		border-color: transparent;
-		border-style: solid;
-		overflow: hidden;
-
-		&-icon {
+		position: relative;
+		.icon-box {
+			width: 28rpx;
+			height: 28rpx;
+			margin-right: 16rpx;
+			flex-shrink: 0;
 			display: flex;
-			flex-direction: row;
-			align-items: center;
-		}
-
-		&-label {
-			color: $ste-search-label-color;
-			font-size: $ste-search-label-font-size;
-			margin: $ste-search-label-margin;
-		}
-
-		&-close {
-			width: $ste-search-close-size;
-			height: $ste-search-close-size;
-			border-top-left-radius: $ste-search-close-radius;
-			border-top-right-radius: $ste-search-close-radius;
-			border-bottom-left-radius: $ste-search-close-radius;
-			border-bottom-right-radius: $ste-search-close-radius;
-			background-color: $ste-search-close-bgColor;
-			display: flex;
-			flex-direction: row;
 			align-items: center;
 			justify-content: center;
-			transform: $ste-search-close-transform;
+
+			.image {
+				width: 100%;
+				height: 100%;
+			}
 		}
-
-		&-input {
+		.input-box {
+			position: relative;
 			flex: 1;
-			font-size: $ste-search-input-font-size;
-			line-height: 1;
-			margin: $ste-search-input-margin;
-			color: $ste-search-input-color;
+			height: 100;
+			.search-input {
+				width: 100%;
+				height: 100%;
+				font-size: 28rpx;
+				color: var(--input-color);
 
-			&-placeholder {
-				color: $ste-search-input-placeholder-color;
+				.search-input-placeholder {
+					color: var(--placeholder-color);
+					font-family: Alibaba PuHuiTi 2, Alibaba PuHuiTi 20;
+					font-weight: normal;
+				}
+			}
+
+			.placeholder-list {
+				width: 100%;
+				height: 100%;
+				pointer-events: none;
+				position: absolute;
+				top: 0;
+				left: 0;
+				.placeholder-item {
+					font-size: 28rpx;
+					line-height: 40rpx;
+					color: var(--placeholder-color);
+					font-family: Alibaba PuHuiTi 2, Alibaba PuHuiTi 20;
+					font-weight: normal;
+				}
+			}
+			.clear-icon {
+				width: 32rpx;
+				height: 32rpx;
+				display: flex;
+				align-items: center;
+				justify-content: center;
+				position: absolute;
+				right: 8rpx;
+				top: 50%;
+				z-index: 2;
+				transform: translateY(-50%);
+			}
+		}
+		.secrch-line {
+			margin-left: 16rpx;
+			width: 4rpx;
+			flex-shrink: 0;
+			height: 24rpx;
+			background-color: var(--btn-text-color);
+			&.disabled {
+				background: #bbbbbb;
+			}
+		}
+		.search-button {
+			padding: 0 8rpx 0 16rpx;
+			height: 40rpx;
+			font-size: 28rpx;
+			line-height: 40rpx;
+			flex-shrink: 0;
+			text-align: center;
+			font-family: Alibaba PuHuiTi 2, Alibaba PuHuiTi 20;
+			font-weight: normal;
+			color: var(--btn-text-color);
+			border-radius: 20rpx;
+			&.disabled {
+				color: #bbbbbb;
 			}
 		}
 	}
-
-	&-action {
-		font-size: $ste-search-action-font-size;
-		color: $ste-search-action-color;
-		width: $ste-search-action-width;
-		overflow: hidden;
-		transition-property: width;
-		transition-duration: 0.3s;
-		/* #ifndef APP-NVUE */
-		white-space: nowrap;
-		/* #endif */
-		text-align: center;
-
-		&-active {
-			width: $ste-search-action-active-width;
-			margin-left: $ste-search-action-margin-left;
-		}
+	.nav-box {
+		position: absolute;
+		width: 100%;
+		height: 100%;
+		top: 0;
+		left: 0;
+		z-index: 2;
 	}
 }
 </style>
