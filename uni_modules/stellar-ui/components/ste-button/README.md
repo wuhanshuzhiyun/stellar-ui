@@ -7,83 +7,79 @@
 
 
 ### 代码演示
-#### 按钮类型
-通过`type`设置按钮的类型，主要区别是按钮的颜色，默认值是`info`
+#### 按钮大小
+通过`mode`设置按钮的大小，默认值是`200`
 ```html
-<ste-button >默认按钮</ste-button>
-<ste-button type="success" >成功按钮</ste-button>
-<ste-button type="error" >危险按钮</ste-button>
-<ste-button type="primary" >主要按钮</ste-button>
-<ste-button type="warning" >警告按钮</ste-button>
+<ste-button :mode="400">超大按钮</ste-button>
+<ste-button :mode="300" >大按钮</ste-button>
+<ste-button>中按钮</ste-button>
+<ste-button :mode="100" >小按钮</ste-button>
+```
+
+#### 非圆角按钮
+通过`round`设置按钮是否镂空，默认值是`true`
+```html
+<ste-button :round="false">非圆角按钮</ste-button>
 ```
 
 #### 镂空按钮
-通过`plain`设置按钮是否镂空，默认值是`false`
 ```html
-<ste-button plain>镂空按钮</ste-button>
-<ste-button plain type="success" >成功按钮</ste-button>
-<ste-button plain type="error" >危险按钮</ste-button>
-<ste-button plain type="primary" >主要按钮</ste-button>
-<ste-button plain type="warning" >警告按钮</ste-button>
+<ste-button background="transparent" borderColor="#0091FF" color="#0091FF">镂空按钮</ste-button>
 ```
 
-#### 禁用按钮
-通过`disabled`设置按钮是否禁用，默认值是`false`
+#### 禁止按钮
+通过`disabled`设置按钮是否镂空，默认值是`false`
 ```html
-<ste-button disabled>禁用按钮</ste-button>
-<ste-button disabled type="success" >成功按钮</ste-button>
-<ste-button disabled type="error" >危险按钮</ste-button>
-<ste-button disabled type="primary" >主要按钮</ste-button>
-<ste-button disabled type="warning" >警告按钮</ste-button>
+<ste-button disabled>禁止按钮</ste-button>
 ```
 
-#### 按钮形状 & 按钮图标
-- 通过`shape`设置按钮的形状，`square`(默认)方形带圆角，`circle`半圆形
-- 通过自定义按钮内部的内容来实现自定义图标
+#### 自适应宽度
+`width`设置值为`100%`，此时按钮的宽度由父容器的宽度决定
 ```html
-<ste-button type="warning" plain shape="circle">
-	<ste-icon code="&#xe63b;" color="#f9ae3d" />
-	<text style="margin-left: 8px">按钮图标</text>
+<ste-button width="100%" >自适应宽度</ste-button>
+```
+
+#### 超长文字
+```html
+<ste-button width="100%">提交-按钮按钮按钮按钮按钮按钮按钮按钮按钮按钮按钮按钮</ste-button>
+```
+
+#### 自定义背景
+```html
+<ste-button background="#FF1E19" >领取</ste-button>
+<ste-button background="transparent" borderColor="#FF1E19" color="#FF1E19">领取</ste-button>
+```
+
+#### 带图标按钮
+```html
+<ste-button background="transparent" borderColor="#0091FF" color="#0091FF">
+	<ste-icon code="&#xe6ae;" :size="28" color="#0090FF" :marginRight="8"></ste-icon>
+	<text>购卡</text>
 </ste-button>
-
-<ste-button type="success" plain shape="circle" >按钮形状</ste-button>
-```
-
-#### 自定义颜色
-```html
-<ste-button color="linear-gradient(to right, rgb(66, 83, 216), rgb(213, 51, 186))">渐变色按钮</ste-button>
-<ste-button color="linear-gradient(to right, rgb(220, 194, 11), rgb(4, 151, 99))">渐变色按钮</ste-button>
-<ste-button color="rgb(10, 185, 156)"">青绿色按钮</ste-button>
-```
-
-#### 自定义大小
-通过`size`设置按钮的大小，默认值是`normal`
-```html
-<ste-button size="large" type="success" >超大尺寸</ste-button>
-<ste-button size="normal" type="error" >普通尺寸</ste-button>
-<ste-button size="small" type="primary" >小型尺寸</ste-button>
-<ste-button size="mini" type="warning" >超小尺寸</ste-button>
 ```
 
 ### API
 #### Props
-|属性名		|说明									|类型	|默认值	|可选值										|支持版本	|
-|-----		|-----									|-----	|-----	|-----										|-----		|
-|hairline	|是否显示按钮的细边框						|Boolean|true	|true / false								|-			|
-|type		|按钮的样式类型							|String	|info	|info / success / error/ primary / warning	|-			|
-|size		|按钮的大小								|String	|normal	|large / normal / small / mini				|-			|
-|shape		|按钮外观形状								|String	|square	|circle / square							|-			|
-|plain		|按钮是否镂空，背景色透明					|Boolean|false	|true / false								|-			|
-|disabled	|是否禁用								|Boolean|false	|true / false								|-			|
-|color		|按钮颜色，支持传入linear-gradient渐变色	|String	|-		|-											|-			|
-
+| 属性中文名		| 属性英文名		| 数据类型			| 默认值		| 可选值																| 说明			|
+| ---			| ---			| ---				| ---		| ---																| ---			|
+| 尺寸			| mode			| Number			| 200		| 100：小，200：中，300：大，400：超大								| -				|
+| 文本颜色		| color			| String			| "#fffff"	| -																	| -				|
+| 背景			| background	| String			| "#0091FF"	| -																	| -				|
+| 边框颜色		| borderColor	| String			| -			| -																	| -				|
+| 宽度			| width			| Number / String	| "auto"	| "auto"： 自适应宽度，"100%"：填满，{{Number}}：自定义宽度 单位rpx	| -				|
+| 是否圆角按钮	| round			| Boolean			| true		| -																	| 圆角度数(48)	|
+| 是否禁用状态	| disabled		| Boolean			| false		| -																	| -				|
+| 是否加载中状态| loading		| Boolean			| false		| -																	| -				|
 
 #### Events
-|事件名	|说明			|类型	|默认值	|可选值	|支持版本	|
-|-----	|-----			|-----	|-----	|-----	|-----		|
-|click	|按钮点击回调事件	|Handler|-		|-		|-			|
+| 事件中文名| 事件英文名| 事件参数	| 备注	|
+| ---		| ---		| ---		| ---	|
+| 点击		| click		| -			| -		|
 
 #### Solts
-| 名称	|说明		|支持版本	|
-|-----	|-----		|-----		|
-|default|按钮内容	|-			|
+| 插槽中文名| 插槽英文名	| 插槽参数	| 备注		|
+| ---		| ---		| ---		| ---		|
+| 默认		| default	|-			| 按钮内容	|
+
+
+{{fuyuwei}}
