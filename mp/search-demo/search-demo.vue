@@ -3,58 +3,48 @@
 		<page-nav :autoBack="true" backColor="#000" titleAlignment="2" title="搜索"></page-nav>
 		<view class="content">
 			<view class="demo-item">
-				<view class="title">基础功能</view>
+				<view class="title">基础用法</view>
 				<view class="item-block">
 					<ste-search @input="onInput" @search="onSearch" />
 				</view>
-			</view>
-			<view class="demo-item">
-				<view class="title">双向绑定</view>
 				<view class="item-block">
 					<ste-search v-model="value" @search="onSearch" />
 				</view>
-			</view>
-			<view class="demo-item">
-				<view class="title">占位符</view>
 				<view class="item-block">
-					<ste-search placeholder="搜索商品" @input="onInput" @search="onSearch" />
+					<ste-search placeholder="搜索商品" @search="onSearch" />
 				</view>
-			</view>
-			<view class="demo-item">
-				<view class="title">热词列表</view>
-
-				<view class="item-block">
-					<ste-search :hot-words="hotWords" @input="onInput" @search="onSearch" />
-				</view>
-				<view class="item-block">
-					<ste-search :hot-words="hotWords" :interval="1000" @input="onInput" @search="onSearch" />
-				</view>
-			</view>
-			<view class="demo-item">
-				<view class="title">禁用</view>
 				<view class="item-block">
 					<ste-search disabled />
 				</view>
 			</view>
 			<view class="demo-item">
-				<view class="title">隐藏分割线以及按钮</view>
+				<view class="title">热词列表</view>
 				<view class="item-block">
-					<ste-search hidden-line @input="onInput" @search="onSearch" />
+					<ste-search :hotWords="hotWords" @search="onSearch" />
 				</view>
 				<view class="item-block">
-					<ste-search hidden-btn @input="onInput" @search="onSearch" />
+					<ste-search :hotWords="hotWords" :interval="1000" @search="onSearch" />
+				</view>
+			</view>
+			<view class="demo-item">
+				<view class="title">隐藏分割线以及按钮</view>
+				<view class="item-block">
+					<ste-search hiddenLine @input="onInput" @search="onSearch" />
+				</view>
+				<view class="item-block">
+					<ste-search hiddenBtn @input="onInput" @search="onSearch" />
 				</view>
 			</view>
 			<view class="demo-item">
 				<view class="title">自定义按钮文字</view>
 				<view class="item-block">
-					<ste-search btn-text="查询" @input="onInput" @search="onSearch" />
+					<ste-search btnText="查询" @input="onInput" @search="onSearch" />
 				</view>
 			</view>
 			<view class="demo-item">
 				<view class="title">隐藏输入框以及按钮</view>
 				<view class="item-block">
-					<ste-search hidden-input hidden-btn @click="onClick" />
+					<ste-search hiddenInput hiddenBtn @click="onClick" />
 				</view>
 			</view>
 			<view class="demo-item">
@@ -68,14 +58,14 @@
 				<view class="item-block">
 					<ste-search
 						placeholder="搜索商品"
-						border-color="#F00"
+						borderColor="#F00"
 						background="#000"
-						before-icon-color="#a55"
-						placeholder-color="#a55"
-						input-color="#fff"
-						clear-icon-color="#a55"
-						btn-bg="#fff"
-						btn-text-color="#000"
+						prefixIconColor="#a55"
+						placeholderColor="#a55"
+						inputTextColor="#fff"
+						clearIconColor="#a55"
+						btnBackground="#fff"
+						btnTextColor="#000"
 						@input="onInput"
 						@search="onSearch"
 					/>
@@ -84,7 +74,7 @@
 			<view class="demo-item">
 				<view class="title">自定义高度以及圆角弧度</view>
 				<view class="item-block">
-					<ste-search :height="90" :radius="45" @input="onInput" @search="onSearch" />
+					<ste-search :height="120" :radius="60" @search="onSearch" />
 				</view>
 			</view>
 			<view class="demo-item">

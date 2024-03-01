@@ -22,12 +22,6 @@
 			}
 		},
 		{
-			"path": "mp/test-demo/test-demo",
-			"style": {
-				"navigationStyle": "custom"
-			}
-		},
-		{
 			"path": "mp/icon-demo/icon-demo",
 			"style": {
 				"navigationStyle": "custom"
