@@ -20,10 +20,10 @@ import utils from '../../utils/utils.js';
  * @description 按钮组件
  * @tutorial http://172.16.114.51:5050/pc/index/index?name=ste-button
  * @property {Number} mode 尺寸 默认值 200
- * @value 100 Number 小
- * @value 200 Number 中
- * @value 300 Number 大
- * @value 400 Number 超大
+ * @value 100 小 {Number}
+ * @value 200 中 {Number}
+ * @value 300 大 {Number}
+ * @value 400 超大 {Number}
  * @property {String} color 文本颜色 默认值 #ffffff
  * @property {String} background 背景 默认值 #0091ff
  * @property {String} borderColor 边框颜色
