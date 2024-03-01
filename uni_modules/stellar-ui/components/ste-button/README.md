@@ -56,16 +56,16 @@
 
 ### API
 #### Props
-| 属性中文名		| 属性英文名		| 数据类型			| 默认值		| 可选值																| 说明			|
-| ---			| ---			| ---				| ---		| ---																| ---			|
-| 尺寸			| mode			| Number			| 200		| 100：小<br/>200：中<br/>300：大<br/>400：超大									| -				|
-| 文本颜色		| color			| String			| "#ffffff"	| -																	| -				|
-| 背景			| background	| String			| "#0091ff"	| -																	| -				|
-| 边框颜色		| borderColor	| String			| -			| -																	| -				|
-| 宽度			| width			| Number / String	| "auto"	| "auto"： 自适应宽度<br/>"100%"：填满<br/>{{Number}}：自定义宽度 单位rpx	| -				|
-| 是否圆角按钮	| round			| Boolean			| true		| -																	| 圆角度数(48)	|
-| 是否禁用状态	| disabled		| Boolean			| false		| -																	| -				|
-| 是否加载中状态	| loading		| Boolean			| false		| -																	| -				|
+| 属性中文名		| 属性英文名		| 数据类型		| 默认值		| 可选值																	| 说明			|
+| ---			| ---			| ---			| ---		| ---																	| ---			|
+| 尺寸			| mode			| Number		| 200		| 100：小<br/>200：中<br/>300：大<br/>400：超大							| -				|
+| 文本颜色		| color			| String		| "#ffffff"	| -																		| -				|
+| 背景			| background	| String		| "#0091ff"	| -																		| -				|
+| 边框颜色		| borderColor	| String		| -			| -																		| -				|
+| 宽度			| width			| Number/String	| "auto"	| "auto"： 自适应宽度<br/>"100%"：填满<br/>{{Number}}：自定义宽度 单位rpx	| -				|
+| 是否圆角按钮	| round			| Boolean		| true		| -																		| 圆角度数(48)	|
+| 是否禁用状态	| disabled		| Boolean		| false		| -																		| -				|
+| 是否加载中状态	| loading		| Boolean		| false		| -																		| -				|
 
 #### Events
 | 事件中文名| 事件英文名| 事件参数	| 备注	|
