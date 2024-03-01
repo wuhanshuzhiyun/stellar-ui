@@ -27,7 +27,7 @@ import utils from '../../utils/utils.js';
  * @property {String} color 文本颜色 默认值 #ffffff
  * @property {String} background 背景 默认值 #0091ff
  * @property {String} borderColor 边框颜色
- * @property {Number|String} width 宽度 默认值auto
+ * @property {Number|String} width 宽度 默认值 auto
  * @value auto String 自适应宽度
  * @value 100% String 填满
  * @value {{Number}} Number 自适应宽度，单位rpx
