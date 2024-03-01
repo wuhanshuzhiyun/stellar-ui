@@ -1,5 +1,5 @@
 <template>
-	<view class="ste-search--root" :style="[cmpStyleVar, cmpBackground]" @click="onClick">
+	<view class="ste-search--root" :style="[cmpStyleVar, cmpBackground, cmpRootPadding]" @click="onClick">
 		<view class="content">
 			<view class="icon-box">
 				<ste-icon code="&#xe66d;" :color="prefixIconColor" />
@@ -210,6 +210,7 @@ export default {
 		cmpStyleVar() {
 			return {
 				'--root-height': utils.rpx2px(this.height),
+				'--root-height': utils.rpx2px(this.height),
 				'--root-radius': utils.rpx2px(this.radius),
 				'--btn-text-color': this.btnTextColor,
 				'--placeholder-color': this.placeholderColor,
@@ -234,6 +235,9 @@ export default {
 		},
 		cmpbtnBackground() {
 			return utils.bg2style(this.btnBackground);
+		},
+		cmpRootPadding() {
+			return this.hiddenBtn && this.hiddenInput ? {} : { padding: '0 8rpx 0 16rpx' };
 		},
 	},
 	watch: {
@@ -293,7 +297,6 @@ export default {
 	background-color: #fff;
 	border-radius: var(--root-radius);
 	border: 1rpx solid var(--border-color);
-	padding: 0 8rpx 0 16rpx;
 	position: relative;
 
 	&,
@@ -306,11 +309,11 @@ export default {
 		display: flex;
 		flex-direction: row;
 		align-items: center;
+		justify-content: center;
 		position: relative;
 		.icon-box {
 			width: 28rpx;
 			height: 28rpx;
-			margin-right: 16rpx;
 			flex-shrink: 0;
 			display: flex;
 			align-items: center;
@@ -319,6 +322,10 @@ export default {
 			.image {
 				width: 100%;
 				height: 100%;
+			}
+
+			& + .input-box {
+				margin-left: 16rpx;
 			}
 		}
 		.input-box {

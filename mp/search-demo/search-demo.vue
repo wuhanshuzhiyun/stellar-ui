@@ -27,30 +27,30 @@
 				</view>
 			</view>
 			<view class="demo-item">
-				<view class="title">隐藏分割线以及按钮</view>
+				<view class="title">自定义按钮文字</view>
 				<view class="item-block">
-					<ste-search hiddenLine @input="onInput" @search="onSearch" />
-				</view>
-				<view class="item-block">
-					<ste-search hiddenBtn @input="onInput" @search="onSearch" />
+					<ste-search btnText="查询" @search="onSearch" />
 				</view>
 			</view>
 			<view class="demo-item">
-				<view class="title">自定义按钮文字</view>
+				<view class="title">隐藏分割线以及按钮</view>
 				<view class="item-block">
-					<ste-search btnText="查询" @input="onInput" @search="onSearch" />
+					<ste-search hiddenLine @search="onSearch" />
+				</view>
+				<view class="item-block">
+					<ste-search hiddenBtn @search="onSearch" />
 				</view>
 			</view>
 			<view class="demo-item">
 				<view class="title">隐藏输入框以及按钮</view>
-				<view class="item-block">
+				<view class="item-block" style="width: 60rpx">
 					<ste-search hiddenInput hiddenBtn @click="onClick" />
 				</view>
 			</view>
 			<view class="demo-item">
-				<view class="title">隐藏清除图标</view>
+				<view class="title">不显示清除图标</view>
 				<view class="item-block">
-					<ste-search :clearable="false" @input="onInput" @search="onSearch" />
+					<ste-search :clearable="false" @search="onSearch" />
 				</view>
 			</view>
 			<view class="demo-item">
@@ -66,7 +66,6 @@
 						clearIconColor="#a55"
 						btnBackground="#fff"
 						btnTextColor="#000"
-						@input="onInput"
 						@search="onSearch"
 					/>
 				</view>
