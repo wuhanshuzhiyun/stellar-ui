@@ -139,4 +139,4 @@ export default {
 | clear	| 配置了clearabled后，清空内容时会发出此事件												| -								| -				|
 | click	| 点击任意区域触发																								| value: 输入框的值	| -				|
 
-
+{{xuyajun}}
