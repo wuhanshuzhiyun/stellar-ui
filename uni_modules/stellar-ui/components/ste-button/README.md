@@ -27,31 +27,49 @@
 <ste-button disabled>禁止按钮</ste-button>
 ```
 
-#### 自适应宽度
-`width`设置值为`100%`，此时按钮的宽度由父容器的宽度决定
+#### 宽度
 ```html
-<ste-button width="100%" >自适应宽度</ste-button>
+<ste-button width="100%" >宽度填满</ste-button>
+<ste-button width="500" >自定义宽度-500rpx</ste-button>
+<ste-button >自适应宽度</ste-button>
 ```
 
-#### 超长文字
+#### 文本颜色
 ```html
-<ste-button width="100%">提交-按钮按钮按钮按钮按钮按钮按钮按钮按钮按钮按钮按钮</ste-button>
+<ste-button color="#000000">文本颜色按钮</ste-button>
 ```
 
 #### 背景
 ```html
 <ste-button background="#FF1E19" >领取</ste-button>
-<ste-button background="https://image.whzb.com/chain/inte-mall/00-普通图片/00-开发版/1平台/我的/入会奖励入口.png" color="#000000">背景图</ste-button>
+<ste-button background="https://image.whzb.com/chain/inte-mall/00-普通图片/00-开发版/1平台/我的/精选会员瓷片.png">背景图</ste-button>
 <ste-button background="linear-gradient(to right, rgb(66, 83, 216), rgb(213, 51, 186))">渐变色</ste-button>
-<ste-button background="transparent" borderColor="#FF1E19" color="#FF1E19">领取</ste-button>
+```
+
+#### 边框颜色
+```html
+<ste-button borderColor="#FF1E19">文本颜色按钮</ste-button>
 ```
 
 #### 插槽
 ```html
-<ste-button background="transparent" borderColor="#0091FF" color="#0091FF">
-	<ste-icon code="&#xe6ae;" :size="28" color="#0090FF" :marginRight="8"></ste-icon>
+<ste-button>
+	<text style="display: inline-block">
+		<ste-icon code="&#xe6ae;" :size="28" color="#FFFFFF" :marginRight="8"></ste-icon>
+	</text>
 	<text>购卡</text>
 </ste-button>
+<ste-button>提交订单</ste-button>
+```
+
+#### 加载中
+```html
+<ste-button loading>按钮</ste-button>
+```
+
+#### 超长文字
+```html
+<ste-button width="100%">提交-按钮按钮按钮按钮按钮按钮按钮按钮按钮按钮按钮按钮</ste-button>
 ```
 
 ### API

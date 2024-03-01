@@ -2,12 +2,13 @@
 	<button
 		class="ste-button--root"
 		:class="cmpRootClass"
-		:hover-class="!disabled ? 'ste-button--root-active' : ''"
+		:hover-class="!disabled && !loading ? 'ste-button--root-active' : ''"
 		@click="handleClick"
 		:style="[cmpBtnCss]"
 	>
 		<view class="btn-box">
-			<slot></slot>
+			<text v-if="loading">加载中.......</text>
+			<slot v-else></slot>
 		</view>
 	</button>
 </template>
