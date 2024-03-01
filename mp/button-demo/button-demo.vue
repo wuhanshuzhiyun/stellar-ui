@@ -77,10 +77,10 @@
 				<view class="title">圆角按钮</view>
 				<view class="item-block">
 					<view>
-						<ste-button>圆角按钮</ste-button>
+						<ste-button @click="handleClick('圆角按钮')">圆角按钮</ste-button>
 					</view>
 					<view>
-						<ste-button :round="false">非圆角按钮</ste-button>
+						<ste-button :round="false" @click="handleClick('非圆角按钮')">非圆角按钮</ste-button>
 					</view>
 				</view>
 			</view>
@@ -104,7 +104,7 @@
 				<view class="title">插槽</view>
 				<view class="item-block">
 					<view>
-						<ste-button @click="handleClick('图标按钮')">
+						<ste-button @click="handleClick('按钮')">
 							<text style="display: inline-block">
 								<ste-icon code="&#xe6ae;" :size="28" color="#FFFFFF" :marginRight="8"></ste-icon>
 							</text>
@@ -112,7 +112,7 @@
 						</ste-button>
 					</view>
 					<view>
-						<ste-button>提交订单</ste-button>
+						<ste-button @click="handleClick('按钮')">提交订单</ste-button>
 					</view>
 				</view>
 			</view>
