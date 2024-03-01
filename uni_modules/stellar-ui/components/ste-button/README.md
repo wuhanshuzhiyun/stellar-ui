@@ -14,15 +14,11 @@
 <ste-button :mode="100" >小按钮</ste-button>
 ```
 
-#### 非圆角按钮
-通过`round`设置按钮是否镂空，默认值是`true`
+#### 圆角按钮
+通过`round`设置按钮是否为圆角，默认值是`true`
 ```html
+<ste-button>圆角按钮</ste-button>
 <ste-button :round="false">非圆角按钮</ste-button>
-```
-
-#### 镂空按钮
-```html
-<ste-button background="transparent" borderColor="#0091FF" color="#0091FF">镂空按钮</ste-button>
 ```
 
 #### 禁止按钮
@@ -42,7 +38,7 @@
 <ste-button width="100%">提交-按钮按钮按钮按钮按钮按钮按钮按钮按钮按钮按钮按钮</ste-button>
 ```
 
-#### 自定义背景
+#### 背景
 ```html
 <ste-button background="#FF1E19" >领取</ste-button>
 <ste-button background="https://image.whzb.com/chain/inte-mall/00-普通图片/00-开发版/1平台/我的/入会奖励入口.png" color="#000000">背景图</ste-button>
@@ -50,7 +46,7 @@
 <ste-button background="transparent" borderColor="#FF1E19" color="#FF1E19">领取</ste-button>
 ```
 
-#### 带图标按钮
+#### 插槽
 ```html
 <ste-button background="transparent" borderColor="#0091FF" color="#0091FF">
 	<ste-icon code="&#xe6ae;" :size="28" color="#0090FF" :marginRight="8"></ste-icon>
@@ -62,14 +58,14 @@
 #### Props
 | 属性中文名		| 属性英文名		| 数据类型			| 默认值		| 可选值																| 说明			|
 | ---			| ---			| ---				| ---		| ---																| ---			|
-| 尺寸			| mode			| Number			| 200		| 100：小，200：中，300：大，400：超大								| -				|
-| 文本颜色		| color			| String			| "#fffff"	| -																	| -				|
-| 背景			| background	| String			| "#0091FF"	| -																	| -				|
+| 尺寸			| mode			| Number			| 200		| 100：小<br/>200：中<br/>300：大<br/>400：超大									| -				|
+| 文本颜色		| color			| String			| "#ffffff"	| -																	| -				|
+| 背景			| background	| String			| "#0091ff"	| -																	| -				|
 | 边框颜色		| borderColor	| String			| -			| -																	| -				|
-| 宽度			| width			| Number / String	| "auto"	| "auto"： 自适应宽度，"100%"：填满，{{Number}}：自定义宽度 单位rpx	| -				|
+| 宽度			| width			| Number / String	| "auto"	| "auto"： 自适应宽度<br/>"100%"：填满<br/>{{Number}}：自定义宽度 单位rpx	| -				|
 | 是否圆角按钮	| round			| Boolean			| true		| -																	| 圆角度数(48)	|
 | 是否禁用状态	| disabled		| Boolean			| false		| -																	| -				|
-| 是否加载中状态| loading		| Boolean			| false		| -																	| -				|
+| 是否加载中状态	| loading		| Boolean			| false		| -																	| -				|
 
 #### Events
 | 事件中文名| 事件英文名| 事件参数	| 备注	|

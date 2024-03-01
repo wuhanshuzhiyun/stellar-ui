@@ -1,10 +1,10 @@
 <template>
 	<button
 		class="ste-button--root"
-		:class="comRootClass"
+		:class="cmpRootClass"
 		:hover-class="!disabled ? 'ste-button--root-active' : ''"
 		@click="handleClick"
-		:style="[comBtnCss]"
+		:style="[cmpBtnCss]"
 	>
 		<view class="btn-box">
 			<slot></slot>
@@ -18,21 +18,21 @@ import utils from '../../utils/utils.js';
  * ste-button 按钮
  * @description 按钮组件
  * @tutorial http://172.16.114.51:5050/pc/index/index?name=ste-button
- * @property {Number} mode 尺寸
+ * @property {Number} mode 尺寸 默认值 200
  * @value 100 Number 小
  * @value 200 Number 中
  * @value 300 Number 大
  * @value 400 Number 超大
- * @property {String} color 文本颜色
- * @property {String} background 背景
+ * @property {String} color 文本颜色 默认值 #ffffff
+ * @property {String} background 背景 默认值 #0091ff
  * @property {String} borderColor 边框颜色
- * @property {Number|String} width 宽度
+ * @property {Number|String} width 宽度 默认值auto
  * @value auto String 自适应宽度
  * @value 100% String 填满
  * @value {{Number}} Number 自适应宽度，单位rpx
- * @property {Boolean} round 是否圆角按钮
- * @property {Boolean} disabled 是否禁用状态
- * @property {Boolean} loading 是否加载中状态
+ * @property {Boolean} round 是否圆角按钮 默认 true
+ * @property {Boolean} disabled 是否禁用状态 默认 false
+ * @property {Boolean} loading 是否加载中状态 默认 false
  * @event {Function} click 非禁止并且非加载中，才能点击
  */
 export default {
@@ -78,7 +78,7 @@ export default {
 	},
 	created() {},
 	computed: {
-		comRootClass() {
+		cmpRootClass() {
 			const classArr = [];
 			const prefix = 'ste-button--root';
 			if ([100, 200, 300, 400].includes(this.mode)) {
@@ -100,7 +100,7 @@ export default {
 			}
 			return classArr;
 		},
-		comBtnCss() {
+		cmpBtnCss() {
 			let style = {};
 
 			if (this.round) {
@@ -140,7 +140,7 @@ export default {
 	methods: {
 		handleClick(e) {
 			if (!this.disabled && !this.loading) {
-				this.$emit('click', e);
+				this.$emit('click');
 			}
 		},
 	},
@@ -156,15 +156,12 @@ export default {
 	flex-direction: row;
 	box-sizing: border-box;
 	flex-direction: row;
-
 	background-size: cover;
 
 	.btn-box {
-		// display: inline-flex;
 		width: 100%;
 		white-space: nowrap;
 		line-height: 1;
-
 		overflow: hidden;
 		text-overflow: ellipsis;
 		white-space: nowrap;

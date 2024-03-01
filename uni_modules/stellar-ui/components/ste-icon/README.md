@@ -26,9 +26,8 @@
 
 ### 图标大小
 
-通过 `size` 属性来设置图标的尺寸大小， 单位为rpx。
+通过 `size` 属性来设置图标的尺寸大小， 单位为rpx 默认28。
 ```html
-<!--默认size 28-->
 <ste-icon code="&#xe628;"></ste-icon>
 <ste-icon code="&#xe628;" size="50"></ste-icon>
 <ste-icon code="&#xe628;" size="70"></ste-icon>
@@ -36,9 +35,8 @@
 
 ### 图标是否粗体
 
-通过 `bold` 属性来设置图标是否粗体。
+通过 `bold` 属性来设置图标是否粗体 默认false。
 ```html
-<!--默认bold false-->
 <ste-icon code="&#xe628;"></ste-icon>
 <ste-icon code="&#xe628;" bold></ste-icon>
 ```

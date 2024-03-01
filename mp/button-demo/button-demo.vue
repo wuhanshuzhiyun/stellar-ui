@@ -20,25 +20,13 @@
 				</view>
 			</view>
 			<view class="demo-item">
-				<view class="title">非圆角按钮</view>
+				<view class="title">圆角按钮</view>
 				<view class="item-block">
 					<view>
-						<ste-button :round="false" @click="handleClick('非圆角按钮')">非圆角按钮</ste-button>
+						<ste-button>圆角按钮</ste-button>
 					</view>
-				</view>
-			</view>
-			<view class="demo-item">
-				<view class="title">镂空按钮</view>
-				<view class="item-block">
 					<view>
-						<ste-button
-							background="transparent"
-							borderColor="#0091FF"
-							color="#0091FF"
-							@click="handleClick('镂空按钮')"
-						>
-							镂空按钮
-						</ste-button>
+						<ste-button :round="false">非圆角按钮</ste-button>
 					</view>
 				</view>
 			</view>
@@ -67,7 +55,7 @@
 				</view>
 			</view>
 			<view class="demo-item">
-				<view class="title">自定义背景</view>
+				<view class="title">背景</view>
 				<view class="item-block">
 					<view>
 						<ste-button background="#FF1E19" @click="handleClick('领取')">领取</ste-button>
@@ -102,7 +90,7 @@
 				</view>
 			</view>
 			<view class="demo-item">
-				<view class="title">带图标按钮</view>
+				<view class="title">插槽</view>
 				<view class="item-block">
 					<view>
 						<ste-button
