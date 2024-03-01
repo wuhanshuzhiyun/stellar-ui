@@ -28,9 +28,9 @@ import utils from '../../utils/utils.js';
  * @property {String} background 背景 默认值 #0091ff
  * @property {String} borderColor 边框颜色
  * @property {Number|String} width 宽度 默认值 auto
- * @value auto String 自适应宽度
- * @value 100% String 填满
- * @value {{Number}} Number 自适应宽度，单位rpx
+ * @value auto 自适应宽度 {String}
+ * @value 100% 填满 {String}
+ * @value {{Number}}  自适应宽度，单位rpx {Number}
  * @property {Boolean} round 是否圆角按钮 默认 true
  * @property {Boolean} disabled 是否禁用状态 默认 false
  * @property {Boolean} loading 是否加载中状态 默认 false

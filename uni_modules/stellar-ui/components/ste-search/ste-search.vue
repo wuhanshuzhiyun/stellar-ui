@@ -2,7 +2,7 @@
 	<view class="ste-search--root" :style="[comStyleVar, comBackground]" @click="onClick">
 		<view class="content">
 			<view class="icon-box">
-				<ste-icon code="&#xe66d;" :color="beforeIconColor" />
+				<ste-icon code="&#xe66d;" :color="prefixIconColor" />
 			</view>
 			<view class="input-box" v-if="!hiddenInput">
 				<input
@@ -40,7 +40,7 @@
 				v-if="!hiddenBtn"
 				class="search-button"
 				:class="disabled ? 'disabled' : ''"
-				:style="[comBtnBg]"
+				:style="[combtnBackground]"
 				@click="onSearch"
 			>
 				{{ btnText }}
@@ -61,25 +61,24 @@ import utils from '../../utils/utils.js';
  * @value nav 		导航栏{String}
  * @property {String}			value				当前值（支持v-model双向绑定）
  * @property {String}			placeholder				占位提示符
- * @property {String[]}		hotWords	热词列表，默认值 []
- * @property {Number}			interval	热词列表自动切换时间间隔，默认值 3000
- * @property {Boolean}		disabled	是否禁用状态，默认值 false
- * @property {Boolean}		hiddenLine	是否隐藏分割线 ，默认值 false
- * @property {Boolean}		hiddenBtn	是否隐藏搜索按钮 ，默认值 false
+ * @property {String[]}		hotWords	热词列表，默认值，[]
+ * @property {Number}			interval	热词列表自动切换时间间隔，默认值，3000
+ * @property {Boolean}		disabled	是否禁用状态，默认值，false
+ * @property {Boolean}		hiddenLine	是否隐藏分割线 ，默认值，false
+ * @property {Boolean}		hiddenBtn	是否隐藏搜索按钮 ，默认值，false
  * @property {String}			btnText	搜索按钮文字 ，默认值 搜索
- * @property {Boolean}		hiddenInput	是否隐藏输入框，默认值 false
- * @property {Boolean}		clearable	是否可清空，默认值 true
- * @property {Number}			height	高度，单位rpx，默认值 64
- * @property {Number}			radius	圆角弧度，单位rpx，默认值 32
- * @property {String}			borderColor	边框颜色，默认值 #EEEEEE66
- * @property {String}			background	背景，默认值 #FFFFFF
- * @property {String}			beforeIconColor	前置图标颜色，默认值 #BBBBBB
- * @property {String}			placeholderColor	占位符文本颜色，默认值 #BBBBBB
- * @property {String}			inputColor	输入框文本颜色，默认值 #000000
- * @property {String}			clearIconColor	清除图标颜色，默认值 #BBBBBB
- * @property {String}			btnTextColor	搜索按钮文本颜色 ，默认值 #0090FF
- * @property {String}			btnBg	搜索按钮背景
-
+ * @property {Boolean}		hiddenInput	是否隐藏输入框，默认值，false
+ * @property {Boolean}		clearable	是否可清空，默认值，true
+ * @property {Number}			height	高度，单位rpx，默认值，64
+ * @property {Number}			radius	圆角弧度，单位rpx，默认值，32
+ * @property {String}			borderColor	边框颜色，默认值，#EEEEEE66
+ * @property {String}			background	背景，默认值，#FFFFFF
+ * @property {String}			prefixIconColor	前置图标颜色，默认值，#BBBBBB
+ * @property {String}			placeholderColor	占位符文本颜色，默认值，#BBBBBB
+ * @property {String}			inputTextColor	输入框文本颜色，默认值，#000000
+ * @property {String}			clearIconColor	清除图标颜色，默认值，#BBBBBB
+ * @property {String}			btnTextColor	搜索按钮文本颜色 ，默认值，#0090FF
+ * @property {String}			btnBackground	搜索按钮背景
  * @event {Function}			input 输入事件
  * @event {Function}			focus 聚焦焦点事件
  * @event {Function}			blur 失去焦点事件
@@ -107,7 +106,6 @@ export default {
 			type: String,
 			default: () => '',
 		},
-
 		// 热词列表
 		hotWords: {
 			type: Array,
@@ -138,7 +136,6 @@ export default {
 			type: String,
 			default: () => '搜索',
 		},
-
 		// 是否隐藏输入框
 		hiddenInput: {
 			type: Boolean,
@@ -160,7 +157,7 @@ export default {
 			default: () => '#ffffff',
 		},
 		// 前置图标颜色
-		beforeIconColor: {
+		prefixIconColor: {
 			type: String,
 			default: () => '#bbbbbb',
 		},
@@ -170,7 +167,7 @@ export default {
 			default: () => '#bbbbbb',
 		},
 		// 输入框文字颜色
-		inputColor: {
+		inputTextColor: {
 			type: String,
 			default: () => '#000000',
 		},
@@ -180,7 +177,7 @@ export default {
 			default: () => '#bbbbbb',
 		},
 		// 搜索按钮背景
-		btnBg: {
+		btnBackground: {
 			type: String,
 		},
 		// 搜索按钮文字颜色
@@ -216,7 +213,7 @@ export default {
 				'--root-radius': utils.rpx2px(this.radius),
 				'--btn-text-color': this.btnTextColor,
 				'--placeholder-color': this.placeholderColor,
-				'--input-color': this.inputColor,
+				'--input-color': this.inputTextColor,
 				'--border-color': this.borderColor,
 			};
 		},
@@ -235,8 +232,8 @@ export default {
 		comBackground() {
 			return utils.bg2style(this.background);
 		},
-		comBtnBg() {
-			return utils.bg2style(this.btnBg);
+		combtnBackground() {
+			return utils.bg2style(this.btnBackground);
 		},
 	},
 	watch: {
