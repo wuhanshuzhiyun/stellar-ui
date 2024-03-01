@@ -1,5 +1,5 @@
 <template>
-	<view class="root" :style="[comStyleVar, comBackground]" @click="onClick">
+	<view class="ste-search--root" :style="[comStyleVar, comBackground]" @click="onClick">
 		<view class="content">
 			<view class="icon-box">
 				<ste-icon code="&#xe66d;" :color="beforeIconColor" />
@@ -290,7 +290,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.root {
+.ste-search--root {
 	width: 100%;
 	height: var(--root-height);
 	background-color: #fff;

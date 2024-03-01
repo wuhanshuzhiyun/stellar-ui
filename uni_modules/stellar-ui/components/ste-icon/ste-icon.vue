@@ -1,5 +1,5 @@
 <template>
-	<div class="root" :style="[cmpCssVar]" @click="handleClick">
+	<div class="ste-icon--root" :style="[cmpCssVar]" @click="handleClick">
 		<view class="iconfont">{{ cmpCode }}</view>
 	</div>
 </template>
@@ -100,28 +100,32 @@ export default {
 
 <style lang="scss" scoped>
 @import './iconfont.css';
-.page-iconfont {
-	position: relative;
-	display: inline-block;
-	width: calc(var(--size) + var(--margin-left) + var(--margin-right)) !important;
-	height: var(--size) !important;
-	line-height: var(--size) !important;
-}
+.ste-icon--root {
+	display: flex;
+	align-items: center;
+	.page-iconfont {
+		position: relative;
+		display: inline-block;
+		width: calc(var(--size) + var(--margin-left) + var(--margin-right)) !important;
+		height: var(--size) !important;
+		line-height: var(--size) !important;
+	}
 
-.iconfont {
-	display: inline-block;
-	vertical-align: bottom;
-	font-family: 'iconfont' !important;
-	font-style: normal;
-	width: var(--size) !important;
-	height: var(--size) !important;
-	line-height: var(--size) !important;
-	font-size: var(--size) !important;
-	color: var(--color);
-	font-weight: var(--weight) !important;
-	margin-left: var(--margin-left) !important;
-	margin-right: var(--margin-right) !important;
-	margin-top: var(--margin-top) !important;
-	margin-bottom: var(--margin-bottom) !important;
+	.iconfont {
+		display: inline-block;
+		vertical-align: bottom;
+		font-family: 'iconfont' !important;
+		font-style: normal;
+		width: var(--size) !important;
+		height: var(--size) !important;
+		line-height: var(--size) !important;
+		font-size: var(--size) !important;
+		color: var(--color);
+		font-weight: var(--weight) !important;
+		margin-left: var(--margin-left) !important;
+		margin-right: var(--margin-right) !important;
+		margin-top: var(--margin-top) !important;
+		margin-bottom: var(--margin-bottom) !important;
+	}
 }
 </style>
