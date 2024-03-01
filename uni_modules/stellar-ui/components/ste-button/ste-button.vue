@@ -1,11 +1,12 @@
 <template>
 	<button
-		:class="btnClass"
-		:hover-class="!disabled ? 'ste-button-active' : ''"
-		:style="[baseColor]"
-		@click="clickHandler"
+		class="root"
+		:class="comRootClass"
+		:hover-class="!disabled ? 'root-active' : ''"
+		@click="handleClick"
+		:style="[comBtnCss]"
 	>
-		<view class="ste-button-text" :style="[{ fontSize: textSize + 'px' }]">
+		<view class="btn-box">
 			<slot></slot>
 		</view>
 	</button>
@@ -17,62 +18,59 @@ import utils from '../../utils/utils.js';
  * ste-button 按钮
  * @description 按钮组件
  * @tutorial http://172.16.114.51:5050/pc/index/index?name=ste-button
- * @property {Boolean}			hairline				是否显示按钮的细边框 (默认 true)
- * @value true 显示细边框
- * @value false 显示细边框
- * @property {String}			type					按钮的预置样式 (默认 'info')
- * @property {String}			size					按钮尺寸 (默认 normal）
- * @value large 超大按钮
- * @value normal 普通按钮
- * @value small 小型按钮
- * @value mini 超小按钮
- * @property {String}			shape					按钮形状（默认 'square'）
- * @value circle 两边半圆
- * @value square 方形带圆角
- * @property {Boolean}			plain					按钮是否镂空，背景色透明 （默认 false）
- * @property {Boolean}			disabled				是否禁用 （默认 false）
- * @property {String}			color					按钮颜色，支持传入linear-gradient渐变色
- * @event {Function}			click			非禁止并且非加载中，才能点击
+ * @property {Number} mode 尺寸
+ * @value 100 Number 小
+ * @value 200 Number 中
+ * @value 300 Number 大
+ * @value 400 Number 超大
+ * @property {String} color 文本颜色
+ * @property {String} background 背景
+ * @property {String} borderColor 边框颜色
+ * @property {Number|String} width 宽度
+ * @value auto String 自适应宽度
+ * @value 100% String 填满
+ * @value {{Number}} Number 自适应宽度，单位rpx
+ * @property {Boolean} round 是否圆角按钮
+ * @property {Boolean} disabled 是否禁用状态
+ * @property {Boolean} loading 是否加载中状态
+ * @event {Function} click 非禁止并且非加载中，才能点击
  */
 export default {
 	group: '基础组件',
 	title: 'Button 按钮',
 	name: 'ste-button',
 	props: {
-		// 是否细边框
-		hairline: {
-			type: [Boolean, String],
-			default: true,
+		mode: {
+			type: Number,
+			default: 200,
 		},
-		// 按钮的预置样式，info，primary，error，warning，success
-		type: {
-			type: String,
-			default: 'info',
-		},
-		// 按钮尺寸，large，normal，small，mini
-		size: {
-			type: String,
-			default: 'normal',
-		},
-		// 按钮形状，circle（两边为半圆），square（带圆角）
-		shape: {
-			type: String,
-			default: 'square',
-		},
-		// 按钮是否镂空
-		plain: {
-			type: [Boolean, String],
-			default: false,
-		},
-		// 是否禁止状态
-		disabled: {
-			type: [Boolean, String],
-			default: false,
-		},
-		// 按钮颜色，支持传入linear-gradient渐变色
 		color: {
 			type: String,
+			default: '#ffffff',
+		},
+		background: {
+			type: String,
+			default: '#0091FF',
+		},
+		borderColor: {
+			type: String,
 			default: '',
+		},
+		width: {
+			type: [String, Number],
+			default: 'auto',
+		},
+		round: {
+			type: Boolean,
+			default: true,
+		},
+		disabled: {
+			type: Boolean,
+			default: false,
+		},
+		loading: {
+			type: Boolean,
+			default: false,
 		},
 	},
 	data() {
@@ -80,63 +78,57 @@ export default {
 	},
 	created() {},
 	computed: {
-		btnClass() {
-			const prefix = 'ste-button';
-			const classArr = [prefix, `${prefix}-${this.type}`, `${prefix}-${this.shape}`, `${prefix}-${this.size}`];
+		comRootClass() {
+			const classArr = [];
+			if ([100, 200, 300, 400].includes(this.mode)) {
+				classArr.push(`root-${this.mode}`);
+			} else {
+				classArr.push('root-200');
+			}
+
 			if (this.disabled) {
-				classArr.push(`${prefix}-disabled`);
+				classArr.push(`root-disabled`);
 			}
-			if (this.hairline) {
-				classArr.push(`${prefix}-hairline`);
+
+			if (this.loading) {
+				classArr.push(`root-loading`);
 			}
-			if (this.plain) {
-				classArr.push(`${prefix}-plain`);
+
+			if (this.round) {
+				classArr.push(`root-round`);
 			}
 			return classArr;
 		},
-		textSize() {
-			let fontSize = 14,
-				{ size } = this;
-			if (size === 'large') fontSize = 16;
-			if (size === 'normal') fontSize = 14;
-			if (size === 'small') fontSize = 12;
-			if (size === 'mini') fontSize = 10;
-			return fontSize;
-		},
-		baseColor() {
+		comBtnCss() {
 			let style = {};
-			if (this.color) {
-				// 针对自定义了color颜色的情况，镂空状态下，就是用自定义的颜色
-				style.color = this.plain ? this.color : 'white';
-				if (!this.plain) {
-					// 非镂空，背景色使用自定义的颜色
-					style['background-color'] = this.color;
-				}
-				if (this.color.indexOf('gradient') !== -1) {
-					// 如果自定义的颜色为渐变色，不显示边框，以及通过backgroundImage设置渐变色
-					// weex文档说明可以写borderWidth的形式，为什么这里需要分开写？
-					// 因为weex是阿里巴巴为了部门业绩考核而做的你懂的东西，所以需要这么写才有效
-					style.borderTopWidth = 0;
-					style.borderRightWidth = 0;
-					style.borderBottomWidth = 0;
-					style.borderLeftWidth = 0;
-					if (!this.plain) {
-						style.backgroundImage = this.color;
-					}
-				} else {
-					// 非渐变色，则设置边框相关的属性
-					style.borderColor = this.color;
-					style.borderWidth = '1px';
-					style.borderStyle = 'solid';
-				}
+
+			if (this.round) {
+				style.borderRadius = utils.addUnit(48);
 			}
+
+			if (this.width == '100%' || this.width == 'auto') {
+				style.width = this.width;
+			} else {
+				style.width = utils.addUnit(this.width);
+			}
+
+			if (!this.disabled) {
+				style = { ...style, ...utils.bg2style(this.background) };
+				style.color = this.color;
+			}
+
+			if (this.borderColor) {
+				style.border = 'solid 2rpx';
+				style.borderColor = this.borderColor;
+			}
+
 			return style;
 		},
 	},
 	methods: {
-		clickHandler() {
-			if (!this.disabled) {
-				this.$emit('click');
+		handleClick(e) {
+			if (!this.disabled && !this.loading) {
+				this.$emit('click', e);
 			}
 		},
 	},
@@ -144,31 +136,22 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-$ste-success-color: #5ac725;
-$ste-error-color: #f56c6c;
-$ste-primary-color: #3c9cff;
-$ste-warning-color: #f9ae3d;
-$ste-button-border-width: 1px;
-
-.ste-button {
-	height: 40px;
+.root {
 	position: relative;
 	align-items: center;
 	justify-content: center;
-	display: flex;
+	display: inline-flex;
 	flex-direction: row;
 	box-sizing: border-box;
 	flex-direction: row;
 
-	width: 100%;
-
-	&::after {
-		border: none;
-	}
-
-	&-text {
+	.btn-box {
 		white-space: nowrap;
 		line-height: 1;
+
+		overflow: hidden;
+		text-overflow: ellipsis;
+		white-space: nowrap;
 	}
 
 	&:before {
@@ -187,126 +170,39 @@ $ste-button-border-width: 1px;
 		border-color: #000;
 	}
 
+	&-disabled {
+		background: #666666;
+		color: #ffffff;
+	}
+
 	&-active {
 		&:before {
 			opacity: 0.15;
 		}
 	}
 
-	&-large {
-		width: 100%;
-		height: 50px;
-		padding: 0 15px;
+	&-100 {
+		padding: 0 30rpx;
+		height: 48rpx;
+		font-size: 24rpx;
 	}
 
-	&-normal {
-		padding: 0 12px;
-		font-size: 14px;
+	&-200 {
+		padding: 0 40rpx;
+		height: 58rpx;
+		font-size: 28rpx;
 	}
 
-	&-small {
-		min-width: 60px;
-		height: 30px;
-		padding: 0 8px;
-		font-size: 12px;
+	&-300 {
+		padding: 0 72rpx;
+		height: 80rpx;
+		font-size: 32rpx;
 	}
 
-	&-mini {
-		height: 22px;
-		font-size: 10px;
-		min-width: 50px;
-		padding: 0 8px;
-	}
-
-	&-disabled {
-		opacity: 0.5;
-	}
-
-	&-info {
-		color: #323233;
-		background-color: #fff;
-
-		border-width: $ste-button-border-width;
-		border-color: #ebedf0;
-		border-style: solid;
-	}
-
-	&-success {
-		color: #fff;
-		background-color: $ste-success-color;
-		border: $ste-button-border-width solid $ste-success-color;
-	}
-
-	&-primary {
-		color: #fff;
-		background-color: $ste-primary-color;
-		border: $ste-button-border-width solid $ste-primary-color;
-	}
-
-	&-error {
-		color: #fff;
-		background-color: $ste-error-color;
-
-		border: $ste-button-border-width solid $ste-error-color;
-	}
-
-	&-warning {
-		color: #fff;
-		background-color: $ste-warning-color;
-
-		border: $ste-button-border-width solid $ste-warning-color;
-	}
-
-	&-square {
-		border-bottom-left-radius: 3px;
-		border-bottom-right-radius: 3px;
-		border-top-left-radius: 3px;
-		border-top-right-radius: 3px;
-	}
-
-	&-circle {
-		border-top-right-radius: 100px;
-		border-top-left-radius: 100px;
-		border-bottom-left-radius: 100px;
-		border-bottom-right-radius: 100px;
-	}
-
-	&-plain {
-		background-color: #fff;
-	}
-
-	&-hairline {
-		border-width: 0.5px !important;
-	}
-
-	&-plain {
-		&.ste-button-primary {
-			color: $ste-primary-color;
-		}
-	}
-
-	&-plain {
-		&.ste-button-info {
-			color: #909399;
-		}
-	}
-
-	&-plain {
-		&.ste-button-success {
-			color: $ste-success-color;
-		}
-	}
-
-	&-plain {
-		&.ste-button-error {
-			color: $ste-error-color;
-		}
-	}
-
-	&-plain {
-		&.ste-button-warning {
-			color: $ste-warning-color;
-		}
+	&-400 {
+		padding: 0 72rpx;
+		height: 96rpx;
+		font-size: 60rpx;
 	}
 }
 </style>

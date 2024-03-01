@@ -7,7 +7,6 @@ let utils = {
 		let px = (parseInt(rpx) * windowWidth) / 750;
 		return `${px}px`;
 	},
-
 	/**
 	 * 背景值转样式
 	 * @param {String} value
@@ -15,12 +14,31 @@ let utils = {
 	bg2style(value) {
 		if (!value) return {};
 		if (value.indexOf('url(') === 0) {
-			return { backgroundImage: value };
+			return {
+				backgroundImage: value
+			};
 		} else {
-			return { backgroundColor: value };
+			return {
+				backgroundColor: value
+			};
 		}
 	},
-
+	/**兼容css中的单位
+	 * 如果值为数字，则拼接 'rpx'，否则直接返回字符串的值
+	 */
+	addUnit(val) {
+		if (this.isNumber(val)) {
+			return val + 'rpx';
+		} else {
+			return val;
+		}
+	},
+	/**字符串是否为数字
+	 *@value 要判断的字符串
+	 */
+	isNumber(value) {
+		return !isNaN(parseFloat(value)) && isFinite(value);
+	},
 	/**节流
 	 *@fn 要节流的方法
 	 *@args 要节流方法的参数，如果最后一个参数是 {delay:2000}，则该参数为节流时间参数，不记入方法参数
