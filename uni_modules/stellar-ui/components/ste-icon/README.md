@@ -36,16 +36,16 @@
 
 ### API
 #### Props
-|属性名			| 说明					|类型			|默认值	| 可选值		|支持版本	|
-| -----			|-----					|-----			|-----	|-----		|-----		|
-| code			|图标名称				|String			|-		|		-	|-			|
-| color			|图标颜色				|String			|-		|	-		|-			|
-| size			|图标大小（单位rpx）		|Number String	|28		|	-		|-			|
-| weight		|图标粗细				|Number String	|normal	|normal/bold|-			|
-| marginLeft	|左外边距（单位rpx）		|Number String	|0		|	-		|-			|
-| marginRight	|右外边距（单位rpx）		|Number String	|0		|	-		|-			|
-| marginTop		|上外边距（单位rpx）		|Number String	|0		|	-		|-			|
-| marginBottom	|下外边距（单位rpx）		|Number String	|0		|	-		|-			|
+|属性名				| 说明								|类型					|默认值	| 可选值	|支持版本	|
+| -----				|-----							|-----				|-----	|-----	|-----		|
+| code				|图标名称						|String				|-			|		-		|-				|
+| color				|图标颜色						|String				|-			|	-			|-				|
+| size				|图标大小（单位rpx）	|Number,String|28			|	-			|-				|
+| bold				|图标粗细						|Boolean			|false	|	-			|-				|
+| marginLeft	|左外边距（单位rpx）	|Number,String|0			|	-			|-				|
+| marginRight	|右外边距（单位rpx）	|Number,String|0			|	-			|-				|
+| marginTop		|上外边距（单位rpx）	|Number,String|0			|	-			|-				|
+| marginBottom|下外边距（单位rpx）	|Number,String|0			|	-			|-				|
 
 
 #### Events
