@@ -92,35 +92,45 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.item-block {
-	display: flex;
-	flex-wrap: wrap;
-	row-gap: 60rpx;
-	justify-content: center;
-	align-items: center;
+.demo-item {
+	margin-bottom: 16px;
 
-	.icon-item {
-		width: 25%;
+	.title {
+		font-size: 14px;
+		color: #8f9ca2;
+		margin-bottom: 8px;
+	}
 
-		.icon-content {
-			display: flex;
-			flex-wrap: wrap;
-			justify-content: center;
-			align-items: center;
-			padding-bottom: 20rpx;
-		}
+	.item-block {
+		display: flex;
+		flex-wrap: wrap;
+		row-gap: 60rpx;
+		justify-content: center;
+		align-items: center;
 
-		.icon-name {
-			text-align: center;
-			overflow: hidden;
-			height: 40rpx;
-			line-height: 40rpx;
-			font-size: 28rpx;
-		}
+		.icon-item {
+			width: 25%;
 
-		.icon-unicode {
-			font-size: 28rpx;
-			text-align: center;
+			.icon-content {
+				display: flex;
+				flex-wrap: wrap;
+				justify-content: center;
+				align-items: center;
+				padding-bottom: 20rpx;
+			}
+
+			.icon-name {
+				text-align: center;
+				overflow: hidden;
+				height: 40rpx;
+				line-height: 40rpx;
+				font-size: 28rpx;
+			}
+
+			.icon-unicode {
+				font-size: 28rpx;
+				text-align: center;
+			}
 		}
 	}
 }
