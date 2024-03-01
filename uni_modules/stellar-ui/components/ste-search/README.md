@@ -4,131 +4,139 @@
 {{compatibility}}
 
 ### 代码演示
-#### 基础功能
-- 通过`placeholder`参数设置占位内容。
-- 通过`v-model`双向绑定一个变量值，设置初始化时搜索框的值，如果初始内容为空，那么请绑定一个值为空字符的变量。
-
-**说明:** 因为是双向绑定的，所以当组件内容输入框内容变化时，也会实时的反映到绑定的`value1`变量，这意味着，您无需监听`change`事件， 也能实时的得知输入框的内容。
-
-```html
-<template>
-	<ste-search placeholder="请输入关键字" v-model="value1" :shwoAction="false"></ste-search>
-</template>
-
-<script>
-	export default {
-		data() {
-			return {
-				value1: ''
-			}
-		}
-	}
-</script>
-```
-
-### 设置初始值
-```html
-<template>
-	<ste-search placeholder="请输入关键字" v-model="value1" :shwoAction="false"></ste-search>
-</template>
-
-<script>
-	export default {
-		data() {
-			return {
-				value1: '卫生纸'
-			}
-		}
-	}
-</script>
-```
-
-### 搜索框形状
-通过`shape`设置输入框两端的形状，`square`-方形带圆角，`round`(默认)-半圆形
-```html
-<ste-search shape="round" placeholder="请输入关键字" :showAction="false"></ste-search>
-<ste-search shape="square" placeholder="请输入关键字" :showAction="false"></ste-search>
-```
-
-
-### 右侧控件
-该控件为类似按钮形式，可以设置为"搜索"或者"取消"等内容
-- `showAction`配置是否开启右边按钮控件
-- `actionText`配置控件内容
-
-> 右侧控件的默认文字为"搜索"，点击它的时候触发的是`custom`事件，而不是`search`事件
-
-```html
-<template>
-	<ste-search showAction actionText="搜索" @custom="customClick"></ste-search>
-</template>
-
-<script>
-	export default {
-		data() {
-			return {
-				value1: '搜索'
-			}
-		}，
-		methods: {
-			customClick() {
-			}
-		}
-	}
-</script>
-```
-
-### 禁用输入框
-```html
-<template>
-	<ste-search disabled @click="click" placeholder="输入框被禁用,可以监听点击事件进行跳转" :showAction="false"></ste-search>
-</template>
-
-<script>
-	export default {
-		data() {
-			return {}
+**JavaScript**
+```javascript
+export default {
+	data() {
+		return {
+			value: 'RTX4060Ti',
+			hotWords: ['RTX4060', 'RTX4070', 'RTX4080', '小米电视', '华为手机'],
+		};
+	},
+	watch: {
+		text(v) {
+			console.log('watch', v);
 		},
-		methods: {
-			click() {
-			}
-		}
-	}
-</script>
+	},
+	created() {},
+	methods: {
+		onInput(v) {
+			console.log('input', v);
+		},
+		onSearch(v) {
+			console.log('search', v);
+			uni.showToast({
+				icon: 'none',
+				title: `搜索：${v}`,
+			});
+		},
+		onClick() {
+			uni.showToast({
+				icon: 'none',
+				title: '点击触发',
+			});
+		},
+	},
+};
+```
+#### 基础功能
+
+- 使用`v-model`属性进行输入框内容的双向绑定。
+- 使用`placeholder`属性设置输入框的占位符。
+- 通过`search`事件可以捕获用户点击`搜索按钮`或`软键盘上的回车`行为，参数为输入的value内容。
+
+```html
+<ste-search  v-model="value" placeholder="搜索商品" @search="onSearch" />
 ```
 
-### 自定义
-- 通过`borderColor`设置整个搜索组件的边框，只要配置了颜色，才会出现边框
-- 通过`bgColor`设置是搜索组件背景颜色
+#### 热词列表
+- 可以通过`hot-words`属性传入热词列表。
+- 可以通过`interval`属性设置热词切换间隔，单位为毫秒。
+
 ```html
-<ste-search :show-action="false" borderColor="rgb(230, 230, 230)" bgColor="#fff"></ste-search>
+<ste-search placeholder="搜索商品" @input="onInput" @search="onSearch" />
+<ste-search :hot-words="hotWords" :interval="1000" @input="onInput" @search="onSearch" />
 ```
+
+#### 隐藏分割线以及按钮
+- 可以通过`hidden-line`属性隐藏分割线
+- 可以通过`hidden-btn`属性隐藏按钮，隐藏按钮时也会隐藏分割线
+
+```html
+<ste-search hidden-line @input="onInput" @search="onSearch" />
+<ste-search hidden-btn @input="onInput" @search="onSearch" />
+```
+#### 自定义颜色
+- 可以通过`border-color`属性设置边框颜色
+- 可以通过`background`属性设置背景颜色或者背景图片
+- 可以通过`before-icon-color`属性设置左侧图标颜色
+- 可以通过`placeholder-color`属性设置占位符颜色
+- 可以通过`input-color`属性设置输入框文字
+- 可以通过`clear-icon-color`属性设置清除按钮图标颜色
+- 可以通过`btn-bg`属性设置搜索按钮背景颜色或者背景图片
+- 可以通过`btn-text-color`属性设置搜索按钮文字颜色
+
+```html
+<ste-search
+	placeholder="搜索商品"
+	border-color="#F00"
+	background="#000"
+	before-icon-color="#a55"
+	placeholder-color="#a55"
+	input-color="#fff"
+	clear-icon-color="#a55"
+	btn-bg="#fff"
+	btn-text-color="#000"
+	@input="onInput"
+	@search="onSearch"
+/>
+```
+
+#### 导航模式
+- 可以通过`type`属性设置`nav`开启导航模式；开启后，点击搜索框任意区域都会触发`click`事件，其他功能失效。
+```
+<ste-search type="nav" @click="onClick" />
+```
+
 
 ### API
 #### Props
-| 参数			| 说明										| 类型		| 默认值			| 可选值			|支持版本	|
-| -----			|-----										|-----		|-----			|-----			|-----		|
-| v-model		| 双向绑定输入框搜索值							| String	| -				| -				|-			|
-| shape			| 搜索框形状，round-圆形，square-方形			| String	| round			| round/square	|-			|
-| bgColor		| 搜索框背景颜色								| String	| #f2f2f2		| -				|-			|
-| placeholder	| 占位文字内容								| String	| 请输入关键字	| -				|-			|
-| clearabled	| 是否启用清除控件							| Boolean	| true			| true/false	|-			|
-| showAction	| 是否显示右侧控件(右侧的"搜索"按钮)			| Boolean	| true			| true/false	|-			|
-| actionText	| 右侧控件文字								| String	| 搜索			| -				|-			|
-| disabled		| 是否启用输入框								| Boolean	| false			| false/true	|-			|
-| borderColor	| 边框颜色，配置了颜色，才会有边框				| String	| transparent	| -				|-			|
-| searchIcon	| 输入框左侧的图标，为ste-icon图标名称的code	| String	|`&#xe66d;`		| -				|-			|
+| 参数						| 说明																								| 类型			| 默认值				| 可选值																	|支持版本	|
+| -----						|-----																							|-----		|-----				|-----																	|-----		|
+| type						| 组件类型																						| String	| "default"		| `"default"`:正常搜索<br/>`"nav"`:导航栏	|-				|
+| value						| 输入框默认值，支持`v-model`双向绑定									| String	| ""					| -																			|-				|
+| placeholder			| 占位提示符																					| String[]| []					| -																			|-				|
+| hotWords				| 热词列表																						| String	| ""					| -																			|-				|
+| interval				| 热词列表自动切换时间间隔，单位`ms`										| Number	| 3000				| -																			|-				|
+| disabled				| 是否禁用状态																				| Boolean	| false				| -																			|-				|
+| hiddenLine			| 隐藏分割线																					| Boolean	| false				| -																			|-				|
+| hiddenBtn				| 隐藏按钮，同时也会隐藏分割线													| Boolean	| false				| -																			|-				|
+| btnText					| 按钮文本内容																				| String	| "搜索"				| -																			|-				|
+| hiddenInput			| 隐藏输入框																					| Boolean	| false				| -																			|-				|
+| clearable				| 是否可清空内容																			| Boolean	| true				| -																			|-				|
+|	height					|	搜索框高度，单位`rpx`																|	Number	|	64					| -																			|-				|
+|	radius					|	圆角弧度，单位`rpx`																	|	Number	|	32					| -																			|-				|
+|	borderColor			|	边框颜色																						|	String	|	"#EEEEEE66"	| -																			|-				|
+|	background			|	背景，可直接传颜色值，或者`url(...)`格式的图片					|	String	|	"#FFFFFF"		| -																			|-				|
+|	beforeIconColor	|	前置图标颜色																				|	String	|	"#BBBBBB"		| -																			|-				|
+|	placeholderColor|	占位符文本颜色																			|	String	|	"#BBBBBB"		| -																			|-				|
+|	inputColor			|	输入框文本颜色																			|	String	|	"#000000"		| -																			|-				|
+|	clearIconColor	|	清除图标颜色																				|	String	|	"#BBBBBB"		| -																			|-				|
+|	btnTextColor		|	搜索按钮文本颜色，分割线会跟随文本颜色变化							|	String	|	"#0090FF"		| -																			|-				|
+|	btnBg						|	搜索按钮背景，可直接传颜色值，或者`url(...)`格式的图片	|	String	|	-						| -																			|-				|
+
 
 
 #### Events
-您可以通过监听`change`事件，在回调中将返回的结果绑定一个变量去获得用户的输入内容。
-但如"基本使用"中的说明一样，您双向绑定了一个变量后，无需监听`change`事件也是可以的。
-| 事件名| 说明															| 回调参数			| 支持版本	|
-|-----	|-----															|-----				|-----		|
-| change| 输入框内容发生变化时触发											| value: 输入框的值	| -			|
-| search| 用户确定搜索时触发，用户按回车键，或者手机键盘右下角的"搜索"键时触发	| value: 输入框的值	| -			|
-| custom| 用户点击右侧控件时触发											| value: 输入框的值	| -			|
-| clear	| 配置了clearabled后，清空内容时会发出此事件						| -					| -			|
-| click	| disabled为true时，点击输入框，发出此事件，用于跳转搜索页			| -					| -			|
+您可以通过监听`input`事件，在回调中将返回的结果绑定一个变量去获得用户的输入内容。
+但如"基本使用"中的说明一样，您双向绑定了一个变量后，无需监听`input`事件也是可以的。
+| 事件名| 说明																														| 回调参数					| 支持版本	|
+|-----	|-----																													|-----						|-----		|
+| input	| 监听用户输入事件																								| value: 输入框的值	| -				|
+| search| 用户确定搜索时触发，用户按回车键，或者手机键盘右下角的"搜索"键时触发	| value: 输入框的值	| -				|
+| focus	| 输入框获取焦点时触发																							| value: 输入框的值	| -				|
+| blur	| 输入框失去焦点时触发																							| value: 输入框的值	| -				|
+| clear	| 配置了clearabled后，清空内容时会发出此事件												| -								| -				|
+| click	| 点击任意区域触发																								| value: 输入框的值	| -				|
 
 
