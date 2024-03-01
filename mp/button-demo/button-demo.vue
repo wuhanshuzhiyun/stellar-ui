@@ -39,18 +39,24 @@
 				</view>
 			</view>
 			<view class="demo-item">
-				<view class="title">自适应宽度</view>
+				<view class="title">宽度</view>
 				<view class="item-block">
-					<ste-button width="100%" @click="handleClick('自适应宽度')">自适应宽度</ste-button>
+					<view style="width: 100%">
+						<ste-button width="100%" @click="handleClick('宽度填满')">宽度填满</ste-button>
+					</view>
+					<view>
+						<ste-button width="500" @click="handleClick('自定义宽度')">自定义宽度-500rpx</ste-button>
+					</view>
+					<view>
+						<ste-button @click="handleClick('自适应宽度')">自适应宽度</ste-button>
+					</view>
 				</view>
 			</view>
 			<view class="demo-item">
-				<view class="title">超长文字</view>
+				<view class="title">文本颜色</view>
 				<view class="item-block">
 					<view style="width: 40%">
-						<ste-button width="100%" @click="handleClick('文字超长按钮')">
-							提交-按钮按钮按钮按钮按钮按钮按钮按钮按钮按钮按钮按钮
-						</ste-button>
+						<ste-button color="#000000" @click="handleClick('文本颜色按钮')">文本颜色按钮</ste-button>
 					</view>
 				</view>
 			</view>
@@ -62,8 +68,7 @@
 					</view>
 					<view>
 						<ste-button
-							background="https://image.whzb.com/chain/inte-mall/00-普通图片/00-开发版/1平台/我的/入会奖励入口.png"
-							color="#3410ff"
+							background="https://image.whzb.com/chain/inte-mall/00-普通图片/00-开发版/1平台/我的/精选会员瓷片.png"
 							@click="handleClick('背景图')"
 						>
 							背景图
@@ -77,15 +82,13 @@
 							渐变色
 						</ste-button>
 					</view>
-					<view>
-						<ste-button
-							background="transparent"
-							borderColor="#FF1E19"
-							color="#FF1E19"
-							@click="handleClick('领取')"
-						>
-							领取
-						</ste-button>
+				</view>
+			</view>
+			<view class="demo-item">
+				<view class="title">边框颜色</view>
+				<view class="item-block">
+					<view style="width: 40%">
+						<ste-button borderColor="#FF1E19" @click="handleClick('边框颜色按钮')">边框颜色按钮</ste-button>
 					</view>
 				</view>
 			</view>
@@ -93,16 +96,32 @@
 				<view class="title">插槽</view>
 				<view class="item-block">
 					<view>
-						<ste-button
-							background="transparent"
-							borderColor="#0091FF"
-							color="#0091FF"
-							@click="handleClick('图标按钮')"
-						>
+						<ste-button @click="handleClick('图标按钮')">
 							<text style="display: inline-block">
-								<ste-icon code="&#xe6ae;" :size="28" color="#0090FF" :marginRight="8"></ste-icon>
+								<ste-icon code="&#xe6ae;" :size="28" color="#FFFFFF" :marginRight="8"></ste-icon>
 							</text>
 							<text>购卡</text>
+						</ste-button>
+					</view>
+					<view>
+						<ste-button>提交订单</ste-button>
+					</view>
+				</view>
+			</view>
+			<view class="demo-item">
+				<view class="title">加载中</view>
+				<view class="item-block">
+					<view>
+						<ste-button loading>按钮</ste-button>
+					</view>
+				</view>
+			</view>
+			<view class="demo-item">
+				<view class="title">超长文字</view>
+				<view class="item-block">
+					<view style="width: 40%">
+						<ste-button width="100%" @click="handleClick('文字超长按钮')">
+							提交-按钮按钮按钮按钮按钮按钮按钮按钮按钮按钮按钮按钮
 						</ste-button>
 					</view>
 				</view>
@@ -115,7 +134,7 @@ export default {
 	data() {
 		return {};
 	},
-	onLoad() {},
+	created() {},
 	methods: {
 		handleClick(v) {
 			uni.showToast({
