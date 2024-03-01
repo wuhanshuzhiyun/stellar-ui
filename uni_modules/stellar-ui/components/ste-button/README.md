@@ -1,7 +1,5 @@
 # Button 按钮
-该组件内部实现以uni-app的```button```组件为基础，进行二次封装，主要区别在于：
-- 按钮```type```值有更多的主题颜色
-- 按钮```size```值有更多的尺寸可选
+基础按钮组件
 
 {{compatibility}}
 
@@ -47,6 +45,8 @@
 #### 自定义背景
 ```html
 <ste-button background="#FF1E19" >领取</ste-button>
+<ste-button background="https://image.whzb.com/chain/inte-mall/00-普通图片/00-开发版/1平台/我的/入会奖励入口.png" color="#000000">背景图</ste-button>
+<ste-button background="linear-gradient(to right, rgb(66, 83, 216), rgb(213, 51, 186))">渐变色</ste-button>
 <ste-button background="transparent" borderColor="#FF1E19" color="#FF1E19">领取</ste-button>
 ```
 

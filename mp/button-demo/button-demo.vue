@@ -3,7 +3,7 @@
 		<page-nav :autoBack="true" backColor="#000" titleAlignment="2" title="按钮"></page-nav>
 		<view class="content">
 			<view class="demo-item">
-				<view class="title">按钮类型</view>
+				<view class="title">按钮大小</view>
 				<view class="item-block">
 					<view>
 						<ste-button :mode="400" @click="handleClick('超大按钮')">超大按钮</ste-button>
@@ -74,7 +74,23 @@
 					</view>
 					<view>
 						<ste-button
-							type="line"
+							background="https://image.whzb.com/chain/inte-mall/00-普通图片/00-开发版/1平台/我的/入会奖励入口.png"
+							color="#3410ff"
+							@click="handleClick('背景图')"
+						>
+							背景图
+						</ste-button>
+					</view>
+					<view>
+						<ste-button
+							background="linear-gradient(to right, rgb(66, 83, 216), rgb(213, 51, 186))"
+							@click="handleClick('渐变色')"
+						>
+							渐变色
+						</ste-button>
+					</view>
+					<view>
+						<ste-button
 							background="transparent"
 							borderColor="#FF1E19"
 							color="#FF1E19"
@@ -95,7 +111,9 @@
 							color="#0091FF"
 							@click="handleClick('图标按钮')"
 						>
-							<ste-icon code="&#xe6ae;" :size="28" color="#0090FF" :marginRight="8"></ste-icon>
+							<text style="display: inline-block">
+								<ste-icon code="&#xe6ae;" :size="28" color="#0090FF" :marginRight="8"></ste-icon>
+							</text>
 							<text>购卡</text>
 						</ste-button>
 					</view>
