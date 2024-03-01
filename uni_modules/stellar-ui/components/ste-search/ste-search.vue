@@ -1,5 +1,5 @@
 <template>
-	<view class="ste-search--root" :style="[comStyleVar, comBackground]" @click="onClick">
+	<view class="ste-search--root" :style="[cmpStyleVar, cmpBackground]" @click="onClick">
 		<view class="content">
 			<view class="icon-box">
 				<ste-icon code="&#xe66d;" :color="prefixIconColor" />
@@ -9,8 +9,8 @@
 					class="search-input"
 					placeholder-class="search-input-placeholder"
 					:disabled="disabled"
-					:placeholder="comPlaceholder"
-					:style="{ paddingRight: comShowClear ? '48rpx' : '8rpx' }"
+					:placeholder="cmpPlaceholder"
+					:style="{ paddingRight: cmpShowClear ? '48rpx' : '8rpx' }"
 					v-model="dataValue"
 					@input="onInput"
 					@confirm="onSearch"
@@ -18,7 +18,7 @@
 					@blur="onBlur"
 				/>
 				<swiper
-					v-if="comShowSwitch"
+					v-if="cmpShowSwitch"
 					class="placeholder-list"
 					:current="switchIndex"
 					autoplay
@@ -31,16 +31,16 @@
 						{{ item }}
 					</swiper-item>
 				</swiper>
-				<view v-if="comShowClear" class="clear-icon" @click="onClear">
+				<view v-if="cmpShowClear" class="clear-icon" @click="onClear">
 					<ste-icon code="&#xe68b;" :color="clearIconColor" size="32rpx" />
 				</view>
 			</view>
-			<view v-if="!comHiddenLine" class="secrch-line" :class="disabled ? 'disabled' : ''" />
+			<view v-if="!cmpHiddenLine" class="secrch-line" :class="disabled ? 'disabled' : ''" />
 			<view
 				v-if="!hiddenBtn"
 				class="search-button"
 				:class="disabled ? 'disabled' : ''"
-				:style="[combtnBackground]"
+				:style="[cmpbtnBackground]"
 				@click="onSearch"
 			>
 				{{ btnText }}
@@ -207,7 +207,7 @@ export default {
 		};
 	},
 	computed: {
-		comStyleVar() {
+		cmpStyleVar() {
 			return {
 				'--root-height': utils.rpx2px(this.height),
 				'--root-radius': utils.rpx2px(this.radius),
@@ -217,22 +217,22 @@ export default {
 				'--border-color': this.borderColor,
 			};
 		},
-		comPlaceholder() {
+		cmpPlaceholder() {
 			return this.hotWords?.length ? '' : this.placeholder;
 		},
-		comHiddenLine() {
+		cmpHiddenLine() {
 			return this.hiddenLine || this.hiddenBtn;
 		},
-		comShowClear() {
+		cmpShowClear() {
 			return this.clearable && this.dataValue;
 		},
-		comShowSwitch() {
+		cmpShowSwitch() {
 			return this.hotWords?.length && !this.dataValue;
 		},
-		comBackground() {
+		cmpBackground() {
 			return utils.bg2style(this.background);
 		},
-		combtnBackground() {
+		cmpbtnBackground() {
 			return utils.bg2style(this.btnBackground);
 		},
 	},
