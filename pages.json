@@ -9,7 +9,7 @@
 		{
 			"path": "pc/index/index",
 			"style": {
-				"navigationBarTitleText": "pc index",
+				"navigationBarTitleText": "Stellar UI",
 				"h5": {
 					"titleNView": false
 				}

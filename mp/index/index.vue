@@ -2,7 +2,11 @@
 	<view class="page">
 		<view class="top">
 			<view class="top-1">
-				<image :src="joinSrc('中百钱包/payment/logo.png')" style="width: 100rpx" mode="widthFix" />
+				<image
+					:src="joinSrc('https://image.whzb.com/chain/StellarUI/logo.png')"
+					style="width: 100rpx"
+					mode="widthFix"
+				/>
 				<view class="title">
 					<view class="title-1">Stellar UI {{ version }}</view>
 					<view class="title-2">微信平台快速开发的UI框架</view>

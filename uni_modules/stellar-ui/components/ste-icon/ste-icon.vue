@@ -13,11 +13,11 @@ import utils from '../../utils/utils.js';
  * @property {String}	code 图标名称
  * @property {String}	color 图标颜色
  * @property {Number|String}	size 图标大小，单位rpx，默认28
- * @property {Boolean} bold 图标粗细，默认false
- * @property {Number|String} marginLeft 左外边距，单位rpx，默认0
- * @property {Number|String} marginRight 右外边距，单位rpx，默认0
- * @property {Number|String} marginTop 上外边距，单位rpx，默认0
- * @property {Number|String} marginBottom 下外边距，单位rpx，默认0
+ * @property {Boolean}	bold 图标是否粗体，默认false
+ * @property {Number|String}	marginLeft 左外边距，单位rpx，默认0
+ * @property {Number|String}	marginRight 右外边距，单位rpx，默认0
+ * @property {Number|String}	marginTop 上外边距，单位rpx，默认0
+ * @property {Number|String}	marginBottom 下外边距，单位rpx，默认0
  * @event {Function} click 图标点击回调事件
  */
 export default {
@@ -43,7 +43,7 @@ export default {
 			type: String,
 			default: '',
 		},
-		// 字体粗细
+		// 图标是否粗体
 		bold: {
 			type: Boolean,
 			default: false,
@@ -81,7 +81,7 @@ export default {
 			return {
 				'--color': this.color,
 				'--size': this.rpx2px(this.size),
-				'--weight': this.bold ? 'normal' : 'bold',
+				'--weight': this.bold ? 'bold' : 'normal',
 				'--margin-left': this.rpx2px(this.marginLeft),
 				'--margin-right': this.rpx2px(this.marginRight),
 				'--margin-top': this.rpx2px(this.marginTop),
@@ -103,13 +103,6 @@ export default {
 .ste-icon--root {
 	display: flex;
 	align-items: center;
-	.page-iconfont {
-		position: relative;
-		display: inline-block;
-		width: calc(var(--size) + var(--margin-left) + var(--margin-right)) !important;
-		height: var(--size) !important;
-		line-height: var(--size) !important;
-	}
 
 	.iconfont {
 		display: inline-block;

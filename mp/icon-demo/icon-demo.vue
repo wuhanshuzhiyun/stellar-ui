@@ -28,6 +28,13 @@
 						<ste-icon code="&#xe628;" marginRight="30" size="70"></ste-icon>
 					</view>
 				</view>
+				<view class="demo-item">
+					<view class="title">图标是否粗体</view>
+					<view class="item-block" style="justify-content: flex-start">
+						<ste-icon code="&#xe628;" marginRight="30"></ste-icon>
+						<ste-icon code="&#xe628;" bold></ste-icon>
+					</view>
+				</view>
 			</view>
 			<view v-if="tabIndex === 1" class="tab2-content">
 				<view class="demo-item">
