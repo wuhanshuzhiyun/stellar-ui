@@ -187,6 +187,12 @@ export default {
 	&-disabled {
 		background: #666666;
 		color: #ffffff;
+
+		cursor: not-allowed;
+	}
+
+	&-loading {
+		cursor: not-allowed;
 	}
 
 	&-active {
