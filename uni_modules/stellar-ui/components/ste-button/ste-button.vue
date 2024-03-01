@@ -1,8 +1,8 @@
 <template>
 	<button
-		class="root"
+		class="ste-button--root"
 		:class="comRootClass"
-		:hover-class="!disabled ? 'root-active' : ''"
+		:hover-class="!disabled ? 'ste-button--root-active' : ''"
 		@click="handleClick"
 		:style="[comBtnCss]"
 	>
@@ -80,22 +80,23 @@ export default {
 	computed: {
 		comRootClass() {
 			const classArr = [];
+			const prefix = 'ste-button--root';
 			if ([100, 200, 300, 400].includes(this.mode)) {
-				classArr.push(`root-${this.mode}`);
+				classArr.push(`${prefix}-${this.mode}`);
 			} else {
-				classArr.push('root-200');
+				classArr.push(`${prefix}-200`);
 			}
 
 			if (this.disabled) {
-				classArr.push(`root-disabled`);
+				classArr.push(`${prefix}-disabled`);
 			}
 
 			if (this.loading) {
-				classArr.push(`root-loading`);
+				classArr.push(`${prefix}-loading`);
 			}
 
 			if (this.round) {
-				classArr.push(`root-round`);
+				classArr.push(`${prefix}-round`);
 			}
 			return classArr;
 		},
@@ -125,8 +126,6 @@ export default {
 				else {
 					style.backgroundColor = this.background;
 				}
-
-				// style = { ...style, ...utils.bg2style(this.background) };
 				style.color = this.color;
 			}
 
@@ -149,7 +148,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.root {
+.ste-button--root {
 	position: relative;
 	align-items: center;
 	justify-content: center;
