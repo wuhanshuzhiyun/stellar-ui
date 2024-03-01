@@ -2,7 +2,7 @@
 	<view class="root" :style="[comStyleVar, comBackground]" @click="onClick">
 		<view class="content">
 			<view class="icon-box">
-				<ste-icon code="&#xe66d;" color="#BBBBBB" />
+				<ste-icon code="&#xe66d;" :color="beforeIconColor" />
 			</view>
 			<view class="input-box" v-if="!hiddenInput">
 				<input
@@ -32,7 +32,7 @@
 					</swiper-item>
 				</swiper>
 				<view v-if="comShowClear" class="clear-icon" @click="onClear">
-					<ste-icon code="&#xe68b;" color="#BBBBBB" size="32rpx" />
+					<ste-icon code="&#xe68b;" :color="clearIconColor" size="32rpx" />
 				</view>
 			</view>
 			<view v-if="!comHiddenLine" class="secrch-line" :class="disabled ? 'disabled' : ''" />
@@ -61,22 +61,24 @@ import utils from '../../utils/utils.js';
  * @value nav 		导航栏{String}
  * @property {String}			value				当前值（支持v-model双向绑定）
  * @property {String}			placeholder				占位提示符
- * @property {String}			placeholderColor	占位符字体颜色，默认值 #BBBBBB
- * @property {String}			inputColor	输入框文字颜色，默认值 #000000
  * @property {String[]}		hotWords	热词列表，默认值 []
  * @property {Number}			interval	热词列表自动切换时间间隔，默认值 3000
  * @property {Boolean}		disabled	是否禁用状态，默认值 false
  * @property {Boolean}		hiddenLine	是否隐藏分割线 ，默认值 false
  * @property {Boolean}		hiddenBtn	是否隐藏搜索按钮 ，默认值 false
  * @property {String}			btnText	搜索按钮文字 ，默认值 搜索
- * @property {String}			btnTextColor	搜索按钮文字颜色 ，默认值 #0090FF
- * @property {String}			btnBg	搜索按钮背景
  * @property {Boolean}		hiddenInput	是否隐藏输入框，默认值 false
  * @property {Boolean}		clearable	是否可清空，默认值 true
- * @property {String}			borderColor	边框颜色，默认值 #eeeeee66
- * @property {String}			background	背景，默认值 #ffffff
  * @property {Number}			height	高度，单位rpx，默认值 64
  * @property {Number}			radius	圆角弧度，单位rpx，默认值 32
+ * @property {String}			borderColor	边框颜色，默认值 #EEEEEE66
+ * @property {String}			background	背景，默认值 #FFFFFF
+ * @property {String}			beforeIconColor	前置图标颜色，默认值 #BBBBBB
+ * @property {String}			placeholderColor	占位符文本颜色，默认值 #BBBBBB
+ * @property {String}			inputColor	输入框文本颜色，默认值 #000000
+ * @property {String}			clearIconColor	清除图标颜色，默认值 #BBBBBB
+ * @property {String}			btnTextColor	搜索按钮文本颜色 ，默认值 #0090FF
+ * @property {String}			btnBg	搜索按钮背景
 
  * @event {Function}			input 输入事件
  * @event {Function}			focus 聚焦焦点事件
@@ -105,16 +107,7 @@ export default {
 			type: String,
 			default: () => '',
 		},
-		// 占位符字体颜色
-		placeholderColor: {
-			type: String,
-			default: () => '#bbbbbb',
-		},
-		// 输入框文字颜色
-		inputColor: {
-			type: String,
-			default: () => '#000000',
-		},
+
 		// 热词列表
 		hotWords: {
 			type: Array,
@@ -145,15 +138,7 @@ export default {
 			type: String,
 			default: () => '搜索',
 		},
-		// 搜索按钮文字颜色
-		btnTextColor: {
-			type: String,
-			default: () => '#0090FF',
-		},
-		// 搜索按钮背景
-		btnBg: {
-			type: String,
-		},
+
 		// 是否隐藏输入框
 		hiddenInput: {
 			type: Boolean,
@@ -173,6 +158,35 @@ export default {
 		background: {
 			type: String,
 			default: () => '#ffffff',
+		},
+		// 前置图标颜色
+		beforeIconColor: {
+			type: String,
+			default: () => '#bbbbbb',
+		},
+		// 占位符字体颜色
+		placeholderColor: {
+			type: String,
+			default: () => '#bbbbbb',
+		},
+		// 输入框文字颜色
+		inputColor: {
+			type: String,
+			default: () => '#000000',
+		},
+		// 清除图标颜色
+		clearIconColor: {
+			type: String,
+			default: () => '#bbbbbb',
+		},
+		// 搜索按钮背景
+		btnBg: {
+			type: String,
+		},
+		// 搜索按钮文字颜色
+		btnTextColor: {
+			type: String,
+			default: () => '#0090FF',
 		},
 		// 高度
 		height: {
@@ -239,12 +253,15 @@ export default {
 	},
 	methods: {
 		onInput() {
+			if (this.disabled) return;
 			this.$emit('input', this.dataValue);
 		},
 		onFocus() {
+			if (this.disabled) return;
 			this.$emit('focus', this.dataValue);
 		},
 		onBlur() {
+			if (this.disabled) return;
 			this.$emit('blur', this.dataValue);
 		},
 		onSearch() {
@@ -259,9 +276,11 @@ export default {
 			this.switchIndex = v.detail.current;
 		},
 		onClick(v) {
+			if (this.disabled) return;
 			this.$emit('click', this.dataValue);
 		},
 		onClear() {
+			if (this.disabled) return;
 			this.dataValue = '';
 			this.$emit('input', this.dataValue);
 			this.$emit('clear');
