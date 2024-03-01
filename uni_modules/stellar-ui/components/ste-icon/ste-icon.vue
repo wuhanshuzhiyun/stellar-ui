@@ -1,6 +1,6 @@
 <template>
-	<div class="page-iconfont" :style="[computedCssVar]" @click="handleClick">
-		<view class="iconfont">{{ computedCode }}</view>
+	<div class="root" :style="[cmpCssVar]" @click="handleClick">
+		<view class="iconfont">{{ cmpCode }}</view>
 	</div>
 </template>
 
@@ -12,7 +12,7 @@ import utils from '../../utils/utils.js';
  * @tutorial http://172.16.114.51:5050/pc/index/index?name=ste-icon
  * @property {String}	code 图标名称
  * @property {String}	color 图标颜色
- * @property {String}	size 图标大小，单位rpx，默认28
+ * @property {Number|String}	size 图标大小，单位rpx，默认28
  * @property {Boolean} bold 图标粗细，默认false
  * @property {Number|String} marginLeft 左外边距，单位rpx，默认0
  * @property {Number|String} marginRight 右外边距，单位rpx，默认0
@@ -72,18 +72,12 @@ export default {
 	data() {
 		return {};
 	},
-	methods: {
-		rpx2px: utils.rpx2px,
-		handleClick() {
-			this.$emit('click');
-		},
-	},
 	computed: {
-		computedCode() {
+		cmpCode() {
 			// unicode编码转字符
 			return String.fromCharCode(this.code.replace('&#', '0').replace(';', ''));
 		},
-		computedCssVar() {
+		cmpCssVar() {
 			return {
 				'--color': this.color,
 				'--size': this.rpx2px(this.size),
@@ -93,6 +87,12 @@ export default {
 				'--margin-top': this.rpx2px(this.marginTop),
 				'--margin-bottom': this.rpx2px(this.marginBottom),
 			};
+		},
+	},
+	methods: {
+		rpx2px: utils.rpx2px,
+		handleClick() {
+			this.$emit('click');
 		},
 	},
 };
