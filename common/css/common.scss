@@ -40,21 +40,21 @@ body {
 		background: transparent;
 		color: transparent;
 	}
-	.content {
+	& > .content {
 		padding: 8px;
 		height: calc(100vh - 50px);
 		overflow-y: auto;
 
-		.demo-item {
+		& > .demo-item {
 			margin-bottom: 16px;
 
-			.title {
+			& > .title {
 				font-size: 14px;
 				color: #8f9ca2;
 				margin-bottom: 8px;
 			}
 
-			.item-block {
+			& > .item-block {
 				display: flex;
 				flex-direction: row;
 				flex-wrap: wrap;

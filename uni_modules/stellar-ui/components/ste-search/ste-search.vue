@@ -296,7 +296,7 @@ export default {
 	background-color: #fff;
 	border-radius: var(--root-radius);
 	border: 1rpx solid var(--border-color);
-	padding: 0 16rpx;
+	padding: 0 8rpx 0 16rpx;
 	position: relative;
 
 	&,
@@ -380,7 +380,7 @@ export default {
 			}
 		}
 		.search-button {
-			padding: 0 8rpx 0 16rpx;
+			padding: 0 16rpx;
 			height: 40rpx;
 			font-size: 28rpx;
 			line-height: 40rpx;
