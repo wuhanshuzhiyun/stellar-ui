@@ -295,6 +295,8 @@ export default {
 	width: 100%;
 	height: var(--root-height);
 	background-color: #fff;
+	background-repeat: no-repeat;
+	background-size: 100% 100%;
 	border-radius: var(--root-radius);
 	border: 1rpx solid var(--border-color);
 	position: relative;
@@ -394,6 +396,8 @@ export default {
 			font-weight: normal;
 			color: var(--btn-text-color);
 			border-radius: 20rpx;
+			background-repeat: no-repeat;
+			background-size: 100% 100%;
 			&.disabled {
 				color: #bbbbbb;
 			}

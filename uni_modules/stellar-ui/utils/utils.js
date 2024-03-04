@@ -12,16 +12,21 @@ let utils = {
 	 * @param {String} value
 	 */
 	bg2style(value) {
-		if (!value) return {};
-		if (value.indexOf('url(') === 0) {
-			return {
-				backgroundImage: value
-			};
-		} else {
-			return {
-				backgroundColor: value
-			};
+		const result = {};
+		const colorReg = /^(\#|rgba?)/;
+		const colorsReg = /^linear\-gradient/;
+		const imgReg = /^(https?\:\/\/|data\:image\/)/;
+		if (colorReg.test(value)) {
+			// 纯色
+			result.backgroundColor = value;
+		} else if (colorsReg.test(value)) {
+			// 渐变色
+			result.backgroundImage = value;
+		} else if (imgReg.test(value)) {
+			// 图片
+			result.backgroundImage = `url(${value})`;
 		}
+		return result;
 	},
 	/**兼容css中的单位
 	 * 如果值为数字，则拼接 'rpx'，否则直接返回字符串的值

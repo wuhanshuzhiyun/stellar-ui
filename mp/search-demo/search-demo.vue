@@ -54,10 +54,11 @@
 				</view>
 			</view>
 			<view class="demo-item">
-				<view class="title">自定义颜色</view>
+				<view class="title">颜色和背景</view>
 				<view class="item-block">
 					<ste-search
-						placeholder="搜索商品"
+						placeholder="全部颜色"
+						hiddenLine
 						borderColor="#F00"
 						background="#000"
 						prefixIconColor="#a55"
@@ -66,6 +67,36 @@
 						clearIconColor="#a55"
 						btnBackground="#fff"
 						btnTextColor="#000"
+						@search="onSearch"
+					/>
+				</view>
+				<view class="item-block">
+					<ste-search
+						placeholder="背景渐变和按钮背景渐变"
+						hiddenLine
+						borderColor="#F00"
+						background="linear-gradient(to right, #aaaaaa, #aaa000)"
+						prefixIconColor="#fff"
+						placeholderColor="#fff"
+						inputTextColor="#fff"
+						clearIconColor="#a55"
+						btnBackground="linear-gradient(to right, #0AAAAA, #000FFF)"
+						btnTextColor="#fff"
+						@search="onSearch"
+					/>
+				</view>
+				<view class="item-block">
+					<ste-search
+						placeholder="背景图片和按钮背景图片"
+						hiddenLine
+						borderColor="#F00"
+						background="https://image.whzb.com/chain/StellarUI/背景1.png"
+						prefixIconColor="#fff"
+						placeholderColor="#fff"
+						inputTextColor="#fff"
+						clearIconColor="#a55"
+						btnBackground="https://image.whzb.com/chain/StellarUI/背景2.png"
+						btnTextColor="#fff"
 						@search="onSearch"
 					/>
 				</view>
