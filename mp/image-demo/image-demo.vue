@@ -25,7 +25,7 @@
 					</ste-image>
 				</view>
 			</view>
-			<ste-button @click="onloading">重新加载</ste-button>
+			<ste-button @click="onloading" width="100%" mode="300">重新加载</ste-button>
 		</view>
 	</view>
 </template>
