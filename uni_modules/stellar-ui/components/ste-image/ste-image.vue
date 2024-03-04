@@ -1,5 +1,5 @@
 <template>
-	<view class="ste-image--root" :style="[cmpStyle]" @click="onClick">
+	<view class="ste-image--root" :style="[cmpStyle]">
 		<view v-if="showLoading && status === 0"><slot name="loading">加载中</slot></view>
 
 		<image
@@ -97,9 +97,6 @@ export default {
 		},
 	},
 	methods: {
-		onClick(e) {
-			this.$emit('click', e);
-		},
 		onLoadOver(e) {
 			this.status = 1;
 			this.$emit('load', e);
