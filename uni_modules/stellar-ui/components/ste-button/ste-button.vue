@@ -115,18 +115,7 @@ export default {
 			}
 
 			if (!this.disabled) {
-				// 判断是否为图片路径
-				if (this.background.startsWith('http') || this.background.startsWith('/')) {
-					style.backgroundImage = `url(${this.background})`;
-				}
-				// 判断是否为渐变色
-				else if (this.background.includes('gradient')) {
-					style.backgroundImage = this.background;
-				}
-				// 默认为纯颜色
-				else {
-					style.backgroundColor = this.background;
-				}
+				style = { ...style, ...utils.bg2style(this.background) };
 				style.color = this.color;
 			}
 
