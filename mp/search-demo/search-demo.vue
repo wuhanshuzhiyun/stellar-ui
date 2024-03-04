@@ -71,6 +71,9 @@
 					/>
 				</view>
 				<view class="item-block">
+					<ste-search hiddenLine placeholder="边框颜色" borderColor="#F00" @search="onSearch" />
+				</view>
+				<view class="item-block">
 					<ste-search
 						placeholder="背景渐变和按钮背景渐变"
 						hiddenLine
