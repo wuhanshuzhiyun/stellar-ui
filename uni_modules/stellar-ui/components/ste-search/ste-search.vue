@@ -149,7 +149,7 @@ export default {
 		// 边框颜色
 		borderColor: {
 			type: String,
-			default: () => '#eeeeee66',
+			default: () => '#dddddd',
 		},
 		// 背景
 		background: {
@@ -209,13 +209,12 @@ export default {
 	computed: {
 		cmpStyleVar() {
 			return {
-				'--root-height': utils.rpx2px(this.height),
-				'--root-height': utils.rpx2px(this.height),
-				'--root-radius': utils.rpx2px(this.radius),
-				'--btn-text-color': this.btnTextColor,
-				'--placeholder-color': this.placeholderColor,
-				'--input-color': this.inputTextColor,
-				'--border-color': this.borderColor,
+				'--search-root-height': utils.rpx2px(this.height),
+				'--search-root-radius': utils.rpx2px(this.radius),
+				'--search-btn-text-color': this.btnTextColor,
+				'--search-placeholder-color': this.placeholderColor,
+				'--search-input-color': this.inputTextColor,
+				'--search-border-color': this.borderColor,
 			};
 		},
 		cmpPlaceholder() {
@@ -293,10 +292,12 @@ export default {
 <style lang="scss" scoped>
 .ste-search--root {
 	width: 100%;
-	height: var(--root-height);
+	height: var(--search-root-height);
 	background-color: #fff;
-	border-radius: var(--root-radius);
-	border: 1rpx solid var(--border-color);
+	background-repeat: no-repeat;
+	background-size: 100% 100%;
+	border-radius: var(--search-root-radius);
+	border: 1rpx solid var(--search-border-color);
 	position: relative;
 
 	&,
@@ -336,10 +337,10 @@ export default {
 				width: 100%;
 				height: 100%;
 				font-size: 28rpx;
-				color: var(--input-color);
+				color: var(--search-input-color);
 
 				.search-input-placeholder {
-					color: var(--placeholder-color);
+					color: var(--search-placeholder-color);
 					font-family: Alibaba PuHuiTi 2, Alibaba PuHuiTi 20;
 					font-weight: normal;
 				}
@@ -355,7 +356,7 @@ export default {
 				.placeholder-item {
 					font-size: 28rpx;
 					line-height: 40rpx;
-					color: var(--placeholder-color);
+					color: var(--search-placeholder-color);
 					font-family: Alibaba PuHuiTi 2, Alibaba PuHuiTi 20;
 					font-weight: normal;
 				}
@@ -378,7 +379,7 @@ export default {
 			width: 4rpx;
 			flex-shrink: 0;
 			height: 24rpx;
-			background-color: var(--btn-text-color);
+			background-color: var(--search-btn-text-color);
 			&.disabled {
 				background: #bbbbbb;
 			}
@@ -392,8 +393,10 @@ export default {
 			text-align: center;
 			font-family: Alibaba PuHuiTi 2, Alibaba PuHuiTi 20;
 			font-weight: normal;
-			color: var(--btn-text-color);
+			color: var(--search-btn-text-color);
 			border-radius: 20rpx;
+			background-repeat: no-repeat;
+			background-size: 100% 100%;
 			&.disabled {
 				color: #bbbbbb;
 			}
