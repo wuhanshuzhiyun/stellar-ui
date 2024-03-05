@@ -41,6 +41,14 @@
 				</view>
 			</view>
 			<view class="demo-item">
+				<view class="title">行高</view>
+				<view class="item-block">
+					<view>
+						<ste-price value="9527" lineHeight="50" />
+					</view>
+				</view>
+			</view>
+			<view class="demo-item">
 				<view class="title">金额样式</view>
 				<view class="item-block">
 					<view>
@@ -58,7 +66,7 @@
 				<view class="title">格式化内容</view>
 				<view class="item-block">
 					<view>
-						<ste-price value="9527" :formatter="this.formatter" />
+						<ste-price value="9527" :formatter="formatter" />
 					</view>
 				</view>
 			</view>

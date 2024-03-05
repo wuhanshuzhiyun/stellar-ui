@@ -18,6 +18,8 @@ import utils from '../../utils/utils.js';
  * @property {String} color 文字颜色 默认值 #ff1e19
  * @property {String} linePriceColor 划线价文字颜色 默认值 #999999
  * @property {Number|String} lineHeight 行高，Number，单位rpx，String，同原生 默认值 1
+ * @value {Number} {{Number}} 单位rpx
+ * @value {String} 同原生
  * @property {Boolean} isSuggestPrice 是否划线价 默认值 false
  * @property {Number|String} marginLeft 左边距	 默认值 0
  * @property {Number|String} marginRight 右边距	 默认值 0
@@ -123,7 +125,7 @@ export default {
 	},
 	computed: {
 		cmpValue() {
-			if (!this.formatter) {
+			if (!this.formatter || typeof this.formatter !== 'function') {
 				if (this.valueUnit == 'fen') {
 					return utils.fenToYuan(this.value, -1, '', 0);
 				} else {
@@ -155,7 +157,7 @@ export default {
 		},
 		cmpPriceStyle() {
 			return {
-				lineHeight: this.lineWeight === -1 ? 1 : utils.addUnit(this.lineWeight),
+				lineHeight: this.lineHeight === -1 ? 1 : utils.addUnit(this.lineHeight),
 				color: (this.isSuggestPrice ? this.linePriceColor : this.color) + ' !important',
 				marginLeft: utils.addUnit(this.marginLeft),
 				marginRight: utils.addUnit(this.marginRight),
