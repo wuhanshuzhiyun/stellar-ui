@@ -52,7 +52,9 @@
 				<view class="title">金额样式</view>
 				<view class="item-block">
 					<view>
-						<ste-price value="9527" :styleType="1" />
+						<ste-price value="9527" :styleType="1" fontSize="20" />
+						<ste-price value="9527" :styleType="1" fontSize="40" />
+						<ste-price value="9527" :styleType="1" fontSize="60" />
 					</view>
 					<view>
 						<ste-price value="9527" :styleType="2" />

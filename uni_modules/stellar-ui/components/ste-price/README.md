@@ -37,9 +37,17 @@
 ```
 
 #### 金额样式
-- 划线价颜色属性只在开启了划线价模式时才生效
+- 当`styleType`值为`1`时，数字字号统一，当数字字号<=`40rpx`，则价格符号字号为`20rpx`
+- 当`styleType`值为`1`时，数字字号统一，当数字字号＞`40rpx`,则价格符号字号为数字字号-`20rpx`
+- 当`styleType`值为`2`时，当小数点前数字字号≤`28rpx` 所有部分展示字号统一
+- 当`styleType`值为`2`时，当`28rpx`＜小数点前数字字号≤`40rpx`则其余部分字号为`20rpx`
+- 当`styleType`值为`2`时，当小数点前数字字号＞`40rpx`则其余部分字号为小数点前数字字号-`20rpx`
+
+
 ```html
-<ste-price value="9527" :styleType="1" />
+<ste-price value="9527" :styleType="1" fontSize="20" />
+<ste-price value="9527" :styleType="1" fontSize="40" />
+<ste-price value="9527" :styleType="1" fontSize="60" />
 <ste-price value="9527" :styleType="2" />
 <ste-price value="9527" :styleType="3" />
 ```
