@@ -62,8 +62,8 @@ export default {
 | -----								|-----																																																			|-----					|-----						|-----																																																																																																																																																																																																																										|-----		|
 | src									| 图片源，同原生																																															| String				| -								| -																																																																																																																																																																																																																												|-				|
 | mode								| 图片裁剪、缩放的模式																																													| String				| `"scaleToFill"`	| `"scaleToFill"`缩放模式，不保持纵横比缩放图片，使图片的宽高完全拉伸至填满`image`元素<br/>`"aspectFit"`缩放模式，保持纵横比缩放图片，使图片的长边能完全显示出来。也就是说，可以完整地将图片显示出来<br/>`"aspectFill"`缩放模式，保持纵横比缩放图片，只保证图片的短边能完全显示出来。也就是说，图片通常只在水平或垂直方向是完整的，另一个方向将会发生截取<br/>`"widthFix"`缩放模式，宽度不变，高度自动变化，保持原图宽高比不变<br/>`"heightFix"`缩放模式，高度不变，宽度自动变化，保持原图宽高比不变	|-				|
-| width								| 宽度																																																				| Number/String	| `"100%"`				| "Number"：单位rpx<br/>"String"：同原生																																																																																																																																																																																																										|-				|
-| height							| 高度																																																				| Number/String	| `"100%"`				| "Number"：单位rpx<br/>"String"：同原生																																																																																																																																																																																																										|-				|
+| width								| 宽度																																																				| Number/String	| `"100%"`				| `Number`单位`rpx`<br/>`String`同原生																																																																																																																																																																																																											|-				|
+| height							| 高度																																																				| Number/String	| `"100%"`				| `Number`单位`rpx`<br/>`String`同原生																																																																																																																																																																																																											|-				|
 | showLoading					| 是否展示图片未加载的占位内容																																									| Boolean				| `false`					| -																																																																																																																																																																																																																												|-				|
 | showError						| 是否加载失败的内容																																														| Boolean				| `true`					| -																																																																																																																																																																																																																												|-				|
 | showMenuByLongpress	| 长按图片显示发送给朋友、收藏、保存图片、搜一搜、打开名片/前往群聊/打开小程序（若图片中包含对应二维码或小程序码）的菜单	| Boolean				| `false`					| -																																																																																																																																																																																																																												|-				|
@@ -72,8 +72,9 @@ export default {
 
 
 #### Events
-您可以通过监听`input`事件，在回调中将返回的结果绑定一个变量去获得用户的输入内容。
-但如"基本使用"中的说明一样，您双向绑定了一个变量后，无需监听`input`事件也是可以的。
+- 您可以通过监听`load`事件，监听图片是否加载完成
+- 您可以通过监听`error`事件，监听图片是否加载失败
+
 | 事件名| 说明							| 回调参数	| 支持版本	|
 |-----	|-----						|-----		|-----		|
 | load	| 图片加载成功触发	| event		| -				|
