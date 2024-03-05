@@ -22,7 +22,7 @@
 		</view>
 		<view class="pc-content">
 			<view v-html="content" class="markdown-view"></view>
-			<view v-show="isComponent" class="comment-view">
+			<view v-show="isComponent && loadingMd" class="comment-view">
 				<view class="comment-title">意见反馈</view>
 				<input class="user-input" placeholder="姓名" v-model="commentParams.user" maxlength="8" />
 				<textarea
@@ -47,7 +47,7 @@
 			</view>
 		</view>
 		<view class="pc-view">
-			<iframe class="view-iframe" :src="viewUrl" frameborder="0" />
+			<iframe class="view-iframe" src="/mp/index/index" frameborder="0" />
 		</view>
 	</view>
 </template>
@@ -67,13 +67,15 @@ export default {
 			content: '',
 			activeName: 'handbook-介绍',
 			datas,
-			viewUrl: '/mp/index/index',
 			commentList: [],
 			isComponent: false,
+			loadingMd: false,
 			commentParams: {
 				user: '',
 				content: '',
 			},
+			iframeEl: null,
+			upurl: '/mp/index/index',
 		};
 	},
 	watch: {
@@ -87,17 +89,23 @@ export default {
 					// 加载预览地址
 					const com = vueMap[v];
 					this.isComponent = !!com;
-					let src = `/mp/index/index?t=${Date.now()}`;
+					let src = '';
 					if (com) {
 						// 如果是组件，获取组件预览地址
 						const name = v.slice(4);
-						src = `/mp/${name}-demo/${name}-demo?t=${Date.now()}`;
+						src = `/mp/${name}-demo/${name}-demo`;
 						this.getComment(v);
+					} else {
+						src = '/mp/index/index';
 					}
-					if (this.viewUrl === src) return;
+					if (this.upurl === src) return;
+					// #ifdef H5
 					this.$nextTick(() => {
-						this.viewUrl = src;
+						this.upurl = src;
+						console.log('src----', src);
+						this.iframeEl.contentWindow.postMessage(src, '*');
 					});
+					// #endif
 				}, 100);
 			},
 			immediate: true,
@@ -108,9 +116,18 @@ export default {
 			this.activeName = name;
 		}
 	},
+	onShow() {
+		// #ifdef H5
+		this.$nextTick(() => {
+			this.iframeEl = document.querySelector('iframe.view-iframe');
+			console.log('iframeEl:', this.iframeEl);
+		});
+		// #endif
+	},
 	methods: {
 		viewContent(url) {
 			this.content = '';
+			this.loadingMd = false;
 			// 加载文档
 			uni.request({
 				url,
@@ -119,6 +136,7 @@ export default {
 				// 渲染完成后，为所有的代码按钮加载复制功能
 				// #ifdef H5
 				this.$nextTick(() => {
+					this.loadingMd = true;
 					document.querySelectorAll('.code-copy-button').forEach((btn) => {
 						btn.addEventListener('click', () => this.copy(btn));
 					});
@@ -129,7 +147,9 @@ export default {
 		toView(key) {
 			this.activeName = key;
 			// 修改URL地址参数，不刷新当前页面
-			history.replaceState({}, '', `/pc/index/index?name=${key}`);
+			uni.navigateTo({
+				url: `/pc/index/index?name=${key}`,
+			});
 		},
 		async copy(btn) {
 			// #ifdef H5
