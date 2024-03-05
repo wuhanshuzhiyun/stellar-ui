@@ -81,26 +81,26 @@
 
 ### API
 #### Props
-| 参数			| 说明						| 类型			| 默认值		| 可选值																	| 支持版本	|
-| ---			| ---						| ---			| ---		| ---																	| ---		|
-| mode			| 尺寸						| Number		| 200		| 100：小<br/>200：中<br/>300：大<br/>400：超大							| -			|
-| color			| 文本颜色					| String		| "#ffffff"	| -																		| -			|
-| background	| 背景						| String		| "#0091ff"	| -																		| -			|
-| borderColor	| 边框颜色					| String		| -			| -																		| -			|
-| width			| 宽度						| Number/String	| "auto"	| "auto"： 自适应宽度<br/>"100%"：填满<br/>{{Number}}：自定义宽度 单位rpx	| -			|
-| round			| 是否圆角按钮，圆角度数(48)	| Boolean		| true		| -																		| -			|
-| disabled		| 是否禁用状态				| Boolean		| false		| -																		| -			|
-| loading		| 是否加载中状态				| Boolean		| false		| -																		| -			|
+| 参数			| 说明						| 类型				| 默认值			| 可选值																		| 支持版本	|
+| ---			| ---						| ---				| ---			| ---																		| ---		|
+| `mode`		| 尺寸						| `Number`			| `200`			| `100`：小<br/>`200`：中<br/>`300`：大<br/>`400`：超大						| -			|
+| `color`		| 文本颜色					| `String`			| `"#ffffff"`	| -																			| -			|
+| `background`	| 背景						| `String`			| `"#0091ff"`	| -																			| -			|
+| `borderColor`	| 边框颜色					| `String`			| -				| -																			| -			|
+| `width`		| 宽度						| `Number/String`	| `"auto"`		| `"auto"`： 自适应宽度<br/>`"100%"`：填满<br/>`{{Number}}`：自定义宽度 单位rpx	| -			|
+| `round`		| 是否圆角按钮，圆角度数(48)	| `Boolean`			| `true`		| -																			| -			|
+| `disabled`	| 是否禁用状态				| `Boolean`			| `false`		| -																			| -			|
+| `loading`		| 是否加载中状态				| `Boolean`			| `false`		| -																			| -			|
 
 #### Events
 | 事件中文名| 事件英文名| 事件参数	| 备注	|
 | ---		| ---		| ---		| ---	|
-| 点击		| click		| -			| -		|
+| 点击		| `click`		| -			| -		|
 
 #### Solts
-| 插槽中文名| 插槽英文名	| 插槽参数	| 备注		|
+| 插槽中文名	| 插槽英文名	| 插槽参数	| 备注		|
 | ---		| ---		| ---		| ---		|
-| 默认		| default	|-			| 按钮内容	|
+| 默认		| `default`	|-			| 按钮内容	|
 
 
 {{fuyuwei}}
