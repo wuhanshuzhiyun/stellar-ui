@@ -93,17 +93,17 @@ export default {
 
 ### API
 #### Props
-| 属性名							| 说明																																																				| 类型						| 默认值						| 可选值																|支持版本	|
-| -----								|-----																																																			|-----					|-----						|-----																|-----		|
-| src									| 图片源，同原生																																															| String				| -								| -																		|-				|
-| mode								| 图片裁剪、缩放的模式																																													| String				| `"scaleToFill"`	| 见下面`Mode`表格											|-				|
-| width								| 宽度																																																				| Number/String	| `"100%"`				| `Number`单位`rpx`<br/>`String`同原生	|-				|
-| height							| 高度																																																				| Number/String	| `"100%"`				| `Number`单位`rpx`<br/>`String`同原生	|-				|
-| radius							| 圆角																																																				| Number/String	| `0`							| `Number`单位`rpx`<br/>`String`同原生	|-				|
-| showLoading					| 是否展示图片未加载的占位内容																																									| Boolean				| `false`					| -																		|-				|
-| showError						| 是否加载失败的内容																																														| Boolean				| `true`					| -																		|-				|
-| showMenuByLongpress	| 长按图片显示发送给朋友、收藏、保存图片、搜一搜、打开名片/前往群聊/打开小程序（若图片中包含对应二维码或小程序码）的菜单	| Boolean				| `false`					| -																		|-				|
-| lazyLoad						| 图片懒加载，在即将进入一定范围（上下三屏）时才开始加载																														| Boolean				| `false`					| -																		|-				|
+| 属性名							| 说明																																																				| 类型						| 默认值						| 可选值						|支持版本	|
+| -----								|-----																																																			|-----					|-----						|-----						|-----		|
+| src									| 图片源，同原生																																															| String				| -								| -								|-				|
+| mode								| 图片裁剪、缩放的模式																																													| String				| `"scaleToFill"`	| 见下面`Mode`表格	|-				|
+| width								| 宽度：`Number`单位`rpx`，`String`同原生																																			| Number/String	| `"100%"`				| -								|-				|
+| height							| 高度：`Number`单位`rpx`，`String`同原生																																			| Number/String	| `"100%"`				| -								|-				|
+| radius							| 圆角：`Number`单位`rpx`，`String`同原生																																			| Number/String	| `0`							| -								|-				|
+| showLoading					| 是否展示图片未加载的占位内容																																									| Boolean				| `false`					| -								|-				|
+| showError						| 是否加载失败的内容																																														| Boolean				| `true`					| -								|-				|
+| showMenuByLongpress	| 长按图片显示发送给朋友、收藏、保存图片、搜一搜、打开名片/前往群聊/打开小程序（若图片中包含对应二维码或小程序码）的菜单	| Boolean				| `false`					| -								|-				|
+| lazyLoad						| 图片懒加载，在即将进入一定范围（上下三屏）时才开始加载																														| Boolean				| `false`					| -								|-				|
 
 ##### Mode
 | 合法值			| 说明																																																									|
