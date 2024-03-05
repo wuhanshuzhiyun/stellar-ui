@@ -22,7 +22,7 @@
 				</view>
 			</view>
 			<view class="demo-item">
-				<view class="title">文字颜色</view>
+				<view class="title">金额文字颜色</view>
 				<view class="item-block">
 					<view>
 						<ste-price value="9527" color="green" />

@@ -19,6 +19,11 @@
 <ste-price value="9527" fontSize="50" />
 ```
 
+#### 金额文字颜色
+```html
+<ste-price value="9527" color="green" />
+```
+
 #### 划线价 & 划线价颜色
 - 划线价颜色属性只在开启了划线价模式时才生效
 ```html

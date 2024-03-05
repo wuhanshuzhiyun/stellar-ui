@@ -100,29 +100,6 @@ export default {
 	data() {
 		return {};
 	},
-	created() {},
-	methods: {
-		calcFontSize() {
-			let size = utils.addUnit(this.fontSize);
-			if (this.styleType == 1) {
-				if (this.fontSize <= 40) {
-					size = utils.addUnit(20);
-				} else {
-					size = utils.addUnit(this.fontSize - 20);
-				}
-			} else if (this.styleType == 3) {
-				size = utils.addUnit(this.fontSize);
-			} else {
-				// 常规 - 分元不一致
-				if (this.fontSize > 28 && this.fontSize <= 40) {
-					size = utils.addUnit(20);
-				} else if (this.fontSize > 40) {
-					size = utils.addUnit(this.fontSize - 20);
-				}
-			}
-			return size;
-		},
-	},
 	computed: {
 		cmpValue() {
 			if (!this.formatter || typeof this.formatter !== 'function') {
@@ -200,6 +177,28 @@ export default {
 				fontSize,
 				textDecoration: this.isSuggestPrice ? 'line-through' : 'none',
 			};
+		},
+	},
+	methods: {
+		calcFontSize() {
+			let size = utils.addUnit(this.fontSize);
+			if (this.styleType == 1) {
+				if (this.fontSize <= 40) {
+					size = utils.addUnit(20);
+				} else {
+					size = utils.addUnit(this.fontSize - 20);
+				}
+			} else if (this.styleType == 3) {
+				size = utils.addUnit(this.fontSize);
+			} else {
+				// 常规 - 分元不一致
+				if (this.fontSize > 28 && this.fontSize <= 40) {
+					size = utils.addUnit(20);
+				} else if (this.fontSize > 40) {
+					size = utils.addUnit(this.fontSize - 20);
+				}
+			}
+			return size;
 		},
 	},
 };
