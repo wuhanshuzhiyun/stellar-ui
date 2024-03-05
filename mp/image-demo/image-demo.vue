@@ -46,7 +46,7 @@
 						<ste-image :src="errorUrl" showLoading width="200" height="200" />
 					</view>
 					<view class="image-box">
-						<ste-image :src="errorImg" :showError="false" width="200" height="200" />
+						<ste-image :src="errorUrl" :showError="false" width="200" height="200" />
 					</view>
 				</view>
 			</view>
@@ -54,12 +54,8 @@
 				<view class="title">具名插槽</view>
 				<view class="item-block">
 					<ste-image :src="errorUrl" showLoading width="200" height="200">
-						<view class="image-box">
-							<template v-slot:loading>Loading...</template>
-						</view>
-						<view class="image-box">
-							<template v-slot:error>Error</template>
-						</view>
+						<template v-slot:loading>Loading...</template>
+						<template v-slot:error>Error</template>
 					</ste-image>
 				</view>
 			</view>

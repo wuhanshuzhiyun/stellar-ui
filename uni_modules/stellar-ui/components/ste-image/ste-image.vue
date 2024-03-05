@@ -12,7 +12,7 @@
 			@load="onLoadOver"
 			@error="onFault"
 		></image>
-		<view v-if="status === 2"><slot name="error">加载失败</slot></view>
+		<view v-if="showError && status === 2"><slot name="error">加载失败</slot></view>
 	</view>
 </template>
 
