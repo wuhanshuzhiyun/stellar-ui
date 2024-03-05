@@ -25,7 +25,7 @@ export function componentFiles() {
 	/** ====================== 组件markdown文件 End ====================== */
 
 	/** ====================== 组件VUE文件 Start ====================== */
-	const vues = require.context('@/uni_modules/stellar-ui/components/', true, /ste\-\w+\.vue$/);
+	const vues = require.context('@/uni_modules/stellar-ui/components/', true, /ste\-[\w\-]+\.vue$/);
 	const vueMap = requireFiles(vues, queryComponentName);
 	/** ====================== 组件VUE文件 End ====================== */
 
