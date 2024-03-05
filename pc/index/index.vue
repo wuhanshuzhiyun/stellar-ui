@@ -108,13 +108,14 @@ export default {
 						this.iframeUrl = src;
 					});
 					// #endif
-				}, 50);
+				}, 20);
 			},
 			immediate: true,
 		},
 	},
 	onLoad({ name }) {
-		if (name) {
+		console.log('on-load');
+		if (name !== this.activeName) {
 			this.activeName = name;
 		}
 	},
@@ -141,9 +142,7 @@ export default {
 		toView(key) {
 			this.activeName = key;
 			// 修改URL地址参数，不刷新当前页面
-			uni.navigateTo({
-				url: `/pc/index/index?name=${key}`,
-			});
+			history.replaceState({}, '', `/pc/index/index?name=${key}`);
 		},
 		async copy(btn) {
 			// #ifdef H5
