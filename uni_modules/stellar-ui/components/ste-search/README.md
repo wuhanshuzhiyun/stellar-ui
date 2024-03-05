@@ -160,42 +160,42 @@ export default {
 
 ### API
 #### Props
-| 属性名					| 说明																		| 类型			| 默认值					| 可选值																|支持版本	|
-| -----						|-----																	|-----		|-----					|-----																|-----		|
-| type						| 组件类型																| String	| `"default"`		| `"default"`正常搜索<br/>`"nav"`导航栏	|-				|
-| value						| 输入框默认值，支持`v-model`双向绑定			| String	| `""`					| -																		|-				|
-| placeholder			| 占位提示符															| String	| `""`					| -																		|-				|
-| hotWords				| 热词列表																| String[]| `[]`					| -																		|-				|
-| interval				| 热词列表自动切换时间间隔，单位`ms`				| Number	| `3000`				| -																		|-				|
-| disabled				| 是否禁用状态														| Boolean	| `false`				| -																		|-				|
-| hiddenLine			| 是否隐藏分割线													| Boolean	| `false`				| -																		|-				|
-| hiddenBtn				| 是否隐藏按钮，同时也会隐藏分割线					| Boolean	| `false`				| -																		|-				|
-| btnText					| 按钮文本内容														| String	| `"搜索"`				| -																		|-				|
-| hiddenInput			| 是否隐藏输入框													| Boolean	| `false`				| -																		|-				|
-| clearable				| 是否可清空内容													| Boolean	| `true`				| -																		|-				|
-| height					| 搜索框高度，单位`rpx`										| Number	| `64`					| -																		|-				|
-| radius					| 圆角弧度，单位`rpx`											| Number	| `32`					| -																		|-				|
-| borderColor			| 边框颜色																| String	| `"#EEEEEE66"`	| -																		|-				|
-| background			| 背景，可直接传颜色值或者图片							| String	| `"#FFFFFF"`		| -																		|-				|
-| placeholderColor| 占位符文本颜色													| String	| `"#BBBBBB"`		| -																		|-				|
-| prefixIconColor	| 前缀图标颜色														| String	| `"#BBBBBB"`		| -																		|-				|
-| inputTextColor	| 输入框文本颜色													| String	| `"#000000"`		| -																		|-				|
-| clearIconColor	| 清除图标颜色														| String	| `"#BBBBBB"`		| -																		|-				|
-| btnTextColor		| 搜索按钮文本颜色，分割线会跟随文本颜色变化	| String	| `"#0090FF"`		| -																		|-				|
-| btnBackground		| 搜索按钮背景，可直接传颜色值或者图片				| String	| -							| -																		|-				|
+| 属性名			| 说明									| 类型		| 默认值			| 可选值									|支持版本	|
+| -----				|-----									|-----		|-----			|-----									|-----		|
+| `type`			| 组件类型								| `String`	| `"default"`	| `"default"`正常搜索<br/>`"nav"`导航栏	|-			|
+| `value`			| 输入框默认值，支持`v-model`双向绑定		| `String`	| `""`			| -										|-			|
+| `placeholder`		| 占位提示符								| `String`	| `""`			| -										|-			|
+| `hotWords`		| 热词列表								| `String[]`| `[]`			| -										|-			|
+| `interval`		| 热词列表自动切换时间间隔，单位`ms`		| `Number`	| `3000`		| -										|-			|
+| `disabled`		| 是否禁用状态							| `Boolean`	| `false`		| -										|-			|
+| `hiddenLine`		| 是否隐藏分割线							| `Boolean`	| `false`		| -										|-			|
+| `hiddenBtn`		| 是否隐藏按钮，同时也会隐藏分割线			| `Boolean`	| `false`		| -										|-			|
+| `btnText`			| 按钮文本内容							| `String`	| `"搜索"`		| -										|-			|
+| `hiddenInput`		| 是否隐藏输入框							| `Boolean`	| `false`		| -										|-			|
+| `clearable`		| 是否可清空内容							| `Boolean`	| `true`		| -										|-			|
+| `height`			| 搜索框高度，单位`rpx`					| `Number`	| `64`			| -										|-			|
+| `radius`			| 圆角弧度，单位`rpx`						| `Number`	| `32`			| -										|-			|
+| `borderColor`		| 边框颜色								| `String`	| `"#EEEEEE66"`	| -										|-			|
+| `background`		| 背景，可直接传颜色值或者图片				| `String`	| `"#FFFFFF"`	| -										|-			|
+| `placeholderColor`| 占位符文本颜色							| `String`	| `"#BBBBBB"`	| -										|-			|
+| `prefixIconColor`	| 前缀图标颜色							| `String`	| `"#BBBBBB"`	| -										|-			|
+| `inputTextColor`	| 输入框文本颜色							| `String`	| `"#000000"`	| -										|-			|
+| `clearIconColor`	| 清除图标颜色							| `String`	| `"#BBBBBB"`	| -										|-			|
+| `btnTextColor`	| 搜索按钮文本颜色，分割线会跟随文本颜色变化	| `String`	| `"#0090FF"`	| -										|-			|
+| `btnBackground`	| 搜索按钮背景，可直接传颜色值或者图片		| `String`	| -				| -										|-			|
 
 
 
 #### Events
 您可以通过监听`input`事件，在回调中将返回的结果绑定一个变量去获得用户的输入内容。
 但如"基本使用"中的说明一样，您双向绑定了一个变量后，无需监听`input`事件也是可以的。
-| 事件名| 说明																														| 回调参数					| 支持版本	|
-|-----	|-----																													|-----						|-----		|
-| input	| 监听用户输入事件																								| value: 输入框的值	| -				|
-| search| 用户确定搜索时触发，用户按回车键，或者手机键盘右下角的"搜索"键时触发	| value: 输入框的值	| -				|
-| focus	| 输入框获取焦点时触发																							| value: 输入框的值	| -				|
-| blur	| 输入框失去焦点时触发																							| value: 输入框的值	| -				|
-| clear	| 配置了`clearabled`后，清空内容时会发出此事件												| -								| -				|
-| click	| 点击任意区域触发																								| value: 输入框的值	| -				|
+| 事件名	| 说明															| 回调参数			| 支持版本	|
+|-----		|-----															|-----				|-----		|
+| `input`	| 监听用户输入事件												| `value`: 输入框的值	| -			|
+| `search`	| 用户确定搜索时触发，用户按回车键，或者手机键盘右下角的"搜索"键时触发	| `value`: 输入框的值	| -			|
+| `focus`	| 输入框获取焦点时触发												| `value`: 输入框的值	| -			|
+| `blur`	| 输入框失去焦点时触发												| `value`: 输入框的值	| -			|
+| `clear`	| 配置了`clearabled`后，清空内容时会发出此事件						| -					| -			|
+| `click`	| 点击任意区域触发												| `value`: 输入框的值	| -			|
 
 {{xuyajun}}

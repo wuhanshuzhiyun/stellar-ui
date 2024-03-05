@@ -25,7 +25,7 @@
 
 ### 图标大小
 
-通过 `size` 属性来设置图标的尺寸大小，单位为rpx，默认28
+通过 `size` 属性来设置图标的尺寸大小，单位为rpx，默认`28`
 ```html
 <ste-icon code="&#xe628;"></ste-icon>
 <ste-icon code="&#xe628;" size="50"></ste-icon>
@@ -34,7 +34,7 @@
 
 ### 图标是否粗体
 
-通过 `bold` 属性来设置图标是否粗体，默认false
+通过 `bold` 属性来设置图标是否粗体，默认`false`
 ```html
 <ste-icon code="&#xe628;"></ste-icon>
 <ste-icon code="&#xe628;" bold></ste-icon>
@@ -44,20 +44,20 @@
 #### Props
 |属性名			| 说明				|类型			|默认值	| 可选值	|支持版本	|
 | -----			|-----				|-----			|-----	|-----	|-----		|
-| code			|图标编码			|String			|必填	|	-	|-			|
-| color			|图标颜色			|String			|-		|	-	|-			|
-| size			|图标大小（单位rpx）	|Number/String	|28		|	-	|-			|
-| bold			|图标是否粗体			|Boolean		|false	|	-	|-			|
-| marginLeft	|左外边距（单位rpx）	|Number/String	|0		|	-	|-			|
-| marginRight	|右外边距（单位rpx）	|Number/String	|0		|	-	|-			|
-| marginTop		|上外边距（单位rpx）	|Number/String	|0		|	-	|-			|
-| marginBottom	|下外边距（单位rpx）	|Number/String	|0		|	-	|-			|
+| `code`		|图标编码			|`String`		|必填	|	-	|-			|
+| `color`		|图标颜色			|`String`		|-		|	-	|-			|
+| `size`		|图标大小（单位rpx）	|`Number/String`|`28`	|	-	|-			|
+| `bold`		|图标是否粗体			|`Boolean`		|`false`|	-	|-			|
+| `marginLeft`	|左外边距（单位rpx）	|`Number/String`|`0`	|	-	|-			|
+| `marginRight`	|右外边距（单位rpx）	|`Number/String`|`0`	|	-	|-			|
+| `marginTop`	|上外边距（单位rpx）	|`Number/String`|`0`	|	-	|-			|
+| `marginBottom`|下外边距（单位rpx）	|`Number/String`|`0`	|	-	|-			|
 
 
 #### Events
-| 属性名| 说明			|类型	|默认值	|可选值	|支持版本	|
-| -----	| -----			|-----	|-----	|-----	|-----		|
-| click	|图标点击回调事件	|Handler|-		|-		|-			|
+| 属性名	| 说明			|类型		|默认值	|可选值	|支持版本	|
+| -----		| -----			|-----		|-----	|-----	|-----		|
+| `click`	|图标点击回调事件	|`Handler`	|-		|-		|-			|
 
 {{zyy}}
 
