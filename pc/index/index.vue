@@ -87,11 +87,11 @@ export default {
 					// 加载预览地址
 					const com = vueMap[v];
 					this.isComponent = !!com;
-					let src = '/mp/index/index';
+					let src = `/mp/index/index?t=${Date.now()}`;
 					if (com) {
 						// 如果是组件，获取组件预览地址
 						const name = v.slice(4);
-						src = `/mp/${name}-demo/${name}-demo`;
+						src = `/mp/${name}-demo/${name}-demo?t=${Date.now()}`;
 						this.getComment(v);
 					}
 					if (this.viewUrl === src) return;
