@@ -10,20 +10,31 @@
 - 通过`src`属性设置图片地址
 - 通过`width`属性设置图片宽度
 - 通过`height`属性设置图片高度
+- 通过`mode`属性设置图片的裁剪和拉伸
 
 ```html
-<ste-image src="https://image.whzb.com/chain/StellarUI/背景1.png" width="200" height="200" />
+<ste-image src="https://image.whzb.com/chain/StellarUI/图片.jpg" width="200" height="200" />
+<ste-image src="https://image.whzb.com/chain/StellarUI/图片.jpg" width="200" height="200" mode="aspectFit"/>
+<ste-image src="https://image.whzb.com/chain/StellarUI/图片.jpg" width="200" height="200" mode="aspectFill"/>
+<ste-image src="https://image.whzb.com/chain/StellarUI/图片.jpg" width="200" height="200" mode="widthFix"/>
+<ste-image src="https://image.whzb.com/chain/StellarUI/图片.jpg" width="200" height="200" mode="heightFix"/>
+```
+
+#### 圆角
+- 通过`radius`属性设置图片圆角属性
+
+```html
+<ste-image src="https://image.whzb.com/chain/StellarUI/图片.jpg" radius="50%" width="200" height="200" />
 ```
 
 #### 加载效果
-- 通过`showLoading`设置图片展示加载中效果
+- 通过`showLoading`设置图片加载中效果开关
 
 ```html
 <template>
 	<view>
 		<ste-image :src="imgUrl" width="200" height="200" style="margin-right: 12rpx" />
 		<ste-image :src="imgUrl" showLoading width="200" height="200" style="margin-right: 12rpx" />
-		<ste-image :src="errorImg" showLoading width="200" height="200" />
 	</view>
 </template>
 <script>
@@ -31,14 +42,38 @@ export default {
 	data() {
 		return {
 			imgUrl: '',
+		};
+	},
+	watch: {},
+	mounted() {
+		setTimeout(() => {
+			this.imgUrl = 'https://image.whzb.com/chain/StellarUI/图片.jpg';
+		}, 1500);
+	},
+};
+</script>
+```
+#### 加载失败
+- 通过`showError`设置图片加载失败效果开关
+
+```html
+<template>
+	<view>
+		<ste-image :src="errorImg" width="200" height="200" />
+		<ste-image :src="errorImg" :showError="false" width="200" height="200" />
+	</view>
+</template>
+<script>
+export default {
+	data() {
+		return {
 			errorUrl: '',
 		};
 	},
 	watch: {},
 	mounted() {
 		setTimeout(() => {
-			this.imgUrl = 'https://image.whzb.com/chain/StellarUI/logo.png';
-			this.errorUrl = 'https://image.whzb.com/chain/StellarUI/logo-1.png';
+			this.errorUrl = 'https://image.whzb.com/chain/StellarUI/none.png';
 		}, 1500);
 	},
 };
@@ -58,17 +93,26 @@ export default {
 
 ### API
 #### Props
-| 属性名							| 说明																																																				| 类型						| 默认值						| 可选值																																																																																																																																																																																																																										|支持版本	|
-| -----								|-----																																																			|-----					|-----						|-----																																																																																																																																																																																																																										|-----		|
-| src									| 图片源，同原生																																															| String				| -								| -																																																																																																																																																																																																																												|-				|
-| mode								| 图片裁剪、缩放的模式																																													| String				| `"scaleToFill"`	| `"scaleToFill"`缩放模式，不保持纵横比缩放图片，使图片的宽高完全拉伸至填满`image`元素<br/>`"aspectFit"`缩放模式，保持纵横比缩放图片，使图片的长边能完全显示出来。也就是说，可以完整地将图片显示出来<br/>`"aspectFill"`缩放模式，保持纵横比缩放图片，只保证图片的短边能完全显示出来。也就是说，图片通常只在水平或垂直方向是完整的，另一个方向将会发生截取<br/>`"widthFix"`缩放模式，宽度不变，高度自动变化，保持原图宽高比不变<br/>`"heightFix"`缩放模式，高度不变，宽度自动变化，保持原图宽高比不变	|-				|
-| width								| 宽度																																																				| Number/String	| `"100%"`				| `Number`单位`rpx`<br/>`String`同原生																																																																																																																																																																																																											|-				|
-| height							| 高度																																																				| Number/String	| `"100%"`				| `Number`单位`rpx`<br/>`String`同原生																																																																																																																																																																																																											|-				|
-| showLoading					| 是否展示图片未加载的占位内容																																									| Boolean				| `false`					| -																																																																																																																																																																																																																												|-				|
-| showError						| 是否加载失败的内容																																														| Boolean				| `true`					| -																																																																																																																																																																																																																												|-				|
-| showMenuByLongpress	| 长按图片显示发送给朋友、收藏、保存图片、搜一搜、打开名片/前往群聊/打开小程序（若图片中包含对应二维码或小程序码）的菜单	| Boolean				| `false`					| -																																																																																																																																																																																																																												|-				|
-| lazyLoad						| 图片懒加载，在即将进入一定范围（上下三屏）时才开始加载																														| Boolean				| `false`					| -																																																																																																																																																																																																																												|-				|
+| 属性名							| 说明																																																				| 类型						| 默认值						| 可选值																|支持版本	|
+| -----								|-----																																																			|-----					|-----						|-----																|-----		|
+| src									| 图片源，同原生																																															| String				| -								| -																		|-				|
+| mode								| 图片裁剪、缩放的模式																																													| String				| `"scaleToFill"`	| 见下面`Mode`表格											|-				|
+| width								| 宽度																																																				| Number/String	| `"100%"`				| `Number`单位`rpx`<br/>`String`同原生	|-				|
+| height							| 高度																																																				| Number/String	| `"100%"`				| `Number`单位`rpx`<br/>`String`同原生	|-				|
+| radius							| 圆角																																																				| Number/String	| `0`							| `Number`单位`rpx`<br/>`String`同原生	|-				|
+| showLoading					| 是否展示图片未加载的占位内容																																									| Boolean				| `false`					| -																		|-				|
+| showError						| 是否加载失败的内容																																														| Boolean				| `true`					| -																		|-				|
+| showMenuByLongpress	| 长按图片显示发送给朋友、收藏、保存图片、搜一搜、打开名片/前往群聊/打开小程序（若图片中包含对应二维码或小程序码）的菜单	| Boolean				| `false`					| -																		|-				|
+| lazyLoad						| 图片懒加载，在即将进入一定范围（上下三屏）时才开始加载																														| Boolean				| `false`					| -																		|-				|
 
+##### Mode
+| 合法值			| 说明																																																									|
+| -----				|-----																																																								|
+| scaleToFill	| 缩放模式，不保持纵横比缩放图片，使图片的宽高完全拉伸至填满 image 元素																											|
+| aspectFit		| 缩放模式，保持纵横比缩放图片，使图片的长边能完全显示出来。也就是说，可以完整地将图片显示出来																		|
+| aspectFill	| 缩放模式，保持纵横比缩放图片，只保证图片的短边能完全显示出来。也就是说，图片通常只在水平或垂直方向是完整的，另一个方向将会发生截取	|
+| widthFix		| 缩放模式，宽度不变，高度自动变化，保持原图宽高比不变																																			|
+| heightFix		| 缩放模式，高度不变，宽度自动变化，保持原图宽高比不变																																			|
 
 
 #### Events

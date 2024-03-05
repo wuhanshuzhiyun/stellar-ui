@@ -31,6 +31,7 @@ import utils from '../../utils/utils.js';
  * @value heightFix 	缩放：高度不变，宽度自动变化，保持原图宽高比不变 App 和 H5 平台 HBuilderX 2.9.3+ 支持、微信小程序需要基础库 2.10.3 {String}
  * @width {String|Number}	width									宽度：Number-单位rpx，String-同原生
  * @width {String|Number}	height								高度：Number-单位rpx，String-同原生
+ * @width {String|Number}	radius								圆角：Number-单位rpx，String-同原生
  * @width {Boolean}				showLoading						是否展示图片加载中内容
  * @width {Boolean}				showError							是否加载失败的内容
  * @width {Boolean}				showMenuByLongpress		长按图片显示发送给朋友、收藏、保存图片、搜一搜、打开名片/前往群聊/打开小程序（若图片中包含对应二维码或小程序码）的菜单。
@@ -60,6 +61,11 @@ export default {
 			type: [Number, String],
 			default: () => '100%',
 		},
+		radius: {
+			type: [Number, String],
+			default: () => 0,
+		},
+
 		showLoading: {
 			type: Boolean,
 			default: () => false,
@@ -87,6 +93,7 @@ export default {
 			return {
 				'--image-root-width': isNaN(this.width) ? this.width : utils.rpx2px(this.width),
 				'--image-root-height': isNaN(this.height) ? this.height : utils.rpx2px(this.height),
+				'--image-root-radius': isNaN(this.radius) ? this.radius : utils.rpx2px(this.radius),
 				'--image-root-background-color': this.status === 1 ? 'none' : 'rgba(127,127,127,.05)',
 			};
 		},
@@ -119,6 +126,8 @@ export default {
 	justify-content: center;
 	align-items: center;
 	background-color: var(--image-root-background-color);
+	border-radius: var(--image-root-radius);
+	overflow: hidden;
 	line-height: 1;
 	vertical-align: middle;
 	& > image {
