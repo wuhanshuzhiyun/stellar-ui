@@ -12,6 +12,7 @@
 			@load="onLoadOver"
 			@error="onFault"
 		></image>
+
 		<view v-if="showError && status === 2"><slot name="error">加载失败</slot></view>
 	</view>
 </template>
@@ -24,21 +25,20 @@ import utils from '../../utils/utils.js';
  * @tutorial http://172.16.114.51:5050/pc/index/index?name=ste-image
  * @property {String}			src										图片地址
  * @property {String}			mode									图片裁剪、缩放的模式 默认值：scaleToFill
- * @value scaleToFill 缩放：不保持纵横比缩放图片，使图片的宽高完全拉伸至填满 image 元素 {String}
+ * @value scaleToFill 缩放（默认）：不保持纵横比缩放图片，使图片的宽高完全拉伸至填满 image 元素 {String}
  * @value aspectFit 	缩放：保持纵横比缩放图片，使图片的长边能完全显示出来。也就是说，可以完整地将图片显示出来 {String}
  * @value aspectFill 	缩放：保持纵横比缩放图片，只保证图片的短边能完全显示出来。也就是说，图片通常只在水平或垂直方向是完整的，另一个方向将会发生截取 {String}
  * @value widthFix 		缩放：宽度不变，高度自动变化，保持原图宽高比不变 {String}
  * @value heightFix 	缩放：高度不变，宽度自动变化，保持原图宽高比不变 App 和 H5 平台 HBuilderX 2.9.3+ 支持、微信小程序需要基础库 2.10.3 {String}
- * @width {String|Number}	width									宽度：Number-单位rpx，String-同原生
- * @width {String|Number}	height								高度：Number-单位rpx，String-同原生
- * @width {String|Number}	radius								圆角：Number-单位rpx，String-同原生
+ * @width {String|Number}	width									宽度：（默认值100%）Number-单位rpx，String-同原生
+ * @width {String|Number}	height								高度：（默认值100%）Number-单位rpx，String-同原生
+ * @width {String|Number}	radius								圆角：（默认值0）Number-单位rpx，String-同原生
  * @width {Boolean}				showLoading						是否展示图片加载中内容
  * @width {Boolean}				showError							是否加载失败的内容
  * @width {Boolean}				showMenuByLongpress		长按图片显示发送给朋友、收藏、保存图片、搜一搜、打开名片/前往群聊/打开小程序（若图片中包含对应二维码或小程序码）的菜单。
  * @width {Boolean}				lazyLoad							图片懒加载，在即将进入一定范围（上下三屏）时才开始加载
- * @event {Function}			load 点击事件
- * @event {Function}			error 点击事件
- * @event {Function}			click 点击事件
+ * @event {Function}			load 加载成功事件
+ * @event {Function}			error 加载失败事件
  */
 export default {
 	group: '基础组件',
@@ -65,7 +65,6 @@ export default {
 			type: [Number, String],
 			default: () => 0,
 		},
-
 		showLoading: {
 			type: Boolean,
 			default: () => false,
