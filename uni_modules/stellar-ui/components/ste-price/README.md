@@ -26,11 +26,36 @@
 <ste-price value="9527" isSuggestPrice linePriceColor="#666666" />
 ```
 
+#### 行高
+```html
+<ste-price value="9527" lineHeight="50" />
+```
+
 #### 金额样式
 - 划线价颜色属性只在开启了划线价模式时才生效
 ```html
 <ste-price value="9527" isSuggestPrice />
 <ste-price value="9527" isSuggestPrice linePriceColor="#666666" />
+```
+
+#### 格式化内容
+```html
+<template>
+	<ste-price value="9527" :formatter="formatter" />
+</template>
+<script>
+export default {
+	data() {
+		return {};
+	},
+	methods: {
+		formatter(price) {
+			// 入参是传入的value值
+			return (price / 100).toFixed(3);
+		},
+	},
+};
+</script>
 ```
 
 ### API
@@ -43,7 +68,7 @@
 | fontSize		| 金额文字尺寸									| Number/String		| 30		| -																| -			|
 | color			| 金额文字颜色									| String			| "#ff1e19"	| -																| -			|
 | linePriceColor| 划线价颜色										| String			| "#999999"	| -																| -			|
-| lineHeight	| 行高 <br/>Number，单位rpx<br/>String，同原生	| Number/String		| "1"		| -																| -			|
+| lineHeight	| 行高											| Number/String		| "1"		| Number，单位rpx<br/>String，同原生								| -			|
 | isSuggestPrice| 是否划线价										| Boolean			| false		| -																| -			|
 | marginLeft	| 左边距											| Number/String		| 0			| -																| -			|
 | marginRight	| 右边距											| Number/String		| 0			| -																| -			|
