@@ -111,7 +111,7 @@ export default {
 			type: Array,
 			default: () => [],
 		},
-		// 热词列表自动切换时间间隔
+		// 热词列表自动切换时间间隔`
 		interval: {
 			type: Number,
 			default: () => 3000,
@@ -355,10 +355,11 @@ export default {
 				left: 0;
 				.placeholder-item {
 					font-size: 28rpx;
-					line-height: 40rpx;
 					color: var(--search-placeholder-color);
 					font-family: Alibaba PuHuiTi 2, Alibaba PuHuiTi 20;
 					font-weight: normal;
+					display: flex;
+					align-items: center;
 				}
 			}
 			.clear-icon {
