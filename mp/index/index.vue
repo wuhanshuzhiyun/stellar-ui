@@ -32,6 +32,20 @@
 			</view>
 			<view class="com-arrow"><image :src="joinSrc('img/r-arrow.png')" mode="widthFix" /></view>
 		</view>
+		<view class="com-box" @click="nav('image')">
+			<view class="com-title">
+				<image :src="joinSrc('img/image.png')" style="width: 18px" mode="widthFix" />
+				<text>Image 图片</text>
+			</view>
+			<view class="com-arrow"><image :src="joinSrc('img/r-arrow.png')" mode="widthFix" /></view>
+		</view>
+		<view class="com-box" @click="nav('price')">
+			<view class="com-title">
+				<image :src="joinSrc('img/price.png')" style="width: 18px" mode="widthFix" />
+				<text>Price 价格</text>
+			</view>
+			<view class="com-arrow"><image :src="joinSrc('img/r-arrow.png')" mode="widthFix" /></view>
+		</view>
 		<!-- ***表单组件*** -->
 		<view class="group-title">表单组件</view>
 		<view class="com-box" @click="nav('search')">
@@ -67,7 +81,7 @@ export default {
 
 <style lang="scss" scoped>
 .page {
-	padding: 46px 20px 20px;
+	padding: 92rpx 20px 20px;
 }
 .top {
 	padding-bottom: 28rpx;
@@ -119,6 +133,8 @@ export default {
 		align-items: center;
 		image {
 			margin-right: 12rpx;
+			width: 18px;
+			height: 18px;
 		}
 		line-height: 100%;
 	}
