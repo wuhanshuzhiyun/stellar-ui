@@ -1,7 +1,12 @@
 <template>
 	<!-- 富文本组件 -->
 	<view style="overflow: hidden">
-		<rich-text :nodes="replaceVerticalAlign(text)" :user-select="userSelect" class="rich-text"></rich-text>
+		<rich-text
+			:nodes="replaceVerticalAlign(text)"
+			:user-select="userSelect"
+			class="rich-text"
+			:space="ensp"
+		></rich-text>
 	</view>
 </template>
 <script>
@@ -12,7 +17,7 @@ import utils from '@/common/utils.js';
  * @description 富文本组件
  * @tutorial http://172.16.114.51:5050/pc/index/index?name=ste-rich-text
  * @property {String} text 富文本值
- * @property {String} space 显示连续空格 默认值 ensp
+ * @property {String} space 显示连续空格 默认值 nbsp
  * @value ensp 中文字符空格一半大小 {String}
  * @value emsp 中文字符空格大小 {String}
  * @value nbsp 根据字体设置的空格大小 {String}
@@ -29,7 +34,7 @@ export default {
 		},
 		space: {
 			type: String,
-			default: 'ensp',
+			default: 'nbsp',
 		},
 		userSelect: {
 			type: Boolean,
