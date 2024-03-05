@@ -11,9 +11,13 @@
 <script>
 import utils from '../../utils/utils.js';
 /**
+ * ste-price 价格
  * @description 金额组件
+ * @tutorial http://172.16.114.51:5050/pc/index/index?name=ste-price
  * @property {Number|String} value 金额 默认值 0
- * @property {String} valueUnit 金额单位 用于判断传入的value值是 fen 还是 yuan 默认值 "fen"
+ * @property {String} valueUnit 金额单位
+ * @value fen 分(默认值){String}
+ * @value yuan 元{String}
  * @property {Number|String} fontSize 金额文字尺寸 默认值 30
  * @property {String} color 文字颜色 默认值 #ff1e19
  * @property {String} linePriceColor 划线价文字颜色 默认值 #999999

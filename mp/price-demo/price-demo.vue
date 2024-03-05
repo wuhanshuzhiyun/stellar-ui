@@ -50,14 +50,16 @@
 			</view>
 			<view class="demo-item">
 				<view class="title">金额样式</view>
-				<view class="item-block">
+				<view class="item-block" style="display: block">
 					<view>
-						<ste-price value="9527" :styleType="1" fontSize="20" />
-						<ste-price value="9527" :styleType="1" fontSize="40" />
+						<ste-price value="9527" :styleType="1" fontSize="20" marginRight="30" />
+						<ste-price value="9527" :styleType="1" fontSize="40" marginRight="30" />
 						<ste-price value="9527" :styleType="1" fontSize="60" />
 					</view>
 					<view>
-						<ste-price value="9527" :styleType="2" />
+						<ste-price value="9527" :styleType="2" fontSize="28" marginRight="30" />
+						<ste-price value="9527" :styleType="2" fontSize="40" marginRight="30" />
+						<ste-price value="9527" :styleType="2" fontSize="60" />
 					</view>
 					<view>
 						<ste-price value="9527" :styleType="3" />
