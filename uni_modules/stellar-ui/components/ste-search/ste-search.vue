@@ -10,7 +10,7 @@
 					placeholder-class="search-input-placeholder"
 					:disabled="disabled"
 					:placeholder="cmpPlaceholder"
-					:style="{ paddingRight: cmpShowClear ? '48rpx' : '8rpx' }"
+					:style="{ width: cmpShowClear ? 'calc(100% - 48rpx)' : 'calc(100% - 8rpx)' }"
 					v-model="dataValue"
 					@input="onInput"
 					@confirm="onSearch"
@@ -301,7 +301,8 @@ export default {
 	position: relative;
 
 	&,
-	view {
+	view,
+	input {
 		box-sizing: border-box;
 	}
 	.content {
@@ -332,9 +333,8 @@ export default {
 		.input-box {
 			position: relative;
 			flex: 1;
-			height: 100;
+			height: 100%;
 			.search-input {
-				width: 100%;
 				height: 100%;
 				font-size: 28rpx;
 				color: var(--search-input-color);
@@ -362,11 +362,11 @@ export default {
 				}
 			}
 			.clear-icon {
-				width: 32rpx;
-				height: 32rpx;
+				width: 48rpx;
+				height: 100%;
 				display: flex;
 				align-items: center;
-				justify-content: center;
+				justify-content: flex-end;
 				position: absolute;
 				right: 8rpx;
 				top: 50%;
@@ -376,7 +376,7 @@ export default {
 		}
 		.secrch-line {
 			margin-left: 16rpx;
-			width: 4rpx;
+			width: 2rpx;
 			flex-shrink: 0;
 			height: 24rpx;
 			background-color: var(--search-btn-text-color);

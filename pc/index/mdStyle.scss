@@ -199,4 +199,10 @@
 	.hljs-link {
 		text-decoration: underline;
 	}
+
+	*:not(.code-body-box) > code {
+		color: #a626a4;
+		border-radius: 3px;
+		white-space: nowrap;
+	}
 }
