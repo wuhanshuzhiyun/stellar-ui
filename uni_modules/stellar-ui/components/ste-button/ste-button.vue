@@ -198,7 +198,7 @@ export default {
 
 	&-200 {
 		padding: 0 40rpx;
-		height: 58rpx;
+		height: 68rpx;
 		font-size: 28rpx;
 	}
 
@@ -211,7 +211,7 @@ export default {
 	&-400 {
 		padding: 0 72rpx;
 		height: 96rpx;
-		font-size: 60rpx;
+		font-size: 36rpx;
 	}
 }
 </style>
