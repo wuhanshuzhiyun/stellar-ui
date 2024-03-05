@@ -58,28 +58,16 @@ export default {
 
 ### API
 #### Props
-| 属性名					| 说明																		| 类型			| 默认值				| 可选值																	|支持版本	|
-| -----						|-----																	|-----		|-----				|-----																	|-----		|
-| type						| 组件类型																| String	| "default"		| `"default"`:正常搜索<br/>`"nav"`:导航栏	|-				|
-| value						| 输入框默认值，支持`v-model`双向绑定			| String	| ""					| -																			|-				|
-| placeholder			| 占位提示符															| String	| ""					| -																			|-				|
-| hotWords				| 热词列表																| String[]| []					| -																			|-				|
-| interval				| 热词列表自动切换时间间隔，单位`ms`				| Number	| 3000				| -																			|-				|
-| disabled				| 是否禁用状态														| Boolean	| false				| -																			|-				|
-| hiddenLine			| 是否隐藏分割线													| Boolean	| false				| -																			|-				|
-| hiddenBtn				| 是否隐藏按钮，同时也会隐藏分割线					| Boolean	| false				| -																			|-				|
-| btnText					| 按钮文本内容														| String	| "搜索"				| -																			|-				|
-| hiddenInput			| 是否隐藏输入框													| Boolean	| false				| -																			|-				|
-| clearable				| 是否可清空内容													| Boolean	| true				| -																			|-				|
-| height					| 搜索框高度，单位`rpx`										| Number	| 64					| -																			|-				|
-| radius					| 圆角弧度，单位`rpx`											| Number	| 32					| -																			|-				|
-| borderColor			| 边框颜色																| String	| "#EEEEEE66"	| -																			|-				|
-| background			| 背景，可直接传颜色值或者图片							| String	|"#FFFFFF"		| -																			|-				|| placeholderColor| 占位符文本颜色	| String| "#BBBBBB"	| -	|-|
-| prefixIconColor	| 前缀图标颜色														| String	| "#BBBBBB"		| -																			|-				|
-| inputTextColor	| 输入框文本颜色													| String	| "#000000"		| -																			|-				|
-| clearIconColor	| 清除图标颜色														| String	| "#BBBBBB"		| -																			|-				|
-| btnTextColor		| 搜索按钮文本颜色，分割线会跟随文本颜色变化	| String	| "#0090FF"		| -																			|-				|
-| btnBackground		| 搜索按钮背景，可直接传颜色值或者图片				| String	| -						| -																			|-				|
+| 属性名							| 说明																																																				| 类型						| 默认值					| 可选值																																																																																																																																																																																																																									|支持版本	|
+| -----								|-----																																																			|-----					|-----					|-----																																																																																																																																																																																																																									|-----		|
+| src									| 图片源，同原生																																															| String				| -							| -																																																																																																																																																																																																																											|-				|
+| mode								| 图片裁剪、缩放的模式																																													| String				| "scaleToFill"	| "scaleToFill"：缩放模式，不保持纵横比缩放图片，使图片的宽高完全拉伸至填满 image 元素<br/>"aspectFit"：缩放模式，保持纵横比缩放图片，使图片的长边能完全显示出来。也就是说，可以完整地将图片显示出来<br/>"aspectFill"：缩放模式，保持纵横比缩放图片，只保证图片的短边能完全显示出来。也就是说，图片通常只在水平或垂直方向是完整的，另一个方向将会发生截取<br/>"widthFix"：缩放模式，宽度不变，高度自动变化，保持原图宽高比不变<br/>"heightFix"：缩放模式，高度不变，宽度自动变化，保持原图宽高比不变	|-				|
+| width								| 宽度																																																				| Number/String	| "100%"				| "Number"：单位rpx<br/>"String"：同原生																																																																																																																																																																																																									|-				|
+| height							| 高度																																																				| Number/String	| "100%"				| "Number"：单位rpx<br/>"String"：同原生																																																																																																																																																																																																									|-				|
+| showLoading					| 是否展示图片未加载的占位内容																																									| Boolean				| false					| -																																																																																																																																																																																																																											|-				|
+| showError						| 是否加载失败的内容																																														| Boolean				| true					| -																																																																																																																																																																																																																											|-				|
+| showMenuByLongpress	| 长按图片显示发送给朋友、收藏、保存图片、搜一搜、打开名片/前往群聊/打开小程序（若图片中包含对应二维码或小程序码）的菜单	| Boolean				| false					| -																																																																																																																																																																																																																											|-				|
+| lazyLoad						| 图片懒加载，在即将进入一定范围（上下三屏）时才开始加载																														| Boolean				| false					| -																																																																																																																																																																																																																											|-				|
 
 
 
@@ -90,5 +78,13 @@ export default {
 |-----	|-----						|-----		|-----		|
 | load	| 图片加载成功触发	| event		| -				|
 | error	| 图片加载失败触发	| event		| -				|
+
+
+#### Solts
+| 插槽中文名		| 插槽英文名	| 插槽参数	| 备注							|
+| ---					| ---				| ---			| ---							|
+| 加载中插槽		| loading		|-				| 加载中展示内容		|
+| 加载失败插槽	| error			|-				| 加载失败展示内容	|
+
 
 {{xuyajun}}
