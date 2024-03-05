@@ -4,8 +4,7 @@
 			<view class="top-1">
 				<image
 					:src="joinSrc('https://image.whzb.com/chain/StellarUI/logo.png')"
-					style="width: 100rpx"
-					mode="widthFix"
+					style="width: 100rpx; height: 100rpx"
 				/>
 				<view class="title">
 					<view class="title-1">Stellar UI {{ version }}</view>
@@ -20,47 +19,47 @@
 		<view class="group-title">基础组件</view>
 		<view class="com-box" @click="nav('button')">
 			<view class="com-title">
-				<image :src="joinSrc('img/button.png')" style="width: 18px" mode="widthFix" />
+				<image :src="joinSrc('img/button.png')" style="width: 36rpx; height: 36rpx" />
 				<text>Button 按钮</text>
 			</view>
-			<view class="com-arrow"><image :src="joinSrc('img/r-arrow.png')" mode="widthFix" /></view>
+			<view class="com-arrow"><image :src="joinSrc('img/r-arrow.png')" /></view>
 		</view>
 		<view class="com-box" @click="nav('icon')">
 			<view class="com-title">
-				<image :src="joinSrc('img/icon.png')" style="width: 18px" mode="widthFix" />
+				<image :src="joinSrc('img/icon.png')" style="width: 36rpx; height: 36rpx" />
 				<text>Icon 图标</text>
 			</view>
-			<view class="com-arrow"><image :src="joinSrc('img/r-arrow.png')" mode="widthFix" /></view>
+			<view class="com-arrow"><image :src="joinSrc('img/r-arrow.png')" /></view>
 		</view>
 		<view class="com-box" @click="nav('image')">
 			<view class="com-title">
-				<image :src="joinSrc('img/image.png')" style="width: 18px" mode="widthFix" />
+				<image :src="joinSrc('img/image.png')" style="width: 36rpx; height: 36rpx" />
 				<text>Image 图片</text>
 			</view>
-			<view class="com-arrow"><image :src="joinSrc('img/r-arrow.png')" mode="widthFix" /></view>
+			<view class="com-arrow"><image :src="joinSrc('img/r-arrow.png')" /></view>
 		</view>
 		<view class="com-box" @click="nav('price')">
 			<view class="com-title">
-				<image :src="joinSrc('img/price.png')" style="width: 18px" mode="widthFix" />
+				<image :src="joinSrc('img/price.png')" style="width: 36rpx; height: 36rpx" />
 				<text>Price 价格</text>
 			</view>
-			<view class="com-arrow"><image :src="joinSrc('img/r-arrow.png')" mode="widthFix" /></view>
+			<view class="com-arrow"><image :src="joinSrc('img/r-arrow.png')" /></view>
 		</view>
 		<!-- ***表单组件*** -->
 		<view class="group-title">表单组件</view>
 		<view class="com-box" @click="nav('search')">
 			<view class="com-title">
-				<image :src="joinSrc('img/search.png')" style="width: 18px" mode="widthFix" />
+				<image :src="joinSrc('img/search.png')" style="width: 36rpx; height: 36rpx" />
 				<text>Search 搜索</text>
 			</view>
-			<view class="com-arrow"><image :src="joinSrc('img/r-arrow.png')" mode="widthFix" /></view>
+			<view class="com-arrow"><image :src="joinSrc('img/r-arrow.png')" /></view>
 		</view>
 		<view class="com-box" @click="nav('rich-text')">
 			<view class="com-title">
-				<image src="https://cdn.uviewui.com/uview/example/textarea.png" style="width: 18px" mode="widthFix" />
+				<image src="https://cdn.uviewui.com/uview/example/textarea.png" style="width: 36rpx; height: 36rpx" />
 				<text>Rich-Text 富文本</text>
 			</view>
-			<view class="com-arrow"><image :src="joinSrc('img/r-arrow.png')" mode="widthFix" /></view>
+			<view class="com-arrow"><image :src="joinSrc('img/r-arrow.png')" /></view>
 		</view>
 	</view>
 </template>
@@ -148,6 +147,7 @@ export default {
 	.com-arrow {
 		image {
 			width: 32rpx;
+			height: 32rpx;
 			position: relative;
 			top: 6rpx;
 		}
