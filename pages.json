@@ -2,6 +2,14 @@
 	"pages": [ //pages数组中第一项表示应用启动页，参考：https://uniapp.dcloud.io/collocation/pages
 		{
 			"path": "pages/index/index",
+			"name": "home",
+			"style": {
+				"navigationStyle": "custom"
+			}
+		},
+		{
+			"path": "pages/404/404",
+			"name": "404",
 			"style": {
 				"navigationStyle": "custom"
 			}
@@ -41,6 +49,12 @@
 			"style": {
 				"navigationStyle": "custom",
 				"disableScroll": true
+			}
+		},
+		{
+			"path": "mp/rich-text-demo/rich-text-demo",
+			"style": {
+				"navigationStyle": "custom"
 			}
 		},
 		{
