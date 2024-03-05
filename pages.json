@@ -7,6 +7,13 @@
 			}
 		},
 		{
+			"path": "pages/404/404",
+			"name": "404",
+			"style": {
+				"navigationStyle": "custom"
+			}
+		},
+		{
 			"path": "pc/index/index",
 			"style": {
 				"navigationBarTitleText": "Stellar UI",
