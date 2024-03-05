@@ -122,18 +122,35 @@ export default {
 		},
 	},
 	computed: {
-		cmpYuanValue() {
-			if (this.valueUnit === 'fen') {
-				return utils.fenToYuan(this.value, -1, '', 1);
+		cmpValue() {
+			if (!this.formatter) {
+				if (this.valueUnit == 'fen') {
+					return utils.fenToYuan(this.value, -1, '', 0);
+				} else {
+					return this.value;
+				}
 			} else {
-				return this.value;
+				return this.formatter(this.value);
+			}
+		},
+		cmpYuanValue() {
+			if (this.cmpValue) {
+				if (this.cmpValue.indexOf('.') > -1) {
+					return this.cmpValue.split('.')[0];
+				} else {
+					return this.cmpValue;
+				}
+			} else {
+				return utils.fenToYuan(this.value, -1, '', 1);
 			}
 		},
 		cmpFenValue() {
-			if (this.valueUnit === 'fen') {
-				return utils.fenToYuan(this.value, -1, '', 2);
+			if (this.cmpValue) {
+				if (this.cmpValue.indexOf('.') > -1) {
+					return '.' + this.cmpValue.split('.')[1];
+				}
 			} else {
-				return this.value;
+				return utils.fenToYuan(this.value, -1, '', 2);
 			}
 		},
 		cmpPriceStyle() {

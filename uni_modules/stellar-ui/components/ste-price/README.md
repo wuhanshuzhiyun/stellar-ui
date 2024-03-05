@@ -33,6 +33,27 @@
 <ste-price value="9527" isSuggestPrice linePriceColor="#666666" />
 ```
 
+#### 格式化内容
+- 划线价颜色属性只在开启了划线价模式时才生效
+```html
+<template>
+	<ste-price value="9527" :formatter="this.formatter" />
+</template>
+<script>
+export default {
+	data() {
+		return {};
+	},
+	methods: {
+		formatter(price) {
+			// 入参是传入的value值
+			return (price / 100).toFixed(3);
+		},
+	},
+};
+</script>
+```
+
 ### API
 #### 组件属性(Props)
 

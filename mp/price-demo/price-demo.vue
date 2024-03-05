@@ -54,6 +54,14 @@
 					</view>
 				</view>
 			</view>
+			<view class="demo-item">
+				<view class="title">格式化内容</view>
+				<view class="item-block">
+					<view>
+						<ste-price value="9527" :formatter="this.formatter" />
+					</view>
+				</view>
+			</view>
 		</view>
 	</view>
 </template>
@@ -63,7 +71,12 @@ export default {
 		return {};
 	},
 	created() {},
-	methods: {},
+	methods: {
+		formatter(price) {
+			// 入参是传入的value值
+			return (price / 100).toFixed(3);
+		},
+	},
 };
 </script>
 
