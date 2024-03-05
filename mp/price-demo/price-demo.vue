@@ -9,7 +9,7 @@
 						<ste-price value="9527" />
 					</view>
 					<view>
-						<ste-price value="95" valueUnit="yuan" />
+						<ste-price value="9527" valueUnit="yuan" />
 					</view>
 				</view>
 			</view>
