@@ -55,6 +55,13 @@
 			</view>
 			<view class="com-arrow"><image :src="joinSrc('img/r-arrow.png')" mode="widthFix" /></view>
 		</view>
+		<view class="com-box" @click="nav('rich-text')">
+			<view class="com-title">
+				<image src="https://cdn.uviewui.com/uview/example/textarea.png" style="width: 18px" mode="widthFix" />
+				<text>Rich-Text 富文本</text>
+			</view>
+			<view class="com-arrow"><image :src="joinSrc('img/r-arrow.png')" mode="widthFix" /></view>
+		</view>
 	</view>
 </template>
 <script>

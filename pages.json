@@ -51,6 +51,12 @@
 			}
 		},
 		{
+			"path": "mp/rich-text-demo/rich-text-demo",
+			"style": {
+				"navigationStyle": "custom"
+			}
+		},
+		{
 			"path": "mp/image-demo/image-demo",
 			"style": {
 				"navigationStyle": "custom",
