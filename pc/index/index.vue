@@ -47,7 +47,7 @@
 			</view>
 		</view>
 		<view class="pc-view">
-			<iframe class="view-iframe" src="/mp/index/index" frameborder="0" />
+			<iframe class="view-iframe" :src="cmdIframeUrl" frameborder="0" />
 		</view>
 	</view>
 </template>
@@ -74,9 +74,13 @@ export default {
 				user: '',
 				content: '',
 			},
-			iframeEl: null,
-			upurl: '/mp/index/index',
+			iframeUrl: '/mp/index/index',
 		};
+	},
+	computed: {
+		cmdIframeUrl() {
+			return `${this.iframeUrl}?t=${Date.now()}`;
+		},
 	},
 	watch: {
 		activeName: {
@@ -98,15 +102,13 @@ export default {
 					} else {
 						src = '/mp/index/index';
 					}
-					if (this.upurl === src) return;
+					if (this.iframeUrl === src) return;
 					// #ifdef H5
 					this.$nextTick(() => {
-						this.upurl = src;
-						console.log('src----', src);
-						this.iframeEl.contentWindow.postMessage(src, '*');
+						this.iframeUrl = src;
 					});
 					// #endif
-				}, 100);
+				}, 50);
 			},
 			immediate: true,
 		},
@@ -116,23 +118,15 @@ export default {
 			this.activeName = name;
 		}
 	},
-	onShow() {
-		// #ifdef H5
-		this.$nextTick(() => {
-			this.iframeEl = document.querySelector('iframe.view-iframe');
-			console.log('iframeEl:', this.iframeEl);
-		});
-		// #endif
-	},
+	onShow() {},
 	methods: {
 		viewContent(url) {
 			this.content = '';
 			this.loadingMd = false;
 			// 加载文档
-			uni.request({
-				url,
-			}).then(async (res) => {
+			uni.request({ url }).then(async (res) => {
 				this.content = await md2html(res.data);
+				console.log('html-length', this.content.length);
 				// 渲染完成后，为所有的代码按钮加载复制功能
 				// #ifdef H5
 				this.$nextTick(() => {
