@@ -99,7 +99,12 @@ export default {
 			if (this.round) {
 				classArr.push(`${prefix}-round`);
 			}
-			return classArr;
+			return (
+				classArr
+					// #ifdef MP-ALIPAY || MP-TOUTIAO || MP-LARK
+					.join(' ')
+			);
+			// #endif
 		},
 		cmpBtnCss() {
 			let style = {};
