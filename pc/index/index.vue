@@ -84,7 +84,7 @@ export default {
 	},
 	watch: {
 		activeName: {
-			handler(v) {
+			handler(v, old) {
 				clearTimeout(timeout);
 				timeout = setTimeout(() => {
 					if (v && mdMap[v]) {
@@ -115,7 +115,7 @@ export default {
 	},
 	onLoad({ name }) {
 		console.log('on-load');
-		if (name !== this.activeName) {
+		if (name && name !== this.activeName) {
 			this.activeName = name;
 		}
 	},
