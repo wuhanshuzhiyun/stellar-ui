@@ -1,6 +1,6 @@
 <template>
 	<view class="page">
-		<page-nav :autoBack="true" backColor="#000" titleAlignment="2" title="按钮"></page-nav>
+		<page-nav :autoBack="true" backColor="#000" titleAlignment="2" title="价格"></page-nav>
 		<view class="content">
 			<view class="demo-item">
 				<view class="title">金额单位</view>
