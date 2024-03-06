@@ -4,14 +4,26 @@
 			"path": "pages/index/index",
 			"name": "home",
 			"style": {
-				"navigationStyle": "custom"
+				"navigationStyle": "custom",
+				"mp-alipay": {
+					"transparentTitle": "always",
+					"titlePenetrate": "YES",
+					"allowsBounceVertical": "NO",
+					"navigationBarTitleText": ""
+				}
 			}
 		},
 		{
 			"path": "pages/404/404",
 			"name": "404",
 			"style": {
-				"navigationStyle": "custom"
+				"navigationStyle": "custom",
+				"mp-alipay": {
+					"transparentTitle": "always",
+					"titlePenetrate": "YES",
+					"allowsBounceVertical": "NO",
+					"navigationBarTitleText": ""
+				}
 			}
 		},
 		{
@@ -27,54 +39,96 @@
 			"path": "mp/index/index",
 			"style": {
 				"navigationStyle": "custom",
-				"disableScroll": true
+				"disableScroll": true,
+				"mp-alipay": {
+					"transparentTitle": "always",
+					"titlePenetrate": "YES",
+					"allowsBounceVertical": "NO",
+					"navigationBarTitleText": ""
+				}
 			}
 		},
 		{
 			"path": "mp/icon-demo/icon-demo",
 			"style": {
 				"navigationStyle": "custom",
-				"disableScroll": true
+				"disableScroll": true,
+				"mp-alipay": {
+					"transparentTitle": "always",
+					"titlePenetrate": "YES",
+					"allowsBounceVertical": "NO",
+					"navigationBarTitleText": ""
+				}
 			}
 		},
 		{
 			"path": "mp/button-demo/button-demo",
 			"style": {
 				"navigationStyle": "custom",
-				"disableScroll": true
+				"disableScroll": true,
+				"mp-alipay": {
+					"transparentTitle": "always",
+					"titlePenetrate": "YES",
+					"allowsBounceVertical": "NO",
+					"navigationBarTitleText": ""
+				}
 			}
 		},
 		{
 			"path": "mp/search-demo/search-demo",
 			"style": {
 				"navigationStyle": "custom",
-				"disableScroll": true
+				"disableScroll": true,
+				"mp-alipay": {
+					"transparentTitle": "always",
+					"titlePenetrate": "YES",
+					"allowsBounceVertical": "NO",
+					"navigationBarTitleText": ""
+				}
 			}
 		},
 		{
 			"path": "mp/rich-text-demo/rich-text-demo",
 			"style": {
-				"navigationStyle": "custom"
+				"navigationStyle": "custom",
+				"mp-alipay": {
+					"transparentTitle": "always",
+					"titlePenetrate": "YES",
+					"allowsBounceVertical": "NO",
+					"navigationBarTitleText": ""
+				}
 			}
 		},
 		{
 			"path": "mp/image-demo/image-demo",
 			"style": {
 				"navigationStyle": "custom",
-				"disableScroll": true
+				"disableScroll": true,
+				"mp-alipay": {
+					"transparentTitle": "always",
+					"titlePenetrate": "YES",
+					"allowsBounceVertical": "NO",
+					"navigationBarTitleText": ""
+				}
 			}
 		},
 		{
 			"path": "mp/price-demo/price-demo",
 			"style": {
 				"navigationStyle": "custom",
-				"disableScroll": true
+				"disableScroll": true,
+				"mp-alipay": {
+					"transparentTitle": "always",
+					"titlePenetrate": "YES",
+					"allowsBounceVertical": "NO",
+					"navigationBarTitleText": ""
+				}
 			}
 		}
 	],
 	"globalStyle": {
 		"navigationBarTextStyle": "black",
-		"navigationBarTitleText": "uni-app",
+		"navigationBarTitleText": "",
 		"navigationBarBackgroundColor": "#F8F8F8",
 		"backgroundColor": "#F8F8F8"
 	},

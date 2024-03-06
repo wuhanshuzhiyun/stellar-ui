@@ -103,7 +103,6 @@ function refreshData(pageThis) {
 			pageThis.windowHeight = windowHeight;
 			pageThis.windowWidth = windowWidth;
 		}
-		log.addLog(JSON.stringify(menuButtonInfo));
 	}, 100);
 }
 
@@ -125,7 +124,6 @@ let usePosition = function () {
 		} else {
 			getData(menuButtonInfo);
 		}
-		log.addLog(JSON.stringify(menuButtonInfo));
 		// #endif
 	}
 	return {
