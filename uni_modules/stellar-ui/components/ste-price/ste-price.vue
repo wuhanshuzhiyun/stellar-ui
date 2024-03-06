@@ -33,7 +33,7 @@ import utils from '../../utils/utils.js';
  * @property {Function(value)} formatter 用来格式化内容
  */
 export default {
-	group: '基础组件',
+	group: '电商',
 	title: 'Price 价格',
 	name: 'ste-price',
 	props: {
