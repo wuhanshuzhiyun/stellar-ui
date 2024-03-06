@@ -338,8 +338,11 @@ export default {
 				height: 100%;
 				font-size: 28rpx;
 				color: var(--search-input-color);
+				// #ifdef MP-ALIPAY
+				background-color: rgba(0, 0, 0, 0);
+				// #endif
 
-				.search-input-placeholder {
+				rch-input-placeholder {
 					color: var(--search-placeholder-color);
 					font-family: Alibaba PuHuiTi 2, Alibaba PuHuiTi 20;
 					font-weight: normal;
