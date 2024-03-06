@@ -28,13 +28,19 @@
 ```
 
 #### 加载效果
-- 通过`showLoading`设置图片加载中效果开关
+- 通过`hiddenLoading`关闭图片加载中提示
 
 ```html
 <template>
 	<view>
-		<ste-image :src="imgUrl" width="200" height="200" style="margin-right: 12rpx" />
-		<ste-image :src="imgUrl" showLoading width="200" height="200" style="margin-right: 12rpx" />
+		<view class="image-box">
+			<ste-image :src="imgUrl" width="200" height="200" />
+			<view class="msg">加载中提示</view>
+		</view>
+		<view class="image-box">
+			<ste-image :src="imgUrl" hiddenLoading width="200" height="200" />
+			<view class="msg">隐藏加载中提示</view>
+		</view>
 	</view>
 </template>
 <script>
@@ -54,13 +60,19 @@ export default {
 </script>
 ```
 #### 加载失败
-- 通过`showError`设置图片加载失败效果开关
+- 通过`hiddenError`隐藏图片加载失败提示
 
 ```html
 <template>
 	<view>
-		<ste-image :src="errorImg" width="200" height="200" />
-		<ste-image :src="errorImg" :showError="false" width="200" height="200" />
+		<view class="image-box">
+			<ste-image :src="errorUrl" width="200" height="200" />
+			<view class="msg">加载失败提示</view>
+		</view>
+		<view class="image-box">
+			<ste-image :src="errorUrl" hiddenError width="200" height="200" />
+			<view class="msg">关闭加载失败提示</view>
+		</view>
 	</view>
 </template>
 <script>
@@ -84,7 +96,7 @@ export default {
 - 通过`error`具名插槽可以自定义加载失败内容
 
 ```html
-<ste-image :src="errorUrl" showLoading width="200" height="200">
+<ste-image :src="errorUrl" width="200" height="200">
 	<template v-slot:loading>Loading...</template>
 	<template v-slot:error>Error</template>
 </ste-image>
@@ -100,8 +112,8 @@ export default {
 | width								| 宽度：`Number`单位`rpx`，`String`同原生																																			| Number/String	| `"100%"`				| -								|-				|
 | height							| 高度：`Number`单位`rpx`，`String`同原生																																			| Number/String	| `"100%"`				| -								|-				|
 | radius							| 圆角：`Number`单位`rpx`，`String`同原生																																			| Number/String	| `0`							| -								|-				|
-| showLoading					| 是否展示图片未加载的占位内容																																									| Boolean				| `false`					| -								|-				|
-| showError						| 是否加载失败的内容																																														| Boolean				| `true`					| -								|-				|
+| hiddenLoading					| 是否展示图片未加载的占位内容																																									| Boolean				| `false`					| -								|-				|
+| hiddenError						| 是否加载失败的内容																																														| Boolean				| `true`					| -								|-				|
 | showMenuByLongpress	| 长按图片显示发送给朋友、收藏、保存图片、搜一搜、打开名片/前往群聊/打开小程序（若图片中包含对应二维码或小程序码）的菜单	| Boolean				| `false`					| -								|-				|
 | lazyLoad						| 图片懒加载，在即将进入一定范围（上下三屏）时才开始加载																														| Boolean				| `false`					| -								|-				|
 

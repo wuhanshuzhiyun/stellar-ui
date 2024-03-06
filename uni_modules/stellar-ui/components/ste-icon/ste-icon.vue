@@ -102,7 +102,9 @@ export default {
 	align-items: center;
 
 	.iconfont {
-		display: inline-block;
+		display: inline-flex;
+		align-items: center;
+		justify-content: center;
 		vertical-align: bottom;
 		font-family: 'iconfont' !important;
 		font-style: normal;

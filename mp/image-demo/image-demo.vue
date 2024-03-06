@@ -6,7 +6,7 @@
 				<view class="title">基础用法</view>
 				<view class="item-block">
 					<view class="image-box">
-						<ste-image :src="demoUrl" width="200" height="200" />
+						<ste-image :src="demoUrl" />
 					</view>
 					<view class="image-box">
 						<ste-image :src="demoUrl" width="200" height="200" mode="aspectFit" />
@@ -15,10 +15,10 @@
 						<ste-image :src="demoUrl" width="200" height="200" mode="aspectFill" />
 					</view>
 					<view class="image-box">
-						<ste-image :src="demoUrl" width="200" height="200" mode="widthFix" />
+						<ste-image :src="demoUrl" width="200" mode="widthFix" />
 					</view>
 					<view class="image-box">
-						<ste-image :src="demoUrl" width="200" height="200" mode="heightFix" />
+						<ste-image :src="demoUrl" height="200" mode="heightFix" />
 					</view>
 				</view>
 			</view>
@@ -33,9 +33,11 @@
 				<view class="item-block">
 					<view class="image-box">
 						<ste-image :src="imgUrl" width="200" height="200" />
+						<view class="msg">加载中提示</view>
 					</view>
 					<view class="image-box">
-						<ste-image :src="imgUrl" showLoading width="200" height="200" />
+						<ste-image :src="imgUrl" hiddenLoading width="200" height="200" />
+						<view class="msg">隐藏加载中提示</view>
 					</view>
 				</view>
 			</view>
@@ -43,17 +45,19 @@
 				<view class="title">加载失败</view>
 				<view class="item-block">
 					<view class="image-box">
-						<ste-image :src="errorUrl" showLoading width="200" height="200" />
+						<ste-image :src="errorUrl" width="200" height="200" />
+						<view class="msg">加载失败提示</view>
 					</view>
 					<view class="image-box">
-						<ste-image :src="errorUrl" :showError="false" width="200" height="200" />
+						<ste-image :src="errorUrl" hiddenError width="200" height="200" />
+						<view class="msg">隐藏加载失败提示</view>
 					</view>
 				</view>
 			</view>
 			<view class="demo-item">
 				<view class="title">具名插槽</view>
 				<view class="item-block">
-					<ste-image :src="errorUrl" showLoading width="200" height="200">
+					<ste-image :src="errorUrl" width="200" height="200">
 						<template v-slot:loading>Loading...</template>
 						<template v-slot:error>Error</template>
 					</ste-image>
@@ -67,7 +71,7 @@
 export default {
 	data() {
 		return {
-			demoUrl: 'https://image.whzb.com/chain/StellarUI/图片.jpg',
+			demoUrl: `http://www.bauble.vip/data/image/2022/11/09/27996_ydby_4604.jpg?t=${Date.now()}`,
 			imgUrl: '',
 			errorUrl: '',
 		};
@@ -99,6 +103,11 @@ export default {
 				& > .image-box {
 					margin: 0 8px 8px 0;
 					display: inline-block;
+				}
+				.msg {
+					font-size: 24rpx;
+					color: #bbbbbb;
+					text-align: center;
 				}
 			}
 		}
