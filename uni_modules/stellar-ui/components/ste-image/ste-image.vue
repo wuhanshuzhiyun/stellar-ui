@@ -93,7 +93,7 @@ export default {
 				'--image-root-width': isNaN(this.width) ? this.width : utils.rpx2px(this.width),
 				'--image-root-height': isNaN(this.height) ? this.height : utils.rpx2px(this.height),
 				'--image-root-radius': isNaN(this.radius) ? this.radius : utils.rpx2px(this.radius),
-				'--image-root-background-color': this.status === 1 ? 'none' : 'rgba(127,127,127,.05)',
+				'--image-root-background-color': 'rgba(127,127,127,.05)',
 			};
 		},
 	},
