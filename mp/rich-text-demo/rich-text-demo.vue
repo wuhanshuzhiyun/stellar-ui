@@ -1,6 +1,6 @@
 <template>
 	<view class="page">
-		<page-nav :autoBack="true" backColor="#000" titleAlignment="2" title="搜索"></page-nav>
+		<page-nav :autoBack="true" backColor="#000" titleAlignment="2" title="富文本"></page-nav>
 		<view class="content">
 			<view class="demo-item">
 				<view class="title">一张图片</view>
@@ -21,8 +21,8 @@
 export default {
 	data() {
 		return {
-			node1: '<p><img style="width:100%;height:auto" src="https://img13.360buyimg.com/n7/jfs/t1/64765/4/22300/205893/635216d7Eca42b0cc/8254ba5915d642fd.jpg"/></p>',
-			node2: '<p><img style="width:100%;height:auto" src="https://img13.360buyimg.com/n7/jfs/t1/64765/4/22300/205893/635216d7Eca42b0cc/8254ba5915d642fd.jpg"/></p><p><img style="width:100%;height:auto" src="https://img14.360buyimg.com/n7/jfs/t1/130149/29/26170/238264/62458d22E3751ba2a/9c46c354c60ae0c9.jpg.avif"/></p>',
+			node1: '<p><img style="width:100%;height:auto" src="https://imgcps.jd.com/img-cubic/creative_server_cia_jdcloud/v2/2000366/100026961503/FocusFullshop/CkJqZnMvdDEvOTA5NzAvMzQvMzgzMjcvNDQ4ODgvNjVkNjRkYTZGOWYzOTM2ODcvMTZiMzk1N2M5YjI5ZDY5Yy5wbmcSCTMtdHlfMF81NDACOO6LekIWChLntKLlsLzmnInnur_ogLPmnLoQAUITCg_kvJjmg6DkuqvkuI3lgZwQAkIQCgznq4vljbPmiqLotK0QBkIKCgbkvJjpgIkQB1jfnMnQ9AI/cr/s/q.jpg"/></p>',
+			node2: '<p><img style="width:100%;height:auto" src="https://imgcps.jd.com/img-cubic/creative_server_cia_jdcloud/v2/2000366/100026961503/FocusFullshop/CkJqZnMvdDEvOTA5NzAvMzQvMzgzMjcvNDQ4ODgvNjVkNjRkYTZGOWYzOTM2ODcvMTZiMzk1N2M5YjI5ZDY5Yy5wbmcSCTMtdHlfMF81NDACOO6LekIWChLntKLlsLzmnInnur_ogLPmnLoQAUITCg_kvJjmg6DkuqvkuI3lgZwQAkIQCgznq4vljbPmiqLotK0QBkIKCgbkvJjpgIkQB1jfnMnQ9AI/cr/s/q.jpg"/></p><p><img style="width:100%;height:auto" src="https://imgcps.jd.com/img-cubic/creative_server_cia_jdcloud/v2/2000367/2273632/FocusFullshop/CkJqZnMvdDEvOTc3MTkvMjMvMzc2MjYvMzU0NjgvNjVkM2FlYTZGNjYwZTZhZTEvZGYwZTgzYjU2YWE3M2VjMy5wbmcSCTUtdHlfMF81NjACOO-LekIRCg3mrKfkuZBC54mZ6IaPEAFCEwoP5L2g5YC85b6X5oul5pyJEAJCEAoM56uL5Y2z5oqi6LStEAZCCgoG5Yqb6I2QEAdY4OKKAQ/cr/s/q.jpg"/></p>',
 		};
 	},
 	mounted() {},

@@ -22,8 +22,6 @@ import utils from '../../utils/utils.js';
  * @property {String} color 文字颜色 默认值 #ff1e19
  * @property {String} linePriceColor 划线价文字颜色 默认值 #999999
  * @property {Number|String} lineHeight 行高，Number，单位rpx，String，同原生 默认值 1
- * @value {Number} {{Number}} 单位rpx
- * @value {String} 同原生
  * @property {Boolean} isSuggestPrice 是否划线价 默认值 false
  * @property {Number|String} marginLeft 左边距	 默认值 0
  * @property {Number|String} marginRight 右边距	 默认值 0
@@ -33,7 +31,7 @@ import utils from '../../utils/utils.js';
  * @property {Function(value)} formatter 用来格式化内容
  */
 export default {
-	group: '基础组件',
+	group: '电商',
 	title: 'Price 价格',
 	name: 'ste-price',
 	props: {
