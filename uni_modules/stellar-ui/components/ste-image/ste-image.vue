@@ -1,10 +1,6 @@
 <template>
 	<view class="ste-image--root" :style="[cmpStyle]">
-		<view v-if="!hiddenLoading && status === 0">
-			<slot name="loading">
-				<ste-icon code="&#xe6fc;" :size="iconSize" />
-			</slot>
-		</view>
+		<view v-if="showLoading && status === 0"><slot name="loading">加载中</slot></view>
 
 		<image
 			class="content"
@@ -17,11 +13,7 @@
 			@error="onFault"
 		></image>
 
-		<view v-if="!hiddenError && status === 2">
-			<slot name="error">
-				<ste-icon code="&#xe6ef;" :size="iconSize" />
-			</slot>
-		</view>
+		<view v-if="showError && status === 2"><slot name="error">加载失败</slot></view>
 	</view>
 </template>
 
@@ -41,8 +33,8 @@ import utils from '../../utils/utils.js';
  * @property {String|Number}	width									宽度：（默认值100%）Number-单位rpx，String-同原生
  * @property {String|Number}	height								高度：（默认值100%）Number-单位rpx，String-同原生
  * @property {String|Number}	radius								圆角：（默认值0）Number-单位rpx，String-同原生
- * @property {Boolean}				hiddenLoading					是否隐藏图片加载中内容
- * @property {Boolean}				hiddenError						是否隐藏加载失败的内容
+ * @property {Boolean}				showLoading						是否展示图片加载中内容
+ * @property {Boolean}				showError							是否加载失败的内容
  * @property {Boolean}				showMenuByLongpress		长按图片显示发送给朋友、收藏、保存图片、搜一搜、打开名片/前往群聊/打开小程序（若图片中包含对应二维码或小程序码）的菜单。
  * @property {Boolean}				lazyLoad							图片懒加载，在即将进入一定范围（上下三屏）时才开始加载
  * @event {Function}			load 加载成功事件
@@ -73,13 +65,13 @@ export default {
 			type: [Number, String],
 			default: () => 0,
 		},
-		hiddenLoading: {
+		showLoading: {
 			type: Boolean,
 			default: () => false,
 		},
-		hiddenError: {
+		showError: {
 			type: Boolean,
-			default: () => false,
+			default: () => true,
 		},
 		showMenuByLongpress: {
 			type: Boolean,
@@ -93,31 +85,15 @@ export default {
 	data() {
 		return {
 			status: 0,
-			iconSize: 60,
 		};
 	},
 	computed: {
 		cmpStyle() {
-			let width = isNaN(this.width) ? this.width : utils.rpx2px(this.width);
-			let height = isNaN(this.height) ? this.height : utils.rpx2px(this.height);
-			if (this.mode === 'widthFix') {
-				if (this.status !== 1) {
-					height = width;
-				} else {
-					height = 'auto';
-				}
-			} else if (this.mode === 'heightFix') {
-				if (this.status !== 1) {
-					width = height;
-				} else {
-					width = 'auto';
-				}
-			}
 			return {
-				'--image-root-width': width,
-				'--image-root-height': height,
+				'--image-root-width': isNaN(this.width) ? this.width : utils.rpx2px(this.width),
+				'--image-root-height': isNaN(this.height) ? this.height : utils.rpx2px(this.height),
 				'--image-root-radius': isNaN(this.radius) ? this.radius : utils.rpx2px(this.radius),
-				'--image-root-background-color': 'rgba(127,127,127,.05)',
+				'--image-root-background-color': this.status === 1 ? 'none' : 'rgba(127,127,127,.05)',
 			};
 		},
 	},
@@ -125,9 +101,6 @@ export default {
 		src() {
 			this.status = 0;
 		},
-	},
-	mounted() {
-		this.setIconSize();
 	},
 	methods: {
 		onLoadOver(e) {
@@ -137,17 +110,6 @@ export default {
 		onFault(e) {
 			this.status = 2;
 			this.$emit('error', e);
-		},
-		setIconSize() {
-			this.$nextTick(async () => {
-				const dom = await utils.querySelector('.ste-image--root', this);
-				const size = dom.width <= dom.height ? dom.width : dom.height;
-				if (size <= 30) this.iconSize = 12 * 2;
-				else if (size <= 50) this.iconSize = 20 * 2;
-				else if (size <= 100) this.iconSize = 30 * 2;
-				else if (size <= 150) this.iconSize = 50 * 2;
-				else this.iconSize = 70 * 2;
-			});
 		},
 	},
 };
