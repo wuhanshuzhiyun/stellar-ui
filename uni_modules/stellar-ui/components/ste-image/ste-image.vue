@@ -100,11 +100,17 @@ export default {
 		cmpStyle() {
 			let width = isNaN(this.width) ? this.width : utils.rpx2px(this.width);
 			let height = isNaN(this.height) ? this.height : utils.rpx2px(this.height);
-			if (this.status !== 1) {
-				if (this.mode === 'widthFix') {
+			if (this.mode === 'widthFix') {
+				if (this.status !== 1) {
 					height = width;
-				} else if (this.mode === 'heightFix') {
+				} else {
+					height = 'auto';
+				}
+			} else if (this.mode === 'heightFix') {
+				if (this.status !== 1) {
 					width = height;
+				} else {
+					width = 'auto';
 				}
 			}
 			return {

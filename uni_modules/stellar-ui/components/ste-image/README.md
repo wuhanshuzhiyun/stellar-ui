@@ -16,8 +16,8 @@
 <ste-image src="https://image.whzb.com/chain/StellarUI/图片.jpg" width="200" height="200" />
 <ste-image src="https://image.whzb.com/chain/StellarUI/图片.jpg" width="200" height="200" mode="aspectFit"/>
 <ste-image src="https://image.whzb.com/chain/StellarUI/图片.jpg" width="200" height="200" mode="aspectFill"/>
-<ste-image src="https://image.whzb.com/chain/StellarUI/图片.jpg" width="200" height="200" mode="widthFix"/>
-<ste-image src="https://image.whzb.com/chain/StellarUI/图片.jpg" width="200" height="200" mode="heightFix"/>
+<ste-image src="https://image.whzb.com/chain/StellarUI/图片.jpg" width="200" mode="widthFix"/>
+<ste-image src="https://image.whzb.com/chain/StellarUI/图片.jpg" height="200" mode="heightFix"/>
 ```
 
 #### 圆角

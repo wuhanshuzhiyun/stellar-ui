@@ -6,7 +6,7 @@
 				<view class="title">基础用法</view>
 				<view class="item-block">
 					<view class="image-box">
-						<ste-image :src="demoUrl" />
+						<ste-image :src="demoUrl" width="200" height="200" />
 					</view>
 					<view class="image-box">
 						<ste-image :src="demoUrl" width="200" height="200" mode="aspectFit" />
