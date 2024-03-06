@@ -57,7 +57,7 @@ export default {
 	data() {
 		return {
 			iconUrl:
-				'https://at.alicdn.com/t/c/font_4041637_pivqtx3f1mq.json?spm=a313x.manage_type_myprojects.i1.49.f7ba3a81fFvJ6W&file=font_4041637_pivqtx3f1mq.json',
+				'https://at.alicdn.com/t/c/font_4041637_ufl38b5x4g.json?spm=a313x.manage_type_myprojects.i1.24.28273a814UZfaX&file=font_4041637_ufl38b5x4g.json',
 			glyphs: [],
 			tabIndex: 0,
 		};
