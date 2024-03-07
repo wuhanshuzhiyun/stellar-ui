@@ -3,7 +3,7 @@
 		class="ste-button--root"
 		:class="cmpRootClass"
 		:hover-class="!disabled && !loading ? 'ste-button--root-active' : ''"
-		@click="handleClick"
+		@click.stop="handleClick"
 		:style="[cmpBtnCss]"
 	>
 		<view class="btn-box">
