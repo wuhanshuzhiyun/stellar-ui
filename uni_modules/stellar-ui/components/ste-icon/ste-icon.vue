@@ -83,7 +83,6 @@ export default {
 			return String.fromCharCode(this.code.replace('&#', '0').replace(';', ''));
 		},
 		cmpCssVar() {
-			console.log(3333, Object.prototype.toString.call(this.fontFamily));
 			return {
 				'--color': this.color,
 				'--size': this.rpx2px(this.size),
