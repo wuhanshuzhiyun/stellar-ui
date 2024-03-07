@@ -117,7 +117,7 @@ export default {
 				'--image-root-width': width,
 				'--image-root-height': height,
 				'--image-root-radius': isNaN(this.radius) ? this.radius : utils.rpx2px(this.radius),
-				'--image-root-background-color': 'rgba(127,127,127,.05)',
+				'--image-root-background-color': this.status === 1 ? 'none' : 'rgba(127,127,127,.05)',
 			};
 		},
 	},
