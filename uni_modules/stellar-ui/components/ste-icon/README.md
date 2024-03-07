@@ -1,4 +1,4 @@
-# Button 按钮
+# Icon 图标
 基于字体的图标集，包含了大多数常见场景的图标
 
 {{compatibility}}
@@ -7,7 +7,7 @@
 
 ### 基础用法
 
-通过 `code` 属性来指定需要使用的图标，Stellar组件使用[iconfont做图标库](https://at.alicdn.com/t/c/font_4041637_pivqtx3f1mq.json?spm=a313x.manage_type_myprojects.i1.49.f7ba3a81fFvJ6W&file=font_4041637_pivqtx3f1mq.json)，
+通过 `code` 属性来指定需要使用的图标，Stellar组件使用[iconfont做图标库](https://at.alicdn.com/t/c/font_4041637_ufl38b5x4g.json?spm=a313x.manage_type_myprojects.i1.24.28273a814UZfaX&file=font_4041637_ufl38b5x4g.json)，
 可以直接传入对应的编码来使用
 
 ```html
