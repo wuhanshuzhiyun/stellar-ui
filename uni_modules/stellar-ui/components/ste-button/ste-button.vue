@@ -99,6 +99,10 @@ export default {
 			if (this.round) {
 				classArr.push(`${prefix}-round`);
 			}
+			// #ifdef MP-ALIPAY || MP-TOUTIAO || MP-LARK
+			return classArr.join(' ');
+			// #endif
+
 			return classArr;
 		},
 		cmpBtnCss() {
@@ -114,10 +118,10 @@ export default {
 				style.width = utils.addUnit(this.width);
 			}
 
-			if (!this.disabled) {
-				style = { ...style, ...utils.bg2style(this.background) };
-				style.color = this.color;
-			}
+			// if (!this.disabled) {
+			style = { ...style, ...utils.bg2style(this.background) };
+			style.color = this.color;
+			// }
 
 			if (this.borderColor) {
 				style.border = 'solid 2rpx';

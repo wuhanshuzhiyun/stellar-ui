@@ -6,7 +6,7 @@
 				<view class="title">金额单位</view>
 				<view class="item-block">
 					<view>
-						<ste-price value="9527" />
+						<ste-price value="9527" fontWeight="bold" />
 					</view>
 					<view>
 						<ste-price value="9527" valueUnit="yuan" />
@@ -63,6 +63,14 @@
 					</view>
 					<view>
 						<ste-price value="9527" :styleType="3" />
+					</view>
+				</view>
+			</view>
+			<view class="demo-item">
+				<view class="title">金额字重</view>
+				<view class="item-block">
+					<view>
+						<ste-price value="9527" fontWeight="bold" fontSize="50" />
 					</view>
 				</view>
 			</view>

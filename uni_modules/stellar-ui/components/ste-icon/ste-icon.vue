@@ -10,7 +10,6 @@ import utils from '../../utils/utils.js';
  * ste-icon 图标
  * @description  图标组件 基于字体的图标集，包含了大多数常见场景的图标
  * @tutorial http://172.16.114.51:5050/pc/index/index?name=ste-icon
- * @property {String} fontFamily 字体名 默认ste-icon
  * @property {String} code 图标名称
  * @property {String} color 图标颜色
  * @property {Number|String} size 图标大小，单位rpx，默认28
@@ -19,6 +18,7 @@ import utils from '../../utils/utils.js';
  * @property {Number|String} marginRight 右外边距，单位rpx，默认0
  * @property {Number|String} marginTop 上外边距，单位rpx，默认0
  * @property {Number|String} marginBottom 下外边距，单位rpx，默认0
+ * @property {String} fontFamily 字体名 默认''
  * @event {Function} click 图标点击回调事件
  */
 export default {
@@ -26,10 +26,6 @@ export default {
 	title: 'Icon 图标',
 	name: 'ste-icon',
 	props: {
-		fontFamily: {
-			type: String,
-			default: '',
-		},
 		// iconfont unicode
 		code: {
 			type: String,
@@ -70,6 +66,10 @@ export default {
 			type: [Number, String],
 			default: 0,
 		},
+		fontFamily: {
+			type: String,
+			default: '',
+		},
 	},
 	data() {
 		return {
@@ -83,7 +83,6 @@ export default {
 			return String.fromCharCode(this.code.replace('&#', '0').replace(';', ''));
 		},
 		cmpCssVar() {
-			console.log(3333, Object.prototype.toString.call(this.fontFamily));
 			return {
 				'--color': this.color,
 				'--size': this.rpx2px(this.size),
