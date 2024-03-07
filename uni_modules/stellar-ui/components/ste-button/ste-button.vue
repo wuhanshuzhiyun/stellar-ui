@@ -118,10 +118,10 @@ export default {
 				style.width = utils.addUnit(this.width);
 			}
 
-			if (!this.disabled) {
-				style = { ...style, ...utils.bg2style(this.background) };
-				style.color = this.color;
-			}
+			// if (!this.disabled) {
+			style = { ...style, ...utils.bg2style(this.background) };
+			style.color = this.color;
+			// }
 
 			if (this.borderColor) {
 				style.border = 'solid 2rpx';
