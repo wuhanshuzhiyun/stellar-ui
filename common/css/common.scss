@@ -49,6 +49,9 @@ body {
 		// #ifdef  MP-WEIXIN
 		height: calc(100% - 220rpx);
 		// #endif
+		// #ifdef  MP-ALIPAY
+		height: calc(100% - 90rpx);
+		// #endif
 		overflow-y: auto;
 
 		& > .demo-item {

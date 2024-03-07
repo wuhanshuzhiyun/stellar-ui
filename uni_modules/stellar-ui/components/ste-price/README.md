@@ -31,11 +31,6 @@
 <ste-price value="9527" isSuggestPrice linePriceColor="#666666" />
 ```
 
-#### 行高
-```html
-<ste-price value="9527" lineHeight="50" />
-```
-
 #### 金额样式
 - 当`styleType`值为`1`时，数字字号统一，
 	- 当数字字号<=`40rpx`，则价格符号字号为`20rpx`
