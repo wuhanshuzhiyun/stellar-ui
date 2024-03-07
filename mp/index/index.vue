@@ -38,10 +38,10 @@
 			</view>
 			<view class="com-arrow"><image :src="joinSrc('img/r-arrow.png')" /></view>
 		</view>
-		<view class="com-box" @click="nav('rich-text')">
+		<view class="com-box" @click="nav('price')">
 			<view class="com-title">
-				<image src="https://cdn.uviewui.com/uview/example/textarea.png" style="width: 36rpx; height: 36rpx" />
-				<text>Rich Text 富文本</text>
+				<image :src="joinSrc('img/price.png')" style="width: 36rpx; height: 36rpx" />
+				<text>Price 价格</text>
 			</view>
 			<view class="com-arrow"><image :src="joinSrc('img/r-arrow.png')" /></view>
 		</view>
@@ -54,12 +54,10 @@
 			</view>
 			<view class="com-arrow"><image :src="joinSrc('img/r-arrow.png')" /></view>
 		</view>
-		<!-- ***电商组件*** -->
-		<view class="group-title">电商组件</view>
-		<view class="com-box" @click="nav('price')">
+		<view class="com-box" @click="nav('rich-text')">
 			<view class="com-title">
-				<image :src="joinSrc('img/price.png')" style="width: 36rpx; height: 36rpx" />
-				<text>Price 价格</text>
+				<image src="https://cdn.uviewui.com/uview/example/textarea.png" style="width: 36rpx; height: 36rpx" />
+				<text>Rich-Text 富文本</text>
 			</view>
 			<view class="com-arrow"><image :src="joinSrc('img/r-arrow.png')" /></view>
 		</view>

@@ -10,6 +10,7 @@ import utils from '../../utils/utils.js';
  * ste-icon 图标
  * @description  图标组件 基于字体的图标集，包含了大多数常见场景的图标
  * @tutorial http://172.16.114.51:5050/pc/index/index?name=ste-icon
+ * @property {String} fontFamily 字体名 默认ste-icon
  * @property {String} code 图标名称
  * @property {String} color 图标颜色
  * @property {Number|String} size 图标大小，单位rpx，默认28
@@ -25,6 +26,10 @@ export default {
 	title: 'Icon 图标',
 	name: 'ste-icon',
 	props: {
+		fontFamily: {
+			type: String,
+			default: '',
+		},
 		// iconfont unicode
 		code: {
 			type: String,
@@ -67,14 +72,18 @@ export default {
 		},
 	},
 	data() {
-		return {};
+		return {
+			defaultFontFamily: 'ste-iconfont-1709689042473', // 和iconfont项目中的字体名保持一致
+		};
 	},
+	mounted() {},
 	computed: {
 		cmpCode() {
 			// unicode编码转字符
 			return String.fromCharCode(this.code.replace('&#', '0').replace(';', ''));
 		},
 		cmpCssVar() {
+			console.log(3333, Object.prototype.toString.call(this.fontFamily));
 			return {
 				'--color': this.color,
 				'--size': this.rpx2px(this.size),
@@ -83,6 +92,7 @@ export default {
 				'--margin-right': this.rpx2px(this.marginRight),
 				'--margin-top': this.rpx2px(this.marginTop),
 				'--margin-bottom': this.rpx2px(this.marginBottom),
+				'--font-family': this.fontFamily === '' ? this.defaultFontFamily : this.fontFamily,
 			};
 		},
 	},
@@ -95,6 +105,7 @@ export default {
 };
 </script>
 
+<style lang="scss"></style>
 <style lang="scss" scoped>
 @import './iconfont.css';
 .ste-icon--root {
@@ -106,7 +117,7 @@ export default {
 		align-items: center;
 		justify-content: center;
 		vertical-align: bottom;
-		font-family: 'iconfont' !important;
+		font-family: var(--font-family) !important;
 		font-style: normal;
 		width: var(--size) !important;
 		height: var(--size) !important;

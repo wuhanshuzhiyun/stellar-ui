@@ -5,7 +5,9 @@
 			<view class="demo-item">
 				<view class="title">基础用法</view>
 				<view class="item-block">
-					<view class="image-box"><ste-image :src="demoUrl" width="200" height="200" /></view>
+					<view class="image-box">
+						<ste-image :src="demoUrl" width="200" height="200" />
+					</view>
 					<view class="image-box">
 						<ste-image :src="demoUrl" width="200" height="200" mode="aspectFit" />
 					</view>
@@ -69,7 +71,7 @@
 export default {
 	data() {
 		return {
-			demoUrl: `https://image.whzb.com/chain/StellarUI/图片.jpg`,
+			demoUrl: `http://www.bauble.vip/data/image/2022/11/09/27996_ydby_4604.jpg?t=${Date.now()}`,
 			imgUrl: '',
 			errorUrl: '',
 		};
