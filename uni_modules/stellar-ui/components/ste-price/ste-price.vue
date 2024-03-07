@@ -28,6 +28,7 @@ import utils from '../../utils/utils.js';
  * @property {Number|String} marginTop 上边距	 默认值 0
  * @property {Number|String} marginBottom 下边距	 默认值 0
  * @property {Number} styleType 金额样式	 默认值 2
+ * @property {String} fontWeight 金额字重，用法同原生
  * @property {Function(value)} formatter 用来格式化内容
  */
 export default {
@@ -93,6 +94,10 @@ export default {
 			type: Number,
 			default: 2,
 		},
+		fontWeight: {
+			type: String,
+			default: '',
+		},
 		//
 		formatter: {
 			type: Function,
@@ -142,6 +147,7 @@ export default {
 				marginRight: utils.addUnit(this.marginRight),
 				marginTop: utils.addUnit(this.marginTop),
 				marginBottom: utils.addUnit(this.marginBottom),
+				fontWeight: this.fontWeight,
 			};
 		},
 		cmpUnitStyle() {
