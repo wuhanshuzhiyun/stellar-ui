@@ -1,10 +1,9 @@
 <template>
 	<button
 		class="ste-button--root"
-		:class="cmpRootClass"
 		:hover-class="!disabled && !loading ? 'ste-button--root-active' : ''"
 		@click.stop="handleClick"
-		:style="[cmpBtnCss]"
+		:style="[cmpBtnStyle]"
 	>
 		<view class="btn-box">
 			<text v-if="loading">加载中.......</text>
@@ -79,53 +78,68 @@ export default {
 	},
 	created() {},
 	computed: {
-		cmpRootClass() {
-			const classArr = [];
-			const prefix = 'ste-button--root';
-			if ([100, 200, 300, 400].includes(this.mode)) {
-				classArr.push(`${prefix}-${this.mode}`);
-			} else {
-				classArr.push(`${prefix}-200`);
-			}
-
-			if (this.disabled) {
-				classArr.push(`${prefix}-disabled`);
-			}
-
-			if (this.loading) {
-				classArr.push(`${prefix}-loading`);
-			}
-
-			if (this.round) {
-				classArr.push(`${prefix}-round`);
-			}
-			// #ifdef MP-ALIPAY || MP-TOUTIAO || MP-LARK
-			return classArr.join(' ');
-			// #endif
-
-			return classArr;
-		},
-		cmpBtnCss() {
+		cmpBtnStyle() {
 			let style = {};
+			// 为解决支付宝动态类名时不兼容，尽量使用内联样式
 
+			// 圆角 round
 			if (this.round) {
 				style.borderRadius = utils.addUnit(48);
 			}
 
+			// 宽度 width
 			if (this.width == '100%' || this.width == 'auto') {
 				style.width = this.width;
 			} else {
 				style.width = utils.addUnit(this.width);
 			}
 
-			// if (!this.disabled) {
-			style = { ...style, ...utils.bg2style(this.background) };
-			style.color = this.color;
-			// }
-
+			// 边框色 borderColor
 			if (this.borderColor) {
 				style.border = 'solid 2rpx';
 				style.borderColor = this.borderColor;
+			}
+
+			// 类型 mode
+			switch (this.mode) {
+				case 100:
+					style.padding = '0 30rpx';
+					style.height = '48rpx';
+					style.fontSize = '24rpx';
+					break;
+				case 300:
+					style.padding = '0 72rpx';
+					style.height = '80rpx';
+					style.fontSize = '32rpx';
+					break;
+				case 400:
+					style.padding = '0 72rpx';
+					style.height = '96rpx';
+					style.fontSize = '36rpx';
+					break;
+				default:
+					style.padding = '0 40rpx';
+					style.height = '68rpx';
+					style.fontSize = '28rpx';
+					break;
+			}
+
+			// 背景色 & 字体色
+			style = { ...style, ...utils.bg2style(this.background) };
+			style.color = this.color;
+
+			// 禁用 disabled
+			if (this.disabled) {
+				if (this.background == '#0091FF') {
+					style.backgroundColor = '#666666';
+				}
+				style.color = '#ffffff';
+				style.cursor = 'not-allowed';
+			}
+
+			// 加载 loading
+			if (this.loading) {
+				style.cursor = 'not-allowed';
 			}
 
 			return style;
