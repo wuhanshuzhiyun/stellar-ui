@@ -102,7 +102,7 @@ export default {
 			default: 2,
 		},
 		bold: {
-			type: String,
+			type: Boolean,
 			default: false,
 		},
 		// 过滤器
