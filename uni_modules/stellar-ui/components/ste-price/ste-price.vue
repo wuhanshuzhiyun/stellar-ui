@@ -1,6 +1,6 @@
 <template>
 	<view class="ste-price--root" :style="[cmpPriceStyle]">
-		<text class="unit" :style="[cmpUnitStyle]">￥</text>
+		<text v-if="showUnit" class="unit" :style="[cmpUnitStyle]">{{ unitSymbol }}</text>
 		<text class="yuan-price" :style="[cmpYuanPriceStyle]">{{ cmpYuanValue }}</text>
 		<text v-if="valueUnit === 'fen'" class="fen-price" :style="[cmpFenPriceStyle]">
 			{{ cmpFenValue }}
@@ -28,8 +28,15 @@ import utils from '../../utils/utils.js';
  * @property {Number|String} marginTop 上边距	 默认值 0
  * @property {Number|String} marginBottom 下边距	 默认值 0
  * @property {Number} styleType 金额样式	 默认值 2
- * @property {String} fontWeight 金额字重，用法同原生
+ * @property {Boolean} bold 是否加粗 默认值 false
+ * @property {Number} digits 精度 默认值 -1
+ * @value -1 不处理（默认值）{Number}
+ * @value 0 取整（四舍五入）{Number}
+ * @value 1 保留1位小数（四舍五入）{Number}
+ * @value 2 保留2位小数（四舍五入）{Number}
  * @property {Function(value)} formatter 用来格式化内容
+ * @property {Boolean} showUnit 是否显示符号
+ * @property {String} unitSymbol 符号标记，默认值 ¥
  */
 export default {
 	group: '电商',
@@ -94,14 +101,29 @@ export default {
 			type: Number,
 			default: 2,
 		},
-		fontWeight: {
+		bold: {
 			type: String,
-			default: '',
+			default: false,
 		},
-		//
+		// 过滤器
 		formatter: {
 			type: Function,
 			default: undefined,
+		},
+		// 精度 -1 不使用精度 0 保留0位小数 1 保留1位小数 2保留2位小数
+		digits: {
+			type: Number,
+			default: -1,
+		},
+		// 是否显示单位符号
+		showUnit: {
+			type: Boolean,
+			default: true,
+		},
+		// 单位符号
+		unitSymbol: {
+			type: String,
+			default: '¥',
 		},
 	},
 	data() {
@@ -109,15 +131,18 @@ export default {
 	},
 	computed: {
 		cmpValue() {
-			if (!this.formatter || typeof this.formatter !== 'function') {
-				if (this.valueUnit == 'fen') {
-					return utils.fenToYuan(this.value, -1, '', 0);
-				} else {
-					return this.value;
-				}
-			} else {
+			if (this.formatter && typeof this.formatter === 'function') {
 				return this.formatter(this.value);
 			}
+
+			let value = this.value;
+			if (this.valueUnit == 'fen') {
+				value = utils.fenToYuan(this.value, -1, '', 0);
+			}
+			if ([0, 1, 2].indexOf(this.digits) !== -1) {
+				value = Number(value).toFixed(this.digits);
+			}
+			return value;
 		},
 		cmpYuanValue() {
 			if (this.cmpValue) {
@@ -147,7 +172,7 @@ export default {
 				marginRight: utils.addUnit(this.marginRight),
 				marginTop: utils.addUnit(this.marginTop),
 				marginBottom: utils.addUnit(this.marginBottom),
-				fontWeight: this.fontWeight,
+				fontWeight: this.bold ? 'bold' : 'normal',
 			};
 		},
 		cmpUnitStyle() {

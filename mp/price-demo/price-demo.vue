@@ -6,10 +6,34 @@
 				<view class="title">金额单位</view>
 				<view class="item-block">
 					<view>
-						<ste-price value="9527" fontWeight="bold" />
+						<ste-price value="9527" />
 					</view>
 					<view>
 						<ste-price value="9527" valueUnit="yuan" />
+					</view>
+				</view>
+			</view>
+			<view class="demo-item">
+				<view class="title">隐藏金额符号</view>
+				<view class="item-block">
+					<view>
+						<ste-price value="9527" :showUnit="false" />
+					</view>
+				</view>
+			</view>
+			<view class="demo-item">
+				<view class="title">自定义金额符号</view>
+				<view class="item-block">
+					<view>
+						<ste-price value="9527" unitSymbol="$" />
+					</view>
+				</view>
+			</view>
+			<view class="demo-item">
+				<view class="title">自定义精度</view>
+				<view class="item-block">
+					<view>
+						<ste-price value="9527" :digits="1" />
 					</view>
 				</view>
 			</view>
@@ -41,14 +65,6 @@
 				</view>
 			</view>
 			<view class="demo-item">
-				<view class="title">行高</view>
-				<view class="item-block">
-					<view>
-						<ste-price value="9527" lineHeight="50" />
-					</view>
-				</view>
-			</view>
-			<view class="demo-item">
 				<view class="title">金额样式</view>
 				<view class="item-block" style="display: block">
 					<view>
@@ -67,10 +83,10 @@
 				</view>
 			</view>
 			<view class="demo-item">
-				<view class="title">金额字重</view>
+				<view class="title">粗体</view>
 				<view class="item-block">
 					<view>
-						<ste-price value="9527" fontWeight="bold" fontSize="50" />
+						<ste-price value="9527" bold fontSize="50" />
 					</view>
 				</view>
 			</view>
