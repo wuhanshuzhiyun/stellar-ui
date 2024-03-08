@@ -160,6 +160,7 @@ export default {
 				if (this.cmpValue.indexOf('.') > -1) {
 					return '.' + this.cmpValue.split('.')[1];
 				}
+				return '';
 			} else {
 				return utils.fenToYuan(this.value, -1, '', 2);
 			}
