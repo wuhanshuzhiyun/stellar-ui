@@ -56,7 +56,7 @@
 ```
 
 ```html
-<!-- 通过 class-prefix 指定类名为 my-icon -->
+<!-- 通过 class-prefix 指定类名为 font-family属性的值：如iconfont -->
 <ste-icon fontFamily="iconfont" code="&#xe6cc;" />
 ```
 
