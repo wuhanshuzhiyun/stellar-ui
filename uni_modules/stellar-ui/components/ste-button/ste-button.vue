@@ -151,6 +151,7 @@ export default {
 	box-sizing: border-box;
 	flex-direction: row;
 	background-size: cover;
+	border-radius: 10rpx;
 
 	.btn-box {
 		width: 100%;
