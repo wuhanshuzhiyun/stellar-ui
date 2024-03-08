@@ -92,7 +92,7 @@ export default {
 | marginTop		| 上边距												| `Number`/`String`	| `0`			| -																	| -			|
 | marginBottom	| 下边距												| `Number`/`String`	| `0`			| -																	| -			|
 | styleType		| 金额样式											| `Number`			| `2`			| `1`元和角分大小相等<br/>`2`角分小于元<br/>`3`价格符号和角，分相等	| -			|
-| fontWeight	| 金额字重，用法同原生								| `String`			| -				| -																	| -			|
+| fontWeight	| 金额字重，用法同原生								| `String`			| -				| -																	| `1.1.2`	|
 | formatter		| 用来格式化内容										| `Function(value)`	| -				| -																	| -			|
 
 {{fuyuwei}}
