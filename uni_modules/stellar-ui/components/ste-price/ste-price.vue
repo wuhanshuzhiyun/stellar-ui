@@ -39,7 +39,7 @@ import utils from '../../utils/utils.js';
  * @property {String} unitSymbol 符号标记，默认值 ¥
  */
 export default {
-	group: '电商',
+	group: '电商组件',
 	title: 'Price 价格',
 	name: 'ste-price',
 	props: {
