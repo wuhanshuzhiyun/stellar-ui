@@ -111,26 +111,31 @@ export default {
 		background-color: #ee0a24;
 		border-radius: 999rpx;
 		width: fit-content;
+		line-height: 0;
 		.content-box {
 			display: flex;
 			align-items: center;
 			justify-content: center;
-			height: 32rpx;
+			height: 26rpx;
 			width: auto;
-			min-width: 32rpx;
+			min-width: 26rpx;
 
-			padding: 0 6rpx;
+			padding: 0 4rpx;
+			line-height: 0;
 		}
 
 		.dot-box {
-			height: 16rpx;
-			width: 16rpx;
+			height: 12rpx;
+			width: 12rpx;
 		}
 
 		&-text {
-			font-size: 24rpx;
+			font-size: 22rpx;
 			color: #ffffff;
-			line-height: 1;
+			line-height: 0;
+
+			position: relative;
+			top: -1rpx;
 		}
 	}
 
