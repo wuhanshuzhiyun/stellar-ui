@@ -17,6 +17,13 @@
 		</view>
 		<!-- ***基础组件*** -->
 		<view class="group-title">基础组件</view>
+		<view class="com-box" @click="nav('badge')">
+			<view class="com-title">
+				<image :src="joinSrc('img/image.png')" style="width: 36rpx; height: 36rpx" />
+				<text>Badge 徽标</text>
+			</view>
+			<view class="com-arrow"><image :src="joinSrc('img/r-arrow.png')" /></view>
+		</view>
 		<view class="com-box" @click="nav('button')">
 			<view class="com-title">
 				<image :src="joinSrc('img/button.png')" style="width: 36rpx; height: 36rpx" />
@@ -35,13 +42,6 @@
 			<view class="com-title">
 				<image :src="joinSrc('img/image.png')" style="width: 36rpx; height: 36rpx" />
 				<text>Image 图片</text>
-			</view>
-			<view class="com-arrow"><image :src="joinSrc('img/r-arrow.png')" /></view>
-		</view>
-		<view class="com-box" @click="nav('badge')">
-			<view class="com-title">
-				<image :src="joinSrc('img/image.png')" style="width: 36rpx; height: 36rpx" />
-				<text>Badge 徽标</text>
 			</view>
 			<view class="com-arrow"><image :src="joinSrc('img/r-arrow.png')" /></view>
 		</view>

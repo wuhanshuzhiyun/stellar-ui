@@ -100,24 +100,28 @@ export default {
 ### API
 #### 组件属性(Props)
 
-| 属性名				| 说明																						| 类型								| 默认值				| 可选值																															| 支持版本	|
-| ---						| ---																						| ---								| ---					| ---																																| ---			|
-| value					| 金额																						| `Number`/`String`	| `0`					| -																																	| -				|
-| valueUnit			| 金额单位 用于判断传入的`value`值是`fen`还是`yuan`	| `String`					| `"fen"`			| -																																	| -				|
-| fontSize			| 金额文字尺寸																		| `Number`/`String`	| `30`				| -																																	| -				|
-| color					| 金额文字颜色																		| `String`					| `"#ff1e19"`	| -																																	| -				|
-| linePriceColor| 划线价颜色																			| `String`					| `"#999999"`	| -																																	| -				|
-| lineHeight		| 行高	：`Number`，单位rpx，`String`，同原生				| `Number`/`String`	| `"1"`				| -																																	| -				|
-| isSuggestPrice| 是否划线价																			| `Boolean`					| `false`			| -																																	| -				|
-| marginLeft		| 左边距																					| `Number`/`String`	| `0`					| -																																	| -				|
-| marginRight		| 右边距																					| `Number`/`String`	| `0`					| -																																	| -				|
-| marginTop			| 上边距																					| `Number`/`String`	| `0`					| -																																	| -				|
-| marginBottom	| 下边距																					| `Number`/`String`	| `0`					| -																																	| -				|
-| styleType			| 金额样式																				| `Number`					| `2`					| `1`元和角分大小相等<br/>`2`角分小于元<br/>`3`价格符号和角，分相等				| -				|
-| bold					| 金额是否加粗																		| `Boolean`					| `false`			| -																																	| `1.1.3`				|
-| formatter			| 用来格式化内容																	| `Function(value)`	| -						| -																																	| -				|
-| digits				| 金额精度																				| `Number`					| `-1`				| `-1`不处理（默认值）<br/>`0`取整<br/>`1`保留1位小数<br/>`2`保留2位小数	| `1.1.3`				|
-| showUnit			| 是否显示单位符号																| `Boolean`					| `true`			| -																																	| `1.1.3`				|
-| unitSymbol		| 单位符号																				| `String`					| `"¥"`				| -																																	| `1.1.3`				|
+| 属性名		| 说明											| 类型				| 默认值			| 可选值																| 支持版本	|
+| ---			| ---											| ---				| ---			| ---																| ---		|
+| value			| 金额											| `Number`/`String`	| `0`			| -																	| -			|
+| valueUnit		| 金额单位 用于判断传入的`value`值是`fen`还是`yuan`	| `String`			| `"fen"`		| -																	| -			|
+| digits		| 金额精度										| `Number`			| `-1`			| `-1`不处理（默认值）<br/>`0`取整<br/>`1`保留1位小数<br/>`2`保留2位小数	| `1.1.3`	|
+| showUnit		| 是否显示单位符号								| `Boolean`			| `true`		| -																	| `1.1.3`	|
+| unitSymbol	| 单位符号										| `String`			| `"¥"`			| -																	| `1.1.3`	|
+| fontSize		| 金额文字尺寸									| `Number`/`String`	| `30`			| -																	| -			|
+| color			| 金额文字颜色									| `String`			| `"#ff1e19"`	| -																	| -			|
+| linePriceColor| 划线价颜色										| `String`			| `"#999999"`	| -																	| -			|
+| lineHeight	| 行高	：`Number`，单位rpx，`String`，同原生		| `Number`/`String`	| `"1"`			| -																	| -			|
+| isSuggestPrice| 是否划线价										| `Boolean`			| `false`		| -																	| -			|
+| marginLeft	| 左边距											| `Number`/`String`	| `0`			| -																	| -			|
+| marginRight	| 右边距											| `Number`/`String`	| `0`			| -																	| -			|
+| marginTop		| 上边距											| `Number`/`String`	| `0`			| -																	| -			|
+| marginBottom	| 下边距											| `Number`/`String`	| `0`			| -																	| -			|
+| styleType		| 金额样式										| `Number`			| `2`			| `1`元和角分大小相等<br/>`2`角分小于元<br/>`3`价格符号和角，分相等		| -			|
+| bold			| 金额是否加粗									| `Boolean`			| `false`		| -																	| `1.1.3`	|
+| formatter		| 用来格式化内容									| `Function(value)`	| -				| -																	| -			|
 
 {{fuyuwei}}
+
+{{xuyajun}}
+
+{{qinpengfei}}
