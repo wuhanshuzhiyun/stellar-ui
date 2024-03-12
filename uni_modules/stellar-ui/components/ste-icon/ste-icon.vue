@@ -108,7 +108,7 @@ export default {
 <style lang="scss" scoped>
 @import './iconfont.css';
 .ste-icon--root {
-	display: flex;
+	display: inline-flex;
 	align-items: center;
 
 	.iconfont {
