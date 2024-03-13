@@ -88,6 +88,19 @@
 			}
 		},
 		{
+			"path": "mp/tabs-demo/tabs-demo",
+			"style": {
+				"navigationStyle": "custom",
+				"disableScroll": true,
+				"mp-alipay": {
+					"transparentTitle": "always",
+					"titlePenetrate": "YES",
+					"allowsBounceVertical": "NO",
+					"navigationBarTitleText": ""
+				}
+			}
+		},
+		{
 			"path": "mp/rich-text-demo/rich-text-demo",
 			"style": {
 				"navigationStyle": "custom",

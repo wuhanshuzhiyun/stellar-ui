@@ -3,6 +3,7 @@ let throTimer = null; // 节流方法用的变量
 
 let utils = {
 	rpx2px(rpx) {
+		if (!rpx) return '0'
 		let windowWidth = uni.getSystemInfoSync().windowWidth;
 		let px = (parseInt(rpx) * windowWidth) / 750;
 		return `${px}px`;
@@ -108,8 +109,7 @@ let utils = {
 		return new Promise((resolve, reject) => {
 			try {
 				uni.createSelectorQuery()
-					.in(component)
-					[selectFn](selectors)
+					.in(component)[selectFn](selectors)
 					.boundingClientRect((data) => {
 						resolve(data);
 					})
