@@ -19,7 +19,7 @@
 		<view class="group-title">基础组件</view>
 		<view class="com-box" @click="nav('badge')">
 			<view class="com-title">
-				<image :src="joinSrc('img/image.png')" style="width: 36rpx; height: 36rpx" />
+				<image :src="joinSrc('img/badge.png')" style="width: 36rpx; height: 36rpx" />
 				<text>Badge 徽标</text>
 			</view>
 			<view class="com-arrow"><image :src="joinSrc('img/r-arrow.png')" /></view>
@@ -65,7 +65,7 @@
 		</view>
 		<view class="com-box" @click="nav('rich-text')">
 			<view class="com-title">
-				<image src="https://cdn.uviewui.com/uview/example/textarea.png" style="width: 36rpx; height: 36rpx" />
+				<image :src="joinSrc('img/parse.png')" style="width: 36rpx; height: 36rpx" />
 				<text>Rich Text 富文本</text>
 			</view>
 			<view class="com-arrow"><image :src="joinSrc('img/r-arrow.png')" /></view>
