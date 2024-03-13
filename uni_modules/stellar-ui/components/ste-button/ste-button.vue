@@ -4,6 +4,19 @@
 		:hover-class="!disabled && !loading ? 'ste-button--root-active' : ''"
 		@click.stop="handleClick"
 		:style="[cmpBtnStyle]"
+		:open-type="openType"
+		:scope="scope"
+		@getuserinfo="getuserinfo"
+		@contact="contact"
+		@getphonenumber="getphonenumber"
+		@getrealtimephonenumber="getrealtimephonenumber"
+		@agreeprivacyauthorization="agreeprivacyauthorization"
+		@error="error"
+		@opensetting="opensetting"
+		@launchapp="launchapp"
+		@chooseavatar="chooseavatar"
+		@getAuthorize="getAuthorize"
+		@followLifestyle="followLifestyle"
 	>
 		<view class="btn-box">
 			<text v-if="loading">加载中.......</text>
@@ -33,7 +46,20 @@ import utils from '../../utils/utils.js';
  * @property {Boolean} round 是否圆角按钮 默认 true
  * @property {Boolean} disabled 是否禁用状态 默认 false
  * @property {Boolean} loading 是否加载中状态 默认 false
+ * @property {String} openType 微信开放能力和支付宝开放能力
+ * @property {String} scope 支付宝开放能力，当 openType 为 getAuthorize 时有效
  * @event {Function} click 非禁止并且非加载中，才能点击
+ * @event {Function} getuserinfo 微信小程序：用户点击该按钮时，会返回获取到的用户信息，从返回参数的 detail 中获取到的值同 wx.getUserInfo。支付宝小程序：当 open-type 为 getAuthorize 且 scope 为 userInfo 时有效。当授权成功时触发。
+ * @event {Function} contact 微信小程序：客服消息回调，open-type="contact"时有效。
+ * @event {Function} getphonenumber 微信小程序：手机号快速验证回调，open-type=getPhoneNumber时有效。Tips：在触发 bindgetphonenumber 回调后应立即隐藏手机号按钮组件，或置为 disabled 状态，避免用户重复授权手机号产生额外费用。支付宝小程序：当 open-type 为 getAuthorize 且 scope 为 phoneNumber 时有效。当授权成功时触发。
+ * @event {Function} getrealtimephonenumber 微信小程序：手机号实时验证回调，open-type=getRealtimePhoneNumber 时有效。Tips：在触发 bindgetrealtimephonenumber 回调后应立即隐藏手机号按钮组件，或置为 disabled 状态，避免用户重复授权手机号产生额外费用。
+ * @event {Function} agreeprivacyauthorization 微信小程序：用户同意隐私协议事件回调，open-type=agreePrivacyAuthorization时有效 （Tips: 如果使用 onNeedPrivacyAuthorization 接口，需要在 bindagreeprivacyauthorization 触发后再调用 resolve({ event: "agree", buttonId })）
+ * @event {Function} error 微信小程序：当使用开放能力时，发生错误的回调，open-type=launchApp时有效 支付宝小程序：当 open-type 为 getAuthorize 时有效。当授权失败时触发。event.detail = {type, errorMessage}，此时 type 的值为 getAuthorize。
+ * @event {Function} launchapp 微信小程序：打开 APP 成功的回调，open-type=launchApp时有效
+ * @event {Function} opensetting 微信小程序：在打开授权设置页后回调，open-type=openSetting时有效
+ * @event {Function} chooseavatar 微信小程序：获取用户头像回调，open-type=chooseAvatar时有效。返回 e.detail.avatarUrl 为头像临时文件链接。
+ * @event {Function} getAuthorize 支付宝小程序：当 open-type 为 getAuthorize 时有效。当授权成功时触发。
+ * @event {Function} followLifestyle 支付宝小程序：当 open-type 为 lifestyle 时有效。当点击按钮时触发。event.detail = { followStatus }，folllowStatus 合法值有 1、2、3，其中 1 表示已关注。2 表示用户不允许关注。3 表示发生未知错误；。
  */
 export default {
 	group: '基础组件',
@@ -71,6 +97,14 @@ export default {
 		loading: {
 			type: Boolean,
 			default: false,
+		},
+		openType: {
+			type: String,
+			default: '',
+		},
+		scope: {
+			type: String,
+			default: '',
 		},
 	},
 	data() {
@@ -150,6 +184,39 @@ export default {
 			if (!this.disabled && !this.loading) {
 				this.$emit('click');
 			}
+		},
+		getuserinfo(e) {
+			this.$emit('getuserinfo', e);
+		},
+		contact(e) {
+			this.$emit('contact', e);
+		},
+		getphonenumber(e) {
+			this.$emit('getphonenumber', e);
+		},
+		getrealtimephonenumber(e) {
+			this.$emit('getrealtimephonenumber', e);
+		},
+		greeprivacyauthorization(e) {
+			this.$emit('greeprivacyauthorization', e);
+		},
+		error(e) {
+			this.$emit('error', e);
+		},
+		launchapp(e) {
+			this.$emit('launchapp', e);
+		},
+		opensetting(e) {
+			this.$emit('opensetting', e);
+		},
+		chooseavatar(e) {
+			this.$emit('chooseavatar', e);
+		},
+		getAuthorize(e) {
+			this.$emit('getAuthorize', e);
+		},
+		followLifestyle(e) {
+			this.$emit('followLifestyle', e);
 		},
 	},
 };
