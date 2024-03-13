@@ -96,27 +96,27 @@
 
 
 #### Events
-|事件名						|说明																																																																		|类型			|默认值		|可选值	|支持版本	|
-| ---						| ---																																																																		| ---			| ---		|---	|---		|
-| `click`					| 点击																																																																		| `eventhandle`	| `event`	|-		|`1.1.4`	|
-| `getuserinfo`				| 微信小程序：用户点击该按钮时，会返回获取到的用户信息，从返回参数的 detail 中获取到的值同 wx.getUserInfo。<br/>支付宝小程序：当 open-type 为 getAuthorize 且 scope 为 userInfo 时有效。当授权成功时触发。																					| `eventhandle`	| `event`	|-		|`1.1.4`	|
-| `contact`					| 微信小程序：客服消息回调，open-type="contact"时有效。																																																							| `eventhandle`	| `event`	|-		|`1.1.4`	|
-| `getphonenumber`			| 微信小程序：手机号快速验证回调，open-type=getPhoneNumber时有效。Tips：在触发 bindgetphonenumber 回调后应立即隐藏手机号按钮组件，或置为 disabled 状态，避免用户重复授权手机号产生额外费用。<br/>支付宝小程序：当 open-type 为 getAuthorize 且 scope 为 phoneNumber 时有效。当授权成功时触发。	| `eventhandle`	| `event`	|-		|`1.1.4`	|
-| `getrealtimephonenumber`	| 微信小程序：手机号实时验证回调，open-type=getRealtimePhoneNumber 时有效。Tips：在触发 bindgetrealtimephonenumber 回调后应立即隐藏手机号按钮组件，或置为 disabled 状态，避免用户重复授权手机号产生额外费用。																				| `eventhandle`	| `event`	|-		|`1.1.4`	|
-| `greeprivacyauthorization`| 微信小程序：用户同意隐私协议事件回调，open-type=agreePrivacyAuthorization时有效 （Tips: 如果使用 onNeedPrivacyAuthorization 接口，需要在 bindagreeprivacyauthorization 触发后再调用 resolve({ event: "agree", buttonId })）															| `eventhandle`	| `event`	|-		|`1.1.4`	|
-| `error`					| 微信小程序：当使用开放能力时，发生错误的回调，open-type=launchApp时有效。 <br/>支付宝小程序：当 open-type 为 getAuthorize 时有效。当授权失败时触发。event.detail = {type, errorMessage}，此时 type 的值为 getAuthorize。																| `eventhandle`	| `event`	|-		|`1.1.4`	|
-| `launchapp`				| 微信小程序：打开 APP 成功的回调，open-type=launchApp时有效																																																					| `eventhandle`	| `event`	|-		|`1.1.4`	|
-| `opensetting`				| 微信小程序：在打开授权设置页后回调，open-type=openSetting时有效																																																				| `eventhandle`	| `event`	|-		|`1.1.4`	|
-| `chooseavatar`			| 微信小程序：获取用户头像回调，open-type=chooseAvatar时有效。返回 e.detail.avatarUrl 为头像临时文件链接。																																											| `eventhandle`	| `event`	|-		|`1.1.4`	|
-| `getAuthorize`			| 支付宝小程序：当 open-type 为 getAuthorize 时有效。当授权成功时触发。																																																			| `eventhandle`	| `event`	|-		|`1.1.4`	|
-| `followLifestyle`			| 支付宝小程序：当 open-type 为 lifestyle 时有效。当点击按钮时触发。event.detail = { followStatus }，folllowStatus 合法值有 1、2、3，其中 1 表示已关注。2 表示用户不允许关注。3 表示发生未知错误；。																						| `eventhandle`	| `event`	|-		|`1.1.4`	|
+|事件名						|说明																																																																		|事件参数	|支持版本	|
+| ---						| ---																																																																		| ---		|---		|
+| `click`					| 点击																																																																		|  -		|-			|
+| `getuserinfo`				| 微信小程序：用户点击该按钮时，会返回获取到的用户信息，从返回参数的 detail 中获取到的值同 wx.getUserInfo。<br/>支付宝小程序：当 open-type 为 getAuthorize 且 scope 为 userInfo 时有效。当授权成功时触发。																					| `event`	|`1.1.4`	|
+| `contact`					| 微信小程序：客服消息回调，open-type="contact"时有效。																																																							| `event`	|`1.1.4`	|
+| `getphonenumber`			| 微信小程序：手机号快速验证回调，open-type=getPhoneNumber时有效。Tips：在触发 bindgetphonenumber 回调后应立即隐藏手机号按钮组件，或置为 disabled 状态，避免用户重复授权手机号产生额外费用。<br/>支付宝小程序：当 open-type 为 getAuthorize 且 scope 为 phoneNumber 时有效。当授权成功时触发。	| `event`	|`1.1.4`	|
+| `getrealtimephonenumber`	| 微信小程序：手机号实时验证回调，open-type=getRealtimePhoneNumber 时有效。Tips：在触发 bindgetrealtimephonenumber 回调后应立即隐藏手机号按钮组件，或置为 disabled 状态，避免用户重复授权手机号产生额外费用。																				| `event`	|`1.1.4`	|
+| `greeprivacyauthorization`| 微信小程序：用户同意隐私协议事件回调，open-type=agreePrivacyAuthorization时有效 （Tips: 如果使用 onNeedPrivacyAuthorization 接口，需要在 bindagreeprivacyauthorization 触发后再调用 resolve({ event: "agree", buttonId })）															| `event`	|`1.1.4`	|
+| `error`					| 微信小程序：当使用开放能力时，发生错误的回调，open-type=launchApp时有效。 <br/>支付宝小程序：当 open-type 为 getAuthorize 时有效。当授权失败时触发。event.detail = {type, errorMessage}，此时 type 的值为 getAuthorize。																| `event`	|`1.1.4`	|
+| `launchapp`				| 微信小程序：打开 APP 成功的回调，open-type=launchApp时有效																																																					| `event`	|`1.1.4`	|
+| `opensetting`				| 微信小程序：在打开授权设置页后回调，open-type=openSetting时有效																																																				| `event`	|`1.1.4`	|
+| `chooseavatar`			| 微信小程序：获取用户头像回调，open-type=chooseAvatar时有效。返回 e.detail.avatarUrl 为头像临时文件链接。																																											| `event`	|`1.1.4`	|
+| `getAuthorize`			| 支付宝小程序：当 open-type 为 getAuthorize 时有效。当授权成功时触发。																																																			| `event`	|`1.1.4`	|
+| `followLifestyle`			| 支付宝小程序：当 open-type 为 lifestyle 时有效。当点击按钮时触发。event.detail = { followStatus }，folllowStatus 合法值有 1、2、3，其中 1 表示已关注。2 表示用户不允许关注。3 表示发生未知错误；。																						| `event`	|`1.1.4`	|
 
 
 
 #### Solts
-| 插槽中文名	| 插槽英文名	| 插槽参数	| 支持版本	|
-| ---		| ---		| ---		| ---		|
-| 默认		| `default`	|-			| -			|
+|插槽名		|说明	|插槽参数	|支持版本	|
+| ---		| ---	| ---		| ---		|
+| `default`	| 默认	|-			| -			|
 
 
 {{fuyuwei}}
