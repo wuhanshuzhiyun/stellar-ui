@@ -65,18 +65,28 @@
 				</view>
 			</view>
 			<view class="demo-item">
-				<view class="title">金额样式</view>
+				<view class="title">金额样式 元和角分大小相等</view>
 				<view class="item-block" style="display: block">
 					<view>
 						<ste-price value="9527" :styleType="1" fontSize="20" marginRight="30" />
 						<ste-price value="9527" :styleType="1" fontSize="40" marginRight="30" />
 						<ste-price value="9527" :styleType="1" fontSize="60" />
 					</view>
+				</view>
+			</view>
+			<view class="demo-item">
+				<view class="title">金额样式 角分小于元</view>
+				<view class="item-block" style="display: block">
 					<view>
 						<ste-price value="9527" :styleType="2" fontSize="28" marginRight="30" />
 						<ste-price value="9527" :styleType="2" fontSize="40" marginRight="30" />
 						<ste-price value="9527" :styleType="2" fontSize="60" />
 					</view>
+				</view>
+			</view>
+			<view class="demo-item">
+				<view class="title">金额样式 价格符号和角分相等</view>
+				<view class="item-block" style="display: block">
 					<view>
 						<ste-price value="9527" :styleType="3" />
 					</view>

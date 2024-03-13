@@ -39,12 +39,32 @@
 			<view v-if="tabIndex === 1" class="tab2-content">
 				<view class="demo-item">
 					<view class="item-block">
+						<view class="icon-condition">
+							<ste-icon
+								code="&#xe628;"
+								:size="48"
+								v-if="!showUnicode"
+								:marginLeft="40"
+								:marginRight="20"
+								@click="showUnicode = true"
+							></ste-icon>
+							<ste-icon
+								code="&#xe901;"
+								:size="48"
+								v-if="showUnicode"
+								:marginLeft="40"
+								:marginRight="20"
+								@click="showUnicode = false"
+							></ste-icon>
+							&nbsp;&nbsp;&nbsp;{{ showUnicode ? '隐藏unicode' : '展示unicode' }}
+						</view>
 						<view v-for="item in glyphs" class="icon-item" @click="copy(item.unicode)">
 							<view class="icon-content">
 								<ste-icon :code="item.unicode" :size="40"></ste-icon>
 							</view>
 							<view class="icon-name">{{ item.name }}</view>
-							<view class="icon-unicode">{{ item.unicode }}</view>
+							<view class="icon-class">{{ item.font_class }}</view>
+							<view class="icon-unicode" v-if="showUnicode">{{ item.unicode }}</view>
 						</view>
 					</view>
 				</view>
@@ -60,6 +80,7 @@ export default {
 				'https://at.alicdn.com/t/c/font_4041637_ufl38b5x4g.json?spm=a313x.manage_type_myprojects.i1.24.28273a814UZfaX&file=font_4041637_ufl38b5x4g.json',
 			glyphs: [],
 			tabIndex: 0,
+			showUnicode: true,
 		};
 	},
 	onReady() {},
@@ -107,7 +128,10 @@ export default {
 		row-gap: 60rpx;
 		justify-content: center;
 		align-items: center;
-
+		.icon-condition {
+			width: 100%;
+			color: #6699ff;
+		}
 		.icon-item {
 			width: 25%;
 
@@ -127,7 +151,8 @@ export default {
 				font-size: 28rpx;
 			}
 
-			.icon-unicode {
+			.icon-unicode,
+			.icon-class {
 				font-size: 28rpx;
 				text-align: center;
 			}

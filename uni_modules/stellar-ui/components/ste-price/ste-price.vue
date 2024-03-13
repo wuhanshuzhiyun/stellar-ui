@@ -18,6 +18,13 @@ import utils from '../../utils/utils.js';
  * @property {String} valueUnit 金额单位
  * @value fen 分(默认值){String}
  * @value yuan 元{String}
+ * @property {Boolean} showUnit 是否显示符号
+ * @property {String} unitSymbol 符号标记，默认值 ¥
+ * @property {Number} digits 精度 默认值 -1
+ * @value -1 不处理（默认值）{Number}
+ * @value 0 取整（四舍五入）{Number}
+ * @value 1 保留1位小数（四舍五入）{Number}
+ * @value 2 保留2位小数（四舍五入）{Number}
  * @property {Number|String} fontSize 金额文字尺寸 默认值 30
  * @property {String} color 文字颜色 默认值 #ff1e19
  * @property {String} linePriceColor 划线价文字颜色 默认值 #999999
@@ -29,14 +36,7 @@ import utils from '../../utils/utils.js';
  * @property {Number|String} marginBottom 下边距	 默认值 0
  * @property {Number} styleType 金额样式	 默认值 2
  * @property {Boolean} bold 是否加粗 默认值 false
- * @property {Number} digits 精度 默认值 -1
- * @value -1 不处理（默认值）{Number}
- * @value 0 取整（四舍五入）{Number}
- * @value 1 保留1位小数（四舍五入）{Number}
- * @value 2 保留2位小数（四舍五入）{Number}
  * @property {Function(value)} formatter 用来格式化内容
- * @property {Boolean} showUnit 是否显示符号
- * @property {String} unitSymbol 符号标记，默认值 ¥
  */
 export default {
 	group: '电商组件',
@@ -52,6 +52,21 @@ export default {
 		valueUnit: {
 			type: String,
 			default: 'fen',
+		},
+		// 精度 -1 不使用精度 0 保留0位小数 1 保留1位小数 2保留2位小数
+		digits: {
+			type: Number,
+			default: -1,
+		},
+		// 是否显示单位符号
+		showUnit: {
+			type: Boolean,
+			default: true,
+		},
+		// 单位符号
+		unitSymbol: {
+			type: String,
+			default: '¥',
 		},
 		// 金额文字尺寸
 		fontSize: {
@@ -109,21 +124,6 @@ export default {
 		formatter: {
 			type: Function,
 			default: undefined,
-		},
-		// 精度 -1 不使用精度 0 保留0位小数 1 保留1位小数 2保留2位小数
-		digits: {
-			type: Number,
-			default: -1,
-		},
-		// 是否显示单位符号
-		showUnit: {
-			type: Boolean,
-			default: true,
-		},
-		// 单位符号
-		unitSymbol: {
-			type: String,
-			default: '¥',
 		},
 	},
 	data() {
