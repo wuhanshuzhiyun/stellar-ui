@@ -6,11 +6,15 @@
 				<view class="title">基础用法</view>
 				<view class="item-block">
 					<ste-tabs :active.sync="active">
-						<template v-slot:default>
-							<ste-tab v-for="(i, index) in list" :title="`标签${i}`" :index="index" :disabled="index === 2">
-								内容{{ i }}
-							</ste-tab>
-						</template>
+						<ste-tab
+							v-for="(i, index) in list"
+							:title="`标签${i}`"
+							:subTitle="`付标签${i}`"
+							:index="index"
+							:disabled="index === 2"
+						>
+							内容{{ i }}
+						</ste-tab>
 					</ste-tabs>
 				</view>
 			</view>
@@ -27,7 +31,7 @@ export default {
 	},
 	mounted() {
 		setTimeout(() => {
-			this.list = [1, 2, 3, 4, 5];
+			this.list = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13];
 			this.active = 1;
 		}, 1000);
 	},
