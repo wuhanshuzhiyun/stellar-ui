@@ -93,7 +93,7 @@
 | `loading`		| 是否加载中状态																																																								| `Boolean`			| `false`		| -																			| -			|
 | `openType`	| 微信开放能力，具体支持可参考 [微信官方文档](https://developers.weixin.qq.com/miniprogram/dev/component/button.html)	<br/> 支付宝开放能力，具体支持可参考 [支付宝官方文档](https://opendocs.alipay.com/mini/component/button?pathHash=e0342ed0)	| `String`			| -				| -																			| `1.1.4`	|
 | `scope`		| 支付宝开放能力，当 openType 为 getAuthorize 时有效，具体支持可参考 [支付宝官方文档](https://opendocs.alipay.com/mini/component/button?pathHash=e0342ed0)																							| `String`			| -				| -																			| `1.1.4`	|
-
+| `style`		| 按钮样式																																																									| `Object`			| -				| -																			| `1.1.4`	|
 
 #### Events
 |事件名						|说明																																																																		|事件参数	|支持版本	|
