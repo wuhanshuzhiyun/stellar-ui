@@ -1,5 +1,5 @@
 <template>
-	<view class="ste-tab--root" :class="{ active: cmpActive }">
+	<view class="ste-tab--root" :class="{ active: true }">
 		<slot name="default" />
 	</view>
 </template>
@@ -56,10 +56,8 @@ export default {
 		};
 	},
 	mounted() {
-		console.log('tab-tabsData', this.tabsData);
 		this.parent = this.tabsData.getParent();
 		this.parent.updateTabs();
-		console.log(this.index);
 	},
 	computed: {
 		cmpActive() {
@@ -71,6 +69,12 @@ export default {
 				return active === this.name;
 			}
 			return false;
+		},
+		cmpDuration() {
+			return this.tabsData.props?.duration;
+		},
+		cmpSwipeable() {
+			return this.tabsData.props?.swipeable;
 		},
 	},
 	watch: {},

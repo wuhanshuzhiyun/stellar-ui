@@ -1,32 +1,44 @@
 <template>
 	<view class="ste-tabs--root" :style="[cmpRootStyle]">
-		<view class="tab-list">
+		<scroll-view
+			class="tab-list"
+			enhanced
+			:scroll-x="scrollX"
+			:scroll-with-animation="scrollX"
+			:scroll-left="scrollLeft"
+			:show-scrollbar="false"
+			@scroll="onScroll"
+		>
 			<view
 				class="tab-item"
-				v-for="(tab, index) in tabPropsList"
+				v-for="(tab, index) in cmpTabList"
 				:key="index"
 				:class="{
-					active: tabActive(tab, index),
+					active: tab.active,
 					disabled: tab.disabled || disabled,
 				}"
 				@click="onClick(tab, index)"
 			>
-				<view class="tab-image">
+				<view class="tab-image" v-if="showImage">
 					{{ tab.image }}
 				</view>
-				<view class="tab-title">
+				<view class="tab-title" v-if="showTitle">
 					{{ tab.title }}
 				</view>
-				<view class="tab-subTitle">
+				<view class="tab-sub-title" v-if="showSubtitle">
 					{{ tab.subTitle }}
 				</view>
 			</view>
-			<view class="tab-line-box">
-				<view class="tab-line"></view>
+			<view class="tab-line-box" v-if="!showSubtitle">
+				<view class="tab-line" :style="[cmpLineStyle]"></view>
+			</view>
+		</scroll-view>
+		<!-- 插槽 -->
+		<view class="tab-content">
+			<view class="content-view">
+				<slot name="default" />
 			</view>
 		</view>
-		<!-- 插槽 -->
-		<slot name="default" />
 	</view>
 </template>
 
@@ -34,7 +46,6 @@
 import utils from '../../utils/utils.js';
 let tabsData = {
 	getParent() {
-		console.log('getParent-this', this);
 		return this;
 	},
 };
@@ -62,6 +73,11 @@ export default {
 			type: String,
 			default: () => 'line',
 		},
+		// 是否显示图片
+		showImage: {
+			type: Boolean,
+			default: () => false,
+		},
 		// 是否显示主标题
 		showTitle: {
 			type: Boolean,
@@ -69,11 +85,6 @@ export default {
 		},
 		// 是否显示副标题
 		showSubtitle: {
-			type: Boolean,
-			default: () => false,
-		},
-		// 是否显示图片
-		showImage: {
 			type: Boolean,
 			default: () => false,
 		},
@@ -155,7 +166,7 @@ export default {
 		// 激活选项字体颜色
 		activeTabColor: {
 			type: String,
-			default: () => '#0090FF',
+			default: () => '#000000',
 		},
 		// 是否显示分隔符
 		showGapLine: {
@@ -186,8 +197,11 @@ export default {
 	provide: { tabsData },
 	data() {
 		return {
+			viewScrollLeft: 0,
+			scrollLeft: 0,
 			showComponent: false,
 			tabPropsList: [],
+			listEl: null,
 			tabEls: [],
 		};
 	},
@@ -196,11 +210,24 @@ export default {
 	},
 	mounted() {},
 	computed: {
+		cmpTabList() {
+			return this.tabPropsList.map((item, index) => {
+				switch (typeof this.active) {
+					case 'string':
+						item.active = this.active === item.name;
+						break;
+					case 'number':
+						item.active = this.active === index;
+						break;
+				}
+				return item;
+			});
+		},
 		cmpRootStyle() {
 			let tabWidth = isNaN(this.tabWidth) ? this.tabWidth : utils.rpx2px(this.tabWidth);
 			let tabPadding = utils.rpx2px(48);
-			if (this.divideNum > 0 && this.tabPropsList.length <= this.divideNum) {
-				tabWidth = 100 / this.divideNum + '%';
+			if (this.divideNum > 0 && this.tabPropsList.length > 0 && this.tabPropsList.length <= this.divideNum) {
+				tabWidth = 100 / this.tabPropsList.length + '%';
 				tabPadding = 0;
 			}
 			const style = {
@@ -209,14 +236,42 @@ export default {
 				'--tabs-line-height': isNaN(this.lineHeight) ? this.lineHeight : utils.rpx2px(this.lineHeight),
 				'--tabs-tab-width': tabWidth,
 				'--tabs-tab-padding': `0 ${tabPadding}`,
+				'--tabs-transition-duration': this.duration ? `${this.duration}s` : 0,
 				'--tabs-tab-space': isNaN(this.tabSpace) ? this.tabSpace : utils.rpx2px(this.tabSpace),
 				'--tabs-offset-top': isNaN(this.offsetTop) ? this.offsetTop : utils.rpx2px(this.offsetTop),
 				'--tabs-tab-color': this.tabColor,
 				'--tabs-active-tab-color': this.activeTabColor,
+				...utils.bg2style(this.background),
+				opacity: this.showComponent ? '1' : '0',
 			};
-
-			Object.assign(style, { opacity: this.showComponent ? '1' : '0' }, utils.bg2style(this.background));
+			console.log(this.tabEls, style);
 			return style;
+		},
+		cmpActiveIndex() {
+			return this.cmpTabList.findIndex((m) => m.active);
+		},
+		cmpActiveEl() {
+			if (this.cmpActiveIndex === -1) return null;
+			const activeEl = this.tabEls[this.cmpActiveIndex];
+			return activeEl;
+		},
+		cmpLineStyle() {
+			const width = isNaN(this.lineWidth) ? this.lineWidth : utils.rpx2px(this.lineWidth);
+			const display = this.tabEls.length ? 'block' : 'none';
+			let marginLeft = 0;
+			if (this.cmpActiveIndex !== -1) {
+				const activeEl = this.tabEls[this.cmpActiveIndex];
+				if (activeEl) {
+					marginLeft = activeEl.left - this.listEl.left + (activeEl.width - width.slice(0, -2)) / 2;
+					marginLeft += 'px';
+				}
+			}
+			console.log('222222222222', this.cmpActiveIndex, display, marginLeft);
+			return { marginLeft, display };
+		},
+		// 是否可滑动
+		scrollX() {
+			return this.tabPropsList.length > this.divideNum;
 		},
 	},
 	watch: {
@@ -226,6 +281,12 @@ export default {
 			},
 			immediate: true,
 			deep: true,
+		},
+		active: {
+			handler(v) {
+				this.scrollToActive();
+			},
+			immediate: true,
 		},
 	},
 
@@ -245,22 +306,13 @@ export default {
 				// #endif
 				this.tabPropsList = tabPropsList;
 				this.showComponent = true;
-				setTimeout(async () => {
+				this.$nextTick(async () => {
+					this.listEl = await utils.querySelector('.tab-list', this);
 					this.tabEls = await utils.querySelector('.tab-list>.tab-item', this, true);
-				}, 1000);
+					console.log('111111111-1', this.listEl);
+					console.log('111111111-2', this.tabEls);
+				});
 			});
-		},
-		tabActive(tab, index) {
-			let bool = false;
-			switch (typeof this.active) {
-				case 'string':
-					bool = this.active === tab.name;
-					break;
-				case 'number':
-					bool = this.active === index;
-					break;
-			}
-			return bool;
 		},
 		onClick(tab, index) {
 			if (tab.disabled || this.disabled) return;
@@ -272,6 +324,28 @@ export default {
 			}
 			this.$emit('update:active', active);
 			this.$emit('change', { index, ...tab });
+		},
+		onScroll(e) {
+			this.viewScrollLeft = e?.detail?.scrollLeft || 0;
+		},
+		scrollToActive() {
+			this.$nextTick(async () => {
+				const activeEl = await utils.querySelector('.tab-list>.tab-item.active', this);
+				if (!activeEl) return;
+				const viewLeft = this.listEl?.left || 0;
+				const viewRight = this.pullDown ? this.listEl?.right - 35 : this.listEl?.right || 0;
+				if (activeEl.left - viewLeft < 0) {
+					console.log('向左侧滑动');
+					// 如果是在左侧非显示区域内
+					this.viewScrollLeft += activeEl.left - viewLeft;
+					this.scrollLeft = this.viewScrollLeft;
+				} else if (activeEl.right - viewRight > 0) {
+					console.log('向右侧滑动');
+					// 判断是否在右侧非显示区域内
+					this.viewScrollLeft += activeEl.right - viewRight;
+					this.scrollLeft = this.viewScrollLeft;
+				}
+			});
 		},
 	},
 };
@@ -288,30 +362,77 @@ export default {
 		overflow-x: auto;
 		.tab-item {
 			width: var(--tabs-tab-width);
-			color: var(--tabs-tab-color);
 			padding: var(--tabs-tab-padding);
 			display: inline-block;
 			text-align: center;
 			& + .tab-item {
 				margin-left: var(--tabs-tab-space);
 			}
+
+			.tab-image {
+				height: 90rpx;
+				width: 90rpx;
+				border-radius: 18rpx;
+				overflow: hidden;
+				border: 2px soilid transparent;
+				image {
+					width: 100%;
+					height: 100%;
+				}
+			}
+			.tab-title {
+				line-height: 40rpx;
+				font-size: 28rpx;
+				color: var(--tabs-tab-color);
+			}
+			.tab-sub-title {
+				line-height: 40rpx;
+				font-size: 24rpx;
+				width: var(--tabs-line-width);
+				border-radius: 20rpx;
+				text-align: center;
+				margin: 0 auto;
+				color: var(--tabs-tab-color);
+			}
+
 			&.active {
-				color: var(--tabs-active-tab-color);
+				.tab-image {
+					border-color: var(--tabs-color);
+				}
+				.tab-title {
+					color: var(--tabs-active-tab-color);
+					font-weight: bold;
+				}
+				.tab-sub-title {
+					background-color: var(--tabs-color);
+					color: #ffffff;
+				}
 			}
 			&.disabled {
-				color: #bbb;
 				cursor: no-drop;
+				.tab-title,
+				.tab-sub-title {
+					color: #bbb;
+				}
 			}
 		}
 
 		.tab-line-box {
 			width: 100%;
 			height: var(--tabs-line-height);
+			margin-top: 4rpx;
 			.tab-line {
-				width: var(--tabs-line-width);
-				height: 100%;
 				background-color: var(--tabs-color);
+				transition-duration: var(--tabs-transition-duration);
+				width: var(--tabs-line-width);
+				height: var(--tabs-line-height);
+				border-radius: 4rpx;
 			}
+		}
+	}
+	.tab-content {
+		width: 100%;
+		.content-view {
 		}
 	}
 }
