@@ -242,7 +242,6 @@ export default {
 	watch: {
 		value: {
 			handler(val) {
-				console.log('value', val);
 				this.dataValue = val;
 			},
 			immediate: true,
