@@ -71,7 +71,7 @@
 export default {
 	data() {
 		return {
-			demoUrl: `http://www.bauble.vip/data/image/2022/11/09/27996_ydby_4604.jpg?t=${Date.now()}`,
+			demoUrl: `https://image.whzb.com/chain/StellarUI/图片.jpg`,
 			imgUrl: '',
 			errorUrl: '',
 		};
