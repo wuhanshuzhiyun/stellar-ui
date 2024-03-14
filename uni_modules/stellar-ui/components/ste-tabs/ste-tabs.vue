@@ -190,7 +190,7 @@ export default {
 		cmpPullDown() {
 			return this.cmpScrollX && this.pullDown;
 		},
-		// 下拉按钮样式
+		// 下拉区域样式
 		cmpPullStyle() {
 			if (!this.listBoxEl || !this.openPullDown) return {};
 			const style = {};
