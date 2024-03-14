@@ -3,12 +3,14 @@
 		class="ste-button--root"
 		:hover-class="!disabled && !loading ? 'ste-button--root-active' : ''"
 		@click.stop="handleClick"
-		:style="[cmpBtnStyle]"
+		:style="[cmpBtnStyle, rootStyle]"
 		:open-type="openType"
 		:scope="scope"
 		@getuserinfo="getuserinfo"
+		@getUserInfo="getuserinfo"
 		@contact="contact"
 		@getphonenumber="getphonenumber"
+		@getPhoneNumber="getphonenumber"
 		@getrealtimephonenumber="getrealtimephonenumber"
 		@agreeprivacyauthorization="agreeprivacyauthorization"
 		@error="error"
@@ -48,7 +50,7 @@ import utils from '../../utils/utils.js';
  * @property {Boolean} loading 是否加载中状态 默认 false
  * @property {String} openType 微信开放能力和支付宝开放能力
  * @property {String} scope 支付宝开放能力，当 openType 为 getAuthorize 时有效
- * @property {Object} style 按钮样式属性
+ * @property {Object} rootStyle 按钮样式属性
  * @event {Function} click 非禁止并且非加载中，才能点击
  * @event {Function} getuserinfo 微信小程序：用户点击该按钮时，会返回获取到的用户信息，从返回参数的 detail 中获取到的值同 wx.getUserInfo。支付宝小程序：当 open-type 为 getAuthorize 且 scope 为 userInfo 时有效。当授权成功时触发。
  * @event {Function} contact 微信小程序：客服消息回调，open-type="contact"时有效。
@@ -107,7 +109,7 @@ export default {
 			type: String,
 			default: '',
 		},
-		style: {
+		rootStyle: {
 			type: Object,
 			default: () => {},
 		},
@@ -180,8 +182,7 @@ export default {
 			if (this.loading) {
 				style.cursor = 'not-allowed';
 			}
-
-			return Object.assign(style, this.style);
+			return style;
 		},
 	},
 	methods: {
