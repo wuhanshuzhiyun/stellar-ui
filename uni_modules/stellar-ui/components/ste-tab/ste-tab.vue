@@ -15,8 +15,8 @@ import utils from '../../utils/utils.js';
  */
 export default {
 	group: '基础组件',
-	title: 'Tabs 标签页',
-	name: 'ste-tabs',
+	title: 'Tab 标签',
+	name: 'ste-tab',
 	props: {
 		// 标题
 		title: {
