@@ -18,26 +18,34 @@ export function componentFiles() {
 	const templateMap = requireFiles(templateMds, (path) => path.replace(/\.\/(.+)\.md$/, '$1'));
 	/** ====================== 父级markdown End ====================== */
 
-	const queryComponentName = (path) => path.replace(/^.*\/(.+)\/[\w\-]+\.(md|vue)+$/, '$1');
 	/** ====================== 组件markdown文件 Start ====================== */
 	const _comMds = require.context('@/uni_modules/stellar-ui/components/', true, /README\.md$/);
-	const comMdMap = requireFiles(_comMds, queryComponentName);
+	const comMdMap = requireFiles(_comMds, (path) => path.replace(/^.*\/(.+)\/[\w\-]+\.md+$/, '$1'));
 	/** ====================== 组件markdown文件 End ====================== */
 
 	/** ====================== 组件VUE文件 Start ====================== */
 	const vues = require.context('@/uni_modules/stellar-ui/components/', true, /ste\-[\w\-]+\.vue$/);
-	const vueMap = requireFiles(vues, queryComponentName);
+	const vueMap = requireFiles(vues, (path) => path.replace(/^.*\/.+\/([\w\-]+)\.vue+$/, '$1'));
 	/** ====================== 组件VUE文件 End ====================== */
 
 	/** ====================== 组装组件数据 Start ====================== */
 	const comGroups = {};
 	const components = Object.keys(comMdMap).map((key) => {
 		const obj = vueMap[key]?.default || {};
-		const { group, title, name } = obj;
+		const {
+			group,
+			title,
+			name
+		} = obj;
 
 		comGroups[group] = group || '其他';
 
-		return { title, name: name || key, key, group };
+		return {
+			title,
+			name: name || key,
+			key,
+			group
+		};
 	});
 
 	const componentsData = Object.keys(comGroups).map((group) => {
@@ -48,7 +56,12 @@ export function componentFiles() {
 	});
 	/** ====================== 组装组件数据 End ====================== */
 
-	return { templateMap, comMdMap, vueMap, componentsData };
+	return {
+		templateMap,
+		comMdMap,
+		vueMap,
+		componentsData
+	};
 }
 
 /**
@@ -66,13 +79,21 @@ export function restsFiles() {
 		const title = path.replace(deg, '$3');
 		const key = path.replace(deg, '$1-$3');
 		restsMdMap[key] = mdMap[path];
-		return { group, title, key, sort };
+		return {
+			group,
+			title,
+			key,
+			sort
+		};
 	});
 	const jsons = require.context('@/pc/markdown/', true, /.+\.json$/);
 	const jsonMap = requireFiles(jsons, (path) => path.replace(deg, '$1'));
 	const restsData = Object.keys(jsonMap)
 		.map((key) => {
-			const { group, sort } = jsonMap[key];
+			const {
+				group,
+				sort
+			} = jsonMap[key];
 			return {
 				title: group,
 				sort,
@@ -81,5 +102,8 @@ export function restsFiles() {
 		})
 		.sort((a, b) => a.sort - b.sort);
 
-	return { restsData, restsMdMap };
+	return {
+		restsData,
+		restsMdMap
+	};
 }

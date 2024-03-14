@@ -119,6 +119,25 @@ let utils = {
 			}
 		});
 	},
+	scrollViewX({
+		viewLeft, // 要显示的元素左侧位置
+		viewRight, // 要显示的元素右侧位置
+		boxLeft = 0, // 视图区域左侧位置
+		boxRight = uni.getSystemInfoSync().windowWidth, // 视图区域右侧位置
+		prevWidth = 0, // 前一个元素的宽度
+		nextWidth = 0, // 后一个元素的宽度
+		scrollLeft = 0, // 当前已经滑动的距离
+	}) {
+		const left = viewLeft - prevWidth;
+		const right = viewRight + nextWidth;
+		if (left < boxLeft) {
+			return scrollLeft += left - boxLeft;
+		}
+		if (right > boxRight) {
+			return scrollLeft += right - boxRight;
+		}
+		return scrollLeft
+	}
 };
 
 export default utils;

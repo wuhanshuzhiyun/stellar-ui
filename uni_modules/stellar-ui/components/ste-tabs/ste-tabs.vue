@@ -282,7 +282,7 @@ export default {
 			immediate: true,
 			deep: true,
 		},
-		active: {
+		cmpActiveIndex: {
 			handler(v) {
 				this.scrollToActive();
 			},
@@ -308,7 +308,7 @@ export default {
 				this.showComponent = true;
 				this.$nextTick(async () => {
 					this.listEl = await utils.querySelector('.tab-list', this);
-					this.tabEls = await utils.querySelector('.tab-list>.tab-item', this, true);
+					this.tabEls = await utils.querySelector('.tab-list .tab-item', this, true);
 					console.log('111111111-1', this.listEl);
 					console.log('111111111-2', this.tabEls);
 				});
@@ -330,21 +330,30 @@ export default {
 		},
 		scrollToActive() {
 			this.$nextTick(async () => {
-				const activeEl = await utils.querySelector('.tab-list>.tab-item.active', this);
+				const activeEl = await utils.querySelector('.tab-list .tab-item.active', this);
 				if (!activeEl) return;
-				const viewLeft = this.listEl?.left || 0;
-				const viewRight = this.pullDown ? this.listEl?.right - 35 : this.listEl?.right || 0;
-				if (activeEl.left - viewLeft < 0) {
-					console.log('向左侧滑动');
-					// 如果是在左侧非显示区域内
-					this.viewScrollLeft += activeEl.left - viewLeft;
-					this.scrollLeft = this.viewScrollLeft;
-				} else if (activeEl.right - viewRight > 0) {
-					console.log('向右侧滑动');
-					// 判断是否在右侧非显示区域内
-					this.viewScrollLeft += activeEl.right - viewRight;
-					this.scrollLeft = this.viewScrollLeft;
+				let tabEls = this.tabEls;
+				if (!tabEls[this.cmpActiveIndex]) {
+					tabEls = await utils.querySelector('.tab-list .tab-item', this, true);
 				}
+				let boxEl = this.listEl;
+				if (!boxEl) {
+					boxEl = await utils.querySelector('.tab-list', this);
+				}
+				const boxLeft = boxEl?.left || 0;
+				const boxRight = this.pullDown ? boxEl?.right - 35 : boxEl?.right || 0;
+
+				const scrollLeft = utils.scrollViewX({
+					viewLeft: activeEl.left,
+					viewRight: activeEl.right,
+					boxLeft,
+					boxRight,
+					prevWidth: tabEls[this.cmpActiveIndex - 1]?.width || 0,
+					nextWidth: tabEls[this.cmpActiveIndex + 1]?.width || 0,
+					scrollLeft: this.viewScrollLeft,
+				});
+				this.viewScrollLeft = scrollLeft;
+				this.scrollLeft = scrollLeft;
 			});
 		},
 	},
