@@ -43,20 +43,20 @@
 							<ste-icon
 								code="&#xe628;"
 								:size="48"
-								v-if="!showUnicode"
+								v-if="isShowUnicode"
 								:marginLeft="40"
 								:marginRight="20"
-								@click="showUnicode = true"
+								@click="isShowUnicode = false"
 							></ste-icon>
 							<ste-icon
 								code="&#xe901;"
 								:size="48"
-								v-if="showUnicode"
+								v-if="!isShowUnicode"
 								:marginLeft="40"
 								:marginRight="20"
-								@click="showUnicode = false"
+								@click="isShowUnicode = true"
 							></ste-icon>
-							&nbsp;&nbsp;&nbsp;{{ showUnicode ? '隐藏unicode' : '展示unicode' }}
+							&nbsp;&nbsp;&nbsp;{{ isShowUnicode ? '隐藏unicode' : '展示unicode' }}
 						</view>
 						<view v-for="item in glyphs" class="icon-item" @click="copy(item.unicode)">
 							<view class="icon-content">
@@ -64,7 +64,7 @@
 							</view>
 							<view class="icon-name">{{ item.name }}</view>
 							<view class="icon-class">{{ item.font_class }}</view>
-							<view class="icon-unicode" v-if="showUnicode">{{ item.unicode }}</view>
+							<view class="icon-unicode" v-if="isShowUnicode">{{ item.unicode }}</view>
 						</view>
 					</view>
 				</view>
@@ -80,7 +80,7 @@ export default {
 				'https://at.alicdn.com/t/c/font_4041637_ufl38b5x4g.json?spm=a313x.manage_type_myprojects.i1.24.28273a814UZfaX&file=font_4041637_ufl38b5x4g.json',
 			glyphs: [],
 			tabIndex: 0,
-			showUnicode: true,
+			isShowUnicode: false,
 		};
 	},
 	onReady() {},
