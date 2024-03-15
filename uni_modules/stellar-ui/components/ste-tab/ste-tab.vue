@@ -1,5 +1,5 @@
 <template>
-	<view class="ste-tab--root" :class="{ active: true }">
+	<view class="ste-tab--root" :class="{ active: cmpActive }">
 		<slot name="default" />
 	</view>
 </template>
@@ -84,10 +84,7 @@ export default {
 
 <style lang="scss" scoped>
 .ste-tab--root {
-	display: none;
 	width: 100%;
-	&.active {
-		display: block;
-	}
+	flex-shrink: 0;
 }
 </style>

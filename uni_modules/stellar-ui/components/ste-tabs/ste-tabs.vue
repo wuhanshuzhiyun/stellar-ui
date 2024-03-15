@@ -45,7 +45,7 @@
 							</view>
 						</view>
 					</view>
-					<view class="tab-list">
+					<view class="tab-list" :style="[cmpPullListTransform]">
 						<view
 							class="tab-item"
 							v-for="(tab, index) in cmpTabList"
@@ -111,6 +111,7 @@ export default {
 			listEl: null,
 			tabEls: [],
 			openPullDown: false,
+			pullListTransform: '-100%',
 		};
 	},
 	beforeCreate() {
@@ -198,6 +199,9 @@ export default {
 			style.left = `${this.listBoxEl.left}px`;
 			style.width = `${this.listBoxEl.width}px`;
 			return style;
+		},
+		cmpPullListTransform() {
+			return { transform: `translateY(${this.pullListTransform})` };
 		},
 	},
 	watch: {
@@ -295,12 +299,18 @@ export default {
 		},
 		onOpenDown() {
 			if (this.openPullDown) {
-				this.openPullDown = false;
+				this.pullListTransform = '-100%';
+				setTimeout(() => {
+					this.openPullDown = false;
+				}, 300);
 				return;
 			}
 			this.$nextTick(async () => {
 				this.listBoxEl = await utils.querySelector('.tab-list-box', this);
 				this.openPullDown = true;
+				setTimeout(() => {
+					this.pullListTransform = '0';
+				});
 			});
 		},
 	},
@@ -444,6 +454,19 @@ export default {
 				}
 				.tab-list {
 					display: none;
+					padding-top: 24rpx;
+					transition-duration: 0.3s;
+					transform: translateY(-100%);
+					.tab-item {
+						width: 25%;
+						padding: 0;
+						margin-bottom: 24rpx;
+						&.active {
+							.tab-title {
+								color: var(--tabs-color);
+							}
+						}
+					}
 				}
 			}
 			&.open {
@@ -455,14 +478,13 @@ export default {
 				.pull-down-content {
 					height: initial;
 					display: block;
-					background-color: #ffffff;
-					border-radius: 0 0 24rpx 24rpx;
+
 					overflow: hidden;
 					.content-tabs {
 						position: relative;
 						box-shadow: 0 5px 5px rgba(245, 245, 245, 0.5);
-						z-index: 1;
-						margin-bottom: 24rpx;
+						z-index: 10;
+						background-color: #ffffff;
 						.placeholder {
 							display: flex;
 						}
@@ -476,11 +498,10 @@ export default {
 					.tab-list {
 						display: flex;
 						flex-wrap: wrap;
-						.tab-item {
-							width: 25%;
-							padding: 0;
-							margin-bottom: 24rpx;
-						}
+						position: relative;
+						z-index: 1;
+						background-color: #ffffff;
+						border-radius: 0 0 24rpx 24rpx;
 					}
 				}
 			}
