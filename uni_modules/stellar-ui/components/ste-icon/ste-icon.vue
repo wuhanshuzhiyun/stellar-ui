@@ -1,7 +1,10 @@
 <template>
-	<div class="ste-icon--root" :style="[cmpCssVar]" @click="handleClick">
-		<view class="iconfont">{{ cmpCode }}</view>
-	</div>
+	<view class="ste-icon--root" :style="[cmpCssVar]" @click="handleClick">
+		{{ cmpCode }}
+		<!-- <view class="icon-font">
+			展示{{ cmpCode }}
+		</view> -->
+	</view>
 </template>
 
 <script>
@@ -25,16 +28,27 @@ export default {
 	group: '基础组件',
 	title: 'Icon 图标',
 	name: 'ste-icon',
+	options: {
+		virtualHost: true,
+	},
 	props: {
 		// iconfont unicode
 		code: {
 			type: String,
 			required: true,
 		},
+		boxSize: {
+			type: [Number, String],
+			default: 'auto',
+		},
 		// 字体大小
 		size: {
 			type: [Number, String],
 			default: 28,
+		},
+		scale: {
+			type: Number,
+			default: 1,
 		},
 		// 颜色
 		color: {
@@ -70,6 +84,10 @@ export default {
 			type: String,
 			default: '',
 		},
+		showBorder: {
+			type: Boolean,
+			default: false,
+		},
 	},
 	data() {
 		return {
@@ -84,14 +102,19 @@ export default {
 		},
 		cmpCssVar() {
 			return {
+				'--border': this.showBorder ? '1px' : '0px',
 				'--color': this.color,
-				'--size': this.rpx2px(this.size),
+				'--box-size': this.boxSize === 'auto' ? utils.addUnit(this.size) : utils.addUnit(this.boxSize),
+				'--size': utils.addUnit(this.size),
 				'--weight': this.bold ? 'bold' : 'normal',
-				'--margin-left': this.rpx2px(this.marginLeft),
-				'--margin-right': this.rpx2px(this.marginRight),
-				'--margin-top': this.rpx2px(this.marginTop),
-				'--margin-bottom': this.rpx2px(this.marginBottom),
+				'--margin-left': utils.addUnit(this.marginLeft),
+				'--margin-right': utils.addUnit(this.marginRight),
+				'--margin-top': utils.addUnit(this.marginTop),
+				'--margin-bottom': utils.addUnit(this.marginBottom),
 				'--font-family': this.fontFamily === '' ? this.defaultFontFamily : this.fontFamily,
+				'--vertical-align': this.boxSize === 'auto' ? 'baseline' : 'top',
+				'--scale': this.scale,
+				'--translate-y': utils.addUnit(this.marginTop) + ' - ' + utils.addUnit(this.marginBottom),
 			};
 		},
 	},
@@ -108,26 +131,39 @@ export default {
 <style lang="scss" scoped>
 @import './iconfont.css';
 .ste-icon--root {
-	display: inline-flex;
+	// background-color: red;
+	display: inline-block;
+	justify-content: center;
 	align-items: center;
+	vertical-align: var(--vertical-align);
+	vertical-align: baseline;
+	// height: calc(var(--box-size)) !important;
+	// width: calc(var(--box-size)) !important;
+	// line-height: calc(var(--box-size) - var(--border) * 2) !important;
+	border-width: var(--border);
+	border-color: #bbb;
+	border-style: solid;
 
-	.iconfont {
-		display: inline-flex;
-		align-items: center;
-		justify-content: center;
-		vertical-align: bottom;
+	margin-left: var(--margin-left) !important;
+	margin-right: var(--margin-right) !important;
+	transform: translateY(calc(var(--margin-top) - var(--margin-bottom))) !important ;
+	// transform: translateY(calc(--translate-y)) !important ;
+
+	height: calc(var(--size)) !important;
+	line-height: calc(var(--size) - var(--border) * 2) !important;
+	font-family: var(--font-family) !important;
+	font-size: calc(var(--size) - var(--border) * 2) !important;
+	color: var(--color);
+	font-weight: var(--weight) !important;
+
+	.icon-font {
+		height: calc(var(--size)) !important;
+		line-height: calc(var(--size)) !important;
 		font-family: var(--font-family) !important;
-		font-style: normal;
-		width: var(--size) !important;
-		height: var(--size) !important;
-		line-height: var(--size) !important;
-		font-size: var(--size) !important;
+		font-size: calc(var(--size) - var(--border) * 2) !important;
+		// font-size: 12px !important;
 		color: var(--color);
 		font-weight: var(--weight) !important;
-		margin-left: var(--margin-left) !important;
-		margin-right: var(--margin-right) !important;
-		margin-top: var(--margin-top) !important;
-		margin-bottom: var(--margin-bottom) !important;
 	}
 }
 </style>

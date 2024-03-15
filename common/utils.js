@@ -203,6 +203,22 @@ let utils = {
 		// 返回替换后的HTML文本
 		return html;
 	},
+	/**兼容css中的单位
+	 * 如果值为数字，则拼接 'rpx'，否则直接返回字符串的值
+	 */
+	addUnit(val) {
+		if (this.isNumber(val)) {
+			return val + 'rpx';
+		} else {
+			return val;
+		}
+	},
+	/**字符串是否为数字
+	 *@value 要判断的字符串
+	 */
+	isNumber(value) {
+		return !isNaN(parseFloat(value)) && isFinite(value);
+	},
 };
 
 export default utils;

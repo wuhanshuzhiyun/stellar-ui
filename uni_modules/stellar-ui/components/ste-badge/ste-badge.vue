@@ -76,7 +76,10 @@ export default {
 	created() {},
 	computed: {
 		cmpContentStyle() {
-			let style = utils.bg2style(this.background);
+			let style = {};
+			if (this.background) {
+				style = { backgroundColor: 'transparent', ...utils.bg2style(this.background) };
+			}
 			if (this.offsetX || this.offsetY || this.offsetX == 0 || this.offsetY == 0) {
 				style.transform = 'translate(0,0)';
 				style.left = utils.addUnit(this.offsetX);
@@ -135,7 +138,7 @@ export default {
 			line-height: 0;
 
 			position: relative;
-			top: -1rpx;
+			top: -0.5rpx;
 		}
 	}
 
