@@ -37,10 +37,6 @@ export default {
 			type: String,
 			required: true,
 		},
-		boxSize: {
-			type: [Number, String],
-			default: 'auto',
-		},
 		// 字体大小
 		size: {
 			type: [Number, String],
@@ -104,7 +100,6 @@ export default {
 			return {
 				'--border': this.showBorder ? '1px' : '0px',
 				'--color': this.color,
-				'--box-size': this.boxSize === 'auto' ? utils.addUnit(this.size) : utils.addUnit(this.boxSize),
 				'--size': utils.addUnit(this.size),
 				'--weight': this.bold ? 'bold' : 'normal',
 				'--margin-left': utils.addUnit(this.marginLeft),
@@ -112,8 +107,6 @@ export default {
 				'--margin-top': utils.addUnit(this.marginTop),
 				'--margin-bottom': utils.addUnit(this.marginBottom),
 				'--font-family': this.fontFamily === '' ? this.defaultFontFamily : this.fontFamily,
-				'--vertical-align': this.boxSize === 'auto' ? 'baseline' : 'top',
-				'--scale': this.scale,
 				'--translate-y': utils.addUnit(this.marginTop) + ' - ' + utils.addUnit(this.marginBottom),
 			};
 		},
@@ -135,11 +128,7 @@ export default {
 	display: inline-block;
 	justify-content: center;
 	align-items: center;
-	vertical-align: var(--vertical-align);
 	vertical-align: baseline;
-	// height: calc(var(--box-size)) !important;
-	// width: calc(var(--box-size)) !important;
-	// line-height: calc(var(--box-size) - var(--border) * 2) !important;
 	border-width: var(--border);
 	border-color: #bbb;
 	border-style: solid;
@@ -147,23 +136,13 @@ export default {
 	margin-left: var(--margin-left) !important;
 	margin-right: var(--margin-right) !important;
 	transform: translateY(calc(var(--margin-top) - var(--margin-bottom))) !important ;
-	// transform: translateY(calc(--translate-y)) !important ;
 
 	height: calc(var(--size)) !important;
+	width: calc(var(--size)) !important;
 	line-height: calc(var(--size) - var(--border) * 2) !important;
 	font-family: var(--font-family) !important;
 	font-size: calc(var(--size) - var(--border) * 2) !important;
 	color: var(--color);
 	font-weight: var(--weight) !important;
-
-	.icon-font {
-		height: calc(var(--size)) !important;
-		line-height: calc(var(--size)) !important;
-		font-family: var(--font-family) !important;
-		font-size: calc(var(--size) - var(--border) * 2) !important;
-		// font-size: 12px !important;
-		color: var(--color);
-		font-weight: var(--weight) !important;
-	}
 }
 </style>
