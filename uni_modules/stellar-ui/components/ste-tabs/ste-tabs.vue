@@ -2,7 +2,7 @@
 	<view class="ste-tabs--root" :style="[cmpRootStyle]">
 		<view class="tab-list-box" :style="[cmpListBackground, { paddingRight: cmpPullDown ? '70rpx' : 0 }]">
 			<scroll-view
-				class="tab-list relative"
+				class="tab-list view-list"
 				:class="{ 'open-down': openPullDown }"
 				enhanced
 				:scroll-x="cmpScrollX"
@@ -19,7 +19,7 @@
 						active: tab.active,
 						disabled: tab.disabled || disabled,
 					}"
-					@click="onClick(tab, index)"
+					@click="onSelect(tab, index)"
 				>
 					<view class="tab-image" v-if="showImage">
 						<ste-image :src="tab.image" />
@@ -54,7 +54,7 @@
 								active: tab.active,
 								disabled: tab.disabled || disabled,
 							}"
-							@click="onClick(tab, index)"
+							@click="onSelect(tab, index)"
 						>
 							<view class="tab-image" v-if="showImage">
 								<ste-image :src="tab.image" />
@@ -247,12 +247,13 @@ export default {
 				this.tabPropsList = tabPropsList;
 				this.showComponent = true;
 				this.$nextTick(async () => {
-					this.listEl = await utils.querySelector('.tab-list', this);
-					this.tabEls = await utils.querySelector('.tab-list .tab-item', this, true);
+					this.listEl = await utils.querySelector('.tab-list.view-list', this);
+					this.tabEls = await utils.querySelector('.tab-list.view-list .tab-item', this, true);
 				});
 			});
 		},
-		onClick(tab, index) {
+		async onSelect(tab, index) {
+			if (this.openPullDown) await this.onOpenDown();
 			if (tab.disabled || this.disabled) return;
 			let active = this.active;
 			if (typeof this.active === 'string') {
@@ -265,24 +266,21 @@ export default {
 				index,
 				...tab,
 			});
-			if (this.openPullDown) {
-				this.openPullDown = false;
-			}
 		},
 		onScroll(e) {
 			this.viewScrollLeft = e?.detail?.scrollLeft || 0;
 		},
 		scrollToActive() {
 			this.$nextTick(async () => {
-				const activeEl = await utils.querySelector('.tab-list.relative .tab-item.active', this);
+				const activeEl = await utils.querySelector('.tab-list.view-list .tab-item.active', this);
 				if (!activeEl) return;
 				let tabEls = this.tabEls;
 				if (!tabEls[this.cmpActiveIndex]) {
-					tabEls = await utils.querySelector('.tab-list.relative .tab-item', this, true);
+					tabEls = await utils.querySelector('.tab-list.view-list .tab-item', this, true);
 				}
 				let listEl = this.listEl;
 				if (!listEl) {
-					listEl = await utils.querySelector('.tab-list.relative', this);
+					listEl = await utils.querySelector('.tab-list.view-list', this);
 				}
 				const scrollLeft = utils.scrollViewX({
 					viewLeft: activeEl.left,
@@ -297,19 +295,24 @@ export default {
 				this.scrollLeft = scrollLeft;
 			});
 		},
-		async onOpenDown() {
-			if (this.openPullDown) {
-				this.pullListTransform = '-100%';
+		onOpenDown() {
+			return new Promise(async (resolve, reject) => {
+				if (this.openPullDown) {
+					this.pullListTransform = '-100%';
+					setTimeout(() => {
+						this.openPullDown = false;
+						resolve();
+					}, 200);
+					return;
+				}
+
+				this.listBoxEl = await utils.querySelector('.tab-list-box', this);
+				this.openPullDown = true;
 				setTimeout(() => {
-					this.openPullDown = false;
-				}, 200);
-				return;
-			}
-			this.listBoxEl = await utils.querySelector('.tab-list-box', this);
-			this.openPullDown = true;
-			setTimeout(() => {
-				this.pullListTransform = '0';
-			}, 20);
+					this.pullListTransform = '0';
+					resolve();
+				}, 20);
+			});
 		},
 	},
 };
@@ -329,6 +332,7 @@ export default {
 			width: 100%;
 			white-space: nowrap;
 			overflow-x: auto;
+			padding-top: 12rpx;
 			.tab-item {
 				width: var(--tabs-tab-width);
 				padding: var(--tabs-tab-padding);
@@ -440,7 +444,7 @@ export default {
 						top: 0;
 						right: 0;
 						bottom: 0;
-						background-color: rgba(255, 255, 255, 0.7);
+						background-color: rgba(255, 255, 255, 0.45);
 						box-shadow: -5px 0 5px rgba(245, 245, 245, 0.5);
 						display: flex;
 						align-items: center;

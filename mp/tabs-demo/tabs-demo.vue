@@ -5,7 +5,7 @@
 			<view class="demo-item">
 				<view class="title">基础用法</view>
 				<view class="item-block">
-					<ste-tabs :active.sync="active" showSubtitle lineWidth="120" pullDown sticky>
+					<ste-tabs :active.sync="active" showSubtitle lineWidth="120" pullDown sticky background="#ff0">
 						<ste-tab
 							v-for="(i, index) in list"
 							:title="`标签${i}`"
