@@ -116,8 +116,11 @@ export default {
 	},
 	beforeCreate() {
 		tabsData.getParent = tabsData.getParent.bind(this);
+		console.log(this.$root);
 	},
-	mounted() {},
+	mounted() {
+		this.onScrollspy();
+	},
 	computed: {
 		cmpTabList() {
 			return this.tabPropsList.map((item, index) => {
@@ -131,6 +134,13 @@ export default {
 				}
 				return item;
 			});
+		},
+		cmpTabContentLefts() {
+			const lefts = [];
+			const width = this.listBoxEl?.width || 0;
+			this.cmpTabList.forEach((m, i) => lefts.push(width * i));
+			console.log('content-lefts', lefts);
+			return lefts;
 		},
 		cmpRootStyle() {
 			let tabWidth = isNaN(this.tabWidth) ? this.tabWidth : utils.rpx2px(this.tabWidth);
@@ -152,6 +162,7 @@ export default {
 				'--tabs-tab-color': this.tabColor,
 				'--tabs-active-tab-color': this.activeTabColor,
 				'--tabs-list-height': this.openPullDown && this.listEl ? `${this.listEl?.height}px` : 'initial',
+				'--tabs-content-display': this.scrollspy ? 'block' : 'flex',
 				opacity: this.showComponent ? '1' : '0',
 			};
 			return style;
@@ -247,8 +258,9 @@ export default {
 				this.tabPropsList = tabPropsList;
 				this.showComponent = true;
 				this.$nextTick(async () => {
-					this.listEl = await utils.querySelector('.tab-list.view-list', this);
-					this.tabEls = await utils.querySelector('.tab-list.view-list .tab-item', this, true);
+					this.listBoxEl = await utils.querySelector('.tab-list-box', this);
+					this.listEl = await utils.querySelector('.tab-list-box .tab-list.view-list', this);
+					this.tabEls = await utils.querySelector('.tab-list-box .tab-list.view-list .tab-item', this, true);
 				});
 			});
 		},
@@ -272,15 +284,15 @@ export default {
 		},
 		scrollToActive() {
 			this.$nextTick(async () => {
-				const activeEl = await utils.querySelector('.tab-list.view-list .tab-item.active', this);
+				const activeEl = await utils.querySelector('.tab-list-box .tab-list.view-list .tab-item.active', this);
 				if (!activeEl) return;
 				let tabEls = this.tabEls;
 				if (!tabEls[this.cmpActiveIndex]) {
-					tabEls = await utils.querySelector('.tab-list.view-list .tab-item', this, true);
+					tabEls = await utils.querySelector('.tab-list-box .tab-list.view-list .tab-item', this, true);
 				}
 				let listEl = this.listEl;
 				if (!listEl) {
-					listEl = await utils.querySelector('.tab-list.view-list', this);
+					listEl = await utils.querySelector('.tab-list-box .tab-list.view-list', this);
 				}
 				const scrollLeft = utils.scrollViewX({
 					viewLeft: activeEl.left,
@@ -313,6 +325,9 @@ export default {
 					resolve();
 				}, 20);
 			});
+		},
+		onScrollspy() {
+			if (!this.scrollspy) return;
 		},
 	},
 };
@@ -511,7 +526,9 @@ export default {
 	}
 	.tab-content {
 		width: 100%;
+		overflow-x: hidden;
 		.content-view {
+			display: var(--tabs-content-display);
 		}
 	}
 }

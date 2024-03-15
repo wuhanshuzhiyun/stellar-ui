@@ -1,5 +1,5 @@
 <template>
-	<view class="ste-tab--root" :class="{ active: cmpActive }">
+	<view class="ste-tab--root" :style="{ width: width }" :class="{ active: cmpActive }">
 		<slot name="default" />
 	</view>
 </template>
@@ -53,6 +53,7 @@ export default {
 	data() {
 		return {
 			parent: {},
+			width: "100%",
 		};
 	},
 	mounted() {
@@ -77,7 +78,11 @@ export default {
 			return this.tabsData.props?.swipeable;
 		},
 	},
-	watch: {},
+	watch: {
+		'parent.listBoxEl'(v) {
+			this.width = v?.width ? `${v.width}px` : "100%";
+		},
+	},
 	methods: {},
 };
 </script>
