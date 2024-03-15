@@ -103,7 +103,7 @@ export default {
 				success: function () {
 					uni.showToast({
 						icon: 'none',
-						title: 'code复制到剪切板',
+						title: `code：${data} 已复制到剪切板`,
 					});
 				},
 			});
@@ -155,6 +155,10 @@ export default {
 			.icon-class {
 				font-size: 28rpx;
 				text-align: center;
+				word-wrap: break-word;
+			}
+			.icon-unicode {
+				color: #f07c82;
 			}
 		}
 	}
