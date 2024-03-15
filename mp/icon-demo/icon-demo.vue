@@ -5,6 +5,7 @@
 			<view class="tabs">
 				<view class="tab1-title" :class="{ actived: tabIndex === 0 }" @click="tabIndex = 0">用法示例</view>
 				<view class="tab2-title" :class="{ actived: tabIndex === 1 }" @click="tabIndex = 1">图标库</view>
+				<view class="tab3-title" @click="nav">图标对齐预览</view>
 			</view>
 			<view v-if="tabIndex === 0" class="tab1-content">
 				<view class="demo-item">
@@ -96,6 +97,11 @@ export default {
 		});
 	},
 	methods: {
+		nav() {
+			uni.navigateTo({
+				url: 'mp/icon-demo/icon-vertical-align',
+			});
+		},
 		copy(data) {
 			uni.setClipboardData({
 				data,
@@ -172,9 +178,17 @@ export default {
 	height: 70rpx;
 	border-bottom: 1px solid #eee;
 	margin-bottom: 20rpx;
-	.tab1-title,
+	.tab1-title {
+		width: 33.3%;
+		text-align: center;
+	}
 	.tab2-title {
-		width: 50%;
+		width: 33.3%;
+		text-align: center;
+		font-size: 32rpx;
+	}
+	.tab3-title {
+		width: 33.4%;
 		text-align: center;
 		font-size: 32rpx;
 	}
