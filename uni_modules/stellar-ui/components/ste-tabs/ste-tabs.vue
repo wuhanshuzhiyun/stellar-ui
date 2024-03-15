@@ -297,21 +297,19 @@ export default {
 				this.scrollLeft = scrollLeft;
 			});
 		},
-		onOpenDown() {
+		async onOpenDown() {
 			if (this.openPullDown) {
 				this.pullListTransform = '-100%';
 				setTimeout(() => {
 					this.openPullDown = false;
-				}, 300);
+				}, 200);
 				return;
 			}
-			this.$nextTick(async () => {
-				this.listBoxEl = await utils.querySelector('.tab-list-box', this);
-				this.openPullDown = true;
-				setTimeout(() => {
-					this.pullListTransform = '0';
-				});
-			});
+			this.listBoxEl = await utils.querySelector('.tab-list-box', this);
+			this.openPullDown = true;
+			setTimeout(() => {
+				this.pullListTransform = '0';
+			}, 20);
 		},
 	},
 };
