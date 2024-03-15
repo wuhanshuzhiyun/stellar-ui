@@ -135,7 +135,7 @@ export default {
 			line-height: 0;
 
 			position: relative;
-			top: -1rpx;
+			// top: -1rpx;
 		}
 	}
 

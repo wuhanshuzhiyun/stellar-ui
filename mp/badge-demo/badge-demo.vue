@@ -42,7 +42,7 @@
 					<view>
 						<ste-badge
 							content=" "
-							background="https://img95.699pic.com/xsj/0a/5y/dc.jpg%21/fw/700/watermark/url/L3hzai93YXRlcl9kZXRhaWwyLnBuZw/align/southeast"
+							background="https://image.whzb.com/chain/inte-mall/00-普通图片/00-开发版/img/fire.png"
 							:showDot="false"
 						>
 							<view class="avator"></view>
