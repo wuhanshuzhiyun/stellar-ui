@@ -1,5 +1,5 @@
 <template>
-	<view class="ste-tabs--root" :style="[cmpRootStyle]">
+	<view class="ste-tabs--root" :class="type" :style="[cmpRootStyle]">
 		<view class="tab-list-box" :style="[cmpListBackground, { paddingRight: cmpPullDown ? '70rpx' : 0 }]">
 			<scroll-view
 				class="tab-list view-list"
@@ -157,7 +157,7 @@ export default {
 				'--tabs-line-width': isNaN(this.lineWidth) ? this.lineWidth : utils.rpx2px(this.lineWidth),
 				'--tabs-line-height': isNaN(this.lineHeight) ? this.lineHeight : utils.rpx2px(this.lineHeight),
 				'--tabs-tab-width': tabWidth,
-				'--tabs-tab-padding': `0 ${tabPadding}`,
+				'--tabs-tab-padding': `6px ${tabPadding}`,
 				'--tabs-transition-duration': this.duration ? `${this.duration}s` : 'inherit',
 				'--tabs-tab-space': isNaN(this.tabSpace) ? this.tabSpace : utils.rpx2px(this.tabSpace),
 				'--tabs-sticky': this.sticky ? 'sticky' : 'relative',
@@ -355,8 +355,8 @@ export default {
 			width: 100%;
 			white-space: nowrap;
 			overflow-x: auto;
-			padding-top: 12rpx;
 			.tab-item {
+				vertical-align: bottom;
 				width: var(--tabs-tab-width);
 				padding: var(--tabs-tab-padding);
 				display: inline-block;
@@ -530,13 +530,6 @@ export default {
 					}
 				}
 			}
-		}
-	}
-	.tab-content {
-		width: 100%;
-		overflow-x: hidden;
-		.content-view {
-			display: var(--tabs-content-display);
 		}
 	}
 }
