@@ -17,6 +17,7 @@ export default {
 	group: '基础组件',
 	title: 'Tab 标签',
 	name: 'ste-tab',
+	inject: ['_tabsComponent'],
 	props: {
 		// 标题
 		title: {
@@ -49,20 +50,20 @@ export default {
 			default: () => false,
 		},
 	},
-	inject: ['tabsData'],
+
 	data() {
 		return {
 			parent: {},
-			width: "100%",
+			width: '100%',
 		};
 	},
 	mounted() {
-		this.parent = this.tabsData.getParent();
+		this.parent = this._tabsComponent.getParent();
 		this.parent.updateTabs();
 	},
 	computed: {
 		cmpActive() {
-			const active = this.tabsData.props?.active;
+			const active = this._tabsComponent.props?.active;
 			if (typeof active === 'number') {
 				return active === this.index;
 			}
@@ -72,15 +73,15 @@ export default {
 			return false;
 		},
 		cmpDuration() {
-			return this.tabsData.props?.duration;
+			return this._tabsComponent.props?.duration;
 		},
 		cmpSwipeable() {
-			return this.tabsData.props?.swipeable;
+			return this._tabsComponent.props?.swipeable;
 		},
 	},
 	watch: {
 		'parent.listBoxEl'(v) {
-			this.width = v?.width ? `${v.width}px` : "100%";
+			this.width = v?.width ? `${v.width}px` : '100%';
 		},
 	},
 	methods: {},

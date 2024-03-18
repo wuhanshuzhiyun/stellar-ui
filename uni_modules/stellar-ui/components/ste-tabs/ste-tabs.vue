@@ -93,12 +93,12 @@ import utils from '../../utils/utils.js';
 import TouchEvent from './TouchEvent.js';
 import props from './props.js';
 
-let tabsData = {
+let _tabsComponent = {
 	getParent() {
 		return this;
 	},
 };
-let timeout;
+let _timeout;
 /**
  * ste-tabs 标签页
  * @description 标签页组件
@@ -111,7 +111,7 @@ export default {
 	title: 'Tabs 标签页',
 	name: 'ste-tabs',
 	mixins: [props],
-	provide: { tabsData },
+	provide: { _tabsComponent },
 	data() {
 		return {
 			viewScrollLeft: 0,
@@ -129,7 +129,7 @@ export default {
 		};
 	},
 	beforeCreate() {
-		tabsData.getParent = tabsData.getParent.bind(this);
+		_tabsComponent.getParent = _tabsComponent.getParent.bind(this);
 	},
 	created() {
 		this.initTouchEvent();
@@ -240,7 +240,7 @@ export default {
 	watch: {
 		$props: {
 			handler(v) {
-				tabsData.props = v;
+				_tabsComponent.props = v;
 			},
 			immediate: true,
 			deep: true,
@@ -259,8 +259,8 @@ export default {
 	methods: {
 		updateTabs() {
 			this.showComponent = false;
-			clearTimeout(timeout);
-			timeout = setTimeout(() => {
+			clearTimeout(_timeout);
+			_timeout = setTimeout(() => {
 				let tabPropsList = [];
 				// #ifdef MP-WEIXIN | MP-ALIPAY
 				const children = this.$children?.filter((tab) => tab.$options.name === 'ste-tab') || [];
