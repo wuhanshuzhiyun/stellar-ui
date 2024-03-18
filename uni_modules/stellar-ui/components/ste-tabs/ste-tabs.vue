@@ -72,14 +72,26 @@
 		</view>
 		<!-- 内容区域 -->
 		<!-- #ifdef MP-WEIXIN | MP-ALIPAY -->
-		<view class="tab-content" @touchstart="onTouchstart" @touchend="onTouchend" @touchmove="onTouchmove">
+		<view
+			class="tab-content"
+			@touchstart="onTouchstart"
+			@touchmove="onTouchmove"
+			@touchend="onTouchend"
+			@touchcancel="onTouchend"
+		>
 			<view class="content-view" :style="[cmpContentTransform]">
 				<slot name="default" />
 			</view>
 		</view>
 		<!-- #endif -->
 		<!-- #ifdef H5 -->
-		<view class="tab-content" @mousedown="onTouchstart" @mouseup="onTouchend" @mousemove="onTouchmove">
+		<view
+			class="tab-content"
+			@mousedown="onTouchstart"
+			@mousemove="onTouchmove"
+			@mouseup="onTouchend"
+			@mouseout="onTouchend"
+		>
 			<view class="content-view" :style="[cmpContentTransform]">
 				<slot name="default" />
 			</view>
@@ -93,12 +105,12 @@ import utils from '../../utils/utils.js';
 import TouchEvent from './TouchEvent.js';
 import props from './props.js';
 
-let tabsData = {
+let _tabsComponent = {
 	getParent() {
 		return this;
 	},
 };
-let timeout;
+let _timeout;
 /**
  * ste-tabs 标签页
  * @description 标签页组件
@@ -111,7 +123,7 @@ export default {
 	title: 'Tabs 标签页',
 	name: 'ste-tabs',
 	mixins: [props],
-	provide: { tabsData },
+	provide: { _tabsComponent },
 	data() {
 		return {
 			viewScrollLeft: 0,
@@ -129,7 +141,7 @@ export default {
 		};
 	},
 	beforeCreate() {
-		tabsData.getParent = tabsData.getParent.bind(this);
+		_tabsComponent.getParent = _tabsComponent.getParent.bind(this);
 	},
 	created() {
 		this.initTouchEvent();
@@ -240,7 +252,7 @@ export default {
 	watch: {
 		$props: {
 			handler(v) {
-				tabsData.props = v;
+				_tabsComponent.props = v;
 			},
 			immediate: true,
 			deep: true,
@@ -259,8 +271,8 @@ export default {
 	methods: {
 		updateTabs() {
 			this.showComponent = false;
-			clearTimeout(timeout);
-			timeout = setTimeout(() => {
+			clearTimeout(_timeout);
+			_timeout = setTimeout(() => {
 				let tabPropsList = [];
 				// #ifdef MP-WEIXIN | MP-ALIPAY
 				const children = this.$children?.filter((tab) => tab.$options.name === 'ste-tab') || [];
@@ -379,15 +391,17 @@ export default {
 			if (!this.touch) return;
 			this.moveContent = false;
 			const { moveX } = this.touch.touchEnd(e);
-			if (Math.abs(moveX) > this.listBoxEl.width / 2) {
-				const index = moveX > 0 ? this.cmpActiveIndex - 1 : this.cmpActiveIndex + 1;
-				if (index < 0 || index > this.cmpTabList.length - 1) return;
-				this.onSelect(this.cmpTabList[index], index);
-			} else {
+
+			const index = moveX > 0 ? this.cmpActiveIndex - 1 : this.cmpActiveIndex + 1;
+
+			if (index < 0 || index > this.cmpTabList.length - 1 || Math.abs(moveX) < this.listBoxEl.width / 2) {
 				this.$nextTick(() => {
 					this.contentTransform = -this.cmpTabContentLefts[this.cmpActiveIndex];
 				});
+				return;
 			}
+
+			this.onSelect(this.cmpTabList[index], index);
 		},
 	},
 };
