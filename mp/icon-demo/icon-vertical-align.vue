@@ -211,7 +211,7 @@ export default {
 }
 .font-sample,
 .icon-code-sample {
-	margin-top: 20rpx;
+	margin-bottom: 20rpx;
 	color: #8b008b;
 }
 .font-text-area,
