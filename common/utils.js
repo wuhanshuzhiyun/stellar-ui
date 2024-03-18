@@ -2,29 +2,43 @@ import config from './config.js';
 
 let throLast = 0; // 节流方法用变量
 let throTimer = null; // 节流方法用的变量
+let windowWidth = null;
 
 let utils = {
 	/**px转rpx*/
 	px2rpx(px) {
-		let windowWidth = uni.getSystemInfoSync().windowWidth;
+		if (windowWidth == null) {
+			windowWidth = uni.getSystemInfoSync().windowWidth;
+		}
 		let rpx = (px * 750) / windowWidth;
 		return rpx;
 	},
 	/**rpx转px 比uni.upx2px精度更高*/
 	rpx2px(rpx) {
-		let windowWidth = uni.getSystemInfoSync().windowWidth;
-		let px = (rpx * windowWidth) / 750;
-		return px;
+		if (!rpx) return '0';
+		if (windowWidth == null) {
+			windowWidth = uni.getSystemInfoSync().windowWidth;
+		}
+		let px = (parseInt(rpx) * windowWidth) / 750;
+		return `${px}px`;
 	},
 	/**兼容css中的单位
 	 * 如果值为数字，则拼接 'rpx'，否则直接返回字符串的值
 	 */
 	addUnit(val) {
+		let newVal;
 		if (this.isNumber(val)) {
-			return val + 'rpx';
+			newVal = val + 'rpx';
 		} else {
-			return val;
+			newVal = val;
 		}
+
+		// #ifdef H5
+		if (newVal.indexOf('rpx') >= 0) {
+			newVal = this.rpx2px(newVal);
+		}
+		// #endif
+		return newVal;
 	},
 	/**拼接image的src
 	 * val 图片地址
@@ -202,22 +216,6 @@ let utils = {
 
 		// 返回替换后的HTML文本
 		return html;
-	},
-	/**兼容css中的单位
-	 * 如果值为数字，则拼接 'rpx'，否则直接返回字符串的值
-	 */
-	addUnit(val) {
-		if (this.isNumber(val)) {
-			return val + 'rpx';
-		} else {
-			return val;
-		}
-	},
-	/**字符串是否为数字
-	 *@value 要判断的字符串
-	 */
-	isNumber(value) {
-		return !isNaN(parseFloat(value)) && isFinite(value);
 	},
 };
 

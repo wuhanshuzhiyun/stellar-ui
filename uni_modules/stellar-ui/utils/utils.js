@@ -1,10 +1,13 @@
 let throLast = 0; // 节流方法用变量
 let throTimer = null; // 节流方法用的变量
+let windowWidth = null;
 
 let utils = {
 	rpx2px(rpx) {
-		if (!rpx) return '0'
-		let windowWidth = uni.getSystemInfoSync().windowWidth;
+		if (!rpx) return '0';
+		if (windowWidth == null) {
+			windowWidth = uni.getSystemInfoSync().windowWidth;
+		}
 		let px = (parseInt(rpx) * windowWidth) / 750;
 		return `${px}px`;
 	},
@@ -33,11 +36,19 @@ let utils = {
 	 * 如果值为数字，则拼接 'rpx'，否则直接返回字符串的值
 	 */
 	addUnit(val) {
+		let newVal;
 		if (this.isNumber(val)) {
-			return val + 'rpx';
+			newVal = val + 'rpx';
 		} else {
-			return val;
+			newVal = val;
 		}
+
+		// #ifdef H5
+		if (newVal.indexOf('rpx') >= 0) {
+			newVal = this.rpx2px(newVal);
+		}
+		// #endif
+		return newVal;
 	},
 	/**字符串是否为数字
 	 *@value 要判断的字符串
@@ -109,7 +120,8 @@ let utils = {
 		return new Promise((resolve, reject) => {
 			try {
 				uni.createSelectorQuery()
-					.in(component)[selectFn](selectors)
+					.in(component)
+					[selectFn](selectors)
 					.boundingClientRect((data) => {
 						resolve(data);
 					})
@@ -131,13 +143,13 @@ let utils = {
 		const left = viewLeft - prevWidth;
 		const right = viewRight + nextWidth;
 		if (left < boxLeft) {
-			return scrollLeft += left - boxLeft;
+			return (scrollLeft += left - boxLeft);
 		}
 		if (right > boxRight) {
-			return scrollLeft += right - boxRight;
+			return (scrollLeft += right - boxRight);
 		}
-		return scrollLeft
-	}
+		return scrollLeft;
+	},
 };
 
 export default utils;
