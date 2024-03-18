@@ -12,7 +12,7 @@
 							:subTitle="`附标签${index}`"
 							:index="index"
 							:image="demoUrl"
-							:disabled="index === 2"
+							:disabled="index === 2 || index === 0"
 						>
 							<view :style="{ background: colors[i] }">
 								<h1>==Start {{ index }}==</h1>

@@ -85,13 +85,7 @@
 		</view>
 		<!-- #endif -->
 		<!-- #ifdef H5 -->
-		<view
-			class="tab-content"
-			@mousedown="onTouchstart"
-			@mousemove="onTouchmove"
-			@mouseup="onTouchend"
-			@mouseout="onTouchend"
-		>
+		<view class="tab-content" @mousedown="onTouchstart" @mousemove="onTouchmove" @mouseup="onTouchend">
 			<view class="content-view" :style="[cmpContentTransform]">
 				<slot name="default" />
 			</view>
@@ -304,8 +298,8 @@ export default {
 			this.touch = new TouchEvent();
 		},
 		async onSelect(tab, index) {
+			if (tab.disabled || this.disabled) return false;
 			if (this.openPullDown) await this.onOpenDown();
-			if (tab.disabled || this.disabled) return;
 			let active = this.active;
 			if (typeof this.active === 'string') {
 				active = tab.name;
@@ -317,6 +311,8 @@ export default {
 				index,
 				...tab,
 			});
+
+			return true;
 		},
 		onScroll(e) {
 			this.viewScrollLeft = e?.detail?.scrollLeft || 0;
@@ -394,14 +390,17 @@ export default {
 
 			const index = moveX > 0 ? this.cmpActiveIndex - 1 : this.cmpActiveIndex + 1;
 
-			if (index < 0 || index > this.cmpTabList.length - 1 || Math.abs(moveX) < this.listBoxEl.width / 2) {
+			if (index < 0 || index > this.cmpTabList.length - 1 || Math.abs(moveX) < this.listBoxEl.width * 0.35) {
 				this.$nextTick(() => {
 					this.contentTransform = -this.cmpTabContentLefts[this.cmpActiveIndex];
 				});
 				return;
 			}
-
-			this.onSelect(this.cmpTabList[index], index);
+			this.$nextTick(async () => {
+				const bool = await this.onSelect(this.cmpTabList[index], index);
+				if (bool) return;
+				this.contentTransform = -this.cmpTabContentLefts[this.cmpActiveIndex];
+			});
 		},
 	},
 };
