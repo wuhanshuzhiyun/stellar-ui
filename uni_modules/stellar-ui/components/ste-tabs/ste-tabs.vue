@@ -71,32 +71,21 @@
 			</view>
 		</view>
 		<!-- 内容区域 -->
-		<!-- #ifdef MP-WEIXIN | MP-ALIPAY -->
-		<view
-			class="tab-content"
-			@touchstart="onTouchstart"
-			@touchmove="onTouchmove"
-			@touchend="onTouchend"
-			@touchcancel="onTouchend"
+		<ste-sliding
+			:index="cmpActiveIndex"
+			:childrenLength="cmpTabList.length"
+			:duration="duration"
+			:disabledIndexs="cmpDisabledIndexs"
+			:disabled="!swipeable"
+			@change="onSliding"
 		>
-			<view class="content-view" :style="[cmpContentTransform]">
-				<slot name="default" />
-			</view>
-		</view>
-		<!-- #endif -->
-		<!-- #ifdef H5 -->
-		<view class="tab-content" @mousedown="onTouchstart" @mousemove="onTouchmove" @mouseup="onTouchend">
-			<view class="content-view" :style="[cmpContentTransform]">
-				<slot name="default" />
-			</view>
-		</view>
-		<!-- #endif -->
+			<slot name="default" />
+		</ste-sliding>
 	</view>
 </template>
 
 <script>
 import utils from '../../utils/utils.js';
-import TouchEvent from './TouchEvent.js';
 import props from './props.js';
 
 let _tabsComponent = {
@@ -129,17 +118,12 @@ export default {
 			tabEls: [],
 			openPullDown: false,
 			pullListTransform: '-100%',
-			touch: null,
-			contentTransform: 0,
-			moveContent: false,
 		};
 	},
 	beforeCreate() {
 		_tabsComponent.getParent = _tabsComponent.getParent.bind(this);
 	},
-	created() {
-		this.initTouchEvent();
-	},
+	created() {},
 	computed: {
 		cmpTabList() {
 			return this.tabPropsList.map((item, index) => {
@@ -154,12 +138,12 @@ export default {
 				return item;
 			});
 		},
-		cmpTabContentLefts() {
-			const lefts = [];
-			const width = this.listBoxEl?.width || 0;
-			this.cmpTabList.forEach((m, i) => lefts.push(width * i));
-			console.log('content-lefts', lefts);
-			return lefts;
+		cmpDisabledIndexs() {
+			const list = [];
+			this.cmpTabList.forEach((m, i) => {
+				if (m.disabled) list.push(i);
+			});
+			return list;
 		},
 		cmpRootStyle() {
 			let tabWidth = isNaN(this.tabWidth) ? this.tabWidth : utils.rpx2px(this.tabWidth);
@@ -168,23 +152,20 @@ export default {
 				tabWidth = 100 / this.tabPropsList.length + '%';
 				tabPadding = 0;
 			}
-			const duration = this.duration ? `${this.duration}s` : 'inherit';
 			const style = {
 				'--tabs-color': this.color,
 				'--tabs-line-width': isNaN(this.lineWidth) ? this.lineWidth : utils.rpx2px(this.lineWidth),
 				'--tabs-line-height': isNaN(this.lineHeight) ? this.lineHeight : utils.rpx2px(this.lineHeight),
 				'--tabs-tab-width': tabWidth,
 				'--tabs-tab-padding': `0 ${tabPadding}`,
-				'--tabs-transition-duration': duration,
+				'--tabs-transition-duration': this.duration ? `${this.duration}s` : 'inherit',
 				'--tabs-tab-space': isNaN(this.tabSpace) ? this.tabSpace : utils.rpx2px(this.tabSpace),
 				'--tabs-sticky': this.sticky ? 'sticky' : 'relative',
 				'--tabs-offset-top': isNaN(this.offsetTop) ? this.offsetTop : utils.rpx2px(this.offsetTop),
 				'--tabs-tab-color': this.tabColor,
 				'--tabs-active-tab-color': this.activeTabColor,
 				'--tabs-list-height': this.openPullDown && this.listEl ? `${this.listEl?.height}px` : 'initial',
-				'--tabs-content-display': this.scrollspy ? 'block' : 'flex',
 				opacity: this.showComponent ? '1' : '0',
-				duration,
 			};
 			return style;
 		},
@@ -235,13 +216,6 @@ export default {
 		cmpPullListTransform() {
 			return { transform: `translateY(${this.pullListTransform})` };
 		},
-		cmpContentTransform() {
-			const transitionDuration = this.moveContent ? 'inherit' : this.cmpRootStyle.duration;
-			return {
-				transform: `translateX(${this.contentTransform}px)`,
-				transitionDuration,
-			};
-		},
 	},
 	watch: {
 		$props: {
@@ -254,7 +228,6 @@ export default {
 		cmpActiveIndex: {
 			handler(v) {
 				this.scrollToActive();
-				this.scrollToContent();
 			},
 			immediate: true,
 		},
@@ -267,6 +240,7 @@ export default {
 			this.showComponent = false;
 			clearTimeout(_timeout);
 			_timeout = setTimeout(() => {
+				console.log('----updateTabs----');
 				let tabPropsList = [];
 				// #ifdef MP-WEIXIN | MP-ALIPAY
 				const children = this.$children?.filter((tab) => tab.$options.name === 'ste-tab') || [];
@@ -292,10 +266,6 @@ export default {
 					this.tabEls = await utils.querySelector('.tab-list-box .tab-list.view-list .tab-item', this, true);
 				});
 			});
-		},
-		initTouchEvent() {
-			if (!this.swipeable) return;
-			this.touch = new TouchEvent();
 		},
 		async onSelect(tab, index) {
 			if (tab.disabled || this.disabled) return false;
@@ -342,16 +312,6 @@ export default {
 				this.scrollLeft = scrollLeft;
 			});
 		},
-		scrollToContent() {
-			this.$nextTick(async () => {
-				if (!this.cmpActiveIndex) {
-					this.contentTransform = 0;
-					return;
-				}
-
-				this.contentTransform = -this.cmpTabContentLefts[this.cmpActiveIndex];
-			});
-		},
 		onOpenDown() {
 			return new Promise(async (resolve, reject) => {
 				if (this.openPullDown) {
@@ -371,36 +331,10 @@ export default {
 				}, 20);
 			});
 		},
-		onTouchstart(e) {
-			if (!this.touch) return;
-			this.moveContent = true;
-			this.touch.touchStart(e);
-		},
-		onTouchmove(e) {
-			if (!this.touch) return;
-			const res = this.touch.touchMove(e);
-			if (!res) return;
-			const { moveX } = res;
-			this.contentTransform = -this.cmpTabContentLefts[this.cmpActiveIndex] + moveX;
-		},
-		onTouchend(e) {
-			if (!this.touch) return;
-			this.moveContent = false;
-			const { moveX } = this.touch.touchEnd(e);
-
-			const index = moveX > 0 ? this.cmpActiveIndex - 1 : this.cmpActiveIndex + 1;
-
-			if (index < 0 || index > this.cmpTabList.length - 1 || Math.abs(moveX) < this.listBoxEl.width * 0.35) {
-				this.$nextTick(() => {
-					this.contentTransform = -this.cmpTabContentLefts[this.cmpActiveIndex];
-				});
-				return;
-			}
-			this.$nextTick(async () => {
-				const bool = await this.onSelect(this.cmpTabList[index], index);
-				if (bool) return;
-				this.contentTransform = -this.cmpTabContentLefts[this.cmpActiveIndex];
-			});
+		onSliding(index) {
+			if (this.disabled) return;
+			const tab = this.cmpTabList[index];
+			this.onSelect(tab, index);
 		},
 	},
 };
