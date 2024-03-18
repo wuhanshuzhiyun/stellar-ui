@@ -72,14 +72,26 @@
 		</view>
 		<!-- 内容区域 -->
 		<!-- #ifdef MP-WEIXIN | MP-ALIPAY -->
-		<view class="tab-content" @touchstart="onTouchstart" @touchend="onTouchend" @touchmove="onTouchmove">
+		<view
+			class="tab-content"
+			@touchstart="onTouchstart"
+			@touchmove="onTouchmove"
+			@touchend="onTouchend"
+			@touchcancel="onTouchend"
+		>
 			<view class="content-view" :style="[cmpContentTransform]">
 				<slot name="default" />
 			</view>
 		</view>
 		<!-- #endif -->
 		<!-- #ifdef H5 -->
-		<view class="tab-content" @mousedown="onTouchstart" @mouseup="onTouchend" @mousemove="onTouchmove">
+		<view
+			class="tab-content"
+			@mousedown="onTouchstart"
+			@mousemove="onTouchmove"
+			@mouseup="onTouchend"
+			@mouseout="onTouchend"
+		>
 			<view class="content-view" :style="[cmpContentTransform]">
 				<slot name="default" />
 			</view>
@@ -379,15 +391,17 @@ export default {
 			if (!this.touch) return;
 			this.moveContent = false;
 			const { moveX } = this.touch.touchEnd(e);
-			if (Math.abs(moveX) > this.listBoxEl.width / 2) {
-				const index = moveX > 0 ? this.cmpActiveIndex - 1 : this.cmpActiveIndex + 1;
-				if (index < 0 || index > this.cmpTabList.length - 1) return;
-				this.onSelect(this.cmpTabList[index], index);
-			} else {
+
+			const index = moveX > 0 ? this.cmpActiveIndex - 1 : this.cmpActiveIndex + 1;
+
+			if (index < 0 || index > this.cmpTabList.length - 1 || Math.abs(moveX) < this.listBoxEl.width / 2) {
 				this.$nextTick(() => {
 					this.contentTransform = -this.cmpTabContentLefts[this.cmpActiveIndex];
 				});
+				return;
 			}
+
+			this.onSelect(this.cmpTabList[index], index);
 		},
 	},
 };
