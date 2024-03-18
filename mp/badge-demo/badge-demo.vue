@@ -6,17 +6,17 @@
 				<view class="title">徽标内容</view>
 				<view class="item-block">
 					<view>
-						<ste-badge content="1" :showDot="false">
+						<ste-badge content="1">
 							<view class="avator"></view>
 						</ste-badge>
 					</view>
 					<view>
-						<ste-badge content="99+" :showDot="false">
+						<ste-badge content="99+">
 							<view class="avator"></view>
 						</ste-badge>
 					</view>
 					<view>
-						<ste-badge content="hot" :showDot="false">
+						<ste-badge content="hot">
 							<view class="avator"></view>
 						</ste-badge>
 					</view>
@@ -26,7 +26,7 @@
 				<view class="title">背景</view>
 				<view class="item-block">
 					<view>
-						<ste-badge content="1" background="rgb(19, 183, 22)" :showDot="false">
+						<ste-badge content="1" background="rgb(19, 183, 22)">
 							<view class="avator"></view>
 						</ste-badge>
 					</view>
@@ -34,16 +34,13 @@
 						<ste-badge
 							content="99+"
 							background="linear-gradient(to right, rgb(66, 83, 216), rgb(213, 51, 186))"
-							:showDot="false"
 						>
 							<view class="avator"></view>
 						</ste-badge>
 					</view>
 					<view>
 						<ste-badge
-							content=" "
 							background="https://image.whzb.com/chain/inte-mall/00-普通图片/00-开发版/img/fire.png"
-							:showDot="false"
 						>
 							<view class="avator"></view>
 						</ste-badge>
@@ -54,32 +51,12 @@
 				<view class="title">小红点</view>
 				<view class="item-block">
 					<view>
-						<ste-badge>
+						<ste-badge showDot>
 							<view class="avator"></view>
 						</ste-badge>
 					</view>
 					<view>
-						<ste-badge background="rgb(19, 183, 22)">
-							<view class="avator"></view>
-						</ste-badge>
-					</view>
-				</view>
-			</view>
-			<view class="demo-item">
-				<view class="title">偏移</view>
-				<view class="item-block">
-					<view>
-						<ste-badge content="1" :showDot="false" :offsetX="10" :offsetY="10">
-							<view class="avator"></view>
-						</ste-badge>
-					</view>
-					<view>
-						<ste-badge content="1" :showDot="false" :offsetX="0" :offsetY="-20">
-							<view class="avator"></view>
-						</ste-badge>
-					</view>
-					<view>
-						<ste-badge content="1" :showDot="false" :offsetX="-20" :offsetY="-30">
+						<ste-badge showDot background="rgb(19, 183, 22)">
 							<view class="avator"></view>
 						</ste-badge>
 					</view>
@@ -89,23 +66,74 @@
 				<view class="title">徽标位置</view>
 				<view class="item-block">
 					<view>
-						<ste-badge content="1" :showDot="false">
+						<ste-badge content="1">
 							<view class="avator"></view>
 						</ste-badge>
 					</view>
 					<view>
-						<ste-badge content="1" :showDot="false" position="topLeft">
+						<ste-badge content="1" position="topLeft">
 							<view class="avator"></view>
 						</ste-badge>
 					</view>
 
 					<view>
-						<ste-badge content="1" :showDot="false" position="bottomLeft">
+						<ste-badge content="1" position="bottomLeft">
 							<view class="avator"></view>
 						</ste-badge>
 					</view>
 					<view>
-						<ste-badge content="1" :showDot="false" position="bottomRight">
+						<ste-badge content="1" position="bottomRight">
+							<view class="avator"></view>
+						</ste-badge>
+					</view>
+				</view>
+			</view>
+			<view class="demo-item">
+				<view class="title">偏移</view>
+				<view class="item-block">
+					<view>
+						<ste-badge content="1" :offsetX="5" :offsetY="5">
+							<view class="avator"></view>
+						</ste-badge>
+					</view>
+					<view>
+						<ste-badge content="1" position="topLeft" :offsetX="5" :offsetY="5">
+							<view class="avator"></view>
+						</ste-badge>
+					</view>
+
+					<view>
+						<ste-badge content="1" position="bottomLeft" :offsetX="5" :offsetY="5">
+							<view class="avator"></view>
+						</ste-badge>
+					</view>
+					<view>
+						<ste-badge content="1" position="bottomRight" :offsetX="5" :offsetY="5">
+							<view class="avator"></view>
+						</ste-badge>
+					</view>
+				</view>
+			</view>
+			<view class="demo-item">
+				<view class="title">为0时是否显示徽标</view>
+				<view class="item-block">
+					<view>
+						<ste-badge :content="0" showZero>
+							<view class="avator"></view>
+						</ste-badge>
+					</view>
+				</view>
+			</view>
+			<view class="demo-item">
+				<view class="title">最大值</view>
+				<view class="item-block">
+					<view>
+						<ste-badge :content="100">
+							<view class="avator"></view>
+						</ste-badge>
+					</view>
+					<view>
+						<ste-badge :content="99">
 							<view class="avator"></view>
 						</ste-badge>
 					</view>
@@ -115,7 +143,7 @@
 				<view class="title">自定义内容</view>
 				<view class="item-block">
 					<view>
-						<ste-badge :showDot="false">
+						<ste-badge>
 							<template slot="content">
 								<ste-icon code="&#xe6f5;" size="18"></ste-icon>
 							</template>
@@ -123,7 +151,7 @@
 						</ste-badge>
 					</view>
 					<view>
-						<ste-badge :showDot="false">
+						<ste-badge>
 							<template slot="content">
 								<ste-icon code="&#xe6a7;" size="12"></ste-icon>
 							</template>
