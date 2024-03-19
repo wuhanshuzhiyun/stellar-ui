@@ -54,6 +54,15 @@
 			</view>
 			<view class="com-arrow"><image :src="joinSrc('img/r-arrow.png')" /></view>
 		</view>
+		<!-- ***电商组件*** -->
+		<view class="group-title">导航组件</view>
+		<view class="com-box" @click="nav('tabs')">
+			<view class="com-title">
+				<image src="https://cdn.uviewui.com/uview/example/tabs.png" style="width: 36rpx; height: 36rpx" />
+				<text>Tabs 标签页</text>
+			</view>
+			<view class="com-arrow"><image :src="joinSrc('img/r-arrow.png')" /></view>
+		</view>
 		<!-- ***表单组件*** -->
 		<view class="group-title">表单组件</view>
 		<view class="com-box" @click="nav('search')">

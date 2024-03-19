@@ -127,7 +127,7 @@ import { getChildrenProps } from './utils.js';
  * @event {Function}						change 						选项改变监听,参数{index:number,...item}
  */
 export default {
-	group: '基础组件',
+	group: '导航组件',
 	title: 'Tabs 标签页',
 	name: 'ste-tabs',
 	props: {
