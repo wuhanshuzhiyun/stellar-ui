@@ -140,9 +140,9 @@ export default {
 		font-size: 24rpx;
 		color: #ffffff;
 		background-color: #ee0a24;
-		border-radius: 999rpx;
+		border-radius: 99999rpx;
 		width: fit-content;
-		line-height: 0;
+
 		.content-box {
 			display: flex;
 			align-items: center;
@@ -152,7 +152,6 @@ export default {
 			min-width: 26rpx;
 
 			padding: 0 4rpx;
-			line-height: 0;
 		}
 
 		.dot-box {
@@ -163,10 +162,16 @@ export default {
 		&-text {
 			font-size: 22rpx;
 			color: #ffffff;
-			line-height: 0;
+			line-height: 26rpx;
 
 			position: relative;
+			// #ifdef  H5
+			// #endif
+			// #ifdef  MP-WEIXIN
 			top: -0.5rpx;
+			// #endif
+			// #ifdef  MP-ALIPAY
+			// #endif
 		}
 	}
 
