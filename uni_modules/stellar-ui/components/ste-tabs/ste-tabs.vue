@@ -678,6 +678,7 @@ export default {
 				height: 100vh;
 				position: fixed;
 				background-color: rgba(0, 0, 0, 0.45);
+				z-index: 1001;
 
 				.pull-down-content {
 					height: initial;
