@@ -12,9 +12,7 @@
 						pullDown
 						sticky
 						swipeable
-						type="card"
-						tabSpace="12"
-						border
+						showGapLine
 					>
 						<ste-tab
 							v-for="(i, index) in list"

@@ -12,7 +12,7 @@
 				@scroll="onScroll"
 			>
 				<block v-for="(tab, index) in cmpTabList" :key="index">
-					<view class="tab-space" v-if="index > 0" :style="{ height: `${listBoxEl.height}px` }">
+					<view class="tab-space" v-if="index > 0" :style="{ height: `${cmpActiveTabEl.height}px` }">
 						<view class="space-line" />
 					</view>
 					<view
@@ -180,6 +180,11 @@ export default {
 					}
 				}
 			}
+			let tabSpaceLine = 0;
+			if (this.showGapLine) {
+				tabSpaceLine = '1px';
+			}
+
 			const style = {
 				'--tabs-color': this.color,
 				'--tabs-card-background': tabCardBg,
@@ -192,6 +197,7 @@ export default {
 				'--tabs-tab-padding': `0 ${tabPadding}`,
 				'--tabs-transition-duration': this.duration ? `${this.duration}s` : 'inherit',
 				'--tabs-tab-space': isNaN(this.tabSpace) ? this.tabSpace : utils.rpx2px(this.tabSpace),
+				'--tabs-tab-space-line': tabSpaceLine,
 				'--tabs-tab-border-width': borderWidth,
 				'--tabs-tab-border-width-start': borderWidthStart,
 				'--tabs-sticky': this.sticky ? 'sticky' : 'relative',
@@ -208,6 +214,9 @@ export default {
 		},
 		cmpActiveIndex() {
 			return this.cmpTabList.findIndex((m) => m.active);
+		},
+		cmpActiveTabEl() {
+			return this.tabEls[this.cmpActiveIndex] || {};
 		},
 		cmpLineStyle() {
 			const width = isNaN(this.lineWidth) ? this.lineWidth : utils.rpx2px(this.lineWidth);
@@ -367,9 +376,17 @@ export default {
 			overflow-x: auto;
 			padding: 12rpx 0;
 			.tab-space {
-				display: inline-block;
+				display: inline-flex;
 				vertical-align: bottom;
 				width: var(--tabs-tab-space);
+				min-width: var(--tabs-tab-space-line);
+				align-items: center;
+				justify-content: center;
+				.space-line {
+					width: var(--tabs-tab-space-line);
+					background-color: rgba(200, 200, 200, 0.3);
+					height: 60%;
+				}
 			}
 			.tab-item {
 				display: inline-block;
@@ -593,96 +610,11 @@ export default {
 		}
 
 		.tab-pull-down-box {
-			width: 70rpx;
-			position: absolute;
-			top: 0;
-			right: 0;
-			bottom: 0;
-
-			.pull-down-content {
-				width: 100%;
-				height: 100%;
-				position: absolute;
-				.content-tabs {
-					width: 100%;
-					height: var(--tabs-list-height);
-					.placeholder {
-						display: none;
-						height: 100%;
-						align-items: center;
-						padding: 0 24rpx;
-						color: var(--tabs-tab-color);
-						font-size: 28rpx;
-					}
-					.tab-pull-down {
-						width: 70rpx;
-						position: absolute;
-						top: 0;
-						right: 0;
-						bottom: 0;
-						background-color: rgba(255, 255, 255, 0.45);
-						box-shadow: -5px 0 5px rgba(245, 245, 245, 0.5);
-						display: flex;
-						align-items: center;
-						justify-content: center;
-						.pull-down-icon {
-							transition-duration: 0.3s;
-						}
-					}
-				}
-				.tab-list {
-					display: none;
-					.tab-item {
-						&.active {
-							.tab-title {
-								color: var(--tabs-color);
-							}
-						}
-					}
-				}
-			}
 			&.open {
-				width: 100%;
-				height: 100vh;
-				position: fixed;
-				background-color: rgba(0, 0, 0, 0.45);
-
 				.pull-down-content {
-					height: initial;
-					display: block;
-
-					overflow: hidden;
-					.content-tabs {
-						position: relative;
-						box-shadow: 0 5px 5px rgba(245, 245, 245, 0.5);
-						z-index: 10;
-						background-color: #ffffff;
-						.placeholder {
-							display: flex;
-						}
-						.tab-pull-down {
-							display: flex;
-							.pull-down-icon {
-								transform: rotate(180deg);
-							}
-						}
-					}
 					.tab-list {
-						display: grid;
-						grid-template-columns: 25% 25% 25% 25%;
-						grid-row-gap: 30rpx;
-						flex-wrap: wrap;
-						position: relative;
-						z-index: 1;
-						background-color: #ffffff;
-						border-radius: 0 0 24rpx 24rpx;
-						padding: 30rpx 0;
-						transition-duration: 0.3s;
-						transform: translateY(-100%);
 						.tab-item {
-							width: 100%;
-							margin: 0;
-							padding: 0;
+							background-color: initial;
 						}
 					}
 				}
