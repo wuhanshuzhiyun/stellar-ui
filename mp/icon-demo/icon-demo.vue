@@ -11,29 +11,29 @@
 				<view class="demo-item">
 					<view class="title">基础用法</view>
 					<view class="item-block" style="justify-content: flex-start">
-						<ste-icon code="&#xe653;" size="60"></ste-icon>
+						<ste-icon code="&#xe689;" size="60"></ste-icon>
 					</view>
 				</view>
 				<view class="demo-item">
 					<view class="title">图标颜色</view>
 					<view class="item-block" style="justify-content: flex-start">
-						<ste-icon code="&#xe64b;" color="#1989fa" size="60" marginRight="30"></ste-icon>
-						<ste-icon code="&#xe64b;" color="#ee0a24" size="60"></ste-icon>
+						<ste-icon code="&#xe684;" color="#1989fa" size="60" marginRight="30"></ste-icon>
+						<ste-icon code="&#xe684;" color="#ee0a24" size="60"></ste-icon>
 					</view>
 				</view>
 				<view class="demo-item">
 					<view class="title">图标大小</view>
 					<view class="item-block" style="justify-content: flex-start">
-						<ste-icon code="&#xe628;" marginRight="30"></ste-icon>
-						<ste-icon code="&#xe628;" marginRight="30" size="50"></ste-icon>
-						<ste-icon code="&#xe628;" marginRight="30" size="70"></ste-icon>
+						<ste-icon code="&#xe671;" marginRight="30"></ste-icon>
+						<ste-icon code="&#xe671;" marginRight="30" size="50"></ste-icon>
+						<ste-icon code="&#xe671;" marginRight="30" size="70"></ste-icon>
 					</view>
 				</view>
 				<view class="demo-item">
-					<view class="title">图标是否粗体</view>
+					<view class="title">图标是否加粗</view>
 					<view class="item-block" style="justify-content: flex-start">
-						<ste-icon code="&#xe628;" marginRight="30"></ste-icon>
-						<ste-icon code="&#xe628;" bold></ste-icon>
+						<ste-icon code="&#xe673;" marginRight="30"></ste-icon>
+						<ste-icon code="&#xe673;" bold></ste-icon>
 					</view>
 				</view>
 			</view>
@@ -42,19 +42,19 @@
 					<view class="item-block">
 						<view class="icon-condition">
 							<ste-icon
-								code="&#xe628;"
+								code="&#xe68a;"
 								:size="48"
 								v-if="isShowUnicode"
 								:marginLeft="40"
-								:marginRight="20"
+								:marginBottom="8"
 								@click="isShowUnicode = false"
 							></ste-icon>
 							<ste-icon
-								code="&#xe901;"
+								code="&#xe68e;"
 								:size="48"
 								v-if="!isShowUnicode"
 								:marginLeft="40"
-								:marginRight="20"
+								:marginBottom="8"
 								@click="isShowUnicode = true"
 							></ste-icon>
 							&nbsp;&nbsp;&nbsp;{{ isShowUnicode ? '隐藏unicode' : '展示unicode' }}
@@ -64,8 +64,8 @@
 								<ste-icon :code="item.unicode" :size="40"></ste-icon>
 							</view>
 							<view class="icon-name">{{ item.name }}</view>
-							<view class="icon-class">{{ item.font_class }}</view>
 							<view class="icon-unicode" v-if="isShowUnicode">{{ item.unicode }}</view>
+							<view class="icon-class">{{ item.font_class }}</view>
 						</view>
 					</view>
 				</view>
@@ -78,7 +78,7 @@ export default {
 	data() {
 		return {
 			iconUrl:
-				'https://at.alicdn.com/t/c/font_4041637_ufl38b5x4g.json?spm=a313x.manage_type_myprojects.i1.24.28273a814UZfaX&file=font_4041637_ufl38b5x4g.json',
+				'https://at.alicdn.com/t/c/font_4457057_v8slqfn0z8.json?spm=a313x.manage_type_myprojects.i1.10.223f3a819BSGBY&file=font_4457057_v8slqfn0z8.json',
 			glyphs: [],
 			tabIndex: 0,
 			isShowUnicode: false,
@@ -157,14 +157,20 @@ export default {
 				font-size: 28rpx;
 			}
 
-			.icon-unicode,
-			.icon-class {
-				font-size: 28rpx;
+			.icon-unicode {
+				font-size: 26rpx;
 				text-align: center;
 				word-wrap: break-word;
-			}
-			.icon-unicode {
+				height: 40rpx;
+				line-height: 40rpx;
 				color: #f07c82;
+			}
+			.icon-class {
+				font-size: 26rpx;
+				text-align: center;
+				word-wrap: break-word;
+				height: 90rpx;
+				line-height: 30rpx;
 			}
 		}
 	}

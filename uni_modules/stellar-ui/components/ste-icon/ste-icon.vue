@@ -29,7 +29,7 @@ export default {
 	title: 'Icon 图标',
 	name: 'ste-icon',
 	options: {
-		virtualHost: true,
+		// virtualHost: true,
 	},
 	props: {
 		// iconfont unicode
@@ -107,7 +107,6 @@ export default {
 				'--margin-top': utils.addUnit(this.marginTop),
 				'--margin-bottom': utils.addUnit(this.marginBottom),
 				'--font-family': this.fontFamily === '' ? this.defaultFontFamily : this.fontFamily,
-				'--translate-y': utils.addUnit(this.marginTop) + ' - ' + utils.addUnit(this.marginBottom),
 			};
 		},
 	},
@@ -135,7 +134,7 @@ export default {
 
 	margin-left: var(--margin-left) !important;
 	margin-right: var(--margin-right) !important;
-	transform: translateY(calc(var(--margin-top) - var(--margin-bottom))) !important ;
+	transform: translateY(calc(var(--margin-bottom) - var(--margin-top))) !important ;
 
 	height: calc(var(--size)) !important;
 	width: calc(var(--size)) !important;
