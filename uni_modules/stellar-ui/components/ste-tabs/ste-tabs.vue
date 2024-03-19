@@ -27,10 +27,10 @@
 						<view class="tab-image" v-if="showImage">
 							<ste-image :src="tab.image" />
 						</view>
-						<view class="tab-title" v-if="showTitle">
+						<view class="tab-title" v-if="showTitle" :style="[cmpEllipsis]">
 							{{ tab.title }}
 						</view>
-						<view class="tab-sub-title" v-if="showSubtitle">
+						<view class="tab-sub-title" v-if="showSubtitle" :style="[cmpEllipsis]">
 							{{ tab.subTitle }}
 						</view>
 					</view>
@@ -45,7 +45,7 @@
 						<view class="placeholder">{{ placeholder }}</view>
 						<view class="tab-pull-down" @click="onOpenDown">
 							<view class="pull-down-icon">
-								<ste-icon code="&#xe6c2;" size="20" :color="tabColor" />
+								<ste-icon code="&#xe676;" size="20" :color="tabColor" />
 							</view>
 						</view>
 					</view>
@@ -63,10 +63,10 @@
 							<view class="tab-image" v-if="showImage">
 								<ste-image :src="tab.image" />
 							</view>
-							<view class="tab-title" v-if="showTitle">
+							<view class="tab-title" v-if="showTitle" :style="[cmpEllipsis]">
 								{{ tab.title }}
 							</view>
-							<view class="tab-sub-title" v-if="showSubtitle">
+							<view class="tab-sub-title" v-if="showSubtitle" :style="[cmpEllipsis]">
 								{{ tab.subTitle }}
 							</view>
 						</view>
@@ -115,11 +115,16 @@ import { getChildrenProps } from './utils.js';
  * @property {Number}						divideNum					均分最大数量，默认4，设置0则不均分
  * @property {String | Number}	tabSpace					选项间距，默认0，单位rpx
  * @property {Boolean}					sticky						是否开启吸顶
- * @property {Boolean} 					swipeable					是否开启手势滑动切换
+ * @property {Number | String}	offsetTop					吸顶距离
+ * @property {Boolean} 					swipeable					是否开启手势滑动切换，默认值0
+ * @property {String} 					tabColor					选项字体颜色和下拉列表中选项颜色，默认值#000000
+ * @property {String} 					activeTabColor		激活选项字体颜色，默认值#000000
+ * @property {Boolean} 					showGapLine				是否显示分割线，默认值false
  * @property {Boolean} 					lock							是否锁定（无法切换）
  * @property {Boolean} 					disabled					是否禁用
- *
- * @event {Function}			click 点击事件
+ * @property {Boolean} 					pullDown					是否有下拉选项（当选项数量大于均分数量时生效）
+ * @property {String} 					placeholder				下拉占位符，默认值：选择类别
+ * @event {Function}						change 						选项改变监听,参数{index:number,...item}
  */
 export default {
 	group: '基础组件',
@@ -206,20 +211,15 @@ export default {
 			type: Boolean,
 			default: () => false,
 		},
-		// 是否开启手势左右滑动切换
-		swipeable: {
-			type: Boolean,
-			default: () => false,
-		},
-		// 是否开启滚动导航
-		scrollspy: {
-			type: Boolean,
-			default: () => false,
-		},
 		// 粘性布局下吸顶时与顶部的距离，单位rpx
 		offsetTop: {
 			type: [String, Number],
 			default: () => 0,
+		},
+		// 是否开启手势左右滑动切换
+		swipeable: {
+			type: Boolean,
+			default: () => false,
 		},
 		// 选项字体颜色和下拉列表中选项颜色
 		tabColor: {
@@ -354,6 +354,7 @@ export default {
 				'--tabs-active-tab-color': activeTabColor,
 				'--tabs-list-height': this.openPullDown && this.listEl ? `${this.listEl?.height}px` : 'initial',
 				opacity: this.showComponent ? '1' : '0',
+				zIndex: this.openPullDown ? '1001' : 1,
 			};
 			return style;
 		},
@@ -401,6 +402,13 @@ export default {
 		},
 		cmpPullListTransform() {
 			return { transform: `translateY(${this.pullListTransform})` };
+		},
+		cmpEllipsis() {
+			const style = {};
+			if (this.ellipsis) {
+				style.textOverflow = 'ellipsis';
+			}
+			return style;
 		},
 	},
 	watch: {
@@ -517,7 +525,7 @@ export default {
 		top: var(--tabs-offset-top);
 		width: 100%;
 		background: #fff;
-		z-index: 1001;
+		z-index: 101;
 		.tab-list {
 			width: 100%;
 			white-space: nowrap;
@@ -670,6 +678,7 @@ export default {
 				height: 100vh;
 				position: fixed;
 				background-color: rgba(0, 0, 0, 0.45);
+				z-index: 1002;
 
 				.pull-down-content {
 					height: initial;
