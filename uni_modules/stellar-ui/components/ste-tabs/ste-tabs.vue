@@ -130,7 +130,6 @@ export default {
 	beforeCreate() {
 		_tabsComponent.getParent = _tabsComponent.getParent.bind(this);
 	},
-	created() {},
 	computed: {
 		cmpTabList() {
 			return this.tabPropsList.map((item, index) => {
