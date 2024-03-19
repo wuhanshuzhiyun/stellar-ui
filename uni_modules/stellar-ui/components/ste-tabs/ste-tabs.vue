@@ -81,7 +81,7 @@
 				:childrenLength="cmpTabList.length"
 				:duration="duration"
 				:disabledIndexs="cmpDisabledIndexs"
-				:disabled="!swipeable || lock"
+				:disabled="!swipeable || lock || disabled"
 				@change="onSliding"
 			>
 				<slot name="default" />
@@ -97,7 +97,28 @@ import { getChildrenProps } from './utils.js';
  * ste-tabs 标签页
  * @description 标签页组件
  * @tutorial https://stellar-ui.intecloud.com.cn/pc/index/index?name=ste-tabs
+ * @property {String | Number} 	active  当前激活的选项支持sync双向绑定（类型为number时tab绑定index，类型为string时tab绑定name）
  * @property {String}			type				组件类型
+ * @value line 线性（默认）
+ * @value card 卡片模式
+ * @property {Boolean} 					showImage					是否显示图片
+ * @property {Boolean} 					showTitle					是否显示标题
+ * @property {Boolean} 					showSubtitle			是否显示子标题
+ * @property {String}						color							主题色（滑块颜色，边框颜色，选中的背景色，激活下拉列表中选项颜色）
+ * @property {String} 					background				背景
+ * @property {Number} 					duration					切换动画时长，默认0.3，单位秒
+ * @property {String | Number}	lineWidth					底部条(或副标题)宽度，默认52，单位rpx
+ * @property {String | Number}	lineHeight				底部条(或副标题)高度，默认6，单位rpx
+ * @property {Boolean}					border						是否显示边框，仅在card模式下生效
+ * @property {Boolean}					ellipsis					是否开启文本超长省略
+ * @property {String | Number}	tabWidth					选项宽度，默认auto，单位rpx
+ * @property {Number}						divideNum					均分最大数量，默认4，设置0则不均分
+ * @property {String | Number}	tabSpace					选项间距，默认0，单位rpx
+ * @property {Boolean}					sticky						是否开启吸顶
+ * @property {Boolean} 					swipeable					是否开启手势滑动切换
+ * @property {Boolean} 					lock							是否锁定（无法切换）
+ * @property {Boolean} 					disabled					是否禁用
+ *
  * @event {Function}			click 点击事件
  */
 export default {
@@ -105,7 +126,7 @@ export default {
 	title: 'Tabs 标签页',
 	name: 'ste-tabs',
 	props: {
-		// 当前激活的选项（支持v-model双向绑定）（类型为number时绑定index，类型为string时绑定name）
+		// 当前激活的选项支持sync双向绑定（类型为number时绑定index，类型为string时绑定name）
 		active: {
 			type: [Number, String],
 			default: () => 0,
