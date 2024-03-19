@@ -96,7 +96,7 @@ import { getChildrenProps } from './utils.js';
 /**
  * ste-tabs 标签页
  * @description 标签页组件
- * @tutorial http://172.16.114.51:5050/pc/index/index?name=ste-tabs
+ * @tutorial https://stellar-ui.intecloud.com.cn/pc/index/index?name=ste-tabs
  * @property {String | Number} 	active  当前激活的选项支持sync双向绑定（类型为number时tab绑定index，类型为string时tab绑定name）
  * @property {String}			type				组件类型
  * @value line 线性（默认）

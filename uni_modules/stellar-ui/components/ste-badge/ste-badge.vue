@@ -22,7 +22,7 @@ import utils from '../../utils/utils.js';
 /**
  * ste-badge 徽标
  * @description 徽标组件
- * @tutorial http://172.16.114.51:5050/pc/index/index?name=ste-badge
+ * @tutorial https://stellar-ui.intecloud.com.cn/pc/index/index?name=ste-badge
  * @property {Number|String} content 徽标内容
  * @property {String} background 背景 默认 #ee0a24
  * @property {Boolean} showDot 是否展示为小红点 默认 false

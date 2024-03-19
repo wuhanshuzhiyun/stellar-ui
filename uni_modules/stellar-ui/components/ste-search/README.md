@@ -30,12 +30,10 @@ export default {
 				title: `搜索：${v}`,
 			});
 		},
-		onClick() {
-			uni.showToast({
-				icon: 'none',
-				title: '点击触发',
-			});
-		},
+		uni.showToast({
+			icon: 'none',
+			title: `点击触发：${v}`,
+		});
 	},
 };
 ```
@@ -154,7 +152,7 @@ export default {
 #### 导航模式
 - 可以通过`type`属性设置`nav`开启导航模式；开启后，点击搜索框任意区域都会触发`click`事件，其他功能失效。
 ```
-<ste-search type="nav" @click="onClick" />
+<ste-search type="nav" @click="onClick" :hotWords="hotWords" />
 ```
 
 

@@ -12,7 +12,7 @@ import utils from '../../utils/utils.js';
 /**
  * ste-icon 图标
  * @description  图标组件 基于字体的图标集，包含了大多数常见场景的图标
- * @tutorial http://172.16.114.51:5050/pc/index/index?name=ste-icon
+ * @tutorial https://stellar-ui.intecloud.com.cn/pc/index/index?name=ste-icon
  * @property {String} code 图标名称
  * @property {String} color 图标颜色
  * @property {Number|String} size 图标大小，单位rpx，默认28
@@ -29,7 +29,7 @@ export default {
 	title: 'Icon 图标',
 	name: 'ste-icon',
 	options: {
-		virtualHost: true,
+		// virtualHost: true,
 	},
 	props: {
 		// iconfont unicode
@@ -107,7 +107,6 @@ export default {
 				'--margin-top': utils.addUnit(this.marginTop),
 				'--margin-bottom': utils.addUnit(this.marginBottom),
 				'--font-family': this.fontFamily === '' ? this.defaultFontFamily : this.fontFamily,
-				'--translate-y': utils.addUnit(this.marginTop) + ' - ' + utils.addUnit(this.marginBottom),
 			};
 		},
 	},
@@ -135,7 +134,7 @@ export default {
 
 	margin-left: var(--margin-left) !important;
 	margin-right: var(--margin-right) !important;
-	transform: translateY(calc(var(--margin-top) - var(--margin-bottom))) !important ;
+	transform: translateY(calc(var(--margin-bottom) - var(--margin-top))) !important ;
 
 	height: calc(var(--size)) !important;
 	width: calc(var(--size)) !important;
