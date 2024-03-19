@@ -108,7 +108,7 @@ export default {
 		// 当前激活的选项（支持v-model双向绑定）（类型为number时绑定index，类型为string时绑定name）
 		active: {
 			type: [Number, String],
-			default: () => null,
+			default: () => 0,
 		},
 		// 样式风格类型，可选值为 line  card
 		type: {
@@ -244,6 +244,7 @@ export default {
 	},
 	data() {
 		return {
+			dataActive: 0,
 			viewScrollLeft: 0,
 			scrollLeft: 0,
 			showComponent: false,
@@ -259,12 +260,12 @@ export default {
 	computed: {
 		cmpTabList() {
 			return this.tabPropsList.map((item, index) => {
-				switch (typeof this.active) {
+				switch (typeof this.dataActive) {
 					case 'string':
-						item.active = this.active === item.name;
+						item.active = this.dataActive === item.name;
 						break;
 					case 'number':
-						item.active = this.active === index;
+						item.active = this.dataActive === index;
 						break;
 				}
 				return item;
@@ -382,6 +383,12 @@ export default {
 		},
 	},
 	watch: {
+		active: {
+			handler(v) {
+				this.dataActive = v;
+			},
+			immediate: true,
+		},
 		cmpActiveIndex: {
 			handler(v) {
 				this.scrollToActive();
@@ -407,12 +414,13 @@ export default {
 		async onSelect(tab, index) {
 			if (this.lock || tab.disabled || this.disabled) return false;
 			if (this.openPullDown) await this.onOpenDown();
-			let active = this.active;
-			if (typeof this.active === 'string') {
+			let active = this.dataActive;
+			if (typeof this.dataActive === 'string') {
 				active = tab.name;
-			} else if (typeof this.active === 'number') {
+			} else if (typeof this.dataActive === 'number') {
 				active = index;
 			}
+			this.dataActive = active;
 			this.$emit('update:active', active);
 			this.$emit('change', {
 				index,
