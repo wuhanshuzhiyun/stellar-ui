@@ -31,7 +31,7 @@ import utils from '../../utils/utils.js';
 /**
  * ste-image 图片
  * @description 图片组件
- * @tutorial http://172.16.114.51:5050/pc/index/index?name=ste-image
+ * @tutorial https://stellar-ui.intecloud.com.cn/pc/index/index?name=ste-image
  * @property {String}			src										图片地址
  * @property {String}			mode									图片裁剪、缩放的模式 默认值：scaleToFill
  * @value scaleToFill 缩放（默认）：不保持纵横比缩放图片，使图片的宽高完全拉伸至填满 image 元素 {String}
