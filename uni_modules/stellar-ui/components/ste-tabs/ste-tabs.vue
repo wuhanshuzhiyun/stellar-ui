@@ -104,7 +104,7 @@ import { getChildrenProps } from './utils.js';
  * @property {Boolean} 					showImage					是否显示图片
  * @property {Boolean} 					showTitle					是否显示标题
  * @property {Boolean} 					showSubtitle			是否显示子标题
- * @property {String}						color							主题色（滑块颜色，边框颜色，选中的背景色，激活下拉列表中选项颜色）
+ * @property {String}						color							主题色（滑块颜色，边框颜色，选中的背景色，激活下拉列表中选项颜色），默认#0090FF
  * @property {String} 					background				背景
  * @property {Number} 					duration					切换动画时长，默认0.3，单位秒
  * @property {String | Number}	lineWidth					底部条(或副标题)宽度，默认52，单位rpx
@@ -203,7 +203,7 @@ export default {
 		},
 		// tab间距rpx
 		tabSpace: {
-			type: Number,
+			type: [Number, String],
 			default: () => 0,
 		},
 		// 是否使用粘性布局
