@@ -525,7 +525,7 @@ export default {
 		top: var(--tabs-offset-top);
 		width: 100%;
 		background: #fff;
-		z-index: 101;
+		z-index: 1001;
 		.tab-list {
 			width: 100%;
 			white-space: nowrap;
@@ -678,7 +678,6 @@ export default {
 				height: 100vh;
 				position: fixed;
 				background-color: rgba(0, 0, 0, 0.45);
-				z-index: 1002;
 
 				.pull-down-content {
 					height: initial;
