@@ -5,20 +5,23 @@
 			<view class="demo-item">
 				<view class="title">基础用法</view>
 				<view class="item-block">
-					<ste-tabs :active.sync="active" showSubtitle lineWidth="120" pullDown sticky background="#ff0" swipeable>
-						<ste-tab
-							v-for="(i, index) in list"
-							:title="`标签${index}`"
-							:subTitle="`附标签${index}`"
-							:index="index"
-							:image="demoUrl"
-							:disabled="index === 2 || index === 0"
-						>
-							<view :style="{ background: colors[i] }">
-								<h1>==Start {{ index }}==</h1>
-								<h1>内容{{ index }}</h1>
-								<h1>==End {{ index }}==</h1>
-							</view>
+					<ste-tabs :active.sync="active">
+						<ste-tab v-for="(item, index) in list1" :key="index" :title="item.title" :index="index">
+							<h1>==Start {{ item.title }}==</h1>
+							<h1>内容{{ item.title }}</h1>
+							<h1>==End {{ item.title }}==</h1>
+						</ste-tab>
+					</ste-tabs>
+				</view>
+			</view>
+			<view class="demo-item">
+				<view class="title">Card模式</view>
+				<view class="item-block">
+					<ste-tabs :active.sync="active" type="card">
+						<ste-tab v-for="(item, index) in list1" :key="index" :title="item.title" :index="index">
+							<h1>==Start {{ item.title }}==</h1>
+							<h1>内容{{ item.title }}</h1>
+							<h1>==End {{ item.title }}==</h1>
 						</ste-tab>
 					</ste-tabs>
 				</view>
@@ -30,22 +33,22 @@
 export default {
 	data() {
 		return {
-			demoUrl: `https://image.whzb.com/chain/StellarUI/图片.jpg`,
-			list: [1, 2],
-			active: 0,
+			list1: [
+				{ title: '标签1', image: `https://image.whzb.com/chain/StellarUI/图片.jpg` },
+				{ title: '标签2', image: `https://image.whzb.com/chain/StellarUI/图片.jpg` },
+				{ title: '标签3', image: `https://image.whzb.com/chain/StellarUI/图片.jpg` },
+				{ title: '标签4', image: `https://image.whzb.com/chain/StellarUI/图片.jpg` },
+			],
+			active: 1,
 		};
 	},
 	mounted() {
 		setTimeout(() => {
-			this.list = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16];
+			this.list = [1, 2, 3, 4];
 			this.active = 3;
 		}, 1000);
 	},
-	computed: {
-		colors() {
-			return this.list.map(() => `rgb(${Math.random() * 255},${Math.random() * 255},${Math.random() * 255})`);
-		},
-	},
+	computed: {},
 	methods: {
 		getStyle() {
 			return;
