@@ -1,8 +1,10 @@
+import Color from "./Color.js"
 let throLast = 0; // 节流方法用变量
 let throTimer = null; // 节流方法用的变量
 let windowWidth = null;
 
 let utils = {
+	Color,
 	rpx2px(rpx) {
 		if (!rpx) return '0';
 		if (windowWidth == null) {
@@ -120,8 +122,7 @@ let utils = {
 		return new Promise((resolve, reject) => {
 			try {
 				uni.createSelectorQuery()
-					.in(component)
-					[selectFn](selectors)
+					.in(component)[selectFn](selectors)
 					.boundingClientRect((data) => {
 						resolve(data);
 					})

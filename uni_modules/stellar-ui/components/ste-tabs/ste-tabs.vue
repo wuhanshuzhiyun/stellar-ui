@@ -11,26 +11,30 @@
 				:show-scrollbar="false"
 				@scroll="onScroll"
 			>
-				<view
-					class="tab-item"
-					v-for="(tab, index) in cmpTabList"
-					:key="index"
-					:class="{
-						active: tab.active,
-						disabled: tab.disabled || disabled,
-					}"
-					@click="onSelect(tab, index)"
-				>
-					<view class="tab-image" v-if="showImage">
-						<ste-image :src="tab.image" />
+				<block v-for="(tab, index) in cmpTabList" :key="index">
+					<view class="tab-space" v-if="index > 0" :style="{ height: `${listBoxEl.height}px` }">
+						<view class="space-line" />
 					</view>
-					<view class="tab-title" v-if="showTitle">
-						{{ tab.title }}
+					<view
+						class="tab-item"
+						:class="{
+							active: tab.active,
+							disabled: tab.disabled || disabled,
+							start: index === 0,
+						}"
+						@click="onSelect(tab, index)"
+					>
+						<view class="tab-image" v-if="showImage">
+							<ste-image :src="tab.image" />
+						</view>
+						<view class="tab-title" v-if="showTitle">
+							{{ tab.title }}
+						</view>
+						<view class="tab-sub-title" v-if="showSubtitle">
+							{{ tab.subTitle }}
+						</view>
 					</view>
-					<view class="tab-sub-title" v-if="showSubtitle">
-						{{ tab.subTitle }}
-					</view>
-				</view>
+				</block>
 				<view class="tab-line-box" v-if="!showSubtitle">
 					<view class="tab-line" :style="[cmpLineStyle]"></view>
 				</view>
@@ -70,22 +74,25 @@
 				</view>
 			</view>
 		</view>
-		<!-- 内容区域 -->
-		<ste-sliding
-			:index="cmpActiveIndex"
-			:childrenLength="cmpTabList.length"
-			:duration="duration"
-			:disabledIndexs="cmpDisabledIndexs"
-			:disabled="!swipeable"
-			@change="onSliding"
-		>
-			<slot name="default" />
-		</ste-sliding>
+		<view class="content">
+			<!-- 内容区域 -->
+			<ste-sliding
+				:index="cmpActiveIndex"
+				:childrenLength="cmpTabList.length"
+				:duration="duration"
+				:disabledIndexs="cmpDisabledIndexs"
+				:disabled="!swipeable || lock"
+				@change="onSliding"
+			>
+				<slot name="default" />
+			</ste-sliding>
+		</view>
 	</view>
 </template>
 
 <script>
 import utils from '../../utils/utils.js';
+import { getChildrenProps } from './utils.js';
 import props from './props.js';
 
 let _tabsComponent = {
@@ -152,18 +159,46 @@ export default {
 				tabWidth = 100 / this.tabPropsList.length + '%';
 				tabPadding = 0;
 			}
+			let tabCardBg = utils.Color.formatColor(this.tabColor, 0.05);
+			let tabCardBgActive = utils.Color.formatColor(this.color, 0.1);
+			let tabCardSubBg = this.color;
+			let tabCardSubColor = '#fff';
+			let activeTabColor = this.activeTabColor;
+			let borderWidthStart = '0';
+			let borderWidth = '0';
+			if (this.type === 'card') {
+				activeTabColor = this.color;
+				if (this.border) {
+					tabCardBg = 'none';
+					tabCardBgActive = this.color;
+					tabCardSubBg = '#fff';
+					tabCardSubColor = this.color;
+					activeTabColor = '#fff';
+					borderWidthStart = '1px';
+					borderWidth = '1px 1px 1px 0';
+					if (this.tabSpace > 0) {
+						borderWidth = '1px';
+					}
+				}
+			}
 			const style = {
 				'--tabs-color': this.color,
+				'--tabs-card-background': tabCardBg,
+				'--tabs-card-background-active': tabCardBgActive,
+				'--tabs-card-sub-bg': tabCardSubBg,
+				'--tabs-card-sub-color': tabCardSubColor,
 				'--tabs-line-width': isNaN(this.lineWidth) ? this.lineWidth : utils.rpx2px(this.lineWidth),
 				'--tabs-line-height': isNaN(this.lineHeight) ? this.lineHeight : utils.rpx2px(this.lineHeight),
 				'--tabs-tab-width': tabWidth,
-				'--tabs-tab-padding': `6px ${tabPadding}`,
+				'--tabs-tab-padding': `0 ${tabPadding}`,
 				'--tabs-transition-duration': this.duration ? `${this.duration}s` : 'inherit',
 				'--tabs-tab-space': isNaN(this.tabSpace) ? this.tabSpace : utils.rpx2px(this.tabSpace),
+				'--tabs-tab-border-width': borderWidth,
+				'--tabs-tab-border-width-start': borderWidthStart,
 				'--tabs-sticky': this.sticky ? 'sticky' : 'relative',
 				'--tabs-offset-top': isNaN(this.offsetTop) ? this.offsetTop : utils.rpx2px(this.offsetTop),
 				'--tabs-tab-color': this.tabColor,
-				'--tabs-active-tab-color': this.activeTabColor,
+				'--tabs-active-tab-color': activeTabColor,
 				'--tabs-list-height': this.openPullDown && this.listEl ? `${this.listEl?.height}px` : 'initial',
 				opacity: this.showComponent ? '1' : '0',
 			};
@@ -174,11 +209,6 @@ export default {
 		},
 		cmpActiveIndex() {
 			return this.cmpTabList.findIndex((m) => m.active);
-		},
-		cmpActiveEl() {
-			if (this.cmpActiveIndex === -1) return null;
-			const activeEl = this.tabEls[this.cmpActiveIndex];
-			return activeEl;
 		},
 		cmpLineStyle() {
 			const width = isNaN(this.lineWidth) ? this.lineWidth : utils.rpx2px(this.lineWidth);
@@ -231,9 +261,6 @@ export default {
 			},
 			immediate: true,
 		},
-		openPullDown(v) {
-			console.log(v ? '打开' : '关闭');
-		},
 	},
 	methods: {
 		updateTabs() {
@@ -241,24 +268,7 @@ export default {
 			clearTimeout(_timeout);
 			_timeout = setTimeout(() => {
 				console.log('----updateTabs----');
-				let tabPropsList = [];
-				// #ifdef MP-WEIXIN | MP-ALIPAY
-				const children = this.$children?.filter((tab) => tab.$options.name === 'ste-tab') || [];
-				children.forEach((tab) =>
-					tabPropsList.push({
-						...tab.$props,
-					})
-				);
-				// #endif
-				// #ifdef H5
-				const children = this.$slots.default || [];
-				children.forEach((tab) =>
-					tabPropsList.push({
-						...tab.componentOptions.propsData,
-					})
-				);
-				// #endif
-				this.tabPropsList = tabPropsList;
+				this.tabPropsList = getChildrenProps(this, 'ste-tab');
 				this.showComponent = true;
 				this.$nextTick(async () => {
 					this.listBoxEl = await utils.querySelector('.tab-list-box', this);
@@ -268,7 +278,7 @@ export default {
 			});
 		},
 		async onSelect(tab, index) {
-			if (tab.disabled || this.disabled) return false;
+			if (this.lock || tab.disabled || this.disabled) return false;
 			if (this.openPullDown) await this.onOpenDown();
 			let active = this.active;
 			if (typeof this.active === 'string') {
@@ -340,12 +350,13 @@ export default {
 };
 </script>
 
+<!-- 默认线状样式 -->
 <style lang="scss" scoped>
 .ste-tabs--root {
 	display: block;
 	width: 100%;
 	position: relative;
-	.tab-list-box {
+	& > .tab-list-box {
 		position: var(--tabs-sticky);
 		top: var(--tabs-offset-top);
 		width: 100%;
@@ -355,16 +366,18 @@ export default {
 			width: 100%;
 			white-space: nowrap;
 			overflow-x: auto;
+			padding: 12rpx 0;
+			.tab-space {
+				display: inline-block;
+				vertical-align: bottom;
+				width: var(--tabs-tab-space);
+			}
 			.tab-item {
+				display: inline-block;
 				vertical-align: bottom;
 				width: var(--tabs-tab-width);
 				padding: var(--tabs-tab-padding);
-				display: inline-block;
 				text-align: center;
-				& + .tab-item {
-					margin-left: var(--tabs-tab-space);
-				}
-
 				.tab-image {
 					height: 90rpx;
 					width: 90rpx;
@@ -479,13 +492,7 @@ export default {
 				}
 				.tab-list {
 					display: none;
-					padding-top: 24rpx;
-					transition-duration: 0.3s;
-					transform: translateY(-100%);
 					.tab-item {
-						width: 25%;
-						padding: 0;
-						margin-bottom: 24rpx;
 						&.active {
 							.tab-title {
 								color: var(--tabs-color);
@@ -521,12 +528,163 @@ export default {
 						}
 					}
 					.tab-list {
-						display: flex;
+						display: grid;
+						grid-template-columns: 25% 25% 25% 25%;
+						grid-row-gap: 30rpx;
 						flex-wrap: wrap;
 						position: relative;
 						z-index: 1;
 						background-color: #ffffff;
 						border-radius: 0 0 24rpx 24rpx;
+						padding: 30rpx 0;
+						transition-duration: 0.3s;
+						transform: translateY(-100%);
+						.tab-item {
+							width: 100%;
+							margin: 0;
+							padding: 0;
+						}
+					}
+				}
+			}
+		}
+	}
+	& > .content {
+		padding-top: 24rpx;
+	}
+}
+</style>
+
+<!-- card样式 -->
+<style lang="scss" scoped>
+.ste-tabs--root.card {
+	.tab-list-box {
+		.tab-list {
+			padding: 0;
+			.tab-item {
+				padding: 12rpx 24rpx;
+				background-color: var(--tabs-card-background);
+				border-width: var(--tabs-tab-border-width);
+				border-style: solid;
+				border-color: var(--tabs-color);
+				&.start {
+					border-width: var(--tabs-tab-border-width-start);
+				}
+
+				&.active {
+					background-color: var(--tabs-card-background-active);
+					.tab-sub-title {
+						background-color: var(--tabs-card-sub-bg);
+						color: var(--tabs-card-sub-color);
+					}
+				}
+				&.disabled {
+					cursor: no-drop;
+					background-color: #f5f5f5;
+					.tab-title,
+					.tab-sub-title {
+						color: #bbb;
+					}
+				}
+			}
+
+			.tab-line-box {
+				display: none;
+			}
+		}
+
+		.tab-pull-down-box {
+			width: 70rpx;
+			position: absolute;
+			top: 0;
+			right: 0;
+			bottom: 0;
+
+			.pull-down-content {
+				width: 100%;
+				height: 100%;
+				position: absolute;
+				.content-tabs {
+					width: 100%;
+					height: var(--tabs-list-height);
+					.placeholder {
+						display: none;
+						height: 100%;
+						align-items: center;
+						padding: 0 24rpx;
+						color: var(--tabs-tab-color);
+						font-size: 28rpx;
+					}
+					.tab-pull-down {
+						width: 70rpx;
+						position: absolute;
+						top: 0;
+						right: 0;
+						bottom: 0;
+						background-color: rgba(255, 255, 255, 0.45);
+						box-shadow: -5px 0 5px rgba(245, 245, 245, 0.5);
+						display: flex;
+						align-items: center;
+						justify-content: center;
+						.pull-down-icon {
+							transition-duration: 0.3s;
+						}
+					}
+				}
+				.tab-list {
+					display: none;
+					.tab-item {
+						&.active {
+							.tab-title {
+								color: var(--tabs-color);
+							}
+						}
+					}
+				}
+			}
+			&.open {
+				width: 100%;
+				height: 100vh;
+				position: fixed;
+				background-color: rgba(0, 0, 0, 0.45);
+
+				.pull-down-content {
+					height: initial;
+					display: block;
+
+					overflow: hidden;
+					.content-tabs {
+						position: relative;
+						box-shadow: 0 5px 5px rgba(245, 245, 245, 0.5);
+						z-index: 10;
+						background-color: #ffffff;
+						.placeholder {
+							display: flex;
+						}
+						.tab-pull-down {
+							display: flex;
+							.pull-down-icon {
+								transform: rotate(180deg);
+							}
+						}
+					}
+					.tab-list {
+						display: grid;
+						grid-template-columns: 25% 25% 25% 25%;
+						grid-row-gap: 30rpx;
+						flex-wrap: wrap;
+						position: relative;
+						z-index: 1;
+						background-color: #ffffff;
+						border-radius: 0 0 24rpx 24rpx;
+						padding: 30rpx 0;
+						transition-duration: 0.3s;
+						transform: translateY(-100%);
+						.tab-item {
+							width: 100%;
+							margin: 0;
+							padding: 0;
+						}
 					}
 				}
 			}

@@ -5,19 +5,29 @@
 			<view class="demo-item">
 				<view class="title">基础用法</view>
 				<view class="item-block">
-					<ste-tabs :active.sync="active" showSubtitle lineWidth="120" pullDown sticky background="#ff0" swipeable>
+					<ste-tabs
+						:active.sync="active"
+						lineWidth="120"
+						showSubtitle
+						pullDown
+						sticky
+						swipeable
+						type="card"
+						tabSpace="12"
+						border
+					>
 						<ste-tab
 							v-for="(i, index) in list"
-							:title="`标签${index}`"
-							:subTitle="`附标签${index}`"
+							:title="`标签${i}`"
+							:subTitle="`附标签${i}`"
 							:index="index"
 							:image="demoUrl"
 							:disabled="index === 2 || index === 0"
 						>
 							<view :style="{ background: colors[i] }">
-								<h1>==Start {{ index }}==</h1>
-								<h1>内容{{ index }}</h1>
-								<h1>==End {{ index }}==</h1>
+								<h1>==Start {{ i }}==</h1>
+								<h1>内容{{ i }}</h1>
+								<h1>==End {{ i }}==</h1>
 							</view>
 						</ste-tab>
 					</ste-tabs>
@@ -32,12 +42,12 @@ export default {
 		return {
 			demoUrl: `https://image.whzb.com/chain/StellarUI/图片.jpg`,
 			list: [1, 2],
-			active: 0,
+			active: 1,
 		};
 	},
 	mounted() {
 		setTimeout(() => {
-			this.list = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16];
+			this.list = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17];
 			this.active = 3;
 		}, 1000);
 	},
