@@ -11,6 +11,7 @@ export default {
 		return {
 			value: 'RTX4060Ti',
 			hotWords: ['RTX4060', 'RTX4070', 'RTX4080', '小米电视', '华为手机'],
+			focus: false,
 		};
 	},
 	watch: {
@@ -155,6 +156,16 @@ export default {
 <ste-search type="nav" @click="onClick" :hotWords="hotWords" />
 ```
 
+#### 聚焦
+- 可以通过`fous`属性控制搜索框聚焦，双向绑定	
+```
+<ste-search @click="onClick" :focus.sync="focus" />
+<!--聚焦按钮-->
+<view style="margin: 10px auto 0 auto">
+	<ste-button @click="focus = true" width="100%">聚焦</ste-button>
+</view>
+```
+
 
 ### API
 #### Props
@@ -181,7 +192,7 @@ export default {
 | `clearIconColor`	| 清除图标颜色							| `String`	| `"#BBBBBB"`	| -										|-			|
 | `btnTextColor`	| 搜索按钮文本颜色，分割线会跟随文本颜色变化	| `String`	| `"#0090FF"`	| -										|-			|
 | `btnBackground`	| 搜索按钮背景，可直接传颜色值或者图片		| `String`	| -				| -										|-			|
-
+| `focus`			| 是否聚焦(双向绑定)						| `Boolean`	| `false`		| -										|`1.1.5`	|
 
 
 #### Events

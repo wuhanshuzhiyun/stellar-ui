@@ -16,6 +16,7 @@
 					@confirm="onSearch"
 					@focus="onFocus"
 					@blur="onBlur"
+					:focus="focus"
 				/>
 				<swiper
 					v-if="cmpShowSwitch"
@@ -79,6 +80,7 @@ import utils from '../../utils/utils.js';
  * @property {String}			clearIconColor	清除图标颜色，默认值，#BBBBBB
  * @property {String}			btnTextColor	搜索按钮文本颜色 ，默认值，#0090FF
  * @property {String}			btnBackground	搜索按钮背景
+ * @property {Boolean}			focus	是否聚焦(双向绑定)，默认值，false
  * @event {Function}			input 输入事件
  * @event {Function}			focus 聚焦焦点事件
  * @event {Function}			blur 失去焦点事件
@@ -195,6 +197,11 @@ export default {
 			type: Number,
 			default: () => 32,
 		},
+		// 聚焦
+		focus: {
+			type: Boolean,
+			default: () => false,
+		},
 	},
 	model: {
 		prop: 'value',
@@ -260,7 +267,7 @@ export default {
 			this.$emit('focus', this.dataValue);
 		},
 		onBlur() {
-			if (this.disabled) return;
+			this.$emit('update:focus', false);
 			this.$emit('blur', this.dataValue);
 		},
 		onSearch() {
