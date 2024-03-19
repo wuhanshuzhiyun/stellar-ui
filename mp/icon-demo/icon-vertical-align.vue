@@ -1,6 +1,6 @@
 <template>
 	<view class="page">
-		<page-nav :autoBack="true" backColor="#000" titleAlignment="2" title="图标预览"></page-nav>
+		<page-nav :autoBack="true" backColor="#000" titleAlignment="2" title="图标对齐预览"></page-nav>
 		<view class="content">
 			<view class="font-title">字体地址</view>
 			<view class="font-sample">
