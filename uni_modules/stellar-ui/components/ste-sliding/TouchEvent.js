@@ -37,6 +37,13 @@ export default class TouchEvent {
 	}
 	// 滑动结束
 	touchEnd(e) {
+		if (this.startX === null || this.startY === null) {
+			return {
+				direction: null,
+				moveX: 0,
+				moveY: 0
+			}
+		}
 		// #ifdef H5
 		const moveX = e.pageX - this.startX;
 		const moveY = e.pageY - this.startY;

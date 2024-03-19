@@ -15,6 +15,7 @@
 			:show-menu-by-longpress="showMenuByLongpress"
 			@load="onLoadOver"
 			@error="onFault"
+			@click="click"
 		></image>
 
 		<view v-if="!hiddenError && status === 2">
@@ -30,7 +31,7 @@ import utils from '../../utils/utils.js';
 /**
  * ste-image 图片
  * @description 图片组件
- * @tutorial http://172.16.114.51:5050/pc/index/index?name=ste-image
+ * @tutorial https://stellar-ui.intecloud.com.cn/pc/index/index?name=ste-image
  * @property {String}			src										图片地址
  * @property {String}			mode									图片裁剪、缩放的模式 默认值：scaleToFill
  * @value scaleToFill 缩放（默认）：不保持纵横比缩放图片，使图片的宽高完全拉伸至填满 image 元素 {String}
@@ -45,6 +46,7 @@ import utils from '../../utils/utils.js';
  * @property {Boolean}				hiddenError						是否隐藏加载失败的内容
  * @property {Boolean}				showMenuByLongpress		长按图片显示发送给朋友、收藏、保存图片、搜一搜、打开名片/前往群聊/打开小程序（若图片中包含对应二维码或小程序码）的菜单。
  * @property {Boolean}				lazyLoad							图片懒加载，在即将进入一定范围（上下三屏）时才开始加载
+ * @event {Function}			click 点击事件
  * @event {Function}			load 加载成功事件
  * @event {Function}			error 加载失败事件
  */
@@ -130,6 +132,9 @@ export default {
 		this.setIconSize();
 	},
 	methods: {
+		click(e) {
+			this.$emit('click', e);
+		},
 		onLoadOver(e) {
 			this.status = 1;
 			this.$emit('load', e);

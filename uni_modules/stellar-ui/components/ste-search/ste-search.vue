@@ -55,7 +55,7 @@ import utils from '../../utils/utils.js';
 /**
  * ste-search 搜索
  * @description 搜索组件
- * @tutorial http://172.16.114.51:5050/pc/index/index?name=ste-search
+ * @tutorial https://stellar-ui.intecloud.com.cn/pc/index/index?name=ste-search
  * @property {String}			type				组件类型
  * @value default	正常搜索{String}
  * @value nav 		导航栏{String}
@@ -274,9 +274,13 @@ export default {
 		onSwitchChange(v) {
 			this.switchIndex = v.detail.current;
 		},
-		onClick(v) {
+		onClick() {
 			if (this.disabled) return;
-			this.$emit('click', this.dataValue);
+			let searchValue = this.dataValue;
+			if (!searchValue && this.hotWords.length) {
+				searchValue = this.hotWords[this.switchIndex];
+			}
+			this.$emit('click', searchValue);
 		},
 		onClear() {
 			if (this.disabled) return;

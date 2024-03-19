@@ -113,7 +113,7 @@
 			<view class="demo-item">
 				<view class="title">导航模式</view>
 				<view class="item-block">
-					<ste-search type="nav" @click="onClick" />
+					<ste-search type="nav" @click="onClick" :hotWords="hotWords" />
 				</view>
 			</view>
 		</view>
@@ -144,10 +144,10 @@ export default {
 				title: `搜索：${v}`,
 			});
 		},
-		onClick() {
+		onClick(v) {
 			uni.showToast({
 				icon: 'none',
-				title: '点击触发',
+				title: `点击触发：${v}`,
 			});
 		},
 	},

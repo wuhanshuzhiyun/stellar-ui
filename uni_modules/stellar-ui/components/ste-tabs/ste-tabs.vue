@@ -1,5 +1,5 @@
 <template>
-	<view class="ste-tabs--root" :style="[cmpRootStyle]">
+	<view class="ste-tabs--root" :class="type" :style="[cmpRootStyle]">
 		<view class="tab-list-box" :style="[cmpListBackground, { paddingRight: cmpPullDown ? '70rpx' : 0 }]">
 			<scroll-view
 				class="tab-list view-list"
@@ -11,26 +11,30 @@
 				:show-scrollbar="false"
 				@scroll="onScroll"
 			>
-				<view
-					class="tab-item"
-					v-for="(tab, index) in cmpTabList"
-					:key="index"
-					:class="{
-						active: tab.active,
-						disabled: tab.disabled || disabled,
-					}"
-					@click="onSelect(tab, index)"
-				>
-					<view class="tab-image" v-if="showImage">
-						<ste-image :src="tab.image" />
+				<block v-for="(tab, index) in cmpTabList" :key="index">
+					<view class="tab-space" v-if="index > 0" :style="{ height: `${cmpActiveTabEl.height}px` }">
+						<view class="space-line" />
 					</view>
-					<view class="tab-title" v-if="showTitle">
-						{{ tab.title }}
+					<view
+						class="tab-item"
+						:class="{
+							active: tab.active,
+							disabled: tab.disabled || disabled,
+							start: index === 0,
+						}"
+						@click="onSelect(tab, index)"
+					>
+						<view class="tab-image" v-if="showImage">
+							<ste-image :src="tab.image" />
+						</view>
+						<view class="tab-title" v-if="showTitle">
+							{{ tab.title }}
+						</view>
+						<view class="tab-sub-title" v-if="showSubtitle">
+							{{ tab.subTitle }}
+						</view>
 					</view>
-					<view class="tab-sub-title" v-if="showSubtitle">
-						{{ tab.subTitle }}
-					</view>
-				</view>
+				</block>
 				<view class="tab-line-box" v-if="!showSubtitle">
 					<view class="tab-line" :style="[cmpLineStyle]"></view>
 				</view>
@@ -70,51 +74,29 @@
 				</view>
 			</view>
 		</view>
-		<!-- 内容区域 -->
-		<!-- #ifdef MP-WEIXIN | MP-ALIPAY -->
-		<view
-			class="tab-content"
-			@touchstart="onTouchstart"
-			@touchmove="onTouchmove"
-			@touchend="onTouchend"
-			@touchcancel="onTouchend"
-		>
-			<view class="content-view" :style="[cmpContentTransform]">
+		<view class="content">
+			<!-- 内容区域 -->
+			<ste-sliding
+				:index="cmpActiveIndex"
+				:childrenLength="cmpTabList.length"
+				:duration="duration"
+				:disabledIndexs="cmpDisabledIndexs"
+				:disabled="!swipeable || lock"
+				@change="onSliding"
+			>
 				<slot name="default" />
-			</view>
+			</ste-sliding>
 		</view>
-		<!-- #endif -->
-		<!-- #ifdef H5 -->
-		<view
-			class="tab-content"
-			@mousedown="onTouchstart"
-			@mousemove="onTouchmove"
-			@mouseup="onTouchend"
-			@mouseout="onTouchend"
-		>
-			<view class="content-view" :style="[cmpContentTransform]">
-				<slot name="default" />
-			</view>
-		</view>
-		<!-- #endif -->
 	</view>
 </template>
 
 <script>
 import utils from '../../utils/utils.js';
-import TouchEvent from './TouchEvent.js';
-import props from './props.js';
-
-let _tabsComponent = {
-	getParent() {
-		return this;
-	},
-};
-let _timeout;
+import { getChildrenProps } from './utils.js';
 /**
  * ste-tabs 标签页
  * @description 标签页组件
- * @tutorial http://172.16.114.51:5050/pc/index/index?name=ste-tabs
+ * @tutorial https://stellar-ui.intecloud.com.cn/pc/index/index?name=ste-tabs
  * @property {String}			type				组件类型
  * @event {Function}			click 点击事件
  */
@@ -122,10 +104,147 @@ export default {
 	group: '基础组件',
 	title: 'Tabs 标签页',
 	name: 'ste-tabs',
-	mixins: [props],
-	provide: { _tabsComponent },
+	props: {
+		// 当前激活的选项（支持v-model双向绑定）（类型为number时绑定index，类型为string时绑定name）
+		active: {
+			type: [Number, String],
+			default: () => 0,
+		},
+		// 样式风格类型，可选值为 line  card
+		type: {
+			type: String,
+			default: () => 'line',
+		},
+		// 是否显示图片
+		showImage: {
+			type: Boolean,
+			default: () => false,
+		},
+		// 是否显示主标题
+		showTitle: {
+			type: Boolean,
+			default: () => true,
+		},
+		// 是否显示副标题
+		showSubtitle: {
+			type: Boolean,
+			default: () => false,
+		},
+		// 主题色（滑块颜色，边框颜色，选中的背景色，激活下拉列表中选项颜色）
+		color: {
+			type: String,
+			default: () => '#0090FF',
+		},
+		// 背景
+		background: {
+			type: String,
+			default: () => 'none',
+		},
+		// 动画时间，单位秒，设置为 0 可以禁用动画
+		duration: {
+			type: [String, Number],
+			default: () => 0.3,
+		},
+		// 底部条宽度，默认单位rpx
+		lineWidth: {
+			type: [String, Number],
+			default: () => 52,
+		},
+		// 底部条高度，默认单位rpx
+		lineHeight: {
+			type: [String, Number],
+			default: () => 6,
+		},
+		// 是否显示标签栏外边框，仅在 type="line" 时有效
+		border: {
+			type: Boolean,
+			default: () => false,
+		},
+		// 是否省略过长的标题文字
+		ellipsis: {
+			type: Boolean,
+			default: () => false,
+		},
+		// tab内容的宽度
+		tabWidth: {
+			type: [String, Number],
+			default: () => 'auto',
+		},
+		// tab等分数量，设置为 0 ，则不等分
+		divideNum: {
+			type: Number,
+			default: () => 4,
+		},
+		// tab间距rpx
+		tabSpace: {
+			type: Number,
+			default: () => 0,
+		},
+		// 是否使用粘性布局
+		sticky: {
+			type: Boolean,
+			default: () => false,
+		},
+		// 是否开启手势左右滑动切换
+		swipeable: {
+			type: Boolean,
+			default: () => false,
+		},
+		// 是否开启滚动导航
+		scrollspy: {
+			type: Boolean,
+			default: () => false,
+		},
+		// 粘性布局下吸顶时与顶部的距离，单位rpx
+		offsetTop: {
+			type: [String, Number],
+			default: () => 0,
+		},
+		// 选项字体颜色和下拉列表中选项颜色
+		tabColor: {
+			type: String,
+			default: () => '#000000',
+		},
+		// 激活选项字体颜色
+		activeTabColor: {
+			type: String,
+			default: () => '#000000',
+		},
+		// 是否显示分隔符
+		showGapLine: {
+			type: Boolean,
+			default: () => false,
+		},
+		// 是否锁定tab(无法切换)
+		lock: {
+			type: Boolean,
+			default: () => false,
+		},
+		// 是否禁用tab(所有功能失效)
+		disabled: {
+			type: Boolean,
+			default: () => false,
+		},
+		// 是否有下拉选择按钮
+		pullDown: {
+			type: Boolean,
+			default: () => false,
+		},
+		// 下拉占位符
+		placeholder: {
+			type: String,
+			default: () => '选择类别',
+		},
+	},
+
+	provide() {
+		return {
+			_tabsComponent: { getParent: () => this },
+		};
+	},
 	data() {
 		return {
+			dataActive: 0,
 			viewScrollLeft: 0,
 			scrollLeft: 0,
 			showComponent: false,
@@ -135,37 +254,29 @@ export default {
 			tabEls: [],
 			openPullDown: false,
 			pullListTransform: '-100%',
-			touch: null,
-			contentTransform: 0,
-			moveContent: false,
+			_timeout: null,
 		};
-	},
-	beforeCreate() {
-		_tabsComponent.getParent = _tabsComponent.getParent.bind(this);
-	},
-	created() {
-		this.initTouchEvent();
 	},
 	computed: {
 		cmpTabList() {
 			return this.tabPropsList.map((item, index) => {
-				switch (typeof this.active) {
+				switch (typeof this.dataActive) {
 					case 'string':
-						item.active = this.active === item.name;
+						item.active = this.dataActive === item.name;
 						break;
 					case 'number':
-						item.active = this.active === index;
+						item.active = this.dataActive === index;
 						break;
 				}
 				return item;
 			});
 		},
-		cmpTabContentLefts() {
-			const lefts = [];
-			const width = this.listBoxEl?.width || 0;
-			this.cmpTabList.forEach((m, i) => lefts.push(width * i));
-			console.log('content-lefts', lefts);
-			return lefts;
+		cmpDisabledIndexs() {
+			const list = [];
+			this.cmpTabList.forEach((m, i) => {
+				if (m.disabled) list.push(i);
+			});
+			return list;
 		},
 		cmpRootStyle() {
 			let tabWidth = isNaN(this.tabWidth) ? this.tabWidth : utils.rpx2px(this.tabWidth);
@@ -174,23 +285,54 @@ export default {
 				tabWidth = 100 / this.tabPropsList.length + '%';
 				tabPadding = 0;
 			}
-			const duration = this.duration ? `${this.duration}s` : 'inherit';
+			let tabCardBg = utils.Color.formatColor(this.tabColor, 0.05);
+			let tabCardBgActive = utils.Color.formatColor(this.color, 0.1);
+			let tabCardSubBg = this.color;
+			let tabCardSubColor = '#fff';
+			let activeTabColor = this.activeTabColor;
+			let borderWidthStart = '0';
+			let borderWidth = '0';
+			if (this.type === 'card') {
+				activeTabColor = this.color;
+				if (this.border) {
+					tabCardBg = 'none';
+					tabCardBgActive = this.color;
+					tabCardSubBg = '#fff';
+					tabCardSubColor = this.color;
+					activeTabColor = '#fff';
+					borderWidthStart = '1px';
+					borderWidth = '1px 1px 1px 0';
+					if (this.tabSpace > 0) {
+						borderWidth = '1px';
+					}
+				}
+			}
+			let tabSpaceLine = 0;
+			if (this.showGapLine) {
+				tabSpaceLine = '1px';
+			}
+
 			const style = {
 				'--tabs-color': this.color,
+				'--tabs-card-background': tabCardBg,
+				'--tabs-card-background-active': tabCardBgActive,
+				'--tabs-card-sub-bg': tabCardSubBg,
+				'--tabs-card-sub-color': tabCardSubColor,
 				'--tabs-line-width': isNaN(this.lineWidth) ? this.lineWidth : utils.rpx2px(this.lineWidth),
 				'--tabs-line-height': isNaN(this.lineHeight) ? this.lineHeight : utils.rpx2px(this.lineHeight),
 				'--tabs-tab-width': tabWidth,
 				'--tabs-tab-padding': `0 ${tabPadding}`,
-				'--tabs-transition-duration': duration,
+				'--tabs-transition-duration': this.duration ? `${this.duration}s` : 'inherit',
 				'--tabs-tab-space': isNaN(this.tabSpace) ? this.tabSpace : utils.rpx2px(this.tabSpace),
+				'--tabs-tab-space-line': tabSpaceLine,
+				'--tabs-tab-border-width': borderWidth,
+				'--tabs-tab-border-width-start': borderWidthStart,
 				'--tabs-sticky': this.sticky ? 'sticky' : 'relative',
 				'--tabs-offset-top': isNaN(this.offsetTop) ? this.offsetTop : utils.rpx2px(this.offsetTop),
 				'--tabs-tab-color': this.tabColor,
-				'--tabs-active-tab-color': this.activeTabColor,
+				'--tabs-active-tab-color': activeTabColor,
 				'--tabs-list-height': this.openPullDown && this.listEl ? `${this.listEl?.height}px` : 'initial',
-				'--tabs-content-display': this.scrollspy ? 'block' : 'flex',
 				opacity: this.showComponent ? '1' : '0',
-				duration,
 			};
 			return style;
 		},
@@ -200,10 +342,8 @@ export default {
 		cmpActiveIndex() {
 			return this.cmpTabList.findIndex((m) => m.active);
 		},
-		cmpActiveEl() {
-			if (this.cmpActiveIndex === -1) return null;
-			const activeEl = this.tabEls[this.cmpActiveIndex];
-			return activeEl;
+		cmpActiveTabEl() {
+			return this.tabEls[this.cmpActiveIndex] || {};
 		},
 		cmpLineStyle() {
 			const width = isNaN(this.lineWidth) ? this.lineWidth : utils.rpx2px(this.lineWidth);
@@ -241,57 +381,29 @@ export default {
 		cmpPullListTransform() {
 			return { transform: `translateY(${this.pullListTransform})` };
 		},
-		cmpContentTransform() {
-			const transitionDuration = this.moveContent ? 'inherit' : this.cmpRootStyle.duration;
-			return {
-				transform: `translateX(${this.contentTransform}px)`,
-				transitionDuration,
-			};
-		},
 	},
 	watch: {
-		$props: {
+		active: {
 			handler(v) {
-				_tabsComponent.props = v;
+				this.dataActive = v;
 			},
 			immediate: true,
-			deep: true,
 		},
 		cmpActiveIndex: {
 			handler(v) {
 				this.scrollToActive();
-				this.scrollToContent();
 			},
 			immediate: true,
-		},
-		openPullDown(v) {
-			console.log(v ? '打开' : '关闭');
 		},
 	},
 	methods: {
 		updateTabs() {
 			this.showComponent = false;
-			clearTimeout(_timeout);
-			_timeout = setTimeout(() => {
-				let tabPropsList = [];
-				// #ifdef MP-WEIXIN | MP-ALIPAY
-				const children = this.$children?.filter((tab) => tab.$options.name === 'ste-tab') || [];
-				children.forEach((tab) =>
-					tabPropsList.push({
-						...tab.$props,
-					})
-				);
-				// #endif
-				// #ifdef H5
-				const children = this.$slots.default || [];
-				children.forEach((tab) =>
-					tabPropsList.push({
-						...tab.componentOptions.propsData,
-					})
-				);
-				// #endif
-				this.tabPropsList = tabPropsList;
+			clearTimeout(this._timeout);
+			this._timeout = setTimeout(() => {
+				this.tabPropsList = getChildrenProps(this, 'ste-tab');
 				this.showComponent = true;
+				console.log('----updateTabs----');
 				this.$nextTick(async () => {
 					this.listBoxEl = await utils.querySelector('.tab-list-box', this);
 					this.listEl = await utils.querySelector('.tab-list-box .tab-list.view-list', this);
@@ -299,24 +411,23 @@ export default {
 				});
 			});
 		},
-		initTouchEvent() {
-			if (!this.swipeable) return;
-			this.touch = new TouchEvent();
-		},
 		async onSelect(tab, index) {
+			if (this.lock || tab.disabled || this.disabled) return false;
 			if (this.openPullDown) await this.onOpenDown();
-			if (tab.disabled || this.disabled) return;
-			let active = this.active;
-			if (typeof this.active === 'string') {
+			let active = this.dataActive;
+			if (typeof this.dataActive === 'string') {
 				active = tab.name;
-			} else if (typeof this.active === 'number') {
+			} else if (typeof this.dataActive === 'number') {
 				active = index;
 			}
+			this.dataActive = active;
 			this.$emit('update:active', active);
 			this.$emit('change', {
 				index,
 				...tab,
 			});
+
+			return true;
 		},
 		onScroll(e) {
 			this.viewScrollLeft = e?.detail?.scrollLeft || 0;
@@ -346,16 +457,6 @@ export default {
 				this.scrollLeft = scrollLeft;
 			});
 		},
-		scrollToContent() {
-			this.$nextTick(async () => {
-				if (!this.cmpActiveIndex) {
-					this.contentTransform = 0;
-					return;
-				}
-
-				this.contentTransform = -this.cmpTabContentLefts[this.cmpActiveIndex];
-			});
-		},
 		onOpenDown() {
 			return new Promise(async (resolve, reject) => {
 				if (this.openPullDown) {
@@ -375,44 +476,22 @@ export default {
 				}, 20);
 			});
 		},
-		onTouchstart(e) {
-			if (!this.touch) return;
-			this.moveContent = true;
-			this.touch.touchStart(e);
-		},
-		onTouchmove(e) {
-			if (!this.touch) return;
-			const res = this.touch.touchMove(e);
-			if (!res) return;
-			const { moveX } = res;
-			this.contentTransform = -this.cmpTabContentLefts[this.cmpActiveIndex] + moveX;
-		},
-		onTouchend(e) {
-			if (!this.touch) return;
-			this.moveContent = false;
-			const { moveX } = this.touch.touchEnd(e);
-
-			const index = moveX > 0 ? this.cmpActiveIndex - 1 : this.cmpActiveIndex + 1;
-
-			if (index < 0 || index > this.cmpTabList.length - 1 || Math.abs(moveX) < this.listBoxEl.width / 2) {
-				this.$nextTick(() => {
-					this.contentTransform = -this.cmpTabContentLefts[this.cmpActiveIndex];
-				});
-				return;
-			}
-
-			this.onSelect(this.cmpTabList[index], index);
+		onSliding(index) {
+			if (this.disabled) return;
+			const tab = this.cmpTabList[index];
+			this.onSelect(tab, index);
 		},
 	},
 };
 </script>
 
+<!-- 默认线状样式 -->
 <style lang="scss" scoped>
 .ste-tabs--root {
 	display: block;
 	width: 100%;
 	position: relative;
-	.tab-list-box {
+	& > .tab-list-box {
 		position: var(--tabs-sticky);
 		top: var(--tabs-offset-top);
 		width: 100%;
@@ -422,16 +501,26 @@ export default {
 			width: 100%;
 			white-space: nowrap;
 			overflow-x: auto;
-			padding-top: 12rpx;
+			padding: 12rpx 0;
+			.tab-space {
+				display: inline-flex;
+				vertical-align: bottom;
+				width: var(--tabs-tab-space);
+				min-width: var(--tabs-tab-space-line);
+				align-items: center;
+				justify-content: center;
+				.space-line {
+					width: var(--tabs-tab-space-line);
+					background-color: rgba(200, 200, 200, 0.3);
+					height: 60%;
+				}
+			}
 			.tab-item {
+				display: inline-block;
+				vertical-align: bottom;
 				width: var(--tabs-tab-width);
 				padding: var(--tabs-tab-padding);
-				display: inline-block;
 				text-align: center;
-				& + .tab-item {
-					margin-left: var(--tabs-tab-space);
-				}
-
 				.tab-image {
 					height: 90rpx;
 					width: 90rpx;
@@ -546,13 +635,7 @@ export default {
 				}
 				.tab-list {
 					display: none;
-					padding-top: 24rpx;
-					transition-duration: 0.3s;
-					transform: translateY(-100%);
 					.tab-item {
-						width: 25%;
-						padding: 0;
-						margin-bottom: 24rpx;
 						&.active {
 							.tab-title {
 								color: var(--tabs-color);
@@ -588,22 +671,81 @@ export default {
 						}
 					}
 					.tab-list {
-						display: flex;
+						display: grid;
+						grid-template-columns: 25% 25% 25% 25%;
+						grid-row-gap: 30rpx;
 						flex-wrap: wrap;
 						position: relative;
 						z-index: 1;
 						background-color: #ffffff;
 						border-radius: 0 0 24rpx 24rpx;
+						padding: 30rpx 0;
+						transition-duration: 0.3s;
+						transform: translateY(-100%);
+						.tab-item {
+							width: 100%;
+							margin: 0;
+							padding: 0;
+						}
 					}
 				}
 			}
 		}
 	}
-	.tab-content {
-		width: 100%;
-		overflow-x: hidden;
-		.content-view {
-			display: var(--tabs-content-display);
+	& > .content {
+		padding-top: 24rpx;
+	}
+}
+</style>
+
+<!-- card样式 -->
+<style lang="scss" scoped>
+.ste-tabs--root.card {
+	.tab-list-box {
+		.tab-list {
+			padding: 0;
+			.tab-item {
+				padding: 12rpx 24rpx;
+				background-color: var(--tabs-card-background);
+				border-width: var(--tabs-tab-border-width);
+				border-style: solid;
+				border-color: var(--tabs-color);
+				&.start {
+					border-width: var(--tabs-tab-border-width-start);
+				}
+
+				&.active {
+					background-color: var(--tabs-card-background-active);
+					.tab-sub-title {
+						background-color: var(--tabs-card-sub-bg);
+						color: var(--tabs-card-sub-color);
+					}
+				}
+				&.disabled {
+					cursor: no-drop;
+					background-color: #f5f5f5;
+					.tab-title,
+					.tab-sub-title {
+						color: #bbb;
+					}
+				}
+			}
+
+			.tab-line-box {
+				display: none;
+			}
+		}
+
+		.tab-pull-down-box {
+			&.open {
+				.pull-down-content {
+					.tab-list {
+						.tab-item {
+							background-color: initial;
+						}
+					}
+				}
+			}
 		}
 	}
 }
