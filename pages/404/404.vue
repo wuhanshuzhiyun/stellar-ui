@@ -21,7 +21,9 @@ export default {
 	},
 	methods: {
 		goToHome() {
-			this.$Router.push({ name: 'home' });
+			uni.redirectTo({
+				url: '/mp/index/index',
+			});
 		},
 	},
 };
