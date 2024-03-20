@@ -64,7 +64,7 @@
 | 参数					| 说明																												| 类型				| 默认值		| 可选值							| 支持版本	|
 | ---					| ---																												| ---				| ---		| ---							| ---		|
 |`activeBg`				| 进度条激活部分的背景																								| `String`			| `#0090ff`	| -								| -			|
-|`inactiveBg`			| 进度条激活部分的背景																								| `String`			| `#eeeeee`	| -								| -			|
+|`inactiveBg`			| 进度条未激活部分的背景																								| `String`			| `#eeeeee`	| -								| -			|
 |`percentage`			| 进度条百分比																										| `Number`			| `0`		| 0-100							| -			|
 |`strokeWidth`			| 进度条的粗细，默认单位rpx																							| `String/Number`	| `24rpx`	| -								| -			|
 |`disabled`				| 是否禁用																											| `Boolean`			| `false`	| -								| -			|
