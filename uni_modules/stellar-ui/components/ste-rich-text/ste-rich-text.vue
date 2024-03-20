@@ -24,7 +24,7 @@ import utils from '@/common/utils.js';
  * @property {Boolean} userSelect 文本是否可选 默认 false
  */
 export default {
-	group: '基础组件',
+	group: '表单组件',
 	title: 'Rich Text 富文本',
 	name: 'ste-rich-text',
 	props: {
