@@ -97,7 +97,7 @@ import { getChildrenProps } from './utils.js';
  * ste-tabs 标签页
  * @description 标签页组件
  * @tutorial https://stellar-ui.intecloud.com.cn/pc/index/index?name=ste-tabs
- * @property {String | Number} 	active  当前激活的选项支持sync双向绑定（类型为number时tab绑定index，类型为string时tab绑定name）
+ * @property {String | Number} 	active  当前激活的选项，支持sync双向绑定（类型为number时tab绑定index，类型为string时tab绑定name）
  * @property {String}			type				组件类型
  * @value line 线性（默认）
  * @value card 卡片模式
@@ -116,14 +116,14 @@ import { getChildrenProps } from './utils.js';
  * @property {String | Number}	tabSpace					选项间距，默认0，单位rpx
  * @property {Boolean}					sticky						是否开启吸顶
  * @property {Number | String}	offsetTop					吸顶距离
- * @property {Boolean} 					swipeable					是否开启手势滑动切换，默认值0
+ * @property {Boolean} 					swipeable					是否开启手势滑动切换
  * @property {String} 					tabColor					选项字体颜色和下拉列表中选项颜色，默认值#000000
  * @property {String} 					activeTabColor		激活选项字体颜色，默认值#000000
  * @property {Boolean} 					showGapLine				是否显示分割线，默认值false
  * @property {Boolean} 					lock							是否锁定（无法切换）
  * @property {Boolean} 					disabled					是否禁用
  * @property {Boolean} 					pullDown					是否有下拉选项（当选项数量大于均分数量时生效）
- * @property {String} 					placeholder				下拉占位符，默认值：选择类别
+ * @property {String} 					placeholder				下拉占位符，默认值：请选择
  * @event {Function}						change 						选项改变监听,参数{index:number,...item}
  */
 export default {
@@ -254,7 +254,7 @@ export default {
 		// 下拉占位符
 		placeholder: {
 			type: String,
-			default: () => '选择类别',
+			default: () => '请选择',
 		},
 	},
 
@@ -540,7 +540,7 @@ export default {
 				justify-content: center;
 				.space-line {
 					width: var(--tabs-tab-space-line);
-					background-color: rgba(200, 200, 200, 0.3);
+					background-color: rgba(180, 180, 180, 0.3);
 					height: 60%;
 				}
 			}
