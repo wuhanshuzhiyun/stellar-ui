@@ -57,7 +57,7 @@ import { mdMap, vueMap, datas } from '../markdown/index.js';
 import md2html from './md2html.js';
 import './mdStyle.scss';
 
-const baseUrl = 'http://172.16.114.51:3000';
+const baseUrl = 'http://172.16.116.220:3000';
 
 let timeout = 0;
 
