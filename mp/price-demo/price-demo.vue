@@ -33,7 +33,7 @@
 				<view class="title">自定义精度</view>
 				<view class="item-block">
 					<view>
-						<ste-price value="9527" :digits="1" />
+						<ste-price value="9520" :digits="1" />
 					</view>
 				</view>
 			</view>

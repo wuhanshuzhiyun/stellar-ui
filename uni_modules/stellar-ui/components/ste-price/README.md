@@ -26,7 +26,7 @@
 #### 自定义精度
 - 使用`digits`可以自定义精度
 ```html
-<ste-price value="9527" :digits="1" />
+<ste-price value="9520" :digits="1" />
 ```
 
 #### 金额文字尺寸
