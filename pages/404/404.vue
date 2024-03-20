@@ -8,7 +8,6 @@
 			<img id="planet" :src="planet" />
 			<a href="#" @click="goToHome"><button class="denied__link">返回首页</button></a>
 		</view>
-		<image :src="imageUrl"></image>
 	</view>
 </template>
 
