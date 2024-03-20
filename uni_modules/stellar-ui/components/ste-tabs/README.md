@@ -92,8 +92,8 @@ export default {
 	</ste-tab>
 </ste-tabs>
 ```
-#### Card模式
-- `ste-tabs`标签设置`type`等于`card`时开启Card模式
+#### 卡片模式
+- `ste-tabs`标签设置`type`等于`card`时开启卡片模式
 ```html
 <ste-tabs type="card">
 	<ste-tab v-for="(item, index) in list1" :key="index" :title="item.title" :index="index">
@@ -103,8 +103,20 @@ export default {
 	</ste-tab>
 </ste-tabs>
 ```
-#### Card模式带边框
-- `ste-tabs`标签设置`border`时展示边框，只在Card模式下生效
+#### 卡片模式带边框
+- `ste-tabs`标签设置`border`时展示边框，只在卡片模式下生效
+```html
+<ste-tabs type="card">
+	<ste-tab v-for="(item, index) in list1" :key="index" :title="item.title" :index="index">
+		<h1>==Start {{ item.title }}==</h1>
+		<h1>内容{{ item.title }}</h1>
+		<h1>==End {{ item.title }}==</h1>
+	</ste-tab>
+</ste-tabs>
+```
+
+#### 分割线
+- `ste-tabs`标签设置`showGapLine`时在子项之间展示分割线
 ```html
 <ste-tabs type="card">
 	<ste-tab v-for="(item, index) in list1" :key="index" :title="item.title" :index="index">
@@ -140,7 +152,7 @@ export default {
 	</ste-tab>
 </ste-tabs>
 ```
-#### 显示子标题和滑块大小
+#### 子标题和滑块大小
 - `ste-tabs`标签的`showSubtitle`属性开启时可显示子标题
 	- `lineWidth`设置滑块宽度
 	- `lineHeight`设置滑块高度
@@ -177,7 +189,7 @@ export default {
 	</ste-tab>
 </ste-tabs>
 ```
-#### 开启下拉选项和自定义颜色
+#### 下拉选项和自定义颜色
 - `ste-tabs`标签的`pullDown`属性可开启下拉选项功能，下拉选项只有在标签数量大于均分数量时展示
 	- `placeholder`设置下拉选项的占位符内容
 	- `color`设置主题色，默认`#0090FF`（滑块颜色，边框颜色，选中的背景色，激活下拉列表中选项颜色）
@@ -237,4 +249,63 @@ export default {
 </ste-tabs>
 ```
 
+### API
+#### Tabs Props
+| 属性名					| 说明																																																| 类型								| 默认值				| 可选值																	|支持版本	|
+| -----						|-----																																															|-----							|-----				|-----																	|-----		|
+| `active`				| 当前激活的选项，支持sync双向绑定**（类型为number时tab绑定index，类型为string时tab绑定name）**					| `String`,`Number`	| `0`					| -																			|-				|
+| `type`					| 组件类型																																														| `String`					| `"line"`		| `"line"`线性模式<br/>`"card"`卡片模式	|-				|
+| `showImage`			| 是否显示图片																																												| `Boolean`					| `false`			| -																			|-				|
+| `showTitle`			| 是否显示标题																																												| `Boolean`					| `true`			| -																			|-				|
+| `showSubtitle`	| 是否显示子标题																																											| `Boolean`					| `false`			| -																			|-				|
+| `color`					| 主题色（滑块颜色，边框颜色，选中的背景色，激活下拉列表中选项颜色）**（仅支持16进制、rgb以及rgba格式）**	| `String`					| `#0090FF`		| -																			|-				|
+| `background`		| 标签栏背景	**（支持图片、颜色以及渐变色）**																													| `String`					| `""`				| -																			|-				|
+| `duration`			| 切换动画时长	**（单位秒）**																																					| `Number`					| `0.3`				| -																			|-				|
+| `lineWidth`			| 底部条或副标题背景色宽度	**（单位rpx）**																														| `String`,`Number`	| `52`				| -																			|-				|
+| `lineHeight`		| 底部条或副标题背景色高度	**（单位rpx）**																														| `String`,`Number`	| `6`					| -																			|-				|
+| `border`				| 是否显示边框	**（仅在card模式下生效）**																															| `Boolean`					| `false`			| -																			|-				|
+| `ellipsis`			| 是否开启选项文本超长省略																																						| `Boolean`					| `false`			| -																			|-				|
+| `tabWidth`			| 选项宽度 **（单位rpx）**																																						| `String`,`Number`	| `"auto"`		| -																			|-				|
+| `divideNum`			| 标签栏均分最大数量 **（设置0则不均分）**																														| `Number`					| `4`					| -																			|-				|
+| `tabSpace`			| 选项间距 **（单位rpx）**																																						| `String`,`Number`	| `0`					| -																			|-				|
+| `sticky`				| 是否开启吸顶																																												| `Boolean`					| `false`			| -																			|-				|
+| `offsetTop`			| 吸顶距离	**（单位rpx）**																																						| `String`,`Number`	| `0`					| -																			|-				|
+| `swipeable`			| 是否开启手势滑动切换																																								| `Boolean`					| `false`			| -																			|-				|
+| `tabColor`			| 标题字体颜色和下拉列表中标题字体颜色																																	| `String`					| `"#000000"`	| -																			|-				|
+| `activeTabColor`| 激活标题字体颜色																																										| `String`					| `"#000000"`	| -																			|-				|
+| `showGapLine`		| 是否显示分割线																																											| `Boolean`					| `false`			| -																			|-				|
+| `lock`					| 是否锁定**（无法切换）**																																						| `Boolean`					| `false`			| -																			|-				|
+| `disabled`			| 是否禁用**（全部功能失效并且置灰）**																																| `Boolean`					| `false`			| -																			|-				|
+| `pullDown`			| 是否有下拉选项**（当选项数量大于均分数量时生效）**																										| `Boolean`					| `false`			| -																			|-				|
+| `placeholder`		| 下拉占位符																																													| `String`					| `"请选择"`		| -																			|-				|
 
+#### Tabs Events
+您可以通过监听`change`事件，事件参数为用户选中标签项的`props`对象，您可以监听该事件获取当前选中的标签。
+|事件名		|说明							|事件参数							|支持版本	|
+|---			|---							|---									|---			|
+| `change`| 监听用户输入事件	| `value`: 输入框的值	| -				|
+
+#### Tabs Slot
+您可以通过监听`change`事件，事件参数为用户选中标签项的`props`对象，您可以监听该事件获取当前选中的标签。
+|插槽名			|说明													|插槽参数	|支持版本	|
+| ---				| ---													| ---			| ---			|
+| `default`	| 默认插槽，请传入`Tab`标签列表	|-				| -				|
+
+#### Tab Props
+| 属性名		| 说明																																		| 类型				| 默认值		| 可选值	|支持版本	|
+| -----			| -----																																	| -----			| -----		| -----	| -----		|
+| `title`		| 标题																																		| `String`	| -				| -			| -				|
+| `subTitle`| 子标题																																	| `String`	| -				| -			| -				|
+| `image`		| 图片**（同image的src属性）**																						| `String`	| -				| -			| -				|
+| `name`		| 标签唯一标识**（当tabs的active值类型为string时，作为匹配激活的标识符）**	| `String`	| -				| -			| -				|
+| `index`		| 标签下标**（当tabs的active值类型为number时，作为匹配激活的标识符）**			| `Number`	| -				| -			| -				|
+| `disabled`| 禁用当前标签																														| `Boolean`	| `false`	| -			| -				|
+
+#### Tab Slot
+您可以通过监听`change`事件，事件参数为用户选中标签项的`props`对象，您可以监听该事件获取当前选中的标签。
+|插槽名			|说明																				|插槽参数	|支持版本	|
+| ---				| ---																				| ---			| ---			|
+| `default`	| 默认插槽，在插槽中的内容会展示在标签内容区域	|-				| -				|
+
+
+{{xuyajun}}
