@@ -45,10 +45,19 @@
 			</view>
 			<view class="com-arrow"><image :src="joinSrc('img/r-arrow.png')" /></view>
 		</view>
-		<view class="com-box" @click="nav('progress')">
+		<!-- ***表单组件*** -->
+		<view class="group-title">表单组件</view>
+		<view class="com-box" @click="nav('rich-text')">
 			<view class="com-title">
-				<image :src="joinSrc('img/progress.png')" style="width: 36rpx; height: 36rpx" />
-				<text>Progress 进度条</text>
+				<image :src="joinSrc('img/parse.png')" style="width: 36rpx; height: 36rpx" />
+				<text>Rich Text 富文本</text>
+			</view>
+			<view class="com-arrow"><image :src="joinSrc('img/r-arrow.png')" /></view>
+		</view>
+		<view class="com-box" @click="nav('search')">
+			<view class="com-title">
+				<image :src="joinSrc('img/search.png')" style="width: 36rpx; height: 36rpx" />
+				<text>Search 搜索</text>
 			</view>
 			<view class="com-arrow"><image :src="joinSrc('img/r-arrow.png')" /></view>
 		</view>
@@ -61,28 +70,21 @@
 			</view>
 			<view class="com-arrow"><image :src="joinSrc('img/r-arrow.png')" /></view>
 		</view>
-		<!-- ***电商组件*** -->
+		<!-- ***数据组件*** -->
+		<view class="group-title">数据组件</view>
+		<view class="com-box" @click="nav('progress')">
+			<view class="com-title">
+				<image :src="joinSrc('img/progress.png')" style="width: 36rpx; height: 36rpx" />
+				<text>Progress 进度条</text>
+			</view>
+			<view class="com-arrow"><image :src="joinSrc('img/r-arrow.png')" /></view>
+		</view>
+		<!-- ***导航组件*** -->
 		<view class="group-title">导航组件</view>
 		<view class="com-box" @click="nav('tabs')">
 			<view class="com-title">
 				<image src="https://cdn.uviewui.com/uview/example/tabs.png" style="width: 36rpx; height: 36rpx" />
 				<text>Tabs 标签页</text>
-			</view>
-			<view class="com-arrow"><image :src="joinSrc('img/r-arrow.png')" /></view>
-		</view>
-		<!-- ***表单组件*** -->
-		<view class="group-title">表单组件</view>
-		<view class="com-box" @click="nav('search')">
-			<view class="com-title">
-				<image :src="joinSrc('img/search.png')" style="width: 36rpx; height: 36rpx" />
-				<text>Search 搜索</text>
-			</view>
-			<view class="com-arrow"><image :src="joinSrc('img/r-arrow.png')" /></view>
-		</view>
-		<view class="com-box" @click="nav('rich-text')">
-			<view class="com-title">
-				<image :src="joinSrc('img/parse.png')" style="width: 36rpx; height: 36rpx" />
-				<text>Rich Text 富文本</text>
 			</view>
 			<view class="com-arrow"><image :src="joinSrc('img/r-arrow.png')" /></view>
 		</view>
