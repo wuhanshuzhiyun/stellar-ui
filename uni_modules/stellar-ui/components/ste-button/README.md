@@ -67,7 +67,7 @@
 ```html
 <ste-button>
 	<text style="display: inline-block">
-		<ste-icon code="&#xe6ae;" :size="28" color="#ffffff" :marginRight="8"></ste-icon>
+		<ste-icon code="&#xe68f;" :size="32" color="#ffffff" :marginRight="8"></ste-icon>
 	</text>
 	<text>购卡</text>
 </ste-button>

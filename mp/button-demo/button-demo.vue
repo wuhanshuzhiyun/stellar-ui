@@ -106,7 +106,7 @@
 					<view>
 						<ste-button @click="handleClick('按钮')">
 							<text style="display: inline-block">
-								<ste-icon code="&#xe6ae;" :size="28" color="#FFFFFF" :marginRight="8"></ste-icon>
+								<ste-icon code="&#xe68f;" :size="32" color="#FFFFFF" :marginRight="8"></ste-icon>
 							</text>
 							<text>购卡</text>
 						</ste-button>

@@ -174,13 +174,13 @@
 ```html
 <ste-badge>
 	<template slot="content">
-		<ste-icon code="&#xe667;" size="10"></ste-icon>
+		<ste-icon code="&#xe676;" size="18"></ste-icon>
 	</template>
 	<view class="avator"></view>
 </ste-badge>
 <ste-badge>
 	<template slot="content">
-		<ste-icon code="&#xe6a7;" size="14"></ste-icon>
+		<ste-icon code="&#xe67b;" size="12"></ste-icon>
 	</template>
 	<view class="avator"></view>
 </ste-badge>

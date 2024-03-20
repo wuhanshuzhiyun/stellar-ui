@@ -2,7 +2,7 @@
 	<view class="ste-search--root" :style="[cmpStyleVar, cmpBackground, cmpRootPadding]" @click="onClick">
 		<view class="content">
 			<view class="icon-box">
-				<ste-icon code="&#xe66d;" :color="prefixIconColor" />
+				<ste-icon code="&#xe695;" :color="prefixIconColor" size="44" />
 			</view>
 			<view class="input-box" v-if="!hiddenInput">
 				<input
@@ -33,7 +33,7 @@
 					</swiper-item>
 				</swiper>
 				<view v-if="cmpShowClear" class="clear-icon" @click="onClear">
-					<ste-icon code="&#xe68b;" :color="clearIconColor" size="32rpx" />
+					<ste-icon code="&#xe694;" :color="clearIconColor" size="44" />
 				</view>
 			</view>
 			<view v-if="!cmpHiddenLine" class="secrch-line" :class="disabled ? 'disabled' : ''" />

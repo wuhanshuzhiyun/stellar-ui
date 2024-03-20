@@ -208,3 +208,5 @@ export default {
 | `click`	| 点击任意区域触发												| `value`: 输入框的值	| -			|
 
 {{xuyajun}}
+
+{{qinpengfei}}
