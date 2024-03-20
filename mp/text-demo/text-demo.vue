@@ -24,32 +24,32 @@
 					</view>
 				</view>
 			</view>
-			<!-- 			<view class="demo-item">
+			<view class="demo-item">
 				<view class="title">解码</view>
 				<view class="item-block">
 					<view>
-						<ste-text decode>Stellar UI，全面的组件和便捷的工具会让您信手拈来&nbsp;如鱼得水</ste-text>
+						<ste-text decode>Stellar&nbsp;UI</ste-text>
 					</view>
 					<view>
-						<ste-text decode>Stellar UI，全面的组件和便捷的工具会让您信手拈来&lt;如鱼得水</ste-text>
+						<!-- <ste-text decode>Stellar&lt;UI</ste-text> -->
 					</view>
 					<view>
-						<ste-text decode>Stellar UI，全面的组件和便捷的工具会让您信手拈来&gt;如鱼得水</ste-text>
+						<!-- <ste-text decode>Stellar&gt;UI</ste-text> -->
 					</view>
 					<view>
-						<ste-text decode>Stellar UI，全面的组件和便捷的工具会让您信手拈来&amp;如鱼得水</ste-text>
+						<ste-text decode>Stellar&amp;UI</ste-text>
 					</view>
 					<view>
-						<ste-text decode>Stellar UI，全面的组件和便捷的工具会让您信手拈来&apos;如鱼得水</ste-text>
+						<ste-text decode>Stellar&apos;UI</ste-text>
 					</view>
 					<view>
-						<ste-text decode>Stellar UI，全面的组件和便捷的工具会让您信手拈来&ensp;如鱼得水</ste-text>
+						<ste-text decode>Stellar&ensp;UI</ste-text>
 					</view>
 					<view>
-						<ste-text decode>Stellar UI，全面的组件和便捷的工具会让您信手拈来&emsp;如鱼得水</ste-text>
+						<ste-text decode>Stellar&emsp;UI</ste-text>
 					</view>
 				</view>
-			</view> -->
+			</view>
 			<view class="demo-item">
 				<view class="title">换行省略</view>
 				<view class="item-block">
