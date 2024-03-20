@@ -1,0 +1,150 @@
+<template>
+	<view class="page">
+		<page-nav :autoBack="true" backColor="#000" titleAlignment="2" title="按钮"></page-nav>
+		<view class="content">
+			<view class="demo-item">
+				<view class="title">背景色</view>
+				<view class="item-block">
+					<view style="width: 100%">
+						<ste-progress :percentage="40"></ste-progress>
+					</view>
+					<view style="width: 100%">
+						<ste-progress
+							:percentage="45"
+							activeBg="https://image.whzb.com/chain/inte-mall/00-普通图片/00-开发版/img/p-red.png"
+							inactiveBg="#CCCCCC"
+						></ste-progress>
+					</view>
+					<view style="width: 100%">
+						<ste-progress
+							:percentage="50"
+							activeBg="linear-gradient(to right, rgb(66, 83, 216), rgb(213, 51, 186))"
+						></ste-progress>
+					</view>
+				</view>
+			</view>
+			<view class="demo-item">
+				<view class="title">线条粗细</view>
+				<view class="item-block">
+					<view style="width: 100%">
+						<ste-progress :percentage="40" strokeWidth="20"></ste-progress>
+					</view>
+					<view style="width: 100%">
+						<ste-progress :percentage="45" strokeWidth="36"></ste-progress>
+					</view>
+				</view>
+			</view>
+			<view class="demo-item">
+				<view class="title">禁用</view>
+				<view class="item-block">
+					<view style="width: 100%">
+						<ste-progress :percentage="40" disabled></ste-progress>
+					</view>
+				</view>
+			</view>
+			<view class="demo-item">
+				<view class="title">长度</view>
+				<view class="item-block">
+					<view style="width: 100%">
+						<ste-progress :percentage="40" width="80%"></ste-progress>
+					</view>
+					<view style="width: 100%">
+						<ste-progress :percentage="45" width="200"></ste-progress>
+					</view>
+				</view>
+			</view>
+			<view class="demo-item">
+				<view class="title">过渡动画</view>
+				<view class="item-block">
+					<view style="width: 100%">
+						<ste-progress :percentage="p"></ste-progress>
+					</view>
+					<view>
+						<ste-button :mode="100" @click="add">增加</ste-button>
+					</view>
+					<view><ste-button :mode="100" @click="subtract">减少</ste-button></view>
+				</view>
+			</view>
+			<view class="demo-item">
+				<view class="title">自定义文字内容</view>
+				<view class="item-block">
+					<view style="width: 100%">
+						<ste-progress :percentage="30" pivotText="已抢30%"></ste-progress>
+					</view>
+					<view style="width: 100%">
+						<ste-progress :percentage="40" pivotText="已抢40%" textColor="#FF1E19"></ste-progress>
+					</view>
+					<view style="width: 100%">
+						<ste-progress :percentage="45" pivotText="已抢45%" textAlign="left"></ste-progress>
+					</view>
+					<view style="width: 100%">
+						<ste-progress :percentage="50" pivotText="已抢50%" textSize="20"></ste-progress>
+					</view>
+				</view>
+			</view>
+			<view class="demo-item">
+				<view class="title">文本显示阈值</view>
+				<view class="item-block">
+					<view style="width: 100%">
+						<ste-progress :percentage="14" :displayTextThreshold="15"></ste-progress>
+					</view>
+					<view style="width: 100%">
+						<ste-progress :percentage="35" :displayTextThreshold="15"></ste-progress>
+					</view>
+				</view>
+			</view>
+			<view class="demo-item">
+				<view class="title">自定义内容</view>
+				<view class="item-block">
+					<view style="width: 100%">
+						<ste-progress :percentage="40" strokeWidth="36">
+							<view class="c-progress">
+								<text>已抢50%</text>
+							</view>
+						</ste-progress>
+					</view>
+				</view>
+			</view>
+		</view>
+	</view>
+</template>
+<script>
+export default {
+	data() {
+		return {
+			p: 30,
+		};
+	},
+	created() {},
+	methods: {
+		subtract() {
+			if (this.p >= 0) {
+				this.p -= 10;
+			}
+		},
+		add() {
+			if (this.p <= 100) {
+				this.p += 10;
+			}
+		},
+	},
+};
+</script>
+
+<style lang="scss" scoped>
+.page {
+	.content {
+		.demo-item {
+			.item-block {
+				> view {
+					margin: 0 8px 8px 0;
+
+					.c-progress {
+						width: 100%;
+					}
+				}
+			}
+		}
+	}
+}
+</style>
