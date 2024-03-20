@@ -220,12 +220,6 @@ export default {
 			active: 1,
 		};
 	},
-	mounted() {
-		setTimeout(() => {
-			this.list = [1, 2, 3, 4];
-			this.active = 3;
-		}, 1000);
-	},
 	computed: {
 		list2() {
 			return [].concat(this.list1, [
@@ -236,11 +230,7 @@ export default {
 			]);
 		},
 	},
-	methods: {
-		getStyle() {
-			return;
-		},
-	},
+	methods: {},
 };
 </script>
 

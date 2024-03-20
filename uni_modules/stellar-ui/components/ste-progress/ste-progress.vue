@@ -18,6 +18,18 @@ import utils from '../../utils/utils.js';
  * ste-progress 进度条
  * @description 进度条组件
  * @tutorial https://stellar-ui.intecloud.com.cn/pc/index/index?name=ste-progress
+ * @property {String} activeBg 进度条激活部分的背景	 默认值 #0090ff
+ * @property {String} inactiveBg 进度条未激活部分的背景	 默认值 #eeeeee
+ * @property {Number} percentage 进度条百分比	默认值 0
+ * @property {Number|String} strokeWidth 进度条的粗细，默认单位rpx	默认值 24
+ * @property {Boolean} disabled 是否禁用状态 默认 false
+ * @property {Number|String} width 进度条宽度 默认值 100%
+ * @property {Number} duration 进度条动画执行时间，单位秒，设置为 0 可以禁用动画 	默认值 0.3
+ * @property {String} pivotText 进度文字内容
+ * @property {String} textColor 进度文字颜色		默认 #ffffff
+ * @property {String} textAlign 文本对齐方式		默认 right
+ * @property {String} textSize 文本字体大小，默认单位rpx		默认 16
+ * @property {Number} textSize 默认文本显示阈值	默认 0
  */
 const MIN = 0;
 const MAX = 100;
@@ -40,7 +52,7 @@ export default {
 		},
 		strokeWidth: {
 			type: [String, Number],
-			default: '24rpx',
+			default: 24,
 		},
 		disabled: {
 			type: Boolean,
@@ -68,7 +80,7 @@ export default {
 		},
 		textSize: {
 			type: [String, Number],
-			default: '16rpx',
+			default: 16,
 		},
 		displayTextThreshold: {
 			type: Number,
