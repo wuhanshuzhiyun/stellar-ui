@@ -54,10 +54,10 @@
 				</view>
 			</view>
 			<view class="demo-item">
-				<view class="title">过渡动画</view>
+				<view class="title">动画时间</view>
 				<view class="item-block">
 					<view style="width: 100%">
-						<ste-progress :percentage="p"></ste-progress>
+						<ste-progress :percentage="p" duration="0.5"></ste-progress>
 					</view>
 					<view>
 						<ste-button :mode="100" @click="add">增加</ste-button>
@@ -107,7 +107,7 @@
 								<text>已抢50%</text>
 								<view class="icon-content">
 									<view class="icon-box">
-										<ste-icon color="#0090ff" code="&#xe696;" size="28"></ste-icon>
+										<ste-icon color="#0090ff" code="&#xe696;" size="36"></ste-icon>
 									</view>
 								</view>
 							</view>
@@ -192,7 +192,7 @@ export default {
 							display: flex;
 							align-items: center;
 							justify-content: center;
-							padding: 8rpx;
+							padding: 4rpx;
 							background-color: #ffffff;
 						}
 					}

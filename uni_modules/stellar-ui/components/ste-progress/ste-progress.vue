@@ -68,7 +68,7 @@ export default {
 		},
 		textSize: {
 			type: [String, Number],
-			default: '16rpx',
+			default: 16,
 		},
 		displayTextThreshold: {
 			type: Number,
