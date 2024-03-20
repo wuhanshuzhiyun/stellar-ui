@@ -97,9 +97,34 @@
 				<view class="title">自定义内容</view>
 				<view class="item-block">
 					<view style="width: 100%">
-						<ste-progress :percentage="40" strokeWidth="36">
-							<view class="c-progress">
+						<ste-progress
+							:percentage="50"
+							strokeWidth="36"
+							inactiveBg="#E8EDF3"
+							activeBg="https://image.whzb.com/chain/inte-mall/00-普通图片/00-开发版/img/p-blue.png"
+						>
+							<view class="c-progress-1">
 								<text>已抢50%</text>
+								<view class="icon-content">
+									<view class="icon-box">
+										<ste-icon color="#0090ff" code="&#xe696;" size="28"></ste-icon>
+									</view>
+								</view>
+							</view>
+						</ste-progress>
+					</view>
+					<view style="width: 100%; margin-top: 10rpx">
+						<ste-progress
+							:percentage="50"
+							strokeWidth="16"
+							inactiveBg="#F8E1E0"
+							activeBg="https://image.whzb.com/chain/inte-mall/00-普通图片/00-开发版/img/p-red.png"
+						>
+							<view class="c-progress-2">
+								<text></text>
+								<view class="p-content">
+									<text>50%</text>
+								</view>
 							</view>
 						</ste-progress>
 					</view>
@@ -139,8 +164,48 @@ export default {
 				> view {
 					margin: 0 8px 8px 0;
 
-					.c-progress {
+					.c-progress-1 {
 						width: 100%;
+						padding-left: 16rpx;
+
+						font-size: 16rpx;
+						color: #ffffff;
+
+						display: flex;
+						align-items: center;
+						justify-content: space-between;
+
+						.icon-content {
+							display: flex;
+							align-items: center;
+							justify-content: center;
+							border-radius: 99999rpx;
+							background-color: rgba(0, 0, 0, 0.15);
+
+							padding: 8rpx;
+
+							transform: translateX(30%);
+						}
+
+						.icon-box {
+							border-radius: 99999rpx;
+							display: flex;
+							align-items: center;
+							justify-content: center;
+							padding: 8rpx;
+							background-color: #ffffff;
+						}
+					}
+
+					.c-progress-2 {
+						.p-content {
+							padding: 0 16rpx;
+							background-color: #ff0000;
+							border-radius: 20rpx;
+
+							color: #ffffff;
+							font-size: 24rpx;
+						}
 					}
 				}
 			}

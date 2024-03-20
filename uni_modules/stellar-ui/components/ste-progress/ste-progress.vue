@@ -22,7 +22,7 @@ import utils from '../../utils/utils.js';
 const MIN = 0;
 const MAX = 100;
 export default {
-	group: '基础组件',
+	group: '数据组件',
 	title: 'Progress 进度条',
 	name: 'ste-progress',
 	props: {
