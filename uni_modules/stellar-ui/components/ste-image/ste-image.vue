@@ -2,7 +2,7 @@
 	<view class="ste-image--root" :style="[cmpStyle]">
 		<view v-if="!hiddenLoading && status === 0">
 			<slot name="loading">
-				<ste-icon code="&#xe6fc;" :size="iconSize" />
+				<ste-icon code="&#xe693;" :size="iconSize" />
 			</slot>
 		</view>
 
@@ -20,7 +20,7 @@
 
 		<view v-if="!hiddenError && status === 2">
 			<slot name="error">
-				<ste-icon code="&#xe6ef;" :size="iconSize" />
+				<ste-icon code="&#xe692;" :size="iconSize" />
 			</slot>
 		</view>
 	</view>

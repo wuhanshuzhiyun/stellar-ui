@@ -7,11 +7,15 @@
 <script>
 import utils from '../../utils/utils.js';
 /**
- * ste-tab 标签页项
- * @description 标签页项组件
+ * ste-tab 标签页选项
+ * @description 标签页选项组件
  * @tutorial https://stellar-ui.intecloud.com.cn/pc/index/index?name=ste-tabs
- * @property {String}			type				组件类型
- * @event {Function}			click 点击事件
+ * @property {String}			title				标题
+ * @property {String}			subTitle		副标题
+ * @property {String}			image				图片，同image的src属性
+ * @property {String}			name				标签唯一标识（当tabs的active值类型为string时，作为匹配激活的标识符）
+ * @property {Number}			index				标签下标（当tabs的active值类型为number时，作为匹配激活的标识符）
+ * @property {Boolean}		disabled		禁用当前标签
  */
 export default {
 	group: '基础组件',

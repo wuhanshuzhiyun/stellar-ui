@@ -17,7 +17,7 @@ import utils from '../../utils/utils.js';
 /**
  * ste-progress 进度条
  * @description 进度条组件
- * @tutorial http://172.16.114.51:5050/pc/index/index?name=ste-progress
+ * @tutorial https://stellar-ui.intecloud.com.cn/pc/index/index?name=ste-progress
  */
 const MIN = 0;
 const MAX = 100;

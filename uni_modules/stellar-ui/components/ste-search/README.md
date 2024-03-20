@@ -11,6 +11,7 @@ export default {
 		return {
 			value: 'RTX4060Ti',
 			hotWords: ['RTX4060', 'RTX4070', 'RTX4080', '小米电视', '华为手机'],
+			focus: false,
 		};
 	},
 	watch: {
@@ -155,6 +156,16 @@ export default {
 <ste-search type="nav" @click="onClick" :hotWords="hotWords" />
 ```
 
+#### 聚焦
+- 可以通过`fous`属性控制搜索框聚焦，双向绑定	
+```
+<ste-search @click="onClick" :focus.sync="focus" />
+<!--聚焦按钮-->
+<view style="margin: 10px auto 0 auto">
+	<ste-button @click="focus = true" width="100%">聚焦</ste-button>
+</view>
+```
+
 
 ### API
 #### Props
@@ -181,12 +192,12 @@ export default {
 | `clearIconColor`	| 清除图标颜色							| `String`	| `"#BBBBBB"`	| -										|-			|
 | `btnTextColor`	| 搜索按钮文本颜色，分割线会跟随文本颜色变化	| `String`	| `"#0090FF"`	| -										|-			|
 | `btnBackground`	| 搜索按钮背景，可直接传颜色值或者图片		| `String`	| -				| -										|-			|
-
+| `focus`			| 是否聚焦(双向绑定)						| `Boolean`	| `false`		| -										|`1.1.5`	|
 
 
 #### Events
-您可以通过监听`input`事件，在回调中将返回的结果绑定一个变量去获得用户的输入内容。
-但如"基本使用"中的说明一样，您双向绑定了一个变量后，无需监听`input`事件也是可以的。
+您可以通过监听`input`事件，事件参数为用户输入的`value`值，您可以监听该事件获取用户输入的内容。<br/>
+但如"基本使用"中的说明一样，您可以直接使用双向绑定，而无需再次监听`input`事件。
 |事件名		|说明															|事件参数			|支持版本	|
 |---		|---															|---				|---		|
 | `input`	| 监听用户输入事件												| `value`: 输入框的值	| -			|
@@ -197,3 +208,5 @@ export default {
 | `click`	| 点击任意区域触发												| `value`: 输入框的值	| -			|
 
 {{xuyajun}}
+
+{{qinpengfei}}

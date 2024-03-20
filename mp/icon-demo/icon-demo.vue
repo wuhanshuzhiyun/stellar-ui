@@ -50,7 +50,7 @@
 								@click="isShowUnicode = false"
 							></ste-icon>
 							<ste-icon
-								code="&#xe68e;"
+								code="&#xe691;"
 								:size="48"
 								v-if="!isShowUnicode"
 								:marginLeft="40"
@@ -78,7 +78,7 @@ export default {
 	data() {
 		return {
 			iconUrl:
-				'https://at.alicdn.com/t/c/font_4457057_v8slqfn0z8.json?spm=a313x.manage_type_myprojects.i1.10.223f3a819BSGBY&file=font_4457057_v8slqfn0z8.json',
+				'https://at.alicdn.com/t/c/font_4457057_wsh8wzbqnq.json?spm=a313x.manage_type_myprojects.i1.11.7d143a81zxkwSb&file=font_4457057_wsh8wzbqnq.json',
 			glyphs: [],
 			tabIndex: 0,
 			isShowUnicode: false,

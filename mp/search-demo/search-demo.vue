@@ -116,6 +116,16 @@
 					<ste-search type="nav" @click="onClick" :hotWords="hotWords" />
 				</view>
 			</view>
+			<view class="demo-item">
+				<view class="title">聚焦</view>
+				<view class="item-block">
+					<ste-search @click="onClick" :focus.sync="focus" />
+					<!--聚焦按钮-->
+					<view style="margin: 10px auto 0 auto">
+						<ste-button @click="focus = true" width="100%">聚焦</ste-button>
+					</view>
+				</view>
+			</view>
 		</view>
 	</view>
 </template>
@@ -125,6 +135,7 @@ export default {
 		return {
 			value: 'RTX4060Ti',
 			hotWords: ['RTX4060', 'RTX4070', 'RTX4080', '小米电视', '华为手机'],
+			focus: false,
 		};
 	},
 	watch: {

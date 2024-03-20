@@ -22,7 +22,7 @@
 		</view>
 		<view class="pc-content">
 			<view v-html="content" class="markdown-view"></view>
-			<view v-show="isComponent && loadingMd" class="comment-view">
+			<view v-show="isComment && isComponent && loadingMd" class="comment-view">
 				<view class="comment-title">意见反馈</view>
 				<input class="user-input" placeholder="姓名" v-model="commentParams.user" maxlength="8" />
 				<textarea
@@ -57,7 +57,7 @@ import { mdMap, vueMap, datas } from '../markdown/index.js';
 import md2html from './md2html.js';
 import './mdStyle.scss';
 
-const baseUrl = 'http://172.16.114.51:3000';
+const baseUrl = 'http://172.16.116.220:3000';
 
 let timeout = 0;
 
@@ -67,6 +67,7 @@ export default {
 			content: '',
 			activeName: 'handbook-介绍',
 			datas,
+			isComment: false,
 			commentList: [],
 			isComponent: false,
 			loadingMd: false,
@@ -181,6 +182,7 @@ export default {
 						this.commentList = data.data.reverse();
 						this.commentParams.content = '';
 						this.commentParams.user = '';
+						this.isComment = true;
 					}
 				},
 			});

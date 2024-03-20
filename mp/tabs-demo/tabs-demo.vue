@@ -51,7 +51,7 @@
 				</view>
 			</view>
 			<view class="demo-item">
-				<view class="title">Card模式</view>
+				<view class="title">卡片模式</view>
 				<view class="item-block">
 					<ste-tabs type="card">
 						<ste-tab v-for="(item, index) in list1" :key="index" :title="item.title" :index="index">
@@ -66,6 +66,18 @@
 				<view class="title">卡片模式带边框</view>
 				<view class="item-block">
 					<ste-tabs type="card" border>
+						<ste-tab v-for="(item, index) in list1" :key="index" :title="item.title" :index="index">
+							<h1>==Start {{ item.title }}==</h1>
+							<h1>内容{{ item.title }}</h1>
+							<h1>==End {{ item.title }}==</h1>
+						</ste-tab>
+					</ste-tabs>
+				</view>
+			</view>
+			<view class="demo-item">
+				<view class="title">分割线</view>
+				<view class="item-block">
+					<ste-tabs showGapLine>
 						<ste-tab v-for="(item, index) in list1" :key="index" :title="item.title" :index="index">
 							<h1>==Start {{ item.title }}==</h1>
 							<h1>内容{{ item.title }}</h1>
@@ -99,7 +111,7 @@
 				</view>
 			</view>
 			<view class="demo-item">
-				<view class="title">显示子标题和滑块大小</view>
+				<view class="title">子标题和滑块大小</view>
 				<view class="item-block">
 					<ste-tabs showSubtitle lineWidth="120" lineHeight="30">
 						<ste-tab v-for="(item, index) in list1" :key="index" :title="item.title" subTitle="子标签" :index="index">
@@ -123,7 +135,7 @@
 				</view>
 			</view>
 			<view class="demo-item">
-				<view class="title">开启手势滑动切换</view>
+				<view class="title">手势滑动切换</view>
 				<view class="item-block">
 					<ste-tabs swipeable>
 						<ste-tab v-for="(item, index) in list1" :key="index" :title="item.title" :index="index">
@@ -135,7 +147,7 @@
 				</view>
 			</view>
 			<view class="demo-item">
-				<view class="title">开启下拉选项和自定义颜色</view>
+				<view class="title">下拉选项和自定义颜色</view>
 				<view class="item-block">
 					<ste-tabs pullDown color="#f0f" background="#ff9" activeTabColor="#00f" tabColor="#666">
 						<ste-tab v-for="(item, index) in list2" :key="index" :title="item.title" :index="index">
