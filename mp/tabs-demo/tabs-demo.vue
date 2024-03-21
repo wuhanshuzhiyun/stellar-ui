@@ -102,7 +102,13 @@
 				<view class="title">显示图片</view>
 				<view class="item-block">
 					<ste-tabs showImage>
-						<ste-tab v-for="(item, index) in list1" :key="index" :title="item.title" :image="item.image" :index="index">
+						<ste-tab
+							v-for="(item, index) in list1"
+							:key="index"
+							:title="item.title"
+							:image="item.image"
+							:index="index"
+						>
 							<h1>==Start {{ item.title }}==</h1>
 							<h1>内容{{ item.title }}</h1>
 							<h1>==End {{ item.title }}==</h1>
@@ -114,7 +120,13 @@
 				<view class="title">子标题和滑块大小</view>
 				<view class="item-block">
 					<ste-tabs showSubtitle lineWidth="120" lineHeight="30">
-						<ste-tab v-for="(item, index) in list1" :key="index" :title="item.title" subTitle="子标签" :index="index">
+						<ste-tab
+							v-for="(item, index) in list1"
+							:key="index"
+							:title="item.title"
+							subTitle="子标签"
+							:index="index"
+						>
 							<h1>==Start {{ item.title }}==</h1>
 							<h1>内容{{ item.title }}</h1>
 							<h1>==End {{ item.title }}==</h1>
