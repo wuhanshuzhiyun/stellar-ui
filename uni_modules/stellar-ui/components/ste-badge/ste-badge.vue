@@ -152,6 +152,7 @@ export default {
 			min-width: 26rpx;
 
 			padding: 0 8rpx;
+			line-height: 0;
 		}
 
 		.dot-box {
