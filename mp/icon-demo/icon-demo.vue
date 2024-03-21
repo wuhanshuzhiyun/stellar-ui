@@ -78,7 +78,7 @@ export default {
 	data() {
 		return {
 			iconUrl:
-				'https://at.alicdn.com/t/c/font_4457057_wsh8wzbqnq.json?spm=a313x.manage_type_myprojects.i1.11.7d143a81zxkwSb&file=font_4457057_wsh8wzbqnq.json',
+				'https://at.alicdn.com/t/c/font_4041637_m2mosopecms.json?spm=a313x.manage_type_myprojects.i1.24.7ecb3a81xqawlc&file=font_4041637_m2mosopecms.json',
 			glyphs: [],
 			tabIndex: 0,
 			isShowUnicode: false,
