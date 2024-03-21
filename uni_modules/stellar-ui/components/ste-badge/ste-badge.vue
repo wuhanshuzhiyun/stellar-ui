@@ -151,7 +151,7 @@ export default {
 			width: auto;
 			min-width: 26rpx;
 
-			padding: 0 4rpx;
+			padding: 0 8rpx;
 		}
 
 		.dot-box {
@@ -166,6 +166,7 @@ export default {
 
 			position: relative;
 			// #ifdef  H5
+			// top: -0.5rpx;
 			// #endif
 			// #ifdef  MP-WEIXIN
 			top: -0.5rpx;
