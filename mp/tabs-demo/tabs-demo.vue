@@ -7,16 +7,14 @@
 				<view class="item-block">
 					<ste-tabs>
 						<ste-tab v-for="(item, index) in list1" :key="index" :title="item.title" :index="index">
-							<view>==Start {{ item.title }}==</view>
-							<view>内容{{ item.title }}</view>
-							<view>==End {{ item.title }}==</view>
+							<view>{{ item.title }}内容</view>
+							<image style="width: 100%; height: 300px" :src="item.content" />
 						</ste-tab>
 					</ste-tabs>
 					<ste-tabs>
 						<ste-tab v-for="(item, index) in list2" :key="index" :title="item.title" :index="index">
-							<view>==Start {{ item.title }}==</view>
-							<view>内容{{ item.title }}</view>
-							<view>==End {{ item.title }}==</view>
+							<view>{{ item.title }}内容</view>
+							<image style="width: 100%; height: 300px" :src="item.content" />
 						</ste-tab>
 					</ste-tabs>
 				</view>
@@ -26,9 +24,8 @@
 				<view class="item-block">
 					<ste-tabs tabWidth="180">
 						<ste-tab v-for="(item, index) in list2" :key="index" :title="item.title" :index="index">
-							<view>==Start {{ item.title }}==</view>
-							<view>内容{{ item.title }}</view>
-							<view>==End {{ item.title }}==</view>
+							<view>{{ item.title }}内容</view>
+							<image style="width: 100%; height: 300px" :src="item.content" />
 						</ste-tab>
 					</ste-tabs>
 				</view>
@@ -38,9 +35,8 @@
 				<view class="item-block">
 					<ste-tabs sticky>
 						<ste-tab v-for="(item, index) in list1" :key="index" :title="item.title" :index="index">
-							<view>==Start {{ item.title }}==</view>
-							<view>内容{{ item.title }}</view>
-							<view>==End {{ item.title }}==</view>
+							<view>{{ item.title }}内容</view>
+							<image style="width: 100%; height: 300px" :src="item.content" />
 						</ste-tab>
 					</ste-tabs>
 				</view>
@@ -50,9 +46,8 @@
 				<view class="item-block">
 					<ste-tabs type="card">
 						<ste-tab v-for="(item, index) in list1" :key="index" :title="item.title" :index="index">
-							<view>==Start {{ item.title }}==</view>
-							<view>内容{{ item.title }}</view>
-							<view>==End {{ item.title }}==</view>
+							<view>{{ item.title }}内容</view>
+							<image style="width: 100%; height: 300px" :src="item.content" />
 						</ste-tab>
 					</ste-tabs>
 				</view>
@@ -62,9 +57,8 @@
 				<view class="item-block">
 					<ste-tabs type="card" border>
 						<ste-tab v-for="(item, index) in list1" :key="index" :title="item.title" :index="index">
-							<view>==Start {{ item.title }}==</view>
-							<view>内容{{ item.title }}</view>
-							<view>==End {{ item.title }}==</view>
+							<view>{{ item.title }}内容</view>
+							<image style="width: 100%; height: 300px" :src="item.content" />
 						</ste-tab>
 					</ste-tabs>
 				</view>
@@ -74,9 +68,8 @@
 				<view class="item-block">
 					<ste-tabs showGapLine>
 						<ste-tab v-for="(item, index) in list1" :key="index" :title="item.title" :index="index">
-							<view>==Start {{ item.title }}==</view>
-							<view>内容{{ item.title }}</view>
-							<view>==End {{ item.title }}==</view>
+							<view>{{ item.title }}内容</view>
+							<image style="width: 100%; height: 300px" :src="item.content" />
 						</ste-tab>
 					</ste-tabs>
 				</view>
@@ -86,9 +79,8 @@
 				<view class="item-block">
 					<ste-tabs type="card" tabSpace="12">
 						<ste-tab v-for="(item, index) in list1" :key="index" :title="item.title" :index="index">
-							<view>==Start {{ item.title }}==</view>
-							<view>内容{{ item.title }}</view>
-							<view>==End {{ item.title }}==</view>
+							<view>{{ item.title }}内容</view>
+							<image style="width: 100%; height: 300px" :src="item.content" />
 						</ste-tab>
 					</ste-tabs>
 				</view>
@@ -97,16 +89,9 @@
 				<view class="title">显示图片</view>
 				<view class="item-block">
 					<ste-tabs showImage :showTitle="false" showSubtitle>
-						<ste-tab
-							v-for="(item, index) in list1"
-							:key="index"
-							subTitle="子标签"
-							:image="item.image"
-							:index="index"
-						>
-							<view>==Start {{ item.title }}==</view>
-							<view>内容{{ item.title }}</view>
-							<view>==End {{ item.title }}==</view>
+						<ste-tab v-for="(item, index) in list1" :key="index" subTitle="子标签" :image="item.image" :index="index">
+							<view>{{ item.title }}内容</view>
+							<image style="width: 100%; height: 300px" :src="item.content" />
 						</ste-tab>
 					</ste-tabs>
 				</view>
@@ -116,9 +101,8 @@
 				<view class="item-block">
 					<ste-tabs showSubtitle lineWidth="120" lineHeight="30">
 						<ste-tab v-for="(item, index) in list1" :key="index" :title="item.title" subTitle="子标签" :index="index">
-							<view>==Start {{ item.title }}==</view>
-							<view>内容{{ item.title }}</view>
-							<view>==End {{ item.title }}==</view>
+							<view>{{ item.title }}内容</view>
+							<image style="width: 100%; height: 300px" :src="item.content" />
 						</ste-tab>
 					</ste-tabs>
 				</view>
@@ -128,9 +112,8 @@
 				<view class="item-block">
 					<ste-tabs ellipsis>
 						<ste-tab v-for="(item, index) in list1" :key="index" :title="item.title" :index="index">
-							<view>==Start {{ item.title }}==</view>
-							<view>内容{{ item.title }}</view>
-							<view>==End {{ item.title }}==</view>
+							<view>{{ item.title }}内容</view>
+							<image style="width: 100%; height: 300px" :src="item.content" />
 						</ste-tab>
 					</ste-tabs>
 				</view>
@@ -140,9 +123,8 @@
 				<view class="item-block">
 					<ste-tabs swipeable>
 						<ste-tab v-for="(item, index) in list1" :key="index" :title="item.title" :index="index">
-							<view>==Start {{ item.title }}==</view>
-							<view>内容{{ item.title }}</view>
-							<view>==End {{ item.title }}==</view>
+							<view>{{ item.title }}内容</view>
+							<image style="width: 100%; height: 300px" :src="item.content" />
 						</ste-tab>
 					</ste-tabs>
 				</view>
@@ -152,16 +134,14 @@
 				<view class="item-block">
 					<ste-tabs pullDown color="#f0f" background="#ff9" activeTabColor="#00f" tabColor="#666">
 						<ste-tab v-for="(item, index) in list2" :key="index" :title="item.title" :index="index">
-							<view>==Start {{ item.title }}==</view>
-							<view>内容{{ item.title }}</view>
-							<view>==End {{ item.title }}==</view>
+							<view>{{ item.title }}内容</view>
+							<image style="width: 100%; height: 300px" :src="item.content" />
 						</ste-tab>
 					</ste-tabs>
 					<ste-tabs pullDown placeholder="你倒是选一个啊">
 						<ste-tab v-for="(item, index) in list2" :key="index" :title="item.title" :index="index">
-							<view>==Start {{ item.title }}==</view>
-							<view>内容{{ item.title }}</view>
-							<view>==End {{ item.title }}==</view>
+							<view>{{ item.title }}内容</view>
+							<image style="width: 100%; height: 300px" :src="item.content" />
 						</ste-tab>
 					</ste-tabs>
 				</view>
@@ -171,9 +151,8 @@
 				<view class="item-block">
 					<ste-tabs lock>
 						<ste-tab v-for="(item, index) in list1" :key="index" :title="item.title" :index="index">
-							<view>==Start {{ item.title }}==</view>
-							<view>内容{{ item.title }}</view>
-							<view>==End {{ item.title }}==</view>
+							<view>{{ item.title }}内容</view>
+							<image style="width: 100%; height: 300px" :src="item.content" />
 						</ste-tab>
 					</ste-tabs>
 				</view>
@@ -183,9 +162,8 @@
 				<view class="item-block">
 					<ste-tabs disabled>
 						<ste-tab v-for="(item, index) in list1" :key="index" :title="item.title" :index="index">
-							<view>==Start {{ item.title }}==</view>
-							<view>内容{{ item.title }}</view>
-							<view>==End {{ item.title }}==</view>
+							<view>{{ item.title }}内容</view>
+							<image style="width: 100%; height: 300px" :src="item.content" />
 						</ste-tab>
 					</ste-tabs>
 				</view>
@@ -198,9 +176,8 @@
 							:title="item.title"
 							:index="index"
 						>
-							<view>==Start {{ item.title }}==</view>
-							<view>内容{{ item.title }}</view>
-							<view>==End {{ item.title }}==</view>
+							<view>{{ item.title }}内容</view>
+							<image style="width: 100%; height: 300px" :src="item.content" />
 						</ste-tab>
 					</ste-tabs>
 				</view>
@@ -213,10 +190,26 @@ export default {
 	data() {
 		return {
 			list1: [
-				{ title: '标签1', image: `https://image.whzb.com/chain/StellarUI/图片.jpg` },
-				{ title: '标签2', image: `https://image.whzb.com/chain/StellarUI/图片.jpg` },
-				{ title: '标签3标签3标签3标签3', image: `https://image.whzb.com/chain/StellarUI/图片.jpg` },
-				{ title: '标签4', image: `https://image.whzb.com/chain/StellarUI/图片.jpg` },
+				{
+					title: '标签1',
+					image: `https://image.whzb.com/chain/StellarUI/图片.jpg`,
+					content: 'https://image.whzb.com/chain/StellarUI/image/img1.jpg',
+				},
+				{
+					title: '标签2',
+					image: `https://image.whzb.com/chain/StellarUI/图片.jpg`,
+					content: 'https://image.whzb.com/chain/StellarUI/image/img2.jfif',
+				},
+				{
+					title: '标签3标签3标签3标签3',
+					image: `https://image.whzb.com/chain/StellarUI/图片.jpg`,
+					content: 'https://image.whzb.com/chain/StellarUI/image/img3.jpg',
+				},
+				{
+					title: '标签4',
+					image: `https://image.whzb.com/chain/StellarUI/图片.jpg`,
+					content: 'https://image.whzb.com/chain/StellarUI/image/img4.jpg',
+				},
 			],
 			active: 1,
 		};
@@ -224,10 +217,26 @@ export default {
 	computed: {
 		list2() {
 			return [].concat(this.list1, [
-				{ title: '标签5', image: `https://image.whzb.com/chain/StellarUI/图片.jpg` },
-				{ title: '标签6', image: `https://image.whzb.com/chain/StellarUI/图片.jpg` },
-				{ title: '标签7', image: `https://image.whzb.com/chain/StellarUI/图片.jpg` },
-				{ title: '标签8', image: `https://image.whzb.com/chain/StellarUI/图片.jpg` },
+				{
+					title: '标签5',
+					image: `https://image.whzb.com/chain/StellarUI/图片.jpg`,
+					content: 'https://image.whzb.com/chain/StellarUI/image/img5.jfif',
+				},
+				{
+					title: '标签6',
+					image: `https://image.whzb.com/chain/StellarUI/图片.jpg`,
+					content: 'https://image.whzb.com/chain/StellarUI/image/img6.jfif',
+				},
+				{
+					title: '标签7',
+					image: `https://image.whzb.com/chain/StellarUI/图片.jpg`,
+					content: 'https://image.whzb.com/chain/StellarUI/image/img7.jfif',
+				},
+				{
+					title: '标签8',
+					image: `https://image.whzb.com/chain/StellarUI/图片.jpg`,
+					content: 'https://image.whzb.com/chain/StellarUI/image/img8.jfif',
+				},
 			]);
 		},
 	},
