@@ -55,7 +55,6 @@ export default {
 通过`readonly `属性，设置只读，不可切换评分，样式不置灰，可部分星， 默认`false`。 
 ```
 <ste-rate v-model="value3" readonly></ste-rate>
-
 ```
 #### 禁用  
 通过`disabled`属性，设置禁用，不可切换评分，样式置灰，可部分星，默认`false`。 
