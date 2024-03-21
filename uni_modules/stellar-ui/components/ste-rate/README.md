@@ -10,9 +10,11 @@ JavaScript后面的演示代码中涉及到的变量和方法都使用本javasar
 export default {
 	data() {
 		return {
-			value: 0,
-			value1: 2.6,
-			value2: 3.5,
+			value: 2,
+			value1: 2,
+			value2: 3,
+			value3: 2.6,
+			value4: 2.5,
 		};
 	},
 	created() {},
