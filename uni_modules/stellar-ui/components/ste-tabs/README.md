@@ -251,33 +251,33 @@ export default {
 
 ### API
 #### Tabs Props
-| 属性名			| 说明																						| 类型				| 默认值			| 可选值									|支持版本	|
-| -----				|-----																						|-----				|-----			|-----									|-----		|
-| `active`			| 当前激活的选项，支持sync双向绑定 **（类型为number时tab绑定index，类型为string时tab绑定name）**	| `String`,`Number`	| `0`			| -										|-			|
-| `type`			| 样式风格类型																				| `String`			| `"line"`		| `"line"`线性模式<br/>`"card"`卡片模式	|-			|
-| `showImage`		| 是否显示图片																				| `Boolean`			| `false`		| -										|-			|
-| `showTitle`		| 是否显示标题																				| `Boolean`			| `true`		| -										|-			|
-| `showSubtitle`	| 是否显示子标题																				| `Boolean`			| `false`		| -										|-			|
-| `color`			| 主题色（滑块颜色，边框颜色，选中的背景色，激活下拉列表中选项颜色）								| `String`			| `#0090FF`		| -										|-			|
-| `background`		| 标签栏背景																					| `String`			| `""`			| -										|-			|
-| `duration`		| 切换动画时长	**（单位秒）**																| `Number`			| `0.3`			| -										|-			|
-| `lineWidth`		| 底部条或副标题背景色宽度	**（单位rpx）**														| `String`,`Number`	| `52`			| -										|-			|
-| `lineHeight`		| 底部条或副标题背景色高度	**（单位rpx）**														| `String`,`Number`	| `6`			| -										|-			|
-| `border`			| 是否显示边框	**（仅在card模式下生效）**														| `Boolean`			| `false`		| -										|-			|
-| `ellipsis`		| 是否开启选项文本超长省略																		| `Boolean`			| `false`		| -										|-			|
-| `tabWidth`		| 选项宽度 **（单位rpx）**																	| `String`,`Number`	| `"auto"`		| -										|-			|
-| `divideNum`		| 标签栏均分最大数量 **（设置0则不均分）**														| `Number`			| `4`			| -										|-			|
-| `tabSpace`		| 选项间距 **（单位rpx）**																	| `String`,`Number`	| `0`			| -										|-			|
-| `sticky`			| 是否开启吸顶																				| `Boolean`			| `false`		| -										|-			|
-| `offsetTop`		| 吸顶距离	**（单位rpx）**																	| `String`,`Number`	| `0`			| -										|-			|
-| `swipeable`		| 是否开启手势滑动切换																			| `Boolean`			| `false`		| -										|-			|
-| `tabColor`		| 标题字体颜色和下拉列表中标题字体颜色															| `String`			| `"#000000"`	| -										|-			|
-| `activeTabColor`	| 激活标题字体颜色																			| `String`			| `"#000000"`	| -										|-			|
-| `showGapLine`		| 是否显示分割线																				| `Boolean`			| `false`		| -										|-			|
-| `lock`			| 是否锁定**（无法切换）**																		| `Boolean`			| `false`		| -										|-			|
-| `disabled`		| 是否禁用**（全部功能失效并且置灰）**															| `Boolean`			| `false`		| -										|-			|
-| `pullDown`		| 是否有下拉选项**（当选项数量大于均分数量时生效）**												| `Boolean`			| `false`		| -										|-			|
-| `placeholder`		| 下拉占位符																					| `String`			| `"请选择"`		| -										|-			|
+| 属性名					| 说明																																									| 类型								| 默认值				| 可选值																|支持版本	|
+| -----						|-----																																								|-----							|-----				|-----																|-----		|
+| `active`				| 当前激活的选项，支持sync双向绑定 （类型为number时tab绑定index，类型为string时tab绑定name）	| `String`/`Number`	| `0`					| -																		|-				|
+| `type`					| 样式风格类型																																					| `String`					| `"line"`		| `"line"`线性模式<br/>`"card"`卡片模式	|-				|
+| `showImage`			| 是否显示图片																																					| `Boolean`					| `false`			| -																		|-				|
+| `showTitle`			| 是否显示标题																																					| `Boolean`					| `true`			| -																		|-				|
+| `showSubtitle`	| 是否显示子标题																																				| `Boolean`					| `false`			| -																		|-				|
+| `color`					| 主题色（滑块颜色，边框颜色，选中的背景色，激活下拉列表中选项颜色）													| `String`					| `#0090FF`		| -																		|-				|
+| `background`		| 标签栏背景																																						| `String`					| `""`				| -																		|-				|
+| `duration`			| 切换动画时长	（单位秒）																																| `Number`					| `0.3`				| -																		|-				|
+| `lineWidth`			| 底部条或副标题背景色宽度	（单位rpx）																										| `String`/`Number`	| `52`				| -																		|-				|
+| `lineHeight`		| 底部条或副标题背景色高度	（单位rpx）																										| `String`/`Number`	| `6`					| -																		|-				|
+| `border`				| 是否显示边框	（仅在card模式下生效）																											| `Boolean`					| `false`			| -																		|-				|
+| `ellipsis`			| 是否开启选项文本超长省略																																| `Boolean`					| `false`			| -																		|-				|
+| `tabWidth`			| 选项宽度 （单位rpx）																																	| `String`/`Number`	| `"auto"`		| -																		|-				|
+| `divideNum`			| 标签栏均分最大数量 （设置0则不均分）																										| `Number`					| `4`					| -																		|-				|
+| `tabSpace`			| 选项间距 （单位rpx）																																	| `String`/`Number`	| `0`					| -																		|-				|
+| `sticky`				| 是否开启吸顶																																					| `Boolean`					| `false`			| -																		|-				|
+| `offsetTop`			| 吸顶距离	（单位rpx）																																	| `String`/`Number`	| `0`					| -																		|-				|
+| `swipeable`			| 是否开启手势滑动切换																																		| `Boolean`					| `false`			| -																		|-				|
+| `tabColor`			| 标题字体颜色和下拉列表中标题字体颜色																											| `String`					| `"#000000"`	| -																		|-				|
+| `activeTabColor`| 激活标题字体颜色																																			| `String`					| `"#000000"`	| -																		|-				|
+| `showGapLine`		| 是否显示分割线																																				| `Boolean`					| `false`			| -																		|-				|
+| `lock`					| 是否锁定（无法切换）																																		| `Boolean`					| `false`			| -																		|-				|
+| `disabled`			| 是否禁用（全部功能失效并且置灰）																												| `Boolean`					| `false`			| -																		|-				|
+| `pullDown`			| 是否有下拉选项（当选项数量大于均分数量时生效）																						| `Boolean`					| `false`			| -																		|-				|
+| `placeholder`		| 下拉占位符																																						| `String`					| `"请选择"`		| -																		|-				|
 
 #### Tabs Events
 您可以通过监听`change`事件，事件参数为用户选中标签项的`props`对象，您可以监听该事件获取当前选中的标签。
@@ -292,14 +292,14 @@ export default {
 | `default`	| 默认插槽，请传入`Tab`标签列表	|-				| -				|
 
 #### Tab Props
-| 属性名		| 说明																																		| 类型				| 默认值		| 可选值	|支持版本	|
-| -----			| -----																																	| -----			| -----		| -----	| -----		|
-| `title`		| 标题																																		| `String`	| -				| -			| -				|
-| `subTitle`| 子标题																																	| `String`	| -				| -			| -				|
-| `image`		| 图片**（同image的src属性）**																						| `String`	| -				| -			| -				|
-| `name`		| 标签唯一标识**（当tabs的active值类型为string时，作为匹配激活的标识符）**	| `String`	| -				| -			| -				|
-| `index`		| 标签下标**（当tabs的active值类型为number时，作为匹配激活的标识符）**			| `Number`	| -				| -			| -				|
-| `disabled`| 禁用当前标签																														| `Boolean`	| `false`	| -			| -				|
+| 属性名		| 说明																															| 类型				| 默认值		| 可选值	|支持版本	|
+| -----			| -----																														| -----			| -----		| -----	| -----		|
+| `title`		| 标题																															| `String`	| -				| -			| -				|
+| `subTitle`| 子标题																														| `String`	| -				| -			| -				|
+| `image`		| 图片（同image的src属性）																					| `String`	| -				| -			| -				|
+| `name`		| 标签唯一标识（当tabs的active值类型为string时，作为匹配激活的标识符）	| `String`	| -				| -			| -				|
+| `index`		| 标签下标（当tabs的active值类型为number时，作为匹配激活的标识符）			| `Number`	| -				| -			| -				|
+| `disabled`| 禁用当前标签																											| `Boolean`	| `false`	| -			| -				|
 
 #### Tab Slot
 您可以通过监听`change`事件，事件参数为用户选中标签项的`props`对象，您可以监听该事件获取当前选中的标签。

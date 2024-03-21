@@ -19,9 +19,9 @@ let utils = {
 	 */
 	bg2style(value) {
 		const result = {};
-		const colorReg = /^(\#|rgba?)/;
-		const colorsReg = /^linear\-gradient/;
-		const imgReg = /^(https?\:\/\/|data\:image\/)/;
+		const colorReg = /^(\#|rgba?)/i;
+		const colorsReg = /^linear\-gradient/i;
+		const imgReg = /^(https?\:\/\/|data\:image\/)/i;
 		if (colorReg.test(value)) {
 			// 纯色
 			result.backgroundColor = value;
@@ -31,6 +31,9 @@ let utils = {
 		} else if (imgReg.test(value)) {
 			// 图片
 			result.backgroundImage = `url(${value})`;
+		} else {
+			// 其他原生值
+			result.background = value
 		}
 		return result;
 	},

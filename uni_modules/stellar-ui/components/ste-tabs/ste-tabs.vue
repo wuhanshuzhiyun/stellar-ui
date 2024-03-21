@@ -35,17 +35,20 @@
 						</view>
 					</view>
 				</block>
-				<view class="tab-line-box" v-if="!showSubtitle">
+				<view class="tab-line-box" v-if="cmpShowLine">
 					<view class="tab-line" :style="[cmpLineStyle]"></view>
 				</view>
 			</scroll-view>
+			<view v-if="cmpPullDown" class="tab-pull-down" @click="onOpenDown">
+				<ste-icon code="&#xe676;" size="10px" :color="titleColor" />
+			</view>
 			<view v-if="cmpPullDown" class="tab-pull-down-box" :class="{ open: openPullDown }">
 				<view class="pull-down-content" :style="[cmpPullStyle]">
 					<view class="content-tabs" :style="[cmpListBackground]">
 						<view class="placeholder">{{ placeholder }}</view>
-						<view class="tab-pull-down" @click="onOpenDown">
-							<view class="pull-down-icon">
-								<ste-icon code="&#xe676;" size="20" :color="tabColor" />
+						<view class="tab-pull-down" @click="onCloseDown">
+							<view class="pull-down-icon" :style="[cmpPullIconTransform]">
+								<ste-icon code="&#xe676;" size="10px" :color="titleColor" />
 							</view>
 						</view>
 					</view>
@@ -117,8 +120,8 @@ import { getChildrenProps } from './utils.js';
  * @property {Boolean}					sticky						是否开启吸顶
  * @property {Number | String}	offsetTop					吸顶距离
  * @property {Boolean} 					swipeable					是否开启手势滑动切换
- * @property {String} 					tabColor					选项字体颜色和下拉列表中选项颜色，默认值#000000
- * @property {String} 					activeTabColor		激活选项字体颜色，默认值#000000
+ * @property {String} 					titleColor				主标题字体颜色和下拉列表中选项颜色，默认值#000000
+ * @property {String} 					activeTitleColor		激活主标题字体颜色，默认值#000000
  * @property {Boolean} 					showGapLine				是否显示分割线，默认值false
  * @property {Boolean} 					lock							是否锁定（无法切换）
  * @property {Boolean} 					disabled					是否禁用
@@ -164,7 +167,7 @@ export default {
 		// 背景
 		background: {
 			type: String,
-			default: () => 'none',
+			default: () => '',
 		},
 		// 动画时间，单位秒，设置为 0 可以禁用动画
 		duration: {
@@ -221,13 +224,13 @@ export default {
 			type: Boolean,
 			default: () => false,
 		},
-		// 选项字体颜色和下拉列表中选项颜色
-		tabColor: {
+		// 主标题字体颜色和下拉列表中选项颜色
+		titleColor: {
 			type: String,
 			default: () => '#000000',
 		},
-		// 激活选项字体颜色
-		activeTabColor: {
+		// 激活主标题字体颜色
+		activeTitleColor: {
 			type: String,
 			default: () => '#000000',
 		},
@@ -256,6 +259,54 @@ export default {
 			type: String,
 			default: () => '请选择',
 		},
+		imageWidth: {
+			type: [Number, String],
+			default: () => 80,
+		},
+		imageHeight: {
+			type: [Number, String],
+			default: () => 80,
+		},
+		imageRadius: {
+			type: [Number, String],
+			default: () => '50%',
+		},
+		imageBorderWidth: {
+			type: [Number, String],
+			default: () => 4,
+		},
+		showLine: {
+			type: Boolean,
+			default: () => true,
+		},
+		subColor: {
+			type: String,
+			default: () => '#000',
+		},
+		activeSubColor: {
+			type: String,
+			default: () => '#fff',
+		},
+		maskTop: {
+			type: [String, Number],
+			default: () => 0,
+		},
+		maskRight: {
+			type: [String, Number],
+			default: () => 0,
+		},
+		maskBottom: {
+			type: [String, Number],
+			default: () => 0,
+		},
+		maskLeft: {
+			type: [String, Number],
+			default: () => 0,
+		},
+		maskZindex: {
+			type: [String, Number],
+			default: () => 1001,
+		},
 	},
 
 	provide() {
@@ -274,7 +325,7 @@ export default {
 			listEl: null,
 			tabEls: [],
 			openPullDown: false,
-			pullListTransform: '-100%',
+			pullTransform: false,
 			_timeout: null,
 		};
 	},
@@ -301,26 +352,24 @@ export default {
 		},
 		cmpRootStyle() {
 			let tabWidth = isNaN(this.tabWidth) ? this.tabWidth : utils.rpx2px(this.tabWidth);
-			let tabPadding = utils.rpx2px(24);
 			if (this.tabPropsList.length > 0 && this.tabPropsList.length <= this.divideNum) {
 				tabWidth = 100 / this.tabPropsList.length + '%';
-				tabPadding = 0;
 			}
-			let tabCardBg = utils.Color.formatColor(this.tabColor, 0.05);
+			let tabCardBg = utils.Color.formatColor(this.titleColor, 0.05);
 			let tabCardBgActive = utils.Color.formatColor(this.color, 0.1);
 			let tabCardSubBg = this.color;
 			let tabCardSubColor = '#fff';
-			let activeTabColor = this.activeTabColor;
+			let activeTitleColor = this.activeTitleColor;
 			let borderWidthStart = '0';
 			let borderWidth = '0';
 			if (this.type === 'card') {
-				activeTabColor = this.color;
+				activeTitleColor = this.color;
 				if (this.border) {
 					tabCardBg = 'none';
 					tabCardBgActive = this.color;
 					tabCardSubBg = '#fff';
 					tabCardSubColor = this.color;
-					activeTabColor = '#fff';
+					activeTitleColor = '#fff';
 					borderWidthStart = '1px';
 					borderWidth = '1px 1px 1px 0';
 					if (this.tabSpace > 0) {
@@ -342,7 +391,7 @@ export default {
 				'--tabs-line-width': isNaN(this.lineWidth) ? this.lineWidth : utils.rpx2px(this.lineWidth),
 				'--tabs-line-height': isNaN(this.lineHeight) ? this.lineHeight : utils.rpx2px(this.lineHeight),
 				'--tabs-tab-width': tabWidth,
-				'--tabs-tab-padding': `0 ${tabPadding}`,
+				'--tabs-tab-padding-bottom': this.cmpShowLine ? utils.rpx2px(4) : utils.rpx2px(24),
 				'--tabs-transition-duration': this.duration ? `${this.duration}s` : 'inherit',
 				'--tabs-tab-space': isNaN(this.tabSpace) ? this.tabSpace : utils.rpx2px(this.tabSpace),
 				'--tabs-tab-space-line': tabSpaceLine,
@@ -350,9 +399,22 @@ export default {
 				'--tabs-tab-border-width-start': borderWidthStart,
 				'--tabs-sticky': this.sticky ? 'sticky' : 'relative',
 				'--tabs-offset-top': isNaN(this.offsetTop) ? this.offsetTop : utils.rpx2px(this.offsetTop),
-				'--tabs-tab-color': this.tabColor,
-				'--tabs-active-tab-color': activeTabColor,
+				'--tabs-title-color': this.titleColor,
+				'--tabs-active-title-color': activeTitleColor,
 				'--tabs-list-height': this.openPullDown && this.listEl ? `${this.listEl?.height}px` : 'initial',
+				'--tabs-image-width': isNaN(this.imageWidth) ? this.imageWidth : utils.rpx2px(this.imageWidth),
+				'--tabs-image-height': isNaN(this.imageHeight) ? this.imageHeight : utils.rpx2px(this.imageHeight),
+				'--tabs-image-radius': isNaN(this.imageRadius) ? this.imageRadius : utils.rpx2px(this.imageRadius),
+				'--tabs-image-border-width': isNaN(this.imageBorderWidth)
+					? this.imageBorderWidth
+					: utils.rpx2px(this.imageBorderWidth),
+				'--tabs-sub-color': this.subColor,
+				'--tabs-active-sub-color': this.activeSubColor,
+				'--tabs-mask-top': isNaN(this.maskTop) ? this.maskTop : utils.rpx2px(this.maskTop),
+				'--tabs-mask-right': isNaN(this.maskRight) ? this.maskRight : utils.rpx2px(this.maskRight),
+				'--tabs-mask-bottom': isNaN(this.maskBottom) ? this.maskBottom : utils.rpx2px(this.maskBottom),
+				'--tabs-mask-left': isNaN(this.maskLeft) ? this.maskLeft : utils.rpx2px(this.maskLeft),
+				'--tabs-mask-zindex': this.maskZindex,
 				opacity: this.showComponent ? '1' : '0',
 				zIndex: this.openPullDown ? '1001' : 1,
 			};
@@ -401,7 +463,10 @@ export default {
 			return style;
 		},
 		cmpPullListTransform() {
-			return { transform: `translateY(${this.pullListTransform})` };
+			return { transform: `translateY(${this.pullTransform ? '0' : '-100%'})` };
+		},
+		cmpPullIconTransform() {
+			return { transform: `rotate(${this.pullTransform ? '180deg' : '0'})` };
 		},
 		cmpEllipsis() {
 			const style = {};
@@ -409,6 +474,9 @@ export default {
 				style.textOverflow = 'ellipsis';
 			}
 			return style;
+		},
+		cmpShowLine() {
+			return this.showLine && !this.showSubtitle;
 		},
 	},
 	watch: {
@@ -442,7 +510,7 @@ export default {
 		},
 		async onSelect(tab, index) {
 			if (this.lock || tab.disabled || this.disabled) return false;
-			if (this.openPullDown) await this.onOpenDown();
+			if (this.openPullDown) await this.onCloseDown();
 			let active = this.dataActive;
 			if (typeof this.dataActive === 'string') {
 				active = tab.name;
@@ -488,22 +556,20 @@ export default {
 		},
 		onOpenDown() {
 			return new Promise(async (resolve, reject) => {
-				if (this.openPullDown) {
-					this.pullListTransform = '-100%';
-					setTimeout(() => {
-						this.openPullDown = false;
-						resolve();
-					}, 200);
-					return;
-				}
-
 				this.listBoxEl = await utils.querySelector('.tab-list-box', this);
 				this.openPullDown = true;
 				setTimeout(() => {
-					this.pullListTransform = '0';
+					this.pullTransform = true;
 					resolve();
 				}, 20);
 			});
+		},
+		onCloseDown() {
+			this.pullTransform = false;
+			setTimeout(() => {
+				this.openPullDown = false;
+				resolve();
+			}, 200);
 		},
 		onSliding(index) {
 			if (this.disabled) return;
@@ -548,39 +614,51 @@ export default {
 				display: inline-block;
 				vertical-align: bottom;
 				width: var(--tabs-tab-width);
-				padding: var(--tabs-tab-padding);
+				padding: 24rpx 24rpx 0 24rpx;
+				padding-bottom: var(--tabs-tab-padding-bottom);
 				text-align: center;
+				white-space: initial;
 				.tab-image {
-					height: 90rpx;
-					width: 90rpx;
-					border-radius: 24rpx;
+					width: var(--tabs-image-width);
+					height: var(--tabs-image-height);
+					border-radius: var(--tabs-image-radius);
+					border-width: var(--tabs-image-border-width);
+					border-style: solid;
+					border-color: transparent;
 					overflow: hidden;
-					border: 2px solid transparent;
 					margin: 0 auto;
 					image {
 						width: 100%;
 						height: 100%;
 					}
+					& + .tab-sub-title {
+						margin-top: 8rpx;
+					}
 				}
 				.tab-title {
 					max-width: 100%;
+					height: 48rpx;
 					overflow: hidden;
-					line-height: 40rpx;
+					line-height: 48rpx;
 					font-size: 28rpx;
-					color: var(--tabs-tab-color);
+					color: var(--tabs-title-color);
+					word-break: break-all;
 					margin: 0 auto;
+					& + .tab-sub-title {
+						margin-top: 4rpx;
+					}
 				}
 				.tab-sub-title {
-					width: var(--tabs-line-width);
+					width: 100%;
+					height: 42rpx;
 					max-width: 100%;
 					overflow: hidden;
-					line-height: 40rpx;
-					font-size: 24rpx;
-					border-radius: 20rpx;
+					line-height: 42rpx;
+					font-size: 28rpx;
+					border-radius: 21rpx;
 					text-align: center;
 					margin: 0 auto;
-					color: var(--tabs-tab-color);
-					margin-top: 8rpx;
+					color: var(--tabs-sub-color);
 				}
 
 				&.active {
@@ -588,12 +666,12 @@ export default {
 						border-color: var(--tabs-color);
 					}
 					.tab-title {
-						color: var(--tabs-active-tab-color);
+						color: var(--tabs-active-title-color);
 						font-weight: bold;
 					}
 					.tab-sub-title {
 						background-color: var(--tabs-color);
-						color: #ffffff;
+						color: var(--tabs-active-sub-color);
 					}
 				}
 				&.disabled {
@@ -623,99 +701,80 @@ export default {
 				pointer-events: none;
 			}
 		}
-
-		.tab-pull-down-box {
+		.tab-pull-down {
 			width: 70rpx;
 			position: absolute;
 			top: 0;
 			right: 0;
 			bottom: 0;
-
+			background-color: rgba(255, 255, 255, 0.45);
+			box-shadow: -5px 0 5px rgba(245, 245, 245, 0.5);
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			.pull-down-icon {
+				width: 10px;
+				height: 10px;
+				display: flex;
+				align-items: center;
+				justify-content: center;
+				transition-duration: 0.3s;
+			}
+		}
+		.tab-pull-down-box {
+			display: none;
+			position: fixed;
+			background-color: rgba(0, 0, 0, 0.45);
+			z-index: 1001;
+			top: var(--tabs-mask-top);
+			right: var(--tabs-mask-right);
+			bottom: var(--tabs-mask-bottom);
+			left: var(--tabs-mask-left);
+			&.open {
+				display: block;
+			}
 			.pull-down-content {
 				width: 100%;
-				height: 100%;
 				position: absolute;
+				height: initial;
+				display: block;
+				overflow: hidden;
 				.content-tabs {
 					width: 100%;
 					height: var(--tabs-list-height);
+					position: relative;
+					box-shadow: 0 5px 5px rgba(245, 245, 245, 0.5);
+					z-index: 10;
+					background-color: #ffffff;
 					.placeholder {
-						display: none;
+						display: flex;
 						height: 100%;
 						align-items: center;
 						padding: 0 24rpx;
-						color: var(--tabs-tab-color);
+						color: var(--tabs-title-color);
 						font-size: 28rpx;
-					}
-					.tab-pull-down {
-						width: 70rpx;
-						position: absolute;
-						top: 0;
-						right: 0;
-						bottom: 0;
-						background-color: rgba(255, 255, 255, 0.45);
-						box-shadow: -5px 0 5px rgba(245, 245, 245, 0.5);
-						display: flex;
-						align-items: center;
-						justify-content: center;
-						.pull-down-icon {
-							transition-duration: 0.3s;
-						}
 					}
 				}
 				.tab-list {
-					display: none;
+					display: grid;
+					grid-template-columns: 25% 25% 25% 25%;
+					grid-row-gap: 30rpx;
+					flex-wrap: wrap;
+					position: relative;
+					z-index: 1;
+					background-color: #ffffff;
+					border-radius: 0 0 24rpx 24rpx;
+					padding: 30rpx 0;
+					transition-duration: 0.3s;
+					transform: translateY(-100%);
 					.tab-item {
+						width: 100%;
+						margin: 0;
+						padding: 0;
 						&.active {
 							.tab-title {
 								color: var(--tabs-color);
 							}
-						}
-					}
-				}
-			}
-			&.open {
-				width: 100%;
-				height: 100vh;
-				position: fixed;
-				background-color: rgba(0, 0, 0, 0.45);
-				z-index: 1001;
-
-				.pull-down-content {
-					height: initial;
-					display: block;
-
-					overflow: hidden;
-					.content-tabs {
-						position: relative;
-						box-shadow: 0 5px 5px rgba(245, 245, 245, 0.5);
-						z-index: 10;
-						background-color: #ffffff;
-						.placeholder {
-							display: flex;
-						}
-						.tab-pull-down {
-							display: flex;
-							.pull-down-icon {
-								transform: rotate(180deg);
-							}
-						}
-					}
-					.tab-list {
-						display: grid;
-						grid-template-columns: 25% 25% 25% 25%;
-						grid-row-gap: 30rpx;
-						flex-wrap: wrap;
-						position: relative;
-						z-index: 1;
-						background-color: #ffffff;
-						border-radius: 0 0 24rpx 24rpx;
-						padding: 30rpx 0;
-						transition-duration: 0.3s;
-						transform: translateY(-100%);
-						.tab-item {
-							width: 100%;
-							margin: 0;
-							padding: 0;
 						}
 					}
 				}

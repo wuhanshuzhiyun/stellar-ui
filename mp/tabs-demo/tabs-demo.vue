@@ -7,16 +7,16 @@
 				<view class="item-block">
 					<ste-tabs>
 						<ste-tab v-for="(item, index) in list1" :key="index" :title="item.title" :index="index">
-							<h1>==Start {{ item.title }}==</h1>
-							<h1>内容{{ item.title }}</h1>
-							<h1>==End {{ item.title }}==</h1>
+							<view>==Start {{ item.title }}==</view>
+							<view>内容{{ item.title }}</view>
+							<view>==End {{ item.title }}==</view>
 						</ste-tab>
 					</ste-tabs>
 					<ste-tabs>
 						<ste-tab v-for="(item, index) in list2" :key="index" :title="item.title" :index="index">
-							<h1>==Start {{ item.title }}==</h1>
-							<h1>内容{{ item.title }}</h1>
-							<h1>==End {{ item.title }}==</h1>
+							<view>==Start {{ item.title }}==</view>
+							<view>内容{{ item.title }}</view>
+							<view>==End {{ item.title }}==</view>
 						</ste-tab>
 					</ste-tabs>
 				</view>
@@ -26,9 +26,9 @@
 				<view class="item-block">
 					<ste-tabs tabWidth="180">
 						<ste-tab v-for="(item, index) in list2" :key="index" :title="item.title" :index="index">
-							<h1>==Start {{ item.title }}==</h1>
-							<h1>内容{{ item.title }}</h1>
-							<h1>==End {{ item.title }}==</h1>
+							<view>==Start {{ item.title }}==</view>
+							<view>内容{{ item.title }}</view>
+							<view>==End {{ item.title }}==</view>
 						</ste-tab>
 					</ste-tabs>
 				</view>
@@ -38,14 +38,9 @@
 				<view class="item-block">
 					<ste-tabs sticky>
 						<ste-tab v-for="(item, index) in list1" :key="index" :title="item.title" :index="index">
-							<h1>==Start {{ item.title }}==</h1>
-							<h1>内容{{ item.title }}</h1>
-							<h1>内容{{ item.title }}</h1>
-							<h1>内容{{ item.title }}</h1>
-							<h1>内容{{ item.title }}</h1>
-							<h1>内容{{ item.title }}</h1>
-							<h1>内容{{ item.title }}</h1>
-							<h1>==End {{ item.title }}==</h1>
+							<view>==Start {{ item.title }}==</view>
+							<view>内容{{ item.title }}</view>
+							<view>==End {{ item.title }}==</view>
 						</ste-tab>
 					</ste-tabs>
 				</view>
@@ -55,9 +50,9 @@
 				<view class="item-block">
 					<ste-tabs type="card">
 						<ste-tab v-for="(item, index) in list1" :key="index" :title="item.title" :index="index">
-							<h1>==Start {{ item.title }}==</h1>
-							<h1>内容{{ item.title }}</h1>
-							<h1>==End {{ item.title }}==</h1>
+							<view>==Start {{ item.title }}==</view>
+							<view>内容{{ item.title }}</view>
+							<view>==End {{ item.title }}==</view>
 						</ste-tab>
 					</ste-tabs>
 				</view>
@@ -67,9 +62,9 @@
 				<view class="item-block">
 					<ste-tabs type="card" border>
 						<ste-tab v-for="(item, index) in list1" :key="index" :title="item.title" :index="index">
-							<h1>==Start {{ item.title }}==</h1>
-							<h1>内容{{ item.title }}</h1>
-							<h1>==End {{ item.title }}==</h1>
+							<view>==Start {{ item.title }}==</view>
+							<view>内容{{ item.title }}</view>
+							<view>==End {{ item.title }}==</view>
 						</ste-tab>
 					</ste-tabs>
 				</view>
@@ -79,9 +74,9 @@
 				<view class="item-block">
 					<ste-tabs showGapLine>
 						<ste-tab v-for="(item, index) in list1" :key="index" :title="item.title" :index="index">
-							<h1>==Start {{ item.title }}==</h1>
-							<h1>内容{{ item.title }}</h1>
-							<h1>==End {{ item.title }}==</h1>
+							<view>==Start {{ item.title }}==</view>
+							<view>内容{{ item.title }}</view>
+							<view>==End {{ item.title }}==</view>
 						</ste-tab>
 					</ste-tabs>
 				</view>
@@ -91,9 +86,9 @@
 				<view class="item-block">
 					<ste-tabs type="card" tabSpace="12">
 						<ste-tab v-for="(item, index) in list1" :key="index" :title="item.title" :index="index">
-							<h1>==Start {{ item.title }}==</h1>
-							<h1>内容{{ item.title }}</h1>
-							<h1>==End {{ item.title }}==</h1>
+							<view>==Start {{ item.title }}==</view>
+							<view>内容{{ item.title }}</view>
+							<view>==End {{ item.title }}==</view>
 						</ste-tab>
 					</ste-tabs>
 				</view>
@@ -101,17 +96,17 @@
 			<view class="demo-item">
 				<view class="title">显示图片</view>
 				<view class="item-block">
-					<ste-tabs showImage>
+					<ste-tabs showImage :showTitle="false" showSubtitle>
 						<ste-tab
 							v-for="(item, index) in list1"
 							:key="index"
-							:title="item.title"
+							:subTitle="`描述${i}`"
 							:image="item.image"
 							:index="index"
 						>
-							<h1>==Start {{ item.title }}==</h1>
-							<h1>内容{{ item.title }}</h1>
-							<h1>==End {{ item.title }}==</h1>
+							<view>==Start {{ item.title }}==</view>
+							<view>内容{{ item.title }}</view>
+							<view>==End {{ item.title }}==</view>
 						</ste-tab>
 					</ste-tabs>
 				</view>
@@ -120,16 +115,10 @@
 				<view class="title">子标题和滑块大小</view>
 				<view class="item-block">
 					<ste-tabs showSubtitle lineWidth="120" lineHeight="30">
-						<ste-tab
-							v-for="(item, index) in list1"
-							:key="index"
-							:title="item.title"
-							subTitle="子标签"
-							:index="index"
-						>
-							<h1>==Start {{ item.title }}==</h1>
-							<h1>内容{{ item.title }}</h1>
-							<h1>==End {{ item.title }}==</h1>
+						<ste-tab v-for="(item, index) in list1" :key="index" :title="item.title" subTitle="子标签" :index="index">
+							<view>==Start {{ item.title }}==</view>
+							<view>内容{{ item.title }}</view>
+							<view>==End {{ item.title }}==</view>
 						</ste-tab>
 					</ste-tabs>
 				</view>
@@ -139,9 +128,9 @@
 				<view class="item-block">
 					<ste-tabs ellipsis>
 						<ste-tab v-for="(item, index) in list1" :key="index" :title="item.title" :index="index">
-							<h1>==Start {{ item.title }}==</h1>
-							<h1>内容{{ item.title }}</h1>
-							<h1>==End {{ item.title }}==</h1>
+							<view>==Start {{ item.title }}==</view>
+							<view>内容{{ item.title }}</view>
+							<view>==End {{ item.title }}==</view>
 						</ste-tab>
 					</ste-tabs>
 				</view>
@@ -151,9 +140,9 @@
 				<view class="item-block">
 					<ste-tabs swipeable>
 						<ste-tab v-for="(item, index) in list1" :key="index" :title="item.title" :index="index">
-							<h1>==Start {{ item.title }}==</h1>
-							<h1>内容{{ item.title }}</h1>
-							<h1>==End {{ item.title }}==</h1>
+							<view>==Start {{ item.title }}==</view>
+							<view>内容{{ item.title }}</view>
+							<view>==End {{ item.title }}==</view>
 						</ste-tab>
 					</ste-tabs>
 				</view>
@@ -163,16 +152,16 @@
 				<view class="item-block">
 					<ste-tabs pullDown color="#f0f" background="#ff9" activeTabColor="#00f" tabColor="#666">
 						<ste-tab v-for="(item, index) in list2" :key="index" :title="item.title" :index="index">
-							<h1>==Start {{ item.title }}==</h1>
-							<h1>内容{{ item.title }}</h1>
-							<h1>==End {{ item.title }}==</h1>
+							<view>==Start {{ item.title }}==</view>
+							<view>内容{{ item.title }}</view>
+							<view>==End {{ item.title }}==</view>
 						</ste-tab>
 					</ste-tabs>
 					<ste-tabs pullDown placeholder="你倒是选一个啊">
 						<ste-tab v-for="(item, index) in list2" :key="index" :title="item.title" :index="index">
-							<h1>==Start {{ item.title }}==</h1>
-							<h1>内容{{ item.title }}</h1>
-							<h1>==End {{ item.title }}==</h1>
+							<view>==Start {{ item.title }}==</view>
+							<view>内容{{ item.title }}</view>
+							<view>==End {{ item.title }}==</view>
 						</ste-tab>
 					</ste-tabs>
 				</view>
@@ -182,9 +171,9 @@
 				<view class="item-block">
 					<ste-tabs lock>
 						<ste-tab v-for="(item, index) in list1" :key="index" :title="item.title" :index="index">
-							<h1>==Start {{ item.title }}==</h1>
-							<h1>内容{{ item.title }}</h1>
-							<h1>==End {{ item.title }}==</h1>
+							<view>==Start {{ item.title }}==</view>
+							<view>内容{{ item.title }}</view>
+							<view>==End {{ item.title }}==</view>
 						</ste-tab>
 					</ste-tabs>
 				</view>
@@ -194,9 +183,9 @@
 				<view class="item-block">
 					<ste-tabs disabled>
 						<ste-tab v-for="(item, index) in list1" :key="index" :title="item.title" :index="index">
-							<h1>==Start {{ item.title }}==</h1>
-							<h1>内容{{ item.title }}</h1>
-							<h1>==End {{ item.title }}==</h1>
+							<view>==Start {{ item.title }}==</view>
+							<view>内容{{ item.title }}</view>
+							<view>==End {{ item.title }}==</view>
 						</ste-tab>
 					</ste-tabs>
 				</view>
@@ -209,9 +198,9 @@
 							:title="item.title"
 							:index="index"
 						>
-							<h1>==Start {{ item.title }}==</h1>
-							<h1>内容{{ item.title }}</h1>
-							<h1>==End {{ item.title }}==</h1>
+							<view>==Start {{ item.title }}==</view>
+							<view>内容{{ item.title }}</view>
+							<view>==End {{ item.title }}==</view>
 						</ste-tab>
 					</ste-tabs>
 				</view>
