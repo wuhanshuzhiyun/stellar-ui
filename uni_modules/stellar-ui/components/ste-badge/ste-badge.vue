@@ -7,7 +7,7 @@
 			v-if="showDot || cmpShowContent || $slots.content"
 		>
 			<view v-if="showDot" class="dot-box" />
-			<view v-else class="content-box">
+			<view v-else class="content-box" :class="{ 'no-padding': $slots.content }">
 				<slot name="content">
 					<text class="ste-badge--content-text">{{ cmpContent }}</text>
 				</slot>
@@ -152,6 +152,11 @@ export default {
 			min-width: 26rpx;
 
 			padding: 0 8rpx;
+			line-height: 0;
+
+			&.no-padding {
+				padding: 0;
+			}
 		}
 
 		.dot-box {
