@@ -27,7 +27,7 @@
 						<view class="tab-image" v-if="showImage">
 							<ste-image :src="tab.image" />
 						</view>
-						<view class="tab-title" v-if="showTitle" :style="[cmpEllipsis]">
+						<view class="tab-title" v-if="showTitle" :style="[cmpEllipsis, cmpTitleStyle]">
 							{{ tab.title }}
 						</view>
 						<view class="tab-sub-title" v-if="showSubtitle" :style="[cmpEllipsis]">
@@ -259,6 +259,10 @@ export default {
 			type: String,
 			default: () => '请选择',
 		},
+		tabPadding: {
+			type: [Number, String],
+			default: () => 24,
+		},
 		imageWidth: {
 			type: [Number, String],
 			default: () => 80,
@@ -351,10 +355,6 @@ export default {
 			return list;
 		},
 		cmpRootStyle() {
-			let tabWidth = isNaN(this.tabWidth) ? this.tabWidth : utils.rpx2px(this.tabWidth);
-			if (this.tabPropsList.length > 0 && this.tabPropsList.length <= this.divideNum) {
-				tabWidth = 100 / this.tabPropsList.length + '%';
-			}
 			let tabCardBg = utils.Color.formatColor(this.titleColor, 0.05);
 			let tabCardBgActive = utils.Color.formatColor(this.color, 0.1);
 			let tabCardSubBg = this.color;
@@ -377,9 +377,16 @@ export default {
 					}
 				}
 			}
+			const tabSpace = utils.rpx2px(this.tabSpace);
 			let tabSpaceLine = 0;
 			if (this.showGapLine) {
 				tabSpaceLine = '1px';
+			}
+			let tabWidth = utils.rpx2px(this.tabWidth);
+			if (this.tabPropsList.length > 0 && this.tabPropsList.length <= this.divideNum) {
+				const listWidth = this.listEl?.width || 375;
+				const tabsWidth = listWidth - tabSpace.slice(0, -2) * (this.tabPropsList.length - 1);
+				tabWidth = tabsWidth / this.tabPropsList.length + 'px';
 			}
 
 			const style = {
@@ -388,32 +395,31 @@ export default {
 				'--tabs-card-background-active': tabCardBgActive,
 				'--tabs-card-sub-bg': tabCardSubBg,
 				'--tabs-card-sub-color': tabCardSubColor,
-				'--tabs-line-width': isNaN(this.lineWidth) ? this.lineWidth : utils.rpx2px(this.lineWidth),
-				'--tabs-line-height': isNaN(this.lineHeight) ? this.lineHeight : utils.rpx2px(this.lineHeight),
+				'--tabs-line-width': utils.rpx2px(this.lineWidth),
+				'--tabs-line-height': utils.rpx2px(this.lineHeight),
 				'--tabs-tab-width': tabWidth,
 				'--tabs-tab-padding-bottom': this.cmpShowLine ? utils.rpx2px(4) : utils.rpx2px(24),
 				'--tabs-transition-duration': this.duration ? `${this.duration}s` : 'inherit',
-				'--tabs-tab-space': isNaN(this.tabSpace) ? this.tabSpace : utils.rpx2px(this.tabSpace),
+				'--tabs-tab-space': tabSpace,
 				'--tabs-tab-space-line': tabSpaceLine,
 				'--tabs-tab-border-width': borderWidth,
 				'--tabs-tab-border-width-start': borderWidthStart,
 				'--tabs-sticky': this.sticky ? 'sticky' : 'relative',
-				'--tabs-offset-top': isNaN(this.offsetTop) ? this.offsetTop : utils.rpx2px(this.offsetTop),
+				'--tabs-offset-top': utils.rpx2px(this.offsetTop),
 				'--tabs-title-color': this.titleColor,
 				'--tabs-active-title-color': activeTitleColor,
 				'--tabs-list-height': this.openPullDown && this.listEl ? `${this.listEl?.height}px` : 'initial',
-				'--tabs-image-width': isNaN(this.imageWidth) ? this.imageWidth : utils.rpx2px(this.imageWidth),
-				'--tabs-image-height': isNaN(this.imageHeight) ? this.imageHeight : utils.rpx2px(this.imageHeight),
-				'--tabs-image-radius': isNaN(this.imageRadius) ? this.imageRadius : utils.rpx2px(this.imageRadius),
-				'--tabs-image-border-width': isNaN(this.imageBorderWidth)
-					? this.imageBorderWidth
-					: utils.rpx2px(this.imageBorderWidth),
+				'--tabs-tab-padding': utils.rpx2px(this.tabPadding),
+				'--tabs-image-width': utils.rpx2px(this.imageWidth),
+				'--tabs-image-height': utils.rpx2px(this.imageHeight),
+				'--tabs-image-radius': utils.rpx2px(this.imageRadius),
+				'--tabs-image-border-width': utils.rpx2px(this.imageBorderWidth),
 				'--tabs-sub-color': this.subColor,
 				'--tabs-active-sub-color': this.activeSubColor,
-				'--tabs-mask-top': isNaN(this.maskTop) ? this.maskTop : utils.rpx2px(this.maskTop),
-				'--tabs-mask-right': isNaN(this.maskRight) ? this.maskRight : utils.rpx2px(this.maskRight),
-				'--tabs-mask-bottom': isNaN(this.maskBottom) ? this.maskBottom : utils.rpx2px(this.maskBottom),
-				'--tabs-mask-left': isNaN(this.maskLeft) ? this.maskLeft : utils.rpx2px(this.maskLeft),
+				'--tabs-mask-top': utils.rpx2px(this.maskTop),
+				'--tabs-mask-right': utils.rpx2px(this.maskRight),
+				'--tabs-mask-bottom': utils.rpx2px(this.maskBottom),
+				'--tabs-mask-left': utils.rpx2px(this.maskLeft),
 				'--tabs-mask-zindex': this.maskZindex,
 				opacity: this.showComponent ? '1' : '0',
 				zIndex: this.openPullDown ? '1001' : 1,
@@ -430,7 +436,7 @@ export default {
 			return this.tabEls[this.cmpActiveIndex] || {};
 		},
 		cmpLineStyle() {
-			const width = isNaN(this.lineWidth) ? this.lineWidth : utils.rpx2px(this.lineWidth);
+			const width = utils.rpx2px(this.lineWidth);
 			const display = this.tabEls.length ? 'block' : 'none';
 			let marginLeft = 0;
 			if (this.cmpActiveIndex !== -1) {
@@ -471,7 +477,16 @@ export default {
 		cmpEllipsis() {
 			const style = {};
 			if (this.ellipsis) {
+				style.whiteSpace = 'nowrap';
 				style.textOverflow = 'ellipsis';
+			}
+			return style;
+		},
+		cmpTitleStyle() {
+			const style = {};
+			if (this.showSubtitle) {
+				style.fontWeight = 'bold';
+				style.fontSize = utils.rpx2px(32);
 			}
 			return style;
 		},
@@ -499,12 +514,11 @@ export default {
 			clearTimeout(this._timeout);
 			this._timeout = setTimeout(() => {
 				this.tabPropsList = getChildrenProps(this, 'ste-tab');
-				this.showComponent = true;
-				console.log('----updateTabs----');
 				this.$nextTick(async () => {
 					this.listBoxEl = await utils.querySelector('.tab-list-box', this);
 					this.listEl = await utils.querySelector('.tab-list-box .tab-list.view-list', this);
 					this.tabEls = await utils.querySelector('.tab-list-box .tab-list.view-list .tab-item', this, true);
+					this.showComponent = true;
 				});
 			});
 		},
@@ -596,7 +610,6 @@ export default {
 			width: 100%;
 			white-space: nowrap;
 			overflow-x: auto;
-			padding: 12rpx 0;
 			.tab-space {
 				display: inline-flex;
 				vertical-align: bottom;
@@ -614,7 +627,7 @@ export default {
 				display: inline-block;
 				vertical-align: bottom;
 				width: var(--tabs-tab-width);
-				padding: 24rpx 24rpx 0 24rpx;
+				padding: 24rpx var(--tabs-tab-padding);
 				padding-bottom: var(--tabs-tab-padding-bottom);
 				text-align: center;
 				white-space: initial;
@@ -685,8 +698,8 @@ export default {
 
 			.tab-line-box {
 				width: 100%;
-				height: var(--tabs-line-height);
-				margin-top: 4rpx;
+				height: call(var(--tabs-line-height) + 8rpx);
+				padding: 4rpx 0;
 				.tab-line {
 					background-color: var(--tabs-color);
 					transition-duration: var(--tabs-transition-duration);

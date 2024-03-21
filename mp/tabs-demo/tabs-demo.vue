@@ -100,7 +100,7 @@
 						<ste-tab
 							v-for="(item, index) in list1"
 							:key="index"
-							:subTitle="`描述${i}`"
+							subTitle="子标签"
 							:image="item.image"
 							:index="index"
 						>
@@ -215,7 +215,7 @@ export default {
 			list1: [
 				{ title: '标签1', image: `https://image.whzb.com/chain/StellarUI/图片.jpg` },
 				{ title: '标签2', image: `https://image.whzb.com/chain/StellarUI/图片.jpg` },
-				{ title: '标签标签标签标签3', image: `https://image.whzb.com/chain/StellarUI/图片.jpg` },
+				{ title: '标签3标签3标签3标签3', image: `https://image.whzb.com/chain/StellarUI/图片.jpg` },
 				{ title: '标签4', image: `https://image.whzb.com/chain/StellarUI/图片.jpg` },
 			],
 			active: 1,
