@@ -12,7 +12,12 @@
 				@scroll="onScroll"
 			>
 				<block v-for="(tab, index) in cmpTabList" :key="index">
-					<view class="tab-space" v-if="index > 0" :style="{ height: `${cmpActiveTabEl.height}px` }">
+					<view
+						class="tab-space"
+						:class="{ 'show-tab-line': cmpShowLine }"
+						v-if="index > 0"
+						:style="{ height: `${cmpActiveTabEl.height}px` }"
+					>
 						<view class="space-line" />
 					</view>
 					<view
@@ -331,7 +336,7 @@ export default {
 			return style;
 		},
 		cmpShowLine() {
-			return this.showLine && !this.showSubtitle;
+			return this.type === 'line' && this.showLine && !this.showSubtitle;
 		},
 	},
 	watch: {
@@ -468,6 +473,13 @@ export default {
 					background-color: rgba(180, 180, 180, 0.3);
 					height: 60%;
 				}
+				&.show-tab-line {
+					align-items: flex-end;
+					.space-line {
+						height: calc(100% - 36rpx);
+						transform: translateY(-6rpx);
+					}
+				}
 			}
 			.tab-item {
 				display: inline-block;
@@ -544,7 +556,6 @@ export default {
 
 			.tab-line-box {
 				width: 100%;
-				height: call(var(--tabs-line-height) + 8rpx);
 				padding: 4rpx 0;
 				.tab-line {
 					background-color: var(--tabs-color);

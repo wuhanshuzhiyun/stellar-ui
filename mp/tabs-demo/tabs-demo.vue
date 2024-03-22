@@ -30,6 +30,15 @@
 						</ste-tab>
 					</ste-tabs>
 				</view>
+				<view class="sub-item">
+					<view class="sub-title">超出显示省略号</view>
+					<ste-tabs tabWidth="180" ellipsis>
+						<ste-tab v-for="(item, index) in list2" :key="index" :title="item.title" :index="index">
+							<view>{{ item.title }}内容</view>
+							<image style="width: 100%; height: 300px" :src="item.content" />
+						</ste-tab>
+					</ste-tabs>
+				</view>
 			</item-view>
 			<item-view title="吸顶">
 				<view class="sub-item">
@@ -194,6 +203,8 @@
 						</ste-tab>
 					</ste-tabs>
 				</view>
+			</item-view>
+			<item-view title="间距">
 				<view class="sub-item">
 					<view class="sub-title">设置间距间距</view>
 					<ste-tabs swipeable type="card" tabSpace="12">
@@ -234,7 +245,7 @@
 				</view>
 				<view class="sub-item">
 					<view class="sub-title">卡片模式下展示分割线</view>
-					<ste-tabs type="card" swipeable showGapLine tabSpace="12">
+					<ste-tabs type="card" swipeable showGapLine tabSpace="14">
 						<ste-tab v-for="(item, index) in list1" :key="index" :title="item.title" :index="index">
 							<view>{{ item.title }}内容</view>
 							<image style="width: 100%; height: 300px" :src="item.content" />
