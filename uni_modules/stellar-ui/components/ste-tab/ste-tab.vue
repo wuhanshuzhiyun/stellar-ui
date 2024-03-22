@@ -53,6 +53,18 @@ export default {
 			type: Boolean,
 			default: () => false,
 		},
+		showDot: {
+			type: Boolean,
+			default: () => false,
+		},
+		badge: {
+			type: [String, Number],
+			default: () => 0,
+		},
+		showZeroBadge: {
+			type: Boolean,
+			default: () => false,
+		},
 	},
 
 	data() {

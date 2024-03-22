@@ -29,15 +29,17 @@
 						}"
 						@click="onClickTab(tab, index)"
 					>
-						<view class="tab-image" v-if="showImage">
-							<ste-image :src="tab.image" />
-						</view>
-						<view class="tab-title" v-if="showTitle" :style="[cmpEllipsis, cmpTitleStyle]">
-							{{ tab.title }}
-						</view>
-						<view class="tab-sub-title" v-if="showSubtitle" :style="[cmpEllipsis]">
-							{{ tab.subTitle }}
-						</view>
+						<ste-badge :showDot="tab.showDot" :content="tab.badge" :showZero="tab.showZeroBadge">
+							<view class="tab-image" v-if="showImage">
+								<ste-image :src="tab.image" />
+							</view>
+							<view class="tab-title" v-if="showTitle" :style="[cmpEllipsis, cmpTitleStyle]">
+								{{ tab.title }}
+							</view>
+							<view class="tab-sub-title" v-if="showSubtitle" :style="[cmpEllipsis]">
+								{{ tab.subTitle }}
+							</view>
+						</ste-badge>
 					</view>
 				</block>
 				<view class="tab-line-box" v-if="cmpShowLine">

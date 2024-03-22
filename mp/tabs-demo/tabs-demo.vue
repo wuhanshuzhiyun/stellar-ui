@@ -289,6 +289,23 @@
 					</ste-tabs>
 				</view>
 			</item-view>
+			<item-view title="徽标">
+				<view class="sub-item">
+					<ste-tabs swipeable showGapLine showSubtitle>
+						<ste-tab
+							v-for="(item, index) in list1"
+							:key="index"
+							:title="item.title"
+							:badge="index"
+							subTitle="子标题"
+							:index="index"
+						>
+							<view>{{ item.title }}内容</view>
+							<image style="width: 100%; height: 300px" :src="item.content" />
+						</ste-tab>
+					</ste-tabs>
+				</view>
+			</item-view>
 		</view>
 	</view>
 </template>
