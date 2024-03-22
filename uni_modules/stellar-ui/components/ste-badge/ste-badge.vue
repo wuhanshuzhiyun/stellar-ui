@@ -110,7 +110,7 @@ export default {
 			return style;
 		},
 		cmpShowContent() {
-			return this.showZero ? true : this.content != '0';
+			return this.showZero ? true : this.content && this.content != '0';
 		},
 		cmpContent() {
 			if (utils.isNumber(this.content) && this.content > this.max) {
