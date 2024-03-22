@@ -381,9 +381,10 @@ export default {
 
 #### Tabs Events
 您可以通过监听`change`事件，事件参数为用户选中标签项的`props`对象，您可以监听该事件获取当前选中的标签。
-|事件名		|说明					|事件参数				|支持版本	|
-|---			|---					|---						|---			|
-| `change`| 监听tab切换	| {...tab,index}| -				|
+|事件名				|说明																						|事件参数				|支持版本	|
+|---					|---																						|---						|---			|
+| `click-tab`	| 监听tab点击事件，不受`disabled`和`lock`属性影响	| {...tab,index}| -				|
+| `change`		| 监听tab切换																		| {...tab,index}| -				|
 
 #### Tabs Slot
 您可以通过监听`change`事件，事件参数为用户选中标签项的`props`对象，您可以监听该事件获取当前选中的标签。

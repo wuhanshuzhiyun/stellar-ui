@@ -27,7 +27,7 @@
 							disabled: tab.disabled || disabled,
 							start: index === 0,
 						}"
-						@click="onSelect(tab, index)"
+						@click="onClickTab(tab, index)"
 					>
 						<view class="tab-image" v-if="showImage">
 							<ste-image :src="tab.image" />
@@ -66,7 +66,7 @@
 								active: tab.active,
 								disabled: tab.disabled || disabled,
 							}"
-							@click="onSelect(tab, index)"
+							@click="onClickTab(tab, index)"
 						>
 							<view class="tab-image" v-if="showImage">
 								<ste-image :src="tab.image" />
@@ -373,6 +373,10 @@ export default {
 				});
 			});
 		},
+		onClickTab(tab, index) {
+			this.$emit('click-tab', { index, ...tab });
+			this.onSelect(tab, index);
+		},
 		async onSelect(tab, index) {
 			if (this.lock || tab.disabled || this.disabled) return false;
 			if (this.openPullDown) await this.onCloseDown();
@@ -384,11 +388,7 @@ export default {
 			}
 			this.dataActive = active;
 			this.$emit('update:active', active);
-			this.$emit('change', {
-				index,
-				...tab,
-			});
-
+			this.$emit('change', { index, ...tab });
 			return true;
 		},
 		onScroll(e) {
