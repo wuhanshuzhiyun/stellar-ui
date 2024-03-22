@@ -171,7 +171,7 @@ export default {
 
 			position: relative;
 			// #ifdef  H5
-			// top: -0.5rpx;
+			top: -0.5rpx;
 			// #endif
 			// #ifdef  MP-WEIXIN
 			top: -0.5rpx;

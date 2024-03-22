@@ -1,10 +1,12 @@
 <template>
-	<view class="ste-price--root" :style="[cmpPriceStyle]">
-		<text v-if="showUnit" class="unit" :style="[cmpUnitStyle]">{{ unitSymbol }}</text>
-		<text class="yuan-price" :style="[cmpYuanPriceStyle]">{{ cmpYuanValue }}</text>
-		<text v-if="valueUnit === 'fen'" class="fen-price" :style="[cmpFenPriceStyle]">
-			{{ cmpFenValue }}
-		</text>
+	<view class="ste-price--root">
+		<view class="content" :style="[cmpPriceStyle]">
+			<text v-if="showUnit" class="unit" :style="[cmpUnitStyle]">{{ unitSymbol }}</text>
+			<text class="yuan-price" :style="[cmpYuanPriceStyle]">{{ cmpYuanValue }}</text>
+			<text v-if="valueUnit === 'fen'" class="fen-price" :style="[cmpFenPriceStyle]">
+				{{ cmpFenValue }}
+			</text>
+		</view>
 	</view>
 </template>
 
@@ -167,7 +169,7 @@ export default {
 		},
 		cmpPriceStyle() {
 			return {
-				lineHeight: this.lineHeight === -1 ? 1 : utils.addUnit(this.lineHeight),
+				lineHeight: this.lineHeight === -1 ? 0.8 : utils.addUnit(this.lineHeight),
 				color: (this.isSuggestPrice ? this.linePriceColor : this.color) + ' !important',
 				marginLeft: utils.addUnit(this.marginLeft),
 				marginRight: utils.addUnit(this.marginRight),
@@ -240,9 +242,12 @@ export default {
 
 <style lang="scss" scoped>
 .ste-price--root {
-	display: inline-block;
-	vertical-align: bottom;
-	overflow: hidden; // 解决ios会产生文字高亮等兼容性问题，导致color样式失效问题
+	display: inline-flex;
+	.content {
+		display: inline-block;
+		vertical-align: bottom;
+		overflow: hidden; // 解决ios会产生文字高亮等兼容性问题，导致color样式失效问题
+	}
 	.unit {
 		vertical-align: baseline;
 	}
