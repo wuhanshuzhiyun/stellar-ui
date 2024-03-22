@@ -165,21 +165,26 @@ export default {
 			tabEls: [],
 			openPullDown: false,
 			pullTransform: false,
-			_timeout: null,
+			_updateChildrenTimeout: null,
+			_updateTabsTimeout: null,
 		};
 	},
 	computed: {
 		cmpTabList() {
 			return this.tabPropsList.map((item, index) => {
+				const tab = { ...item };
 				switch (typeof this.dataActive) {
 					case 'string':
-						item.active = this.dataActive === item.name;
+						tab.active = this.dataActive === tab.name;
 						break;
 					case 'number':
-						item.active = this.dataActive === index;
+						tab.active = this.dataActive === index;
 						break;
 				}
-				return item;
+				if (tab.subTitle?.length > 6) {
+					tab.subTitle = tab.subTitle.slice(0, 6);
+				}
+				return tab;
 			});
 		},
 		cmpDisabledIndexs() {
@@ -342,12 +347,18 @@ export default {
 			},
 			immediate: true,
 		},
+		cmpRootStyle() {
+			clearTimeout(this._updateTabsTimeout);
+			this._updateTabsTimeout = setTimeout(async () => {
+				this.tabEls = await utils.querySelector('.tab-list-box .tab-list.view-list .tab-item', this, true);
+			}, 10);
+		},
 	},
 	methods: {
 		updateTabs() {
 			this.showComponent = false;
-			clearTimeout(this._timeout);
-			this._timeout = setTimeout(() => {
+			clearTimeout(this._updateChildrenTimeout);
+			this._updateChildrenTimeout = setTimeout(() => {
 				this.tabPropsList = getChildrenProps(this, 'ste-tab');
 				this.$nextTick(async () => {
 					this.listBoxEl = await utils.querySelector('.tab-list-box', this);
@@ -573,7 +584,7 @@ export default {
 			display: none;
 			position: fixed;
 			background-color: rgba(0, 0, 0, 0.45);
-			z-index: 1001;
+			z-index: var(--tabs-mask-zindex);
 			top: var(--tabs-mask-top);
 			right: var(--tabs-mask-right);
 			bottom: var(--tabs-mask-bottom);
@@ -583,7 +594,7 @@ export default {
 			}
 			.pull-down-content {
 				width: 100%;
-				position: absolute;
+				position: fixed;
 				height: initial;
 				display: block;
 				overflow: hidden;
@@ -618,7 +629,7 @@ export default {
 					.tab-item {
 						width: 100%;
 						margin: 0;
-						padding: 0;
+						padding: 0 24rpx;
 						&.active {
 							.tab-title {
 								color: var(--tabs-color);

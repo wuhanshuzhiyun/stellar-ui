@@ -1,13 +1,7 @@
 <template>
 	<view class="page">
 		<page-nav :autoBack="true" backColor="#000" titleAlignment="2" title="搜索"></page-nav>
-		<ste-tabs>
-			<ste-tab v-for="(item, index) in list1" :key="index" :title="item.title" :index="index">
-				<view>{{ item.title }}内容</view>
-				<image style="width: 100%; height: 300px" :src="item.content" />
-			</ste-tab>
-		</ste-tabs>
-		<!-- 		<view class="content">
+		<view class="content">
 			<item-view title="基础用法" open>
 				<view class="sub-item">
 					<view class="sub-title">标签数量小于或等于均分数量时，标签宽度均分</view>
@@ -97,6 +91,26 @@
 				<view class="sub-item">
 					<view class="sub-title">开启下拉选项，当标签数量小于均分数量时不生效</view>
 					<ste-tabs pullDown :showTitle="false" showImage showSubtitle tabWidth="180" tabPadding="12">
+						<ste-tab v-for="(item, index) in list2" :key="index" :image="item.image" subTitle="子标题" :index="index">
+							<view>{{ item.title }}内容</view>
+							<image style="width: 100%; height: 300px" :src="item.content" />
+						</ste-tab>
+					</ste-tabs>
+				</view>
+				<view class="sub-item">
+					<view class="sub-title">下拉蒙层位置</view>
+					<ste-tabs
+						pullDown
+						:showTitle="false"
+						showImage
+						showSubtitle
+						tabWidth="180"
+						tabPadding="12"
+						maskLeft="30"
+						maskRight="30"
+						maskBottom="120"
+						maskTop="180"
+					>
 						<ste-tab v-for="(item, index) in list2" :key="index" :image="item.image" subTitle="子标题" :index="index">
 							<view>{{ item.title }}内容</view>
 							<image style="width: 100%; height: 300px" :src="item.content" />
@@ -220,7 +234,7 @@
 				</view>
 				<view class="sub-item">
 					<view class="sub-title">卡片模式下展示分割线</view>
-					<ste-tabs type="card" swipeable showGapLine>
+					<ste-tabs type="card" swipeable showGapLine tabSpace="12">
 						<ste-tab v-for="(item, index) in list1" :key="index" :title="item.title" :index="index">
 							<view>{{ item.title }}内容</view>
 							<image style="width: 100%; height: 300px" :src="item.content" />
@@ -228,8 +242,44 @@
 					</ste-tabs>
 				</view>
 			</item-view>
+			<item-view title="锁定和禁用">
+				<view class="sub-item">
+					<view class="sub-title">锁定</view>
+					<ste-tabs swipeable showGapLine showSubtitle lock>
+						<ste-tab v-for="(item, index) in list1" :key="index" :title="item.title" subTitle="子标题" :index="index">
+							<view>{{ item.title }}内容</view>
+							<image style="width: 100%; height: 300px" :src="item.content" />
+						</ste-tab>
+					</ste-tabs>
+				</view>
+				<view class="sub-item">
+					<view class="sub-title">全局禁用</view>
+					<ste-tabs swipeable showGapLine showSubtitle disabled>
+						<ste-tab v-for="(item, index) in list1" :key="index" :title="item.title" subTitle="子标题" :index="index">
+							<view>{{ item.title }}内容</view>
+							<image style="width: 100%; height: 300px" :src="item.content" />
+						</ste-tab>
+					</ste-tabs>
+				</view>
+				<view class="sub-item">
+					<view class="sub-title">单项禁用</view>
+					<ste-tabs swipeable showGapLine showSubtitle>
+						<ste-tab
+							v-for="(item, index) in list1"
+							:key="index"
+							:title="item.title"
+							subTitle="子标题"
+							:index="index"
+							:disabled="index === 1"
+						>
+							<view>{{ item.title }}内容</view>
+							<image style="width: 100%; height: 300px" :src="item.content" />
+						</ste-tab>
+					</ste-tabs>
+				</view>
+			</item-view>
 		</view>
-	 --></view>
+	</view>
 </template>
 <script>
 export default {
