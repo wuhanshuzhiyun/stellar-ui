@@ -124,7 +124,7 @@ export default {
 @import './iconfont.css';
 .ste-icon--root {
 	// background-color: red;
-	display: inline-block;
+	display: inline-flex;
 	justify-content: center;
 	align-items: center;
 	vertical-align: baseline;
