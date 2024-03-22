@@ -333,7 +333,26 @@ export default {
 	</ste-tab>
 </ste-tabs>
 ```
-
+#### 徽标
+- `ste-tab`标签
+	- `showDot`右上角是否展示小红点
+	- `badge`右上角徽标的内容
+	- `showZeroBadge`当 badge 为数字 0 时，是否展示徽标
+```html
+<ste-tabs swipeable showGapLine showSubtitle>
+	<ste-tab
+		v-for="(item, index) in list1"
+		:key="index"
+		:title="item.title"
+		:badge="index"
+		subTitle="子标题"
+		:index="index"
+	>
+		<view>{{ item.title }}内容</view>
+		<image style="width: 100%; height: 300px" :src="item.content" />
+	</ste-tab>
+</ste-tabs>
+```
 
 ### API
 #### Tabs Props
@@ -393,14 +412,17 @@ export default {
 | `default`	| 默认插槽，请传入`ste-tab`标签列表	|-				| -				|
 
 #### Tab Props
-| 属性名		| 说明																															| 类型				| 默认值		| 可选值	|支持版本	|
-| -----			| -----																														| -----			| -----		| -----	| -----		|
-| `title`		| 标题																															| `String`	| -				| -			| -				|
-| `subTitle`| 子标题																														| `String`	| -				| -			| -				|
-| `image`		| 图片（同image的src属性）																					| `String`	| -				| -			| -				|
-| `name`		| 标签唯一标识（当tabs的active值类型为string时，作为匹配激活的标识符）	| `String`	| -				| -			| -				|
-| `index`		| 标签下标（当tabs的active值类型为number时，作为匹配激活的标识符）			| `Number`	| -				| -			| -				|
-| `disabled`| 禁用当前标签																											| `Boolean`	| `false`	| -			| -				|
+| 属性名					| 说明																																| 类型								| 默认值		| 可选值	|支持版本	|
+| -----						| -----																															| -----							| -----		| -----	| -----		|
+| `title`					| 标题																																| `String`					| -				| -			| -				|
+| `subTitle`			| 子标题																															| `String`					| -				| -			| -				|
+| `image`					| 图片（同image的src属性）																						| `String`					| -				| -			| -				|
+| `name`					| 标签唯一标识（当tabs的active值类型为string时，作为匹配激活的标识符）	| `String`					| -				| -			| -				|
+| `index`					| 标签下标（当tabs的active值类型为number时，作为匹配激活的标识符）			| `Number`					| -				| -			| -				|
+| `disabled`			| 禁用当前标签																												| `Boolean`					| `false`	| -			| -				|
+| `showDot`				| 是否在标题右上角显示小红点																					| `Boolean`					| `false`	| -			| -				|
+| `badge`					| 右上角徽标的内容																										| `String`/`Number`	| `0`			| -			| -				|
+| `showZeroBadge`	| 当 badge 为数字 0 时，是否展示徽标																	| `Boolean`					| `false`	| -			| -				|
 
 #### Tab Slot
 您可以通过监听`change`事件，事件参数为用户选中标签项的`props`对象，您可以监听该事件获取当前选中的标签。
