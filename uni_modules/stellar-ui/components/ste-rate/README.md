@@ -10,9 +10,11 @@ JavaScript后面的演示代码中涉及到的变量和方法都使用本javasar
 export default {
 	data() {
 		return {
-			value: 0,
-			value1: 2.6,
-			value2: 3.5,
+			value: 2,
+			value1: 2,
+			value2: 3,
+			value3: 2.6,
+			value4: 2.5,
 		};
 	},
 	created() {},
@@ -53,7 +55,6 @@ export default {
 通过`readonly `属性，设置只读，不可切换评分，样式不置灰，可部分星， 默认`false`。 
 ```
 <ste-rate v-model="value3" readonly></ste-rate>
-
 ```
 #### 禁用  
 通过`disabled`属性，设置禁用，不可切换评分，样式置灰，可部分星，默认`false`。 
@@ -69,3 +70,27 @@ export default {
 <ste-rate v-model="value4" :count="1" :score="5"></ste-rate>
 ```
 
+### API
+#### 组件属性(Props)
+
+| 参数				| 说明							| 类型				| 默认值		| 可选值	| 支持版本	|
+| ---				| ---							| ---				| ---		| ---	| ---		|
+| `value`			| 当前评分数(支持v-model双向绑定)	| `Number`			| `0`		| -		| -			|
+| `count`			| 图标总数						| `Number`			| `5`		| -		| -			|
+| `score`			| 每颗星星代表的分数				| `Number`			| `1`		| -		| -			|
+| `disabled`		| 禁用							| `Boolean`			| `false`	| -		| -			|
+| `readonly `		| 只读（不置灰）					| `Boolean`			| `false`	| -		| -			|
+| `size`			| 评分图标的大小，单位`rpx`		| `Number/String`	| `44`		| -		| -			|
+| `inactiveColor`	| 未选中的颜色					| `String`			| `#dddddd`	| -		| -			|
+| `activeColor`		| 选中的颜色						| `String`			| `#fa5014`	| -		| -			|
+| `inactiveCode`	| 未选中的图标`code`				| `String`			| `&#xe681;`| -		| -			|
+| `activeCode`		| 选中的图标`code`				| `String`			| `&#xe684;`| -		| -			|
+| `gutter`			| 每个图标之间的距离，单位`rpx`	| `Number/String`	| `10`		| -		| -			|
+
+
+#### Events
+|事件名		|说明					|事件参数			|支持版本	|
+|---		|---					|---				|---		|
+| `change`	| 当前分值变化时触发的事件	|`value`:改变后的分值	| -			|
+
+{{qinpengfei}}
