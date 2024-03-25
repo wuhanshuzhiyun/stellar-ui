@@ -113,6 +113,7 @@ export default {
 				'--margin-top': utils.addUnit(this.marginTop),
 				'--margin-bottom': utils.addUnit(this.marginBottom),
 				'--font-family': this.fontFamily === '' ? this.defaultFontFamily : this.fontFamily,
+				'--display': this.inlineBlock ? 'inline-block' : 'inline-flex',
 			};
 		},
 	},
@@ -129,9 +130,7 @@ export default {
 <style lang="scss" scoped>
 @import './iconfont.css';
 .ste-icon--root {
-	// background-color: red;
-	// display: inline-flex;
-	display: inline-block;
+	display: var(--display);
 	justify-content: center;
 	align-items: center;
 	vertical-align: baseline;

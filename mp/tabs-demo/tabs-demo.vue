@@ -306,9 +306,9 @@
 					</ste-tabs>
 				</view>
 			</item-view>
-			<item-view title="异形配置">
+			<item-view title="异形">
 				<view class="sub-item">
-					<view class="sub-title">通过现有属性配置(待完善)</view>
+					<view class="sub-title">根据需求配置出所需效果</view>
 					<ste-tabs
 						swipeable
 						showSubtitle
@@ -317,7 +317,11 @@
 						subColor="#fff"
 						activeSubColor="#0090ff"
 						color="#fff"
+						tabPadding="6"
+						subTitleHeight="60"
 						:showLine="false"
+						radius="45"
+						subTitleRadius="30"
 					>
 						<ste-tab v-for="(item, index) in list1" :key="index" :subTitle="item.title" :index="index">
 							<view>{{ item.title }}内容</view>

@@ -34,6 +34,11 @@ export default {
 		type: String,
 		default: () => '',
 	},
+	// 圆角
+	radius: {
+		type: [String, Number],
+		default: () => 0,
+	},
 	// 动画时间，单位秒，设置为 0 可以禁用动画
 	duration: {
 		type: [String, Number],
@@ -109,6 +114,11 @@ export default {
 		type: String,
 		default: () => '#000000',
 	},
+	// 标题高度
+	titleHeight: {
+		type: [Number, String],
+		default: () => 48,
+	},
 	// 子标题字体颜色和下拉列表中选项颜色
 	subColor: {
 		type: String,
@@ -118,6 +128,16 @@ export default {
 	activeSubColor: {
 		type: String,
 		default: () => '#fff',
+	},
+	// 子标题高度
+	subTitleHeight: {
+		type: [Number, String],
+		default: () => 42,
+	},
+	// 子标题高度
+	subTitleRadius: {
+		type: [Number, String],
+		default: () => 21,
 	},
 	// 图片宽度，默认80，单位rpx
 	imageWidth: {

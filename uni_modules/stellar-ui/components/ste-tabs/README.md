@@ -354,6 +354,41 @@ export default {
 </ste-tabs>
 ```
 
+#### 异形
+- `ste-tabs`标签
+	- `showSubtitle`显示子标题
+	- `showTitle` = `false`隐藏主标题
+	- `background`调整标签栏背景
+	- `subColor`调整子标题颜色
+	- `activeSubColor`调整选中子标题颜色
+	- `color`调整主题色（子标签背景色）
+	- `tabPadding`调整标签内边距
+	- `subTitleHeight`调整子标题高度
+	- `showLine` = `false`隐藏下划线
+	- `radius`调整标签栏圆角
+	- `subTitleRadius`调整子标题圆角
+```html
+<ste-tabs
+	swipeable
+	showSubtitle
+	:showTitle="false"
+	background="#0090ff"
+	subColor="#fff"
+	activeSubColor="#0090ff"
+	color="#fff"
+	tabPadding="6"
+	subTitleHeight="60"
+	:showLine="false"
+	radius="45"
+	subTitleRadius="30"
+>
+	<ste-tab v-for="(item, index) in list1" :key="index" :subTitle="item.title" :index="index">
+		<view>{{ item.title }}内容</view>
+		<image style="width: 100%; height: 300px" :src="item.content" />
+	</ste-tab>
+</ste-tabs>
+```
+
 ### API
 #### Tabs Props
 - 背景之外的颜色属性只支持`16进制`、`RGB`、`RGBA`格式
@@ -361,11 +396,13 @@ export default {
 | -----							|-----																																										|-----							|-----				|-----																	|-----		|
 | `active`					| 当前激活的选项，支持sync双向绑定 （类型为number时tab绑定index，类型为string时tab绑定name）	| `String`/`Number`	| `0`					| -																			|-				|
 | `type`						| 样式风格类型																																							| `String`					| `"line"`		| `"line"`线性模式<br/>`"card"`卡片模式	|-				|
+| `color`						| 主题色（滑块颜色，边框颜色，选中的背景色，激活下拉列表中选项颜色）													| `String`					| `#0090FF`		| -																			|-				|
+| `radius`					| 标签栏圆角	（单位rpx）																																		| `String`/`Number`	| `0`					| -																			|-				|
+| `background`			| 标签栏背景																																								| `String`					| `""`				| -																			|-				|
 | `showImage`				| 是否显示图片																																							| `Boolean`					| `false`			| -																			|-				|
 | `showTitle`				| 是否显示标题																																							| `Boolean`					| `true`			| -																			|-				|
+| `titleHeight`			| 主标题高度	（单位rpx）																																		| `String`/`Number`	| `48`				| -																			|-				|
 | `showSubtitle`		| 是否显示子标题																																						| `Boolean`					| `false`			| -																			|-				|
-| `color`						| 主题色（滑块颜色，边框颜色，选中的背景色，激活下拉列表中选项颜色）													| `String`					| `#0090FF`		| -																			|-				|
-| `background`			| 标签栏背景																																								| `String`					| `""`				| -																			|-				|
 | `duration`				| 切换动画时长	（单位秒）																																		| `Number`					| `0.3`				| -																			|-				|
 | `showLine`				| 底部条是否展示	(显示副标题时无法展示)																											| `Boolean`					| `true`			| -																			|-				|
 | `lineWidth`				| 底部条宽度	（单位rpx）																																		| `String`/`Number`	| `52`				| -																			|-				|
@@ -379,10 +416,12 @@ export default {
 | `sticky`					| 是否开启吸顶																																							| `Boolean`					| `false`			| -																			|-				|
 | `offsetTop`				| 吸顶距离	（单位rpx）																																			| `String`/`Number`	| `0`					| -																			|-				|
 | `swipeable`				| 是否开启手势滑动切换																																			| `Boolean`					| `false`			| -																			|-				|
-| `titleColor`			| 主标题字体颜色和下拉列表中主标题颜色																											| `String`					| `"#000000"`	| -																			|-				|
+| `titleColor`			| 主标题字体颜色和下拉列表中主标题颜色																												| `String`					| `"#000000"`	| -																			|-				|
 | `activeTitleColor`| 激活主标题字体颜色																																				| `String`					| `"#000000"`	| -																			|-				|
-| `subColor`				| 子标题字体颜色和下拉列表中子标题颜色																											| `String`					| `"#000000"`	| -																			|-				|
+| `subColor`				| 子标题字体颜色和下拉列表中子标题颜色																												| `String`					| `"#000000"`	| -																			|-				|
 | `activeSubColor`	| 激活子标题字体颜色和下拉列表中子标题激活颜色																								| `String`					| `"#ffffff"`	| -																			|-				|
+| `subTitleHeight`	| 子标题高度	（单位rpx）																																		| `String`/`Number`	| `42`				| -																			|-				|
+| `subTitleRadius`	| 子标题圆角	（单位rpx）																																		| `String`/`Number`	| `21`				| -																			|-				|
 | `imageWidth`			| 图片宽度																																									| `String`/`Number`	| `80`				| -																			|-				|
 | `imageHeight`			| 图片高度																																									| `String`/`Number`	| `80`				| -																			|-				|
 | `imageRadius`			| 图片圆角																																									| `String`/`Number`	| `50%`				| -																			|-				|

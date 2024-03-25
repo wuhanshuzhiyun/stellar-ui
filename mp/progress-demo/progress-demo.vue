@@ -57,7 +57,7 @@
 				<view class="title">动画时间</view>
 				<view class="item-block">
 					<view style="width: 100%">
-						<ste-progress :percentage="p" duration="0.5"></ste-progress>
+						<ste-progress :percentage="p" :duration="0.5"></ste-progress>
 					</view>
 					<view>
 						<ste-button :mode="100" @click="add">增加</ste-button>
