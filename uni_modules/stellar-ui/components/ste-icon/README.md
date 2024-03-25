@@ -64,23 +64,24 @@
 
 #### Props
 
-|属性名			|说明					|类型				|默认值		|可选值	|支持版本	|
-| ---			| ---					| ---				| ---		| ---	| ---		|
-| `code`		| 图标编码				| `String`			| 必填		| -		| -			|
-| `color`		| 图标颜色				| `String`			| -			| -		| -			|
-| `size`		| 图标大小（单位 rpx）	| `Number/String`	| `28`		| -		| -			|
-| `bold`		| 图标是否粗体			| `Boolean`			| `false`	| -		| -			|
-| `marginLeft`	| 左外边距（单位 rpx）	| `Number/String`	| `0`		| -		| -			|
-| `marginRight`	| 右外边距（单位 rpx）	| `Number/String`	| `0`		| -		| -			|
-| `marginTop`	| 上外边距（单位 rpx）	| `Number/String`	| `0`		| -		| -			|
-| `marginBottom`| 下外边距（单位 rpx）	| `Number/String`	| `0`		| -		| -			|
-| `fontFamily`	| 字体名					| `String`			| -			| -		| -			|
+| 属性名         | 说明                 | 类型            | 默认值  | 可选值                                    | 支持版本 |
+| -------------- | -------------------- | --------------- | ------- | ----------------------------------------- | -------- |
+| `code`         | 图标编码             | `String`        | 必填    | -                                         | -        |
+| `color`        | 图标颜色             | `String`        | -       | -                                         | -        |
+| `size`         | 图标大小（单位 rpx） | `Number/String` | `28`    | -                                         | -        |
+| `bold`         | 图标是否粗体         | `Boolean`       | `false` | -                                         | -        |
+| `marginLeft`   | 左外边距（单位 rpx） | `Number/String` | `0`     | -                                         | -        |
+| `marginRight`  | 右外边距（单位 rpx） | `Number/String` | `0`     | -                                         | -        |
+| `marginTop`    | 上外边距（单位 rpx） | `Number/String` | `0`     | -                                         | -        |
+| `marginBottom` | 下外边距（单位 rpx） | `Number/String` | `0`     | -                                         | -        |
+| `fontFamily`   | 字体名               | `String`        | -       | -                                         | -        |
+| `inlineBlock`  | 容器对齐方式         | `Boolean`       | `true`  | true：inline-block <br>false：inline-flex | -        |
 
 #### Events
 
-|事件名		|说明				|事件参数	|支持版本	|
-| ---		| ---				| ---		| ---		|
-| `click`	| 图标点击回调事件	| -			| -			|
+| 事件名  | 说明             | 事件参数 | 支持版本 |
+| ------- | ---------------- | -------- | -------- |
+| `click` | 图标点击回调事件 | -        | -        |
 
 {{zyy}}
 
