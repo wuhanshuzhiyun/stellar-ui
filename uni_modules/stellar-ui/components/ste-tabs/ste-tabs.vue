@@ -116,6 +116,7 @@ import props from './props.js';
  * @property {Boolean} 					showTitle					是否显示标题
  * @property {Boolean} 					showSubtitle			是否显示子标题
  * @property {String}						color							主题色（滑块颜色，边框颜色，选中的背景色，激活下拉列表中选项颜色），默认#0090FF
+ * @property {String | Number}	radius						圆角，默认0，单位rpx
  * @property {String} 					background				背景
  * @property {Number} 					duration					切换动画时长，默认0.3，单位秒
  * @property {Boolean}					showLine					底部条是否显示，默认true（显示副标题的情况下会自动隐藏）
@@ -132,8 +133,11 @@ import props from './props.js';
  * @property {Boolean} 					swipeable					是否开启手势滑动切换
  * @property {String} 					titleColor				主标题字体颜色和下拉列表中主标题颜色，默认值#000000
  * @property {String} 					activeTitleColor	激活主标题字体颜色，默认值#000000
+ * @property {String | Number}	titleHeight				主标题高度，默认44，单位rpx
  * @property {String} 					subColor					子标题字体颜色和下拉列表中子标题颜色，默认值#000000
  * @property {String} 					activeSubColor		激活子标题字体颜色和下拉列表中子标题颜色，默认值#ffffff
+ * @property {String | Number}	subTitleHeight		子标题高度，默认42，单位rpx
+ * @property {String | Number}	subTitleRadius		子标题高度，默认21，单位rpx
  * @property {Number | String} 	imageWidth				图片宽度，默认80，单位rpx
  * @property {Number | String} 	imageHeight				图片高度，默认80，单位rpx
  * @property {Number | String} 	imageRadius				图片圆角，默认50%，单位rpx
@@ -238,6 +242,7 @@ export default {
 
 			const style = {
 				'--tabs-color': this.color,
+				'--tabs-radius': utils.rpx2px(this.radius),
 				'--tabs-card-background': tabCardBg,
 				'--tabs-card-background-active': tabCardBgActive,
 				'--tabs-card-sub-bg': tabCardSubBg,
@@ -245,7 +250,8 @@ export default {
 				'--tabs-line-width': utils.rpx2px(this.lineWidth),
 				'--tabs-line-height': utils.rpx2px(this.lineHeight),
 				'--tabs-tab-width': tabWidth,
-				'--tabs-tab-padding-bottom': this.cmpShowLine ? utils.rpx2px(4) : utils.rpx2px(24),
+				'--tabs-tab-padding': utils.rpx2px(this.tabPadding),
+				'--tabs-tab-padding-bottom': this.cmpShowLine ? utils.rpx2px(4) : utils.rpx2px(this.tabPadding),
 				'--tabs-transition-duration': this.duration ? `${this.duration}s` : 'inherit',
 				'--tabs-tab-space': tabSpace,
 				'--tabs-tab-space-line': tabSpaceLine,
@@ -255,8 +261,10 @@ export default {
 				'--tabs-offset-top': utils.rpx2px(this.offsetTop),
 				'--tabs-title-color': this.titleColor,
 				'--tabs-active-title-color': activeTitleColor,
+				'--tabs-title-height': utils.rpx2px(this.titleHeight),
+				'--tabs-sub-title-height': utils.rpx2px(this.subTitleHeight),
+				'--tabs-sub-title-radius': utils.rpx2px(this.subTitleRadius),
 				'--tabs-list-height': this.openPullDown && this.listEl ? `${this.listEl?.height}px` : 'initial',
-				'--tabs-tab-padding': utils.rpx2px(this.tabPadding),
 				'--tabs-image-width': utils.rpx2px(this.imageWidth),
 				'--tabs-image-height': utils.rpx2px(this.imageHeight),
 				'--tabs-image-radius': utils.rpx2px(this.imageRadius),
@@ -289,7 +297,7 @@ export default {
 			if (this.cmpActiveIndex !== -1) {
 				const activeEl = this.tabEls[this.cmpActiveIndex];
 				if (activeEl) {
-					marginLeft = activeEl.left - this.listEl.left + (activeEl.width - width.slice(0, -2)) / 2;
+					marginLeft = activeEl.left - this.listEl?.left + (activeEl.width - width.slice(0, -2)) / 2;
 					marginLeft += 'px';
 				}
 			}
@@ -459,10 +467,14 @@ export default {
 		width: 100%;
 		background: #fff;
 		z-index: 1001;
+		border-radius: var(--tabs-radius);
+		overflow: hidden;
+
 		.tab-list {
 			width: 100%;
 			white-space: nowrap;
 			overflow-x: auto;
+
 			.tab-space {
 				display: inline-flex;
 				vertical-align: bottom;
@@ -487,7 +499,7 @@ export default {
 				display: inline-block;
 				vertical-align: bottom;
 				width: var(--tabs-tab-width);
-				padding: 24rpx var(--tabs-tab-padding);
+				padding: var(--tabs-tab-padding);
 				padding-bottom: var(--tabs-tab-padding-bottom);
 				text-align: center;
 				white-space: initial;
@@ -510,9 +522,9 @@ export default {
 				}
 				.tab-title {
 					max-width: 100%;
-					height: 48rpx;
+					height: var(--tabs-title-height);
+					line-height: var(--tabs-title-height);
 					overflow: hidden;
-					line-height: 48rpx;
 					font-size: 28rpx;
 					color: var(--tabs-title-color);
 					word-break: break-all;
@@ -523,12 +535,12 @@ export default {
 				}
 				.tab-sub-title {
 					width: 100%;
-					height: 42rpx;
+					height: var(--tabs-sub-title-height);
+					line-height: var(--tabs-sub-title-height);
+					border-radius: var(--tabs-sub-title-radius);
 					max-width: 100%;
 					overflow: hidden;
-					line-height: 42rpx;
 					font-size: 28rpx;
-					border-radius: 21rpx;
 					text-align: center;
 					margin: 0 auto;
 					color: var(--tabs-sub-color);
@@ -652,9 +664,6 @@ export default {
 				}
 			}
 		}
-	}
-	& > .content {
-		padding-top: 24rpx;
 	}
 }
 </style>
