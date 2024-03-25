@@ -85,7 +85,7 @@ export default {
 	},
 	model: {
 		prop: 'value',
-		// 派发事件名，更新父组件数组
+		// 派发事件名，更新父组件数据
 		event: 'input',
 	},
 	data() {
