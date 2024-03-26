@@ -135,7 +135,8 @@ export default {
 
 <style lang="scss" scoped>
 .page {
-	padding: 92rpx 20px 20px;
+	padding: 120rpx 20px 42px;
+	height: initial;
 }
 .top {
 	padding-bottom: 28rpx;

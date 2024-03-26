@@ -21,7 +21,7 @@
 import utils from '../../utils/utils.js';
 import TouchEvent from './TouchEvent.js';
 
-/*
+/**
  * touch-swipe 手势切屏
  * @description 手势切屏组件
  * @property {Number} 	index  当前展示的面板索引，支持sync双向绑定
@@ -37,7 +37,9 @@ import TouchEvent from './TouchEvent.js';
  * @property {Array} 						disabledIndexs	禁用的面板索引（使用touch-swipe-item作为子元素时直接在touch-swipe-item上定义某个标签禁用即可，不使用touch-swipe-item作为子元素盒子时可传）
  * */
 export default {
-	name: 'touch-swipe',
+	group: '基础组件',
+	title: 'TouchSwipe 手势切屏',
+	name: 'ste-touch-swipe',
 	provide() {
 		return {
 			_flickPanel: { getParent: () => this },

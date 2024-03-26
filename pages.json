@@ -39,7 +39,6 @@
 			"path": "mp/index/index",
 			"style": {
 				"navigationStyle": "custom",
-				"disableScroll": true,
 				"mp-alipay": {
 					"transparentTitle": "always",
 					"titlePenetrate": "YES",
