@@ -201,6 +201,31 @@
 					"navigationBarTitleText": ""
 				}
 			}
+		},
+		{
+			"path": "mp/input-demo/input-demo",
+			"style": {
+				"navigationStyle": "custom",
+				"disableScroll": true,
+				"mp-alipay": {
+					"transparentTitle": "always",
+					"titlePenetrate": "YES",
+					"allowsBounceVertical": "NO",
+					"navigationBarTitleText": ""
+				}
+			}
+		}, {
+			"path": "mp/checkbox-demo/checkbox-demo",
+			"style": {
+				"navigationStyle": "custom",
+				"disableScroll": true,
+				"mp-alipay": {
+					"transparentTitle": "always",
+					"titlePenetrate": "YES",
+					"allowsBounceVertical": "NO",
+					"navigationBarTitleText": ""
+				}
+			}
 		}
 	],
 	"globalStyle": {

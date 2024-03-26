@@ -54,6 +54,13 @@
 		</view>
 		<!-- ***表单组件*** -->
 		<view class="group-title">表单组件</view>
+		<view class="com-box" @click="nav('checkbox')">
+			<view class="com-title">
+				<image :src="joinSrc('img/checkbox.png')" style="width: 36rpx; height: 36rpx" />
+				<text>Checkbox 复选框</text>
+			</view>
+			<view class="com-arrow"><image :src="joinSrc('img/r-arrow.png')" /></view>
+		</view>
 		<view class="com-box" @click="nav('rate')">
 			<view class="com-title">
 				<image :src="joinSrc('img/rate.png')" style="width: 36rpx; height: 36rpx" />

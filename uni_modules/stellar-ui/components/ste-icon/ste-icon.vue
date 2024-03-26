@@ -22,6 +22,7 @@ import utils from '../../utils/utils.js';
  * @property {Number|String} marginTop 上外边距，单位rpx，默认0
  * @property {Number|String} marginBottom 下外边距，单位rpx，默认0
  * @property {String} fontFamily 字体名 默认''
+ * @property {Boolean} inlineBlock 容器对齐方式  默认true
  * @event {Function} click 图标点击回调事件
  */
 export default {
@@ -29,7 +30,7 @@ export default {
 	title: 'Icon 图标',
 	name: 'ste-icon',
 	options: {
-		// virtualHost: true,
+		virtualHost: true,
 	},
 	props: {
 		// iconfont unicode
@@ -84,6 +85,11 @@ export default {
 			type: Boolean,
 			default: false,
 		},
+		// 容器对齐方式 true inline-block false inline-flex
+		inlineBlock: {
+			type: Boolean,
+			default: true,
+		},
 	},
 	data() {
 		return {
@@ -107,6 +113,7 @@ export default {
 				'--margin-top': utils.addUnit(this.marginTop),
 				'--margin-bottom': utils.addUnit(this.marginBottom),
 				'--font-family': this.fontFamily === '' ? this.defaultFontFamily : this.fontFamily,
+				'--display': this.inlineBlock ? 'inline-block' : 'inline-flex',
 			};
 		},
 	},
@@ -123,8 +130,7 @@ export default {
 <style lang="scss" scoped>
 @import './iconfont.css';
 .ste-icon--root {
-	// background-color: red;
-	display: block;
+	display: var(--display);
 	justify-content: center;
 	align-items: center;
 	vertical-align: baseline;
