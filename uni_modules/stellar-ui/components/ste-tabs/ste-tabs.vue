@@ -59,7 +59,7 @@
 							</view>
 						</view>
 					</view>
-					<view class="tab-list" :style="[cmpPullListTransform]">
+					<view class="tab-list" :style="[cmpListBackground, cmpPullListTransform]">
 						<view
 							class="tab-item"
 							v-for="(tab, index) in cmpTabList"
@@ -623,7 +623,6 @@ export default {
 					width: 100%;
 					height: var(--tabs-list-height);
 					position: relative;
-					box-shadow: 0 5px 5px rgba(245, 245, 245, 0.5);
 					z-index: 10;
 					background-color: #ffffff;
 					.placeholder {
