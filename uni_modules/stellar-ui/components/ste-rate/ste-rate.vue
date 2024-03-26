@@ -95,6 +95,13 @@ export default {
 		cmpListStyle() {
 			let style = {};
 			style['columnGap'] = this.gutter + 'rpx';
+			// #ifdef H5
+			if (this.disabled || this.readonly) {
+				style['cursor'] = 'not-allowed';
+			} else {
+				style['cursor'] = 'pointer';
+			}
+			// #endif
 			return style;
 		},
 		cmpCount() {
