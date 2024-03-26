@@ -9,27 +9,28 @@ export default class TouchEvent {
 		this.minDis = minDis
 	}
 
+	_getInfo(e) {
+		return e.changedTouches?.length ? e.changedTouches[0] : e
+	}
+
 	// 滑动开始
 	touchStart(e) {
-		// #ifdef H5
-		this.startX = e.pageX;
-		this.startY = e.pageY;
-		// #endif
-		// #ifdef MP-WEIXIN | MP-ALIPAY
-		this.startX = e.changedTouches[0].pageX;
-		this.startY = e.changedTouches[0].pageY;
-		// #endif
+		const {
+			pageX,
+			pageY
+		} = this._getInfo(e);
+		this.startX = pageX;
+		this.startY = pageY;
 	}
 	touchMove(e) {
 		if (this.startX === null || this.startY === null) return null
-		// #ifdef H5
-		const moveX = e.pageX - this.startX;
-		const moveY = e.pageY - this.startY;
-		// #endif
-		// #ifdef MP-WEIXIN | MP-ALIPAY
-		const moveX = e.changedTouches[0].pageX - this.startX;
-		const moveY = e.changedTouches[0].pageY - this.startY;
-		// #endif
+		const {
+			pageX,
+			pageY
+		} = this._getInfo(e);
+		const moveX = pageX - this.startX;
+		const moveY = pageY - this.startY;
+
 		return {
 			moveX,
 			moveY
@@ -44,14 +45,13 @@ export default class TouchEvent {
 				moveY: 0
 			}
 		}
-		// #ifdef H5
-		const moveX = e.pageX - this.startX;
-		const moveY = e.pageY - this.startY;
-		// #endif
-		// #ifdef MP-WEIXIN | MP-ALIPAY
-		const moveX = e.changedTouches[0].pageX - this.startX;
-		const moveY = e.changedTouches[0].pageY - this.startY;
-		// #endif
+		const {
+			pageX,
+			pageY
+		} = this._getInfo(e);
+		const moveX = pageX - this.startX;
+		const moveY = pageY - this.startY;
+
 		let direction = null
 		if (Math.abs(moveX) > Math.abs(moveY) && Math.abs(moveX) > this.minDis) {
 			if (moveX > 0) {

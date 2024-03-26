@@ -86,7 +86,7 @@
 		</view>
 		<view class="content">
 			<!-- 内容区域 -->
-			<ste-sliding
+			<ste-touch-swipe
 				:index="cmpActiveIndex"
 				:childrenLength="cmpTabList.length"
 				:duration="duration"
@@ -95,14 +95,13 @@
 				@change="onSliding"
 			>
 				<slot name="default" />
-			</ste-sliding>
+			</ste-touch-swipe>
 		</view>
 	</view>
 </template>
 
 <script>
 import utils from '../../utils/utils.js';
-import { getChildrenProps } from './utils.js';
 import props from './props.js';
 /**
  * ste-tabs 标签页
@@ -301,10 +300,7 @@ export default {
 					marginLeft += 'px';
 				}
 			}
-			return {
-				marginLeft,
-				display,
-			};
+			return { marginLeft, display };
 		},
 		// 是否可滑动
 		cmpScrollX() {
@@ -374,7 +370,7 @@ export default {
 			this.showComponent = false;
 			clearTimeout(this._updateChildrenTimeout);
 			this._updateChildrenTimeout = setTimeout(() => {
-				this.tabPropsList = getChildrenProps(this, 'ste-tab');
+				this.tabPropsList = utils.getChildrenProps(this, 'ste-tab');
 				this.$nextTick(async () => {
 					this.listBoxEl = await utils.querySelector('.tab-list-box', this);
 					this.listEl = await utils.querySelector('.tab-list-box .tab-list.view-list', this);
