@@ -7,6 +7,54 @@
 ### 代码演示
 JavaScript后面的演示代码中涉及到的变量和方法都使用本javasaript代码
 ```javascript
+export default {
+	data() {
+		return {
+			value1: false,
+			value2: true,
+			value3: false,
+			value4: true,
+			value5: false,
+			value6: true,
+			value7: true,
+			value8: false,
+			value9: false,
+			value10: false,
+			value11: true,
+			value12: true,
+			value13: false,
+			value14: false,
+			value15: false,
+			value16: false,
+			value17: false,
+		};
+	},
+	created() {},
+	methods: {
+		click1(value) {
+			uni.showToast({
+				icon: 'none',
+				title: `点击：${value} 复选框的值`,
+			});
+		},
+		click2(value, allowStop, resolve) {
+			uni.showToast({
+				icon: 'none',
+				title: `点击：${value} 复选框的值`,
+			});
+			// 阻止change事件
+			allowStop();
+		},
+		change(value) {
+			setTimeout(() => {
+				uni.showToast({
+					icon: 'none',
+					title: `改变：${value} 复选框的值`,
+				});
+			}, 1000);
+		},
+	},
+};
 ```
 
 #### 基础用法
@@ -78,5 +126,36 @@ JavaScript后面的演示代码中涉及到的变量和方法都使用本javasar
 	复选框
 </ste-checkbox>
 ```
+
+### API
+#### Checkbox组件属性(Props)
+
+| 参数					| 说明								| 类型				| 默认值		| 可选值								| 支持版本	|
+| ---					| ---								| ---				| ---		| ---								| ---		|
+| `value`				| 当前选中值（支持v-model双向绑定）	| `Boolean`			| `false`	| -									| -			|
+| `name`				| 选项的值							| `Number/String`	| -			| -									| -			|
+| `disabled`			| 是否禁用							| `Boolean`			| `false`	| -									| -			|
+| `readonly`			| 只读 (不置灰)						| `Boolean`			| `false`	| -									| -			|
+| `shape`				| 形状								| `String`			| `circle`	| `circle`：圆形 <br/>`squar`：方形	| -			|
+| `iconSize`			| 图标大小，单位rpx					| `Number/String`	| `36`		| -									| -			|
+| `checkedColor`		| 选中状态的图标颜色					| `String`			| `#0090FF`	| -									| -			|
+| `textPosition`		| 文本的位置，默认文本在右侧			| `String`			| `right`	| `right`：右 <br/>`left`：左		| -			|
+| `textSize`			| 文本字体大小，单位rpx				| `Number/String`	| `25`		| -									| -			|
+| `textlnactiveColor`	| 未选中文本颜色						| `String`			| `#000000`	| -									| -			|
+| `textActiveColor`		| 选中文本颜色						| `String`			| `#000000`	| -									| -			|
+| `textDisabled`		| 禁用文本点击						| `Boolean`			| `false`	| -									| -			|
+
+
+#### Checkbox Events
+|事件名		|说明									|事件参数																			|支持版本	|
+|---		|---									|---																				|---		|
+| `click`	|点击单选框时触发的事件（可拦截change事件）	|`value`：改变后的分值,`allowStop`：允许阻止后续的事件触发,：`resolve`：后续的事件执行	| -			|
+| `change`	|当绑定值变化时触发的事件					|`value`：改变后的分值																| -			|
+
+#### Checkbox Solts
+|插槽名		|说明			|插槽参数									|支持版本	|
+| ---		| ---			| ---										| ---		|
+| `default`	| 单选框文本内容	|`{ checked: boolean, disabled: boolean }`	| -			|
+| `icon`	| 单选框图标		|`{ checked: boolean, disabled: boolean }`	| -			|
 
 {{qinpengfei}}

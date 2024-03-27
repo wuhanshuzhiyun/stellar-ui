@@ -77,6 +77,15 @@
 					<ste-checkbox v-model="value15" textDisabled>复选框</ste-checkbox>
 				</view>
 			</view>
+			<view class="demo-item">
+				<view class="title">回调事件</view>
+				<view class="item-block checkbox-box">
+					<ste-checkbox v-model="value16" @click="click1" @change="change">复选框</ste-checkbox>
+					<text>在click事件后，执行change事件</text>
+					<ste-checkbox v-model="value17" @click="click2" @change="change">复选框</ste-checkbox>
+					<text>在click事件后，阻止change事件</text>
+				</view>
+			</view>
 		</view>
 	</view>
 </template>
@@ -99,14 +108,34 @@ export default {
 			value13: false,
 			value14: false,
 			value15: false,
+			value16: false,
+			value17: false,
 		};
 	},
 	created() {},
 	methods: {
-		click(value) {
-			console.log('value', value);
+		click1(value) {
+			uni.showToast({
+				icon: 'none',
+				title: `点击：${value} 复选框的值`,
+			});
 		},
-		change(value) {},
+		click2(value, allowStop, resolve) {
+			uni.showToast({
+				icon: 'none',
+				title: `点击：${value} 复选框的值`,
+			});
+			// 阻止change事件
+			allowStop();
+		},
+		change(value) {
+			setTimeout(() => {
+				uni.showToast({
+					icon: 'none',
+					title: `改变：${value} 复选框的值`,
+				});
+			}, 1000);
+		},
 	},
 };
 </script>

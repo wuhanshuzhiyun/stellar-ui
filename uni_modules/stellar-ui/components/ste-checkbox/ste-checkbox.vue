@@ -106,7 +106,7 @@ export default {
 	data() {
 		return {
 			clickTask: null, // click完成任务和allowStopStatus搭配使用
-			allowStopStatus: false, // 允许2阻止后续的事件触发
+			allowStopStatus: false, // 允许阻止后续的事件触发
 		};
 	},
 	computed: {
@@ -171,10 +171,12 @@ export default {
 				if (this.allowStopStatus) {
 					await this.clickTask;
 				}
+				let value = null;
 				if (typeof this.value == 'boolean') {
+					value = !this.cmpChecked;
 					this.$emit('input', !this.cmpChecked);
 				} else {
-					let value = this.value;
+					value = this.value;
 					if (this.cmpChecked) {
 						value = value.filter((value) => value != this.name);
 					} else {
@@ -182,7 +184,7 @@ export default {
 					}
 					this.$emit('input', value);
 				}
-				this.$emit('change', this.value);
+				this.$emit('change', value);
 			}
 		},
 		// 允许阻止后续操作
