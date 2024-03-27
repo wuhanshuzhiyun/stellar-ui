@@ -25,7 +25,7 @@ import utils from '@/common/utils.js';
  */
 export default {
 	group: '表单组件',
-	title: 'Rich Text 富文本',
+	title: 'RichText 富文本',
 	name: 'ste-rich-text',
 	props: {
 		text: {
