@@ -30,10 +30,51 @@
 				</view>
 			</view>
 			<view class="demo-item">
+				<view class="title">自定义图标大小</view>
+				<view class="item-block checkbox-box">
+					<ste-checkbox v-model="value11" iconSize="60">60rpx</ste-checkbox>
+				</view>
+			</view>
+			<view class="demo-item">
+				<view class="title">自定义图标颜色</view>
+				<view class="item-block checkbox-box">
+					<ste-checkbox v-model="value12" checkedColor="#ee0a24">红色</ste-checkbox>
+				</view>
+			</view>
+			<view class="demo-item">
+				<view class="title">自定义图标</view>
+				<view class="item-block checkbox-box">
+					<ste-checkbox v-model="value13">
+						<template #icon="{ slotProps }">
+							<ste-icon
+								code="&#xe677;"
+								size="50"
+								:color="slotProps.checked ? '#ee0a24' : '#000000'"
+							></ste-icon>
+						</template>
+						自定义图标
+					</ste-checkbox>
+				</view>
+			</view>
+			<view class="demo-item">
 				<view class="title">文本的位置</view>
 				<view class="item-block checkbox-box">
 					<ste-checkbox v-model="value8">右边</ste-checkbox>
 					<ste-checkbox v-model="value9" textPosition="left">左边</ste-checkbox>
+				</view>
+			</view>
+			<view class="demo-item">
+				<view class="title">自定义文本</view>
+				<view class="item-block checkbox-box">
+					<ste-checkbox v-model="value14" textSize="50" textInactiveColor="green" textActiveColor="#d276a3">
+						复选框
+					</ste-checkbox>
+				</view>
+			</view>
+			<view class="demo-item">
+				<view class="title">禁用文本点击</view>
+				<view class="item-block checkbox-box">
+					<ste-checkbox v-model="value15" textDisabled>复选框</ste-checkbox>
 				</view>
 			</view>
 		</view>
@@ -50,8 +91,14 @@ export default {
 			value5: false,
 			value6: true,
 			value7: true,
-			value8: true,
-			value9: true,
+			value8: false,
+			value9: false,
+			value10: false,
+			value11: true,
+			value12: true,
+			value13: false,
+			value14: false,
+			value15: false,
 		};
 	},
 	created() {},
