@@ -1,6 +1,6 @@
 <template>
 	<view class="ste-image--root" :style="[cmpStyle]">
-		<view v-if="!hiddenLoading && status === 0">
+		<view class="loading-icon" v-if="!hiddenLoading && status === 0">
 			<slot name="loading">
 				<ste-icon code="&#xe693;" :size="iconSize" />
 			</slot>
@@ -8,7 +8,7 @@
 
 		<image
 			class="content"
-			:style="{ display: status === 1 ? 'block' : 'none' }"
+			:style="{ opacity: status === 1 ? '1' : '0' }"
 			:src="src"
 			:mode="mode"
 			:lazy-load="lazyLoad"
@@ -18,7 +18,7 @@
 			@click="click"
 		></image>
 
-		<view v-if="!hiddenError && status === 2">
+		<view class="loading-icon" v-if="!hiddenError && status === 2">
 			<slot name="error">
 				<ste-icon code="&#xe692;" :size="iconSize" />
 			</slot>
@@ -172,9 +172,14 @@ export default {
 	overflow: hidden;
 	line-height: 1;
 	vertical-align: middle;
+	position: relative;
 	& > image {
 		width: var(--image-root-width);
 		height: var(--image-root-height);
+	}
+	.loading-icon {
+		position: absolute;
+		z-index: 2;
 	}
 }
 </style>
