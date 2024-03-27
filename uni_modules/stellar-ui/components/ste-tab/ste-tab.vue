@@ -1,5 +1,5 @@
 <template>
-	<view class="ste-tab--root" :style="{ width: width }" :class="{ active: cmpActive }">
+	<view class="ste-tab--root">
 		<slot name="default" />
 	</view>
 </template>
@@ -70,43 +70,17 @@ export default {
 	data() {
 		return {
 			parent: {},
-			width: '100%',
 		};
 	},
 	mounted() {
 		this.parent = this._tabsComponent.getParent();
 		this.parent.updateTabs();
 	},
-	computed: {
-		cmpActive() {
-			const active = this._tabsComponent.props?.active;
-			if (typeof active === 'number') {
-				return active === this.index;
-			}
-			if (typeof active === 'string') {
-				return active === this.name;
-			}
-			return false;
-		},
-		cmpDuration() {
-			return this._tabsComponent.props?.duration;
-		},
-		cmpSwipeable() {
-			return this._tabsComponent.props?.swipeable;
-		},
-	},
-	watch: {
-		'parent.listBoxEl'(v) {
-			this.width = v?.width ? `${v.width}px` : '100%';
-		},
-	},
-	methods: {},
 };
 </script>
 
 <style lang="scss" scoped>
 .ste-tab--root {
 	width: 100%;
-	flex-shrink: 0;
 }
 </style>
