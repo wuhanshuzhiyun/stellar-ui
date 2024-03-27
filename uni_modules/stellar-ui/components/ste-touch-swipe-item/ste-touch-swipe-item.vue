@@ -8,6 +8,7 @@
 /**
  * ste-touch-swipe-item 手势切屏
  * @description 手势切屏组件
+ * @tutorial https://stellar-ui.intecloud.com.cn/pc/index/index?name=ste-touch-swipe
  * @property {Boolean} 	disabled  当前面板是否禁用
  */
 export default {

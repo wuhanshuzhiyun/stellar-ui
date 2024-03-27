@@ -1,6 +1,6 @@
 <template>
 	<view class="page">
-		<page-nav :autoBack="true" backColor="#000" titleAlignment="2" title="搜索"></page-nav>
+		<page-nav :autoBack="true" backColor="#000" titleAlignment="2" title="标签页"></page-nav>
 		<view class="content">
 			<item-view title="基础用法" open>
 				<view class="sub-item">
