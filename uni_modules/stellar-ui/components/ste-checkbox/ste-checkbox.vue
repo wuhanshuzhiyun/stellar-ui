@@ -104,7 +104,10 @@ export default {
 		event: 'input',
 	},
 	data() {
-		return {};
+		return {
+			clickTask: null, // click完成任务和allowStopStatus搭配使用
+			allowStopStatus: false, // 允许2阻止后续的事件触发
+		};
 	},
 	computed: {
 		cmpSlotProps() {
@@ -159,9 +162,15 @@ export default {
 		},
 	},
 	methods: {
-		click() {
+		async click() {
 			if (!this.disabled && !this.readonly) {
-				this.$emit('click', this.value);
+				this.allowStopStatus = false;
+				this.clickTask = new Promise((resolve) => {
+					this.$emit('click', this.value, this.allowStop, resolve);
+				});
+				if (this.allowStopStatus) {
+					await this.clickTask;
+				}
 				if (typeof this.value == 'boolean') {
 					this.$emit('input', !this.cmpChecked);
 				} else {
@@ -175,6 +184,10 @@ export default {
 				}
 				this.$emit('change', this.value);
 			}
+		},
+		// 允许阻止后续操作
+		allowStop() {
+			this.allowStopStatus = true;
 		},
 	},
 };
