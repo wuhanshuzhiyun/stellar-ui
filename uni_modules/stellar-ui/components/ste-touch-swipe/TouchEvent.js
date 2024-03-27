@@ -1,6 +1,8 @@
 export default class TouchEvent {
 	startX = null;
 	startY = null;
+	moveX = null;
+	moveY = null;
 	// 滑动的最小距离
 	minDis = 50;
 	timeout = null;
@@ -30,6 +32,11 @@ export default class TouchEvent {
 		} = this._getInfo(e);
 		const moveX = pageX - this.startX;
 		const moveY = pageY - this.startY;
+		if (Math.abs(moveX - this.moveX) < 1 && Math.abs(moveY - this.moveY) < 1) {
+			return null
+		}
+		this.moveX = moveX;
+		this.moveY = moveY;
 
 		return {
 			moveX,
@@ -51,8 +58,12 @@ export default class TouchEvent {
 		} = this._getInfo(e);
 		const moveX = pageX - this.startX;
 		const moveY = pageY - this.startY;
-
+		this.startX = null;
+		this.startY = null;
+		this.moveX = null;
+		this.moveY = null;
 		let direction = null
+
 		if (Math.abs(moveX) > Math.abs(moveY) && Math.abs(moveX) > this.minDis) {
 			if (moveX > 0) {
 				direction = "right"
@@ -67,8 +78,7 @@ export default class TouchEvent {
 				direction = "up"
 			}
 		}
-		this.startX = null;
-		this.startY = null;
+
 		return {
 			direction,
 			moveX,

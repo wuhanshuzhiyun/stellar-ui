@@ -6,7 +6,7 @@
 			@mousemove="onTouchmove"
 			@mouseup="onTouchend"
 			@touchstart="onTouchstart"
-			@touchmove="onTouchmove"
+			@touchmove.stop="onTouchmove"
 			@touchend="onTouchend"
 			@touchcancel="onTouchend"
 		>
@@ -28,7 +28,7 @@ import TouchEvent from './TouchEvent.js';
  * @property {String} 	direction  滑动方向
  * @value horizontal 	（默认）水平方向：必须固定宽度
  * @value vertical 		垂直方向：必须固定高度
- * @pprperty {String | Number} 	width 					宽度，默认值100%
+ * @property {String | Number} 	width 					宽度，默认值100%
  * @property {String | Number} 	height 					高度，默认值100%
  * @property {Number}						duration				动画时长，单位s
  * @property {Number} 					swipeThreshold	灵敏度（0-1之间的数值，数值越小越灵敏）

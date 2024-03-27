@@ -52,6 +52,13 @@
 			</view>
 			<view class="com-arrow"><image :src="joinSrc('img/r-arrow.png')" /></view>
 		</view>
+		<view class="com-box" @click="nav('touch-swipe')">
+			<view class="com-title">
+				<image src="https://cdn.uviewui.com/uview/example/countTo.png" style="width: 36rpx; height: 36rpx" />
+				<text>TouchSwipe 手势切屏</text>
+			</view>
+			<view class="com-arrow"><image :src="joinSrc('img/r-arrow.png')" /></view>
+		</view>
 		<!-- ***表单组件*** -->
 		<view class="group-title">表单组件</view>
 		<view class="com-box" @click="nav('checkbox')">
