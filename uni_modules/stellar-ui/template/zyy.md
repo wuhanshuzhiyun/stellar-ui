@@ -35,7 +35,7 @@
 <div class="con-box">
 	<div class="con-item">
 		<a  href="http://172.16.108.253:8001/zyy">
-			<image class="con-image" src="https://www.gravatar.com/avatar/4e36901b98eeb024ccc0159f4a0c169e?s=80&d=identicon"></image>
+			<image class="con-image" src="https://image.whzb.com/chain/inte-mall/00-普通图片/00-开发版/img/头像/张园因.png"></image>
 		</a>
 		<a href="http://172.16.108.253:8001/zyy"><div class="name">张园因</div></a>
 	</div>
