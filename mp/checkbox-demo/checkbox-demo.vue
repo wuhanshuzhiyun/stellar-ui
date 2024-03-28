@@ -57,7 +57,7 @@
 				</view>
 			</view>
 			<view class="demo-item">
-				<view class="title">文本的位置</view>
+				<view class="title">左侧文本</view>
 				<view class="item-block checkbox-box">
 					<ste-checkbox v-model="value8">右边</ste-checkbox>
 					<ste-checkbox v-model="value9" textPosition="left">左边</ste-checkbox>
@@ -86,6 +86,46 @@
 					<text>在click事件后，阻止change事件</text>
 				</view>
 			</view>
+			<view class="demo-item">
+				<view class="title">复选框组</view>
+				<view class="item-block checkbox-box">
+					<ste-checkbox-group v-model="value18">
+						<ste-checkbox name="a">复选框a</ste-checkbox>
+						<ste-checkbox name="b">复选框b</ste-checkbox>
+						<ste-checkbox name="c">复选框c</ste-checkbox>
+					</ste-checkbox-group>
+				</view>
+			</view>
+			<view class="demo-item">
+				<view class="title">复选框组属性和复选框属性</view>
+				<view class="item-block checkbox-box">
+					<ste-checkbox-group v-model="value19" shape="square" textPosition="left">
+						<ste-checkbox name="a">复选框a</ste-checkbox>
+						<ste-checkbox name="b" disabled>复选框b</ste-checkbox>
+						<ste-checkbox name="c" shape="circle">复选框c</ste-checkbox>
+					</ste-checkbox-group>
+				</view>
+			</view>
+			<view class="demo-item">
+				<view class="title">水平排列</view>
+				<view class="item-block checkbox-box">
+					<ste-checkbox-group v-model="value20" direction="row">
+						<ste-checkbox name="a">复选框a</ste-checkbox>
+						<ste-checkbox name="b">复选框b</ste-checkbox>
+						<ste-checkbox name="c">复选框c</ste-checkbox>
+					</ste-checkbox-group>
+				</view>
+			</view>
+			<view class="demo-item">
+				<view class="title">限制最大可选数</view>
+				<view class="item-block checkbox-box">
+					<ste-checkbox-group v-model="value21" :max="2">
+						<ste-checkbox name="a">复选框a</ste-checkbox>
+						<ste-checkbox name="b">复选框b</ste-checkbox>
+						<ste-checkbox name="c">复选框c</ste-checkbox>
+					</ste-checkbox-group>
+				</view>
+			</view>
 		</view>
 	</view>
 </template>
@@ -110,6 +150,11 @@ export default {
 			value15: false,
 			value16: false,
 			value17: false,
+			value18: [],
+			value19: [],
+			value20: [],
+			value21: [],
+			value22: [],
 		};
 	},
 	created() {},

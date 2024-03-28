@@ -4,10 +4,10 @@
 			<slot name="icon" :slotProps="cmpSlotProps">
 				<view class="input-icon" :style="[cmpInputStyle]">
 					<ste-icon
-						v-if="cmpChecked"
-						:size="iconSize * 0.8"
+						v-if="cmpChecked && cmpIconSize"
+						:size="cmpIconSize * 0.8"
 						code="&#xe67a;"
-						:color="disabled ? '#bbbbbb' : '#fff'"
+						:color="cmpDisabled ? '#bbbbbb' : '#fff'"
 						bold
 					></ste-icon>
 				</view>
@@ -43,14 +43,13 @@
  * @event {Function} click 点击复选框时触发的事件
  * @event {Function} change 当绑定值变化时触发的事件
  */
-
 export default {
 	group: '表单组件',
 	title: 'Checkbox 复选框',
 	name: 'ste-checkbox',
 	props: {
 		value: {
-			type: [Boolean],
+			type: Boolean,
 			default: false,
 		},
 		name: {
@@ -58,50 +57,55 @@ export default {
 			default: '',
 		},
 		disabled: {
-			type: Boolean,
-			default: false,
+			type: [Boolean, null],
+			default: null,
 		},
 		readonly: {
-			type: Boolean,
-			default: false,
+			type: [Boolean, null],
+			default: null,
 		},
 		shape: {
-			type: String,
-			default: 'circle',
+			type: [String, null],
+			default: null,
 		},
 		iconSize: {
-			type: [Number, String],
-			default: 36,
+			type: [Number, String, null],
+			default: null,
 		},
 		checkedColor: {
-			type: String,
-			default: '#0090FF',
+			type: [String, null],
+			default: null,
 		},
 		textPosition: {
-			type: String,
-			default: 'right',
+			type: [String, null],
+			default: null,
 		},
 		textSize: {
-			type: [Number, String],
-			default: 28,
+			type: [Number, String, null],
+			default: null,
 		},
 		textInactiveColor: {
-			type: String,
-			default: '#000000',
+			type: [String, null],
+			default: null,
 		},
 		textActiveColor: {
-			type: String,
-			default: '#000000',
+			type: [String, null],
+			default: null,
 		},
 		textDisabled: {
-			type: Boolean,
-			default: false,
+			type: [Boolean, null],
+			default: null,
 		},
 	},
 	model: {
 		prop: 'value',
 		// 派发事件名，更新父组件数据
 		event: 'input',
+	},
+	inject: {
+		checkboxGroup: {
+			default: '',
+		},
 	},
 	data() {
 		return {
@@ -110,27 +114,64 @@ export default {
 		};
 	},
 	computed: {
+		cmpDisabled() {
+			let disabled = this.getDefaultData('disabled', false);
+			// 限制最大可选数
+			if (this.cmpGroup && this.checkboxGroup.max) {
+				if (!this.cmpChecked && this.checkboxGroup.value.length >= this.checkboxGroup.max) {
+					disabled = true;
+				}
+			}
+			return disabled;
+		},
+		cmpReadonly() {
+			return this.getDefaultData('readonly', false);
+		},
+		cmpShape() {
+			return this.getDefaultData('shape', 'circle');
+		},
+		cmpIconSize() {
+			return this.getDefaultData('iconSize', 36);
+		},
+		cmpCheckedColor() {
+			return this.getDefaultData('checkedColor', '#0090FF');
+		},
+		cmpTextPosition() {
+			return this.getDefaultData('textPosition', 'right');
+		},
+		cmpTextSize() {
+			return this.getDefaultData('textSize', 28);
+		},
+		cmpTextInactiveColor() {
+			return this.getDefaultData('textInactiveColor', '#000000');
+		},
+		cmpTextActiveColor() {
+			return this.getDefaultData('textActiveColor', '#000000');
+		},
+		cmpTextDisabled() {
+			return this.getDefaultData('textDisabled', false);
+		},
 		cmpSlotProps() {
 			return {
 				checked: this.cmpChecked,
-				disabled: this.disabled,
+				disabled: this.cmpDisabled,
 			};
 		},
 		cmpStyle() {
 			let style = {};
-			style['fontSize'] = this.textSize + 'rpx';
-			style['color'] = this.cmpChecked ? this.textActiveColor : this.textInactiveColor;
-			style['flexDirection'] = this.textPosition == 'right' ? 'row' : 'row-reverse';
+			style['fontSize'] = this.cmpTextSize + 'rpx';
+			style['color'] = this.cmpChecked ? this.cmpTextActiveColor : this.cmpTextInactiveColor;
+			style['flexDirection'] = this.cmpTextPosition == 'right' ? 'row' : 'row-reverse';
 			// #ifdef H5
-			if (this.disabled || this.readonly) {
+			if (this.cmpDisabled || this.cmpReadonly) {
 				style['cursor'] = 'not-allowed';
-			} else if (this.textDisabled) {
+			} else if (this.cmpTextDisabled) {
 				style['cursor'] = 'default';
 			} else {
 				style['cursor'] = 'pointer';
 			}
 			// #endif
-			if (this.textDisabled) {
+			if (this.cmpTextDisabled) {
 				style['pointerEvents'] = 'none';
 			}
 			return style;
@@ -138,19 +179,19 @@ export default {
 		cmpInputStyle() {
 			let style = {};
 			// 没有icon 则默认样式
-			style['borderRadius'] = this.shape == 'circle' ? '50%' : '0';
-			style['border'] = `2rpx solid ${this.cmpChecked ? this.checkedColor : '#BBBBBB'}`;
-			style['background'] = this.cmpChecked ? this.checkedColor : '#FFFFFF';
-			style['width'] = this.iconSize + 'rpx';
-			style['height'] = this.iconSize + 'rpx';
+			style['borderRadius'] = this.cmpShape == 'circle' ? '50%' : '0';
+			style['border'] = `2rpx solid ${this.cmpChecked ? this.cmpCheckedColor : '#BBBBBB'}`;
+			style['background'] = this.cmpChecked ? this.cmpCheckedColor : '#FFFFFF';
+			style['width'] = this.cmpIconSize + 'rpx';
+			style['height'] = this.cmpIconSize + 'rpx';
 			// #ifdef H5
-			if (this.disabled || this.readonly) {
+			if (this.cmpDisabled || this.cmpReadonly) {
 				style['cursor'] = 'not-allowed';
 			} else {
 				style['cursor'] = 'pointer';
 			}
 			// #endif
-			if (this.disabled) {
+			if (this.cmpDisabled) {
 				style['background'] = '#eeeeee';
 				style['borderColor'] = '#bbbbbb';
 			}
@@ -158,12 +199,15 @@ export default {
 		},
 		// 选中状态
 		cmpChecked() {
-			return typeof this.value == 'boolean' ? this.value : this.value.includes(this.name);
+			return this.cmpGroup ? this.checkboxGroup.value.includes(this.name) : this.value;
+		},
+		cmpGroup() {
+			return !!this.checkboxGroup;
 		},
 	},
 	methods: {
 		async click() {
-			if (!this.disabled && !this.readonly) {
+			if (!this.cmpDisabled && !this.cmpReadonly) {
 				this.allowStopStatus = false;
 				this.clickTask = new Promise((resolve) => {
 					this.$emit('click', this.value, this.allowStop, resolve);
@@ -172,17 +216,18 @@ export default {
 					await this.clickTask;
 				}
 				let value = null;
-				if (typeof this.value == 'boolean') {
-					value = !this.cmpChecked;
-					this.$emit('input', !this.cmpChecked);
-				} else {
-					value = this.value;
+				if (this.cmpGroup) {
+					value = this.checkboxGroup.value;
 					if (this.cmpChecked) {
 						value = value.filter((value) => value != this.name);
 					} else {
 						value.push(this.name);
 					}
-					this.$emit('input', value);
+					this.checkboxGroup.$emit('input', value);
+					this.checkboxGroup.$emit('change', value);
+				} else {
+					value = !this.cmpChecked;
+					this.$emit('input', !this.cmpChecked);
 				}
 				this.$emit('change', value);
 			}
@@ -190,6 +235,9 @@ export default {
 		// 允许阻止后续操作
 		allowStop() {
 			this.allowStopStatus = true;
+		},
+		getDefaultData(key, value) {
+			return this[key] != null ? this[key] : this.checkboxGroup[key] ? this.checkboxGroup[key] : value;
 		},
 	},
 };

@@ -27,6 +27,11 @@ export default {
 			value15: false,
 			value16: false,
 			value17: false,
+			value18: [],
+			value19: [],
+			value20: [],
+			value21: [],
+			value22: [],
 		};
 	},
 	created() {},
@@ -110,8 +115,8 @@ export default {
 </ste-checkbox>
 ```
 
-#### 文本的位置  
-通过设置 `textPosition` 属性可以设置文本的位置， 默认`right`。 
+#### 左侧文本  
+将 `textPosition` 属性设置为 `left`，可以将文本位置调整到复选框左侧。
 ```
 <ste-checkbox v-model="value6">右边</ste-checkbox>
 <ste-checkbox v-model="value7" textPosition="left">左边</ste-checkbox>
@@ -127,23 +132,90 @@ export default {
 </ste-checkbox>
 ```
 
+#### 回调事件  
+-  `click`  点击单选框时触发的事件（可拦截change事件），`value`：改变后的分值,`allowStop`：允许阻止后续的事件触发,：`resolve`：后续的事件执行。
+-  `change` 当绑定值变化时触发的事件，`value`:改变后的分值。
+```
+<ste-checkbox v-model="value16" @click="click1" @change="change">复选框</ste-checkbox>
+<text>在click事件后，执行change事件</text>
+<ste-checkbox v-model="value17" @click="click2" @change="change">复选框</ste-checkbox>
+<text>在click事件后，阻止change事件</text>
+```
+
+### 复选框组
+需要与ste-checkbox-group一起使用，选中值是一个数组，通过value绑定在ste-checkbox-group上，数组中的项即为选中的Checkbox的name属性设置的值。
+```
+<ste-checkbox-group v-model="value18">
+	<ste-checkbox name="a">复选框a</ste-checkbox>
+	<ste-checkbox name="b">复选框b</ste-checkbox>
+	<ste-checkbox name="c">复选框c</ste-checkbox>
+</ste-checkbox-group>
+```
+
+### 复选框组属性和复选框属性
+属性优先级：ste-checkbox组件上配置的属性 > ste-checkbox-group组件上配置的属性 > ste-checkbox组件默认属性
+```
+<ste-checkbox-group v-model="value19" shape="square" textPosition="left">
+	<ste-checkbox name="a">复选框a</ste-checkbox>
+	<ste-checkbox name="b" disabled>复选框b</ste-checkbox>
+	<ste-checkbox name="c" shape="circle">复选框c</ste-checkbox>
+</ste-checkbox-group>
+```
+### 水平排列
+将 `direction` 属性设置为 `row` 后，复选框组会变成水平排列。
+```
+<ste-checkbox-group v-model="value20" direction="row">
+	<ste-checkbox name="a">复选框a</ste-checkbox>
+	<ste-checkbox name="b">复选框b</ste-checkbox>
+	<ste-checkbox name="c">复选框c</ste-checkbox>
+</ste-checkbox-group>
+```
+
+### 限制最大可选数
+通过 `max` 属性可以限制复选框组的最大可选数,为`0`则不限制,默认0。
+```
+<ste-checkbox-group v-model="value21" :max="2">
+	<ste-checkbox name="a">复选框a</ste-checkbox>
+	<ste-checkbox name="b">复选框b</ste-checkbox>
+	<ste-checkbox name="c">复选框c</ste-checkbox>
+</ste-checkbox-group>
+```
+
 ### API
 #### Checkbox组件属性(Props)
 
-| 参数					| 说明								| 类型				| 默认值		| 可选值								| 支持版本	|
-| ---					| ---								| ---				| ---		| ---								| ---		|
+| 参数					| 说明							| 类型				| 默认值		| 可选值								| 支持版本	|
+| ---					| ---							| ---				| ---		| ---								| ---		|
 | `value`				| 当前选中值（支持v-model双向绑定）	| `Boolean`			| `false`	| -									| -			|
-| `name`				| 选项的值							| `Number/String`	| -			| -									| -			|
-| `disabled`			| 是否禁用							| `Boolean`			| `false`	| -									| -			|
-| `readonly`			| 只读 (不置灰)						| `Boolean`			| `false`	| -									| -			|
-| `shape`				| 形状								| `String`			| `circle`	| `circle`：圆形 <br/>`squar`：方形	| -			|
-| `iconSize`			| 图标大小，单位rpx					| `Number/String`	| `36`		| -									| -			|
-| `checkedColor`		| 选中状态的图标颜色					| `String`			| `#0090FF`	| -									| -			|
-| `textPosition`		| 文本的位置，默认文本在右侧			| `String`			| `right`	| `right`：右 <br/>`left`：左		| -			|
-| `textSize`			| 文本字体大小，单位rpx				| `Number/String`	| `25`		| -									| -			|
-| `textlnactiveColor`	| 未选中文本颜色						| `String`			| `#000000`	| -									| -			|
-| `textActiveColor`		| 选中文本颜色						| `String`			| `#000000`	| -									| -			|
-| `textDisabled`		| 禁用文本点击						| `Boolean`			| `false`	| -									| -			|
+| `name`				| 选项的值						| `Number/String`	| -			| -									| -			|
+| `disabled`			| 是否禁用						| `Boolean`			| `false`	| -									| -			|
+| `readonly`			| 只读 (不置灰)					| `Boolean`			| `false`	| -									| -			|
+| `shape`				| 形状							| `String`			| `circle`	| `circle`：圆形 <br/>`squar`：方形	| -			|
+| `iconSize`			| 图标大小，单位rpx				| `Number/String`	| `36`		| -									| -			|
+| `checkedColor`		| 选中状态的图标颜色				| `String`			| `#0090FF`	| -									| -			|
+| `textPosition`		| 文本的位置						| `String`			| `right`	| `right`：右 <br/>`left`：左		| -			|
+| `textSize`			| 文本字体大小，单位rpx			| `Number/String`	| `25`		| -									| -			|
+| `textlnactiveColor`	| 未选中文本颜色					| `String`			| `#000000`	| -									| -			|
+| `textActiveColor`		| 选中文本颜色					| `String`			| `#000000`	| -									| -			|
+| `textDisabled`		| 禁用文本点击					| `Boolean`			| `false`	| -									| -			|
+
+#### CheckboxGroup 组件属性(Props)
+
+| 参数					| 说明							| 类型				| 默认值		| 可选值								| 支持版本	|
+| ---					| ---							| ---				| ---		| ---								| ---		|
+| `value`				|当前选中值（支持v-model双向绑定）	| `Array`			| `false`	| -									| -			|
+| `direction`			| 排列方式						| `String`			| `row`		|  `column`：横向 <br/>`row`：纵向	| -			|
+| `disabled`			| 是否禁用						| `Boolean`			| `false`	| -									| -			|
+| `readonly`			| 只读 (不置灰)					| `Boolean`			| `false`	| -									| -			|
+| `shape`				| 形状							| `String`			| `circle`	| `circle`：圆形 <br/>`squar`：方形	| -			|
+| `iconSize`			| 图标大小，单位rpx				| `Number/String`	| `36`		| -									| -			|
+| `checkedColor`		| 选中状态的图标颜色				| `String`			| `#0090FF`	| -									| -			|
+| `textPosition`		| 文本的位置						| `String`			| `right`	| `right`：右 <br/>`left`：左		| -			|
+| `textSize`			| 文本字体大小，单位rpx			| `Number/String`	| `25`		| -									| -			|
+| `textlnactiveColor`	| 未选中文本颜色					| `String`			| `#000000`	| -									| -			|
+| `textActiveColor`		| 选中文本颜色					| `String`			| `#000000`	| -									| -			|
+| `textDisabled`		| 禁用文本点击					| `Boolean`			| `false`	| -									| -			|
+| `max`					| 最大可选数，0 为无限制			| `Number`			| `0`		| -									| -			|
 
 
 #### Checkbox Events
@@ -151,6 +223,12 @@ export default {
 |---		|---									|---																				|---		|
 | `click`	|点击单选框时触发的事件（可拦截change事件）	|`value`：改变后的分值,`allowStop`：允许阻止后续的事件触发,：`resolve`：后续的事件执行	| -			|
 | `change`	|当绑定值变化时触发的事件					|`value`：改变后的分值																| -			|
+
+#### CheckboxGroup Events
+|事件名		|说明									|事件参数																			|支持版本	|
+|---		|---									|---																				|---		|
+| `change`	|当绑定值变化时触发的事件					|`value`：改变后的分值																| -			|
+
 
 #### Checkbox Solts
 |插槽名		|说明			|插槽参数									|支持版本	|
