@@ -36,7 +36,7 @@
 					<input
 						class="ste-input--input"
 						:type="type"
-						:focus="focus"
+						:focus="focused"
 						:value="dataValue"
 						:disabled="disabled || readonly"
 						:maxlength="maxlength"
@@ -88,7 +88,7 @@ export default {
 		},
 		placeholder: {
 			type: String,
-			default: '请输入内容',
+			default: '',
 		},
 		placeholderStyle: {
 			type: [String, Object],
@@ -162,6 +162,7 @@ export default {
 	data() {
 		return {
 			dataValue: '',
+			focused: this.focus,
 		};
 	},
 	created() {},
@@ -210,7 +211,7 @@ export default {
 		},
 
 		cmpShowClear() {
-			return !this.disabled && !this.readonly && this.clearable && this.dataValue && this.focus;
+			return !this.disabled && !this.readonly && this.clearable && this.dataValue && this.focused;
 		},
 	},
 	methods: {
@@ -228,12 +229,14 @@ export default {
 		},
 		onFocus() {
 			if (this.disabled) return;
+			this.focused = true;
 			this.$emit('update:focus', true);
 			this.$emit('focus', this.dataValue);
 		},
 		onBlur() {
 			setTimeout(() => {
 				this.$emit('update:focus', false);
+				this.focused = false;
 			}, 50);
 			this.$emit('blur', this.dataValue);
 		},
@@ -247,6 +250,11 @@ export default {
 				this.dataValue = val;
 			},
 			immediate: true,
+		},
+		focus: {
+			handler(val) {
+				this.focused = val;
+			},
 		},
 	},
 };
