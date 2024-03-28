@@ -3,10 +3,26 @@
 		<page-nav :autoBack="true" backColor="#000" titleAlignment="2" title="输入框"></page-nav>
 		<view class="content">
 			<view class="demo-item">
-				<view class="title">常规输入框</view>
+				<view class="title">文本输入框</view>
 				<view class="item-block">
 					<view style="width: 100%">
-						<ste-input />
+						<ste-input value="输入" />
+					</view>
+				</view>
+			</view>
+			<view class="demo-item">
+				<view class="title">密码输入框</view>
+				<view class="item-block">
+					<view style="width: 100%">
+						<ste-input type="password" />
+					</view>
+				</view>
+			</view>
+			<view class="demo-item">
+				<view class="title">数字输入框</view>
+				<view class="item-block">
+					<view style="width: 100%">
+						<ste-input type="number" />
 					</view>
 				</view>
 			</view>
@@ -46,6 +62,21 @@
 					</view>
 					<view style="width: 100%">
 						<ste-input shape="line" type="textarea" :maxlength="140" showWordLimit />
+					</view>
+				</view>
+			</view>
+			<view class="demo-item">
+				<view class="title">焦点</view>
+				<view class="item-block">
+					<view style="width: 100%">
+						<ste-input :focus.sync="inputFocus" />
+					</view>
+					<view style="width: 100%; text-align: center; font-size: 28rpx">
+						<ste-text>{{ inputFocus ? '获取焦点' : '失去焦点' }}</ste-text>
+					</view>
+					<view style="width: 100%; text-align: center">
+						<ste-button :mode="100" style="margin-right: 50rpx" @click="focus">获取焦点</ste-button>
+						<ste-button :mode="100" @click="blur">失去焦点</ste-button>
 					</view>
 				</view>
 			</view>
@@ -128,11 +159,20 @@ export default {
 	data() {
 		return {
 			v: '123123',
-			f: false,
+			inputFocus: false,
 		};
 	},
 	created() {},
-	methods: {},
+	methods: {
+		blur() {
+			this.inputFocus = false;
+		},
+		focus() {
+			setTimeout(() => {
+				this.inputFocus = true;
+			}, 200);
+		},
+	},
 };
 </script>
 
