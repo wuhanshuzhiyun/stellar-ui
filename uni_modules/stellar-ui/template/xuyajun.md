@@ -35,7 +35,7 @@
 <div class="con-box">
 	<div class="con-item">
 		<a  href="http://172.16.108.253:8001/xuyajun">
-			<image class="con-image" src="http://172.16.108.253:8001/uploads/-/system/user/avatar/88/avatar.png?width=400"></image>
+			<image class="con-image" src="https://image.whzb.com/chain/inte-mall/00-普通图片/00-开发版/img/头像/徐亚君.png"></image>
 		</a>
 		<a href="http://172.16.108.253:8001/xuyajun"><div class="name">徐亚君</div></a>
 	</div>
