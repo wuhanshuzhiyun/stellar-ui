@@ -1,5 +1,5 @@
 <template>
-	<view class="ste-input--root" :class="cmpRootClass" :style="[cmpRootStyle, cmpRootCssVar]">
+	<view class="ste-input--root" :class="cmpRootClass" :style="[cmpRootStyle, cmpRootCssVar]" @click="inputClick">
 		<view class="content">
 			<view class="prefix-box">
 				<slot name="prefix"></slot>
@@ -17,20 +17,23 @@
 						:placeholder-style="placeholderStyle"
 						:placeholder-class="placeholderClass"
 						:confirm-type="confirmType"
+						:cursor-spacing="cursorSpacing"
 						@input="onInput"
 						@focus="onFocus"
 						@blur="onBlur"
 						@confirm="onConfirm"
 					/>
+					<!-- #ifdef H5 || MP-WEIXIN -->
 					<text
 						class="count-text"
 						:style="{
-							'background-color': disabled ? 'transparent' : '#fff',
+							'background-color': 'transparent',
 						}"
 						v-if="showWordLimit && maxlength > 0"
 					>
 						{{ dataValue.length }}/{{ maxlength }}
 					</text>
+					<!-- #endif -->
 				</template>
 				<template v-else>
 					<input
@@ -49,6 +52,7 @@
 						@blur="onBlur"
 						@confirm="onConfirm"
 						:style="[{ width: cmpShowClear ? 'calc(100% - 48rpx)' : 'calc(100% - 8rpx)' }]"
+						:cursor-spacing="cursorSpacing"
 					/>
 					<view v-if="cmpShowClear" class="clear-icon" @click="onClear">
 						<ste-icon code="&#xe694;" color="#bbbbbb" size="34" />
@@ -69,6 +73,49 @@ import utils from '../../utils/utils.js';
  * ste-input 输入框
  * @description 输入框组件
  * @tutorial https://stellar-ui.intecloud.com.cn//pc/index/index?name=ste-input
+ * @property {Number|String} value 初始内容，支持双向绑定
+ * @property {String} type 输入框类型
+ * @value text 纯文本输入 {String}
+ * @value textarea 文本域 {String}
+ * @value tel 电话输入 {String}
+ * @value number  数字输入 {String}
+ * @value idcard  身份证输入键盘 {String}
+ * @value digit 小数点的数字键盘 {String}
+ * @value password  密码类型 {String}
+ * @value nickname  昵称输入(微信小程序) {String}
+ * @value numberpad 仅支付宝小程序 {String}
+ * @value digitpad 仅支付宝小程序 {String}
+ * @value idcardpad 仅支付宝小程序 {String}
+ * @property {String} placeholder 占位符
+ * @property {String|Object} placeholderStyle 指定placeholder的样式
+ * @property {String} placeholderClass 指定placeholder的类
+ * @property {Boolean} disabled 是否禁用
+ * @property {Boolean} clearable 是否有清空按钮
+ * @property {Number} maxlength 最大长度
+ * @property {Boolean} showWordLimit 是否显示字数统计
+ * @property {String} confirmType 设置右下角按钮的文字
+ * @value send 右下角按钮为"发送" {String}
+ * @value search 右下角按钮为"搜索" {String}
+ * @value next 右下角按钮为"下一个" {String}
+ * @value go  右下角按钮为"前往" {String}
+ * @value done  右下角按钮为"完成" {String}
+ * @property {Boolean} focus 是否聚焦，支持双向绑定
+ * @property {String} inputAlign 对齐方式
+ * @value left 向左对齐 {String}
+ * @value center 居中对齐 {String}
+ * @value right 向右对齐{String}
+ * @property {Number|String} fontSize 输入框字体大小，单位rpx
+ * @property {String} fontColor 输入框字体颜色
+ * @property {Boolean} readonly 是否只读，与禁用不同，只读不会置灰
+ * @property {String} shape 输入框形状
+ * @value square 方形 {String}
+ * @value circle 圆形 {String}
+ * @value line 线形 {String}
+ * @property {Boolean} border 是否有边框
+ * @property {String} borderColor 边框颜色
+ * @property {String} background 输入框背景色
+ * @property {String} rootClass 自定义输入框类名
+ * @property {Number} cursorSpacing 指定光标与键盘的距离
  */
 export default {
 	group: '表单组件',
@@ -158,6 +205,10 @@ export default {
 			type: String,
 			default: '',
 		},
+		cursorSpacing: {
+			type: Number,
+			default: 20,
+		},
 	},
 	data() {
 		return {
@@ -222,13 +273,13 @@ export default {
 			}
 		},
 		onClear() {
-			if (this.disabled) return;
+			if (this.disabled && !this.readonly) return;
 			this.dataValue = '';
 			this.$emit('input', this.dataValue);
 			this.$emit('clear');
 		},
 		onFocus() {
-			if (this.disabled) return;
+			if (this.disabled && !this.readonly) return;
 			this.focused = true;
 			this.$emit('update:focus', true);
 			this.$emit('focus', this.dataValue);
@@ -242,6 +293,9 @@ export default {
 		},
 		onConfirm() {
 			this.$emit('confirm', this.dataValue);
+		},
+		inputClick() {
+			this.onFocus();
 		},
 	},
 	watch: {
@@ -305,13 +359,15 @@ export default {
 				border: none;
 				padding: 0;
 				margin: 0;
-
+				height: var(--input-font-size);
 				width: 100%;
 
 				font-size: var(--input-font-size);
 				color: var(--input-font-color);
 
 				text-align: var(--input-text-align);
+
+				background-color: transparent;
 
 				&.textarea {
 					height: 160rpx;
@@ -328,8 +384,16 @@ export default {
 		}
 	}
 
-	&.ste-input--disabled {
+	&.ste-input-readonly {
+		cursor: not-allowed;
 		.ste-input--input {
+			cursor: not-allowed;
+		}
+	}
+	&.ste-input--disabled {
+		cursor: not-allowed;
+		.ste-input--input {
+			cursor: not-allowed;
 			color: #cccccc !important;
 		}
 	}

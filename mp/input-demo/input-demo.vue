@@ -8,23 +8,16 @@
 					<view style="width: 100%">
 						<ste-input />
 					</view>
-
-					<!-- <view style="width: 100%">
-											<ste-input shape="line" />
-										</view>
-										<view style="width: 100%">
-											<ste-input shape="circle" />
-										</view> -->
 				</view>
 			</view>
 			<view class="demo-item">
 				<view class="title">占位符</view>
 				<view class="item-block">
 					<view style="width: 100%">
-						<ste-input placeholder="请输入" />
+						<ste-input placeholder="请输入" placeholderClass="my-input-holder" />
 					</view>
 					<view style="width: 100%">
-						<ste-input placeholder="请输入" placeholderStyle="color: #f00;font-weight: bold" />
+						<ste-input placeholder="请输入" placeholderStyle="color: #f00" />
 					</view>
 				</view>
 			</view>
@@ -112,13 +105,16 @@
 				</view>
 			</view>
 			<view class="demo-item">
-				<view class="title">插槽</view>
+				<view class="title">前后插槽</view>
 				<view class="item-block">
 					<view style="width: 80%">
 						<ste-input placeholder="请输入内容" confirmType="next" rootClass="root-my-input" shape="line">
 							<view slot="prefix" style="margin-right: 28rpx">
 								<ste-icon code="&#xe68c;" size="28" />
 								<text>文本</text>
+							</view>
+							<view slot="suffix">
+								<ste-icon code="&#xe672;" size="28" />
 							</view>
 						</ste-input>
 					</view>
@@ -135,17 +131,7 @@ export default {
 			f: false,
 		};
 	},
-	created() {
-		setTimeout(() => {
-			this.v = 'fuyuwei';
-			this.f = true;
-		}, 2000);
-		setTimeout(() => {
-			console.log('第二次执行');
-			this.v = 'fuyuwei';
-			this.f = true;
-		}, 5000);
-	},
+	created() {},
 	methods: {},
 };
 </script>
@@ -159,18 +145,13 @@ export default {
 				> view {
 					margin: 0 8px 8px 0;
 
-					// .ste-input-placeholder {
-					// 	color: red;
-					// 	font-size: 36rpx;
+					// /deep/ .root-my-input {
+
 					// }
 
-					// /deep/ .my-input {
-					// 	padding: 10rpx;
+					// /deep/ .my-input-holder {
+					// 	color: pink !important;
 					// }
-
-					/deep/ .root-my-input {
-						// padding: 10rpx;
-					}
 				}
 			}
 		}
