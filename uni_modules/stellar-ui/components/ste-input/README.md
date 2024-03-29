@@ -3,12 +3,22 @@
 {{compatibility}}
 
 ### 代码演示
-#### 常规输入框
+#### 文本输入框
 - 通过`value`给输入框初始值
 - 支持通过`v-model`双向绑定
 ```html
-<ste-input />
+<ste-input value="输入"/>
 ```
+
+#### 密码输入框
+```html
+<ste-input type="password" />
+``` 
+
+#### 数字输入框
+```html
+<ste-input type="number" />
+``` 
 
 #### 占位符
 - 支持`placeholderStyle`给占位符指定样式
@@ -34,6 +44,12 @@
 ```html
 <ste-input type="textarea" :maxlength="140" showWordLimit />
 <ste-input shape="line" type="textarea" :maxlength="140" showWordLimit />
+```
+
+#### 焦点
+通过 `focus`值来控制输入框的焦点，支持双向绑定
+```html
+<ste-input :focus.sync="focus"/>
 ```
 
 #### 文本对齐方式
@@ -111,8 +127,8 @@
 
 |事件名		|说明					|	事件参数		|支持版本	|
 |---		|---					|---			|---		|
-|`blur`		|输入框失去焦点时触发		|value：内容值	|-			|
-|`focus`	|输入框聚焦时触发		|value：内容值	|-			|
+|`blur`		|输入框失去焦点时触发		| value：内容值	|-			|
+|`focus`	|输入框聚焦时触发		| value：内容值	|-			|
 |`confirm`	|点击键盘右下角按钮时触发	|value：内容值	|-			|
 |`change`	|内容发生变化触发此事件	|value：内容值	|-			|
 |`clear`	|点击清空内容			|-				|-			|

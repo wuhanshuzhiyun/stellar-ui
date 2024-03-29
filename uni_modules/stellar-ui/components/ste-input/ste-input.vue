@@ -274,6 +274,7 @@ export default {
 		},
 		onClear() {
 			if (this.disabled && !this.readonly) return;
+
 			this.dataValue = '';
 			this.$emit('input', this.dataValue);
 			this.$emit('clear');
@@ -285,11 +286,12 @@ export default {
 			this.$emit('focus', this.dataValue);
 		},
 		onBlur() {
+			console.log('失去焦点');
 			setTimeout(() => {
 				this.$emit('update:focus', false);
 				this.focused = false;
-			}, 50);
-			this.$emit('blur', this.dataValue);
+				this.$emit('blur', this.dataValue);
+			}, 200);
 		},
 		onConfirm() {
 			this.$emit('confirm', this.dataValue);
