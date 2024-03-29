@@ -1,15 +1,15 @@
 <template>
-	<div class="ste-checkbox-group--root" :style="[cmpStyle]">
+	<div class="ste-radio-group--root" :style="[cmpStyle]">
 		<slot></slot>
 	</div>
 </template>
 
 <script>
 /**
- * ste-checkbox-group 复选框组
- * @description 复选框组组件,内部由多个checkbox组成。
- * @tutorial https://stellar-ui.intecloud.com.cn/pc/index/index?name=ste-checkbox
- * @property {Array} value 当前选中值（支持v-model双向绑定）
+ * ste-radio-group 单选框组
+ * @description 单选框组组件,内部由多个radio组成。
+ * @tutorial https://stellar-ui.intecloud.com.cn/pc/index/index?name=ste-radio
+ * @property {String} value 当前选中值（支持v-model双向绑定）
  * @property {String} direction 排列方式 默认 column
  * @value row 横向 默认 {{String}}
  * @value  column 纵向 {{String}}
@@ -27,15 +27,14 @@
  * @property {String} textInactiveColor 未选中的文本颜色 默认 #000000
  * @property {String} textActiveColor 选中的文本颜色 默认 #000000
  * @property {Boolean} textDisabled 禁用文本点击 默认 false
- * @property {Boolean} max 最大可选数，0为无限制 默认 0
  * @event {Function} change 当绑定值变化时触发的事件
  */
 export default {
-	name: 'ste-checkbox-group',
+	name: 'ste-radio-group',
 	props: {
 		value: {
-			type: Array,
-			default: [],
+			type: String,
+			default: '',
 		},
 		direction: {
 			type: String,
@@ -93,7 +92,7 @@ export default {
 	},
 	provide() {
 		return {
-			checkboxGroup: this,
+			radioGroup: this,
 		};
 	},
 	data() {
@@ -110,7 +109,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.ste-checkbox-group--root {
+.ste-radio-group--root {
 	display: flex;
 	column-gap: 16rpx;
 	row-gap: 16rpx;

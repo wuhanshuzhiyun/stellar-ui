@@ -133,7 +133,7 @@ export default {
 ```
 
 #### 回调事件  
--  `click`  点击单选框时触发的事件（可拦截change事件），`value`：改变后的分值,`allowStop`：允许阻止后续的事件触发,：`resolve`：后续的事件执行。
+-  `click`  点击复选框时触发的事件（可拦截change事件），`value`：改变后的分值,`allowStop`：允许阻止后续的事件触发,：`resolve`：后续的事件执行。
 -  `change` 当绑定值变化时触发的事件，`value`:改变后的分值。
 ```
 <ste-checkbox v-model="value16" @click="click1" @change="change">复选框</ste-checkbox>
@@ -143,7 +143,7 @@ export default {
 ```
 
 ### 复选框组
-需要与ste-checkbox-group一起使用，选中值是一个数组，通过value绑定在ste-checkbox-group上，数组中的项即为选中的Checkbox的name属性设置的值。
+需要与`ste-checkbox-group`一起使用，选中值是一个数组，通过`value`绑定在`ste-checkbox-group`上，数组中的项即为选中的`ste-checkbox`的`name`属性设置的值。
 ```
 <ste-checkbox-group v-model="value18">
 	<ste-checkbox name="a">复选框a</ste-checkbox>
@@ -153,7 +153,7 @@ export default {
 ```
 
 ### 复选框组属性和复选框属性
-属性优先级：ste-checkbox组件上配置的属性 > ste-checkbox-group组件上配置的属性 > ste-checkbox组件默认属性
+属性优先级：`ste-checkbox`组件上配置的属性 > `ste-checkbox-group`组件上配置的属性 > `ste-checkbox`组件默认属性
 ```
 <ste-checkbox-group v-model="value19" shape="square" textPosition="left">
 	<ste-checkbox name="a">复选框a</ste-checkbox>
@@ -203,7 +203,7 @@ export default {
 
 | 参数					| 说明							| 类型				| 默认值		| 可选值								| 支持版本	|
 | ---					| ---							| ---				| ---		| ---								| ---		|
-| `value`				|当前选中值（支持v-model双向绑定）	| `Array`			| `false`	| -									| -			|
+| `value`				|当前选中值（支持v-model双向绑定）	| `Array`			| -			| -									| -			|
 | `direction`			| 排列方式						| `String`			| `row`		|  `column`：横向 <br/>`row`：纵向	| -			|
 | `disabled`			| 是否禁用						| `Boolean`			| `false`	| -									| -			|
 | `readonly`			| 只读 (不置灰)					| `Boolean`			| `false`	| -									| -			|
@@ -219,10 +219,10 @@ export default {
 
 
 #### Checkbox Events
-|事件名		|说明									|事件参数																			|支持版本	|
-|---		|---									|---																				|---		|
-| `click`	|点击单选框时触发的事件（可拦截change事件）	|`value`：改变后的分值,`allowStop`：允许阻止后续的事件触发,：`resolve`：后续的事件执行	| -			|
-| `change`	|当绑定值变化时触发的事件					|`value`：改变后的分值																| -			|
+|事件名		|说明									|事件参数																		|支持版本	|
+|---		|---									|---																			|---		|
+| `click`	|点击复选框时触发的事件（可拦截change事件）	|`value`：改变后的分值,`allowStop`：允许阻止后续的事件触发,：`resolve`：后续的事件执行	| -			|
+| `change`	|当绑定值变化时触发的事件					|`value`：改变后的分值															| -			|
 
 #### CheckboxGroup Events
 |事件名		|说明									|事件参数																			|支持版本	|
@@ -233,7 +233,7 @@ export default {
 #### Checkbox Solts
 |插槽名		|说明			|插槽参数									|支持版本	|
 | ---		| ---			| ---										| ---		|
-| `default`	| 单选框文本内容	|`{ checked: boolean, disabled: boolean }`	| -			|
-| `icon`	| 单选框图标		|`{ checked: boolean, disabled: boolean }`	| -			|
+| `default`	| 复选框文本内容	|`{ checked: boolean, disabled: boolean }`	| -			|
+| `icon`	| 复选框图标		|`{ checked: boolean, disabled: boolean }`	| -			|
 
 {{qinpengfei}}
