@@ -71,12 +71,12 @@
 					<view style="width: 100%">
 						<ste-input :focus.sync="inputFocus" />
 					</view>
-					<view style="width: 100%; text-align: center; font-size: 28rpx">
+					<!-- 					<view style="width: 100%; text-align: center; font-size: 28rpx">
 						<ste-text>{{ inputFocus ? '获取焦点' : '失去焦点' }}</ste-text>
-					</view>
+					</view> -->
 					<view style="width: 100%; text-align: center">
-						<ste-button :mode="100" style="margin-right: 50rpx" @click="focus">获取焦点</ste-button>
-						<ste-button :mode="100" @click="blur">失去焦点</ste-button>
+						<ste-button width="100%" style="margin-right: 50rpx" @click="focus">焦点</ste-button>
+						<!-- <ste-button :mode="100" @click="blur">失去焦点</ste-button> -->
 					</view>
 				</view>
 			</view>
@@ -168,9 +168,7 @@ export default {
 			this.inputFocus = false;
 		},
 		focus() {
-			setTimeout(() => {
-				this.inputFocus = true;
-			}, 200);
+			this.inputFocus = !this.inputFocus;
 		},
 	},
 };
