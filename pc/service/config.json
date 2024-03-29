@@ -1,0 +1,11 @@
+{
+	"port": 3000,
+	"origins": ["http://172.16.116.220", "https://stellar-ui.intecloud.com.cn", "http://localhost:8080"],
+	"redis": {
+		"port": 6379,
+		"host": "localhost",
+		"username": "default",
+		"password": "",
+		"db": 0
+	}
+}

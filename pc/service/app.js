@@ -1,21 +1,24 @@
 const bodyParser = require('body-parser');
 const cors = require('cors');
 const express = require('express');
-const path = require('path');
 const app = express();
 const router = require('./src/routers');
-const { origins, port } = require(path.join(process.cwd(), './config'));
+const { origins, port } = require('./src/utils/getConfig')();
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 
 app.use(cors({ credentials: true, origin: origins }));
 
-app.use(router);
+app.use('/api', router);
 
 app.use((err, req, res, next) => {
 	console.log(err);
-	res.send({ code: 500, err: JSON.stringify(err) });
+	if (err.code) {
+		res.send(err);
+	} else {
+		res.send({ code: 400, err: JSON.stringify(err) });
+	}
 });
 
 app.listen(port, () => {

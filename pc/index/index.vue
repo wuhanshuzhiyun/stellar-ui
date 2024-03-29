@@ -25,6 +25,7 @@
 			<view v-show="isComment && isComponent && loadingMd" class="comment-view">
 				<view class="comment-title">意见反馈</view>
 				<input class="user-input" placeholder="姓名" v-model="commentParams.user" maxlength="8" />
+
 				<textarea
 					class="comment-input"
 					v-model="commentParams.content"
@@ -32,7 +33,17 @@
 					placeholder="反馈意见"
 					maxlength="300"
 				/>
-				<ste-button style="margin-top: 12px" type="primary" @click="setComment">提交</ste-button>
+				<view class="button-box">
+					<view class="code-img" v-html="codeSvg" @click="getCode"></view>
+					<input
+						class="code-input"
+						placeholder="验证码"
+						v-model="commentParams.code"
+						maxlength="4"
+						style="width: 120px"
+					/>
+					<ste-button type="primary" @click="setComment">提交</ste-button>
+				</view>
 				<view class="comment-list" v-show="commentList.length">
 					<view class="comment-item" v-for="item in commentList" :key="item.id">
 						<view class="comment-head">
@@ -40,7 +51,7 @@
 							<text class="head-time">{{ item.time }}</text>
 						</view>
 						<view class="comment-content">
-							{{ item.content }}
+							{{ item.conents }}
 						</view>
 					</view>
 				</view>
@@ -55,9 +66,8 @@
 <script>
 import { mdMap, vueMap, datas } from '../markdown/index.js';
 import md2html from './md2html.js';
+import config from '@/common/config.js';
 import './mdStyle.scss';
-
-const baseUrl = 'http://172.16.116.220:3000';
 
 let timeout = 0;
 
@@ -71,7 +81,10 @@ export default {
 			commentList: [],
 			isComponent: false,
 			loadingMd: false,
+			codeSvg: '',
 			commentParams: {
+				uuid: '',
+				code: '',
 				user: '',
 				content: '',
 			},
@@ -115,12 +128,13 @@ export default {
 		},
 	},
 	onLoad({ name }) {
-		console.log('on-load');
 		if (name && name !== this.activeName) {
 			this.activeName = name;
 		}
 	},
-	onShow() {},
+	onShow() {
+		this.getCode();
+	},
 	methods: {
 		viewContent(url) {
 			this.content = '';
@@ -174,28 +188,52 @@ export default {
 			}
 			// #endif
 		},
+		getCode() {
+			uni.request({
+				url: `${config.BASE_URL}/api/code?t=${Date.now()}`,
+				success: ({ data }) => {
+					const reult = data.data;
+					this.codeSvg = reult.data;
+					this.commentParams.uuid = reult.uuid;
+				},
+			});
+		},
 		getComment(name) {
 			uni.request({
-				url: `${baseUrl}/list?name=${name}`,
+				url: `${config.BASE_URL}/api/list?name=${name}`,
 				success: ({ data }) => {
 					if (data.code === 0) {
 						this.commentList = data.data.reverse();
 						this.commentParams.content = '';
 						this.commentParams.user = '';
 						this.isComment = true;
+						this.getCode();
 					}
 				},
 			});
 		},
 		setComment() {
+			if (!this.commentParams.content) {
+				uni.showToast({ title: '请输入反馈意见', icon: 'none' });
+				return;
+			}
+			if (!this.commentParams.code) {
+				uni.showToast({ title: '请输入验证码', icon: 'none' });
+				return;
+			}
 			uni.request({
-				url: `${baseUrl}/create`,
+				url: `${config.BASE_URL}/api/create`,
 				data: Object.assign({ name: this.activeName }, this.commentParams),
 				method: 'POST',
 				success: ({ data }) => {
 					if (data.code === 0) {
 						this.getComment(this.activeName);
+						uni.showToast({
+							title: '提交完成',
+						});
+						return;
 					}
+					uni.showToast({ title: data.messgae, icon: 'none' });
 				},
 			});
 		},
@@ -284,10 +322,33 @@ export default {
 				border-radius: 4px;
 			}
 			.user-input {
-				height: 30px;
+				height: 32px;
 			}
 			.comment-input {
 				width: 100%;
+			}
+			.button-box {
+				margin-top: 12px;
+				width: 100%;
+				display: flex;
+				align-items: center;
+				justify-content: flex-end;
+
+				.code-img {
+					height: 32px;
+					border-radius: 4px;
+					overflow: hidden;
+					background-color: #eee;
+					display: flex;
+					align-items: center;
+				}
+				.code-input {
+					border: 1px solid #ddd;
+					padding: 5px;
+					border-radius: 4px;
+					height: 32px;
+					margin: 0 12rpx;
+				}
 			}
 			.comment-list {
 				border: 1px solid #ddd;
