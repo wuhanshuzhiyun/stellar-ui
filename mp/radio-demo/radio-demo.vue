@@ -120,7 +120,7 @@
 			<view class="demo-item">
 				<view class="title">单选框组</view>
 				<view class="item-block radio-box">
-					<ste-radio-group v-model="value12">
+					<ste-radio-group v-model="value13">
 						<ste-radio name="a">单选框a</ste-radio>
 						<ste-radio name="b">单选框b</ste-radio>
 						<ste-radio name="c">单选框c</ste-radio>
@@ -130,7 +130,7 @@
 			<view class="demo-item">
 				<view class="title">单选框组属性和单选框属性</view>
 				<view class="item-block radio-box">
-					<ste-radio-group v-model="value13" shape="square" textPosition="left">
+					<ste-radio-group v-model="value14" shape="square" textPosition="left">
 						<ste-radio name="a">单选框a</ste-radio>
 						<ste-radio name="b" disabled>单选框b</ste-radio>
 						<ste-radio name="c" shape="circle">单选框c</ste-radio>
@@ -140,7 +140,7 @@
 			<view class="demo-item">
 				<view class="title">水平排列</view>
 				<view class="item-block radio-box">
-					<ste-radio-group v-model="value14" direction="row">
+					<ste-radio-group v-model="value15" direction="row">
 						<ste-radio name="a">单选框a</ste-radio>
 						<ste-radio name="b">单选框b</ste-radio>
 						<ste-radio name="c">单选框c</ste-radio>
@@ -168,6 +168,7 @@ export default {
 			value12: '',
 			value13: '',
 			value14: '',
+			value15: '',
 		};
 	},
 	created() {},

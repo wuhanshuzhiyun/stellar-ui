@@ -24,6 +24,7 @@ export default {
 			value12: '',
 			value13: '',
 			value14: '',
+			value15: '',
 		};
 	},
 	created() {},
