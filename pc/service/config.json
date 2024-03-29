@@ -7,5 +7,9 @@
 		"username": "default",
 		"password": "",
 		"db": 0
+	},
+	"wx": {
+		"appid": "wx0b4f889a073433c6",
+		"secret": "ab66676195fde1a047915e3b18960185"
 	}
 }

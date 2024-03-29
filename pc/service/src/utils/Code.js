@@ -18,7 +18,7 @@ class Code {
 				ignoreChars: '0oO1ilI2z',
 				noise: 2,
 				width: 100,
-				height: 30,
+				height: 32,
 				fontSize: 26,
 			};
 			try {
@@ -41,18 +41,18 @@ class Code {
 	static checkCode(uuid, code) {
 		return new Promise(async (resolve, reject) => {
 			if (!uuid) {
-				reject({ code: 400, messgae: 'uuid不能为空' });
+				reject({ code: 400, message: 'uuid不能为空' });
 				return;
 			}
 			if (!code) {
-				reject({ code: 400, messgae: '验证码不能为空' });
+				reject({ code: 400, message: '验证码不能为空' });
 				return;
 			}
 			try {
 				let bool = false;
 				let data = await Redis.get(`code-${uuid}`);
 				if (!data) {
-					reject({ code: 400, messgae: '验证码已过期' });
+					reject({ code: 400, message: '验证码已过期' });
 					return;
 				}
 				data = JSON.parse(data);

@@ -232,8 +232,10 @@ export default {
 							title: '提交完成',
 						});
 						return;
+					} else if (data.code === 400) {
+						uni.showToast({ title: `内容涉及${data.message}信息，请修改后重新评论`, icon: 'none' });
 					}
-					uni.showToast({ title: data.messgae, icon: 'none' });
+					this.getCode();
 				},
 			});
 		},
