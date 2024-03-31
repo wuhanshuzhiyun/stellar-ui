@@ -17,7 +17,7 @@ app.use((err, req, res, next) => {
 	if (err.code) {
 		res.send(err);
 	} else {
-		res.send({ code: 400, err: JSON.stringify(err) });
+		res.send({ code: 500, message: JSON.stringify(err) });
 	}
 });
 

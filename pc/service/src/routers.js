@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 const Data = require('./utils/Data.js');
 const Code = require('./utils/Code.js');
-const WeiXin = require('./utils/WeiXin.js');
+const wx = require('./utils/WeiXin.js');
 
 router.get('/code', async (req, res, next) => {
 	try {
@@ -31,7 +31,11 @@ router.post('/create', async (req, res, next) => {
 			res.send({ code: 400, message: '验证码错误' });
 			return;
 		}
-		await WeiXin.sensitiveWords(`${content} ${user}`);
+		const result = await wx.checkout(`${content} ${user}`);
+		if (result.bool) {
+			next({ code: 401, message: result.message });
+			return;
+		}
 		const data = await Data.setData(name, { content, user });
 		res.send({ code: 0, data });
 	} catch (error) {
@@ -41,7 +45,7 @@ router.post('/create', async (req, res, next) => {
 
 router.get('/openid', async (req, res, next) => {
 	try {
-		const openid = await WeiXin.getOpenid(req.query.code);
+		const openid = await wx.getOpenid(req.query.code);
 		res.send({ code: 0, data: openid });
 	} catch (error) {
 		next(error);

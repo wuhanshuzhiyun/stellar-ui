@@ -206,6 +206,7 @@ export default {
 						this.commentList = data.data.reverse();
 						this.commentParams.content = '';
 						this.commentParams.user = '';
+						this.commentParams.code = '';
 						this.isComment = true;
 						this.getCode();
 					}
@@ -232,8 +233,10 @@ export default {
 							title: '提交完成',
 						});
 						return;
-					} else if (data.code === 400) {
+					} else if (data.code === 401) {
 						uni.showToast({ title: `内容涉及${data.message}信息，请修改后重新评论`, icon: 'none' });
+					} else {
+						uni.showToast({ title: data.message, icon: 'none' });
 					}
 					this.getCode();
 				},
