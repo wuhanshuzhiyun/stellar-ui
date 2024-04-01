@@ -98,7 +98,7 @@
 					</view>
 					<view>非弹性盒子</view>
 					<view>盒子行高（默认）</view>
-					<view>文字32px，图标一15px，图标二32px</view>
+					<view>文字32px，图标一16px，图标二32px</view>
 					<view class="preview-item">
 						<ste-icon
 							size="16px"
@@ -107,7 +107,6 @@
 							color="#FF4500"
 							:marginRight="marginRight"
 							marginTop="0px"
-							marginBottom="6px"
 							:showBorder="true"
 						></ste-icon>
 						展示

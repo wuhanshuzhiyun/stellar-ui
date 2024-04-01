@@ -54,7 +54,7 @@
 	<div class="item">
 		<div class="top">
 			<img src="https://image.whzb.com/chain/inte-mall/00-普通图片/00-开发版/img/头像/邻里购.png"></img>
-		</div>
+		</div>	
 		<div class="bottom">
 			<img src="https://image.whzb.com/chain/inte-mall/00-普通图片/00-开发版/img/头像/邻里购头像.png"></img>
 			<div class="info">
