@@ -232,7 +232,6 @@ export default {
 					this.$emit('input', !this.cmpChecked);
 				}
 				this.$emit('change', value);
-				this.$forceUpdate();
 			}
 		},
 		// 允许阻止后续操作
