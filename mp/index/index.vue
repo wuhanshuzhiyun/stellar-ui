@@ -75,6 +75,13 @@
 			</view>
 			<view class="com-arrow"><image :src="joinSrc('img/r-arrow.png')" /></view>
 		</view>
+		<view class="com-box" @click="nav('radio')">
+			<view class="com-title">
+				<image :src="joinSrc('img/radio.png')" style="width: 36rpx; height: 36rpx" />
+				<text>Radio 单选框</text>
+			</view>
+			<view class="com-arrow"><image :src="joinSrc('img/r-arrow.png')" /></view>
+		</view>
 		<view class="com-box" @click="nav('rate')">
 			<view class="com-title">
 				<image :src="joinSrc('img/rate.png')" style="width: 36rpx; height: 36rpx" />

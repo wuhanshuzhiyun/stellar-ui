@@ -5,18 +5,20 @@
 				<ste-icon code="&#xe695;" :color="prefixIconColor" size="44" />
 			</view>
 			<view class="input-box" v-if="!hiddenInput">
-				<input
+				<ste-input
 					class="search-input"
 					placeholder-class="search-input-placeholder"
 					:disabled="disabled"
 					:placeholder="cmpPlaceholder"
-					:style="{ width: cmpShowClear ? 'calc(100% - 48rpx)' : 'calc(100% - 8rpx)' }"
 					v-model="dataValue"
 					@input="onInput"
 					@confirm="onSearch"
 					@focus="onFocus"
 					@blur="onBlur"
+					@clear="onClear"
 					:focus="focus"
+					:clearable="clearable"
+					background="transparent"
 				/>
 				<swiper
 					v-if="cmpShowSwitch"
@@ -32,9 +34,9 @@
 						{{ item }}
 					</swiper-item>
 				</swiper>
-				<view v-if="cmpShowClear" class="clear-icon" @click="onClear">
+				<!-- <view v-if="cmpShowClear" class="clear-icon" @click="onClear">
 					<ste-icon code="&#xe694;" :color="clearIconColor" size="44" />
-				</view>
+				</view> -->
 			</view>
 			<view v-if="!cmpHiddenLine" class="secrch-line" :class="disabled ? 'disabled' : ''" />
 			<view
@@ -344,13 +346,19 @@ export default {
 			position: relative;
 			flex: 1;
 			height: 100%;
-			.search-input {
+			/deep/ .search-input {
 				height: 100%;
+
 				font-size: 28rpx;
 				color: var(--search-input-color);
 				// #ifdef MP-ALIPAY
 				background-color: rgba(0, 0, 0, 0);
 				// #endif
+
+				.content {
+					padding: 0;
+					height: 100%;
+				}
 
 				rch-input-placeholder {
 					color: var(--search-placeholder-color);

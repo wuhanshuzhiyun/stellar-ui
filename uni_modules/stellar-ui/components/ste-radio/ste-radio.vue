@@ -1,5 +1,5 @@
 <template>
-	<view class="ste-checkbox--root" :style="[cmpStyle]" @click="click">
+	<view class="ste-radio--root" :style="[cmpStyle]" @click="click">
 		<view class="icon">
 			<slot name="icon" :slotProps="cmpSlotProps">
 				<view class="input-icon" :style="[cmpInputStyle]">
@@ -21,10 +21,10 @@
 
 <script>
 /**
- * ste-checkbox 复选框
- * @description 复选框组件,在一组备选项中进行多选。
- * @tutorial https://stellar-ui.intecloud.com.cn/pc/index/index?name=ste-checkbox
- * @property {Boolean} value 当前选中值（支持v-model双向绑定） 默认 false
+ * ste-radio 单选框
+ * @description 单选框组件,在一组备选项中进行单选。
+ * @tutorial https://stellar-ui.intecloud.com.cn/pc/index/index?name=ste-radio
+ * @property {String} value 当前选中值（支持v-model双向绑定
  * @property {Number|String} name 选项的值
  * @property {Boolean} disabled 禁用 默认 false
  * @property {Boolean} readonly 只读（不置灰） 默认 false
@@ -40,17 +40,17 @@
  * @property {String} textInactiveColor 未选中的文本颜色 默认 #000000
  * @property {String} textActiveColor 选中的文本颜色 默认 #000000
  * @property {Boolean} textDisabled 禁用文本点击 默认 false
- * @event {Function} click 点击复选框时触发的事件
+ * @event {Function} click 点击单选框时触发的事件
  * @event {Function} change 当绑定值变化时触发的事件
  */
 export default {
 	group: '表单组件',
-	title: 'Checkbox 复选框',
-	name: 'ste-checkbox',
+	title: 'Radio 单选框',
+	name: 'ste-radio',
 	props: {
 		value: {
-			type: Boolean,
-			default: false,
+			type: String,
+			default: '',
 		},
 		name: {
 			type: [Number, String],
@@ -103,7 +103,7 @@ export default {
 		event: 'input',
 	},
 	inject: {
-		checkboxGroup: {
+		radioGroup: {
 			default: '',
 		},
 	},
@@ -115,14 +115,7 @@ export default {
 	},
 	computed: {
 		cmpDisabled() {
-			let disabled = this.getDefaultData('disabled', false);
-			// 限制最大可选数
-			if (this.cmpGroup && this.checkboxGroup.max) {
-				if (!this.cmpChecked && this.checkboxGroup.value.length >= this.checkboxGroup.max) {
-					disabled = true;
-				}
-			}
-			return disabled;
+			return this.getDefaultData('disabled', false);
 		},
 		cmpReadonly() {
 			return this.getDefaultData('readonly', false);
@@ -199,10 +192,10 @@ export default {
 		},
 		// 选中状态
 		cmpChecked() {
-			return this.cmpGroup ? this.checkboxGroup.value.includes(this.name) : this.value;
+			return this.cmpGroup ? this.radioGroup.value == this.name : this.value == this.name;
 		},
 		cmpGroup() {
-			return !!this.checkboxGroup;
+			return !!this.radioGroup;
 		},
 	},
 	methods: {
@@ -215,21 +208,16 @@ export default {
 				if (this.allowStopStatus) {
 					await this.clickTask;
 				}
-				let value = null;
-				if (this.cmpGroup) {
-					value = this.checkboxGroup.value;
-					if (this.cmpChecked) {
-						value = value.filter((value) => value != this.name);
+				if (!this.cmpChecked) {
+					let value = this.name;
+					if (this.cmpGroup) {
+						this.radioGroup.$emit('input', value);
+						this.radioGroup.$emit('change', value);
 					} else {
-						value.push(this.name);
+						this.$emit('input', value);
 					}
-					this.checkboxGroup.$emit('input', value);
-					this.checkboxGroup.$emit('change', value);
-				} else {
-					value = !this.cmpChecked;
-					this.$emit('input', !this.cmpChecked);
+					this.$emit('change', value);
 				}
-				this.$emit('change', value);
 			}
 		},
 		// 允许阻止后续操作
@@ -237,14 +225,14 @@ export default {
 			this.allowStopStatus = true;
 		},
 		getDefaultData(key, value) {
-			return this[key] != null ? this[key] : this.checkboxGroup[key] ? this.checkboxGroup[key] : value;
+			return this[key] != null ? this[key] : this.radioGroup[key] ? this.radioGroup[key] : value;
 		},
 	},
 };
 </script>
 
 <style lang="scss" scoped>
-.ste-checkbox--root {
+.ste-radio--root {
 	width: auto;
 	height: 100%;
 	display: flex;

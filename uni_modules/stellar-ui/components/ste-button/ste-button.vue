@@ -265,6 +265,10 @@ export default {
 		border-color: #000;
 	}
 
+	&:after {
+		border: none;
+	}
+
 	&-disabled {
 		background: #666666;
 		color: #ffffff;

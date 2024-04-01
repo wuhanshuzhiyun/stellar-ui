@@ -35,7 +35,7 @@
 <div class="con-box">
 	<div class="con-item">
 		<a  href="http://172.16.108.253:8001/fuyuwei">
-			<image class="con-image" src="https://www.gravatar.com/avatar/5cdeddb1eda2673cddac39ec69a3c631?s=80&d=identicon"></image>
+			<image class="con-image" src="https://image.whzb.com/chain/inte-mall/00-普通图片/00-开发版/img/头像/付宇威.png"></image>
 		</a>
 		<a href="http://172.16.108.253:8001/fuyuwei"><div class="name">付宇威</div></a>
 	</div>
