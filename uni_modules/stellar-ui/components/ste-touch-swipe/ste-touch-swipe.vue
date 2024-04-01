@@ -39,7 +39,7 @@ import TouchEvent from './TouchEvent.js';
  * @property {Array} 						disabledIndexs	禁用的面板索引（使用touch-swipe-item作为子元素时直接在touch-swipe-item上定义某个标签禁用即可，不使用touch-swipe-item作为子元素盒子时可传）
  * */
 export default {
-	group: '基础组件',
+	group: '导航组件',
 	title: 'TouchSwipe 手势切屏',
 	name: 'ste-touch-swipe',
 	provide() {

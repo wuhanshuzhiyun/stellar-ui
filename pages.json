@@ -239,7 +239,21 @@
 					"navigationBarTitleText": ""
 				}
 			}
-		}, {
+		},
+		{
+			"path": "mp/scroll-to-demo/scroll-to-demo",
+			"style": {
+				"navigationStyle": "custom",
+				"disableScroll": true,
+				"mp-alipay": {
+					"transparentTitle": "always",
+					"titlePenetrate": "YES",
+					"allowsBounceVertical": "NO",
+					"navigationBarTitleText": ""
+				}
+			}
+		},
+		{
 			"path": "mp/radio-demo/radio-demo",
 			"style": {
 				"navigationStyle": "custom",
