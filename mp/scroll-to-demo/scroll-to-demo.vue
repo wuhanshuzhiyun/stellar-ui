@@ -29,6 +29,10 @@ export default {
 				'https://image.whzb.com/chain/StellarUI/image/img2.jfif',
 				'https://image.whzb.com/chain/StellarUI/image/img3.jpg',
 				'https://image.whzb.com/chain/StellarUI/image/img4.jpg',
+				'https://image.whzb.com/chain/StellarUI/image/img1.jpg',
+				'https://image.whzb.com/chain/StellarUI/image/img2.jfif',
+				'https://image.whzb.com/chain/StellarUI/image/img3.jpg',
+				'https://image.whzb.com/chain/StellarUI/image/img4.jpg',
 			],
 		};
 	},
