@@ -111,6 +111,7 @@ export default {
 		return {
 			clickTask: null, // click完成任务和allowStopStatus搭配使用
 			allowStopStatus: false, // 允许阻止后续的事件触发
+			num: 1, // 解决支付宝小程序checkboxGroup.value更新不触发计算属性的问题
 		};
 	},
 	computed: {
@@ -199,7 +200,7 @@ export default {
 		},
 		// 选中状态
 		cmpChecked() {
-			return this.cmpGroup ? this.checkboxGroup.value.includes(this.name) : this.value;
+			return this.num && this.cmpGroup ? this.checkboxGroup.value.includes(this.name) : this.value;
 		},
 		cmpGroup() {
 			return !!this.checkboxGroup;
@@ -225,11 +226,13 @@ export default {
 					}
 					this.checkboxGroup.$emit('input', value);
 					this.checkboxGroup.$emit('change', value);
+					this.num++;
 				} else {
 					value = !this.cmpChecked;
 					this.$emit('input', !this.cmpChecked);
 				}
 				this.$emit('change', value);
+				this.$forceUpdate();
 			}
 		},
 		// 允许阻止后续操作
