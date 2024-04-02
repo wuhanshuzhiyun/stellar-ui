@@ -46,7 +46,8 @@ router.post('/create', async (req, res, next) => {
 
 router.get('/islogin', async (req, res, next) => {
 	try {
-		const openid = await User.getOpenidByToken(req.query.token);
+		const { token } = req.query;
+		const openid = await User.getOpenidByToken(token);
 		return res.send({ code: 0, data: !!openid });
 	} catch (error) {
 		next(error);
@@ -55,8 +56,16 @@ router.get('/islogin', async (req, res, next) => {
 
 router.get('/login', async (req, res, next) => {
 	try {
-		const token = await User.login(req.query.code);
-		res.send({ code: 0, data: token });
+		const { code, token } = req.query;
+		if (token) {
+			const openidU = await User.getOpenidByToken(token);
+			if (openidU) {
+				res.send({ code: 0, data: token });
+				return;
+			}
+		}
+		const newToken = await User.login(code);
+		res.send({ code: 0, data: newToken });
 	} catch (error) {
 		next(error);
 	}

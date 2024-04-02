@@ -3,15 +3,10 @@ import request from '@/common/request.js';
 export default {
 	onLaunch: async function () {
 		// #ifdef MP-WEIXIN
-		const token = uni.getStorageSync('token');
-		if (token) {
-			const islogin = await request(`/api/islogin?token=${token}`);
-			if (islogin) return;
-		}
-		wx.login().then(async (res) => {
-			const token = await request(`/api/login?code=${res.code}`);
-			uni.setStorageSync('token', token);
-		});
+		const { code } = await wx.login();
+		let token = uni.getStorageSync('token');
+		token = await request(`/api/login?code=${code}&token=${token}`);
+		uni.setStorageSync('token', token);
 		// #endif
 	},
 	onShow: function () {},
