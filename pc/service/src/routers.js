@@ -3,6 +3,7 @@ const router = express.Router();
 const Data = require('./utils/Data.js');
 const Code = require('./utils/Code.js');
 const wx = require('./utils/WeiXin.js');
+const User = require('./utils/User.js');
 
 router.get('/code', async (req, res, next) => {
 	try {
@@ -43,10 +44,19 @@ router.post('/create', async (req, res, next) => {
 	}
 });
 
-router.get('/openid', async (req, res, next) => {
+router.get('/islogin', async (req, res, next) => {
 	try {
-		const openid = await wx.getOpenid(req.query.code);
-		res.send({ code: 0, data: openid });
+		const openid = await User.getOpenidByToken(req.query.token);
+		return res.send({ code: 0, data: !!openid });
+	} catch (error) {
+		next(error);
+	}
+});
+
+router.get('/login', async (req, res, next) => {
+	try {
+		const token = await User.login(req.query.code);
+		res.send({ code: 0, data: token });
 	} catch (error) {
 		next(error);
 	}

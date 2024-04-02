@@ -40,6 +40,19 @@
 			}
 		},
 		{
+			"path": "pages/code/code",
+			"name": "code",
+			"style": {
+				"navigationStyle": "custom",
+				"mp-alipay": {
+					"transparentTitle": "always",
+					"titlePenetrate": "YES",
+					"allowsBounceVertical": "NO",
+					"navigationBarTitleText": ""
+				}
+			}
+		},
+		{
 			"path": "pc/index/index",
 			"style": {
 				"navigationBarTitleText": "Stellar UI",

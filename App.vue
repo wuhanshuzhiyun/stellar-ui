@@ -1,15 +1,16 @@
 <script>
-import config from '@/common/config.js';
+import request from '@/common/request.js';
 export default {
-	onLaunch: function () {
+	onLaunch: async function () {
 		// #ifdef MP-WEIXIN
-		wx.login().then((res) => {
-			uni.request({
-				url: `${config.BASE_URL}/api/openid?code=${res.code}`,
-				success: ({ data }) => {
-					console.log('openid', data.data);
-				},
-			});
+		const token = uni.getStorageSync('token');
+		if (token) {
+			const islogin = await request(`/api/islogin?token=${token}`);
+			if (islogin) return;
+		}
+		wx.login().then(async (res) => {
+			const token = await request(`/api/login?code=${res.code}`);
+			uni.setStorageSync('token', token);
 		});
 		// #endif
 	},
