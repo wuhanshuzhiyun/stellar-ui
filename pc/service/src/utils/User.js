@@ -45,6 +45,21 @@ class User {
 			}
 		});
 	}
+
+	static logout(token) {
+		return new Promise(async (resolve, reject) => {
+			try {
+				const openid = await User.getOpenidByToken(token);
+				if (openid) {
+					await Redis.del(`token-${token}`);
+					await Redis.del(`openid-${openid}`);
+				}
+				resolve(true);
+			} catch (error) {
+				reject(error);
+			}
+		});
+	}
 }
 
 module.exports = User;

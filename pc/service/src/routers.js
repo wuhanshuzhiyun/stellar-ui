@@ -64,4 +64,25 @@ router.get('/login', async (req, res, next) => {
 	}
 });
 
+router.get('/logout', async (req, res, next) => {
+	try {
+		const { token } = req.query;
+		const result = await User.logout(token);
+		res.send({ code: 0, data: result });
+	} catch (error) {
+		next(error);
+	}
+});
+
+router.get('/wxcode', async (req, res, next) => {
+	try {
+		const { code } = req.query;
+		const openid = await wx.getOpenid(code);
+		const result = await Code.getCodeByOpenid(openid);
+		res.send({ code: 0, data: result });
+	} catch (error) {
+		next(error);
+	}
+});
+
 module.exports = router;

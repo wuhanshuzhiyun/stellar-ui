@@ -64,6 +64,16 @@ class Code {
 			}
 		});
 	}
+
+	/**
+	 * 根据openid获取验证码，30s变一次
+	 */
+	static async getCodeByOpenid(openid) {
+		const time = Math.floor(Date.now() / 30000);
+		const baseStr = md5(`${openid}${time}${openid}`);
+		return baseStr.slice(0, 6).toLocaleUpperCase();
+		
+	}
 }
 
 module.exports = Code;
