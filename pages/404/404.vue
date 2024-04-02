@@ -21,9 +21,16 @@ export default {
 	},
 	methods: {
 		goToHome() {
+			// #ifdef H5
+			uni.redirectTo({
+				url: '/pc/index/index',
+			});
+			// #endif
+			// #ifdef MP
 			uni.redirectTo({
 				url: '/mp/index/index',
 			});
+			// #endif
 		},
 	},
 };

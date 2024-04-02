@@ -27,6 +27,19 @@
 			}
 		},
 		{
+			"path": "pages/gitlab/gitlab",
+			"name": "gitlab",
+			"style": {
+				"navigationStyle": "custom",
+				"mp-alipay": {
+					"transparentTitle": "always",
+					"titlePenetrate": "YES",
+					"allowsBounceVertical": "NO",
+					"navigationBarTitleText": ""
+				}
+			}
+		},
+		{
 			"path": "pc/index/index",
 			"style": {
 				"navigationBarTitleText": "Stellar UI",
