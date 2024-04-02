@@ -4,6 +4,7 @@
 		scroll-y
 		scroll-anchoring
 		scroll-with-animation
+		:scroll-animation-duration="300"
 		:scroll-top="scrollTop"
 		:style="[cmpRootStyle]"
 		@scroll="onScroll"
@@ -17,6 +18,9 @@
 
 <script>
 import utils from '../../utils/utils.js';
+function isNum(num) {
+	return typeof num === 'number' && !isNaN(num);
+}
 export default {
 	group: '导航组件',
 	title: 'ScrollTo 滚动锚点',
@@ -38,44 +42,40 @@ export default {
 	},
 	data() {
 		return {
+			dataActive: 0,
 			children: [],
-			childrenData: [],
-			isActiveChange: false,
-			isScroll: false,
+			childrenTops: [],
+			scrollType: 'init',
 			scrollTop: 0,
 			_scrollTop: 0,
-			_changeTimeout: null,
-			_scrollTimeout: null,
+			_childrenTimeout: null,
 			_activeChangeTimeout: null,
+			_setActiveTimeout: null,
+			_setScrollTopTimeout: null,
+			_scrollTimeout: null,
 		};
 	},
-	mounted() {},
 	watch: {
 		active: {
-			async handler(v) {
-				console.log(v, this.isScroll);
-				if (this.isScroll) return;
-				const childrenData = await this.getChildrenData();
-				const item = childrenData[v];
-				if (!item) return;
-				const next = childrenData[v + 1];
-				const scrollTop = this._scrollTop;
-				console.log('????????????????????', scrollTop, item);
-				if (scrollTop >= item.top) {
-					if (!next) return;
-					if (next.top > scrollTop + 10) return;
-				}
-				this.isActiveChange = true;
-				const animation = Math.abs(this.scrollTop - item.top);
-				clearTimeout(this._activeChangeTimeout);
-				this._activeChangeTimeout = setTimeout(() => {
-					this.isActiveChange = false;
-				}, animation + 100);
-
-				this.scrollTop = item.top;
-				this._scrollTop = item.top;
+			handler(v) {
+				this.dataActive = v;
 			},
 			immediate: true,
+		},
+		dataActive(v) {
+			if (this.scrollType === 'scroll') return;
+			const top = this.childrenTops[v];
+			if (!isNum(top)) return;
+			this.scrollType = 'active';
+			clearTimeout(this._activeChangeTimeout);
+			this._activeChangeTimeout = setTimeout(() => {
+				this.scrollType = 'init';
+			}, 500);
+			this.setScrollTop(v);
+		},
+		childrenTops() {
+			this.scrollType = 'init';
+			this.setScrollTop(this.dataActive);
 		},
 	},
 	computed: {
@@ -87,56 +87,75 @@ export default {
 	methods: {
 		updateChildren({ index, component }) {
 			this.children[index] = component;
+			this.getChildrenTops();
 		},
-		getChildrenData() {
-			return new Promise((resolve, reject) => {
-				if (this.childrenData.length) {
-					resolve(this.childrenData);
-					return;
+		getChildrenTops() {
+			clearTimeout(this._childrenTimeout);
+			this._childrenTimeout = setTimeout(async () => {
+				const view = await utils.querySelector('.ste-scroll-to--root', this);
+				const box = await utils.querySelector('.ste-scroll-to-content', this);
+				let max = box.height - view.height;
+				if (max < 0) max = 0;
+				const childrenTops = [];
+				for (let i = 0; i < this.children.length; i++) {
+					const comp = this.children[i];
+					const child = await utils.querySelector('.ste-scroll-to-item--root', comp);
+					const top = child.top - box.top;
+					childrenTops.push(top > max ? max + 10 : top);
 				}
-				setTimeout(async () => {
-					const box = await utils.querySelector('.ste-scroll-to-content', this);
-					const childrenData = [];
-					for (let i = 0; i < this.children.length; i++) {
-						const comp = this.children[i];
-						const child = await utils.querySelector('.ste-scroll-to-item--root', comp);
-						child.top -= box.top;
-						childrenData.push(child);
-					}
-					this.childrenData = childrenData;
-					resolve(childrenData);
-				});
-			});
+				this.childrenTops = childrenTops;
+			}, 500);
 		},
-		onScroll({ detail: { scrollTop } }) {
-			this._scrollTop = scrollTop;
-			console.log(this.isActiveChange, scrollTop);
-			if (this.isActiveChange) return;
-			this.isScroll = true;
-			clearTimeout(this._changeTimeout);
-			this._changeTimeout = setTimeout(async () => {
-				const childrenData = await this.getChildrenData();
-				for (let i = 0; i < childrenData.length; i++) {
-					const item = childrenData[i];
-					const next = childrenData[i + 1];
-					if (!next || (scrollTop >= item.top && next.top > scrollTop)) {
-						if (this.active === i) break;
+		setScrollTop(index) {
+			console.log('setScrollTop');
+			clearTimeout(this._setScrollTopTimeout);
+			this._setScrollTopTimeout = setTimeout(() => {
+				const childrenTops = this.childrenTops;
+				const top = childrenTops[index];
+				if (!isNum(top)) return;
+				const scrollTop = this._scrollTop;
+				if (scrollTop >= top) {
+					const next = childrenTops[index + 1];
+					if (!isNum(next)) return;
+					if (next > scrollTop + 10) return;
+				}
+				this.scrollTop = top;
+				this._scrollTop = top;
+			}, 50);
+		},
+		setActive(scrollTop) {
+			console.log('setActive', scrollTop);
+			clearTimeout(this._setActiveTimeout);
+			this._setActiveTimeout = setTimeout(() => {
+				const childrenTops = this.childrenTops;
+				for (let i = 0; i < childrenTops.length; i++) {
+					const top = childrenTops[i];
+					if (!isNum(top)) continue;
+					const next = childrenTops[i + 1];
+					if (!isNum(next) || next === top || (scrollTop >= top && next > scrollTop)) {
+						if (this.dataActive === i) return;
 						this.$emit('change', i);
 						this.$emit('update:active', i);
-						break;
+						return;
 					}
 				}
-				clearTimeout(this._scrollTimeout);
-				this._scrollTimeout = setTimeout(() => {
-					this.isScroll = false;
-				}, 80);
 			}, 25);
 		},
-		onScrolltolower() {
+		onScroll(e) {
+			if (this.scrollType === 'active') return;
+			this.scrollType = 'scroll';
+			clearTimeout(this._scrollTimeout);
+			this._scrollTimeout = setTimeout(() => {
+				this.scrollType = 'init';
+			}, 300);
+			const { scrollTop } = e.detail;
+			this._scrollTop = scrollTop;
+			this.setActive(scrollTop);
+		},
+		onScrolltolower(e) {
 			setTimeout(() => {
-				this.isActiveChange = false;
-				this.isScroll = false;
-			}, 1000);
+				this.scrollType = 'init';
+			}, 500);
 		},
 	},
 };

@@ -5,7 +5,7 @@
 			<view class="demo-item">
 				<view class="title">基础用法</view>
 				<view class="item-block">
-					<ste-tabs :active.sync="active">
+					<ste-tabs :active.sync="active" sticky>
 						<ste-tab v-for="(m, i) in imgs" :key="i" :title="`标签${i + 1}`" />
 					</ste-tabs>
 					<ste-scroll-to height="1200" :active.sync="active">

@@ -6,8 +6,8 @@ export default {
 		wx.login().then((res) => {
 			uni.request({
 				url: `${config.BASE_URL}/api/openid?code=${res.code}`,
-				success: (res) => {
-					console.log(res);
+				success: ({ data }) => {
+					console.log('openid', data.data);
 				},
 			});
 		});

@@ -1,7 +1,7 @@
 <template>
-	<scroll-view class="ste-scroll-to-item--root" @resize="getData">
+	<view class="ste-scroll-to-item--root" @resize="getData">
 		<slot />
-	</scroll-view>
+	</view>
 </template>
 
 <script>
