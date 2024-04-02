@@ -8,11 +8,26 @@ class User {
 			try {
 				const openid = await wx.getOpenid(code);
 				if (!openid) {
-          reject("getopenid error")
+					reject('getopenid error');
 					return;
 				}
-				const token = Utils.generateToken();
-				await Redis.set(`token-${token}`, openid, 'EX', 60 * 60 * 24 * 7);
+				let token = await User.getTokenByOpenid(openid);
+				if (!token) {
+					token = Utils.generateToken();
+				}
+				await Redis.set(`token-${token}`, openid, 'EX', 60 * 60 * 24);
+				await Redis.set(`openid-${openid}`, token, 'EX', 60 * 60 * 24);
+				resolve(token);
+			} catch (error) {
+				reject(error);
+			}
+		});
+	}
+
+	static getTokenByOpenid(openid) {
+		return new Promise(async (resolve, reject) => {
+			try {
+				const token = await Redis.get(`openid-${openid}`);
 				resolve(token);
 			} catch (error) {
 				reject(error);

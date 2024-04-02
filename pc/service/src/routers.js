@@ -56,16 +56,9 @@ router.get('/islogin', async (req, res, next) => {
 
 router.get('/login', async (req, res, next) => {
 	try {
-		const { code, token } = req.query;
-		if (token) {
-			const openidU = await User.getOpenidByToken(token);
-			if (openidU) {
-				res.send({ code: 0, data: token });
-				return;
-			}
-		}
-		const newToken = await User.login(code);
-		res.send({ code: 0, data: newToken });
+		const { code } = req.query;
+		const token = await User.login(code);
+		res.send({ code: 0, data: token });
 	} catch (error) {
 		next(error);
 	}
