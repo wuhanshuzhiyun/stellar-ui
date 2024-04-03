@@ -1,18 +1,12 @@
+const path = require('path');
+const fs = require('fs');
 const express = require('express');
 const router = express.Router();
 const Data = require('./utils/Data.js');
 const Code = require('./utils/Code.js');
 const wx = require('./utils/WeiXin.js');
 const User = require('./utils/User.js');
-
-router.get('/code', async (req, res, next) => {
-	try {
-		const result = await Code.getCode();
-		res.send({ code: 0, data: result });
-	} catch (error) {
-		next(error);
-	}
-});
+const Utils = require('./utils/Utils.js');
 
 router.get('/list', async (req, res, next) => {
 	const { name } = req.query;
@@ -27,17 +21,13 @@ router.get('/list', async (req, res, next) => {
 router.post('/create', async (req, res, next) => {
 	const { name, content, user, code, uuid } = req.body;
 	try {
-		const bool = await Code.checkCode(uuid, code);
-		if (!bool) {
-			res.send({ code: 400, message: '验证码错误' });
-			return;
-		}
-		const result = await wx.checkout(`${content} ${user}`);
+		const openid = await Code.checkCode(uuid, code);
+		const result = await wx.checkout(`${content} ${user}`, openid);
 		if (result.bool) {
 			next({ code: 401, message: result.message });
 			return;
 		}
-		const data = await Data.setData(name, { content, user });
+		const data = await Data.setData(name, { content, user, openid });
 		res.send({ code: 0, data });
 	} catch (error) {
 		next(error);
@@ -76,9 +66,33 @@ router.get('/logout', async (req, res, next) => {
 
 router.get('/wxcode', async (req, res, next) => {
 	try {
-		const { code } = req.query;
+		const { uuid } = req.query;
+		const filePath = path.join(process.cwd(), `/static/${uuid}.png`);
+		if (fs.existsSync(filePath)) {
+			res.sendFile(filePath);
+			return;
+		}
+		const result = await wx.getWxacodeunlimit('pages/code/code', uuid, {
+			env_version: 'trial',
+			check_path: false,
+			width: 280,
+		});
+		fs.writeFileSync(filePath, result);
+		res.sendFile(filePath);
+	} catch (error) {
+		next(error);
+	}
+});
+
+router.get('/getwxcode', async (req, res, next) => {
+	try {
+		const { code, uuid } = req.query;
+		if (!code || !uuid) {
+			return res.send({ code: 400, msg: '非法调用！' });
+		}
 		const openid = await wx.getOpenid(code);
-		const result = await Code.getCodeByOpenid(openid);
+		if (!openid) return res.send({ code: 400, msg: '非法调用！' });
+		const result = await Code.createCode(uuid, openid);
 		res.send({ code: 0, data: result });
 	} catch (error) {
 		next(error);

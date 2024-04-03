@@ -1,31 +1,42 @@
-const captcha = require('svg-captcha');
 const md5 = require('js-md5');
 const Redis = require('./Redis');
 
-function _createUUID() {
-	return md5(Math.random().toString(36) + Date.now().toString(36));
-}
-
 class Code {
 	/**
-	 * 获取图形验证码
-	 * @returns {Promise<{data:string;uuid:string}>}
+	 * 生成验证码
+	 * @param {String} uuid
+	 * @param {String} openid
+	 * @returns {Promise<{code:string;openid:string}>}
 	 */
-	static getCode() {
+	static createCode(uuid, openid) {
 		return new Promise(async (resolve, reject) => {
-			const option = {
-				size: 4,
-				ignoreChars: '0oO1ilI2z',
-				noise: 2,
-				width: 100,
-				height: 32,
-				fontSize: 26,
-			};
 			try {
-				const uuid = _createUUID();
-				const svg = captcha.create(option);
-				await Redis.set(`code-${uuid}`, JSON.stringify({ code: svg.text }), 'EX', 600);
-				resolve({ data: svg.data, uuid });
+				let code = '';
+				for (let i = 0; i < 6; i++) {
+					code += Math.floor(Math.random() * 32).toString(32);
+				}
+				code = code.toLocaleUpperCase();
+				await Redis.set(`code-${uuid}`, JSON.stringify({ code, openid }), 'EX', 300);
+				resolve(code);
+			} catch (error) {
+				reject(error);
+			}
+		});
+	}
+	/**
+	 * 获取验证码
+	 * @param {String} uuid
+	 * @returns {Promise<{code:string;openid:string}>}
+	 */
+	static getCode(uuid) {
+		return new Promise(async (resolve, reject) => {
+			try {
+				const data = await Redis.get(`code-${uuid}`);
+				if (!data) {
+					reject({ code: 400, message: '验证码不存在' });
+					return;
+				}
+				resolve(JSON.parse(data));
 			} catch (error) {
 				reject(error);
 			}
@@ -33,46 +44,26 @@ class Code {
 	}
 
 	/**
-	 * 校验图形验证码
-	 * @param {string} uuid // 同code一起生成的UUID
-	 * @param {string} code
-	 * @returns {Promise<boolean>}
+	 * 校验验证码
 	 */
 	static checkCode(uuid, code) {
 		return new Promise(async (resolve, reject) => {
-			if (!uuid) {
-				reject({ code: 400, message: 'uuid不能为空' });
-				return;
-			}
-			if (!code) {
-				reject({ code: 400, message: '验证码不能为空' });
-				return;
-			}
 			try {
-				let bool = false;
-				let data = await Redis.get(`code-${uuid}`);
-				if (!data) {
-					reject({ code: 400, message: '验证码已过期' });
+				if (!uuid || !code) {
+					reject({ code: 400, message: '验证码不存在' });
 					return;
 				}
-				data = JSON.parse(data);
-				bool = code && data.code.toLowerCase() === code.toLowerCase();
+				const data = await Code.getCode(uuid);
+				if (!data || data.code !== code.toLocaleUpperCase()) {
+					reject({ code: 400, message: '验证码不正确' });
+					return;
+				}
 				await Redis.del(`code-${uuid}`);
-				resolve(bool);
+				resolve(data.openid);
 			} catch (error) {
 				reject(error);
 			}
 		});
-	}
-
-	/**
-	 * 根据openid获取验证码，30s变一次
-	 */
-	static async getCodeByOpenid(openid) {
-		const time = Math.floor(Date.now() / 30000);
-		const baseStr = md5(`${openid}${time}${openid}`);
-		return baseStr.slice(0, 6).toLocaleUpperCase();
-		
 	}
 }
 

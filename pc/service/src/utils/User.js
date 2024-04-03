@@ -13,7 +13,7 @@ class User {
 				}
 				let token = await User.getTokenByOpenid(openid);
 				if (!token) {
-					token = Utils.generateToken();
+					token = Utils.generateUUID();
 				}
 				await Redis.set(`token-${token}`, openid, 'EX', 60 * 60 * 24);
 				await Redis.set(`openid-${openid}`, token, 'EX', 60 * 60 * 24);

@@ -34,15 +34,23 @@
 					maxlength="300"
 				/>
 				<view class="button-box">
-					<view class="code-img" v-html="codeSvg" @click="getCode"></view>
+					<view class="code-message">
+						查看验证码
+						<view class="code-img">
+							<view class="img-box">
+								<img :src="cmpImage" />
+							</view>
+							<view class="code-uuid">UUID:{{ commentParams.uuid }}</view>
+						</view>
+					</view>
 					<input
 						class="code-input"
 						placeholder="验证码"
 						v-model="commentParams.code"
-						maxlength="4"
+						maxlength="6"
 						style="width: 120px"
 					/>
-					<ste-button type="primary" @click="setComment">提交</ste-button>
+					<button type="primary" style="width: 120px; height: 32px; line-height: 32px" @click="setComment">提交</button>
 				</view>
 				<view class="comment-list" v-show="commentList.length">
 					<view class="comment-item" v-for="item in commentList" :key="item.id">
@@ -58,7 +66,7 @@
 			</view>
 		</view>
 		<view class="pc-view">
-			<iframe class="view-iframe" :src="cmdIframeUrl" frameborder="0" />
+			<iframe class="view-iframe" :src="cmpIframeUrl" frameborder="0" />
 		</view>
 	</view>
 </template>
@@ -67,6 +75,7 @@
 import { mdMap, vueMap, datas } from '../markdown/index.js';
 import md2html from './md2html.js';
 import config from '@/common/config.js';
+import request from '@/common/request.js';
 import './mdStyle.scss';
 
 let timeout = 0;
@@ -81,7 +90,6 @@ export default {
 			commentList: [],
 			isComponent: false,
 			loadingMd: false,
-			codeSvg: '',
 			commentParams: {
 				uuid: '',
 				code: '',
@@ -92,8 +100,12 @@ export default {
 		};
 	},
 	computed: {
-		cmdIframeUrl() {
+		cmpIframeUrl() {
 			return `${this.iframeUrl}?t=${Date.now()}`;
+		},
+		cmpImage() {
+			if (!this.commentParams.uuid) return '';
+			return `${config.BASE_URL}/api/wxcode?uuid=${this.commentParams.uuid}`;
 		},
 	},
 	watch: {
@@ -133,9 +145,20 @@ export default {
 		}
 	},
 	onShow() {
-		this.getCode();
+		const uuid = this.initUUID();
+		this.commentParams.uuid = uuid;
 	},
 	methods: {
+		initUUID() {
+			let uuid = uni.getStorageSync('uuid');
+			if (uuid) return uuid;
+			uuid = Date.now().toString(32);
+			for (let i = 0; i < 10; i++) {
+				uuid += Math.floor(Math.random() * 32).toString(32);
+			}
+			uni.setStorageSync('uuid', uuid);
+			return uuid;
+		},
 		viewContent(url) {
 			this.content = '';
 			this.loadingMd = false;
@@ -188,16 +211,6 @@ export default {
 			}
 			// #endif
 		},
-		getCode() {
-			uni.request({
-				url: `${config.BASE_URL}/api/code?t=${Date.now()}`,
-				success: ({ data }) => {
-					const reult = data.data;
-					this.codeSvg = reult.data;
-					this.commentParams.uuid = reult.uuid;
-				},
-			});
-		},
 		getComment(name) {
 			uni.request({
 				url: `${config.BASE_URL}/api/list?name=${name}`,
@@ -208,7 +221,6 @@ export default {
 						this.commentParams.user = '';
 						this.commentParams.code = '';
 						this.isComment = true;
-						this.getCode();
 					}
 				},
 			});
@@ -238,7 +250,6 @@ export default {
 					} else {
 						uni.showToast({ title: data.message, icon: 'none' });
 					}
-					this.getCode();
 				},
 			});
 		},
@@ -339,13 +350,46 @@ export default {
 				align-items: center;
 				justify-content: flex-end;
 
-				.code-img {
+				.code-message {
 					height: 32px;
 					border-radius: 4px;
-					overflow: hidden;
-					background-color: #eee;
 					display: flex;
 					align-items: center;
+					font-size: 12px;
+					color: #1989fa;
+					cursor: pointer;
+					position: relative;
+
+					.code-img {
+						// 阴影
+						box-shadow: 0 0 10px #ddd;
+						display: none;
+						position: absolute;
+						z-index: 10;
+						left: 0;
+						bottom: 32px;
+						width: 200px;
+						height: 200px;
+						background: #fff;
+						text-align: center;
+						border-radius: 4px;
+						padding: 15px 30px 0 30px;
+
+						.img-box {
+							width: 100%;
+							img {
+								width: 100%;
+							}
+						}
+						.code-uuid {
+							margin-top: 5px;
+						}
+					}
+					&:hover {
+						.code-img {
+							display: block;
+						}
+					}
 				}
 				.code-input {
 					border: 1px solid #ddd;

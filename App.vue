@@ -4,7 +4,7 @@ export default {
 	onLaunch: async function () {
 		// #ifdef MP-WEIXIN
 		const { code } = await wx.login();
-		token = await request(`/api/login?code=${code}`);
+		const token = await request(`/api/login?code=${code}`);
 		uni.setStorageSync('token', token);
 		// #endif
 	},

@@ -22,9 +22,12 @@ function findFile(name) {
 
 async function initFiles() {
 	try {
-		const p = path.join(process.cwd(), './datas');
-		await fs.promises.mkdir(p, { recursive: true });
+		const d = path.join(process.cwd(), '/datas');
+		await fs.promises.mkdir(d, { recursive: true });
 		console.log('datas目录已创建');
+		const s = path.join(process.cwd(), '/static');
+		await fs.promises.mkdir(s, { recursive: true });
+		console.log('static目录已创建');
 	} catch (err) {
 		console.error('创建目录失败:', err);
 	}
@@ -55,13 +58,13 @@ class Data {
 		});
 	}
 
-	static setData(name, { content, user }) {
+	static setData(name, { content, user, openid }) {
 		return new Promise(async (resolve, reject) => {
 			try {
 				if (!content || content.indexOf(interval) >= 0) return reject('缺失内容');
 				const data = `${dayjs().format('YYYY-MM-DD HH:mm:ss')}${interval}${content}${interval}${
 					user || '未知用户'
-				}\n`;
+				}${interval}${openid}\n`;
 				const fp = filePath(name);
 				const bool = await findFile(name);
 				if (bool) {
