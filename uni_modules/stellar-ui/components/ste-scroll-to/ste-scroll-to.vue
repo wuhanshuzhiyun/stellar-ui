@@ -48,11 +48,10 @@ export default {
 			scrollType: 'init',
 			scrollTop: 0,
 			_scrollTop: 0,
+			_scrollTypeTimeout: null,
 			_childrenTimeout: null,
-			_activeChangeTimeout: null,
 			_setActiveTimeout: null,
 			_setScrollTopTimeout: null,
-			_scrollTimeout: null,
 		};
 	},
 	watch: {
@@ -66,16 +65,12 @@ export default {
 			if (this.scrollType === 'scroll') return;
 			const top = this.childrenTops[v];
 			if (!isNum(top)) return;
-			this.scrollType = 'active';
-			clearTimeout(this._activeChangeTimeout);
-			this._activeChangeTimeout = setTimeout(() => {
-				this.scrollType = 'init';
-			}, 500);
-			this.setScrollTop(v);
+			this.setScrollType('active');
+			this.setScrollTopByIndex(v);
 		},
 		childrenTops() {
 			this.scrollType = 'init';
-			this.setScrollTop(this.dataActive);
+			this.setScrollTopByIndex(this.dataActive);
 		},
 	},
 	computed: {
@@ -106,8 +101,15 @@ export default {
 				this.childrenTops = childrenTops;
 			}, 500);
 		},
-		setScrollTop(index) {
-			console.log('setScrollTop');
+		setScrollType(type) {
+			this.scrollType = type;
+			clearTimeout(this._scrollTypeTimeout);
+			this._scrollTypeTimeout = setTimeout(() => {
+				this.scrollType = 'init';
+			}, 500);
+		},
+		setScrollTopByIndex(index) {
+			console.log('setScrollTopByIndex:', index);
 			clearTimeout(this._setScrollTopTimeout);
 			this._setScrollTopTimeout = setTimeout(() => {
 				const childrenTops = this.childrenTops;
@@ -123,8 +125,8 @@ export default {
 				this._scrollTop = top;
 			}, 50);
 		},
-		setActive(scrollTop) {
-			console.log('setActive', scrollTop);
+		setActiveByTop(scrollTop) {
+			console.log('setActiveByTop:', scrollTop);
 			clearTimeout(this._setActiveTimeout);
 			this._setActiveTimeout = setTimeout(() => {
 				const childrenTops = this.childrenTops;
@@ -143,20 +145,12 @@ export default {
 		},
 		onScroll(e) {
 			if (this.scrollType === 'active') return;
-			this.scrollType = 'scroll';
-			clearTimeout(this._scrollTimeout);
-			this._scrollTimeout = setTimeout(() => {
-				this.scrollType = 'init';
-			}, 300);
+			this.setScrollType('scroll');
 			const { scrollTop } = e.detail;
 			this._scrollTop = scrollTop;
-			this.setActive(scrollTop);
+			this.setActiveByTop(scrollTop);
 		},
-		onScrolltolower(e) {
-			setTimeout(() => {
-				this.scrollType = 'init';
-			}, 500);
-		},
+		onScrolltolower(e) {},
 	},
 };
 </script>
