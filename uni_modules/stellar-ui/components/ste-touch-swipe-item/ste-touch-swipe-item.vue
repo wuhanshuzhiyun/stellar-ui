@@ -20,9 +20,24 @@ export default {
 			default: () => false,
 		},
 	},
+	data() {
+		return {
+			parent: {},
+		};
+	},
+	created() {
+		this.parent = this._flickPanel.getParent();
+	},
 	mounted() {
-		const parent = this._flickPanel?.getParent();
-		parent?.updateChildren();
+		this.parent.updateChildren();
+	},
+	updated() {
+		this.parent.updateChildren();
+	},
+	beforeDestroy() {
+		this.$nextTick(() => {
+			this.parent.updateChildren();
+		});
 	},
 };
 </script>
