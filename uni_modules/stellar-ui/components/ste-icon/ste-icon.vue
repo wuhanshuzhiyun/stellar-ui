@@ -21,7 +21,7 @@ import utils from '../../utils/utils.js';
  * @property {Number|String} marginRight 右外边距，单位rpx，默认0
  * @property {Number|String} marginTop 上外边距，单位rpx，默认0
  * @property {Number|String} marginBottom 下外边距，单位rpx，默认0
- * @property {String} fontFamily 字体名 默认''
+ * @property {String} fontFam ily 字体名 默认''
  * @property {Boolean} inlineBlock 容器对齐方式  默认true
  * @event {Function} click 图标点击回调事件
  */
