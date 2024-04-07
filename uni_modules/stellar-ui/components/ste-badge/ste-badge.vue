@@ -7,7 +7,11 @@
 			v-if="showDot || cmpShowContent || $slots.content"
 		>
 			<view v-if="showDot" class="dot-box" />
-			<view v-else class="content-box" :class="{ 'no-padding': $slots.content }">
+			<view
+				v-else
+				class="content-box"
+				:class="{ 'no-padding': $slots.content || (content && content.length == 1) }"
+			>
 				<slot name="content">
 					<text class="ste-badge--content-text">{{ cmpContent }}</text>
 				</slot>
@@ -168,15 +172,16 @@ export default {
 			font-size: 22rpx;
 			color: #ffffff;
 			line-height: 26rpx;
-
+			vertical-align: middle;
 			position: relative;
 			// #ifdef  H5
 			top: -0.5rpx;
 			// #endif
 			// #ifdef  MP-WEIXIN
-			top: -0.5rpx;
+			// top: -0.5rpx;
 			// #endif
 			// #ifdef  MP-ALIPAY
+			// top: 0.5rpx;
 			// #endif
 		}
 	}
