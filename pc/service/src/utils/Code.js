@@ -16,7 +16,7 @@ class Code {
 					code += Math.floor(Math.random() * 32).toString(32);
 				}
 				code = code.toLocaleUpperCase();
-				await Redis.set(`code-${uuid}`, JSON.stringify({ code, openid }), 'EX', 300);
+				await Redis.set(`code-${uuid}`, JSON.stringify({ code, openid }));
 				resolve(code);
 			} catch (error) {
 				reject(error);

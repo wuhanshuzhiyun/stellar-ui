@@ -5,6 +5,7 @@
 		<view class="uuid-text">UUID:{{ uuid }}</view>
 		<view class="code-title">验证码</view>
 		<view class="code-text">{{ code }}</view>
+		<view class="code-message">验证码只能使用一次</view>
 		<view style="margin-top: 12rpx">
 			<ste-button mode="300" @click="getCode(uuid)" :loading="loading">刷新验证码</ste-button>
 		</view>
@@ -13,6 +14,7 @@
 </template>
 
 <script>
+import Color from '../../uni_modules/stellar-ui/utils/Color';
 import request from '@/common/request.js';
 export default {
 	data() {
@@ -80,6 +82,11 @@ export default {
 		border-radius: 12rpx;
 		margin-top: 12rpx;
 		min-width: 450rpx;
+	}
+	.code-message {
+		color: #f00;
+		line-height: 40rpx;
+		font-size: 24rpx;
 	}
 }
 </style>

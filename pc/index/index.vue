@@ -31,7 +31,7 @@
 					v-model="commentParams.content"
 					rows="10"
 					placeholder="反馈意见"
-					maxlength="300"
+					maxlength="500"
 				/>
 				<view class="button-box">
 					<view class="code-message">
