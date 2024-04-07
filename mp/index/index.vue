@@ -119,21 +119,21 @@
 		<view class="group-title">导航组件</view>
 		<view class="com-box" @click="nav('tabs')">
 			<view class="com-title">
-				<image src="https://cdn.uviewui.com/uview/example/tabs.png" style="width: 36rpx; height: 36rpx" />
+				<image :src="joinSrc('img/tabs.png')" style="width: 36rpx; height: 36rpx" />
 				<text>Tabs 标签页</text>
 			</view>
 			<view class="com-arrow"><image :src="joinSrc('img/r-arrow.png')" /></view>
 		</view>
 		<view class="com-box" @click="nav('touch-swipe')">
 			<view class="com-title">
-				<image src="https://cdn.uviewui.com/uview/example/countTo.png" style="width: 36rpx; height: 36rpx" />
+				<image :src="joinSrc('img/countTo.png')" style="width: 36rpx; height: 36rpx" />
 				<text>TouchSwipe 手势切屏</text>
 			</view>
 			<view class="com-arrow"><image :src="joinSrc('img/r-arrow.png')" /></view>
 		</view>
 		<view class="com-box" @click="nav('scroll-to')">
 			<view class="com-title">
-				<image src="https://cdn.uviewui.com/uview/example/tabbar.png" style="width: 36rpx; height: 36rpx" />
+				<image :src="joinSrc('img/tabbar.png')" style="width: 36rpx; height: 36rpx" />
 				<text>ScrollTo 滚动锚点</text>
 			</view>
 			<view class="com-arrow"><image :src="joinSrc('img/r-arrow.png')" /></view>
