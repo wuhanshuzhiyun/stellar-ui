@@ -34,9 +34,7 @@ export default {
 		}
 		this.getCode(this.uuid);
 	},
-	mounted() {
-		this.getUserInfo();
-	},
+	mounted() {},
 	methods: {
 		getCode(uuid) {
 			if (!this.uuid) return;
@@ -52,17 +50,6 @@ export default {
 					//TODO handle the exception
 					this.loading = false;
 				}
-			});
-			// #endif
-		},
-		getUserInfo() {
-			// #ifdef MP-WEIXIN
-			console.log(":!!!!!!!!")
-			wx.getUserProfile({
-				desc: '用于完善会员资料', // 声明获取用户个人信息后的用途，后续会展示在弹窗中，请谨慎填写
-				success: (res) => {
-					console.log('????????????????');
-				},
 			});
 			// #endif
 		},
