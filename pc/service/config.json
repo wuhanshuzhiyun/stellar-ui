@@ -10,6 +10,7 @@
 	},
 	"wx": {
 		"appid": "wx0b4f889a073433c6",
-		"secret": "ab66676195fde1a047915e3b18960185"
+		"secret": "ab66676195fde1a047915e3b18960185",
+		"env_version": "trial"
 	}
 }

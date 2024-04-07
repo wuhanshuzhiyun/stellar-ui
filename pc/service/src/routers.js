@@ -6,7 +6,6 @@ const Data = require('./utils/Data.js');
 const Code = require('./utils/Code.js');
 const wx = require('./utils/WeiXin.js');
 const User = require('./utils/User.js');
-const Utils = require('./utils/Utils.js');
 
 router.get('/list', async (req, res, next) => {
 	const { name } = req.query;
@@ -73,7 +72,6 @@ router.get('/wxcode', async (req, res, next) => {
 			return;
 		}
 		const result = await wx.getWxacodeunlimit('pages/code/code', uuid, {
-			env_version: 'trial',
 			check_path: false,
 			width: 280,
 		});
