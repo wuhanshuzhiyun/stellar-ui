@@ -21,6 +21,15 @@ import utils from '../../utils/utils.js';
 function isNum(num) {
 	return typeof num === 'number' && !isNaN(num);
 }
+
+/**
+ * ste-scroll-to 滚动锚点
+ * @description 滚动锚点
+ * @tutorial https://stellar-ui.intecloud.com.cn/pc/index/index?name=ste-scroll-to
+ * @property {Number}					active 当前激活的锚点index，支持sync双向绑定，默认值0
+ * @property {String|Number}	height 高度，默认值100%
+ * @event {Function}					change 滚动锚点时触发
+ */
 export default {
 	group: '导航组件',
 	title: 'ScrollTo 滚动锚点',
