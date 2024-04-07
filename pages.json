@@ -39,6 +39,7 @@
 				}
 			}
 		},
+		// #ifdef MP-WEIXIN
 		{
 			"path": "pages/code/code",
 			"name": "code",
@@ -52,6 +53,7 @@
 				}
 			}
 		},
+		// #endif
 		{
 			"path": "pc/index/index",
 			"style": {
