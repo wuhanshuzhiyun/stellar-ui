@@ -1,5 +1,7 @@
 <template>
-	<view class="ste-switch--root"></view>
+	<view class="ste-switch--root" :style="[cmpStyle]">
+		<view class="switch-node" :style="[cmpNodeStyle]"></view>
+	</view>
 </template>
 
 <script>
@@ -37,15 +39,15 @@ export default {
 			default: false,
 		},
 		size: {
-			ttype: [String, Number],
+			type: [String, Number],
 			default: 78,
 		},
 		activeColor: {
-			ttype: String,
+			type: String,
 			default: '#0090FF',
 		},
 		inactiveColor: {
-			ttype: String,
+			type: String,
 			default: '#bbbbbb',
 		},
 		loading: {
@@ -62,21 +64,23 @@ export default {
 		return {};
 	},
 	computed: {
-		cmpListStyle() {
+		cmpStyle() {
 			let style = {};
-			style['columnGap'] = this.gutter + 'rpx';
+			style['width'] = this.size * 2 + 4 + 'rpx';
+			style['height'] = this.size + 4 + 'rpx';
+			style['borderRadius'] = this.size + 'rpx';
+			style['background'] = this.value ? this.activeColor : this.inactiveColor;
+			style['opacity'] = this.disabled || this.readonly ? '0.6' : '1';
 			// #ifdef H5
-			if (this.disabled || this.readonly) {
-				style['cursor'] = 'not-allowed';
-			} else {
-				style['cursor'] = 'pointer';
-			}
+			style['opacity'] = this.disabled || this.readonly ? 'not-allowed' : 'pointer';
 			// #endif
 			return style;
 		},
-		cmpCount() {
-			// 兼容浏览器和微信 对数字循环的处理不同
-			return Array.from({ length: this.count }, (_, index) => index);
+		cmpNodeStyle() {
+			let style = {};
+			style['width'] = this.size + 'rpx';
+			style['height'] = this.size + 'rpx';
+			return style;
 		},
 	},
 	methods: {
@@ -91,22 +95,20 @@ export default {
 				}
 			}
 		},
-		getWidth(index) {
-			let value = (index + 1) * this.score;
-			let diff = this.value - value;
-			if (diff >= 0) {
-				return '100%';
-			} else if (Math.abs(diff) > 0 && Math.abs(diff) < this.score) {
-				return (1 - Math.abs(diff) / this.score).toFixed(2) * 100 + '%';
-			} else {
-				return 0;
-			}
-		},
 	},
 };
 </script>
 
 <style lang="scss" scoped>
 .ste-switch--root {
+	display: inline-flex;
+	align-items: center;
+
+	.switch-node {
+		margin-left: 4rpx;
+		border-radius: 50%;
+		background: #ffffff;
+		box-shadow: 9rpx 6rpx 18rpx 3rpx rgba(0, 0, 0, 0.12);
+	}
 }
 </style>

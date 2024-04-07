@@ -30,9 +30,17 @@ export default {
 		this.parent = this._scrollToComponent?.getParent();
 		this.getData();
 	},
+	updated() {
+		this.getData();
+	},
+	beforeDestroy() {
+		this.$nextTick(() => {
+			this.getData();
+		});
+	},
 	methods: {
 		getData() {
-			if (!this.parent || this.index === undefined) return;
+			if (!this.parent) return;
 			if (this.index === undefined) {
 				console.error('ste-scroll-to-item组件的index值不能为空！');
 				return;

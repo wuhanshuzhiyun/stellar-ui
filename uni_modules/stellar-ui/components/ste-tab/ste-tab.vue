@@ -72,9 +72,19 @@ export default {
 			parent: {},
 		};
 	},
-	mounted() {
+	created() {
 		this.parent = this._tabsComponent.getParent();
+	},
+	mounted() {
 		this.parent.updateTabs();
+	},
+	updated() {
+		this.parent.updateTabs();
+	},
+	beforeDestroy() {
+		this.$nextTick(() => {
+			this.parent.updateTabs();
+		});
 	},
 };
 </script>

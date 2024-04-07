@@ -50,7 +50,9 @@
 						maxlength="6"
 						style="width: 120px"
 					/>
-					<button type="primary" style="width: 120px; height: 32px; line-height: 32px" @click="setComment">提交</button>
+					<button type="primary" style="width: 120px; height: 32px; line-height: 32px" @click="setComment">
+						提交
+					</button>
 				</view>
 				<view class="comment-list" v-show="commentList.length">
 					<view class="comment-item" v-for="item in commentList" :key="item.id">
