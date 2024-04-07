@@ -1,11 +1,12 @@
 <template>
-	<view class="ste-switch--root" :style="[cmpStyle]">
-		<view class="switch-node" :style="[cmpNodeStyle]"></view>
+	<view class="ste-switch--root" :style="[cmpStyle]" @click="click">
+		<view class="switch-node" :style="[cmpNodeStyle]">
+			<view v-if="loading" class="switch-loading" :style="[cmpLoadingStyle]"></view>
+		</view>
 	</view>
 </template>
 
 <script>
-import utils from '../../utils/utils.js';
 /**
  * ste-switch 开关
  * @description 开关组件,表示两种相互对立的状态间的切换，多用于触发「开/关」。
@@ -61,18 +62,21 @@ export default {
 		event: 'input',
 	},
 	data() {
-		return {};
+		return {
+			clickTask: null, // click完成任务和allowStopStatus搭配使用
+			allowStopStatus: false, // 允许阻止后续的事件触发
+		};
 	},
 	computed: {
 		cmpStyle() {
 			let style = {};
-			style['width'] = this.size * 2 + 4 + 'rpx';
-			style['height'] = this.size + 4 + 'rpx';
+			style['width'] = Number(this.size) * 2 + 4 + 'rpx';
+			style['height'] = Number(this.size) + 4 + 'rpx';
 			style['borderRadius'] = this.size + 'rpx';
 			style['background'] = this.value ? this.activeColor : this.inactiveColor;
-			style['opacity'] = this.disabled || this.readonly ? '0.6' : '1';
+			style['opacity'] = this.disabled ? '0.6' : '1';
 			// #ifdef H5
-			style['opacity'] = this.disabled || this.readonly ? 'not-allowed' : 'pointer';
+			style['cursor'] = this.disabled || this.readonly ? 'not-allowed' : 'pointer';
 			// #endif
 			return style;
 		},
@@ -80,20 +84,34 @@ export default {
 			let style = {};
 			style['width'] = this.size + 'rpx';
 			style['height'] = this.size + 'rpx';
+			if (this.value) {
+				style['transform'] = `translatex(${Number(this.size) - 4}rpx)`;
+			}
+			return style;
+		},
+		cmpLoadingStyle() {
+			let style = {};
+			style['borderColor'] = '#eeeeee '.repeat(3) + (this.value ? this.activeColor : this.inactiveColor);
 			return style;
 		},
 	},
 	methods: {
-		onSelect(index) {
-			if (!this.disabled && !this.readonly) {
-				let value = (index + 1) * this.score;
-				if (this.value != value) {
-					// 更新 model
-					this.$emit('input', value);
-					// change回调
-					this.$emit('change', value);
+		async click() {
+			if (!this.disabled && !this.readonly && !this.loading) {
+				this.allowStopStatus = false;
+				this.clickTask = new Promise((resolve) => {
+					this.$emit('click', this.value, this.allowStop, resolve);
+				});
+				if (this.allowStopStatus) {
+					await this.clickTask;
 				}
+				this.$emit('input', !this.value);
+				this.$emit('change', !this.value);
 			}
+		},
+		// 允许阻止后续操作
+		allowStop() {
+			this.allowStopStatus = true;
 		},
 	},
 };
@@ -103,12 +121,33 @@ export default {
 .ste-switch--root {
 	display: inline-flex;
 	align-items: center;
-
+	transition: background-color 0.3s;
 	.switch-node {
 		margin-left: 4rpx;
 		border-radius: 50%;
 		background: #ffffff;
 		box-shadow: 9rpx 6rpx 18rpx 3rpx rgba(0, 0, 0, 0.12);
+		transition: transform 0.3s cubic-bezier(0.3, 1.05, 0.4, 1.05);
+		cursor: inherit;
+		display: inline-flex;
+		justify-content: center;
+		align-items: center;
+
+		.switch-loading {
+			width: 50%;
+			height: 50%;
+			border: 3rpx solid;
+			border-radius: 50%;
+			animation: ste-rotate 1s linear infinite;
+		}
+	}
+	@keyframes ste-rotate {
+		0% {
+			transform: rotate(0);
+		}
+		100% {
+			transform: rotate(1turn);
+		}
 	}
 }
 </style>

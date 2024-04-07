@@ -8,6 +8,47 @@
 					<ste-switch v-model="value1"></ste-switch>
 				</view>
 			</view>
+			<view class="demo-item">
+				<view class="title">只读</view>
+				<view class="item-block">
+					<ste-switch v-model="value2" readonly></ste-switch>
+				</view>
+			</view>
+			<view class="demo-item">
+				<view class="title">禁用</view>
+				<view class="item-block">
+					<ste-switch v-model="value2" disabled></ste-switch>
+				</view>
+			</view>
+			<view class="demo-item">
+				<view class="title">自定义大小</view>
+				<view class="item-block">
+					<ste-switch v-model="value3" size="100"></ste-switch>
+				</view>
+			</view>
+			<view class="demo-item">
+				<view class="title">自定义颜色</view>
+				<view class="item-block">
+					<ste-switch v-model="value4" activeColor="#13CE66" inactiveColor="#FF4949"></ste-switch>
+				</view>
+			</view>
+			<view class="demo-item">
+				<view class="title">加载状态</view>
+				<view class="item-block">
+					<ste-switch v-model="value2" loading></ste-switch>
+					<view style="margin: 0 20rpx"></view>
+					<ste-switch v-model="value5" loading></ste-switch>
+				</view>
+			</view>
+			<view class="demo-item">
+				<view class="title">回调事件</view>
+				<view class="item-block switch-box">
+					<ste-switch v-model="value6" @click="click1" @change="change"></ste-switch>
+					<text>在click事件后，执行change事件</text>
+					<ste-switch v-model="value7" @click="click2" @change="change"></ste-switch>
+					<text>在click事件后，阻止change事件</text>
+				</view>
+			</view>
 		</view>
 	</view>
 </template>
@@ -16,12 +57,36 @@ export default {
 	data() {
 		return {
 			value1: false,
+			value2: true,
+			value3: false,
+			value4: false,
+			value5: false,
+			value6: false,
+			value7: false,
 		};
 	},
-	created() {},
 	methods: {
+		click1(value) {
+			uni.showToast({
+				icon: 'none',
+				title: `点击：${value} 开关的值`,
+			});
+		},
+		click2(value, allowStop, resolve) {
+			uni.showToast({
+				icon: 'none',
+				title: `点击：${value} 开关的值`,
+			});
+			// 阻止change事件
+			allowStop();
+		},
 		change(value) {
-			console.log('value', value);
+			setTimeout(() => {
+				uni.showToast({
+					icon: 'none',
+					title: `改变：${value} 开关的值`,
+				});
+			}, 1000);
 		},
 	},
 };
@@ -29,5 +94,11 @@ export default {
 
 <style lang="scss" scoped>
 .page {
+	.switch-box {
+		flex-direction: column !important;
+		row-gap: 20rpx;
+		align-items: flex-start !important;
+		justify-content: center;
+	}
 }
 </style>
