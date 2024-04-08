@@ -6,7 +6,7 @@
 			</view>
 			<view class="input-box" v-if="!hiddenInput">
 				<ste-input
-					class="search-input"
+					rootClass="ste-search-input"
 					placeholder-class="search-input-placeholder"
 					:disabled="disabled"
 					:placeholder="cmpPlaceholder"
