@@ -20,6 +20,8 @@
 </template>
 
 <script>
+import utils from '../../utils/utils.js';
+
 /**
  * ste-radio 单选框
  * @description 单选框组件,在一组备选项中进行单选。
@@ -152,7 +154,7 @@ export default {
 		},
 		cmpStyle() {
 			let style = {};
-			style['fontSize'] = this.cmpTextSize + 'rpx';
+			style['fontSize'] = utils.rpx2px(this.cmpTextSize);
 			style['color'] = this.cmpChecked ? this.cmpTextActiveColor : this.cmpTextInactiveColor;
 			style['flexDirection'] = this.cmpTextPosition == 'right' ? 'row' : 'row-reverse';
 			// #ifdef H5
@@ -173,10 +175,10 @@ export default {
 			let style = {};
 			// 没有icon 则默认样式
 			style['borderRadius'] = this.cmpShape == 'circle' ? '50%' : '0';
-			style['border'] = `2rpx solid ${this.cmpChecked ? this.cmpCheckedColor : '#BBBBBB'}`;
+			style['border'] = `${utils.rpx2px(2)} solid ${this.cmpChecked ? this.cmpCheckedColor : '#BBBBBB'}`;
 			style['background'] = this.cmpChecked ? this.cmpCheckedColor : '#FFFFFF';
-			style['width'] = this.cmpIconSize + 'rpx';
-			style['height'] = this.cmpIconSize + 'rpx';
+			style['width'] = utils.rpx2px(this.cmpIconSize);
+			style['height'] = utils.rpx2px(this.cmpIconSize);
 			// #ifdef H5
 			if (this.cmpDisabled || this.cmpReadonly) {
 				style['cursor'] = 'not-allowed';

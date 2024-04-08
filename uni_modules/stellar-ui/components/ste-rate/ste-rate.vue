@@ -94,7 +94,7 @@ export default {
 	computed: {
 		cmpListStyle() {
 			let style = {};
-			style['columnGap'] = this.gutter + 'rpx';
+			style['columnGap'] = utils.rpx2px(this.gutter);
 			// #ifdef H5
 			if (this.disabled || this.readonly) {
 				style['cursor'] = 'not-allowed';
