@@ -106,19 +106,18 @@ export default {
 			return {
 				'--border': this.showBorder ? '1px' : '0px',
 				'--color': this.color,
-				'--size': utils.addUnit(this.size),
+				'--size': utils.rpx2px(this.size),
 				'--weight': this.bold ? 'bold' : 'normal',
-				'--margin-left': utils.addUnit(this.marginLeft),
-				'--margin-right': utils.addUnit(this.marginRight),
-				'--margin-top': utils.addUnit(this.marginTop),
-				'--margin-bottom': utils.addUnit(this.marginBottom),
+				'--margin-left': utils.rpx2px(this.marginLeft),
+				'--margin-right': utils.rpx2px(this.marginRight),
+				'--margin-top': utils.rpx2px(this.marginTop),
+				'--margin-bottom': utils.rpx2px(this.marginBottom),
 				'--font-family': this.fontFamily === '' ? this.defaultFontFamily : this.fontFamily,
 				'--display': this.inlineBlock ? 'inline-block' : 'inline-flex',
 			};
 		},
 	},
 	methods: {
-		rpx2px: utils.rpx2px,
 		handleClick() {
 			this.$emit('click');
 		},

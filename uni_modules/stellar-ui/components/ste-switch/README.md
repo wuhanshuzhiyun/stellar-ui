@@ -65,7 +65,7 @@ export default {
 ```
 
 #### 自定义大小  
-通过 `size` 属性自定义开关的大小，默认`78`。 
+通过 `size` 属性自定义开关的大小，默认`52`。 
 ```
 <ste-switch v-model="value3" size="100"></ste-switch>
 ```
@@ -92,17 +92,17 @@ export default {
 | `value`			| 开关状态（支持`v-model`双向绑定）	| `Boolean`			| `false`	| -		| -			|
 | `disabled`		| 是否禁用							| `Boolean`			| `false`	| -		| -			|
 | `readonly`		| 只读（不置灰）						| `Boolean`			| `false`	| -		| -			|
-| `size`			| 开关大小,单位`rpx`					| `Number/String`	| `78`		| -		| -			|
+| `size`			| 开关大小,单位`rpx`					| `Number/String`	| `52`		| -		| -			|
 | `activeColor`		| 激活时颜色							| `String`			| `#0090FF`	| -		| -			|
 | `inactiveColor`	| 未激活颜色							| `String`			| `#bbbbbb`	| -		| -			|
 | `loading`			| 加载中								| `Boolean`			| `false`	| -		| -			|
 
 
 #### Events
-|事件名		|说明									|事件参数																		|支持版本	|
-|---		|---									|---																			|---		|
-| `click`	|点击开关时触发的事件（可拦截change事件）	|`value`：改变后的分值,`allowStop`：允许阻止后续的事件触发,：`resolve`：后续的事件执行	| -			|
-| `change`	|当绑定值变化时触发的事件					|`value`：改变后的分值															| -			|
+|事件名		|说明									|事件参数																			|支持版本	|
+|---		|---									|---																				|---		|
+| `click`	|点击开关时触发的事件（可拦截change事件）	|`value`：当前的绑定值,`allowStop`：允许阻止后续的事件触发,：`resolve`：后续的事件执行	| -			|
+| `change`	|当绑定值变化时触发的事件					|`value`：改变后的绑定值																| -			|
 
 
 {{qinpengfei}}

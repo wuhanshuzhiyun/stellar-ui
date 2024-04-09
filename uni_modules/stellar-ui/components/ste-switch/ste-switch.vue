@@ -7,6 +7,8 @@
 </template>
 
 <script>
+import utils from '../../utils/utils.js';
+
 /**
  * ste-switch 开关
  * @description 开关组件,表示两种相互对立的状态间的切换，多用于触发「开/关」。
@@ -14,7 +16,7 @@
  * @property {Boolean} value 开关状态（支持v-model双向绑定）默认 false
  * @property {Boolean} disabled 禁用 默认 false
  * @property {Boolean} readonly 只读（不置灰） 默认 false
- * @property {Number|String} size 开关大小，单位rpx 默认 78
+ * @property {Number|String} size 开关大小，单位rpx 默认 52
  * @property {String} activeColor 激活时颜色 默认 #0090FF
  * @property {String} inactiveColor 未激活颜色 默认 #bbbbbb
  * @property {Boolean} loading 加载中 默认 false
@@ -41,7 +43,7 @@ export default {
 		},
 		size: {
 			type: [String, Number],
-			default: 78,
+			default: 52,
 		},
 		activeColor: {
 			type: String,
@@ -70,9 +72,9 @@ export default {
 	computed: {
 		cmpStyle() {
 			let style = {};
-			style['width'] = Number(this.size) * 2 + 4 + 'rpx';
-			style['height'] = Number(this.size) + 4 + 'rpx';
-			style['borderRadius'] = this.size + 'rpx';
+			style['width'] = utils.rpx2px(Number(this.size) * 2 + 4);
+			style['height'] = utils.rpx2px(Number(this.size) + 4);
+			style['borderRadius'] = utils.rpx2px(this.size);
 			style['background'] = this.value ? this.activeColor : this.inactiveColor;
 			style['opacity'] = this.disabled ? '0.6' : '1';
 			// #ifdef H5
@@ -82,10 +84,12 @@ export default {
 		},
 		cmpNodeStyle() {
 			let style = {};
-			style['width'] = this.size + 'rpx';
-			style['height'] = this.size + 'rpx';
+			style['width'] = utils.rpx2px(Number(this.size));
+			style['height'] = utils.rpx2px(Number(this.size));
 			if (this.value) {
-				style['transform'] = `translatex(${Number(this.size) - 4}rpx)`;
+				style['transform'] = `translatex(${utils.rpx2px(Number(this.size))})`;
+			} else {
+				style['marginLeft'] = utils.rpx2px(4);
 			}
 			return style;
 		},
@@ -123,7 +127,6 @@ export default {
 	align-items: center;
 	transition: background-color 0.3s;
 	.switch-node {
-		margin-left: 4rpx;
 		border-radius: 50%;
 		background: #ffffff;
 		box-shadow: 9rpx 6rpx 18rpx 3rpx rgba(0, 0, 0, 0.12);

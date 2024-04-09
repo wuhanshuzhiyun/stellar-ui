@@ -414,5 +414,18 @@ export default {
 			border-bottom: 2rpx solid var(--input-line-color);
 		}
 	}
+
+	&.ste-search-input {
+		height: 100%;
+
+		// #ifdef MP-ALIPAY
+		background-color: rgba(0, 0, 0, 0);
+		// #endif
+
+		.content {
+			padding: 0;
+			height: 100%;
+		}
+	}
 }
 </style>
