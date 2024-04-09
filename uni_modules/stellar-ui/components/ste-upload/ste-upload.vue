@@ -148,14 +148,22 @@ export default {
 	},
 	methods: {
 		selectFile() {
+			// #ifdef MP-WEIXIN
+			this.wxSelectFile();
+			// #endif
+			// #ifdef MP-ALIPAY
+			this.aliSelectFile();
+			// #endif
+		},
+		wxSelectFile() {
 			const accept = this.accept, // 文件类型, 可选值为all media image file video
 				capture = this.capture, //  图片或者视频选取模式，当accept为image | media 类型时设置capture可选值为camera可以直接调起摄像头
 				camera = this.camera, // 相机类型 当 accept 为 image | video | media 时生效，可选值为 back-后置 front-前置
 				compressed = this.compressed, // 是否压缩
 				maxDuration = this.maxDuration, // 录制时长
 				multiple = this.multiple,
-				maxCount = this.maxCount;
-			// #ifdef MP-WEIXIN
+				maxCount = this.maxCount,
+				maxSize = this.maxSize;
 			let count = 1;
 			if (multiple) {
 				count = maxCount - this.dataValue.length > 9 ? 9 : maxCount - this.dataValue.length;
@@ -168,19 +176,55 @@ export default {
 					camera: camera,
 					sizeType: [compressed ? 'compressed' : 'original'],
 					maxDuration,
-
-					success: (res) => {},
+					success: async ({ tempFiles }) => {
+						const result = tempFiles.map((item) => {
+							return {
+								name: null,
+								size: item.size,
+								path: item.tempFilePath,
+								type: item.fileType,
+							};
+						});
+						this.readNext(result);
+					},
 					fail: (err) => {},
 				});
 			} else {
 				wx.chooseMessageFile({
 					type: accept,
-					count: !multiple ? 1 : maxCount - this.dataValue.length,
-					success: (res) => {},
+					count,
+					success: ({ tempFiles }) => {
+						this.readNext(tempFiles);
+					},
 					fail: (err) => {},
 				});
 			}
-			// #endif
+		},
+		aliSelectFile() {
+			const accept = this.accept, // 文件类型, 可选值为all media image file video
+				capture = this.capture, //  图片或者视频选取模式，当accept为image | media 类型时设置capture可选值为camera可以直接调起摄像头
+				camera = this.camera, // 相机类型 当 accept 为 image | video | media 时生效，可选值为 back-后置 front-前置
+				compressed = this.compressed, // 是否压缩
+				maxDuration = this.maxDuration, // 录制时长
+				multiple = this.multiple,
+				maxCount = this.maxCount,
+				maxSize = this.maxSize;
+			let count = 1;
+			if (multiple) {
+				count = maxCount - this.dataValue.length > 9 ? 9 : maxCount - this.dataValue.length;
+			}
+		},
+		readNext(fileList) {
+			let next = true;
+			this.$emit('before-read', fileList, (bool) => (next = bool));
+			if (!next) return;
+			this.$emit('read', fileList);
+		},
+		deleteNext(index) {
+			let next = true;
+			this.$emit('before-delete', index, (bool) => (next = bool));
+			if (!next) return;
+			this.$emit('delete', index);
 		},
 	},
 };

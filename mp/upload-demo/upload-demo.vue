@@ -1,6 +1,7 @@
 <template>
 	<view class="test-demo">
-		<ste-upload></ste-upload>
+		<ste-upload multiple @before-read="beforeRead" @after-read="afterRead"></ste-upload>
+		<ste-upload multiple accept="all" @after-read="afterRead"></ste-upload>
 	</view>
 </template>
 
@@ -15,6 +16,15 @@ export default {
 		setTimeout(() => {
 			this.list = [];
 		}, 2000);
+	},
+	methods: {
+		beforeRead(fileList, next) {
+			console.log('beforeRead');
+			next(false);
+		},
+		afterRead(fileList) {
+			console.log('afterRead');
+		},
 	},
 };
 </script>
