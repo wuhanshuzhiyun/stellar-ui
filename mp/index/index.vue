@@ -97,6 +97,13 @@
 			</view>
 			<view class="com-arrow"><image :src="joinSrc('img/r-arrow.png')" /></view>
 		</view>
+		<view class="com-box" @click="nav('stepper')">
+			<view class="com-title">
+				<image :src="joinSrc('img/stepper.png')" style="width: 36rpx; height: 36rpx" />
+				<text>Stepper 步进器</text>
+			</view>
+			<view class="com-arrow"><image :src="joinSrc('img/r-arrow.png')" /></view>
+		</view>
 		<view class="com-box" @click="nav('switch')">
 			<view class="com-title">
 				<image :src="joinSrc('img/switch.png')" style="width: 36rpx; height: 36rpx" />
