@@ -1,27 +1,102 @@
 <template>
 	<view class="ste-upload--root" :style="[cmpRootStyle]">
-		<view class="image-item" v-for="(item, index) in dataValue" :key="index">
-			<ste-image :src="item.url" />
-		</view>
-		<view class="image-item btn" v-if="cmpShowUpload" @click="selectFile">
-			<slot>
-				<view class="upload-btn">
-					<ste-icon :code="uploadIcon" :size="60" color="#ddd"></ste-icon>
-					<view class="upload-text">{{ uploadText }}</view>
+		<view class="upload-list">
+			<view class="image-item" v-for="(item, index) in dataValue" :key="index">
+				<image
+					class="image"
+					:src="item.thumbPath || item.url || item.path"
+					mode="aspectFit"
+					@click="previewItem(index)"
+				/>
+				<view class="loading" v-if="item.status === 'loading'">上传中</view>
+				<view class="error" v-if="item.status === 'error'">上传失败</view>
+				<view class="delete" v-if="deletable && item.status !== 'loading'" @click.stop="deleteItem">
+					<view class="icon">
+						<ste-icon code="&#xe67b;" size="20" color="#fff" />
+					</view>
 				</view>
-			</slot>
+				<view class="preview-cover">
+					<slot name="preview-cover" :item="item"></slot>
+				</view>
+			</view>
+			<view class="image-item btn" v-if="cmpShowUpload" @click="selectFile">
+				<slot>
+					<view class="upload-btn">
+						<ste-icon :code="uploadIcon" :size="60" color="#ddd"></ste-icon>
+						<view class="upload-text">{{ uploadText }}</view>
+					</view>
+				</slot>
+				<view class="delete" v-if="accept === 'media'" @click.stop="setMediaType">
+					<view class="icon">
+						<view :class="{ video: mediaType === 'video' }">
+							<ste-icon :code="mediaType === 'video' ? '&#xe699;' : '&#xe693;'" size="20" color="#fff" />
+						</view>
+					</view>
+				</view>
+			</view>
+		</view>
+		<view class="preview-item" v-if="previewIndex || previewIndex === 0" @click="previewIndex = null">
+			<ste-touch-swipe :index.sync="previewIndex">
+				<ste-touch-swipe-item v-for="(item, index) in dataValue" :key="index">
+					<video
+						object-fit="contain"
+						class="video"
+						:style="{ width: `${item.width}px`, height: `${item.height}px` }"
+						v-if="item.type === 'video'"
+						:src="item.url || item.path"
+						@click.stop="1"
+					/>
+					<image class="image" v-else :src="item.url || item.path" mode="aspectFit" />
+				</ste-touch-swipe-item>
+			</ste-touch-swipe>
+			<view class="index-box">{{ previewIndex + 1 }}/{{ dataValue.length }}</view>
 		</view>
 	</view>
 </template>
 
 <script>
 import utils from '../../utils/utils.js';
+import { readMediaFile, readFile } from './ReadFile.js';
+/**
+ * ste-upload 文件上传
+ * @description 文件上传组件
+ * @tutorial https://stellar-ui.intecloud.com.cn/pc/index/index?name=ste-ste-upload
+ * @property {Array} 	value  已经上传的文件列表 {url:string;type:string;name?:string;status?:"loading"|"error"|"success";message?:string;path?:string;thumbPath?:string}[]
+ * @property {String} accept 接受的文件类型, 可选值为all media image file video
+ * @value all 从聊天记录中选取全部类型文件（仅微信小程序生效）
+ * @value file 从聊天记录中选取图片视频之外的文件类型（仅微信小程序生效）
+ * @value media 媒体类型（仅微信小程序生效）
+ * @value image 图片类型
+ * @value video 视频类型
+ * @property {Array} capture 图片或者视频选取模式，当accept为image | media 类型时生效 类型：("album" | "camera")[]
+ * @property {String} camera 相机类型 当 accept 为 image | video | media 时生效，可选值为 back-后置 front-前置
+ * @value back 后置
+ * @value front 前置
+ * @property {Boolean} compressed 当 accept 为 image | video | media 时生效，是否压缩视频、图片默认为true
+ * @property {Number} maxDuration 当 accept 为 video | media 时生效，拍摄视频最长拍摄时间，单位秒
+ * @property {Number | String} previewWidth 预览图和上传区域的宽度，默认单位为rpx
+ * @property {Number | String} previewHeight 预览图和上传区域的高度，默认单位为rpx
+ * @property {Boolean} previewImage 是否在上传完成后展示预览图
+ * @property {Boolean} previewFullImage 是否在点击预览图后展示全屏图片预览
+ * @property {Boolean} multiple 是否支持多选文件，部分安卓机型不支持
+ * @property {Boolean} disabled 是否禁用
+ * @property {Boolean} showUpload 是否展示文件上传按钮
+ * @property {Boolean} deletable 是否展示删除文件按钮
+ * @property {Number} maxSize 文件大小限制，单位为byte，0为不限制
+ * @property {Number} maxCount 最大上传文件数量
+ * @property {String} uploadIcon 上传按钮图标,同icon组件code
+ * @property {String} uploadText 上传按钮文字
+ * @property {Number | String} radius 圆角弧度，单位rpx
+ * */
 export default {
 	group: '表单组件',
 	title: 'Upload 上传',
 	name: 'ste-upload',
 	props: {
-		// 已上传的文件列表: {url:string;name:string;type:string;status:string;message:string;}[]
+		/**
+		 * 已上传的文件列表
+		 * @type {{url:string;name?:string;type?:string;status?:"loading"|"error"|"success";message?:string;path?:string}[]}
+		 */
 		value: {
 			type: Array,
 			default: () => [],
@@ -33,7 +108,7 @@ export default {
 		},
 		// 图片或者视频选取模式，当accept为image | media 类型时设置capture可选值为camera可以直接调起摄像头
 		capture: {
-			type: [Array, String],
+			type: Array,
 			default: () => ['album', 'camera'],
 		},
 		// 相机类型 当 accept 为 image | video | media 时生效，可选值为 back-后置 front-前置
@@ -54,12 +129,12 @@ export default {
 		// 预览图和上传区域的宽度，默认单位为rpx
 		previewWidth: {
 			type: [String, Number],
-			default: () => 160,
+			default: () => 200,
 		},
 		// 预览图和上传区域的高度，默认单位为rpx
 		previewHeight: {
 			type: [String, Number],
-			default: () => 160,
+			default: () => 200,
 		},
 		// 是否在上传完成后展示预览图
 		previewImage: {
@@ -100,7 +175,7 @@ export default {
 		// 文件上传数量限制,0为不限制
 		maxCount: {
 			type: Number,
-			default: () => 100,
+			default: () => 0,
 		},
 
 		// 上传区域图标，可选值见 Icon 组件
@@ -111,17 +186,19 @@ export default {
 		// 上传区域文字提示
 		uploadText: {
 			type: String,
-			default: () => '上传图片',
+			default: () => '点击上传',
 		},
 		// 圆角弧度
 		radius: {
 			type: [String, Number],
-			default: () => 8,
+			default: () => 9,
 		},
 	},
 	data() {
 		return {
 			dataValue: [],
+			previewIndex: null,
+			mediaType: 'image',
 		};
 	},
 	computed: {
@@ -141,22 +218,19 @@ export default {
 	watch: {
 		value: {
 			handler(val) {
-				this.dataValue = val || [];
+				if (this.maxCount > 0 && val.length > this.maxCount) {
+					this.dataValue = [...val].splice(this.maxCount);
+				} else {
+					this.dataValue = [...val];
+				}
 			},
 			immediate: true,
 		},
 	},
 	methods: {
 		selectFile() {
-			// #ifdef MP-WEIXIN
-			this.wxSelectFile();
-			// #endif
-			// #ifdef MP-ALIPAY
-			this.aliSelectFile();
-			// #endif
-		},
-		wxSelectFile() {
-			const accept = this.accept, // 文件类型, 可选值为all media image file video
+			if (this.disabled) return;
+			let accept = this.accept, // 文件类型, 可选值为all media image file video
 				capture = this.capture, //  图片或者视频选取模式，当accept为image | media 类型时设置capture可选值为camera可以直接调起摄像头
 				camera = this.camera, // 相机类型 当 accept 为 image | video | media 时生效，可选值为 back-后置 front-前置
 				compressed = this.compressed, // 是否压缩
@@ -166,65 +240,56 @@ export default {
 				maxSize = this.maxSize;
 			let count = 1;
 			if (multiple) {
-				count = maxCount - this.dataValue.length > 9 ? 9 : maxCount - this.dataValue.length;
+				if (maxCount === 0) {
+					count = 9;
+				} else {
+					count = maxCount - this.dataValue.length > 9 ? 9 : maxCount - this.dataValue.length;
+				}
 			}
-			if (['media', 'image', 'video'].indexOf(accept) >= 0) {
-				wx.chooseMedia({
-					count,
-					mediaType: accept === 'media' ? ['video', 'image'] : [accept],
-					sourceType: capture,
-					camera: camera,
-					sizeType: [compressed ? 'compressed' : 'original'],
+			if (count === 0) return;
+			if (accept === 'media') {
+				accept = this.mediaType;
+			}
+			if (['image', 'video'].indexOf(accept) >= 0) {
+				readMediaFile({
+					accept,
+					capture,
+					camera,
+					compressed,
 					maxDuration,
-					success: async ({ tempFiles }) => {
-						const result = tempFiles.map((item) => {
-							return {
-								name: null,
-								size: item.size,
-								path: item.tempFilePath,
-								type: item.fileType,
-							};
-						});
-						this.readNext(result);
-					},
-					fail: (err) => {},
+					multiple,
+					count,
+					maxSize,
+				}).then((fileList) => {
+					this.readNext(fileList);
 				});
 			} else {
-				wx.chooseMessageFile({
-					type: accept,
-					count,
-					success: ({ tempFiles }) => {
-						this.readNext(tempFiles);
-					},
-					fail: (err) => {},
+				readFile(accept, count).then((fileList) => {
+					this.readNext(fileList);
 				});
 			}
 		},
-		aliSelectFile() {
-			const accept = this.accept, // 文件类型, 可选值为all media image file video
-				capture = this.capture, //  图片或者视频选取模式，当accept为image | media 类型时设置capture可选值为camera可以直接调起摄像头
-				camera = this.camera, // 相机类型 当 accept 为 image | video | media 时生效，可选值为 back-后置 front-前置
-				compressed = this.compressed, // 是否压缩
-				maxDuration = this.maxDuration, // 录制时长
-				multiple = this.multiple,
-				maxCount = this.maxCount,
-				maxSize = this.maxSize;
-			let count = 1;
-			if (multiple) {
-				count = maxCount - this.dataValue.length > 9 ? 9 : maxCount - this.dataValue.length;
-			}
-		},
+
 		readNext(fileList) {
 			let next = true;
-			this.$emit('before-read', fileList, (bool) => (next = bool));
+			const e = this.$emit('before-read', fileList, (bool) => (next = bool));
+			console.log('before-read', e);
 			if (!next) return;
+			next = undefined;
 			this.$emit('read', fileList);
 		},
-		deleteNext(index) {
+		deleteItem(index) {
 			let next = true;
 			this.$emit('before-delete', index, (bool) => (next = bool));
 			if (!next) return;
+			next = undefined;
 			this.$emit('delete', index);
+		},
+		previewItem(index) {
+			this.previewIndex = index;
+		},
+		setMediaType() {
+			this.mediaType = this.mediaType === 'image' ? 'video' : 'image';
 		},
 	},
 };
@@ -232,28 +297,111 @@ export default {
 
 <style lang="scss" scoped>
 .ste-upload--root {
-	.image-item {
-		width: var(--ste-upload-width);
-		height: var(--ste-upload-height);
-		border-radius: var(--ste-upload-radius);
+	.image {
+		max-width: 100%;
+		max-height: 100%;
+	}
+	.upload-list {
 		display: flex;
-		align-items: center;
-		justify-content: center;
-		margin-bottom: 12rpx;
-		margin-right: 12rpx;
+		flex-direction: row;
+		justify-content: flex-start;
+		flex-wrap: wrap;
 
-		&.btn {
-			background: #fafafa;
-			.upload-btn {
-				display: flex;
-				align-items: center;
-				justify-content: center;
-				flex-direction: column;
-				.upload-text {
-					color: #ccc;
-					font-size: 24rpx;
+		.image-item {
+			width: var(--ste-upload-width);
+			height: var(--ste-upload-height);
+			border-radius: var(--ste-upload-radius);
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			margin-bottom: 24rpx;
+			margin-right: 24rpx;
+			position: relative;
+			background: #f7f7f7;
+			overflow: hidden;
+
+			&.btn {
+				.upload-btn {
+					display: flex;
+					align-items: center;
+					justify-content: center;
+					flex-direction: column;
+					.upload-text {
+						color: #ccc;
+						font-size: 24rpx;
+					}
+				}
+				.icon {
+					.video {
+						transform: rotateZ(-90deg);
+					}
 				}
 			}
+			.loading,
+			.error {
+				position: absolute;
+				z-index: 5;
+				width: 100%;
+				height: 100%;
+				background-color: rgba(0, 0, 0, 0.45);
+				color: #fff;
+				display: flex;
+				flex-direction: column;
+				justify-content: center;
+				align-items: center;
+				font-family: PingFang SC, PingFang SC;
+				font-weight: 400;
+				font-size: 28rpx;
+				line-height: 30px;
+			}
+			.delete {
+				position: absolute;
+				z-index: 10;
+				width: 90rpx;
+				height: 90rpx;
+				background-color: #000;
+				color: #fff;
+				font-size: 12rpx;
+				top: -45rpx;
+				right: -45rpx;
+				border-radius: 50%;
+				.icon {
+					position: absolute;
+					left: 16rpx;
+					bottom: 16rpx;
+					display: flex;
+					align-items: center;
+					justify-content: center;
+				}
+			}
+			.preview-cover {
+				position: absolute;
+				z-index: 8;
+			}
+		}
+	}
+
+	.preview-item {
+		background-color: #000;
+		position: fixed;
+		top: 0;
+		left: 0;
+		bottom: 0;
+		right: 0;
+		z-index: 100;
+		.video {
+			width: 100%;
+			height: 750rpx;
+			max-width: 100%;
+			max-height: 100%;
+		}
+		.index-box {
+			position: absolute;
+			width: 100%;
+			text-align: center;
+			bottom: 109rpx;
+			color: #fff;
+			font-size: 36rpx;
 		}
 	}
 }
