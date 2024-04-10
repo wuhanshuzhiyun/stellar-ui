@@ -125,43 +125,43 @@ export default {
 
 			// 圆角 round
 			if (this.round) {
-				style.borderRadius = utils.addUnit(48);
+				style.borderRadius = utils.rpx2px(48);
 			}
 
 			// 宽度 width
 			if (this.width == '100%' || this.width == 'auto') {
 				style.width = this.width;
 			} else {
-				style.width = utils.addUnit(this.width);
+				style.width = utils.rpx2px(this.width);
 			}
 
 			// 边框色 borderColor
 			if (this.borderColor) {
-				style.border = 'solid 2rpx';
+				style.border = `solid ${utils.rpx2px(2)}`;
 				style.borderColor = this.borderColor;
 			}
 
 			// 类型 mode
 			switch (this.mode) {
 				case 100:
-					style.padding = '0 30rpx';
-					style.height = '48rpx';
-					style.fontSize = '24rpx';
+					style.padding = `0 ${utils.rpx2px(30)}`;
+					style.height = utils.rpx2px(48);
+					style.fontSize = utils.rpx2px(24);
 					break;
 				case 300:
-					style.padding = '0 72rpx';
-					style.height = '80rpx';
-					style.fontSize = '32rpx';
+					style.padding = `0 ${utils.rpx2px(72)}`;
+					style.height = utils.rpx2px(80);
+					style.fontSize = utils.rpx2px(32);
 					break;
 				case 400:
-					style.padding = '0 72rpx';
-					style.height = '96rpx';
-					style.fontSize = '36rpx';
+					style.padding = `0 ${utils.rpx2px(72)}`;
+					style.height = utils.rpx2px(96);
+					style.fontSize = utils.rpx2px(36);
 					break;
 				default:
-					style.padding = '0 40rpx';
-					style.height = '68rpx';
-					style.fontSize = '28rpx';
+					style.padding = `0 ${utils.rpx2px(40)}`;
+					style.height = utils.rpx2px(68);
+					style.fontSize = utils.rpx2px(28);
 					break;
 			}
 
