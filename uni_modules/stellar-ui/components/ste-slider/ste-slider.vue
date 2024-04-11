@@ -9,6 +9,7 @@
 			@touchmove.stop="onTouchMove"
 			@touchend="onTouchEnd"
 			@touchcancel="onTouchEnd"
+			@mousedown="onDown"
 			:style="{
 				left: vertical ? '50%' : `${realPercentage}%`,
 				top: vertical ? `${realPercentage}%` : '50%',
@@ -126,6 +127,8 @@ export default {
 			startPercentage: 0,
 			markList: [],
 			hasMarks: false,
+			isMouseDown: false,
+			isMouseEnter: false,
 		};
 	},
 	created() {},
@@ -205,6 +208,19 @@ export default {
 		},
 	},
 	methods: {
+		// #ifdef WEB
+		// 适配web端没有touch事件
+		onDown(e) {
+			this.isMouseDown = true;
+			this.onTouchStart({ touches: [{ clientX: e.clientX, clientY: e.clientY }] });
+			window.addEventListener('mousemove', this.onTouchMove);
+			window.addEventListener('mouseup', this.onTouchEnd);
+		},
+		removeListenner() {
+			window.removeEventListener('mousemove', this.onTouchMove);
+			window.removeEventListener('mouseup', this.onTouchEnd);
+		},
+		// #endif
 		handleClick(e) {
 			if (this.readonly || this.disabled) return;
 			let offsetValue;
@@ -219,13 +235,13 @@ export default {
 			this.$emit('change', this.realPercentage);
 		},
 		onTouchStart(e) {
-			this.startPosition = e.touches[0];
+			this.startPosition = this.getPosition(e);
 			this.startPercentage = this.realPercentage;
 			this.$emit('dragStart', e);
 		},
 		onTouchMove(e) {
 			if (this.readonly || this.disabled) return;
-			let touches = e.touches[0];
+			let touches = this.getPosition(e);
 			let distance = this.vertical
 				? touches.clientY - this.startPosition.clientY
 				: touches.clientX - this.startPosition.clientX;
@@ -237,6 +253,14 @@ export default {
 			this.isDrag = false;
 			this.$emit('dragEnd', e);
 			this.$emit('change', this.realPercentage);
+			this.removeListenner && this.removeListenner();
+		},
+		getPosition(e) {
+			if (e.touches) {
+				return e.touches[0];
+			} else {
+				return { clientX: e.clientX, clientY: e.clientY };
+			}
 		},
 		updateWidth(value, drag) {
 			let realValue;
@@ -308,6 +332,7 @@ export default {
 		}
 	}
 	&.ste-slider--vertical {
+		margin: 0 16rpx;
 		width: var(--progress-height);
 		height: 100%;
 
@@ -338,6 +363,7 @@ export default {
 		}
 	}
 	&.ste-slider--horizontal {
+		margin: 16rpx 0;
 		.mark-box {
 			transform: translateX(-50%);
 			display: flex;
@@ -358,6 +384,7 @@ export default {
 	}
 
 	.slider-bar-box {
+		cursor: grab;
 		position: absolute;
 		left: 0;
 		top: 50%;
@@ -366,7 +393,6 @@ export default {
 
 		transition: left 0.3s ease;
 		.slider-bar {
-			cursor: grab;
 			min-width: var(--bar-size);
 			height: var(--bar-size);
 			width: var(--bar-size);
