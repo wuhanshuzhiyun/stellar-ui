@@ -2,12 +2,6 @@
 	<view class="ste-progress--root" :style="[cmpRootCssVar]">
 		<view class="inactive-box" :style="[cmpInactiveStyle]"></view>
 		<view class="active-box line" :style="[cmpActiveStyle]" v-if="realPercentage > 0">
-			<!-- <template v-if="haveSlot">
-				<slot></slot>
-			</template>
-			<template v-else>
-				<text class="text">{{ cmpActiveText }}</text>
-			</template> -->
 			<slot v-if="haveSlot"></slot>
 			<text class="text" v-else>{{ cmpActiveText }}</text>
 		</view>
@@ -97,8 +91,6 @@ export default {
 	},
 	created() {},
 	mounted() {
-		console.log('slot is ', this.$slots);
-		console.log('$children is ', this.$children);
 		this.haveSlot = this.$slots.default;
 	},
 	computed: {

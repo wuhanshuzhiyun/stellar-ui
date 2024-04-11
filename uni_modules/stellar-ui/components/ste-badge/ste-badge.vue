@@ -38,6 +38,7 @@ import utils from '../../utils/utils.js';
  * @value topLeft 上左 {String}
  * @value bottomLeft 下左 {String}
  * @value bottomRight 下右 {String}
+ * @property {Number} max 徽标最大显示值 默认 99
  */
 
 export default {

@@ -6,7 +6,7 @@
 				<view class="title">文本输入框</view>
 				<view class="item-block">
 					<view style="width: 100%">
-						<ste-input value="输入" />
+						<ste-input value="输入" rootClass="my-input" />
 					</view>
 				</view>
 			</view>
@@ -71,12 +71,9 @@
 					<view style="width: 100%">
 						<ste-input :focus.sync="inputFocus" />
 					</view>
-					<!-- 					<view style="width: 100%; text-align: center; font-size: 28rpx">
-						<ste-text>{{ inputFocus ? '获取焦点' : '失去焦点' }}</ste-text>
-					</view> -->
+
 					<view style="width: 100%; text-align: center">
 						<ste-button width="100%" style="margin-right: 50rpx" @click="focus">焦点</ste-button>
-						<!-- <ste-button :mode="100" @click="blur">失去焦点</ste-button> -->
 					</view>
 				</view>
 			</view>
@@ -150,6 +147,17 @@
 						</ste-input>
 					</view>
 				</view>
+				<view class="item-block">
+					<view style="width: 80%">
+						<ste-input placeholder="请输入验证码" confirmType="next" rootClass="root-my-input" shape="line">
+							<view slot="suffix">
+								<ste-button :mode="100" :round="false" @click="getCode" :disabled="count > 0">
+									{{ count <= 0 ? '获取验证码' : count + '秒后获取' }}
+								</ste-button>
+							</view>
+						</ste-input>
+					</view>
+				</view>
 			</view>
 		</view>
 	</view>
@@ -160,6 +168,8 @@ export default {
 		return {
 			v: '123123',
 			inputFocus: false,
+			count: 0,
+			codeTimer: null,
 		};
 	},
 	created() {},
@@ -169,6 +179,15 @@ export default {
 		},
 		focus() {
 			this.inputFocus = !this.inputFocus;
+		},
+		getCode() {
+			this.count = 20;
+			this.codeTimer = setInterval(() => {
+				if (this.count <= 0) {
+					clearInterval(this.codeTimer);
+				}
+				this.count--;
+			}, 1000);
 		},
 	},
 };
@@ -183,9 +202,9 @@ export default {
 				> view {
 					margin: 0 8px 8px 0;
 
-					// /deep/ .root-my-input {
-
-					// }
+					/deep/ .my-input {
+						color: red;
+					}
 
 					// /deep/ .my-input-holder {
 					// 	color: pink !important;
