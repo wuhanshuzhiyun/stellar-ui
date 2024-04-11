@@ -111,6 +111,13 @@
 			</view>
 			<view class="com-arrow"><image :src="joinSrc('img/r-arrow.png')" /></view>
 		</view>
+		<view class="com-box" @click="nav('slider')">
+			<view class="com-title">
+				<image :src="joinSrc('img/slider.png')" style="width: 36rpx; height: 36rpx" />
+				<text>Slider 滑块</text>
+			</view>
+			<view class="com-arrow"><image :src="joinSrc('img/r-arrow.png')" /></view>
+		</view>
 		<!-- ***电商组件*** -->
 		<view class="group-title">电商组件</view>
 		<view class="com-box" @click="nav('price')">

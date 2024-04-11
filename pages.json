@@ -345,6 +345,19 @@
 					"navigationBarTitleText": ""
 				}
 			}
+		},
+		{
+			"path": "mp/slider-demo/slider-demo",
+			"style": {
+				"navigationStyle": "custom",
+				"disableScroll": true,
+				"mp-alipay": {
+					"transparentTitle": "always",
+					"titlePenetrate": "YES",
+					"allowsBounceVertical": "NO",
+					"navigationBarTitleText": ""
+				}
+			}
 		}
 	],
 	"globalStyle": {
