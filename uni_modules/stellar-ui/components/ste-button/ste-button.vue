@@ -3,7 +3,7 @@
 		class="ste-button--root"
 		:hover-class="!disabled && !loading ? 'ste-button--root-active' : ''"
 		@click.stop="handleClick"
-		:style="[cmpBtnStyle, rootStyle]"
+		:style="[cmpBtnStyle]"
 		:open-type="openType"
 		:scope="scope"
 		@getuserinfo="getuserinfo"
@@ -182,7 +182,7 @@ export default {
 			if (this.loading) {
 				style.cursor = 'not-allowed';
 			}
-			return style;
+			return utils.deepMerge(style, this.rootStyle);
 		},
 	},
 	methods: {

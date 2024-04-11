@@ -1,4 +1,4 @@
-import Color from "./Color.js"
+import Color from './Color.js';
 let throLast = 0; // 节流方法用变量
 let throTimer = null; // 节流方法用的变量
 let windowWidth = null;
@@ -10,11 +10,11 @@ let utils = {
 		let str = rpx;
 		if (isNaN(str)) {
 			if (/^\d+px$/i.test(str)) {
-				return str
+				return str;
 			} else if (/^\d+rpx/i.test(str)) {
-				str = str.slice(0, -3)
+				str = str.slice(0, -3);
 			} else {
-				return str
+				return str;
 			}
 		}
 		if (windowWidth == null) {
@@ -43,7 +43,7 @@ let utils = {
 			result.backgroundImage = `url(${value})`;
 		} else {
 			// 其他原生值
-			result.background = value
+			result.background = value;
 		}
 		return result;
 	},
@@ -135,7 +135,8 @@ let utils = {
 		return new Promise((resolve, reject) => {
 			try {
 				uni.createSelectorQuery()
-					.in(component)[selectFn](selectors)
+					.in(component)
+					[selectFn](selectors)
 					.boundingClientRect((data) => {
 						resolve(data);
 					})
@@ -182,8 +183,56 @@ let utils = {
 			})
 		);
 		// #endif
-		return propsList
-	}
+		return propsList;
+	},
+	/**深拷贝
+		/* obj 深拷贝对象
+		/* keySort 是否对字段进行排序
+		*/
+	deepClone(obj, keySort = false) {
+		if (obj === null || typeof obj !== 'object') {
+			return obj;
+		}
+
+		let clone = Array.isArray(obj) ? [] : {};
+
+		let keys = Object.keys(obj);
+
+		if (keySort) {
+			keys.sort();
+		}
+
+		for (let key of keys) {
+			// if (obj.hasOwnProperty(key)) {
+			clone[key] = this.deepClone(obj[key], keySort);
+			// }
+		}
+
+		return clone;
+	},
+	/**对象深度合并
+	 * 用source上的数据覆盖掉target上的数据，返回target
+	 * */
+	deepMerge(target, source) {
+		// 遍历 source 的所有属性
+		for (const prop in source) {
+			// 判断是否为自身属性
+			if (source.hasOwnProperty(prop)) {
+				// 判断属性是否为对象，如果是则递归合并
+				if (typeof source[prop] === 'object' && !Array.isArray(source[prop]) && source[prop] !== null) {
+					// 如果 target 对应的属性不是对象，则新建一个空对象
+					if (typeof target[prop] !== 'object' || target[prop] === null) {
+						target[prop] = {};
+					}
+					this.deepMerge(target[prop], source[prop]);
+				} else {
+					// 如果属性不是对象，直接赋值
+					target[prop] = source[prop];
+				}
+			}
+		}
+		return target;
+	},
 };
 
 export default utils;
