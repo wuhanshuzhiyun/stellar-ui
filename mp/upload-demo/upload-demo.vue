@@ -1,7 +1,7 @@
 <template>
 	<view class="test-demo">
 		<page-nav :autoBack="true" backColor="#000" titleAlignment="2" title="上传"></page-nav>
-		<ste-upload :value="list" multiple @read="read" max-count="9" multiple accept="media"></ste-upload>
+		<ste-upload :value="list" multiple @read="read" :max-count="9" multiple accept="media"></ste-upload>
 		<ste-upload multiple accept="all" @read="read">
 			<template v-slot:preview-cover="{ item }">
 				<view>{{ item.size }}</view>

@@ -35,18 +35,20 @@
 				</view>
 			</view>
 		</view>
-		<view class="preview-item" v-if="previewIndex || previewIndex === 0" @click="previewIndex = null">
+		<view class="preview-list" v-if="previewIndex || previewIndex === 0" @click="previewIndex = null">
 			<ste-touch-swipe :index.sync="previewIndex">
 				<ste-touch-swipe-item v-for="(item, index) in dataValue" :key="index">
-					<video
-						object-fit="contain"
-						class="video"
-						:style="{ width: `${item.width}px`, height: `${item.height}px` }"
-						v-if="item.type === 'video'"
-						:src="item.url || item.path"
-						@click.stop="1"
-					/>
-					<image class="image" v-else :src="item.url || item.path" mode="aspectFit" />
+					<view class="preview-item" @click.stop="1">
+						<video
+							object-fit="contain"
+							class="video"
+							:style="{ width: `${item.width}px`, height: `${item.height}px` }"
+							v-if="item.type === 'video'"
+							:src="item.url || item.path"
+							@click.stop="1"
+						/>
+						<image class="image" v-else :src="item.url || item.path" mode="aspectFit" />
+					</view>
 				</ste-touch-swipe-item>
 			</ste-touch-swipe>
 			<view class="index-box">{{ previewIndex + 1 }}/{{ dataValue.length }}</view>
@@ -63,11 +65,11 @@ import { readMediaFile, readFile } from './ReadFile.js';
  * @tutorial https://stellar-ui.intecloud.com.cn/pc/index/index?name=ste-ste-upload
  * @property {Array} 	value  已经上传的文件列表 {url:string;type:string;name?:string;status?:"loading"|"error"|"success";message?:string;path?:string;thumbPath?:string}[]
  * @property {String} accept 接受的文件类型, 可选值为all media image file video
- * @value all 从聊天记录中选取全部类型文件（仅微信小程序生效）
- * @value file 从聊天记录中选取图片视频之外的文件类型（仅微信小程序生效）
- * @value media 媒体类型（仅微信小程序生效）
- * @value image 图片类型
+ * @value image 图片类型（默认）
  * @value video 视频类型
+ * @value media 媒体类型（可选择图片和视频）
+ * @value file 从聊天记录中选取图片视频之外的文件类型（仅微信小程序生效）
+ * @value all 从聊天记录中选取全部类型文件（仅微信小程序生效）
  * @property {Array} capture 图片或者视频选取模式，当accept为image | media 类型时生效 类型：("album" | "camera")[]
  * @property {String} camera 相机类型 当 accept 为 image | video | media 时生效，可选值为 back-后置 front-前置
  * @value back 后置
@@ -175,7 +177,7 @@ export default {
 		// 文件上传数量限制,0为不限制
 		maxCount: {
 			type: Number,
-			default: () => 0,
+			default: () => 9,
 		},
 
 		// 上传区域图标，可选值见 Icon 组件
@@ -264,7 +266,7 @@ export default {
 					this.readNext(fileList);
 				});
 			} else {
-				readFile(accept, count).then((fileList) => {
+				readFile(accept, count, multiple).then((fileList) => {
 					this.readNext(fileList);
 				});
 			}
@@ -273,9 +275,10 @@ export default {
 		readNext(fileList) {
 			let next = true;
 			const e = this.$emit('before-read', fileList, (bool) => (next = bool));
-			console.log('before-read', e);
 			if (!next) return;
 			next = undefined;
+			this.dataValue = this.dataValue.concat(fileList);
+			this.$emit('input', this.dataValue);
 			this.$emit('read', fileList);
 		},
 		deleteItem(index) {
@@ -283,6 +286,8 @@ export default {
 			this.$emit('before-delete', index, (bool) => (next = bool));
 			if (!next) return;
 			next = undefined;
+			this.dataValue.splice(index, 1);
+			this.$emit('input', this.dataValue);
 			this.$emit('delete', index);
 		},
 		previewItem(index) {
@@ -380,20 +385,26 @@ export default {
 			}
 		}
 	}
-
-	.preview-item {
+	.preview-list {
 		background-color: #000;
 		position: fixed;
+		width: 100vw;
+		height: 100vh;
 		top: 0;
 		left: 0;
-		bottom: 0;
-		right: 0;
 		z-index: 100;
-		.video {
-			width: 100%;
-			height: 750rpx;
-			max-width: 100%;
-			max-height: 100%;
+		.preview-item {
+			width: 100vw;
+			height: 100vh;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			.video {
+				width: 100%;
+				height: 750rpx;
+				max-width: 100%;
+				max-height: 100%;
+			}
 		}
 		.index-box {
 			position: absolute;

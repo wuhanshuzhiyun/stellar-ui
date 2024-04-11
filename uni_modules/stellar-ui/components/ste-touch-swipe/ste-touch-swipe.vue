@@ -168,18 +168,23 @@ export default {
 	watch: {
 		index: {
 			handler(v) {
-				if (v < 0 || v > this.cmpChildrenLength - 1) return;
 				this.dataIndex = v;
 			},
 			immediate: true,
 		},
 		dataIndex: {
 			handler(v) {
-				if (this.direction === 'horizontal') {
-					this.translateX = -this.cmpItemLefts[this.dataIndex];
-				} else if (this.direction === 'vertical') {
-					this.translateY = -this.cmpItemTops[this.dataIndex];
-				}
+				if (!this.cmpItemLefts.length) return;
+				this.setTransform(v);
+			},
+			immediate: true,
+		},
+		cmpItemLefts: {
+			handler(v) {
+				console.log('cmpItemLefts', v);
+				this.$nextTick(() => {
+					this.setTransform(this.dataIndex);
+				});
 			},
 			immediate: true,
 		},
@@ -203,6 +208,14 @@ export default {
 					this.show = true;
 				});
 			});
+		},
+		setTransform() {
+			if (this.direction === 'horizontal') {
+				this.translateX = -this.cmpItemLefts[this.dataIndex];
+				console.log('this.dataIndex', this.dataIndex, this.cmpItemLefts, this.translateX);
+			} else if (this.direction === 'vertical') {
+				this.translateY = -this.cmpItemTops[this.dataIndex];
+			}
 		},
 		nextItem(moveX, moveY) {
 			let index = this.dataIndex;
