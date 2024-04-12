@@ -8,9 +8,9 @@
 					mode="aspectFit"
 					@click="previewItem(index)"
 				/>
-				<view class="loading" v-if="item.status === 'loading'">上传中</view>
+				<view class="uploading" v-if="item.status === 'uploading'">上传中</view>
 				<view class="error" v-if="item.status === 'error'">上传失败</view>
-				<view class="delete" v-if="deletable && item.status !== 'loading'" @click.stop="deleteItem">
+				<view class="delete" v-if="deletable && item.status !== 'uploading'" @click.stop="deleteItem(index)">
 					<view class="icon">
 						<ste-icon code="&#xe67b;" size="20" color="#fff" />
 					</view>
@@ -26,6 +26,7 @@
 						<view class="upload-text">{{ uploadText }}</view>
 					</view>
 				</slot>
+				<!-- #ifdef MP-ALIPAY -->
 				<view class="delete" v-if="accept === 'media'" @click.stop="setMediaType">
 					<view class="icon">
 						<view :class="{ video: mediaType === 'video' }">
@@ -33,9 +34,14 @@
 						</view>
 					</view>
 				</view>
+				<!-- #endif -->
 			</view>
 		</view>
-		<view class="preview-list" v-if="previewIndex || previewIndex === 0" @click="previewIndex = null">
+		<!-- #ifndef MP-WEIXIN -->
+		<view class="preview-list" v-if="previewIndex || previewIndex === 0">
+			<view class="close-btn" @click="previewIndex = null">
+				<ste-icon code="&#xe67b;" color="#fff" size="30" />
+			</view>
 			<ste-touch-swipe :index.sync="previewIndex">
 				<ste-touch-swipe-item v-for="(item, index) in dataValue" :key="index">
 					<view class="preview-item" @click.stop="1">
@@ -53,6 +59,7 @@
 			</ste-touch-swipe>
 			<view class="index-box">{{ previewIndex + 1 }}/{{ dataValue.length }}</view>
 		</view>
+		<!-- #endif -->
 	</view>
 </template>
 
@@ -63,13 +70,13 @@ import { readMediaFile, readFile } from './ReadFile.js';
  * ste-upload 文件上传
  * @description 文件上传组件
  * @tutorial https://stellar-ui.intecloud.com.cn/pc/index/index?name=ste-ste-upload
- * @property {Array} 	value  已经上传的文件列表 {url:string;type:string;name?:string;status?:"loading"|"error"|"success";message?:string;path?:string;thumbPath?:string}[]
+ * @property {Array} 	value  已经上传的文件列表 {url:string;type:string;name?:string;status?:"uploading"|"error"|"success";path?:string;thumbPath?:string}[]
  * @property {String} accept 接受的文件类型, 可选值为all media image file video
  * @value image 图片类型（默认）
  * @value video 视频类型
  * @value media 媒体类型（可选择图片和视频）
  * @value file 从聊天记录中选取图片视频之外的文件类型（仅微信小程序生效）
- * @value all 从聊天记录中选取全部类型文件（仅微信小程序生效）
+ * @value all 从聊天记录中选取全部类型文件（仅微信小程序和H5生效）
  * @property {Array} capture 图片或者视频选取模式，当accept为image | media 类型时生效 类型：("album" | "camera")[]
  * @property {String} camera 相机类型 当 accept 为 image | video | media 时生效，可选值为 back-后置 front-前置
  * @value back 后置
@@ -84,8 +91,8 @@ import { readMediaFile, readFile } from './ReadFile.js';
  * @property {Boolean} disabled 是否禁用
  * @property {Boolean} showUpload 是否展示文件上传按钮
  * @property {Boolean} deletable 是否展示删除文件按钮
- * @property {Number} maxSize 文件大小限制，单位为byte，0为不限制
- * @property {Number} maxCount 最大上传文件数量
+ * @property {Number} maxSize 文件大小限制，单位为kb，0为不限制
+ * @property {Number} maxCount 最大上传文件数量,默认为9
  * @property {String} uploadIcon 上传按钮图标,同icon组件code
  * @property {String} uploadText 上传按钮文字
  * @property {Number | String} radius 圆角弧度，单位rpx
@@ -97,7 +104,7 @@ export default {
 	props: {
 		/**
 		 * 已上传的文件列表
-		 * @type {{url:string;name?:string;type?:string;status?:"loading"|"error"|"success";message?:string;path?:string}[]}
+		 * @type {{url:string;name?:string;type?:string;status?:"uploading"|"error"|"success";path?:string}[]}
 		 */
 		value: {
 			type: Array,
@@ -169,7 +176,7 @@ export default {
 			default: () => true,
 		},
 
-		// 文件大小限制，单位为byte，0为不限制
+		// 文件大小限制，单位为kb，0为不限制
 		maxSize: {
 			type: Number,
 			default: () => 0,
@@ -199,8 +206,13 @@ export default {
 	data() {
 		return {
 			dataValue: [],
+			// #ifndef MP-WEIXIN
 			previewIndex: null,
+			// #endif
+			// #ifdef MP-ALIPAY
 			mediaType: 'image',
+			// #endif
+			menuButtonBounding: null,
 		};
 	},
 	computed: {
@@ -238,8 +250,7 @@ export default {
 				compressed = this.compressed, // 是否压缩
 				maxDuration = this.maxDuration, // 录制时长
 				multiple = this.multiple,
-				maxCount = this.maxCount,
-				maxSize = this.maxSize;
+				maxCount = this.maxCount;
 			let count = 1;
 			if (multiple) {
 				if (maxCount === 0) {
@@ -249,10 +260,12 @@ export default {
 				}
 			}
 			if (count === 0) return;
+			// #ifdef MP-ALIPAY
 			if (accept === 'media') {
 				accept = this.mediaType;
 			}
-			if (['image', 'video'].indexOf(accept) >= 0) {
+			// #endif
+			if (['image', 'video', 'media'].indexOf(accept) >= 0) {
 				readMediaFile({
 					accept,
 					capture,
@@ -261,7 +274,6 @@ export default {
 					maxDuration,
 					multiple,
 					count,
-					maxSize,
 				}).then((fileList) => {
 					this.readNext(fileList);
 				});
@@ -277,6 +289,16 @@ export default {
 			const e = this.$emit('before-read', fileList, (bool) => (next = bool));
 			if (!next) return;
 			next = undefined;
+			if (this.maxSize > 0) {
+				for (let item of fileList) {
+					if (item.size / 1024 > this.maxSize) {
+						console.error(`文件大小${Math.floor(item.size / 1024)}kb超过${this.maxSize}kb限制`);
+						this.$emit('oversize', fileList);
+						return;
+					}
+				}
+			}
+			fileList.forEach((item) => (item.status = 'uploading'));
 			this.dataValue = this.dataValue.concat(fileList);
 			this.$emit('input', this.dataValue);
 			this.$emit('read', fileList);
@@ -286,16 +308,26 @@ export default {
 			this.$emit('before-delete', index, (bool) => (next = bool));
 			if (!next) return;
 			next = undefined;
+
 			this.dataValue.splice(index, 1);
 			this.$emit('input', this.dataValue);
 			this.$emit('delete', index);
 		},
 		previewItem(index) {
+			// #ifdef MP-WEIXIN
+			wx.previewMedia({
+				current: index,
+				sources: this.dataValue.map((item) => ({ ...item, url: item.url || item.path, poster: item.thumbPath })),
+			});
+			return;
+			// #endif
 			this.previewIndex = index;
 		},
+		// #ifdef MP-ALIPAY
 		setMediaType() {
 			this.mediaType = this.mediaType === 'image' ? 'video' : 'image';
 		},
+		// #endif
 	},
 };
 </script>
@@ -342,7 +374,7 @@ export default {
 					}
 				}
 			}
-			.loading,
+			.uploading,
 			.error {
 				position: absolute;
 				z-index: 5;
@@ -385,6 +417,7 @@ export default {
 			}
 		}
 	}
+	// #ifndef MP-WEIXIN
 	.preview-list {
 		background-color: #000;
 		position: fixed;
@@ -392,7 +425,23 @@ export default {
 		height: 100vh;
 		top: 0;
 		left: 0;
-		z-index: 100;
+		z-index: 1001;
+		.close-btn {
+			width: 78rpx;
+			height: 78rpx;
+			border-radius: 50%;
+			position: absolute;
+			z-index: 100;
+			bottom: 120rpx;
+			left: 50%;
+			transform: translateX(-50%);
+			border: 1px solid #fff;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			box-shadow: 0 0 5px 0 rgba(0, 0, 0, 0.2);
+			background-color: rgba(0, 0, 0, 0.1);
+		}
 		.preview-item {
 			width: 100vw;
 			height: 100vh;
@@ -407,13 +456,17 @@ export default {
 			}
 		}
 		.index-box {
+			padding: 3rpx 10rpx;
 			position: absolute;
-			width: 100%;
 			text-align: center;
-			bottom: 109rpx;
+			bottom: 48rpx;
 			color: #fff;
 			font-size: 36rpx;
+			background-color: rgba(0, 0, 0, 0.1);
+			left: 50%;
+			transform: translateX(-50%);
 		}
 	}
+	// #endif
 }
 </style>

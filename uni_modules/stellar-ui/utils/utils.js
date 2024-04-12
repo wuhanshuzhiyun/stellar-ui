@@ -5,7 +5,12 @@ let windowWidth = null;
 
 let utils = {
 	Color,
-	rpx2px(rpx) {
+	/**
+	 * rpx转px
+	 * @param rpx {Number | String} rpx值
+	 * @param restype {"str" | "num"} 返回值类型
+	 */
+	rpx2px(rpx, restype = "str") {
 		if (!rpx) return '0';
 		let str = rpx;
 		if (isNaN(str)) {
@@ -21,7 +26,7 @@ let utils = {
 			windowWidth = uni.getSystemInfoSync().windowWidth;
 		}
 		let px = (str * windowWidth) / 750;
-		return `${px}px`;
+		return restype === "num" ? px : `${px}px`;
 	},
 	/**
 	 * 背景值转样式
@@ -135,8 +140,7 @@ let utils = {
 		return new Promise((resolve, reject) => {
 			try {
 				uni.createSelectorQuery()
-					.in(component)
-					[selectFn](selectors)
+					.in(component)[selectFn](selectors)
 					.boundingClientRect((data) => {
 						resolve(data);
 					})

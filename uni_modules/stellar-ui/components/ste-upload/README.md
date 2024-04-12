@@ -1,69 +1,98 @@
 # Upload 上传
-手势切屏组件，支持水平手势切换和垂直手势切换。
+支持图片上传、视频上传、其他文件上传（仅微信小程序和H5）。
 
 {{compatibility}}
 
 
-#### 水平切换，固定宽度
-- 外层使用`ste-touch-swipe`父标签包裹
-	- `index`属性设置当前激活区域，支持`sync`双向绑定
-	- `width`属性设置区域宽度，默认`100%`
-- 内层使用`ste-touch-swipe-item`子标签包裹每一块区域的内容
+#### 基础用法
+- `v-model`双向绑定接收一个对象数组，对象包含以下属性
+	- `url`：文件路径（与path二选一必须）
+	- `path`：本地文件路径（与url二选一必须）
+	- `name`：文件名（可选）
+	- `type`：文件类型；可选值为`video`、`image`、`file`（可选）
+	- `size`：文件大小（可选）
+	- `status`：文件上传状态；可选值为`uploading`、`error`、`success`（可选，默认为`success`）
+	- `thumbPath`：视频首帧图片（类型为`video`时必需）
+	- `width`：视频宽度（可选）
+	- `height`：视频高度（可选）
+	- `duration`：视频时长（可选）
+- `@read`事件在文件读取完成后调用，回调参数为选取到的文件对象列表，对象包含以下属性
+	- `path`：本地文件路径
+	- `name`：文件名称（小程序都是`null`）
+	- `type`：文件类型
+	- `size`：文件大小
+	- `thumbPath`：视频首帧图片（类型为`video`时提供）
+	- `width`：视频宽度（类型为`video`时提供）
+	- `height`：视频高度（类型为`video`时提供）
+	- `duration`：视频时长（类型为`video`时提供）
+	- `file`：当前文件对象（H5平台专属）
 
 
 ```html
-<ste-touch-swipe width="690" :index.sync="hIndex">
-	<ste-touch-swipe-item v-for="(img, index) in imgs" :key="index">
-		<image :src="img" mode="widthFix" style="width: 100%" />
-	</ste-touch-swipe-item>
-</ste-touch-swipe>
+<ste-upload v-model="fileList" @read="onRead" />
 
 <script>
 export default {
 	data() {
 		return {
-			hIndex: 0,
-			imgs: [
-				'https://image.whzb.com/chain/StellarUI/image/img1.jpg',
-				'https://image.whzb.com/chain/StellarUI/image/img2.jfif',
-				'https://image.whzb.com/chain/StellarUI/image/img3.jpg',
-				'https://image.whzb.com/chain/StellarUI/image/img4.jpg',
-			],
+			fileList: [],
 		};
 	},
-};
-</script>
-```
-#### 垂直切换，固定高度
-- 外层使用`ste-touch-swipe`父标签包裹
-	- `height`属性设置区域高度，默认`100%`
-- 内层使用`ste-touch-swipe-item`子标签包裹每一块区域的内容
-
-
-```html
-<ste-touch-swipe height="600" direction="vertical" :index.sync="vIndex">
-	<ste-touch-swipe-item v-for="(img, index) in imgs" :key="index">
-		<image :src="img" mode="heightFix" style="height: 100%" />
-	</ste-touch-swipe-item>
-</ste-touch-swipe>
-
-<script>
-export default {
-	data() {
-		return {
-			vIndex: 0,
-			imgs: [
-				'https://image.whzb.com/chain/StellarUI/image/img1.jpg',
-				'https://image.whzb.com/chain/StellarUI/image/img2.jfif',
-				'https://image.whzb.com/chain/StellarUI/image/img3.jpg',
-				'https://image.whzb.com/chain/StellarUI/image/img4.jpg',
-			],
-		};
+	methods: {
+		onRead(fileList) {
+			setTimeout(() => {
+				fileList.forEach((item) => {
+					if (Math.random() > 0.5) {
+						item.status = 'success';
+					} else {
+						item.status = 'error';
+					}
+				});
+			}, 1000);
+		},
 	}
 };
 </script>
 ```
 
+
+#### 文件类型
+- `accept`属性可以设置选择文件类型：可选值有
+	- `image`：图片类型（默认）
+	- `video`：视频类型
+	- `media`：可选自行切换择图片或者视频
+	- `all`：所有类型（微信小程序和H5可用）
+	- `file`：除了图片和视频之外的其他类型（仅微信小程序可用）
+
+
+```html
+<ste-upload v-model="fileList1" @read="onRead1" accept="media" />
+
+<script>
+export default {
+	data() {
+		return {
+			fileList1: [],
+		};
+	},
+	methods: {
+		onRead1(fileList) {
+			setTimeout(() => {
+				fileList.forEach((item) => {
+					item.status = 'success';
+				});
+			}, 1000);
+		},
+	}
+};
+</script>
+```
+
+#### 双向绑定
+- 当然也支持`v-model`双向绑定
+```
+
+```
 
 ### API
 ### touch-swipe Props

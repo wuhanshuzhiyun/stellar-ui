@@ -1,10 +1,5 @@
-const fileType = {
-	all: "*",
-	image: ".PNG,.JPG,.WEBP,.SVG,.GIF",
-	video: ".mp4,.mov,.m4v,.3gp,.avi,.m3u8,.webm",
-}
 /**
- * @type {{accept: "image" | "video";capture:("album" | "camera")[];camera:"back" | "front";compressed:boolean;maxDuration:number;multiple:boolean;count:number;maxSize:number}}
+ * @type {{accept: "image" | "video";capture:("album" | "camera")[];camera:"back" | "front";compressed:boolean;maxDuration:number;multiple:boolean;count:number;}}
  */
 const _options = {
 	accept: "image",
@@ -14,12 +9,11 @@ const _options = {
 	maxDuration: 60,
 	multiple: false,
 	count: 9,
-	maxSize: 0
 }
 
 /**
  * 读取本地媒体文件
- * @param {{accept: "image" | "video";capture:("album" | "camera")[];camera:"back" | "front";compressed:boolean;maxDuration:number;multiple:boolean;count:number;maxSize:number}} options 参数
+ * @param {{accept: "image" | "video" | "media";capture:("album" | "camera")[];camera:"back" | "front";compressed:boolean;maxDuration:number;multiple:boolean;count:number;}} options 参数
  * @returns {Promise<{path:string;name:string;type:string;size:number;height?:number;width?:number;thumbPath?:string}[]>}
  */
 export function readMediaFile(options = {}) {
@@ -31,55 +25,39 @@ export function readMediaFile(options = {}) {
 		maxDuration,
 		multiple,
 		count,
-		maxSize
 	} = Object.assign(_options, options)
 	return new Promise((resolve, reject) => {
 		// #ifdef MP-WEIXIN
-		if (accept === "video") {
-			wx.chooseVideo({
-				sourceType: capture,
-				camera,
-				compressed,
-				maxDuration,
-				success(e) {
-					resolve([{
+		wx.chooseMedia({
+			count,
+			mediaType: [accept],
+			sourceType: capture,
+			camera: camera,
+			sizeType: [compressed ? 'compressed' : 'original'],
+			maxDuration,
+			success(res) {
+				const tempFiles = res.tempFiles
+				const result = tempFiles.map((item) => {
+					const m = {
 						name: null,
-						size: e.size,
-						path: e.tempFilePath,
-						type: "video",
-						duration: e.duration,
-						height: e.height,
-						width: e.width,
-						thumbPath: e.thumbTempFilePath,
-					}])
-				},
-			})
-		} else {
-			wx.chooseMedia({
-				count,
-				mediaType: ['image'],
-				sourceType: capture,
-				camera: camera,
-				sizeType: [compressed ? 'compressed' : 'original'],
-				maxDuration,
-				success({
-					tempFiles
-				}) {
-					const result = tempFiles.map((item) => {
-						return {
-							name: null,
-							size: item.size,
-							path: item.tempFilePath,
-							type: "image",
-						};
-					});
-					resolve(result)
-				},
-				fail: (err) => {
-					reject(err)
-				},
-			});
-		}
+						size: item.size,
+						path: item.tempFilePath,
+						type: res.type,
+					};
+					if (m.type === "video") {
+						m.duration = item.duration
+						m.height = item.height
+						m.width = item.width
+						m.thumbPath = item.thumbTempFilePath
+					}
+					return m
+				});
+				resolve(result)
+			},
+			fail: (err) => {
+				reject(err)
+			},
+		});
 		// #endif
 
 		// #ifdef MP-ALIPAY
@@ -129,7 +107,6 @@ export function readMediaFile(options = {}) {
  * @param {Number} count
  */
 export function readFile(accept = "all", count = 9, multiple = false) {
-	console.log("选择文件")
 	return new Promise((resolve, reject) => {
 		// #ifdef MP-WEIXIN
 		wx.chooseMessageFile({
@@ -160,7 +137,7 @@ export function readFile(accept = "all", count = 9, multiple = false) {
 }
 
 
-
+// #ifdef MP-ALIPAY
 function aliReadImage({
 	count,
 	useFrontCamera,
@@ -192,6 +169,15 @@ function aliReadImage({
 		})
 	})
 }
+// #endif
+// #ifdef H5
+const h5FileType = {
+	all: "*",
+	file: "*",
+	image: ".PNG,.JPG,.WEBP,.SVG,.GIF",
+	video: ".mp4,.mov,.m4v,.3gp,.avi,.m3u8,.webm",
+	media: ".PNG,.JPG,.WEBP,.SVG,.GIF,.mp4,.mov,.m4v,.3gp,.avi,.m3u8,.webm",
+}
 
 function h5ReadFile({
 	accept = "image",
@@ -202,18 +188,23 @@ function h5ReadFile({
 		ipt.style.display = "none";
 		ipt.setAttribute("type", "file")
 		ipt.setAttribute("multiple", multiple)
-		ipt.setAttribute("accept", fileType[accept])
+		ipt.setAttribute("accept", h5FileType[accept])
 		document.body.appendChild(ipt);
 		ipt.click()
 		ipt.addEventListener("change", async (e) => {
 			const files = e.target.files;
+
 			const result = []
 			for (let i = 0; i < files.length; i++) {
 				const file = files[i]
+				let type = file.type;
+				if (["image", "video", "media"].indexOf(accept) !== -1) {
+					type = type.indexOf("video") !== -1 ? "video" : "image"
+				}
 				const resultItem = {
 					name: file.name,
 					path: URL.createObjectURL(file),
-					type: accept,
+					type,
 					size: file.size,
 					file,
 				};
@@ -264,3 +255,4 @@ function getVideoFirstFrame(path) {
 		}
 	})
 }
+// #endif
