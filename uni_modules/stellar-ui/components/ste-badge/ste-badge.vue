@@ -13,7 +13,7 @@
 				:class="{ 'no-padding': $slots.content || (content && content.length == 1) }"
 			>
 				<slot name="content">
-					<text class="ste-badge--content-text">{{ cmpContent }}</text>
+					<view class="ste-badge--content-text">{{ cmpContent }}</view>
 				</slot>
 			</view>
 		</view>
@@ -147,6 +147,7 @@ export default {
 		background-color: #ee0a24;
 		border-radius: 99999rpx;
 		width: fit-content;
+		z-index: 99;
 
 		.content-box {
 			display: flex;
