@@ -6,7 +6,7 @@
 					class="image"
 					:src="item.thumbPath || item.url || item.path"
 					mode="aspectFit"
-					@click="previewItem(index)"
+					@click="previewItem(index, item)"
 				/>
 				<view class="uploading" v-if="item.status === 'uploading'">上传中</view>
 				<view class="error" v-if="item.status === 'error'">上传失败</view>
@@ -15,26 +15,28 @@
 						<ste-icon code="&#xe67b;" size="20" color="#fff" />
 					</view>
 				</view>
-				<view class="preview-cover">
+				<view class="preview-cover" v-if="!item.status || item.status === 'success'">
 					<slot name="preview-cover" :item="item"></slot>
 				</view>
 			</view>
-			<view class="image-item btn" v-if="cmpShowUpload" @click="selectFile">
+			<view class="add-file" v-if="cmpShowUpload" @click="selectFile">
 				<slot>
-					<view class="upload-btn">
-						<ste-icon :code="uploadIcon" :size="60" color="#ddd"></ste-icon>
-						<view class="upload-text">{{ uploadText }}</view>
+					<view class="image-item add-file">
+						<view class="upload-btn">
+							<ste-icon :code="uploadIcon" :size="60" color="#ddd"></ste-icon>
+							<view class="upload-text">{{ uploadText }}</view>
+						</view>
+						<!-- #ifdef MP-ALIPAY -->
+						<view class="delete" v-if="accept === 'media'" @click.stop="setMediaType">
+							<view class="icon">
+								<view :class="{ video: mediaType === 'video' }">
+									<ste-icon :code="mediaType === 'video' ? '&#xe699;' : '&#xe693;'" size="20" color="#fff" />
+								</view>
+							</view>
+						</view>
+						<!-- #endif -->
 					</view>
 				</slot>
-				<!-- #ifdef MP-ALIPAY -->
-				<view class="delete" v-if="accept === 'media'" @click.stop="setMediaType">
-					<view class="icon">
-						<view :class="{ video: mediaType === 'video' }">
-							<ste-icon :code="mediaType === 'video' ? '&#xe699;' : '&#xe693;'" size="20" color="#fff" />
-						</view>
-					</view>
-				</view>
-				<!-- #endif -->
 			</view>
 		</view>
 		<!-- #ifndef MP-WEIXIN -->
@@ -43,7 +45,7 @@
 				<ste-icon code="&#xe67b;" color="#fff" size="30" />
 			</view>
 			<ste-touch-swipe :index.sync="previewIndex">
-				<ste-touch-swipe-item v-for="(item, index) in dataValue" :key="index">
+				<ste-touch-swipe-item v-for="(item, index) in cmpPreviewList" :key="index">
 					<view class="preview-item" @click.stop="1">
 						<video
 							object-fit="contain"
@@ -57,7 +59,7 @@
 					</view>
 				</ste-touch-swipe-item>
 			</ste-touch-swipe>
-			<view class="index-box">{{ previewIndex + 1 }}/{{ dataValue.length }}</view>
+			<view class="index-box">{{ previewIndex + 1 }}/{{ cmpPreviewList.length }}</view>
 		</view>
 		<!-- #endif -->
 	</view>
@@ -228,6 +230,9 @@ export default {
 			let bool = this.showUpload && (this.maxCount == 0 || this.dataValue.length < this.maxCount);
 			return bool;
 		},
+		cmpPreviewList() {
+			return this.dataValue.filter((item) => ['video', 'image'].indexOf(item.type) !== -1);
+		},
 	},
 	watch: {
 		value: {
@@ -313,11 +318,13 @@ export default {
 			this.$emit('input', this.dataValue);
 			this.$emit('delete', index);
 		},
-		previewItem(index) {
+		previewItem(index, item) {
+			console.log(item);
+			if (['video', 'image'].indexOf(item.type) === -1) return;
 			// #ifdef MP-WEIXIN
 			wx.previewMedia({
 				current: index,
-				sources: this.dataValue.map((item) => ({ ...item, url: item.url || item.path, poster: item.thumbPath })),
+				sources: this.cmpPreviewList.map((item) => ({ ...item, url: item.url || item.path, poster: item.thumbPath })),
 			});
 			return;
 			// #endif
@@ -357,7 +364,7 @@ export default {
 			background: #f7f7f7;
 			overflow: hidden;
 
-			&.btn {
+			&.add-file {
 				.upload-btn {
 					display: flex;
 					align-items: center;

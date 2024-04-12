@@ -18,6 +18,20 @@
 				<view class="title">限制文件大小2M</view>
 				<ste-upload v-model="fileList3" :maxSize="2048" />
 			</view>
+			<view class="demo-item">
+				<view class="title">自定义上传样式</view>
+				<ste-upload v-model="fileList4">
+					<button type="primary" size="mini" style="padding: 0 10px">上传文件</button>
+				</ste-upload>
+			</view>
+			<view class="demo-item">
+				<view class="title">自定义预览图层</view>
+				<ste-upload v-model="fileList5">
+					<template v-slot:preview-cover="{ item }">
+						<view style="color: #06a; font-size: 24rpx">size:{{ item.size }}b</view>
+					</template>
+				</ste-upload>
+			</view>
 		</view>
 	</view>
 </template>
@@ -28,8 +42,11 @@ export default {
 		return {
 			fileList: [],
 			fileList1: [],
-			fileList2: [{ url: 'https://image.whzb.com/chain/StellarUI/bg1.jpg' }],
+			fileList2: [{ url: 'https://image.whzb.com/chain/StellarUI/bg1.jpg', type: 'image' }],
 			fileList3: [],
+			fileList4: [],
+			fileList5: [{ url: 'https://image.whzb.com/chain/StellarUI/bg1.jpg', type: 'image', size: 1234 }],
+			fileList6: [],
 		};
 	},
 	watch: {
@@ -41,14 +58,33 @@ export default {
 			}, 1000);
 		},
 		fileList3(v) {
-			v.forEach((item) => {
-				item.status = 'success';
-			});
+			setTimeout(() => {
+				v.forEach((item) => {
+					item.status = 'success';
+				});
+			}, 1000);
 		},
-	},
-	mounted() {
-		const info = uni.getMenuButtonBoundingClientRect();
-		console.log(info);
+		fileList4(v) {
+			setTimeout(() => {
+				v.forEach((item) => {
+					item.status = 'success';
+				});
+			}, 1000);
+		},
+		fileList5(v) {
+			setTimeout(() => {
+				v.forEach((item) => {
+					item.status = 'success';
+				});
+			}, 1000);
+		},
+		fileList6(v) {
+			setTimeout(() => {
+				v.forEach((item) => {
+					item.status = 'success';
+				});
+			}, 1000);
+		},
 	},
 	methods: {
 		beforeRead(fileList, next) {
