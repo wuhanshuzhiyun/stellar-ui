@@ -101,6 +101,8 @@ export default {
 
 						color: #ffffff;
 						font-size: 24rpx;
+
+						white-space: nowrap;
 					}
 				}
 			}

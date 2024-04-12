@@ -1,7 +1,8 @@
 <template>
 	<button
 		class="ste-button--root"
-		:hover-class="!disabled && !loading ? 'ste-button--root-active' : ''"
+		:disabled="disabled"
+		:hover-class="!loading ? 'ste-button--root-active' : ''"
 		@click.stop="handleClick"
 		:style="[cmpBtnStyle]"
 		:open-type="openType"
