@@ -8,16 +8,22 @@
 					mode="aspectFit"
 					@click="previewItem(index, item)"
 				/>
-				<view class="uploading" v-if="item.status === 'uploading'">上传中</view>
-				<view class="error" v-if="item.status === 'error'">上传失败</view>
+				<view class="uploading" v-if="item.status === 'uploading'">
+					<view class="icon"><ste-icon code="&#xe69f;" size="48" color="#fff" /></view>
+					<view class="text">上传中</view>
+				</view>
+				<view class="error" v-if="item.status === 'error'">
+					<view class="icon"><ste-icon code="&#xe6a0;" size="48" color="#fff" /></view>
+					<view class="text">上传失败</view>
+				</view>
 				<view class="delete" v-if="deletable && item.status !== 'uploading'" @click.stop="deleteItem(index)">
 					<view class="icon">
 						<ste-icon code="&#xe67b;" size="20" color="#fff" />
 					</view>
 				</view>
-				<view class="preview-cover" v-if="!item.status || item.status === 'success'">
+				<block v-if="!item.status || item.status === 'success'">
 					<slot name="preview-cover" :item="item"></slot>
-				</view>
+				</block>
 			</view>
 			<view class="add-file" v-if="cmpShowUpload" @click="selectFile">
 				<slot>
@@ -30,7 +36,7 @@
 						<view class="delete" v-if="accept === 'media'" @click.stop="setMediaType">
 							<view class="icon">
 								<view :class="{ video: mediaType === 'video' }">
-									<ste-icon :code="mediaType === 'video' ? '&#xe699;' : '&#xe693;'" size="20" color="#fff" />
+									<ste-icon :code="mediaType === 'video' ? '&#xe6a1;' : '&#xe69b;'" size="20" color="#fff" />
 								</view>
 							</view>
 						</view>
@@ -98,6 +104,11 @@ import { readMediaFile, readFile } from './ReadFile.js';
  * @property {String} uploadIcon 上传按钮图标,同icon组件code
  * @property {String} uploadText 上传按钮文字
  * @property {Number | String} radius 圆角弧度，单位rpx
+ * @event {Function} beforeRead 文件读取前的回调函数
+ * @event {Function} read 文件读取后的回调函数
+ * @event {Function} oversize 文件大小超出限制的回调函数
+ * @event {Function} beforeDelete 文件删除前的回调函数
+ * @event {Function} delete 文件删除后的回调函数
  * */
 export default {
 	group: '表单组件',
@@ -192,7 +203,7 @@ export default {
 		// 上传区域图标，可选值见 Icon 组件
 		uploadIcon: {
 			type: String,
-			default: () => '&#xe693;',
+			default: () => '&#xe69b;',
 		},
 		// 上传区域文字提示
 		uploadText: {
@@ -291,7 +302,7 @@ export default {
 
 		readNext(fileList) {
 			let next = true;
-			const e = this.$emit('before-read', fileList, (bool) => (next = bool));
+			const e = this.$emit('beforeRead', fileList, (bool) => (next = bool));
 			if (!next) return;
 			next = undefined;
 			if (this.maxSize > 0) {
@@ -310,7 +321,7 @@ export default {
 		},
 		deleteItem(index) {
 			let next = true;
-			this.$emit('before-delete', index, (bool) => (next = bool));
+			this.$emit('beforeDelete', index, (bool) => (next = bool));
 			if (!next) return;
 			next = undefined;
 
@@ -340,6 +351,14 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+@keyframes ste-upload-rotate {
+	0% {
+		transform: rotate(0deg);
+	}
+	100% {
+		transform: rotate(360deg);
+	}
+}
 .ste-upload--root {
 	.image {
 		max-width: 100%;
@@ -358,8 +377,8 @@ export default {
 			display: flex;
 			align-items: center;
 			justify-content: center;
-			margin-bottom: 24rpx;
-			margin-right: 24rpx;
+			margin-bottom: 18rpx;
+			margin-right: 18rpx;
 			position: relative;
 			background: #f7f7f7;
 			overflow: hidden;
@@ -395,8 +414,23 @@ export default {
 				align-items: center;
 				font-family: PingFang SC, PingFang SC;
 				font-weight: 400;
-				font-size: 28rpx;
-				line-height: 30px;
+
+				.icon {
+					width: 48rpx;
+					height: 48rpx;
+					display: flex;
+					align-items: center;
+					text-align: center;
+				}
+				.text {
+					margin-top: 18rpx;
+					font-size: 28rpx;
+					line-height: 40rpx;
+				}
+			}
+
+			.uploading .icon {
+				animation: ste-upload-rotate 1s linear infinite;
 			}
 			.delete {
 				position: absolute;
@@ -417,10 +451,6 @@ export default {
 					align-items: center;
 					justify-content: center;
 				}
-			}
-			.preview-cover {
-				position: absolute;
-				z-index: 8;
 			}
 		}
 	}

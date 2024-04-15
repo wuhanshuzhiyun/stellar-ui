@@ -187,7 +187,9 @@ function h5ReadFile({
 		let ipt = document.createElement("input");
 		ipt.style.display = "none";
 		ipt.setAttribute("type", "file")
-		ipt.setAttribute("multiple", multiple)
+		if (multiple) {
+			ipt.setAttribute("multiple", multiple)
+		}
 		ipt.setAttribute("accept", h5FileType[accept])
 		document.body.appendChild(ipt);
 		ipt.click()

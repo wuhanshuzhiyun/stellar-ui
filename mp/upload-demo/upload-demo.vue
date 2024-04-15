@@ -6,9 +6,10 @@
 				<view class="title">基础用法</view>
 				<ste-upload v-model="fileList" @read="onRead" />
 			</view>
+
 			<view class="demo-item">
-				<view class="title">文件类型</view>
-				<ste-upload v-model="fileList1" @read="onRead1" accept="media" />
+				<view class="title">文件类型、多选</view>
+				<ste-upload v-model="fileList1" @read="onRead1" accept="media" multiple />
 			</view>
 			<view class="demo-item">
 				<view class="title">限制上传数量2</view>
@@ -28,9 +29,29 @@
 				<view class="title">自定义预览图层</view>
 				<ste-upload v-model="fileList5">
 					<template v-slot:preview-cover="{ item }">
-						<view style="color: #06a; font-size: 24rpx">size:{{ item.size }}b</view>
+						<view
+							style="
+								color: #000;
+								font-size: 24rpx;
+								background-color: rgba(255, 255, 255, 0.8);
+								position: absolute;
+								width: 100%;
+								bottom: 0;
+								text-align: center;
+							"
+						>
+							size:{{ item.size }}b
+						</view>
 					</template>
 				</ste-upload>
+			</view>
+			<view class="demo-item">
+				<view class="title">上传、删除前置处理</view>
+				<ste-upload @beforeRead="beforeRead"></ste-upload>
+			</view>
+			<view class="demo-item">
+				<view class="title">删除前置处理</view>
+				<ste-upload v-model="fileList6" @beforeDelete="beforeDelete"></ste-upload>
 			</view>
 		</view>
 	</view>
@@ -87,9 +108,6 @@ export default {
 		},
 	},
 	methods: {
-		beforeRead(fileList, next) {
-			next(false);
-		},
 		onRead(fileList) {
 			setTimeout(() => {
 				fileList.forEach((item) => {
@@ -99,7 +117,7 @@ export default {
 						item.status = 'error';
 					}
 				});
-			}, 1000);
+			}, 10000);
 		},
 		onDelete(i) {
 			this.fileList.splice(i, 1);
@@ -113,6 +131,20 @@ export default {
 		},
 		onDelete1(i) {
 			this.fileList1.splice(i, 1);
+		},
+		beforeRead(fileList, next) {
+			uni.showToast({
+				title: '阻止上传',
+				icon: 'none',
+			});
+			next(false);
+		},
+		beforeDelete(index, next) {
+			uni.showToast({
+				title: '阻止删除',
+				icon: 'none',
+			});
+			next(false);
 		},
 	},
 };
