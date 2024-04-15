@@ -33,6 +33,7 @@ body {
 
 .page {
 	height: 100vh;
+	overflow: hidden;
 	::-webkit-scrollbar {
 		display: none;
 		width: 0 !important;
@@ -50,7 +51,7 @@ body {
 		height: calc(100% - 220rpx);
 		// #endif
 		// #ifdef  MP-ALIPAY
-		height: calc(100% - 90rpx);
+		height: calc(100% - 200rpx);
 		// #endif
 		overflow-y: auto;
 

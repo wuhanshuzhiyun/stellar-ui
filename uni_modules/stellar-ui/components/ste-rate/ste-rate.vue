@@ -121,14 +121,20 @@ export default {
 				}
 			}
 		},
+		// 计算已评分占未评分的宽度
 		getWidth(index) {
 			let value = (index + 1) * this.score;
 			let diff = this.value - value;
+			// 全部占据
 			if (diff >= 0) {
 				return '100%';
-			} else if (Math.abs(diff) > 0 && Math.abs(diff) < this.score) {
+			}
+			// 部分占据
+			else if (Math.abs(diff) > 0 && Math.abs(diff) < this.score) {
 				return (1 - Math.abs(diff) / this.score).toFixed(2) * 100 + '%';
-			} else {
+			}
+			// 未占据
+			else {
 				return 0;
 			}
 		},

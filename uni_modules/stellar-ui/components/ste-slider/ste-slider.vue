@@ -5,6 +5,7 @@
 
 		<view
 			class="slider-bar-box"
+			:class="{ 'range-min': realPercentage == 0, 'range-max': realPercentage == 100 }"
 			@touchstart="onTouchStart"
 			@touchmove.stop="onTouchMove"
 			@touchend="onTouchEnd"
@@ -15,10 +16,31 @@
 				top: vertical ? `${realPercentage}%` : '50%',
 			}"
 		>
-			<slot name="button">
-				<view class="slider-bar" />
+			<slot :name="range ? 'leftButton' : 'button'">
+				<view class="slider-bar"></view>
 			</slot>
 		</view>
+
+		<view
+			v-if="range"
+			class="slider-bar-box range"
+			:class="{ 'range-min': realPercentage2 == 0, 'range-max': realPercentage2 == 100 }"
+			@touchstart="onTouchStart($event, true)"
+			@touchmove.stop="onTouchMove($event, true)"
+			@touchend="onTouchEnd($event, true)"
+			@touchcancel="onTouchEnd($event, true)"
+			@mousedown="onDown($event, true)"
+			:style="{
+				left: vertical ? '50%' : `${realPercentage2}%`,
+				top: vertical ? `${realPercentage2}%` : '50%',
+				zIndex: isSecondSlider ? 10 : 8,
+			}"
+		>
+			<slot name="rightButton">
+				<view class="slider-bar"></view>
+			</slot>
+		</view>
+
 		<template v-if="showStops">
 			<template v-for="(e, i) in markList">
 				<view class="mark-box" :style="{ left: e.left, top: e.top }">
@@ -54,6 +76,9 @@ export default {
 	group: '表单组件',
 	title: 'Slider 滑块',
 	name: 'ste-slider',
+	options: {
+		virtualHost: true,
+	},
 	props: {
 		value: {
 			type: [Number, String, Array],
@@ -115,7 +140,7 @@ export default {
 	data() {
 		return {
 			realPercentage: 0,
-			haveSlot: false,
+			realPercentage2: 0, // 范围模式下该值为第二个滑块的值
 			sliderRect: {
 				left: 0,
 				width: 0,
@@ -128,12 +153,11 @@ export default {
 			markList: [],
 			hasMarks: false,
 			isMouseDown: false,
-			isMouseEnter: false,
+			isSecondSlider: false,
 		};
 	},
 	created() {},
 	mounted() {
-		this.haveSlot = this.$slots.default;
 		utils.querySelector('.ste-slider--root', this).then((rect) => {
 			this.sliderRect = rect;
 		});
@@ -144,6 +168,14 @@ export default {
 			let classStr = '';
 			if (this.isDrag) {
 				classStr += 'ste-slider--drag ';
+			}
+
+			if (this.range) {
+				classStr += 'ste-slider--range ';
+			}
+
+			if (this.disabled) {
+				classStr += 'ste-slider--disabled ';
 			}
 
 			if (this.vertical) {
@@ -163,9 +195,7 @@ export default {
 		},
 		cmpInactiveStyle() {
 			let style = {};
-			if (this.disabled) {
-				style.backgroundColor = '#eeeeee';
-			} else {
+			if (!this.disabled) {
 				const bg = utils.bg2style(this.inactiveColor);
 				style = { ...style, ...bg };
 			}
@@ -173,16 +203,24 @@ export default {
 		},
 		cmpActiveStyle() {
 			let style = {};
-			if (this.disabled) {
-				style.backgroundColor = '#cccccc';
-			} else {
+			if (!this.disabled) {
 				const bg = utils.bg2style(this.activeColor);
 				style = { ...style, ...bg };
 			}
 			if (this.vertical) {
-				style.height = this.realPercentage + '%';
+				if (this.range) {
+					style.top = this.realPercentage + '%';
+					style.height = this.realPercentage2 - this.realPercentage + '%';
+				} else {
+					style.height = this.realPercentage + '%';
+				}
 			} else {
-				style.width = this.realPercentage + '%';
+				if (this.range) {
+					style.left = this.realPercentage + '%';
+					style.width = this.realPercentage2 - this.realPercentage + '%';
+				} else {
+					style.width = this.realPercentage + '%';
+				}
 			}
 			return style;
 		},
@@ -190,12 +228,11 @@ export default {
 	watch: {
 		value: {
 			handler(val) {
-				if (val >= this.max) {
-					this.realPercentage = this.max;
-				} else if (val <= this.min) {
-					this.realPercentage = this.min;
+				if (Array.isArray(val)) {
+					this.realPercentage = this.getRealValue(val[0]);
+					this.realPercentage2 = this.getRealValue(val[1]);
 				} else {
-					this.realPercentage = val;
+					this.realPercentage = this.getRealValue(val);
 				}
 			},
 			immediate: true,
@@ -222,7 +259,7 @@ export default {
 		},
 		// #endif
 		handleClick(e) {
-			if (this.readonly || this.disabled) return;
+			if (this.readonly || this.disabled || this.range) return;
 			let offsetValue;
 			if (this.vertical) {
 				let clientY = e.detail.y || e.detail.clientY;
@@ -232,11 +269,12 @@ export default {
 				offsetValue = ((clientX - this.sliderRect.left) / this.sliderRect.width) * 100;
 			}
 			this.updateWidth(offsetValue, false);
-			this.$emit('change', this.realPercentage);
+			this.$emit('change', this.range ? [this.realPercentage, this.realPercentage2] : this.realPercentage);
 		},
-		onTouchStart(e) {
+		onTouchStart(e, isSecond) {
+			this.isSecondSlider = !!isSecond;
 			this.startPosition = this.getPosition(e);
-			this.startPercentage = this.realPercentage;
+			this.startPercentage = isSecond ? this.realPercentage2 : this.realPercentage;
 			this.$emit('dragStart', e);
 		},
 		onTouchMove(e) {
@@ -251,10 +289,12 @@ export default {
 		},
 		onTouchEnd(e) {
 			this.isDrag = false;
+			// this.isSecondSlider = false;
 			this.$emit('dragEnd', e);
-			this.$emit('change', this.realPercentage);
+			this.$emit('change', this.range ? [this.realPercentage, this.realPercentage2] : this.realPercentage);
 			this.removeListenner && this.removeListenner();
 		},
+		// 为了保持web端和移动端事件参数数据结构一致
 		getPosition(e) {
 			if (e.touches) {
 				return e.touches[0];
@@ -270,19 +310,43 @@ export default {
 			} else {
 				realValue = value;
 			}
-
-			this.realPercentage = this.hasMarks
-				? this.calculateValue(realValue, 1)
-				: this.calculateValue(realValue, this.step);
-			this.$emit('input', this.realPercentage);
+			const changeValue = this.calculateValue(realValue);
+			if (this.isSecondSlider) {
+				this.realPercentage2 = changeValue;
+			} else {
+				this.realPercentage = changeValue;
+			}
+			this.$emit('input', this.range ? [this.realPercentage, this.realPercentage2] : this.realPercentage);
 		},
-		calculateValue(value, step) {
+		// 根据步长和最大最小值来计算每次的滑动
+		calculateValue(value) {
+			let step = this.hasMarks ? 1 : this.step;
+			let min = this.min;
+			let max = this.max;
+
+			/**
+			 *当范围模式下时，两个滑块不允许交替,
+			 *第一个滑块的最大值就是第二个滑块的当前值，
+			 * 第二个滑块的最小是就是第一个滑块的当前值
+			 */
+			if (this.range) {
+				if (this.isSecondSlider) {
+					min = this.realPercentage;
+				} else {
+					max = this.realPercentage2;
+				}
+			}
+
 			// 计算出当前值相对于最小值的偏移量
-			const offset = value - this.min;
+			const offset = value - min;
 			// 根据步长计算出应该是哪个步长点
-			const targetValue = Math.round(offset / step) * step + this.min;
+			const targetValue = Math.round(offset / step) * step + min;
 			// 确保计算出的值不会超过最大值和低于最小值
-			return Math.max(Math.min(targetValue, this.max), this.min);
+			return this.getRealValue(targetValue, max, min);
+		},
+		// 根据传入的最大最小值来计算传入的值是否在范围内，并给出范围内的值
+		getRealValue(value = 0, max = this.max, min = this.min) {
+			return Math.max(Math.min(value, max), min);
 		},
 		calculateStepMarks() {
 			if (!this.showStops) return;
@@ -323,6 +387,22 @@ export default {
 	height: var(--progress-height);
 	border-radius: 24rpx;
 
+	&.ste-slider--disabled {
+		.active-box {
+			background-color: #cccccc;
+		}
+
+		.inactive-box {
+			background-color: #eeeeee;
+		}
+
+		.slider-bar-box {
+			.slider-bar {
+				border-color: #cccccc;
+			}
+		}
+	}
+
 	&.ste-slider--drag {
 		.active-box {
 			transition: none !important;
@@ -332,6 +412,7 @@ export default {
 		}
 	}
 	&.ste-slider--vertical {
+		display: inline-block;
 		margin: 0 16rpx;
 		width: var(--progress-height);
 		height: 100%;
@@ -351,6 +432,14 @@ export default {
 			transition: top 0.3s ease;
 			left: 50%;
 			top: 0;
+
+			// &.range-min {
+			// 	transform: translate(-50%, -6px);
+			// }
+
+			// &.range-max {
+			// 	transform: translate(-50%, calc(-100% + 12rpx));
+			// }
 		}
 
 		.mark-box {
@@ -375,31 +464,21 @@ export default {
 				margin-bottom: 20rpx;
 			}
 		}
+		.slider-bar-box {
+			// &.range-min {
+			// 	transform: translate(-6px, -50%);
+			// }
+
+			// &.range-max {
+			// 	transform: translate(calc(-100% + 12rpx), -50%);
+			// }
+		}
 	}
 
 	.inactive-box {
 		width: 100%;
 		height: var(--progress-height);
 		border-radius: 24rpx;
-	}
-
-	.slider-bar-box {
-		cursor: grab;
-		position: absolute;
-		left: 0;
-		top: 50%;
-		transform: translate(-50%, -50%);
-		z-index: 9;
-
-		transition: left 0.3s ease;
-		.slider-bar {
-			min-width: var(--bar-size);
-			height: var(--bar-size);
-			width: var(--bar-size);
-			border-radius: 50%;
-			background-color: #ffffff;
-			border: 2rpx solid var(--active-color);
-		}
 	}
 
 	.active-box {
@@ -415,6 +494,38 @@ export default {
 		justify-content: flex-end;
 		transition: width 0.3s ease;
 		z-index: 2;
+	}
+
+	.slider-bar-box {
+		cursor: grab;
+		position: absolute;
+		left: 0;
+		top: 50%;
+		transform: translate(-50%, -50%);
+		z-index: 9;
+		padding: 12rpx;
+
+		transition: left 0.3s ease;
+		white-space: nowrap;
+		/* 其他样式 */
+		view {
+			white-space: nowrap;
+		}
+		text {
+			white-space: nowrap;
+		}
+		.slider-bar {
+			min-width: var(--bar-size);
+			height: var(--bar-size);
+			width: var(--bar-size);
+			border-radius: 50%;
+			background-color: #ffffff;
+			border: 2rpx solid var(--active-color);
+
+			display: flex;
+			align-items: center;
+			justify-content: center;
+		}
 	}
 
 	.mark-box {

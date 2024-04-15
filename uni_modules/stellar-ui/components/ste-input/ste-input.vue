@@ -286,7 +286,6 @@ export default {
 			this.$emit('focus', this.dataValue);
 		},
 		onBlur() {
-			console.log('失去焦点');
 			setTimeout(() => {
 				this.$emit('update:focus', false);
 				this.focused = false;
