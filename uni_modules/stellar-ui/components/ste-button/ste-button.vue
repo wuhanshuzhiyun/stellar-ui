@@ -1,9 +1,38 @@
 <template>
 	<button
+		v-if="stopPropagation"
 		class="ste-button--root"
 		:disabled="disabled"
 		:hover-class="!loading ? 'ste-button--root-active' : ''"
 		@click.stop="handleClick"
+		:style="[cmpBtnStyle]"
+		:open-type="openType"
+		:scope="scope"
+		@getuserinfo="getuserinfo"
+		@getUserInfo="getuserinfo"
+		@contact="contact"
+		@getphonenumber="getphonenumber"
+		@getPhoneNumber="getphonenumber"
+		@getrealtimephonenumber="getrealtimephonenumber"
+		@agreeprivacyauthorization="agreeprivacyauthorization"
+		@error="error"
+		@opensetting="opensetting"
+		@launchapp="launchapp"
+		@chooseavatar="chooseavatar"
+		@getAuthorize="getAuthorize"
+		@followLifestyle="followLifestyle"
+	>
+		<view class="btn-box">
+			<text v-if="loading">加载中.......</text>
+			<slot v-else></slot>
+		</view>
+	</button>
+	<button
+		v-else
+		class="ste-button--root"
+		:disabled="disabled"
+		:hover-class="!loading ? 'ste-button--root-active' : ''"
+		@click="handleClick"
 		:style="[cmpBtnStyle]"
 		:open-type="openType"
 		:scope="scope"
@@ -113,6 +142,10 @@ export default {
 		rootStyle: {
 			type: Object,
 			default: () => {},
+		},
+		stopPropagation: {
+			type: Boolean,
+			default: true,
 		},
 	},
 	data() {
