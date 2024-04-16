@@ -6,10 +6,10 @@
 		<view
 			class="slider-bar-box"
 			:class="{ 'range-min': realPercentage == 0, 'range-max': realPercentage == 100 }"
-			@touchstart="onTouchStart"
+			@touchstart.stop="onTouchStart"
 			@touchmove.stop="onTouchMove"
-			@touchend="onTouchEnd"
-			@touchcancel="onTouchEnd"
+			@touchend.stop="onTouchEnd"
+			@touchcancel.stop="onTouchEnd"
 			@mousedown="onDown"
 			:style="{
 				left: vertical ? '50%' : `${realPercentage}%`,
