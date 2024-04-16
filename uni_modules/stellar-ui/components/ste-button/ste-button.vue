@@ -78,6 +78,7 @@ import utils from '../../utils/utils.js';
  * @property {Boolean} round 是否圆角按钮 默认 true
  * @property {Boolean} disabled 是否禁用状态 默认 false
  * @property {Boolean} loading 是否加载中状态 默认 false
+ * @property {Boolean} stopPropagation 是否阻止冒泡行为 默认 false
  * @property {String} openType 微信开放能力和支付宝开放能力
  * @property {String} scope 支付宝开放能力，当 openType 为 getAuthorize 时有效
  * @property {Object} rootStyle 按钮样式属性
