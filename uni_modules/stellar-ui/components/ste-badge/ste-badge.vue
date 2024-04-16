@@ -78,6 +78,14 @@ export default {
 			type: Number,
 			default: 99,
 		},
+		showBorder: {
+			type: Boolean,
+			default: false,
+		},
+		borderColor: {
+			type: String,
+			default: '#fff',
+		},
 	},
 	data() {
 		return {};
@@ -110,6 +118,9 @@ export default {
 						style.top = utils.addUnit(this.offsetY);
 						break;
 				}
+			}
+			if (this.showBorder) {
+				style.border = 'solid 1px ' + this.borderColor;
 			}
 
 			return style;
