@@ -394,7 +394,7 @@ export default {
 			}
 			this.dataActive = active;
 			this.$emit('update:active', active);
-			this.$emit('change', { index, ...tab });
+			this.$emit('change', { ...tab, index });
 			return true;
 		},
 		onScroll(e) {
