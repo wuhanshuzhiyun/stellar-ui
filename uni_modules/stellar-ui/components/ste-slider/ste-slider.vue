@@ -247,9 +247,9 @@ export default {
 	methods: {
 		// #ifdef WEB
 		// 适配web端没有touch事件
-		onDown(e) {
+		onDown(e, isSecond) {
 			this.isMouseDown = true;
-			this.onTouchStart({ touches: [{ clientX: e.clientX, clientY: e.clientY }] });
+			this.onTouchStart({ touches: [{ clientX: e.clientX, clientY: e.clientY }] }, isSecond);
 			window.addEventListener('mousemove', this.onTouchMove);
 			window.addEventListener('mouseup', this.onTouchEnd);
 		},
@@ -257,6 +257,9 @@ export default {
 			window.removeEventListener('mousemove', this.onTouchMove);
 			window.removeEventListener('mouseup', this.onTouchEnd);
 		},
+		// onMouseMove(e, isSecond) {
+		// 	this.ont
+		// }
 		// #endif
 		handleClick(e) {
 			if (this.readonly || this.disabled || this.range) return;
