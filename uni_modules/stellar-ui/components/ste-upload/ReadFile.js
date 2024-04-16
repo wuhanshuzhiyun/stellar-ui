@@ -27,6 +27,10 @@ export function readMediaFile(options = {}) {
 		count,
 	} = Object.assign(_options, options)
 	return new Promise((resolve, reject) => {
+		if (count < 1) {
+			reject("count不能小于1")
+			return
+		}
 		// #ifdef MP-WEIXIN
 		wx.chooseMedia({
 			count,
@@ -108,6 +112,10 @@ export function readMediaFile(options = {}) {
  */
 export function readFile(accept = "all", count = 9, multiple = false) {
 	return new Promise((resolve, reject) => {
+		if (count < 1) {
+			reject("count不能小于1")
+			return
+		}
 		// #ifdef MP-WEIXIN
 		wx.chooseMessageFile({
 			type: accept,

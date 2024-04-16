@@ -29,29 +29,17 @@
 				<view class="title">自定义预览图层</view>
 				<ste-upload v-model="fileList5">
 					<template v-slot:preview-cover="{ item }">
-						<view
-							style="
-								color: #000;
-								font-size: 24rpx;
-								background-color: rgba(255, 255, 255, 0.8);
-								position: absolute;
-								width: 100%;
-								bottom: 0;
-								text-align: center;
-							"
-						>
-							size:{{ item.size }}b
-						</view>
+						<view class="item-preview">size:{{ item.size }}b</view>
 					</template>
 				</ste-upload>
 			</view>
 			<view class="demo-item">
-				<view class="title">上传、删除前置处理</view>
-				<ste-upload @beforeRead="beforeRead"></ste-upload>
+				<view class="title">读取文件前置处理</view>
+				<ste-upload @beforeRead="beforeRead" @read="onSuccessRead"></ste-upload>
 			</view>
 			<view class="demo-item">
 				<view class="title">删除前置处理</view>
-				<ste-upload v-model="fileList6" @beforeDelete="beforeDelete"></ste-upload>
+				<ste-upload v-model="fileList6" @beforeDelete="beforeDelete" @delete="onSuccessDelete"></ste-upload>
 			</view>
 		</view>
 	</view>
@@ -132,19 +120,25 @@ export default {
 		onDelete1(i) {
 			this.fileList1.splice(i, 1);
 		},
-		beforeRead(fileList, next) {
-			uni.showToast({
-				title: '阻止上传',
-				icon: 'none',
-			});
-			next(false);
+		beforeRead(fileList, suspend, next, stop) {
+			suspend();
+			uni.showToast({ title: 'suspend-read', icon: 'none' });
+			setTimeout(() => {
+				next();
+			}, 2000);
 		},
-		beforeDelete(index, next) {
-			uni.showToast({
-				title: '阻止删除',
-				icon: 'none',
-			});
-			next(false);
+		onSuccessRead(fileList) {
+			uni.showToast({ title: 'success-read', icon: 'none' });
+		},
+		beforeDelete(index, suspend, next, stop) {
+			suspend();
+			uni.showToast({ title: 'suspend-delete', icon: 'none' });
+			setTimeout(() => {
+				next();
+			}, 2000);
+		},
+		onSuccessDelete(index, fileList) {
+			uni.showToast({ title: 'success-delete', icon: 'none' });
 		},
 	},
 };
@@ -159,6 +153,16 @@ export default {
 		text {
 			font-size: 30rpx;
 		}
+	}
+	.item-preview {
+		position: absolute;
+		z-index: 10;
+		bottom: 0;
+		left: 0;
+		width: 100%;
+		text-align: center;
+		background-color: rgba(0, 0, 0, 0.5);
+		color: #fff;
 	}
 }
 </style>

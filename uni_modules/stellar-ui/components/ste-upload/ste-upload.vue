@@ -1,30 +1,32 @@
 <template>
 	<view class="ste-upload--root" :style="[cmpRootStyle]">
 		<view class="upload-list">
-			<view class="image-item" v-for="(item, index) in dataValue" :key="index">
-				<image
-					class="image"
-					:src="item.thumbPath || item.url || item.path"
-					mode="aspectFit"
-					@click="previewItem(index, item)"
-				/>
-				<view class="uploading" v-if="item.status === 'uploading'">
-					<view class="icon"><ste-icon code="&#xe69f;" size="48" color="#fff" /></view>
-					<view class="text">上传中</view>
-				</view>
-				<view class="error" v-if="item.status === 'error'">
-					<view class="icon"><ste-icon code="&#xe6a0;" size="48" color="#fff" /></view>
-					<view class="text">上传失败</view>
-				</view>
-				<view class="delete" v-if="deletable && item.status !== 'uploading'" @click.stop="deleteItem(index)">
-					<view class="icon">
-						<ste-icon code="&#xe67b;" size="20" color="#fff" />
+			<block v-if="previewImage">
+				<view class="image-item" v-for="(item, index) in dataValue" :key="index">
+					<image
+						class="image"
+						:src="item.thumbPath || item.url || item.path"
+						mode="aspectFit"
+						@click="previewItem(index, item)"
+					/>
+					<view class="uploading" v-if="item.status === 'uploading'">
+						<view class="icon"><ste-icon code="&#xe69f;" size="48" color="#fff" /></view>
+						<view class="text">上传中</view>
 					</view>
+					<view class="error" v-if="item.status === 'error'">
+						<view class="icon"><ste-icon code="&#xe6a0;" size="48" color="#fff" /></view>
+						<view class="text">上传失败</view>
+					</view>
+					<view class="delete" v-if="deletable && item.status !== 'uploading'" @click.stop="deleteItem(index)">
+						<view class="icon">
+							<ste-icon code="&#xe67b;" size="20" color="#fff" />
+						</view>
+					</view>
+					<block v-if="!item.status || item.status === 'success'">
+						<slot name="preview-cover" :item="item"></slot>
+					</block>
 				</view>
-				<block v-if="!item.status || item.status === 'success'">
-					<slot name="preview-cover" :item="item"></slot>
-				</block>
-			</view>
+			</block>
 			<view class="add-file" v-if="cmpShowUpload" @click="selectFile">
 				<slot>
 					<view class="image-item add-file">
@@ -47,25 +49,28 @@
 		</view>
 		<!-- #ifndef MP-WEIXIN -->
 		<view class="preview-list" v-if="previewIndex || previewIndex === 0">
-			<view class="close-btn" @click="previewIndex = null">
-				<ste-icon code="&#xe67b;" color="#fff" size="30" />
+			<view class="preview-content">
+				<ste-touch-swipe :index.sync="previewIndex">
+					<ste-touch-swipe-item v-for="(item, index) in cmpPreviewList" :key="index">
+						<view class="preview-item" @click.stop="1">
+							<video
+								object-fit="contain"
+								class="video"
+								v-if="item.type === 'video'"
+								:src="item.url || item.path"
+								@click.stop="1"
+							/>
+							<image class="image" v-else :src="item.url || item.path" mode="aspectFit" />
+						</view>
+					</ste-touch-swipe-item>
+				</ste-touch-swipe>
 			</view>
-			<ste-touch-swipe :index.sync="previewIndex">
-				<ste-touch-swipe-item v-for="(item, index) in cmpPreviewList" :key="index">
-					<view class="preview-item" @click.stop="1">
-						<video
-							object-fit="contain"
-							class="video"
-							:style="{ width: `${item.width}px`, height: `${item.height}px` }"
-							v-if="item.type === 'video'"
-							:src="item.url || item.path"
-							@click.stop="1"
-						/>
-						<image class="image" v-else :src="item.url || item.path" mode="aspectFit" />
-					</view>
-				</ste-touch-swipe-item>
-			</ste-touch-swipe>
-			<view class="index-box">{{ previewIndex + 1 }}/{{ cmpPreviewList.length }}</view>
+			<view class="preview-footer">
+				<view class="index-box">{{ previewIndex + 1 }}/{{ cmpPreviewList.length }}</view>
+				<view class="close-btn" @click="previewIndex = null">
+					<ste-icon code="&#xe67b;" color="#fff" size="30" />
+				</view>
+			</view>
 		</view>
 		<!-- #endif -->
 	</view>
@@ -79,7 +84,7 @@ import { readMediaFile, readFile } from './ReadFile.js';
  * @description 文件上传组件
  * @tutorial https://stellar-ui.intecloud.com.cn/pc/index/index?name=ste-ste-upload
  * @property {Array} 	value  已经上传的文件列表 {url:string;type:string;name?:string;status?:"uploading"|"error"|"success";path?:string;thumbPath?:string}[]
- * @property {String} accept 接受的文件类型, 可选值为all media image file video
+ * @property {String} accept 文件类型, 可选值为all media image file video
  * @value image 图片类型（默认）
  * @value video 视频类型
  * @value media 媒体类型（可选择图片和视频）
@@ -87,12 +92,12 @@ import { readMediaFile, readFile } from './ReadFile.js';
  * @value all 从聊天记录中选取全部类型文件（仅微信小程序和H5生效）
  * @property {Array} capture 图片或者视频选取模式，当accept为image | media 类型时生效 类型：("album" | "camera")[]
  * @property {String} camera 相机类型 当 accept 为 image | video | media 时生效，可选值为 back-后置 front-前置
- * @value back 后置
+ * @value back 后置（默认）
  * @value front 前置
  * @property {Boolean} compressed 当 accept 为 image | video | media 时生效，是否压缩视频、图片默认为true
  * @property {Number} maxDuration 当 accept 为 video | media 时生效，拍摄视频最长拍摄时间，单位秒
- * @property {Number | String} previewWidth 预览图和上传区域的宽度，默认单位为rpx
- * @property {Number | String} previewHeight 预览图和上传区域的高度，默认单位为rpx
+ * @property {Number | String} previewWidth 预览图和上传区域的宽度，单位为rpx
+ * @property {Number | String} previewHeight 预览图和上传区域的高度，单位为rpx
  * @property {Boolean} previewImage 是否在上传完成后展示预览图
  * @property {Boolean} previewFullImage 是否在点击预览图后展示全屏图片预览
  * @property {Boolean} multiple 是否支持多选文件，部分安卓机型不支持
@@ -104,7 +109,7 @@ import { readMediaFile, readFile } from './ReadFile.js';
  * @property {String} uploadIcon 上传按钮图标,同icon组件code
  * @property {String} uploadText 上传按钮文字
  * @property {Number | String} radius 圆角弧度，单位rpx
- * @event {Function} beforeRead 文件读取前的回调函数
+ * @event {Function} beforeRead 文件读取前的触发
  * @event {Function} read 文件读取后的回调函数
  * @event {Function} oversize 文件大小超出限制的回调函数
  * @event {Function} beforeDelete 文件删除前的回调函数
@@ -226,6 +231,8 @@ export default {
 			mediaType: 'image',
 			// #endif
 			menuButtonBounding: null,
+			reading: null,
+			deleting: null,
 		};
 	},
 	computed: {
@@ -300,37 +307,76 @@ export default {
 			}
 		},
 
-		readNext(fileList) {
+		async readNext(fileList) {
+			if (this.reading) return;
+			this.reading = true;
 			let next = true;
-			const e = this.$emit('beforeRead', fileList, (bool) => (next = bool));
-			if (!next) return;
-			next = undefined;
+			const stop = new Promise((resolve, reject) => {
+				this.$emit(
+					'beforeRead',
+					fileList,
+					() => (next = false),
+					() => resolve(),
+					() => reject()
+				);
+			});
+			if (!next) {
+				try {
+					await stop;
+				} catch (e) {
+					this.reading = false;
+					return;
+				}
+			}
+			this.reading = false;
 			if (this.maxSize > 0) {
 				for (let item of fileList) {
 					if (item.size / 1024 > this.maxSize) {
 						console.error(`文件大小${Math.floor(item.size / 1024)}kb超过${this.maxSize}kb限制`);
-						this.$emit('oversize', fileList);
+						this.$emit('oversize', item, fileList);
 						return;
 					}
 				}
 			}
 			fileList.forEach((item) => (item.status = 'uploading'));
+			if (this.dataValue.length + fileList.length > this.maxCount) {
+				fileList.splice(this.maxCount - this.dataValue.length);
+			}
 			this.dataValue = this.dataValue.concat(fileList);
 			this.$emit('input', this.dataValue);
 			this.$emit('read', fileList);
 		},
-		deleteItem(index) {
+		async deleteItem(index) {
+			if (this.disabled) return;
+			if (this.deleting) return;
+			this.deleting = true;
 			let next = true;
-			this.$emit('beforeDelete', index, (bool) => (next = bool));
-			if (!next) return;
-			next = undefined;
-
+			const stop = new Promise((resolve, reject) => {
+				this.$emit(
+					'beforeDelete',
+					index,
+					() => (next = false),
+					() => resolve(),
+					() => reject()
+				);
+			});
+			if (!next) {
+				try {
+					await stop;
+				} catch (e) {
+					//TODO handle the exception
+					this.deleting = false;
+					return;
+				}
+			}
+			this.deleting = false;
 			this.dataValue.splice(index, 1);
 			this.$emit('input', this.dataValue);
-			this.$emit('delete', index);
+			this.$emit('delete', index, this.dataValue);
 		},
 		previewItem(index, item) {
-			console.log(item);
+			if (this.disabled) return;
+			if (!this.previewFullImage) return;
 			if (['video', 'image'].indexOf(item.type) === -1) return;
 			// #ifdef MP-WEIXIN
 			wx.previewMedia({
@@ -361,6 +407,8 @@ export default {
 }
 .ste-upload--root {
 	.image {
+		width: 100%;
+		height: 100%;
 		max-width: 100%;
 		max-height: 100%;
 	}
@@ -463,45 +511,46 @@ export default {
 		top: 0;
 		left: 0;
 		z-index: 1001;
-		.close-btn {
-			width: 78rpx;
-			height: 78rpx;
-			border-radius: 50%;
-			position: absolute;
-			z-index: 100;
-			bottom: 120rpx;
-			left: 50%;
-			transform: translateX(-50%);
-			border: 1px solid #fff;
-			display: flex;
-			align-items: center;
-			justify-content: center;
-			box-shadow: 0 0 5px 0 rgba(0, 0, 0, 0.2);
-			background-color: rgba(0, 0, 0, 0.1);
-		}
-		.preview-item {
-			width: 100vw;
-			height: 100vh;
-			display: flex;
-			align-items: center;
-			justify-content: center;
-			.video {
+		.preview-content {
+			width: 100%;
+			height: calc(100% - 120rpx);
+			.preview-item {
 				width: 100%;
-				height: 750rpx;
-				max-width: 100%;
-				max-height: 100%;
+				height: 100%;
+				display: flex;
+				align-items: center;
+				justify-content: center;
+				.video {
+					width: 100%;
+					height: 100%;
+				}
 			}
 		}
-		.index-box {
-			padding: 3rpx 10rpx;
-			position: absolute;
-			text-align: center;
-			bottom: 48rpx;
-			color: #fff;
-			font-size: 36rpx;
-			background-color: rgba(0, 0, 0, 0.1);
-			left: 50%;
-			transform: translateX(-50%);
+		.preview-footer {
+			width: 100%;
+			height: 120rpx;
+			padding: 0 30rpx 24rpx 30rpx;
+			display: flex;
+			align-items: center;
+			justify-content: space-between;
+			.index-box {
+				padding: 3rpx 10rpx;
+				text-align: center;
+				color: #fff;
+				font-size: 36rpx;
+				background-color: rgba(0, 0, 0, 0.1);
+			}
+			.close-btn {
+				width: 78rpx;
+				height: 78rpx;
+				border-radius: 50%;
+				border: 1px solid #fff;
+				display: flex;
+				align-items: center;
+				justify-content: center;
+				box-shadow: 0 0 5px 0 rgba(0, 0, 0, 0.2);
+				background-color: rgba(0, 0, 0, 0.1);
+			}
 		}
 	}
 	// #endif

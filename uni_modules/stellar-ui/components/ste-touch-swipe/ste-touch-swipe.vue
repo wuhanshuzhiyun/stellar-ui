@@ -210,6 +210,7 @@ export default {
 			});
 		},
 		setTransform() {
+			if (!this.cmpItemLefts?.length) return;
 			if (this.direction === 'horizontal') {
 				this.translateX = -this.cmpItemLefts[this.dataIndex];
 				console.log('this.dataIndex', this.dataIndex, this.cmpItemLefts, this.translateX);
