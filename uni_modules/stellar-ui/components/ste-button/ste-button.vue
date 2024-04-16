@@ -1,9 +1,38 @@
 <template>
 	<button
+		v-if="stopPropagation"
 		class="ste-button--root"
 		:disabled="disabled"
 		:hover-class="!loading ? 'ste-button--root-active' : ''"
 		@click.stop="handleClick"
+		:style="[cmpBtnStyle]"
+		:open-type="openType"
+		:scope="scope"
+		@getuserinfo="getuserinfo"
+		@getUserInfo="getuserinfo"
+		@contact="contact"
+		@getphonenumber="getphonenumber"
+		@getPhoneNumber="getphonenumber"
+		@getrealtimephonenumber="getrealtimephonenumber"
+		@agreeprivacyauthorization="agreeprivacyauthorization"
+		@error="error"
+		@opensetting="opensetting"
+		@launchapp="launchapp"
+		@chooseavatar="chooseavatar"
+		@getAuthorize="getAuthorize"
+		@followLifestyle="followLifestyle"
+	>
+		<view class="btn-box">
+			<text v-if="loading">加载中.......</text>
+			<slot v-else></slot>
+		</view>
+	</button>
+	<button
+		v-else
+		class="ste-button--root"
+		:disabled="disabled"
+		:hover-class="!loading ? 'ste-button--root-active' : ''"
+		@click="handleClick"
 		:style="[cmpBtnStyle]"
 		:open-type="openType"
 		:scope="scope"
@@ -49,6 +78,7 @@ import utils from '../../utils/utils.js';
  * @property {Boolean} round 是否圆角按钮 默认 true
  * @property {Boolean} disabled 是否禁用状态 默认 false
  * @property {Boolean} loading 是否加载中状态 默认 false
+ * @property {Boolean} stopPropagation 是否阻止冒泡行为 默认 false
  * @property {String} openType 微信开放能力和支付宝开放能力
  * @property {String} scope 支付宝开放能力，当 openType 为 getAuthorize 时有效
  * @property {Object} rootStyle 按钮样式属性
@@ -113,6 +143,10 @@ export default {
 		rootStyle: {
 			type: Object,
 			default: () => {},
+		},
+		stopPropagation: {
+			type: Boolean,
+			default: true,
 		},
 	},
 	data() {

@@ -6,10 +6,10 @@
 		<view
 			class="slider-bar-box"
 			:class="{ 'range-min': realPercentage == 0, 'range-max': realPercentage == 100 }"
-			@touchstart="onTouchStart"
+			@touchstart.stop="onTouchStart"
 			@touchmove.stop="onTouchMove"
-			@touchend="onTouchEnd"
-			@touchcancel="onTouchEnd"
+			@touchend.stop="onTouchEnd"
+			@touchcancel.stop="onTouchEnd"
 			@mousedown="onDown"
 			:style="{
 				left: vertical ? '50%' : `${realPercentage}%`,
@@ -247,9 +247,9 @@ export default {
 	methods: {
 		// #ifdef WEB
 		// 适配web端没有touch事件
-		onDown(e) {
+		onDown(e, isSecond) {
 			this.isMouseDown = true;
-			this.onTouchStart({ touches: [{ clientX: e.clientX, clientY: e.clientY }] });
+			this.onTouchStart({ touches: [{ clientX: e.clientX, clientY: e.clientY }] }, isSecond);
 			window.addEventListener('mousemove', this.onTouchMove);
 			window.addEventListener('mouseup', this.onTouchEnd);
 		},
@@ -257,6 +257,9 @@ export default {
 			window.removeEventListener('mousemove', this.onTouchMove);
 			window.removeEventListener('mouseup', this.onTouchEnd);
 		},
+		// onMouseMove(e, isSecond) {
+		// 	this.ont
+		// }
 		// #endif
 		handleClick(e) {
 			if (this.readonly || this.disabled || this.range) return;

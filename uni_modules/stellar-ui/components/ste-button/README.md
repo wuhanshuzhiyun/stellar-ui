@@ -81,19 +81,21 @@
 
 ### API
 #### Props
-| 参数			| 说明																																																										| 类型				| 默认值			| 可选值																		| 支持版本	|
-| ---			| ---																																																										| ---				| ---			| ---																		| ---		|
-| `mode`		| 尺寸																																																										| `Number`			| `200`			| `100`：小<br/>`200`：中<br/>`300`：大<br/>`400`：超大						| -			|
-| `color`		| 文本颜色																																																									| `String`			| `"#ffffff"`	| -																			| -			|
-| `background`	| 背景																																																										| `String`			| `"#0091ff"`	| -																			| -			|
-| `borderColor`	| 边框颜色																																																									| `String`			| -				| -																			| -			|
-| `width`		| 宽度																																																										| `Number/String`	| `"auto"`		| `"auto"`： 自适应宽度<br/>`"100%"`：填满<br/>`{{Number}}`：自定义宽度 单位rpx	| -			|
-| `round`		| 是否圆角按钮，圆角度数(48)																																																					| `Boolean`			| `true`		| -																			| -			|
-| `disabled`	| 是否禁用状态																																																								| `Boolean`			| `false`		| -																			| -			|
-| `loading`		| 是否加载中状态																																																								| `Boolean`			| `false`		| -																			| -			|
-| `openType`	| 微信开放能力，具体支持可参考 [微信官方文档](https://developers.weixin.qq.com/miniprogram/dev/component/button.html)	<br/> 支付宝开放能力，具体支持可参考 [支付宝官方文档](https://opendocs.alipay.com/mini/component/button?pathHash=e0342ed0)	| `String`			| -				| -																			| `1.1.4`	|
-| `scope`		| 支付宝开放能力，当 openType 为 getAuthorize 时有效，具体支持可参考 [支付宝官方文档](https://opendocs.alipay.com/mini/component/button?pathHash=e0342ed0)																							| `String`			| -				| -																			| `1.1.4`	|
-| `rootStyle`	| 按钮样式																																																									| `Object`			| -				| -																			| `1.1.4`	|
+| 参数				| 说明																																																										| 类型				| 默认值			| 可选值																			| 支持版本	|
+| ---				| ---																																																										| ---				| ---			| ---																			| ---		|
+| `mode`			| 尺寸																																																										| `Number`			| `200`			| `100`：小<br/>`200`：中<br/>`300`：大<br/>`400`：超大							| -			|
+| `color`			| 文本颜色																																																									| `String`			| `"#ffffff"`	| -																				| -			|
+| `background`		| 背景																																																										| `String`			| `"#0091ff"`	| -																				| -			|
+| `borderColor`		| 边框颜色																																																									| `String`			| -				| -																				| -			|
+| `width`			| 宽度																																																										| `Number/String`	| `"auto"`		| `"auto"`： 自适应宽度<br/>`"100%"`：填满<br/>`{{Number}}`：自定义宽度 单位rpx	| -			|
+| `round`			| 是否圆角按钮，圆角度数(48)																																																					| `Boolean`			| `true`		| -																				| -			|
+| `disabled`		| 是否禁用状态																																																								| `Boolean`			| `false`		| -																				| -			|
+| `loading`			| 是否加载中状态																																																								| `Boolean`			| `false`		| -																				| -			|
+| `openType`		| 微信开放能力，具体支持可参考 [微信官方文档](https://developers.weixin.qq.com/miniprogram/dev/component/button.html)	<br/> 支付宝开放能力，具体支持可参考 [支付宝官方文档](https://opendocs.alipay.com/mini/component/button?pathHash=e0342ed0)	| `String`			| -				| -																				| `1.1.4`	|
+| `scope`			| 支付宝开放能力，当 openType 为 getAuthorize 时有效，具体支持可参考 [支付宝官方文档](https://opendocs.alipay.com/mini/component/button?pathHash=e0342ed0)																						| `String`			| -				| -																				| `1.1.4`	|
+| `rootStyle`		| 按钮样式																																																									| `Object`			| -				| -																				| `1.1.4`	|
+|`stopPropagation`	| 是否阻止冒泡行为																																																							| `Boolean`			| `true`		| -																				| `1.1.8`	|
+
 
 #### Events
 |事件名						|说明																																																																		|事件参数	|支持版本	|

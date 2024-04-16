@@ -10,7 +10,7 @@
 			<view
 				v-else
 				class="content-box"
-				:class="{ 'no-padding': $slots.content || (content && content.length == 1) }"
+				:class="{ 'no-padding': $slots.content || (content && (content.length == 1 || content < 10)) }"
 			>
 				<slot name="content">
 					<view class="ste-badge--content-text">{{ cmpContent }}</view>
@@ -121,7 +121,7 @@ export default {
 			if (utils.isNumber(this.content) && this.content > this.max) {
 				return `${this.max}+`;
 			} else {
-				return this.content;
+				return String(this.content);
 			}
 		},
 	},
@@ -136,6 +136,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+$default-size: 28rpx;
 .ste-badge--root {
 	position: relative;
 
@@ -147,15 +148,18 @@ export default {
 		background-color: #ee0a24;
 		border-radius: 99999rpx;
 		width: fit-content;
-		z-index: 99;
+		z-index: 999;
 
 		.content-box {
 			display: flex;
 			align-items: center;
 			justify-content: center;
-			height: 26rpx;
+			height: $default-size;
+			max-height: $default-size;
+			min-height: $default-size;
 			width: auto;
-			min-width: 26rpx;
+			min-width: $default-size;
+			overflow: hidden;
 
 			padding: 0 8rpx;
 			line-height: 0;
@@ -173,7 +177,7 @@ export default {
 		&-text {
 			font-size: 22rpx;
 			color: #ffffff;
-			line-height: 26rpx;
+			line-height: $default-size;
 			vertical-align: middle;
 			position: relative;
 			// #ifdef  H5
