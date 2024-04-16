@@ -1,5 +1,5 @@
 <template>
-	<view class="ste-rate--root">
+	<view class="ste-rate-root">
 		<view class="list" :style="[cmpListStyle]">
 			<view v-for="index in cmpCount" class="item">
 				<view class="icon-box inactive" @click="onSelect(index)">
@@ -143,7 +143,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.ste-rate--root {
+.ste-rate-root {
 	.list {
 		display: flex;
 

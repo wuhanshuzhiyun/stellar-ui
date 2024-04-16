@@ -1,5 +1,5 @@
 <template>
-	<view class="ste-search--root" :style="[cmpStyleVar, cmpBackground, cmpRootPadding]" @click="onClick">
+	<view class="ste-search-root" :style="[cmpStyleVar, cmpBackground, cmpRootPadding]" @click="onClick">
 		<view class="content">
 			<view class="icon-box">
 				<ste-icon code="&#xe695;" :color="prefixIconColor" size="44" />
@@ -34,9 +34,6 @@
 						{{ item }}
 					</swiper-item>
 				</swiper>
-				<!-- <view v-if="cmpShowClear" class="clear-icon" @click="onClear">
-					<ste-icon code="&#xe694;" :color="clearIconColor" size="44" />
-				</view> -->
 			</view>
 			<view v-if="!cmpHiddenLine" class="secrch-line" :class="disabled ? 'disabled' : ''" />
 			<view
@@ -302,7 +299,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.ste-search--root {
+.ste-search-root {
 	width: 100%;
 	height: var(--search-root-height);
 	background-color: #fff;

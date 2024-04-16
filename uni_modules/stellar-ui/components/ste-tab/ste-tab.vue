@@ -1,5 +1,5 @@
 <template>
-	<view class="ste-tab--root">
+	<view class="ste-tab-root">
 		<slot name="default" />
 	</view>
 </template>
@@ -90,7 +90,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.ste-tab--root {
+.ste-tab-root {
 	width: 100%;
 }
 </style>

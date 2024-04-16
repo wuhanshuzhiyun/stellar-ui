@@ -1,9 +1,9 @@
 <template>
-	<view class="ste-badge--root">
+	<view class="ste-badge-root">
 		<view
-			class="ste-badge--content"
+			class="ste-badge-content"
 			:style="[cmpContentStyle]"
-			:class="'ste-badge--' + position"
+			:class="'ste-badge-' + position"
 			v-if="showDot || cmpShowContent || $slots.content"
 		>
 			<view v-if="showDot" class="dot-box" />
@@ -13,7 +13,7 @@
 				:class="{ 'no-padding': $slots.content || (content && (content.length == 1 || content < 10)) }"
 			>
 				<slot name="content">
-					<view class="ste-badge--content-text">{{ cmpContent }}</view>
+					<view class="ste-badge-content-text">{{ cmpContent }}</view>
 				</slot>
 			</view>
 		</view>
@@ -137,10 +137,10 @@ export default {
 
 <style lang="scss" scoped>
 $default-size: 28rpx;
-.ste-badge--root {
+.ste-badge-root {
 	position: relative;
 
-	.ste-badge--content {
+	.ste-badge-content {
 		display: inline-block;
 		position: absolute;
 		font-size: 24rpx;
@@ -192,7 +192,7 @@ $default-size: 28rpx;
 		}
 	}
 
-	.ste-badge-- {
+	.ste-badge- {
 		&topRight {
 			top: 0;
 			right: 0;

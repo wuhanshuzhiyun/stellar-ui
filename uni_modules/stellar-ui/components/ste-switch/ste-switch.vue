@@ -1,5 +1,5 @@
 <template>
-	<view class="ste-switch--root" :style="[cmpStyle]" @click="click">
+	<view class="ste-switch-root" :style="[cmpStyle]" @click="click">
 		<view class="switch-node" :style="[cmpNodeStyle]">
 			<view v-if="loading" class="switch-loading" :style="[cmpLoadingStyle]"></view>
 		</view>
@@ -122,7 +122,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.ste-switch--root {
+.ste-switch-root {
 	display: inline-flex;
 	align-items: center;
 	transition: background-color 0.3s;

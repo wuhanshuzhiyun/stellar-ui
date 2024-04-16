@@ -1,5 +1,5 @@
 <template>
-	<view class="ste-upload--root" :style="[cmpRootStyle]">
+	<view class="ste-upload-root" :style="[cmpRootStyle]">
 		<view class="upload-list">
 			<block v-if="previewImage">
 				<view class="image-item" v-for="(item, index) in dataValue" :key="index">
@@ -405,7 +405,7 @@ export default {
 		transform: rotate(360deg);
 	}
 }
-.ste-upload--root {
+.ste-upload-root {
 	.image {
 		width: 100%;
 		height: 100%;

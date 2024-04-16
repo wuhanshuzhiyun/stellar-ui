@@ -1,5 +1,5 @@
 <template>
-	<view class="ste-progress--root" :style="[cmpRootCssVar]">
+	<view class="ste-progress-root" :style="[cmpRootCssVar]">
 		<view class="inactive-box" :style="[cmpInactiveStyle]"></view>
 		<view class="active-box line" :style="[cmpActiveStyle]" v-if="realPercentage > 0">
 			<slot v-if="haveSlot"></slot>
@@ -159,7 +159,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.ste-progress--root {
+.ste-progress-root {
 	position: relative;
 	width: var(--progress-width);
 	height: var(--progress-height);

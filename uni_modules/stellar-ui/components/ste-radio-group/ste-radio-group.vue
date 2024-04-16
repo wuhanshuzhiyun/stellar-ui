@@ -1,5 +1,5 @@
 <template>
-	<div class="ste-radio-group--root" :style="[cmpStyle]">
+	<div class="ste-radio-group-root" :style="[cmpStyle]">
 		<slot></slot>
 	</div>
 </template>
@@ -109,7 +109,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.ste-radio-group--root {
+.ste-radio-group-root {
 	display: flex;
 	column-gap: 16rpx;
 	row-gap: 16rpx;

@@ -1,5 +1,5 @@
 <template>
-	<view class="ste-slider--root" :class="cmpRootClass" :style="[cmpRootCssVar]" @click="handleClick">
+	<view class="ste-slider-root" :class="cmpRootClass" :style="[cmpRootCssVar]" @click="handleClick">
 		<view class="inactive-box" :style="[cmpInactiveStyle]"></view>
 		<view class="active-box line" :style="[cmpActiveStyle]"></view>
 
@@ -158,7 +158,7 @@ export default {
 	},
 	created() {},
 	mounted() {
-		utils.querySelector('.ste-slider--root', this).then((rect) => {
+		utils.querySelector('.ste-slider-root', this).then((rect) => {
 			this.sliderRect = rect;
 		});
 		this.calculateStepMarks();
@@ -167,21 +167,21 @@ export default {
 		cmpRootClass() {
 			let classStr = '';
 			if (this.isDrag) {
-				classStr += 'ste-slider--drag ';
+				classStr += 'ste-slider-drag ';
 			}
 
 			if (this.range) {
-				classStr += 'ste-slider--range ';
+				classStr += 'ste-slider-range ';
 			}
 
 			if (this.disabled) {
-				classStr += 'ste-slider--disabled ';
+				classStr += 'ste-slider-disabled ';
 			}
 
 			if (this.vertical) {
-				classStr += 'ste-slider--vertical ';
+				classStr += 'ste-slider-vertical ';
 			} else {
-				classStr += 'ste-slider--horizontal ';
+				classStr += 'ste-slider-horizontal ';
 			}
 			return classStr;
 		},
@@ -383,14 +383,14 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.ste-slider--root {
+.ste-slider-root {
 	position: relative;
 	z-index: 1;
 	width: 100%;
 	height: var(--progress-height);
 	border-radius: 24rpx;
 
-	&.ste-slider--disabled {
+	&.ste-slider-disabled {
 		.active-box {
 			background-color: #cccccc;
 		}
@@ -406,7 +406,7 @@ export default {
 		}
 	}
 
-	&.ste-slider--drag {
+	&.ste-slider-drag {
 		.active-box {
 			transition: none !important;
 		}
@@ -414,7 +414,7 @@ export default {
 			transition: none !important;
 		}
 	}
-	&.ste-slider--vertical {
+	&.ste-slider-vertical {
 		display: inline-block;
 		margin: 0 16rpx;
 		width: var(--progress-height);
@@ -435,14 +435,6 @@ export default {
 			transition: top 0.3s ease;
 			left: 50%;
 			top: 0;
-
-			// &.range-min {
-			// 	transform: translate(-50%, -6px);
-			// }
-
-			// &.range-max {
-			// 	transform: translate(-50%, calc(-100% + 12rpx));
-			// }
 		}
 
 		.mark-box {
@@ -454,7 +446,7 @@ export default {
 			}
 		}
 	}
-	&.ste-slider--horizontal {
+	&.ste-slider-horizontal {
 		margin: 16rpx 0;
 		.mark-box {
 			transform: translateX(-50%);
@@ -468,13 +460,6 @@ export default {
 			}
 		}
 		.slider-bar-box {
-			// &.range-min {
-			// 	transform: translate(-6px, -50%);
-			// }
-
-			// &.range-max {
-			// 	transform: translate(calc(-100% + 12rpx), -50%);
-			// }
 		}
 	}
 

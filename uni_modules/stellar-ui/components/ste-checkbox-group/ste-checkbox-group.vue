@@ -1,5 +1,5 @@
 <template>
-	<div class="ste-checkbox-group--root" :style="[cmpStyle]">
+	<div class="ste-checkbox-group-root" :style="[cmpStyle]">
 		<slot></slot>
 	</div>
 </template>
@@ -110,7 +110,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.ste-checkbox-group--root {
+.ste-checkbox-group-root {
 	display: flex;
 	column-gap: 16rpx;
 	row-gap: 16rpx;

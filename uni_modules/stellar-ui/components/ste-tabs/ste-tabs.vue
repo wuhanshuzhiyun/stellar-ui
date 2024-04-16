@@ -1,5 +1,5 @@
 <template>
-	<view class="ste-tabs--root" :class="type" :style="[cmpRootStyle]">
+	<view class="ste-tabs-root" :class="type" :style="[cmpRootStyle]">
 		<view class="tab-list-box" :style="[cmpListBackground, { paddingRight: cmpPullDown ? '70rpx' : 0 }]">
 			<scroll-view
 				class="tab-list view-list"
@@ -453,7 +453,7 @@ export default {
 
 <!-- 默认线状样式 -->
 <style lang="scss" scoped>
-.ste-tabs--root {
+.ste-tabs-root {
 	display: block;
 	width: 100%;
 	position: relative;
@@ -665,7 +665,7 @@ export default {
 
 <!-- card样式 -->
 <style lang="scss" scoped>
-.ste-tabs--root.card {
+.ste-tabs-root.card {
 	.tab-list-box {
 		.tab-list {
 			padding: 0;

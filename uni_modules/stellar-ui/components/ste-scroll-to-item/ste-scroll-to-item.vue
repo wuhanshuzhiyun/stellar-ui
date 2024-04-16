@@ -1,5 +1,5 @@
 <template>
-	<view class="ste-scroll-to-item--root" @resize="getData">
+	<view class="ste-scroll-to-item-root" @resize="getData">
 		<slot />
 	</view>
 </template>
@@ -54,7 +54,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.ste-scroll-to-item--root {
+.ste-scroll-to-item-root {
 	width: 100%;
 }
 </style>

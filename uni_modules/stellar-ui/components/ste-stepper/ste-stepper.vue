@@ -1,5 +1,5 @@
 <template>
-	<view class="ste-stepper--root" :style="[cmpStyle]">
+	<view class="ste-stepper-root" :style="[cmpStyle]">
 		<ste-button v-if="theme != 'add'" :rootStyle="cmpLeftButtonStyle" @click="minus" :disabled="cmpDisableMinus">
 			<ste-icon
 				code="&#xe67c;"
@@ -342,7 +342,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.ste-stepper--root {
+.ste-stepper-root {
 	display: flex;
 
 	.input {

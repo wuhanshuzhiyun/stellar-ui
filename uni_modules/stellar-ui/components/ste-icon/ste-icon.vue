@@ -1,9 +1,6 @@
 <template>
-	<view class="ste-icon--root" :style="[cmpCssVar]" @click="handleClick">
+	<view class="ste-icon-root" :style="[cmpCssVar]" @click="handleClick">
 		{{ cmpCode }}
-		<!-- <view class="icon-font">
-			展示{{ cmpCode }}
-		</view> -->
 	</view>
 </template>
 
@@ -128,7 +125,7 @@ export default {
 <style lang="scss"></style>
 <style lang="scss" scoped>
 @import './iconfont.css';
-.ste-icon--root {
+.ste-icon-root {
 	display: var(--display);
 	justify-content: center;
 	align-items: center;

@@ -1,5 +1,5 @@
 <template>
-	<view class="ste-touch-swipe-item--root">
+	<view class="ste-touch-swipe-item-root">
 		<slot />
 	</view>
 </template>
@@ -43,7 +43,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.ste-touch-swipe-item--root {
+.ste-touch-swipe-item-root {
 	width: 100%;
 	height: 100%;
 	display: inline-block;

@@ -1,5 +1,5 @@
 <template>
-	<view class="ste-image--root" :style="[cmpStyle]">
+	<view class="ste-image-root" :style="[cmpStyle]">
 		<view class="loading-icon" v-if="!hiddenLoading && status === 0">
 			<slot name="loading">
 				<ste-icon code="&#xe693;" :size="iconSize" />
@@ -145,7 +145,7 @@ export default {
 		},
 		setIconSize() {
 			this.$nextTick(async () => {
-				const dom = await utils.querySelector('.ste-image--root', this);
+				const dom = await utils.querySelector('.ste-image-root', this);
 				const size = dom.width <= dom.height ? dom.width : dom.height;
 				if (size <= 30) this.iconSize = 12 * 2;
 				else if (size <= 50) this.iconSize = 20 * 2;
@@ -159,7 +159,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.ste-image--root {
+.ste-image-root {
 	width: var(--image-root-width);
 	height: var(--image-root-height);
 	display: inline-flex;

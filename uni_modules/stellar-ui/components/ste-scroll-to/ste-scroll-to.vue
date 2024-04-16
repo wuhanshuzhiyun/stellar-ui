@@ -1,6 +1,6 @@
 <template>
 	<scroll-view
-		class="ste-scroll-to--root"
+		class="ste-scroll-to-root"
 		scroll-y
 		scroll-anchoring
 		scroll-with-animation
@@ -96,14 +96,14 @@ export default {
 		getChildrenTops() {
 			clearTimeout(this._childrenTimeout);
 			this._childrenTimeout = setTimeout(async () => {
-				const view = await utils.querySelector('.ste-scroll-to--root', this);
+				const view = await utils.querySelector('.ste-scroll-to-root', this);
 				const box = await utils.querySelector('.ste-scroll-to-content', this);
 				let max = box.height - view.height;
 				if (max < 0) max = 0;
 				const childrenTops = [];
 				for (let i = 0; i < this.children.length; i++) {
 					const comp = this.children[i];
-					const child = await utils.querySelector('.ste-scroll-to-item--root', comp);
+					const child = await utils.querySelector('.ste-scroll-to-item-root', comp);
 					const top = child.top - box.top;
 					childrenTops.push(top > max ? max + 10 : top);
 				}
@@ -165,7 +165,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.ste-scroll-to--root {
+.ste-scroll-to-root {
 	width: 100%;
 	height: var(--scroll-to-height);
 }

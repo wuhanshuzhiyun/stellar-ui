@@ -1,5 +1,5 @@
 <template>
-	<view class="ste-input--root" :class="cmpRootClass" :style="[cmpRootStyle, cmpRootCssVar]" @click="inputClick">
+	<view class="ste-input-root" :class="cmpRootClass" :style="[cmpRootStyle, cmpRootCssVar]" @click="inputClick">
 		<view class="content">
 			<view class="prefix-box">
 				<slot name="prefix"></slot>
@@ -7,7 +7,7 @@
 			<view class="input-box">
 				<template v-if="type == 'textarea'">
 					<textarea
-						class="ste-input--input textarea"
+						class="ste-input-input textarea"
 						:type="type"
 						:focus="focus"
 						:value="dataValue"
@@ -37,7 +37,7 @@
 				</template>
 				<template v-else>
 					<input
-						class="ste-input--input"
+						class="ste-input-input"
 						:type="type"
 						:focus="focused"
 						:value="dataValue"
@@ -222,13 +222,13 @@ export default {
 		cmpRootClass() {
 			let classStr = '';
 			if (this.disabled) {
-				classStr += 'ste-input--disabled ';
+				classStr += 'ste-input-disabled ';
 			}
 			if (this.readonly) {
-				classStr += 'ste-input--readonly ';
+				classStr += 'ste-input-readonly ';
 			}
 
-			classStr += `ste-input--${this.shape} `;
+			classStr += `ste-input-${this.shape} `;
 
 			if (this.rootClass) {
 				classStr += `${this.rootClass}`;
@@ -316,7 +316,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.ste-input--root {
+.ste-input-root {
 	box-sizing: border-box;
 
 	border-width: 1rpx;
@@ -355,7 +355,7 @@ export default {
 				transform: translateY(-50%);
 			}
 
-			.ste-input--input {
+			.ste-input-input {
 				outline: none;
 				border: none;
 				padding: 0;
@@ -387,23 +387,22 @@ export default {
 
 	&.ste-input-readonly {
 		cursor: not-allowed;
-		.ste-input--input {
+		.ste-input-input {
 			cursor: not-allowed;
 		}
 	}
-	&.ste-input--disabled {
+	&.ste-input-disabled {
 		cursor: not-allowed;
-		.ste-input--input {
+		.ste-input-input {
 			cursor: not-allowed;
 			color: #cccccc !important;
 		}
 	}
 
-	&.ste-input--line {
+	&.ste-input-line {
 		background-color: transparent;
 		border: none;
 		border-color: transparent;
-		// border-bottom: 1rpx solid var(--input-border-color);
 
 		.content {
 			padding: 20rpx 0;

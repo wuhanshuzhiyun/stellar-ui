@@ -1,5 +1,5 @@
 <template>
-	<view class="ste-price--root">
+	<view class="ste-price-root">
 		<view class="content" :style="[cmpPriceStyle]">
 			<text v-if="showUnit" class="unit" :style="[cmpUnitStyle]">{{ unitSymbol }}</text>
 			<text class="yuan-price" :style="[cmpYuanPriceStyle]">{{ cmpYuanValue }}</text>
@@ -241,7 +241,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.ste-price--root {
+.ste-price-root {
 	display: inline-flex;
 	.content {
 		display: inline-block;

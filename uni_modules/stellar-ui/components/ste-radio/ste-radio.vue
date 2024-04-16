@@ -1,5 +1,5 @@
 <template>
-	<view class="ste-radio--root" :style="[cmpStyle]" @click="click">
+	<view class="ste-radio-root" :style="[cmpStyle]" @click="click">
 		<view class="icon">
 			<slot name="icon" :slotProps="cmpSlotProps">
 				<view class="input-icon" :style="[cmpInputStyle]">
@@ -234,7 +234,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.ste-radio--root {
+.ste-radio-root {
 	width: auto;
 	height: 100%;
 	display: flex;

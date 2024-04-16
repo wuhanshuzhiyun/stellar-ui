@@ -1,7 +1,7 @@
 <template>
 	<text
 		:style="[cmpRootCssVar]"
-		class="ste-text--root"
+		class="ste-text-root"
 		:class="{ 'ste-text-lines': lines > 0 }"
 		:selectable="selectable"
 		:user-select="selectable"
@@ -59,7 +59,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.ste-text--root {
+.ste-text-root {
 	&.ste-text-lines {
 		/* #ifdef MP-WEIXIN || H5 */
 		display: -webkit-box;
