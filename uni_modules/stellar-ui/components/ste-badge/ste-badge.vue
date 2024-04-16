@@ -148,7 +148,7 @@ $default-size: 28rpx;
 		background-color: #ee0a24;
 		border-radius: 99999rpx;
 		width: fit-content;
-		z-index: 99;
+		z-index: 999;
 
 		.content-box {
 			display: flex;
