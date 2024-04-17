@@ -39,6 +39,8 @@ import utils from '../../utils/utils.js';
  * @value bottomLeft 下左 {String}
  * @value bottomRight 下右 {String}
  * @property {Number} max 徽标最大显示值 默认 99
+ * @property {Boolean} showBorder 是否显示边框 默认 false
+ * @property {String} borderColor 边框颜色
  */
 
 export default {
