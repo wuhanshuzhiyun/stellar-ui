@@ -158,6 +158,7 @@ export default {
 $default-size: 28rpx;
 .ste-badge-root {
 	position: relative;
+	display: inline-block;
 
 	.ste-badge-content {
 		display: inline-block;
