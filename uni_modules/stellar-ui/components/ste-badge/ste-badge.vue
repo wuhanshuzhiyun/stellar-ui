@@ -41,6 +41,7 @@ import utils from '../../utils/utils.js';
  * @property {Number} max 徽标最大显示值 默认 99
  * @property {Boolean} showBorder 是否显示边框 默认 false
  * @property {String} borderColor 边框颜色
+ * @property {Number} zIndex 层级
  */
 
 export default {
@@ -88,6 +89,10 @@ export default {
 			type: String,
 			default: '#fff',
 		},
+		zIndex: {
+			type: Number,
+			default: 999,
+		},
 	},
 	data() {
 		return {};
@@ -124,6 +129,7 @@ export default {
 			if (this.showBorder) {
 				style.border = 'solid 1px ' + this.borderColor;
 			}
+			style['z-index'] = this.zIndex;
 
 			return style;
 		},
@@ -161,7 +167,6 @@ $default-size: 28rpx;
 		background-color: #ee0a24;
 		border-radius: 99999rpx;
 		width: fit-content;
-		z-index: 999;
 
 		.content-box {
 			display: flex;
