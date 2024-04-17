@@ -103,12 +103,12 @@ export default {
 			return {
 				'--border': this.showBorder ? '1px' : '0px',
 				'--color': this.color,
-				'--size': utils.rpx2px(this.size),
+				'--size': utils.formatPx(this.size),
 				'--weight': this.bold ? 'bold' : 'normal',
-				'--margin-left': utils.rpx2px(this.marginLeft),
-				'--margin-right': utils.rpx2px(this.marginRight),
-				'--margin-top': utils.rpx2px(this.marginTop),
-				'--margin-bottom': utils.rpx2px(this.marginBottom),
+				'--margin-left': utils.formatPx(this.marginLeft),
+				'--margin-right': utils.formatPx(this.marginRight),
+				'--margin-top': utils.formatPx(this.marginTop),
+				'--margin-bottom': utils.formatPx(this.marginBottom),
 				'--font-family': this.fontFamily === '' ? this.defaultFontFamily : this.fontFamily,
 				'--display': this.inlineBlock ? 'inline-block' : 'inline-flex',
 			};

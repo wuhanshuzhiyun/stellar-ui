@@ -238,9 +238,9 @@ export default {
 	computed: {
 		cmpRootStyle() {
 			const style = {
-				'--ste-upload-width': utils.rpx2px(this.previewWidth),
-				'--ste-upload-height': utils.rpx2px(this.previewHeight),
-				'--ste-upload-radius': utils.rpx2px(this.radius),
+				'--ste-upload-width': utils.formatPx(this.previewWidth),
+				'--ste-upload-height': utils.formatPx(this.previewHeight),
+				'--ste-upload-radius': utils.formatPx(this.radius),
 			};
 			return style;
 		},

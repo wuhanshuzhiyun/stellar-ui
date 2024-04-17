@@ -113,8 +113,8 @@ export default {
 	computed: {
 		cmpRootStyle() {
 			return {
-				'--touch-swipe-width': utils.rpx2px(this.width),
-				'--touch-swipe-height': utils.rpx2px(this.height),
+				'--touch-swipe-width': utils.formatPx(this.width),
+				'--touch-swipe-height': utils.formatPx(this.height),
 				opacity: this.show ? '1' : '0',
 			};
 		},

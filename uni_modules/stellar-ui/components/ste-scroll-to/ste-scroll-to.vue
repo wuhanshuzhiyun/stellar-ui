@@ -84,7 +84,7 @@ export default {
 	},
 	computed: {
 		cmpRootStyle() {
-			const style = { '--scroll-to-height': utils.rpx2px(this.height) };
+			const style = { '--scroll-to-height': utils.formatPx(this.height) };
 			return style;
 		},
 	},

@@ -6,26 +6,28 @@ let windowWidth = null;
 let utils = {
 	Color,
 	/**
-	 * rpx转px
-	 * @param rpx {Number | String} rpx值
+	 * 格式化像素单位为px
+	 * @param value {Number | String} 像素单位值
 	 * @param restype {"str" | "num"} 返回值类型
 	 */
-	rpx2px(rpx, restype = "str") {
-		if (!rpx) return '0';
-		let str = rpx;
-		if (isNaN(str)) {
-			if (/^\d+px$/i.test(str)) {
-				return str;
-			} else if (/^\d+rpx/i.test(str)) {
-				str = str.slice(0, -3);
+	formatPx(value, restype = "str") {
+		let format = value ? value : 0;
+		if (format && isNaN(format)) {
+			if (/^\d+px$/i.test(format)) {
+				return format;
+			} else if (/^\d+rpx/i.test(format)) {
+				format = Number(format.slice(0, -3));
 			} else {
-				return str;
+				return format;
 			}
 		}
-		if (windowWidth == null) {
-			windowWidth = uni.getSystemInfoSync().windowWidth;
+		let px = 0;
+		if (format !== 0) {
+			if (windowWidth == null) {
+				windowWidth = uni.getSystemInfoSync().windowWidth;
+			}
+			px = (format * windowWidth) / 750;
 		}
-		let px = (str * windowWidth) / 750;
 		return restype === "num" ? px : `${px}px`;
 	},
 	/**
@@ -65,7 +67,7 @@ let utils = {
 
 		// #ifdef H5
 		if (newVal.indexOf('rpx') >= 0) {
-			newVal = this.rpx2px(newVal);
+			newVal = this.formatPx(newVal);
 		}
 		// #endif
 		return newVal;

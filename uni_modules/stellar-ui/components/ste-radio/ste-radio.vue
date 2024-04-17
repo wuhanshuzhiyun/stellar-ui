@@ -154,7 +154,7 @@ export default {
 		},
 		cmpStyle() {
 			let style = {};
-			style['fontSize'] = utils.rpx2px(this.cmpTextSize);
+			style['fontSize'] = utils.formatPx(this.cmpTextSize);
 			style['color'] = this.cmpChecked ? this.cmpTextActiveColor : this.cmpTextInactiveColor;
 			style['flexDirection'] = this.cmpTextPosition == 'right' ? 'row' : 'row-reverse';
 			// #ifdef H5
@@ -175,10 +175,10 @@ export default {
 			let style = {};
 			// 没有icon 则默认样式
 			style['borderRadius'] = this.cmpShape == 'circle' ? '50%' : '0';
-			style['border'] = `${utils.rpx2px(2)} solid ${this.cmpChecked ? this.cmpCheckedColor : '#BBBBBB'}`;
+			style['border'] = `${utils.formatPx(2)} solid ${this.cmpChecked ? this.cmpCheckedColor : '#BBBBBB'}`;
 			style['background'] = this.cmpChecked ? this.cmpCheckedColor : '#FFFFFF';
-			style['width'] = utils.rpx2px(this.cmpIconSize);
-			style['height'] = utils.rpx2px(this.cmpIconSize);
+			style['width'] = utils.formatPx(this.cmpIconSize);
+			style['height'] = utils.formatPx(this.cmpIconSize);
 			// #ifdef H5
 			if (this.cmpDisabled || this.cmpReadonly) {
 				style['cursor'] = 'not-allowed';

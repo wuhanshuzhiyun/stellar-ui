@@ -196,13 +196,13 @@ export default {
 	computed: {
 		cmpButtonStyle() {
 			let style = {};
-			style['width'] = utils.rpx2px(this.btnSize);
-			style['height'] = utils.rpx2px(this.btnSize);
+			style['width'] = utils.formatPx(this.btnSize);
+			style['height'] = utils.formatPx(this.btnSize);
 			style['padding'] = '0';
 			// #ifdef H5
 			style['cursor'] = this.disabled || this.cmpDisablePlus ? 'not-allowed' : 'pointer';
 			// #endif
-			style['borderRadius'] = utils.rpx2px(16);
+			style['borderRadius'] = utils.formatPx(16);
 			style['border'] = 'none';
 			if (this.theme == 'line') {
 				style['borderRadius'] = '0';
@@ -212,7 +212,7 @@ export default {
 		cmpLeftButtonStyle() {
 			let style = {};
 			if (this.theme == 'card') {
-				style['border'] = `${utils.rpx2px('2')} solid ${
+				style['border'] = `${utils.formatPx('2')} solid ${
 					(this.cmpDisableMinus ? '#cccccc' : this.mainColor) + '80'
 				}`;
 			}
@@ -238,19 +238,19 @@ export default {
 		},
 		cmpInputStyle() {
 			let style = {};
-			style['width'] = utils.rpx2px(this.inputWidth);
-			style['height'] = utils.rpx2px(this.btnSize);
-			style['margin'] = `0 ${utils.rpx2px(4)}`;
+			style['width'] = utils.formatPx(this.inputWidth);
+			style['height'] = utils.formatPx(this.btnSize);
+			style['margin'] = `0 ${utils.formatPx(4)}`;
 			style['color'] = this.disabled || this.disableInput ? '#cccccc' : '#000000';
 			// #ifdef H5
 			style['cursor'] = this.disabled || this.cmpDisablePlus ? 'not-allowed' : 'pointer';
 			// #endif
 			if (this.theme == 'line') {
-				style['borderLeft'] = `${utils.rpx2px('2')} solid #EEEEEE`;
-				style['borderRight'] = `${utils.rpx2px('2')} solid #EEEEEE`;
+				style['borderLeft'] = `${utils.formatPx('2')} solid #EEEEEE`;
+				style['borderRight'] = `${utils.formatPx('2')} solid #EEEEEE`;
 				style['margin'] = `0`;
-				style['padding'] = `0 ${utils.rpx2px(8)}`;
-				style['width'] = utils.rpx2px(this.inputWidth + 16);
+				style['padding'] = `0 ${utils.formatPx(8)}`;
+				style['width'] = utils.formatPx(this.inputWidth + 16);
 			}
 			return style;
 		},
@@ -271,8 +271,8 @@ export default {
 		cmpStyle() {
 			let style = {};
 			if (this.theme == 'line') {
-				style['border'] = `${utils.rpx2px('0.6')} solid #EEEEEE`;
-				style['borderRadius'] = utils.rpx2px(24);
+				style['border'] = `${utils.formatPx('0.6')} solid #EEEEEE`;
+				style['borderRadius'] = utils.formatPx(24);
 				style['overflow'] = 'hidden';
 			}
 			return style;

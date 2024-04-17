@@ -227,12 +227,12 @@ export default {
 					}
 				}
 			}
-			const tabSpace = utils.rpx2px(this.tabSpace);
+			const tabSpace = utils.formatPx(this.tabSpace);
 			let tabSpaceLine = 0;
 			if (this.showGapLine) {
 				tabSpaceLine = '1px';
 			}
-			let tabWidth = utils.rpx2px(this.tabWidth);
+			let tabWidth = utils.formatPx(this.tabWidth);
 			if (this.tabPropsList.length > 0 && this.tabPropsList.length <= this.divideNum) {
 				const listWidth = this.listEl?.width || 375;
 				const tabsWidth = listWidth - tabSpace.slice(0, -2) * (this.tabPropsList.length - 1);
@@ -241,39 +241,39 @@ export default {
 
 			const style = {
 				'--tabs-color': this.color,
-				'--tabs-radius': utils.rpx2px(this.radius),
+				'--tabs-radius': utils.formatPx(this.radius),
 				'--tabs-card-background': tabCardBg,
 				'--tabs-card-background-active': tabCardBgActive,
 				'--tabs-card-sub-bg': tabCardSubBg,
 				'--tabs-card-sub-color': tabCardSubColor,
-				'--tabs-line-width': utils.rpx2px(this.lineWidth),
-				'--tabs-line-height': utils.rpx2px(this.lineHeight),
+				'--tabs-line-width': utils.formatPx(this.lineWidth),
+				'--tabs-line-height': utils.formatPx(this.lineHeight),
 				'--tabs-tab-width': tabWidth,
-				'--tabs-tab-padding': utils.rpx2px(this.tabPadding),
-				'--tabs-tab-padding-bottom': this.cmpShowLine ? utils.rpx2px(4) : utils.rpx2px(this.tabPadding),
+				'--tabs-tab-padding': utils.formatPx(this.tabPadding),
+				'--tabs-tab-padding-bottom': this.cmpShowLine ? utils.formatPx(4) : utils.formatPx(this.tabPadding),
 				'--tabs-transition-duration': this.duration ? `${this.duration}s` : 'inherit',
 				'--tabs-tab-space': tabSpace,
 				'--tabs-tab-space-line': tabSpaceLine,
 				'--tabs-tab-border-width': borderWidth,
 				'--tabs-tab-border-width-start': borderWidthStart,
 				'--tabs-sticky': this.sticky ? 'sticky' : 'relative',
-				'--tabs-offset-top': utils.rpx2px(this.offsetTop),
+				'--tabs-offset-top': utils.formatPx(this.offsetTop),
 				'--tabs-title-color': this.titleColor,
 				'--tabs-active-title-color': activeTitleColor,
-				'--tabs-title-height': utils.rpx2px(this.titleHeight),
-				'--tabs-sub-title-height': utils.rpx2px(this.subTitleHeight),
-				'--tabs-sub-title-radius': utils.rpx2px(this.subTitleRadius),
+				'--tabs-title-height': utils.formatPx(this.titleHeight),
+				'--tabs-sub-title-height': utils.formatPx(this.subTitleHeight),
+				'--tabs-sub-title-radius': utils.formatPx(this.subTitleRadius),
 				'--tabs-list-height': this.openPullDown && this.listEl ? `${this.listEl?.height}px` : 'initial',
-				'--tabs-image-width': utils.rpx2px(this.imageWidth),
-				'--tabs-image-height': utils.rpx2px(this.imageHeight),
-				'--tabs-image-radius': utils.rpx2px(this.imageRadius),
-				'--tabs-image-border-width': utils.rpx2px(this.imageBorderWidth),
+				'--tabs-image-width': utils.formatPx(this.imageWidth),
+				'--tabs-image-height': utils.formatPx(this.imageHeight),
+				'--tabs-image-radius': utils.formatPx(this.imageRadius),
+				'--tabs-image-border-width': utils.formatPx(this.imageBorderWidth),
 				'--tabs-sub-color': this.subColor,
 				'--tabs-active-sub-color': this.activeSubColor,
-				'--tabs-mask-top': utils.rpx2px(this.maskTop),
-				'--tabs-mask-right': utils.rpx2px(this.maskRight),
-				'--tabs-mask-bottom': utils.rpx2px(this.maskBottom),
-				'--tabs-mask-left': utils.rpx2px(this.maskLeft),
+				'--tabs-mask-top': utils.formatPx(this.maskTop),
+				'--tabs-mask-right': utils.formatPx(this.maskRight),
+				'--tabs-mask-bottom': utils.formatPx(this.maskBottom),
+				'--tabs-mask-left': utils.formatPx(this.maskLeft),
 				'--tabs-mask-zindex': this.maskZindex,
 				opacity: this.showComponent ? '1' : '0',
 				zIndex: this.openPullDown ? '1001' : 1,
@@ -290,7 +290,7 @@ export default {
 			return this.tabEls[this.cmpActiveIndex] || {};
 		},
 		cmpLineStyle() {
-			const width = utils.rpx2px(this.lineWidth);
+			const width = utils.formatPx(this.lineWidth);
 			const display = this.tabEls.length ? 'block' : 'none';
 			let marginLeft = 0;
 			if (this.cmpActiveIndex !== -1) {
@@ -337,7 +337,7 @@ export default {
 			const style = {};
 			if (this.showSubtitle) {
 				style.fontWeight = 'bold';
-				style.fontSize = utils.rpx2px(32);
+				style.fontSize = utils.formatPx(32);
 			}
 			return style;
 		},

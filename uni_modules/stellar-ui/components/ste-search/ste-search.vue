@@ -215,8 +215,8 @@ export default {
 	computed: {
 		cmpStyleVar() {
 			return {
-				'--search-root-height': utils.rpx2px(this.height),
-				'--search-root-radius': utils.rpx2px(this.radius),
+				'--search-root-height': utils.formatPx(this.height),
+				'--search-root-radius': utils.formatPx(this.radius),
 				'--search-btn-text-color': this.btnTextColor,
 				'--search-placeholder-color': this.placeholderColor,
 				'--search-input-color': this.inputTextColor,
