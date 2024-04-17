@@ -141,8 +141,10 @@ export default {
 			if (this.valueUnit == 'fen') {
 				value = utils.fenToYuan(this.value, -1, '', 0);
 			}
-			if ([0, 1, 2].indexOf(this.digits) !== -1) {
-				value = Number.parseFloat(Number(value).toFixed(this.digits)).toString();
+			if (this.digits == -1) {
+				value = Number.parseFloat(Number(value)).toString();
+			} else {
+				value = Number(value).toFixed(this.digits).toString();
 			}
 			return value;
 		},
