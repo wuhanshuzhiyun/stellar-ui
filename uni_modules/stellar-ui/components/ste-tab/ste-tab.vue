@@ -86,6 +86,17 @@ export default {
 			this.parent.updateTabs();
 		});
 	},
+	watch: {
+		$props: {
+			handler(v) {
+				this.$nextTick(() => {
+					console.log(v);
+					this.parent.updateTabs(v);
+				});
+			},
+			deep: true,
+		},
+	},
 };
 </script>
 

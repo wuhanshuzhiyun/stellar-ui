@@ -181,7 +181,6 @@ export default {
 		},
 		cmpItemLefts: {
 			handler(v) {
-				console.log('cmpItemLefts', v);
 				this.$nextTick(() => {
 					this.setTransform(this.dataIndex);
 				});
@@ -213,7 +212,6 @@ export default {
 			if (!this.cmpItemLefts?.length) return;
 			if (this.direction === 'horizontal') {
 				this.translateX = -this.cmpItemLefts[this.dataIndex];
-				console.log('this.dataIndex', this.dataIndex, this.cmpItemLefts, this.translateX);
 			} else if (this.direction === 'vertical') {
 				this.translateY = -this.cmpItemTops[this.dataIndex];
 			}

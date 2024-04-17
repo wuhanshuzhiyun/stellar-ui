@@ -296,7 +296,7 @@
 							v-for="(item, index) in list1"
 							:key="index"
 							:title="item.title"
-							:badge="index"
+							:badge="item.badge"
 							subTitle="子标题"
 							:index="index"
 						>
@@ -342,21 +342,25 @@ export default {
 					title: '标签1',
 					image: `https://image.whzb.com/chain/StellarUI/图片.jpg`,
 					content: 'https://image.whzb.com/chain/StellarUI/image/img1.jpg',
+					badge: 0,
 				},
 				{
 					title: '标签2',
 					image: `https://image.whzb.com/chain/StellarUI/图片.jpg`,
 					content: 'https://image.whzb.com/chain/StellarUI/image/img2.jfif',
+					badge: 1,
 				},
 				{
 					title: '标签3标签3标签3标签3',
 					image: `https://image.whzb.com/chain/StellarUI/图片.jpg`,
 					content: 'https://image.whzb.com/chain/StellarUI/image/img3.jpg',
+					badge: 2,
 				},
 				{
 					title: '标签4',
 					image: `https://image.whzb.com/chain/StellarUI/图片.jpg`,
 					content: 'https://image.whzb.com/chain/StellarUI/image/img4.jpg',
+					badge: 3,
 				},
 			],
 		};
@@ -386,6 +390,15 @@ export default {
 				},
 			]);
 		},
+	},
+	mounted() {
+		setTimeout(() => {
+			const list = this.list1.map((item) => {
+				item.badge += 10;
+				return item;
+			});
+			this.list1 = list;
+		}, 3000);
 	},
 	methods: {},
 };

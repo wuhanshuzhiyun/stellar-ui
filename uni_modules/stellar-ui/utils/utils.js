@@ -239,6 +239,42 @@ let utils = {
 		}
 		return target;
 	},
+	/**得到媒体文件类型*/
+	getMediaFileType(filePath, compatible = 1) {
+		//compatible 1 安卓或者ios 2 安卓且ios 3 安卓 4 ios
+		let filePathList = filePath.split('.');
+		let type = filePathList[filePathList.length - 1];
+		let videoType = [];
+		let audioType = [];
+		if (compatible === 1) {
+			videoType = ['mp4', 'mov', 'm4v', '3gp', 'avim', '3u8', 'webm'];
+			audioType = ['flac', 'm4a', 'ogg', 'ape', 'amr', 'wma', 'wav', 'mp3', 'mp4', 'aac', 'aiff', 'caf'];
+		}
+		if (compatible === 2) {
+			videoType = ['mp4', '3gp', 'm3u8'];
+			audioType = ['m4a', 'wav', 'mp3', 'aac'];
+		}
+		if (compatible === 3) {
+			videoType = ['mp4', '3gp', 'm3u8', 'webm'];
+			audioType = ['flac', 'm4a', 'ogg', 'ape', 'amr', 'wma', 'wav', 'mp3', 'mp4', 'aac'];
+		}
+		if (compatible === 4) {
+			videoType = ['mp4', 'mov', 'm4v', '3gp', 'avim', '3u8'];
+			audioType = ['flac', 'm4a', 'wav', 'mp3', 'aac', 'aiff', 'caf'];
+		}
+		let imageType = ['jpg', 'png', 'svg', 'webp', 'gif', 'bmp'];
+		if (videoType.includes(type)) {
+			return 'video';
+		}
+		if (audioType.includes(type)) {
+			return 'audio';
+		}
+		if (imageType.includes(type)) {
+			return 'image';
+		}
+		return -1;
+	},
+
 };
 
 export default utils;
