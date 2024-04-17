@@ -169,6 +169,12 @@ export default {
 			if (this.cmpTextDisabled) {
 				style['pointerEvents'] = 'none';
 			}
+
+			// 在没有使用插槽内容时去掉边距
+			if (!this.$slots.default) {
+				style['columnGap'] = 0;
+			}
+
 			return style;
 		},
 		cmpInputStyle() {
