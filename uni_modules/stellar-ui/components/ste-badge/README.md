@@ -211,7 +211,7 @@
 | `max`			| 最大值，超过最大值会显示 {max}+，仅当 content 为数字时有效，当 content 为数字 0 时不处理	| `Number`			| `99`		| 0：当 content 为数字 0 时不处理<br/>{{Number}}：超过最大值会显示 {max}+		| `v1.1.5`	|
 | `showBorder`	| 是否显示边框																		| `Boolean`			| `false`	| -																			| `v1.1.9`	|
 | `borderColor`	| 边框颜色																			| `String`			| `#fff`	| -																			| `v1.1.9`	|
-| `zIndex`		| 层级																				| `Number`			| `999`		| -																			| `v1.1.9`	|
+| `zIndex`		| 层级																				| `Number`			| `2`		| -																			| `v1.1.9`	|
 
 #### 组件插槽(Solts)
 

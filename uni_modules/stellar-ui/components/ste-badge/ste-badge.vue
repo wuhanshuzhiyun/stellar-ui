@@ -41,7 +41,7 @@ import utils from '../../utils/utils.js';
  * @property {Number} max 徽标最大显示值 默认 99
  * @property {Boolean} showBorder 是否显示边框 默认 false
  * @property {String} borderColor 边框颜色
- * @property {Number} zIndex 层级
+ * @property {Number} zIndex 层级 默认 2
  */
 
 export default {
@@ -91,7 +91,7 @@ export default {
 		},
 		zIndex: {
 			type: Number,
-			default: 999,
+			default: 2,
 		},
 	},
 	data() {
