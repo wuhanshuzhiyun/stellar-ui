@@ -15,7 +15,7 @@ let utils = {
 	},
 	/**rpx转px 比uni.upx2px精度更高*/
 	rpx2px(rpx) {
-		if (!rpx) return '0';
+		if (!rpx) return '0px';
 		if (windowWidth == null) {
 			windowWidth = uni.getSystemInfoSync().windowWidth;
 		}

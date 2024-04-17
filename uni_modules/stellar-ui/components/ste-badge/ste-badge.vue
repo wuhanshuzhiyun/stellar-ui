@@ -39,6 +39,8 @@ import utils from '../../utils/utils.js';
  * @value bottomLeft 下左 {String}
  * @value bottomRight 下右 {String}
  * @property {Number} max 徽标最大显示值 默认 99
+ * @property {Boolean} showBorder 是否显示边框 默认 false
+ * @property {String} borderColor 边框颜色
  */
 
 export default {
@@ -78,6 +80,14 @@ export default {
 			type: Number,
 			default: 99,
 		},
+		showBorder: {
+			type: Boolean,
+			default: false,
+		},
+		borderColor: {
+			type: String,
+			default: '#fff',
+		},
 	},
 	data() {
 		return {};
@@ -110,6 +120,9 @@ export default {
 						style.top = utils.addUnit(this.offsetY);
 						break;
 				}
+			}
+			if (this.showBorder) {
+				style.border = 'solid 1px ' + this.borderColor;
 			}
 
 			return style;
