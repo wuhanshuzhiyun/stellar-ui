@@ -49,6 +49,20 @@
 				</view>
 				<view class="com-arrow"><image :src="joinSrc('img/r-arrow.png')" /></view>
 			</view>
+			<view class="com-box" @click="nav('media-preview')">
+				<view class="com-title">
+					<image :src="joinSrc('img/mediaPreview.png')" style="width: 36rpx; height: 36rpx" />
+					<text>mediaPreview 媒体预览</text>
+				</view>
+				<view class="com-arrow"><image :src="joinSrc('img/r-arrow.png')" /></view>
+			</view>
+			<view class="com-box" @click="nav('popup')">
+				<view class="com-title">
+					<image :src="joinSrc('img/popup.png')" style="width: 36rpx; height: 36rpx" />
+					<text>Popup 弹出层</text>
+				</view>
+				<view class="com-arrow"><image :src="joinSrc('img/r-arrow.png')" /></view>
+			</view>
 			<view class="com-box" @click="nav('text')">
 				<view class="com-title">
 					<image :src="joinSrc('img/text.png')" style="width: 36rpx; height: 36rpx" />

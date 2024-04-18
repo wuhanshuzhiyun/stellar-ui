@@ -204,11 +204,11 @@ export default {
 			});
 
 			if (this.position === 'center') {
-				animation.scale(1).translate(this.offsetX, this.offsetY).step();
+				animation.scale(1).translate(utils.formatPx(this.offsetX), utils.formatPx(this.offsetY)).step();
 			} else if (this.position === 'top' || this.position === 'bottom') {
-				animation.translate(this.offsetX, this.offsetY).step();
+				animation.translate(utils.formatPx(this.offsetX), utils.formatPx(this.offsetY)).step();
 			} else if (this.position === 'left' || this.position === 'right') {
-				animation.translate(this.offsetX, this.offsetY).step();
+				animation.translate(utils.formatPx(this.offsetX), utils.formatPx(this.offsetY)).step();
 			}
 			this.overlayAnimationData = overlayAnimation.export();
 			this.animationData = animation.export();
