@@ -136,7 +136,13 @@
 				</view>
 				<view class="com-arrow"><image :src="joinSrc('img/r-arrow.png')" /></view>
 			</view>
-
+			<view class="com-box" @click="nav('upload')">
+				<view class="com-title">
+					<image :src="joinSrc('img/upload.png')" style="width: 36rpx; height: 36rpx" />
+					<text>Upload 上传</text>
+				</view>
+				<view class="com-arrow"><image :src="joinSrc('img/r-arrow.png')" /></view>
+			</view>
 			<!-- ***电商组件*** -->
 			<view class="group-title">电商组件</view>
 			<view class="com-box" @click="nav('price')">
@@ -157,6 +163,13 @@
 			</view>
 			<!-- ***导航组件*** -->
 			<view class="group-title">导航组件</view>
+			<view class="com-box" @click="nav('scroll-to')">
+				<view class="com-title">
+					<image :src="joinSrc('img/tabbar.png')" style="width: 36rpx; height: 36rpx" />
+					<text>ScrollTo 滚动锚点</text>
+				</view>
+				<view class="com-arrow"><image :src="joinSrc('img/r-arrow.png')" /></view>
+			</view>
 			<view class="com-box" @click="nav('tabs')">
 				<view class="com-title">
 					<image :src="joinSrc('img/tabs.png')" style="width: 36rpx; height: 36rpx" />
@@ -168,13 +181,6 @@
 				<view class="com-title">
 					<image :src="joinSrc('img/countTo.png')" style="width: 36rpx; height: 36rpx" />
 					<text>TouchSwipe 手势切屏</text>
-				</view>
-				<view class="com-arrow"><image :src="joinSrc('img/r-arrow.png')" /></view>
-			</view>
-			<view class="com-box" @click="nav('scroll-to')">
-				<view class="com-title">
-					<image :src="joinSrc('img/tabbar.png')" style="width: 36rpx; height: 36rpx" />
-					<text>ScrollTo 滚动锚点</text>
 				</view>
 				<view class="com-arrow"><image :src="joinSrc('img/r-arrow.png')" /></view>
 			</view>
