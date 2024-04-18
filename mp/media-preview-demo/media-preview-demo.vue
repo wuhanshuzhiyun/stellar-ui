@@ -6,7 +6,7 @@
 				<view class="title">基础用法</view>
 				<view class="item-block">
 					<view style="width: 100%">
-						<ste-media-preview />
+						<ste-media-preview :urls="medias" :show="show" />
 					</view>
 				</view>
 			</view>
@@ -18,8 +18,15 @@
 export default {
 	data() {
 		return {
-			open: false,
-			medias: [],
+			show: true,
+			medias: [
+				'https://image.whzb.com/chain/StellarUI/图片.jpg',
+				'https://image.whzb.com/chain/StellarUI/视频1.mp4',
+				'https://image.whzb.com/chain/StellarUI/验证码背景.png',
+				'https://image.whzb.com/chain/StellarUI/bg4.jpg',
+				'https://image.whzb.com/chain/StellarUI/视频2.mp4',
+				'https://image.whzb.com/chain/StellarUI/bg3.jpg',
+			],
 		};
 	},
 };
