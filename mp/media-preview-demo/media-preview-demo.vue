@@ -21,10 +21,10 @@ export default {
 			show: true,
 			medias: [
 				'https://image.whzb.com/chain/StellarUI/图片.jpg',
-				'https://image.whzb.com/chain/StellarUI/视频1.mp4',
+				'https://image.whzb.com/chain/StellarUI/竖屏1.mp4',
 				'https://image.whzb.com/chain/StellarUI/验证码背景.png',
 				'https://image.whzb.com/chain/StellarUI/bg4.jpg',
-				'https://image.whzb.com/chain/StellarUI/视频2.mp4',
+				'https://image.whzb.com/chain/StellarUI/横屏2.mp4',
 				'https://image.whzb.com/chain/StellarUI/bg3.jpg',
 			],
 		};
