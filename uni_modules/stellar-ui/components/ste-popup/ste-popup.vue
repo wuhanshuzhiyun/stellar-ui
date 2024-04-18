@@ -21,6 +21,30 @@
 <script>
 import utils from '../../utils/utils.js';
 const DEFAULT_BORDER_RADIUS = 16;
+/**
+ * ste-popup 弹出层
+ * @description 弹出层组件
+ * @tutorial https://stellar-ui.intecloud.com.cn//pc/index/index?name=ste-popup
+ * @property {Boolean} show 是否显示弹出层,使用sync修饰符来双向绑定 默认 false
+ * @property {String} backgroundColor 内容容器的背景色 默认 #ffffff
+ * @property {Boolean} isMaskClick 是否可以点击遮罩层关闭 默认 true
+ * @property {Number|String} width 内容区宽度
+ * @property {Number|String} height 内容区高度
+ * @property {String} position 弹出位置 默认 center
+ * @value center 中 {String}
+ * @value top 上 {String}
+ * @value bottom 下 {String}
+ * @value left 左 {String}
+ * @value right 右 {String}
+ * @property {Boolean} round 是否圆角 默认 false
+ * @property {Boolean} showClose 是否右上角显示关闭图标 默认 true
+ * @property {Number|String} offsetX 根据弹出位置，设置X轴偏移量，单位px 默认 0
+ * @property {Number|String} offsetY 根据弹出位置，设置Y轴偏移量，单位px 默认 0
+ * @property {Number} duration 动画持续时间，单位ms
+ * @property {Number} zIndex 弹窗层级z-index
+ * @event {Function} close 关闭事件
+ * @event {Function} maskClick 遮罩点击事件
+ **/
 export default {
 	group: '基础组件',
 	title: 'Popup 弹出层',
@@ -126,6 +150,17 @@ export default {
 			return style;
 		},
 	},
+	watch: {
+		show: {
+			handler(newVal) {
+				if (newVal) {
+					this.beginAnimation();
+				} else {
+					this.endAnimation();
+				}
+			},
+		},
+	},
 	methods: {
 		touchmove(e) {
 			// TODO nvue 取消冒泡
@@ -198,18 +233,6 @@ export default {
 				this.contentOpacity = 0;
 				this.pageDisplay = 'none';
 			}, this.duration);
-		},
-	},
-
-	watch: {
-		show: {
-			handler(newVal) {
-				if (newVal) {
-					this.beginAnimation();
-				} else {
-					this.endAnimation();
-				}
-			},
 		},
 	},
 };
