@@ -16,6 +16,7 @@
 						@touchstart="onTouchstart"
 						@touchmove="onTouchmove"
 						@touchend="onTouchend"
+						@longpress="onLongpress"
 					>
 						<video
 							class="video"
@@ -23,7 +24,7 @@
 							v-if="item.type === 'video'"
 							:src="item.url || item.path"
 							@click.stop="1"
-							:style="[cmpTransform]"
+							:style="[dataIndex === index ? cmpTransform : null]"
 						/>
 						<image :style="[cmpTransform]" class="image" v-else :src="item.url || item.path" mode="aspectFit" />
 					</view>
@@ -51,14 +52,14 @@ import TouchScaleing from './TouchScaleing.js';
  * @property {Boolean} show 是否显示
  * @property {Array<String>} urls 预览的媒体地址数组
  * @property {Number} autoplay 自动轮播时长，为0不自动轮播，单位ms
- * @property {Boolean} loop 是否循环播放
- * @property {Number} index 默认展示的索引下标
- * @property {Boolean} showIndex 是否显示索引
+ * @property {Boolean} loop 是否前后衔接播放
+ * @property {Number} index 默认展示的资源下标
+ * @property {Boolean} showIndex 是否显示左下角索引
  * @property {Boolean} scale 是否支持双指缩放
  * @event {Function} beforeClose 关闭前触发
  * @event {Function} close 关闭后触发
- * @event {Function} change 下标切换时触发
- * @event {Function} longPress 长按触发
+ * @event {Function} change 切换时触发
+ * @event {Function} longpress 长按触发
  */
 export default {
 	group: '基础组件',
@@ -106,7 +107,7 @@ export default {
 		};
 	},
 	mounted() {
-		this.touch = new TouchScaleing();
+		if (this.scale) this.touch = new TouchScaleing();
 	},
 	computed: {
 		cmpUrls() {
@@ -154,9 +155,11 @@ export default {
 			this.$emit('close');
 		},
 		async onTouchstart(e) {
+			if (!this.scale) return;
 			this.touch.touchStart(e.changedTouches);
 		},
 		onTouchmove(e) {
+			if (!this.scale) return;
 			/**
 			 * @type {TouchScaleing}
 			 */
@@ -166,9 +169,9 @@ export default {
 			this.scaling = touch.scale;
 			this.translate = `${touch.translateX}px,${touch.translateY}px`;
 			this.rotate = touch.rotate;
-			console.log(this.scaling, this.translate);
 		},
 		onTouchend(e) {
+			if (!this.scale) return;
 			const bool = this.touch.touchEnd(e.changedTouches);
 			if (!bool) return;
 			this.transition = '0.3s';
@@ -185,6 +188,9 @@ export default {
 			this.dataIndex = detail.current;
 			this.$emit('update:index', this.dataIndex);
 			this.$emit('change', this.dataIndex);
+		},
+		onLongpress() {
+			this.$meit('longpress', this.dataIndex);
 		},
 	},
 };
