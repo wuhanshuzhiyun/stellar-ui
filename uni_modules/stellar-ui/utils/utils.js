@@ -274,6 +274,16 @@ let utils = {
 		}
 		return -1;
 	},
+	/**延迟执行
+	 * @millisecond 延迟的秒数
+	 */
+	sleep(millisecond) {
+		return new Promise((resolve) => {
+			setTimeout(() => {
+				resolve();
+			}, millisecond);
+		});
+	},
 
 };
 
