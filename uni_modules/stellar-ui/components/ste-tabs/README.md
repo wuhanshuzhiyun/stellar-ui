@@ -369,7 +369,6 @@ export default {
 	- `subTitleRadius`调整子标题圆角
 ```html
 <ste-tabs
-	swipeable
 	showSubtitle
 	:showTitle="false"
 	background="#0090ff"
@@ -377,10 +376,10 @@ export default {
 	activeSubColor="#0090ff"
 	color="#fff"
 	tabPadding="6"
-	subTitleHeight="60"
+	subTitleHeight="66"
 	:showLine="false"
 	radius="45"
-	subTitleRadius="30"
+	subTitleRadius="33"
 >
 	<ste-tab v-for="(item, index) in list1" :key="index" :subTitle="item.title" :index="index">
 		<view>{{ item.title }}内容</view>

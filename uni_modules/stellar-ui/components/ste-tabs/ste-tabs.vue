@@ -29,17 +29,23 @@
 						}"
 						@click="onClickTab(tab, index)"
 					>
-						<ste-badge :showDot="tab.showDot" :content="tab.badge" :showZero="tab.showZeroBadge">
-							<view class="tab-image" v-if="showImage">
-								<ste-image :src="tab.image" />
-							</view>
-							<view class="tab-title" v-if="showTitle" :style="[cmpEllipsis, cmpTitleStyle]">
+						<view class="tab-image" v-if="showImage">
+							<ste-image :src="tab.image" />
+						</view>
+						<ste-badge
+							v-if="showTitle"
+							:isBlock="type === 'card'"
+							:showDot="tab.showDot"
+							:content="tab.badge"
+							:showZero="tab.showZeroBadge"
+						>
+							<view class="tab-title" :style="[cmpEllipsis, cmpTitleStyle]">
 								{{ tab.title }}
 							</view>
-							<view class="tab-sub-title" v-if="showSubtitle" :style="[cmpEllipsis]">
-								{{ tab.subTitle }}
-							</view>
 						</ste-badge>
+						<view class="tab-sub-title" v-if="showSubtitle" :style="[cmpEllipsis]">
+							{{ tab.subTitle }}
+						</view>
 					</view>
 				</block>
 				<view class="tab-line-box" v-if="cmpShowLine">
@@ -473,7 +479,7 @@ export default {
 
 			.tab-space {
 				display: inline-flex;
-				vertical-align: bottom;
+				vertical-align: top;
 				width: var(--tabs-tab-space);
 				min-width: var(--tabs-tab-space-line);
 				align-items: center;
@@ -493,7 +499,7 @@ export default {
 			}
 			.tab-item {
 				display: inline-block;
-				vertical-align: bottom;
+				vertical-align: top;
 				width: var(--tabs-tab-width);
 				padding: var(--tabs-tab-padding);
 				padding-bottom: var(--tabs-tab-padding-bottom);

@@ -310,7 +310,6 @@
 				<view class="sub-item">
 					<view class="sub-title">根据需求配置出所需效果</view>
 					<ste-tabs
-						swipeable
 						showSubtitle
 						:showTitle="false"
 						background="#0090ff"
@@ -318,10 +317,10 @@
 						activeSubColor="#0090ff"
 						color="#fff"
 						tabPadding="6"
-						subTitleHeight="60"
+						subTitleHeight="66"
 						:showLine="false"
 						radius="45"
-						subTitleRadius="30"
+						subTitleRadius="33"
 					>
 						<ste-tab v-for="(item, index) in list1" :key="index" :subTitle="item.title" :index="index">
 							<view>{{ item.title }}内容</view>
