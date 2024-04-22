@@ -212,7 +212,7 @@
 | `showBorder`	| 是否显示边框																			| `Boolean`			| `false`	| -																			| `v1.9.0`	|
 | `borderColor`	| 边框颜色																				| `String`			| `#fff`	| -																			| `v1.9.0`	|
 | `zIndex`		| 层级																					| `Number`			| `2`		| -																			| `v1.9.0`	|
-| `isBlock`		| display属性是否为block																	| `Boolean`			| `false`	| -																			| `v1.10.0`	|
+| `isInline`	| display属性是否为inline-block															| `Boolean`			| `false`	| -																			| `v1.10.0`	|
 
 #### 组件插槽(Solts)
 
