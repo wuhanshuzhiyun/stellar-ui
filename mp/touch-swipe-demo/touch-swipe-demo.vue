@@ -39,7 +39,7 @@
 export default {
 	data() {
 		return {
-			hIndex: 0,
+			hIndex: 3,
 			vIndex: 0,
 			imgs: [
 				'https://image.whzb.com/chain/StellarUI/image/img1.jpg',

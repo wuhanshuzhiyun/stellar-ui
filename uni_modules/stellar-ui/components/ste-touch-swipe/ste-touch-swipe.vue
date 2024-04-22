@@ -94,7 +94,8 @@ export default {
 	},
 	data() {
 		return {
-			show: false,
+			init: false,
+			showNode: false,
 			boxEl: null,
 			touch: null,
 			moveing: false,
@@ -115,7 +116,7 @@ export default {
 			return {
 				'--touch-swipe-width': utils.formatPx(this.width),
 				'--touch-swipe-height': utils.formatPx(this.height),
-				opacity: this.show ? '1' : '0',
+				opacity: this.showNode ? '1' : '0',
 			};
 		},
 		cmpChildrenLength() {
@@ -135,7 +136,7 @@ export default {
 		},
 		cmpTransform() {
 			this.$nextTick(() => {
-				if (!this.show) this.show = true;
+				if (!this.showNode) this.showNode = true;
 			});
 			let transform = '';
 			if (this.direction === 'horizontal') {
@@ -145,7 +146,7 @@ export default {
 			}
 			return {
 				transform,
-				transitionDuration: this.moveing ? 'inherit' : `${this.duration}s`,
+				transitionDuration: !this.init || this.moveing ? 'inherit' : `${this.duration}s`,
 			};
 		},
 		cmpItemLefts() {
@@ -191,7 +192,7 @@ export default {
 	methods: {
 		updateChildren() {
 			clearTimeout(this._timeout);
-			this.show = false;
+			this.showNode = false;
 			this._timeout = setTimeout(() => {
 				const children = utils.getChildrenProps(this, 'ste-touch-swipe-item');
 				this.dataChildrenLength = children.length;
@@ -204,7 +205,7 @@ export default {
 					if (!this.boxEl) {
 						this.boxEl = await utils.querySelector('.ste-touch-swipe--root', this);
 					}
-					this.show = true;
+					this.showNode = true;
 				});
 			});
 		},
@@ -215,6 +216,9 @@ export default {
 			} else if (this.direction === 'vertical') {
 				this.translateY = -this.cmpItemTops[this.dataIndex];
 			}
+			setTimeout(() => {
+				this.init = true;
+			}, 50);
 		},
 		nextItem(moveX, moveY) {
 			let index = this.dataIndex;
