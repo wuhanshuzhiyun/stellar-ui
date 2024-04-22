@@ -171,7 +171,7 @@ export default {
 	border-radius: var(--image-root-radius);
 	overflow: hidden;
 	line-height: 1;
-	vertical-align: middle;
+	vertical-align: top;
 	position: relative;
 	& > image {
 		width: var(--image-root-width);
