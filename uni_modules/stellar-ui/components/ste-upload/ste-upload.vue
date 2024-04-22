@@ -48,30 +48,11 @@
 			</view>
 		</view>
 		<!-- #ifndef MP-WEIXIN -->
-		<view class="preview-list" v-if="previewIndex || previewIndex === 0">
-			<view class="preview-content">
-				<ste-touch-swipe :index.sync="previewIndex">
-					<ste-touch-swipe-item v-for="(item, index) in cmpPreviewList" :key="index">
-						<view class="preview-item" @click.stop="1">
-							<video
-								object-fit="contain"
-								class="video"
-								v-if="item.type === 'video'"
-								:src="item.url || item.path"
-								@click.stop="1"
-							/>
-							<image class="image" v-else :src="item.url || item.path" mode="aspectFit" />
-						</view>
-					</ste-touch-swipe-item>
-				</ste-touch-swipe>
-			</view>
-			<view class="preview-footer">
-				<view class="index-box">{{ previewIndex + 1 }}/{{ cmpPreviewList.length }}</view>
-				<view class="close-btn" @click="previewIndex = null">
-					<ste-icon code="&#xe67b;" color="#fff" size="30" />
-				</view>
-			</view>
-		</view>
+		<ste-media-preview
+			:show="previewIndex || previewIndex === 0"
+			:urls="cmpPreviewList"
+			:index.sync="previewIndex"
+		></ste-media-preview>
 		<!-- #endif -->
 	</view>
 </template>
@@ -249,7 +230,9 @@ export default {
 			return bool;
 		},
 		cmpPreviewList() {
-			return this.dataValue.filter((item) => ['video', 'image'].indexOf(item.type) !== -1);
+			return this.dataValue
+				.filter((item) => ['video', 'image'].indexOf(item.type) !== -1)
+				.map((item) => item.thumbPath || item.url || item.path);
 		},
 	},
 	watch: {
@@ -381,7 +364,9 @@ export default {
 			// #ifdef MP-WEIXIN
 			wx.previewMedia({
 				current: index,
-				sources: this.cmpPreviewList.map((item) => ({ ...item, url: item.url || item.path, poster: item.thumbPath })),
+				sources: this.dataValue
+					.filter((item) => ['video', 'image'].indexOf(item.type) !== -1)
+					.map((item) => ({ ...item, url: item.url || item.path, poster: item.thumbPath })),
 			});
 			return;
 			// #endif
@@ -502,57 +487,5 @@ export default {
 			}
 		}
 	}
-	// #ifndef MP-WEIXIN
-	.preview-list {
-		background-color: #000;
-		position: fixed;
-		width: 100vw;
-		height: 100vh;
-		top: 0;
-		left: 0;
-		z-index: 1001;
-		.preview-content {
-			width: 100%;
-			height: calc(100% - 120rpx);
-			.preview-item {
-				width: 100%;
-				height: 100%;
-				display: flex;
-				align-items: center;
-				justify-content: center;
-				.video {
-					width: 100%;
-					height: 100%;
-				}
-			}
-		}
-		.preview-footer {
-			width: 100%;
-			height: 120rpx;
-			padding: 0 30rpx 24rpx 30rpx;
-			display: flex;
-			align-items: center;
-			justify-content: space-between;
-			.index-box {
-				padding: 3rpx 10rpx;
-				text-align: center;
-				color: #fff;
-				font-size: 36rpx;
-				background-color: rgba(0, 0, 0, 0.1);
-			}
-			.close-btn {
-				width: 78rpx;
-				height: 78rpx;
-				border-radius: 50%;
-				border: 1px solid #fff;
-				display: flex;
-				align-items: center;
-				justify-content: center;
-				box-shadow: 0 0 5px 0 rgba(0, 0, 0, 0.2);
-				background-color: rgba(0, 0, 0, 0.1);
-			}
-		}
-	}
-	// #endif
 }
 </style>
