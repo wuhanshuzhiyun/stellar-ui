@@ -1,5 +1,5 @@
 <template>
-	<view class="ste-badge-root">
+	<view class="ste-badge-root" :style="{ display: isBlock ? 'block' : 'inline-block' }">
 		<view
 			class="ste-badge-content"
 			:style="[cmpContentStyle]"
@@ -42,6 +42,7 @@ import utils from '../../utils/utils.js';
  * @property {Boolean} showBorder 是否显示边框 默认 false
  * @property {String} borderColor 边框颜色
  * @property {Number} zIndex 层级 默认 2
+ * @property {Boolean} isBlock display属性是否为block 默认 false
  */
 
 export default {
@@ -92,6 +93,10 @@ export default {
 		zIndex: {
 			type: Number,
 			default: 2,
+		},
+		isBlock: {
+			type: Boolean,
+			default: false,
 		},
 	},
 	data() {

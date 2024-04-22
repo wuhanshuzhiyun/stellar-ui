@@ -199,19 +199,20 @@
 ### API
 #### 组件属性(Props)
 
-| 参数			| 说明																				| 类型				| 默认值		| 可选值																		| 支持版本	|
-| ---			| ---																				| ---				| ---		| ---																		| ---		|
-| `content`		| 徽标内容																			| `Number/String`	| -			| -																			| -			|
-| `background`	| 背景																				| `String`			| `#ee0a24`	| -																			| -			|
-| `showDot`		| 是否展示为小红点																	| `Boolean`			| `true`	| -																			| -			|
-| `position`	| 徽标位置																			| `String`			| `topRight`| topRight：上右<br/>topLeft：上左<br/>bottomLeft：下左<br/>bottomRight：下右	| -			|
-| `offsetX`		| x轴偏移量																			| `Number/String`	| `auto`	| -																			| -			|
-| `offsetY`		| y轴偏移量																			| `Number/String`	| `auto`	| -																			| -			|
+| 参数			| 说明																					| 类型				| 默认值		| 可选值																		| 支持版本	|
+| ---			| ---																					| ---				| ---		| ---																		| ---		|
+| `content`		| 徽标内容																				| `Number/String`	| -			| -																			| -			|
+| `background`	| 背景																					| `String`			| `#ee0a24`	| -																			| -			|
+| `showDot`		| 是否展示为小红点																		| `Boolean`			| `true`	| -																			| -			|
+| `position`	| 徽标位置																				| `String`			| `topRight`| topRight：上右<br/>topLeft：上左<br/>bottomLeft：下左<br/>bottomRight：下右	| -			|
+| `offsetX`		| x轴偏移量																				| `Number/String`	| `auto`	| -																			| -			|
+| `offsetY`		| y轴偏移量																				| `Number/String`	| `auto`	| -																			| -			|
 | `showZero`	| 当 content 为数字 0 或字符串 '0' 时，是否展示徽标										| `Boolean`			| `true`	| -																			| -			|
 | `max`			| 最大值，超过最大值会显示 {max}+，仅当 content 为数字时有效，当 content 为数字 0 时不处理	| `Number`			| `99`		| 0：当 content 为数字 0 时不处理<br/>{{Number}}：超过最大值会显示 {max}+		| `v1.1.5`	|
-| `showBorder`	| 是否显示边框																		| `Boolean`			| `false`	| -																			| `v1.9.0`	|
-| `borderColor`	| 边框颜色																			| `String`			| `#fff`	| -																			| `v1.9.0`	|
-| `zIndex`		| 层级																				| `Number`			| `2`		| -																			| `v1.9.0`	|
+| `showBorder`	| 是否显示边框																			| `Boolean`			| `false`	| -																			| `v1.9.0`	|
+| `borderColor`	| 边框颜色																				| `String`			| `#fff`	| -																			| `v1.9.0`	|
+| `zIndex`		| 层级																					| `Number`			| `2`		| -																			| `v1.9.0`	|
+| `isBlock`		| display属性是否为block																	| `Boolean`			| `false`	| -																			| `v1.10.0`	|
 
 #### 组件插槽(Solts)
 
