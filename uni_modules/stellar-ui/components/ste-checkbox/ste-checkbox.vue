@@ -42,6 +42,9 @@ import utils from '../../utils/utils.js';
  * @property {String} textInactiveColor 未选中的文本颜色 默认 #000000
  * @property {String} textActiveColor 选中的文本颜色 默认 #000000
  * @property {Boolean} textDisabled 禁用文本点击 默认 false
+ * @property {Number|String} marginLeft 左边距，单位rpx 默认 0
+ * @property {Number|String} marginRight 右边距，单位rpx 默认 0
+ * @property {Number|String} columnGap 复选框和文本间距，单位rpx 默认 16
  * @event {Function} click 点击复选框时触发的事件
  * @event {Function} change 当绑定值变化时触发的事件
  */
@@ -96,6 +99,18 @@ export default {
 		},
 		textDisabled: {
 			type: [Boolean, null],
+			default: null,
+		},
+		marginLeft: {
+			type: [Number, String, null],
+			default: null,
+		},
+		marginRight: {
+			type: [Number, String, null],
+			default: null,
+		},
+		columnGap: {
+			type: [Number, String, null],
 			default: null,
 		},
 	},
@@ -154,6 +169,15 @@ export default {
 		cmpTextDisabled() {
 			return this.getDefaultData('textDisabled', false);
 		},
+		cmpMarginLeft() {
+			return this.getDefaultData('marginLeft', '0');
+		},
+		cmpMarginRight() {
+			return this.getDefaultData('marginRight', '0');
+		},
+		cmpColumnGap() {
+			return this.getDefaultData('columnGap', '16');
+		},
 		cmpSlotProps() {
 			return {
 				checked: this.cmpChecked,
@@ -165,6 +189,9 @@ export default {
 			style['fontSize'] = utils.formatPx(this.cmpTextSize);
 			style['color'] = this.cmpChecked ? this.cmpTextActiveColor : this.cmpTextInactiveColor;
 			style['flexDirection'] = this.cmpTextPosition == 'right' ? 'row' : 'row-reverse';
+			style['columnGap'] = utils.formatPx(this.cmpColumnGap);
+			style['marginLeft'] = utils.formatPx(this.cmpMarginLeft);
+			style['marginRight'] = utils.formatPx(this.cmpMarginRight);
 			// #ifdef H5
 			if (this.cmpDisabled || this.cmpReadonly) {
 				style['cursor'] = 'not-allowed';
@@ -257,7 +284,6 @@ export default {
 	width: auto;
 	height: 100%;
 	display: flex;
-	column-gap: 16rpx;
 	align-items: center;
 	.input-icon {
 		display: flex;

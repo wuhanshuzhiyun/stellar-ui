@@ -198,6 +198,11 @@ export default {
 | `textlnactiveColor`	| 未选中文本颜色					| `String`			| `#000000`	| -									| -			|
 | `textActiveColor`		| 选中文本颜色					| `String`			| `#000000`	| -									| -			|
 | `textDisabled`		| 禁用文本点击					| `Boolean`			| `false`	| -									| -			|
+| `marginLeft`			| 左边距,单位rpx					| `Number/String`	| `0`		| -									| `v1.10.0`	|
+| `marginRight`			| 右边距,单位rpx					| `Number/String`	| `0`		| -									| `v1.10.0`	|
+| `columnGap`			| 复选框和文本间距，单位rpx		| `Number/String`	| `16`		| -									| `v1.10.0`	|
+
+
 
 #### CheckboxGroup 组件属性(Props)
 
@@ -216,7 +221,9 @@ export default {
 | `textActiveColor`		| 选中文本颜色					| `String`			| `#000000`	| -									| -			|
 | `textDisabled`		| 禁用文本点击					| `Boolean`			| `false`	| -									| -			|
 | `max`					| 最大可选数，0 为无限制			| `Number`			| `0`		| -									| -			|
-
+| `marginLeft`			| 左边距,单位rpx					| `Number/String`	| `0`		| -									| `v1.10.0`	|
+| `marginRight`			| 右边距,单位rpx					| `Number/String`	| `0`		| -									| `v1.10.0`	|
+| `columnGap`			| 复选框和文本间距，单位rpx		| `Number/String`	| `16`		| -									| `v1.10.0`	|
 
 #### Checkbox Events
 |事件名		|说明									|事件参数																		|支持版本	|

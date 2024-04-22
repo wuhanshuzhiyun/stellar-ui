@@ -27,6 +27,9 @@
  * @property {String} textInactiveColor 未选中的文本颜色 默认 #000000
  * @property {String} textActiveColor 选中的文本颜色 默认 #000000
  * @property {Boolean} textDisabled 禁用文本点击 默认 false
+ * @property {Number|String} marginLeft 左边距，单位rpx 默认 0
+ * @property {Number|String} marginRight 右边距，单位rpx 默认 0
+ * @property {Number|String} columnGap 单选框和文本间距，单位rpx 默认 16
  * @event {Function} change 当绑定值变化时触发的事件
  */
 export default {
@@ -80,9 +83,17 @@ export default {
 			type: Boolean,
 			default: false,
 		},
-		max: {
-			type: Number,
-			default: 0,
+		marginLeft: {
+			type: [Number, String, null],
+			default: null,
+		},
+		marginRight: {
+			type: [Number, String, null],
+			default: null,
+		},
+		columnGap: {
+			type: [Number, String, null],
+			default: null,
 		},
 	},
 	model: {
