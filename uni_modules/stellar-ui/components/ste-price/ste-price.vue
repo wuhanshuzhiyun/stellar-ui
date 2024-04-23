@@ -248,7 +248,6 @@ export default {
 	.content {
 		display: inline-block;
 		vertical-align: bottom;
-		overflow: hidden; // 解决ios会产生文字高亮等兼容性问题，导致color样式失效问题
 	}
 	.unit {
 		vertical-align: baseline;
