@@ -171,12 +171,12 @@ export default {
 		},
 		cmpPriceStyle() {
 			return {
-				lineHeight: this.lineHeight === -1 ? 0.8 : utils.addUnit(this.lineHeight),
+				lineHeight: this.lineHeight === -1 ? 0.8 : utils.formatPx(this.lineHeight),
 				color: (this.isSuggestPrice ? this.linePriceColor : this.color) + ' !important',
-				marginLeft: utils.addUnit(this.marginLeft),
-				marginRight: utils.addUnit(this.marginRight),
-				marginTop: utils.addUnit(this.marginTop),
-				marginBottom: utils.addUnit(this.marginBottom),
+				marginLeft: utils.formatPx(this.marginLeft),
+				marginRight: utils.formatPx(this.marginRight),
+				marginTop: utils.formatPx(this.marginTop),
+				marginBottom: utils.formatPx(this.marginBottom),
 				fontWeight: this.bold ? 'bold' : 'normal',
 			};
 		},
@@ -188,7 +188,7 @@ export default {
 
 			if (this.isSuggestPrice) {
 				style.color = this.linePriceColor;
-				style.fontSize = utils.addUnit(this.fontSize);
+				style.fontSize = utils.formatPx(this.fontSize);
 			} else {
 				style.fontSize = this.calcFontSize();
 			}
@@ -196,19 +196,19 @@ export default {
 		},
 		cmpYuanPriceStyle() {
 			return {
-				fontSize: utils.addUnit(this.fontSize),
+				fontSize: utils.formatPx(this.fontSize),
 				textDecoration: this.isSuggestPrice ? 'line-through' : 'none',
 			};
 		},
 		cmpFenPriceStyle() {
 			let fontSize = 0;
 			if (this.isSuggestPrice) {
-				fontSize = utils.addUnit(this.fontSize);
+				fontSize = utils.formatPx(this.fontSize);
 			} else {
 				if (this.styleType == 2) {
 					fontSize = this.calcFontSize();
 				} else {
-					fontSize = utils.addUnit(this.fontSize);
+					fontSize = utils.formatPx(this.fontSize);
 				}
 			}
 			return {
@@ -219,21 +219,21 @@ export default {
 	},
 	methods: {
 		calcFontSize() {
-			let size = utils.addUnit(this.fontSize);
+			let size = utils.formatPx(this.fontSize);
 			if (this.styleType == 1) {
 				if (this.fontSize <= 40) {
-					size = utils.addUnit(20);
+					size = utils.formatPx(20);
 				} else {
-					size = utils.addUnit(this.fontSize - 20);
+					size = utils.formatPx(this.fontSize - 20);
 				}
 			} else if (this.styleType == 3) {
-				size = utils.addUnit(this.fontSize);
+				size = utils.formatPx(this.fontSize);
 			} else {
 				// 常规 - 分元不一致
 				if (this.fontSize > 28 && this.fontSize <= 40) {
-					size = utils.addUnit(20);
+					size = utils.formatPx(20);
 				} else if (this.fontSize > 40) {
-					size = utils.addUnit(this.fontSize - 20);
+					size = utils.formatPx(this.fontSize - 20);
 				}
 			}
 			return size;
