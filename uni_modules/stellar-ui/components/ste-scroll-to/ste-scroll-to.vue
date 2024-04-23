@@ -118,7 +118,6 @@ export default {
 			}, 500);
 		},
 		setScrollTopByIndex(index) {
-			console.log('setScrollTopByIndex:', index);
 			clearTimeout(this._setScrollTopTimeout);
 			this._setScrollTopTimeout = setTimeout(() => {
 				const childrenTops = this.childrenTops;
@@ -135,7 +134,6 @@ export default {
 			}, 50);
 		},
 		setActiveByTop(scrollTop) {
-			console.log('setActiveByTop:', scrollTop);
 			clearTimeout(this._setActiveTimeout);
 			this._setActiveTimeout = setTimeout(() => {
 				const childrenTops = this.childrenTops;

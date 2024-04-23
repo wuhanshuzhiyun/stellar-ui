@@ -90,7 +90,6 @@ export default {
 		$props: {
 			handler(v) {
 				this.$nextTick(() => {
-					console.log(v);
 					this.parent.updateTabs(v);
 				});
 			},
