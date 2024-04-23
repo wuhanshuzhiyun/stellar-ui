@@ -38,6 +38,7 @@
 							:showDot="tab.showDot"
 							:content="tab.badge"
 							:showZero="tab.showZeroBadge"
+							isInline
 						>
 							<view class="tab-title" :style="[cmpEllipsis, cmpTitleStyle]">
 								{{ tab.title }}
