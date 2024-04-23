@@ -391,55 +391,55 @@ export default {
 ### API
 #### Tabs Props
 背景之外的颜色属性只支持`16进制`、`RGB`、`RGBA`格式
-| 属性名						| 说明																																									| 类型								| 默认值				| 可选值																| 支持版本	|
-| -----							|-----																																								|-----							|-----				|-----																|-----		|
-| `active`					| 当前激活的选项，支持sync双向绑定 （类型为number时tab绑定index，类型为string时tab绑定name）	| `String`/`Number`	| `0`					| -																		|-				|
-| `type`						| 样式风格类型																																					| `String`					| `"line"`		| `"line"`线性模式<br/>`"card"`卡片模式	|-				|
-| `color`						| 主题色（滑块颜色，边框颜色，选中的背景色，激活下拉列表中选项颜色）													| `String`					| `#0090FF`		| -																		|-				|
-| `radius`					| 标签栏圆角	（单位rpx）																																| `String`/`Number`	| `0`					| -																		|-				|
-| `background`			| 标签栏背景																																						| `String`					| `""`				| -																		|-				|
-| `showImage`				| 是否显示图片																																					| `Boolean`					| `false`			| -																		|-				|
-| `showTitle`				| 是否显示标题																																					| `Boolean`					| `true`			| -																		|-				|
-| `titleHeight`			| 主标题高度	（单位rpx）																																| `String`/`Number`	| `48`				| -																		|-				|
-| `showSubtitle`		| 是否显示子标题																																				| `Boolean`					| `false`			| -																		|-				|
-| `duration`				| 切换动画时长	（单位秒）																																| `Number`					| `0.3`				| -																		|-				|
-| `showLine`				| 底部条是否展示	(显示副标题时无法展示)																										| `Boolean`					| `true`			| -																		|-				|
-| `lineWidth`				| 底部条宽度	（单位rpx）																																| `String`/`Number`	| `52`				| -																		|-				|
-| `lineHeight`			| 底部条高度	（单位rpx）																																| `String`/`Number`	| `6`					| -																		|-				|
-| `border`					| 是否显示边框	（仅在card模式下生效）																											| `Boolean`					| `false`			| -																		|-				|
-| `ellipsis`				| 是否开启选项文本超长省略																																| `Boolean`					| `false`			| -																		|-				|
-| `tabWidth`				| 选项宽度 （单位rpx）																																	| `String`/`Number`	| `"auto"`		| -																		|-				|
-| `tabPadding`			| 选项内边距，单位rpx																																		| `String`/`Number`	| `24`				| -																		|-				|
-| `tabSpace`				| 选项间距 （单位rpx）																																	| `String`/`Number`	| `0`					| -																		|-				|
-| `divideNum`				| 标签栏均分最大数量 （设置0则不均分）																										| `Number`					| `4`					| -																		|-				|
-| `sticky`					| 是否开启吸顶																																					| `Boolean`					| `false`			| -																		|-				|
-| `offsetTop`				| 吸顶距离	（单位rpx）																																	| `String`/`Number`	| `0`					| -																		|-				|
-| `swipeable`				| 是否开启手势滑动切换																																		| `Boolean`					| `false`			| -																		|-				|
-| `titleColor`			| 主标题字体颜色和下拉列表中主标题颜色																											| `String`					| `"#000000"`	| -																		|-				|
-| `activeTitleColor`| 激活主标题字体颜色																																			| `String`					| `"#000000"`	| -																		|-				|
-| `subColor`				| 子标题字体颜色和下拉列表中子标题颜色																											| `String`					| `"#000000"`	| -																		|-				|
-| `activeSubColor`	| 激活子标题字体颜色和下拉列表中子标题激活颜色																							| `String`					| `"#ffffff"`	| -																		|-				|
-| `subTitleHeight`	| 子标题高度	（单位rpx）																																| `String`/`Number`	| `42`				| -																		|-				|
-| `subTitleRadius`	| 子标题圆角	（单位rpx）																																| `String`/`Number`	| `21`				| -																		|-				|
-| `imageWidth`			| 图片宽度																																							| `String`/`Number`	| `80`				| -																		|-				|
-| `imageHeight`			| 图片高度																																							| `String`/`Number`	| `80`				| -																		|-				|
-| `imageRadius`			| 图片圆角																																							| `String`/`Number`	| `50%`				| -																		|-				|
-| `imageBorderWidth`| 选中图片边框宽度																																			| `String`/`Number`	| `4`					| -																		|-				|
-| `showGapLine`			| 是否显示分割线																																				| `Boolean`					| `false`			| -																		|-				|
-| `lock`						| 是否锁定（无法切换）																																		| `Boolean`					| `false`			| -																		|-				|
-| `disabled`				| 是否禁用（全部功能失效并且置灰）																												| `Boolean`					| `false`			| -																		|-				|
-| `pullDown`				| 是否有下拉选项（当选项数量大于均分数量时生效）																						| `Boolean`					| `false`			| -																		|-				|
-| `placeholder`			| 下拉占位符																																						| `String`					| `"请选择"`		| -																		|-				|
-| `maskTop`					| 下拉蒙层顶部距离																																			| `String`/`Number`	| `0`					| -																		|-				|
-| `maskRight`				| 下拉蒙层右侧距离																																			| `String`/`Number`	| `0`					| -																		|-				|
-| `maskBottom`			| 下拉蒙层底部距离																																			| `String`/`Number`	| `0`					| -																		|-				|
-| `maskLeft`				| 下拉蒙层左侧距离																																			| `String`/`Number`	| `0`					| -																		|-				|
-| `maskZindex`			| 下拉蒙层层级																																					| `Number`					| `1001`			| -																		|-				|
+| 属性名						| 说明																																											| 类型								| 默认值				| 可选值																	| 支持版本	|
+| -----							| -----																																										| -----							| -----				| -----																	| -----		|
+| `active`					| 当前激活的选项，支持sync双向绑定 （类型为number时tab绑定index，类型为string时tab绑定name）	| `String`/`Number`	| `0`					| -																			| -				|
+| `type`						| 样式风格类型																																							| `String`					| `"line"`		| `"line"`线性模式<br/>`"card"`卡片模式	| -				|
+| `color`						| 主题色（滑块颜色，边框颜色，选中的背景色，激活下拉列表中选项颜色）													| `String`					| `#0090FF`		| -																			| -				|
+| `radius`					| 标签栏圆角	（单位rpx）																																		| `String`/`Number`	| `0`					| -																			| -				|
+| `background`			| 标签栏背景																																								| `String`					| `""`				| -																			| -				|
+| `showImage`				| 是否显示图片																																							| `Boolean`					| `false`			| -																			| -				|
+| `showTitle`				| 是否显示标题																																							| `Boolean`					| `true`			| -																			| -				|
+| `titleHeight`			| 主标题高度	（单位rpx）																																		| `String`/`Number`	| `48`				| -																			| -				|
+| `showSubtitle`		| 是否显示子标题																																						| `Boolean`					| `false`			| -																			| -				|
+| `duration`				| 切换动画时长	（单位秒）																																		| `Number`					| `0.3`				| -																			| -				|
+| `showLine`				| 底部条是否展示	(显示副标题时无法展示)																											| `Boolean`					| `true`			| -																			| -				|
+| `lineWidth`				| 底部条宽度	（单位rpx）																																		| `String`/`Number`	| `52`				| -																			| -				|
+| `lineHeight`			| 底部条高度	（单位rpx）																																		| `String`/`Number`	| `6`					| -																			| -				|
+| `border`					| 是否显示边框	（仅在card模式下生效）																												| `Boolean`					| `false`			| -																			| -				|
+| `ellipsis`				| 是否开启选项文本超长省略																																	| `Boolean`					| `false`			| -																			| -				|
+| `tabWidth`				| 选项宽度 （单位rpx）																																			| `String`/`Number`	| `"auto"`		| -																			| -				|
+| `tabPadding`			| 选项内边距，单位rpx																																			| `String`/`Number`	| `24`				| -																			| -				|
+| `tabSpace`				| 选项间距 （单位rpx）																																			| `String`/`Number`	| `0`					| -																			| -				|
+| `divideNum`				| 标签栏均分最大数量 （设置0则不均分）																											| `Number`					| `4`					| -																			| -				|
+| `sticky`					| 是否开启吸顶																																							| `Boolean`					| `false`			| -																			| -				|
+| `offsetTop`				| 吸顶距离	（单位rpx）																																			| `String`/`Number`	| `0`					| -																			| -				|
+| `swipeable`				| 是否开启手势滑动切换																																			| `Boolean`					| `false`			| -																			| -				|
+| `titleColor`			| 主标题字体颜色和下拉列表中主标题颜色																												| `String`					| `"#000000"`	| -																			| -				|
+| `activeTitleColor`| 激活主标题字体颜色																																				| `String`					| `"#000000"`	| -																			| -				|
+| `subColor`				| 子标题字体颜色和下拉列表中子标题颜色																												| `String`					| `"#000000"`	| -																			| -				|
+| `activeSubColor`	| 激活子标题字体颜色和下拉列表中子标题激活颜色																								| `String`					| `"#ffffff"`	| -																			| -				|
+| `subTitleHeight`	| 子标题高度	（单位rpx）																																		| `String`/`Number`	| `42`				| -																			| -				|
+| `subTitleRadius`	| 子标题圆角	（单位rpx）																																		| `String`/`Number`	| `21`				| -																			| -				|
+| `imageWidth`			| 图片宽度																																									| `String`/`Number`	| `80`				| -																			| -				|
+| `imageHeight`			| 图片高度																																									| `String`/`Number`	| `80`				| -																			| -				|
+| `imageRadius`			| 图片圆角																																									| `String`/`Number`	| `50%`				| -																			| -				|
+| `imageBorderWidth`| 选中图片边框宽度																																					| `String`/`Number`	| `4`					| -																			| -				|
+| `showGapLine`			| 是否显示分割线																																						| `Boolean`					| `false`			| -																			| -				|
+| `lock`						| 是否锁定（无法切换）																																			| `Boolean`					| `false`			| -																			| -				|
+| `disabled`				| 是否禁用（全部功能失效并且置灰）																													| `Boolean`					| `false`			| -																			| -				|
+| `pullDown`				| 是否有下拉选项（当选项数量大于均分数量时生效）																							| `Boolean`					| `false`			| -																			| -				|
+| `placeholder`			| 下拉占位符																																								| `String`					| `"请选择"`		| -																			| -				|
+| `maskTop`					| 下拉蒙层顶部距离																																					| `String`/`Number`	| `0`					| -																			| -				|
+| `maskRight`				| 下拉蒙层右侧距离																																					| `String`/`Number`	| `0`					| -																			| -				|
+| `maskBottom`			| 下拉蒙层底部距离																																					| `String`/`Number`	| `0`					| -																			| -				|
+| `maskLeft`				| 下拉蒙层左侧距离																																					| `String`/`Number`	| `0`					| -																			| -				|
+| `maskZindex`			| 下拉蒙层层级																																							| `Number`					| `1001`			| -																			| -				|
 
 #### Tabs Events
 您可以通过监听`change`事件，事件参数为用户选中标签项的`props`对象，您可以监听该事件获取当前选中的标签。
 |事件名				|说明																						|事件参数				|支持版本	|
-|---					|---																						|---						|---			|
+| ---					| ---																						| ---						| ---			|
 | `click-tab`	| 监听tab点击事件，不受`disabled`和`lock`属性影响	| {...tab,index}| -				|
 | `change`		| 监听tab切换																		| {...tab,index}| -				|
 
@@ -447,7 +447,7 @@ export default {
 您可以通过监听`change`事件，事件参数为用户选中标签项的`props`对象，您可以监听该事件获取当前选中的标签。
 |插槽名			|说明													|插槽参数	|支持版本	|
 | ---				| ---													| ---			| ---			|
-| `default`	| 默认插槽，请传入`ste-tab`标签列表	|-				| -				|
+| `default`	| 默认插槽，请传入`ste-tab`标签列表	| -				| -				|
 
 #### Tab Props
 | 属性名					| 说明																																| 类型								| 默认值		| 可选值	|支持版本	|
@@ -458,7 +458,7 @@ export default {
 | `name`					| 标签唯一标识（当tabs的active值类型为string时，作为匹配激活的标识符）	| `String`					| -				| -			| -				|
 | `index`					| 标签下标（当tabs的active值类型为number时，作为匹配激活的标识符）			| `Number`					| -				| -			| -				|
 | `disabled`			| 禁用当前标签																												| `Boolean`					| `false`	| -			| -				|
-| `showDot`				| 是否在标题右上角显示小红点																					| `Boolean`					| `false`	| -			| -				|
+| `showDot`				| 是否在主标题右上角显示小红点（隐藏主标题时无法显示）									| `Boolean`					| `false`	| -			| -				|
 | `badge`					| 右上角徽标的内容																										| `String`/`Number`	| `0`			| -			| -				|
 | `showZeroBadge`	| 当 badge 为数字 0 时，是否展示徽标																	| `Boolean`					| `false`	| -			| -				|
 
@@ -466,7 +466,7 @@ export default {
 您可以通过监听`change`事件，事件参数为用户选中标签项的`props`对象，您可以监听该事件获取当前选中的标签。
 |插槽名			|说明																				|插槽参数	|支持版本	|
 | ---				| ---																				| ---			| ---			|
-| `default`	| 默认插槽，在插槽中的内容会展示在标签内容区域	|-				| -				|
+| `default`	| 默认插槽，在插槽中的内容会展示在标签内容区域	| -				| -				|
 
 
 {{xuyajun}}
