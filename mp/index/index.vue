@@ -49,13 +49,6 @@
 				</view>
 				<view class="com-arrow"><image :src="joinSrc('img/r-arrow.png')" /></view>
 			</view>
-			<view class="com-box" @click="nav('media-preview')">
-				<view class="com-title">
-					<image :src="joinSrc('img/mediaPreview.png')" style="width: 36rpx; height: 36rpx" />
-					<text>mediaPreview 媒体预览</text>
-				</view>
-				<view class="com-arrow"><image :src="joinSrc('img/r-arrow.png')" /></view>
-			</view>
 			<view class="com-box" @click="nav('popup')">
 				<view class="com-title">
 					<image :src="joinSrc('img/popup.png')" style="width: 36rpx; height: 36rpx" />
@@ -140,6 +133,22 @@
 				<view class="com-title">
 					<image :src="joinSrc('img/upload.png')" style="width: 36rpx; height: 36rpx" />
 					<text>Upload 上传</text>
+				</view>
+				<view class="com-arrow"><image :src="joinSrc('img/r-arrow.png')" /></view>
+			</view>
+			<!-- ***展示组件*** -->
+			<view class="group-title">展示组件</view>
+			<view class="com-box" @click="nav('media-preview')">
+				<view class="com-title">
+					<image :src="joinSrc('img/mediaPreview.png')" style="width: 36rpx; height: 36rpx" />
+					<text>MediaPreview 媒体预览</text>
+				</view>
+				<view class="com-arrow"><image :src="joinSrc('img/r-arrow.png')" /></view>
+			</view>
+			<view class="com-box" @click="nav('notice-bar')">
+				<view class="com-title">
+					<image :src="joinSrc('img/noticeBar.png')" style="width: 36rpx; height: 36rpx" />
+					<text>NoticeBar 公告栏</text>
 				</view>
 				<view class="com-arrow"><image :src="joinSrc('img/r-arrow.png')" /></view>
 			</view>

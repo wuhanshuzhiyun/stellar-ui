@@ -26,7 +26,13 @@
 							@click.stop="1"
 							:style="[dataIndex === index ? cmpTransform : null]"
 						/>
-						<image :style="[cmpTransform]" class="image" v-else :src="item.url || item.path" mode="aspectFit" />
+						<image
+							:style="[cmpTransform]"
+							class="image"
+							v-else
+							:src="item.url || item.path"
+							mode="aspectFit"
+						/>
 					</view>
 				</swiper-item>
 			</swiper>
@@ -62,7 +68,7 @@ import TouchScaleing from './TouchScaleing.js';
  * @event {Function} longpress 长按触发
  */
 export default {
-	group: '基础组件',
+	group: '展示组件',
 	title: 'MediaPreview 媒体预览',
 	name: 'ste-media-preview',
 	props: {
