@@ -146,6 +146,8 @@ export default {
 		setIconSize() {
 			this.$nextTick(async () => {
 				const dom = await utils.querySelector('.ste-image-root', this);
+				// 因为查找dom为异步方法 组件销毁后，该方法继续执行导致报错
+				if (!dom) return;
 				const size = dom.width <= dom.height ? dom.width : dom.height;
 				if (size <= 30) this.iconSize = 12 * 2;
 				else if (size <= 50) this.iconSize = 20 * 2;
