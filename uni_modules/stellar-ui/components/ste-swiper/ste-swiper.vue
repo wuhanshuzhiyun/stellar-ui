@@ -89,7 +89,7 @@ export default {
 			dataIndex: 0,
 			childrenComponents: {},
 			childrenData: [],
-			timeout: null,
+			childrenTimeout: null,
 			touch: new TouchEvent(),
 			boxWidth: null,
 			boxHeight: null,
@@ -156,8 +156,8 @@ export default {
 	methods: {
 		getChildren(chil) {
 			this.childrenComponents[chil.index] = chil;
-			clearTimeout(this.timeout);
-			this.timeout = setTimeout(async () => {
+			clearTimeout(this.childrenTimeout);
+			this.childrenTimeout = setTimeout(async () => {
 				const boxEl = await utils.querySelector('.swipe-content-view', this);
 				this.boxWidth = boxEl.width;
 				this.boxHeight = boxEl.height;
@@ -274,15 +274,15 @@ export default {
 		display: flex;
 		align-items: center;
 		.swiper-dots-item {
-			width: 24rpx;
-			height: 24rpx;
+			width: 18rpx;
+			height: 18rpx;
 			border-radius: 50%;
 			background-color: rgba(0, 0, 0, 0.3);
 			&.active {
 				background-color: #000;
 			}
 			& + .swiper-dots-item {
-				margin-left: 12rpx;
+				margin-left: 6rpx;
 			}
 		}
 	}

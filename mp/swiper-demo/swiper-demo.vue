@@ -35,6 +35,7 @@ export default {
 	.content {
 		.item {
 			padding: 30rpx;
+			height: 300rpx;
 			color: #fff;
 			background-image: linear-gradient(90deg, #3478f6, #6f8743);
 		}
