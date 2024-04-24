@@ -15,12 +15,31 @@
 				<slot></slot>
 			</view>
 		</view>
+		<view class="ste-swiper-dots">
+			<view
+				class="swiper-dots-item"
+				v-for="(m, index) in childrenData"
+				:key="index"
+				:class="{ active: dataIndex === index }"
+			/>
+		</view>
 	</view>
 </template>
 
 <script>
 import utils from '../../utils/utils';
 import TouchEvent from '../ste-touch-swipe/TouchEvent.js';
+/**
+ * ste-swiper 轮播
+ * @description 轮播组件
+ * @tutorial https://stellar-ui.intecloud.com.cn/pc/index/index?name=ste-swiper
+ * @property {Number} 						current  		当前所在滑块的 index
+ * @property {String}							direction		滑动方向  "horizontal" | "vertical"
+ * @value horizontal 水平（默认,必须固定宽度）
+ * @value vertical 纵向(必须固定高度)
+ * @property {Number | String} 		width		宽度,默认值100%
+ * @property {Number | String} 		height		高度,默认值100%
+ */
 export default {
 	group: '导航组件',
 	title: 'Swiper 轮播',
@@ -31,11 +50,12 @@ export default {
 		};
 	},
 	props: {
+		// 当前所在滑块的 index
 		current: {
 			type: Number,
 			default: () => 0,
 		},
-		// 滑动方向  "horizontal" | "vertical"(水平方向时宽度必须固定，垂直方向时高度必须固定)
+		// 滑动方向  "horizontal" | "vertical"
 		direction: {
 			type: String,
 			default: () => 'horizontal',
@@ -145,20 +165,21 @@ export default {
 					.getChildrenProps(this, 'ste-swiper-item')
 					.map((props, index) => ({ index, component: this.childrenComponents[index] }));
 				this.setTransform();
-				this.$nextTick(() => {
+				setTimeout(() => {
 					this.initializing = false;
-				});
-			}, 30);
+				}, 30);
+			}, 20);
 		},
 		setBoundary(moveX = 0, moveY = 0) {
+			const endIndex = this.childrenData.length - 1;
 			if (this.dataIndex === 0) {
-				const component = this.childrenData[this.childrenData.length - 1].component;
+				const component = this.childrenData[endIndex].component;
 				if (this.direction === 'horizontal' && moveX > 0) {
 					component.setTransform({ x: -this.childrenData.length * this.boxWidth });
 				} else if (this.direction === 'vertical' && moveY > 0) {
 					component.setTransform({ y: -this.childrenData.length * this.boxHeight });
 				}
-			} else if (this.dataIndex === this.childrenData.length - 1) {
+			} else if (this.dataIndex === endIndex) {
 				const component = this.childrenData[0].component;
 				if (this.direction === 'horizontal' && moveX < 0) {
 					component.setTransform({ x: this.childrenData.length * this.boxWidth });
@@ -168,19 +189,18 @@ export default {
 			}
 		},
 		resetBoundary() {
-			let component;
-			if (this.dataIndex === -1) {
-				component = this.childrenData[this.childrenData.length - 1].component;
-				setTimeout(() => {
-					this.dataIndex = this.childrenData.length - 1;
-				}, 30);
-			} else if (this.dataIndex === this.childrenData.length) {
-				component = this.childrenData[0].component;
-				setTimeout(() => {
-					this.dataIndex = 0;
-				}, 30);
-			}
-			component?.setTransform({});
+			this.reseting = true;
+
+			this.childrenData.forEach(({ component }, index) => {
+				component?.setTransform({});
+			});
+
+			if (this.dataIndex === -1) this.dataIndex = this.childrenData.length - 1;
+			if (this.dataIndex === this.childrenData.length) this.dataIndex = 0;
+
+			setTimeout(() => {
+				this.reseting = false;
+			}, 20);
 		},
 		setTransform(moveX = 0, moveY = 0) {
 			if (!this.childrenData?.length) return;
@@ -205,6 +225,7 @@ export default {
 			this.setTransform(moveX, moveY);
 		},
 		onTouchend(e) {
+			if (this.disabled) return;
 			this.moveing = false;
 			const { moveX, moveY } = this.touch.touchEnd(e);
 			if (this.direction === 'horizontal' && !moveX) return;
@@ -233,6 +254,8 @@ export default {
 	width: var(--swiper-width);
 	height: var(--swiper-height);
 	overflow: hidden;
+	padding: 0 20px;
+	position: relative;
 	.swipe-content {
 		width: var(--swiper-width);
 		height: var(--swiper-height);
@@ -240,6 +263,27 @@ export default {
 			width: var(--swiper-width);
 			height: var(--swiper-height);
 			display: grid;
+		}
+	}
+	.ste-swiper-dots {
+		position: absolute;
+		bottom: 18rpx;
+		z-index: 1;
+		left: 50%;
+		transform: translateX(-50%);
+		display: flex;
+		align-items: center;
+		.swiper-dots-item {
+			width: 24rpx;
+			height: 24rpx;
+			border-radius: 50%;
+			background-color: rgba(0, 0, 0, 0.3);
+			&.active {
+				background-color: #000;
+			}
+			& + .swiper-dots-item {
+				margin-left: 12rpx;
+			}
 		}
 	}
 }

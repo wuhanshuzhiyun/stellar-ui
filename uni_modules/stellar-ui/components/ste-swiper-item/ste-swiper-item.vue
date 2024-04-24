@@ -46,7 +46,6 @@ export default {
 	},
 	methods: {
 		setTransform({ x = 0, y = 0, z = 0 }) {
-			console.log('setTransform', x, y, z);
 			if (this.transformX !== x) this.transformX = x;
 			if (this.transformY !== y) this.transformY = y;
 			if (this.transformZ !== z) this.transformZ = z;
