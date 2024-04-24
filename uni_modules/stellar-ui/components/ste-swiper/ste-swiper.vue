@@ -65,6 +65,7 @@ export default {
 		return {
 			initializing: true,
 			moveing: false,
+			reseting: false,
 			dataIndex: 0,
 			childrenComponents: {},
 			childrenData: [],
@@ -107,7 +108,7 @@ export default {
 			}
 			return {
 				transform,
-				transitionDuration: this.initializing || this.moveing ? 'inherit' : `${this.duration}ms`,
+				transitionDuration: this.initializing || this.moveing || this.reseting ? 'inherit' : `${this.duration}ms`,
 			};
 		},
 	},
@@ -149,13 +150,51 @@ export default {
 				});
 			}, 30);
 		},
+		setBoundary(moveX = 0, moveY = 0) {
+			if (this.dataIndex === 0) {
+				const component = this.childrenData[this.childrenData.length - 1].component;
+				if (this.direction === 'horizontal' && moveX > 0) {
+					component.setTransform({ x: -this.childrenData.length * this.boxWidth });
+				} else if (this.direction === 'vertical' && moveY > 0) {
+					component.setTransform({ y: -this.childrenData.length * this.boxHeight });
+				}
+			} else if (this.dataIndex === this.childrenData.length - 1) {
+				const component = this.childrenData[0].component;
+				if (this.direction === 'horizontal' && moveX < 0) {
+					component.setTransform({ x: this.childrenData.length * this.boxWidth });
+				} else if (this.direction === 'vertical' && moveY < 0) {
+					component.setTransform({ y: this.childrenData.length * this.boxHeight });
+				}
+			}
+		},
+		resetBoundary() {
+			let component;
+			if (this.dataIndex === -1) {
+				component = this.childrenData[this.childrenData.length - 1].component;
+				setTimeout(() => {
+					this.dataIndex = this.childrenData.length - 1;
+				}, 30);
+			} else if (this.dataIndex === this.childrenData.length) {
+				component = this.childrenData[0].component;
+				setTimeout(() => {
+					this.dataIndex = 0;
+				}, 30);
+			}
+			component?.setTransform({});
+		},
 		setTransform(moveX = 0, moveY = 0) {
 			if (!this.childrenData?.length) return;
-			if (this.direction === 'horizontal') this.translateX = -this.dataIndex * this.boxWidth + moveX;
-			if (this.direction === 'vertical') this.translateY = -this.dataIndex * this.boxHeight + moveY;
+			if (this.direction === 'horizontal') {
+				this.translateX = -this.dataIndex * this.boxWidth + moveX;
+				this.setBoundary(moveX);
+			} else if (this.direction === 'vertical') {
+				this.translateY = -this.dataIndex * this.boxHeight + moveY;
+				this.setBoundary(0, moveY);
+			}
 		},
 		onTouchstart(e) {
 			if (this.disabled) return;
+			this.resetBoundary();
 			this.moveing = true;
 			this.touch.touchStart(e);
 		},
@@ -176,6 +215,9 @@ export default {
 			} else if (this.direction === 'vertical' && Math.abs(moveY) > this.boxHeight * this.swipeThreshold) {
 				index = moveY > 0 ? index - 1 : index + 1;
 			}
+			setTimeout(() => {
+				this.resetBoundary();
+			}, this.duration);
 			if (this.dataIndex === index) {
 				this.setTransform();
 				return;

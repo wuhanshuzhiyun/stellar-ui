@@ -1,5 +1,5 @@
 <template>
-	<view class="ste-swiper-item-root">
+	<view class="ste-swiper-item-root" :style="[cmpStyle]">
 		<slot></slot>
 	</view>
 </template>
@@ -20,12 +20,13 @@ export default {
 			transformX: 0,
 			transformY: 0,
 			transformZ: 0,
+			activate: 0,
 		};
 	},
 	computed: {
 		cmpStyle() {
 			return {
-				transfrom: `translate3d(${this.transformX}px,${this.transformY}px,${this.transformZ}px)`,
+				transform: `translate3d(${this.transformX}px,${this.transformY}px,${this.transformZ}px)`,
 			};
 		},
 	},
@@ -45,12 +46,13 @@ export default {
 	},
 	methods: {
 		setTransform({ x = 0, y = 0, z = 0 }) {
-			this.transformX = x;
-			this.transformY = y;
-			this.transformZ = z;
+			console.log('setTransform', x, y, z);
+			if (this.transformX !== x) this.transformX = x;
+			if (this.transformY !== y) this.transformY = y;
+			if (this.transformZ !== z) this.transformZ = z;
 		},
-		setIndex(index) {
-			this.index = index;
+		setActivate(index) {
+			this.activate = index;
 		},
 	},
 };
