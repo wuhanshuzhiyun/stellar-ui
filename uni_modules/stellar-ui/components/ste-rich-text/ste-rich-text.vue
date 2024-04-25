@@ -5,7 +5,7 @@
 			:nodes="replaceVerticalAlign(text)"
 			:user-select="userSelect"
 			class="rich-text"
-			:space="ensp"
+			:space="space"
 		></rich-text>
 	</view>
 </template>
