@@ -5,7 +5,13 @@
 			<view class="demo-item">
 				<view class="title">基础用法</view>
 				<view class="item-block">
-					<ste-notice-bar></ste-notice-bar>
+					<ste-notice-bar :list="list"></ste-notice-bar>
+				</view>
+			</view>
+			<view class="demo-item">
+				<view class="title">自定义样式</view>
+				<view class="item-block">
+					<ste-notice-bar :list="list" background="#FBF8DC" color="red" :width="400"></ste-notice-bar>
 				</view>
 			</view>
 		</view>
@@ -15,12 +21,16 @@
 <script>
 export default {
 	data() {
-		return {};
+		return {
+			list: ['中百集团提醒您：请勿在非中百官方渠道购卡，请勿相信任何非中百卡官方渠道'],
+		};
 	},
+	mounted() {},
 };
 </script>
 
 <style lang="scss" scoped>
 .page {
+	background: #00000080;
 }
 </style>
