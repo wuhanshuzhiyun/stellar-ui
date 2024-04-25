@@ -183,6 +183,12 @@ export default {
 				transitionDuration: this.initializing || this.moveing || this.reseting ? 'inherit' : `${this.duration}ms`,
 			};
 		},
+		cmpStartComponent() {
+			return this.childrenData[0]?.component;
+		},
+		cmpEndComponent() {
+			return this.childrenData[this.childrenData.length - 1]?.component;
+		},
 	},
 	watch: {
 		current: {
@@ -224,50 +230,12 @@ export default {
 					.getChildrenProps(this, 'ste-swiper-item')
 					.map((props, index) => ({ index, component: this.childrenComponents[index] }));
 				this.setTransform();
+				if (this.initializing) {
+					this.resetBoundary();
+				}
 				setTimeout(() => {
 					this.initializing = false;
 				}, 30);
-			}, 20);
-		},
-		setBoundary(moveX = 0, moveY = 0) {
-			const endIndex = this.childrenData.length - 1;
-			if (this.dataIndex === 0) {
-				const component = this.childrenData[endIndex].component;
-				if (this.direction === 'horizontal' && moveX > 0) {
-					component.setTransform({ x: -this.childrenData.length * this.boxWidth });
-				} else if (this.direction === 'vertical' && moveY > 0) {
-					component.setTransform({ y: -this.childrenData.length * this.boxHeight });
-				}
-			} else if (this.dataIndex === endIndex) {
-				const component = this.childrenData[0].component;
-				if (this.direction === 'horizontal' && moveX < 0) {
-					component.setTransform({ x: this.childrenData.length * this.boxWidth });
-				} else if (this.direction === 'vertical' && moveY < 0) {
-					component.setTransform({ y: this.childrenData.length * this.boxHeight });
-				}
-			}
-		},
-		resetBoundary() {
-			this.reseting = true;
-			const length = this.childrenData.length;
-			this.childrenData.forEach(({ component }, index) => {
-				let x = 0,
-					y = 0;
-				if (index === length - 1 && this.dataIndex === 0) {
-					x = this.direction === 'horizontal' ? -length * this.boxWidth : 0;
-					y = this.direction === 'vertical' ? -length * this.boxHeight : 0;
-				} else if (index === 0 && this.dataIndex === length - 1) {
-					x = this.direction === 'horizontal' ? length * this.boxWidth : 0;
-					y = this.direction === 'vertical' ? length * this.boxHeight : 0;
-				}
-				component?.setTransform({ x, y });
-			});
-
-			if (this.dataIndex === -1) this.dataIndex = this.childrenData.length - 1;
-			if (this.dataIndex === this.childrenData.length) this.dataIndex = 0;
-
-			setTimeout(() => {
-				this.reseting = false;
 			}, 20);
 		},
 		setTransform(moveX = 0, moveY = 0) {
@@ -295,7 +263,6 @@ export default {
 		},
 		onTouchend(e) {
 			if (this.disabled) return;
-
 			this.moveing = false;
 			const { moveX, moveY } = this.touch.touchEnd(e);
 			if (this.direction === 'horizontal' && !moveX) return;
@@ -308,8 +275,8 @@ export default {
 			}
 			clearTimeout(this.durationTimeout);
 			this.durationTimeout = setTimeout(() => {
-				this.resetBoundary();
 				this.setAutoplay();
+				this.resetBoundary();
 			}, this.duration);
 			if (this.dataIndex === index) {
 				this.setTransform();
@@ -328,6 +295,50 @@ export default {
 					this.resetBoundary();
 				}, this.duration);
 			}, this.interval);
+		},
+		setBoundary(moveX = 0, moveY = 0) {
+			const startComponent = this.cmpStartComponent;
+			const endComponent = this.cmpEndComponent;
+			const length = this.childrenData.length;
+			const width = this.boxWidth;
+			const height = this.boxHeight;
+			if (this.dataIndex <= 0) {
+				startComponent.setTransform({});
+				if (this.direction === 'horizontal' && moveX > 0) {
+					endComponent.setTransform({ x: -length * width });
+				} else if (this.direction === 'vertical' && moveY > 0) {
+					endComponent.setTransform({ y: -length * height });
+				}
+			} else if (this.dataIndex >= length - 1) {
+				endComponent.setTransform({});
+				if (this.direction === 'horizontal' && moveX < 0) {
+					startComponent.setTransform({ x: length * width });
+				} else if (this.direction === 'vertical' && moveY < 0) {
+					startComponent.setTransform({ y: length * height });
+				}
+			}
+		},
+		resetBoundary() {
+			this.reseting = true;
+			if (this.dataIndex === -1) this.dataIndex = this.childrenData.length - 1;
+			if (this.dataIndex === this.childrenData.length) this.dataIndex = 0;
+
+			const length = this.childrenData.length;
+			this.childrenData.forEach(({ component }, index) => {
+				let x = 0,
+					y = 0;
+				if (index === length - 1 && this.dataIndex === 0 && length > 2) {
+					x = this.direction === 'horizontal' ? -length * this.boxWidth : 0;
+					y = this.direction === 'vertical' ? -length * this.boxHeight : 0;
+				} else if (index === 0 && this.dataIndex === length - 1 && length > 2) {
+					x = this.direction === 'horizontal' ? length * this.boxWidth : 0;
+					y = this.direction === 'vertical' ? length * this.boxHeight : 0;
+				}
+				component?.setTransform({ x, y });
+			});
+			setTimeout(() => {
+				this.reseting = false;
+			}, 20);
 		},
 	},
 };

@@ -2,21 +2,17 @@
 	<view class="page">
 		<page-nav :autoBack="true" backColor="#000" titleAlignment="2" title="轮播图"></page-nav>
 		<view class="content">
-			<ste-swiper :current="2" indicator-dots autoplay>
-				<ste-swiper-item v-for="(m, index) in list" :index="index" :key="index">
+			<ste-swiper indicator-dots autoplay>
+				<ste-swiper-item v-for="(m, index) in list1" :index="index" :key="index">
 					<view class="item">{{ m }}</view>
 				</ste-swiper-item>
 			</ste-swiper>
-			<swiper
-				style="width: 100%; height: 360rpx; margin-top: 24rpx"
-				next-margin="60rpx"
-				previous-margin="60rpx"
-				circular
-			>
-				<swiper-item v-for="(m, index) in list" :key="index">
+			<view style="margin-top: 24rpx"></view>
+			<ste-swiper indicator-dots autoplay>
+				<ste-swiper-item v-for="(m, index) in list2" :index="index" :key="index">
 					<view class="item">{{ m }}</view>
-				</swiper-item>
-			</swiper>
+				</ste-swiper-item>
+			</ste-swiper>
 		</view>
 	</view>
 </template>
@@ -25,7 +21,8 @@
 export default {
 	data() {
 		return {
-			list: ['1111', '2222', '3333', '4444'],
+			list1: ['1111', '2222'],
+			list2: ['1111', '2222', '3333', '4444'],
 		};
 	},
 };
