@@ -2,7 +2,7 @@
 	<view class="page">
 		<page-nav :autoBack="true" backColor="#000" titleAlignment="2" title="轮播图"></page-nav>
 		<view class="content">
-			<ste-swiper :current="2">
+			<ste-swiper :current="2" indicator-dots autoplay>
 				<ste-swiper-item v-for="(m, index) in list" :index="index" :key="index">
 					<view class="item">{{ m }}</view>
 				</ste-swiper-item>
