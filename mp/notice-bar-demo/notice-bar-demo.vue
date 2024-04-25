@@ -13,6 +13,7 @@
 						closeMode
 						@click="click"
 						@close="close"
+						color="#e2e"
 					>
 						<ste-icon code="&#xe672;" size="28" slot="leftIcon"></ste-icon>
 					</ste-notice-bar>

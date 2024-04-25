@@ -151,6 +151,7 @@ export default {
 			let style = {
 				background: this.background,
 				width: utils.addUnit(this.width),
+				'--text-color': this.color,
 			};
 			return style;
 		},
@@ -269,7 +270,7 @@ export default {
 		overflow: hidden;
 		display: inline-flex;
 		align-items: center;
-
+		color: var(--text-color);
 		&.vertical {
 			display: block;
 

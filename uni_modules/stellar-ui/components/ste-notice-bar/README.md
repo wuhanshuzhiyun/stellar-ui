@@ -21,12 +21,12 @@
 | `closeMode`	| 是否启用关闭模式						| `Boolean`			| `false`	| -										| -			|
 | `color`		| 文字颜色								| `String`			| `#000000`	| -										| -			|
 | `background`	| 背景色									| `String`			| `#ffffff`	| -										| -			|
-| `mode`		| 尺寸									| `Number`			| `[]`		| `100`：小<br/>`200`：中<br/>`300`：大	| -			|
-| `width`		| 宽度，默认100%（占满父容器宽度）		| `String\Number`	| `[]`		| -										| -			|
+| `mode`		| 尺寸									| `Number`			| `100`		| `100`：小<br/>`200`：中<br/>`300`：大	| -			|
+| `width`		| 宽度，默认100%（占满父容器宽度）		| `String\Number`	| `100%`	| -										| -			|
 | `speed`		| 滚动速率								| `Number`			| `50`		| -										| -			|
 | `delay`		| 延时多少秒开始滚动(为横向滚动时有效)	| `Number`			| `1`		| -										| -			|
-| `standTime`	| 每次滚动前停留多少毫秒(竖向滚动时有效)	| `Number`			| `1000`		| -										| -			|
-| `scrollable`	| 是否可以滚动							| `Boolean`			| `false`		| -										| -			|
+| `standTime`	| 每次滚动前停留多少毫秒(竖向滚动时有效)	| `Number`			| `1000`	| -										| -			|
+| `scrollable`	| 是否可以滚动							| `Boolean`			| `false`	| -										| -			|
 
 #### 组件事件(Events)
 
