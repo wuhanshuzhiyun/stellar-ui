@@ -235,8 +235,8 @@ export default {
 				}
 				setTimeout(() => {
 					this.initializing = false;
-				}, 30);
-			}, 20);
+				}, 25);
+			}, 25);
 		},
 		setTransform(moveX = 0, moveY = 0) {
 			if (!this.childrenData?.length) return;
@@ -338,7 +338,7 @@ export default {
 			});
 			setTimeout(() => {
 				this.reseting = false;
-			}, 20);
+			}, 25);
 		},
 	},
 };
