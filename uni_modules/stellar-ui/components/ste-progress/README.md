@@ -76,7 +76,7 @@
 |`textSize`				| 文本字体大小，默认单位rpx																							| `String/Number`	| `16`		| -								| -			|
 |`displayTextThreshold`	| 默认文本显示阈值																									| `Number`			| `0`		| -								| -			|
 
-#### Solts
+#### Slots
 |插槽名		|说明		|插槽参数	|支持版本	|
 | ---		| ---		| ---		| ---		|
 | `default`	| 进度条内容	|-			| -			|

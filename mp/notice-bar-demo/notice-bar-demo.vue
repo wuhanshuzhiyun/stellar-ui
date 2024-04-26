@@ -14,6 +14,18 @@
 					<ste-notice-bar :list="list" background="#FBF8DC" color="red" :width="400"></ste-notice-bar>
 				</view>
 			</view>
+			<view class="demo-item">
+				<view class="title">垂直滚动</view>
+				<view class="item-block">
+					<ste-notice-bar :list="list" background="#FBF8DC" color="red" :width="400"></ste-notice-bar>
+				</view>
+			</view>
+			<view class="demo-item">
+				<view class="title">滚动速率/滚动的速度</view>
+				<view class="item-block">
+					<ste-notice-bar :list="list" background="#FBF8DC" color="red" :width="400"></ste-notice-bar>
+				</view>
+			</view>
 		</view>
 	</view>
 </template>
@@ -22,7 +34,7 @@
 export default {
 	data() {
 		return {
-			list: ['中百集团提醒您：请勿在非中百官方渠道购卡，请勿相信任何非中百卡官方渠道'],
+			list: ['第一条:1111111111111111111111111111', '第二条:2222222222222222222222', '第三条:3333333333333'],
 		};
 	},
 	mounted() {},

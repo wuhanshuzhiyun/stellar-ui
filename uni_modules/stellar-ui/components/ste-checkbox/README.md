@@ -237,7 +237,7 @@ export default {
 | `change`	|当绑定值变化时触发的事件	|`value`：改变后的绑定值	| -			|
 
 
-#### Checkbox Solts
+#### Checkbox Slots
 |插槽名		|说明			|插槽参数									|支持版本	|
 | ---		| ---			| ---										| ---		|
 | `default`	| 复选框文本内容	|`{ checked: boolean, disabled: boolean }`	| -			|

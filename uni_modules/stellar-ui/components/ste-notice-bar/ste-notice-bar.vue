@@ -1,14 +1,37 @@
 <template>
 	<view class="ste-notice-bar-root" :style="[cmpStyle]">
-		<div class="msg-box-content" @touchstart="this.touch = true" @touchend="this.touch = false">
+		<div class="msg-box-content" @touchstart="doPause" @touchend="doRun" @mousedown="doPause" @mouseup="doRun">
 			<div class="left">
-				<ste-image width="36" height="36" src="https://image.whzb.com/chain/StellarUI/notice-bar/tip.png" />
+				<slot name="leftIcon">
+					<ste-image width="36" height="36" src="https://image.whzb.com/chain/StellarUI/notice-bar/tip.png" />
+				</slot>
 			</div>
-			<div class="right" :class="id">
-				<div :style="[cmpMsg]" @animationend="onAnimationEnd" ref="cardMsg" :id="id" :class="cardMsgClass">
-					<ste-rich-text :text="cmpText"></ste-rich-text>
+			<div v-if="direction == 'across'" class="center" :class="id" @click="handleClick">
+				<div :animation="animationData" :id="id" @transitionend="onAnimationEnd">
+					<ste-rich-text :text="list[index]"></ste-rich-text>
 				</div>
 			</div>
+			<view v-else class="center vertical" v-else @click="handleClick">
+				<view
+					v-for="(item, i) in list"
+					:key="i"
+					class="vertical-text-item"
+					:class="flag ? 'animation-play' : ''"
+					:style="{
+						animationPlayState: !touch ? 'running' : 'paused',
+						animationDuration: verticalDuration + 's',
+						animationDelay: (firstDone ? '0' : standTime) + 'ms',
+					}"
+					@animationend="verticalEnd"
+				>
+					{{ item }}
+				</view>
+			</view>
+			<view class="right-icon">
+				<slot name="rightIcon">
+					<ste-icon code="&#xe67b;" size="24" @click="handleClose" v-if="closeMode"></ste-icon>
+				</slot>
+			</view>
 		</div>
 	</view>
 </template>
@@ -27,11 +50,7 @@ import utils from '../../utils/utils.js';
  * @property {Boolean} closeMode 是否启用关闭模式 默认 false
  * @property {String} color 文字颜色，默认 #000000
  * @property {String} background 背景，默认 #ffffff
- * @property {Number} mode 尺寸，默认 200
- * @value 100 小 {Number}
- * @value 200 中 {Number}
- * @value 300 大 {Number}
- * @property {Number|String} width 宽度 尺寸 默认 100%
+ * @property {Number|String} width 宽度  默认 100%
  * @value 100% 小 {String}
  * @value  {{Number}} 自定义宽度，单位rpx {Number}
  * @property {Number} speed，across：滚动速率 (px/s)，vertical：滚动的速度（ms），默认 50
@@ -70,10 +89,6 @@ export default {
 			type: String,
 			default: '#fffffff',
 		},
-		mode: {
-			type: Number,
-			default: 200,
-		},
 		width: {
 			type: [Number, String],
 			default: '100%',
@@ -98,21 +113,18 @@ export default {
 	data() {
 		return {
 			id: utils.guid(),
-			// 消息滚动的时间
-			textDuration: 10,
 			index: 0,
 			textTranslate: 0,
-			cardMsgClass: '',
 			touch: false,
+			boxWidth: 0,
+			flag: true,
+			firstDone: false,
+			animationData: {},
+			parentWidth: 0,
 		};
 	},
 	async mounted() {
-		if (this.direction == 'across') {
-			// 获取滚动消息的长度来计算动画的执行时间
-			const dom = await utils.querySelector('#' + this.id, this);
-			console.log('dom21', dom);
-			this.textDuration = dom.width / Number(this.speed);
-		}
+		this.handleAnimation();
 	},
 	// watch: {
 	// 	list: {
@@ -124,29 +136,90 @@ export default {
 		cmpStyle() {
 			let style = {};
 			style['width'] = isNaN(Number(this.width)) ? this.width : utils.formatPx(this.width);
+			style['minHeight'] = utils.formatPx(68);
+			style['height'] = utils.formatPx(68);
 			style['background'] = this.background;
 			style['color'] = this.color;
 			return style;
 		},
-		cmpMsg() {
-			let style = {};
-			style['animationDuration'] = this.textDuration + 's';
-			style['animationPlayState'] = !this.touch ? 'running' : 'paused';
-			style['transform'] = `translateX(${this.textTranslate}px)`;
-			return style;
-		},
-		cmpText() {
-			return this.list[this.index];
-		},
 	},
 	methods: {
-		async onAnimationEnd() {
-			console.log('xxxxx');
+		// 第一次执行动画
+		async handleAnimation() {
+			if (this.direction == 'across') {
+				// 获取滚动消息的长度来计算动画的执行时间
+				let dom = await utils.querySelector('#' + this.id, this);
+				console.log('dom.width ', dom.width);
+				let animation = uni.createAnimation({
+					duration: (dom.width / Number(this.speed)) * 1000,
+				});
+				animation.translateX('-100%').step();
+				this.animationData = animation.export();
+			}
+		},
+		// 循环动画
+		async nextAnimation() {
 			// 获取滚动消息的父级元素的长度实现无缝滚动
-			let dom = await utils.querySelector('.' + this.id, this);
-			console.log('dom', dom);
-			this.textTranslate = dom.width;
-			this.cardMsgClass = 'play-infinite';
+			if (!this.parentWidth) {
+				let dom = await utils.querySelector('.' + this.id, this);
+				this.parentWidth = dom.width;
+			}
+			// 先还原
+			let animation = uni.createAnimation({
+				duration: 0,
+			});
+			animation.translateX(this.parentWidth).step();
+			this.animationData = animation.export();
+			// 获取滚动消息的长度来计算动画的执行时间
+			// let dom1 = await utils.querySelector('#' + this.id, this);
+			// let animation = uni.createAnimation({
+			// 	duration: (dom1.width / Number(this.speed)) * 1000,
+			// });
+			// console.log('dom1.width ', dom1.width);
+			// let dom2 = await utils.querySelector('.' + this.id, this);
+			// // this.textTranslate = dom2.width;
+			// animation.translateX(dom2.width).step();
+			// this.animationData = animation.export();
+			// console.log('dom2.width ', dom2.width);
+		},
+		// 动画结束
+		async onAnimationEnd() {
+			console.log('index', this.index);
+			this.index = this.index + 1 >= this.list.length ? 0 : this.index + 1;
+			this.$nextTick(() => {
+				this.nextAnimation();
+			});
+			// // #ifdef H5
+			// if (this.firstDone) {
+			// 	// #endif
+			// 	this.flag = false;
+			// 	this.index = this.index + 1 >= this.list.length ? 0 : this.index + 1;
+			// 	// 获取滚动消息的父级元素的长度实现无缝滚动
+			// 	this.$nextTick(async () => {
+			// 		let dom = await utils.querySelector('.' + this.id, this);
+			// 		this.textTranslate = dom.width;
+			// 		await this.getAnimationTime();
+			// 		this.flag = true;
+			// 	});
+			// 	// #ifdef H5
+			// }
+			// this.firstDone = true;
+			// // #endif
+		},
+		// 暂停
+		doPause() {
+			this.touch = true;
+		},
+		// 取消暂停
+		doRun() {
+			this.touch = false;
+		},
+		handleClose(e) {
+			this.show = false;
+			this.$emit('close', e);
+		},
+		handleClick(e) {
+			this.$emit('click', e);
 		},
 	},
 };
@@ -157,36 +230,44 @@ export default {
 	width: 100%;
 	padding: 16rpx;
 	background: #f9f9f9;
+	border-radius: 16rpx;
+	display: flex;
+	align-items: center;
 
 	.msg-box-content {
-		min-height: 56rpx;
-		background-color: #ffffff;
-		border-radius: 12rpx;
-		width: 100%;
 		display: flex;
 		align-items: center;
 		overflow-x: hidden;
 		justify-content: flex-start;
-		padding: 10rpx 26rpx 10rpx 20rpx;
 	}
 	.left {
 		flex-shrink: 0;
-		margin-right: 10rpx;
+		margin-right: 16rpx;
+		display: flex;
+		align-items: center;
 	}
-	.right {
+	.center {
 		flex: 1;
+		display: flex;
 		overflow: hidden;
+
 		> div {
 			fong-size: 24rpx;
 			display: inline-block;
 			width: auto;
 			white-space: nowrap;
-			animation: marquee linear both running;
 			animation-delay: 1.5s;
 		}
+		.animation {
+			animation: marquee linear both running;
+			animation-iteration-count: 1;
+		}
+		.animation-none {
+			display: none;
+		}
 
-		.play-infinite {
-			animation-iteration-count: infinite;
+		.animation-play {
+			animation: marquee linear both running;
 		}
 	}
 

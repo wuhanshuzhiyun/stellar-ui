@@ -214,7 +214,7 @@
 | `zIndex`		| 层级																					| `Number`			| `2`		| -																			| `v1.9.0`	|
 | `isInline`	| display属性是否为inline-block															| `Boolean`			| `false`	| -																			| `v1.10.0`	|
 
-#### 组件插槽(Solts)
+#### 组件插槽(Slots)
 
 |名称	|说明			|支持版本	|
 |---	|---			|---		|
