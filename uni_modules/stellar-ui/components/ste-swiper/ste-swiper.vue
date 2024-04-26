@@ -286,7 +286,9 @@ export default {
 			if (this.disabled) return;
 			if (this.childrenData?.length < 2) return;
 			this.moveing = true;
-			const { moveX, moveY } = this.touch.touchMove(e);
+			const res = this.touch.touchMove(e);
+			if (!res) return;
+			let { moveX, moveY } = res;
 			this.setTransform(moveX, moveY);
 		},
 		onTouchend(e) {

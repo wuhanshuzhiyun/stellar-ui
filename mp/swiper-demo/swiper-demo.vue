@@ -2,34 +2,76 @@
 	<view class="page">
 		<page-nav :autoBack="true" backColor="#000" titleAlignment="2" title="轮播图"></page-nav>
 		<view class="content">
-			<ste-swiper indicator-dots autoplay :duration="5000" circular nextMargin="36rpx">
-				<ste-swiper-item v-for="(m, index) in list1" :index="index" :key="index">
-					<view class="item">{{ m }}</view>
-				</ste-swiper-item>
-			</ste-swiper>
-			<view style="margin-top: 24rpx"></view>
-			<ste-swiper indicator-dots autoplay :duration="5000" circular previousMargin="36rpx">
-				<ste-swiper-item v-for="(m, index) in list2" :index="index" :key="index">
-					<view class="item">{{ m }}</view>
-				</ste-swiper-item>
-			</ste-swiper>
-			<view style="margin-top: 24rpx"></view>
-			<swiper
-				indicator-dots
-				autoplay
-				:duration="5000"
-				:interval="3000"
-				circular
-				next-margin="36rpx"
-				previous-margin="36rpx"
-			>
-				<swiper-item>
-					<view class="item">1</view>
-				</swiper-item>
-				<swiper-item>
-					<view class="item">2</view>
-				</swiper-item>
-			</swiper>
+			<view class="demo-item">
+				<view class="title">基础用法（必须固定高度，默认100%）</view>
+				<view class="item-view">
+					<ste-swiper>
+						<ste-swiper-item v-for="(m, index) in list1" :index="index" :key="index">
+							<view class="item">{{ m }}</view>
+						</ste-swiper-item>
+					</ste-swiper>
+				</view>
+			</view>
+			<view class="demo-item">
+				<view class="title">纵向轮播（必须固定高度，默认100%）</view>
+				<view class="item-view">
+					<ste-swiper direction="vertical" height="300rpx">
+						<ste-swiper-item v-for="(m, index) in list1" :index="index" :key="index">
+							<view class="item">{{ m }}</view>
+						</ste-swiper-item>
+					</ste-swiper>
+				</view>
+			</view>
+			<view class="demo-item">
+				<view class="title">首尾衔接轮播</view>
+				<view class="item-view">
+					<ste-swiper circular>
+						<ste-swiper-item v-for="(m, index) in list1" :index="index" :key="index">
+							<view class="item">{{ m }}</view>
+						</ste-swiper-item>
+					</ste-swiper>
+				</view>
+			</view>
+			<view class="demo-item">
+				<view class="title">自动轮播</view>
+				<view class="item-view">
+					<ste-swiper circular autoplay>
+						<ste-swiper-item v-for="(m, index) in list1" :index="index" :key="index">
+							<view class="item">{{ m }}</view>
+						</ste-swiper-item>
+					</ste-swiper>
+				</view>
+			</view>
+			<view class="demo-item">
+				<view class="title">显示指示器</view>
+				<view class="item-view">
+					<ste-swiper circular autoplay indicatorDots>
+						<ste-swiper-item v-for="(m, index) in list1" :index="index" :key="index">
+							<view class="item">{{ m }}</view>
+						</ste-swiper-item>
+					</ste-swiper>
+				</view>
+			</view>
+			<view class="demo-item">
+				<view class="title">指示器颜色</view>
+				<view class="item-view">
+					<ste-swiper circular autoplay indicatorDots indicatorColor="#0f0" indicatorActiveColor="#f00">
+						<ste-swiper-item v-for="(m, index) in list1" :index="index" :key="index">
+							<view class="item">{{ m }}</view>
+						</ste-swiper-item>
+					</ste-swiper>
+				</view>
+			</view>
+			<view class="demo-item">
+				<view class="title">同时显示前后页</view>
+				<view class="item-view">
+					<ste-swiper circular autoplay previousMargin="60rpx" nextMargin="60rpx" >
+						<ste-swiper-item v-for="(m, index) in list2" :index="index" :key="index">
+							<view class="item">{{ m }}</view>
+						</ste-swiper-item>
+					</ste-swiper>
+				</view>
+			</view>
 		</view>
 	</view>
 </template>
