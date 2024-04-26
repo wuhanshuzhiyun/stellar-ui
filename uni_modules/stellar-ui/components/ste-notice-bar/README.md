@@ -1,16 +1,16 @@
 # NoticeBar 公告栏
 
-用于循环播放展示一组消息通知
+用于循环播放展示一组消息通知。
 
 {{compatibility}}
 
 ### 代码演示
-#### 基础使用
-
-```html
-<ste-notice-bar/>
+JavaScript后面的演示代码中涉及到的变量和方法都使用本javasaript代码
+```javascript
 ```
 
+#### 基础用法
+通过`list`数组参数设置需要滚动的内容。
 ### API
 #### 组件属性(Props)
 
@@ -42,5 +42,3 @@
 |`leftIcon`	|左边图标的插槽	|-			|			|
 |`rightIcon`|右边图标的插槽	|-			|			|
 
-
-{{fuyuwei}}

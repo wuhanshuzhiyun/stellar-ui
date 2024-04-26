@@ -1,73 +1,47 @@
 <template>
-	<view class="ste-notice-bar" :style="[cmpRootStyle]" v-if="show">
-		<view class="bar-content" @touchstart="doPause" @touchend="doRun" @mousedown="doPause" @mouseup="doRun">
-			<view class="left">
-				<slot name="leftIcon"></slot>
-			</view>
-			<view class="center across" v-if="direction == 'across'" @click="handleClick">
-				<view
-					:style="{
-						animationDuration: acrossDuration + 's',
-						animationPlayState: !touch ? 'running' : 'paused',
-						animationDelay: (boxWidth > 0 ? 0 : delay) + 's',
-					}"
-					@animationend="onAnimationEnd"
-					:class="cmpAnimationClass"
-				>
-					<view class="animation-placeholder" :style="{ width: boxWidth + 'px' }"></view>
-					<ste-rich-text :text="acrossText"></ste-rich-text>
-				</view>
-			</view>
-			<view class="center vertical" v-else @click="handleClick">
-				<view
-					v-for="(item, i) in listData"
-					:key="i"
-					class="vertical-text-item"
-					:class="flag ? 'animation-play' : ''"
-					:style="{
-						animationPlayState: !touch ? 'running' : 'paused',
-						animationDuration: verticalDuration + 's',
-						animationDelay: (firstDone ? '0' : standTime) + 'ms',
-					}"
-					@animationend="verticalEnd"
-				>
-					{{ item }}
-				</view>
-			</view>
-			<view class="right">
-				<slot name="rightIcon">
-					<ste-icon code="&#xe67b;" size="24" @click="handleClose" v-if="closeMode"></ste-icon>
-				</slot>
-			</view>
-		</view>
+	<view class="ste-notice-bar-root" :style="[cmpStyle]">
+		<div class="msg-box-content" @touchstart="this.touch = true" @touchend="this.touch = false">
+			<div class="left">
+				<ste-image width="36" height="36" src="https://image.whzb.com/chain/StellarUI/notice-bar/tip.png" />
+			</div>
+			<div class="right" :class="id">
+				<div :style="[cmpMsg]" @animationend="onAnimationEnd" ref="cardMsg" :id="id" :class="cardMsgClass">
+					<ste-rich-text :text="cmpText"></ste-rich-text>
+				</div>
+			</div>
+		</div>
 	</view>
 </template>
 
 <script>
 import utils from '../../utils/utils.js';
+
 /**
- * ste-notice-bar 通知栏
- * @description 通知栏组件
- * @tutorial https://stellar-ui.intecloud.com.cn//pc/index/index?name=ste-notice-bar
- * @property {Array} list 滚动数据列表
- * @property {String} direction 滚动的方向
+ * ste-notice-bar 公告栏
+ * @description 用于循环播放展示一组消息通知。
+ * @tutorial https://stellar-ui.intecloud.com.cn/pc/index/index?name=ste-notice-bar
+ * @property {Array} list 滚动数据列表，默认 []
+ * @property {String} direction 滚动的方向，默认 across
  * @value across 水平 {String}
- * @value vertical 垂直{String}
- * @property {Boolean} closeMode 是否启用关闭模式
- * @property {String} color 文字颜色
- * @property {String} background 背景色
- * @property {Number} mode 尺寸
+ * @value vertical 垂直 {String}
+ * @property {Boolean} closeMode 是否启用关闭模式 默认 false
+ * @property {String} color 文字颜色，默认 #000000
+ * @property {String} background 背景，默认 #ffffff
+ * @property {Number} mode 尺寸，默认 200
  * @value 100 小 {Number}
  * @value 200 中 {Number}
  * @value 300 大 {Number}
- * @property {String|Number} width 宽度，默认100%（占满父容器宽度）
- * @property {Number} speed 滚动速率
- * @property {Number} delay 延时多少秒开始滚动(为横向滚动时有效)
- * @property {Number} standTime 每次滚动前停留多少毫秒(竖向滚动时有效)
- * @property {Boolean} scrollable 是否可以滚动 默认false
- * @event {Function} click 内容区域点击回调事件
- * @event {Function} close 关闭模式下点击右侧关闭按钮时触发
+ * @property {Number|String} width 宽度 尺寸 默认 100%
+ * @value 100% 小 {String}
+ * @value  {{Number}} 自定义宽度，单位rpx {Number}
+ * @property {Number} speed，across：滚动速率 (px/s)，vertical：滚动的速度（ms），默认 50
+ * @property {Number} delay 延时多少秒，默认 1
+ * @property {Number} standTime 垂直停留时间(ms)，默认 1000
+ * @property {Boolean} scrollable 是否可以滚动 默认 false
+ * @event {Function} click 外层点击事件回调
+ * @event {Function} close 关闭通知栏时触发
  */
+
 export default {
 	group: '展示组件',
 	title: 'NoticeBar 公告栏',
@@ -78,7 +52,7 @@ export default {
 	props: {
 		list: {
 			type: Array,
-			default: [],
+			default: () => [],
 		},
 		direction: {
 			type: String,
@@ -94,26 +68,26 @@ export default {
 		},
 		background: {
 			type: String,
-			default: '#ffffff',
+			default: '#fffffff',
 		},
 		mode: {
 			type: Number,
-			default: 100,
+			default: 200,
 		},
 		width: {
 			type: [Number, String],
 			default: '100%',
 		},
 		speed: {
-			type: [Number, String],
+			type: Number,
 			default: 50,
 		},
 		delay: {
-			type: [Number, String],
+			type: Number,
 			default: 1,
 		},
 		standTime: {
-			type: [Number, String],
+			type: Number,
 			default: 1000,
 		},
 		scrollable: {
@@ -123,217 +97,107 @@ export default {
 	},
 	data() {
 		return {
-			show: true,
+			id: utils.guid(),
+			// 消息滚动的时间
+			textDuration: 10,
+			index: 0,
+			textTranslate: 0,
+			cardMsgClass: '',
 			touch: false,
-			acrossDuration: 0,
-			verticalDuration: 0,
-			acrossText: '',
-			boxWidth: 0,
-			firstDone: false,
-			flag: true,
-			curIndex: 0,
-			listData: [],
 		};
 	},
-	created() {},
 	async mounted() {
 		if (this.direction == 'across') {
 			// 获取滚动消息的长度来计算动画的执行时间
-			const cardMsgRes = await utils.querySelector('.scroll-box', this);
-			this.acrossDuration = cardMsgRes.width / this.speed;
-		} else {
-			const cardMsgRes = await utils.querySelector('.center', this);
-			this.verticalDuration = cardMsgRes.height / this.speed;
+			const dom = await utils.querySelector('#' + this.id, this);
+			console.log('dom21', dom);
+			this.textDuration = dom.width / Number(this.speed);
 		}
 	},
+	// watch: {
+	// 	list: {
+	// 		handler(val) {},
+	// 		deep: true,
+	// 	},
+	// },
 	computed: {
-		cmpRootStyle() {
-			let style = {
-				background: this.background,
-				width: utils.addUnit(this.width),
-				'--text-color': this.color,
-			};
+		cmpStyle() {
+			let style = {};
+			style['width'] = isNaN(Number(this.width)) ? this.width : utils.formatPx(this.width);
+			style['background'] = this.background;
+			style['color'] = this.color;
 			return style;
 		},
-		cmpAnimationClass() {
-			let str = 'scroll-box';
-			if (this.flag) {
-				str += ' animation-play';
-			} else {
-				str += ' animation-none';
-			}
-			if (this.boxWidth > 0) {
-				str += ' play-infinite';
-			}
-			return str;
+		cmpMsg() {
+			let style = {};
+			style['animationDuration'] = this.textDuration + 's';
+			style['animationPlayState'] = !this.touch ? 'running' : 'paused';
+			style['transform'] = `translateX(${this.textTranslate}px)`;
+			return style;
 		},
-	},
-	watch: {
-		list: {
-			handler(val) {
-				if (Array.isArray(val)) {
-					this.listData = val;
-					this.acrossText = val.join('');
-				} else {
-					this.listData = [];
-					this.acrossText = val;
-				}
-			},
-			immediate: true,
+		cmpText() {
+			return this.list[this.index];
 		},
 	},
 	methods: {
-		verticalEnd(e) {
-			const fn = () => {
-				this.flag = false;
-				let tempListData = utils.deepClone(this.listData);
-				tempListData.push(tempListData[0]);
-				tempListData.shift();
-				this.listData = tempListData;
-				this.firstDone = true;
-				setTimeout(() => {
-					this.flag = true;
-				}, this.standTime);
-			};
-
-			utils.thro(fn, { delay: this.standTime });
-		},
-		onAnimationEnd() {
-			/**
-			 * 由于横向动画中没有加入(form)，h5平台和小程序平台差异（h5初始化就会触发动画完毕事件，小程序在第一次执行完触发）
-			 * h5平台加入了一些变量进行判断
-			 */
-			// #ifdef H5
-			if (this.boxWidth <= 0 && this.firstDone) {
-				// #endif
-
-				// 第一次执行动画长度和后续动画执行的长度不一致，所以时间需要重新计算
-				// 需要通过变量移除类名来移除动画(否则会导致动画闪动)
-				// 再赋值为true恢复动画执行
-				this.flag = false;
-				utils.querySelector('.center', this).then((res) => {
-					this.boxWidth = parseInt(res.width);
-					this.$nextTick(() => {
-						this.acrossDuration += this.boxWidth / this.speed;
-						this.flag = true;
-					});
-				});
-
-				// #ifdef H5
-			}
-			this.firstDone = true;
-			// #endif
-		},
-		// 暂停
-		doPause() {
-			this.touch = true;
-		},
-		// 取消暂停
-		doRun() {
-			this.touch = false;
-		},
-		handleClose(e) {
-			this.show = false;
-			this.$emit('close', e);
-		},
-		handleClick(e) {
-			this.$emit('click', e);
+		async onAnimationEnd() {
+			console.log('xxxxx');
+			// 获取滚动消息的父级元素的长度实现无缝滚动
+			let dom = await utils.querySelector('.' + this.id, this);
+			console.log('dom', dom);
+			this.textTranslate = dom.width;
+			this.cardMsgClass = 'play-infinite';
 		},
 	},
 };
 </script>
 
 <style lang="scss" scoped>
-.ste-notice-bar {
-	.bar-content {
-		height: 56rpx;
+.ste-notice-bar-root {
+	width: 100%;
+	padding: 16rpx;
+	background: #f9f9f9;
+
+	.msg-box-content {
+		min-height: 56rpx;
+		background-color: #ffffff;
 		border-radius: 12rpx;
 		width: 100%;
 		display: flex;
 		align-items: center;
 		overflow-x: hidden;
 		justify-content: flex-start;
-
-		padding: 0 20rpx;
+		padding: 10rpx 26rpx 10rpx 20rpx;
 	}
 	.left {
-		margin-right: 20rpx;
+		flex-shrink: 0;
+		margin-right: 10rpx;
 	}
 	.right {
-		margin-left: 20rpx;
-		cursor: pointer;
-	}
-	.center {
-		font-size: 24rpx;
-		height: 100%;
 		flex: 1;
 		overflow: hidden;
-		display: inline-flex;
-		align-items: center;
-		color: var(--text-color);
-		&.vertical {
-			display: block;
-
-			animation-delay: 1s;
-			.vertical-text-item {
-				height: 100%;
-				display: flex;
-				align-items: center;
-				will-change: transform;
-				backface-visibility: hidden;
-				&.animation-play {
-					// animation: scrollDown  ease-out both;
-					animation: scrollDown ease-out both running;
-				}
-			}
-
-			@keyframes scrollDown {
-				0% {
-					transform: translateY(0);
-				}
-				100% {
-					transform: translateY(-100%);
-				}
-			}
-		}
-		.scroll-box {
-			height: 100%;
-
-			display: inline-flex;
-			align-items: center;
+		> div {
+			fong-size: 24rpx;
+			display: inline-block;
 			width: auto;
 			white-space: nowrap;
-
-			&.animation-none {
-				display: none;
-			}
-
-			&.animation-play {
-				animation: marquee linear both running;
-				// animation-fill-mode: backwards;
-			}
-
-			&.play-infinite {
-				animation-iteration-count: infinite;
-			}
+			animation: marquee linear both running;
+			animation-delay: 1.5s;
 		}
 
-		.animation-placeholder {
-			height: 100%;
-			background-color: rgba(0, 0, 0, 0);
+		.play-infinite {
+			animation-iteration-count: infinite;
 		}
 	}
 
 	@keyframes marquee {
-		100% {
-			-webkit-transform: translateX(-100%);
+		to {
 			transform: translate(-100%);
 		}
 	}
 
 	@-webkit-keyframes marquee {
-		100% {
-			-webkit-transform: translateX(-100%);
+		to {
 			transform: translate(-100%);
 		}
 	}
