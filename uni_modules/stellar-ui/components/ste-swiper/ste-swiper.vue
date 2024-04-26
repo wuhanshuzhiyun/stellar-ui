@@ -58,7 +58,7 @@ import TouchEvent from '../ste-touch-swipe/TouchEvent.js';
  */
 export default {
 	group: '导航组件',
-	title: 'Swiper 轮播',
+	title: 'Swiper 轮播组件',
 	name: 'ste-swiper',
 	provide() {
 		return {
@@ -263,7 +263,7 @@ export default {
 			return true;
 		},
 		setTransform(moveX = 0, moveY = 0) {
-			if (!this.childrenData?.length) return;
+			if (this.childrenData?.length < 2) return;
 			const bool = this.isMover(moveX, moveY);
 			if (!bool) return;
 			if (this.direction === 'horizontal') {
@@ -276,6 +276,7 @@ export default {
 		},
 		onTouchstart(e) {
 			if (this.disabled) return;
+			if (this.childrenData?.length < 2) return;
 			clearInterval(this.autoplayTimeout);
 			this.resetBoundary();
 			this.moveing = true;
@@ -283,6 +284,7 @@ export default {
 		},
 		onTouchmove(e) {
 			if (this.disabled) return;
+			if (this.childrenData?.length < 2) return;
 			this.moveing = true;
 			const { moveX, moveY } = this.touch.touchMove(e);
 			this.setTransform(moveX, moveY);
@@ -319,7 +321,7 @@ export default {
 		setAutoplay() {
 			clearInterval(this.autoplayTimeout);
 			if (!this.autoplay) return;
-			console.log('开始自动轮播');
+			if (this.childrenData?.length < 2) return;
 			this.autoplayTimeout = setInterval(() => {
 				let next = this.dataIndex + 1 <= this.childrenData.length - 1 ? this.dataIndex + 1 : 0;
 				if (this.circular) {
