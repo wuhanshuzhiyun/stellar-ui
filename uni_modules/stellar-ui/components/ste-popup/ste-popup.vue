@@ -13,14 +13,14 @@
 			</scroll-view>
 			<slot v-else name="default"></slot>
 			<view class="close-icon-box" @click="close" v-if="showClose">
-				<ste-icon code="&#xe67b;" size="24"></ste-icon>
+				<ste-icon code="&#xe6a0;" size="40"></ste-icon>
 			</view>
 		</view>
 	</view>
 </template>
 <script>
 import utils from '../../utils/utils.js';
-const DEFAULT_BORDER_RADIUS = 16;
+const DEFAULT_BORDER_RADIUS = 32;
 /**
  * ste-popup 弹出层
  * @description 弹出层组件
@@ -243,7 +243,7 @@ export default {
 	height: 100vh;
 	width: 100vw;
 	overflow: hidden;
-	background-color: rgba(0, 0, 0, 0.4);
+	background-color: rgba(0, 0, 0, 0.6);
 	position: fixed;
 	left: 0;
 	top: 0;
