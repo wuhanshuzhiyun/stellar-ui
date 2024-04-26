@@ -20,7 +20,6 @@ export default {
 			transformX: 0,
 			transformY: 0,
 			transformZ: 0,
-			activate: 0,
 		};
 	},
 	computed: {
@@ -50,14 +49,6 @@ export default {
 			if (this.transformY !== y) this.transformY = y;
 			if (this.transformZ !== z) this.transformZ = z;
 		},
-		setActivate(index) {
-			this.activate = index;
-		},
 	},
 };
 </script>
-
-<style>
-.ste-swiper-item-root {
-}
-</style>
