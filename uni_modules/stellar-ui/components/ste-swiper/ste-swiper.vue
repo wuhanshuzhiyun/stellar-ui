@@ -38,14 +38,14 @@ import TouchEvent from '../ste-touch-swipe/TouchEvent.js';
  * ste-swiper 轮播
  * @description 轮播组件
  * @tutorial https://stellar-ui.intecloud.com.cn/pc/index/index?name=ste-swiper
- * @property {Number} 						current  				设置阈值，当内容超过阈值，显示指示器当前所在滑块的 index
+ * @property {Number} 						current  				当前显示所在滑块的 index
  * @property {String}							direction				滑动方向  "horizontal" | "vertical"
  * @value horizontal 水平（默认,必须固定宽度）
  * @value vertical 纵向(必须固定高度)
  * @property {Boolean} 						disabled 				是否禁用
  * @property {Number | String} 		width						宽度,默认值100%
  * @property {Number | String} 		height					高度,默认值100%
- * @property {Number} 						duration				滑动动画时长
+ * @property {Number} 						duration				切换动画时常
  * @property {Number}							swipeThreshold	滑动灵敏度（0-1之间的小数，数值越小越灵敏）
  * @property {Boolean}						indicatorDots		是否显示面板指示点
  * @property {String}							indicatorColor	指示点颜色，默认rgba(0,0,0,0.3)
@@ -55,6 +55,7 @@ import TouchEvent from '../ste-touch-swipe/TouchEvent.js';
  * @property {Boolean}						circular				是否采用衔接滑动，即播放到末尾后重新回到开头
  * @property {Number | String}		previousMargin	前边距，可用于露出前一项的一小部分
  * @property {Number | String}		nextMargin			后边距，可用于露出后一项的一小部分
+ * @event {(index:number)=>void} change 切换事件
  */
 export default {
 	group: '导航组件',
@@ -185,10 +186,8 @@ export default {
 			} else if (this.direction === 'vertical') {
 				transform = `translateY(${this.translateY}px)`;
 			}
-			return {
-				transform,
-				transitionDuration: this.initializing || this.moveing || this.reseting ? 'inherit' : `${this.cmpDuration}ms`,
-			};
+			const duration = this.initializing || this.moveing || this.reseting ? 'inherit' : `${this.cmpDuration}ms`;
+			return { transform, transitionDuration: duration };
 		},
 		cmpStartComponent() {
 			return this.childrenData[0]?.component;
@@ -200,7 +199,7 @@ export default {
 	watch: {
 		current: {
 			handler(v) {
-				this.dataIndex = v;
+				this.dataIndex = v < 0 ? 0 : v >= this.childrenData.length ? this.childrenData.length - 1 : v;
 			},
 			immediate: true,
 		},
@@ -275,23 +274,25 @@ export default {
 			}
 		},
 		onTouchstart(e) {
+			console.log('onTouchstart');
 			if (this.disabled) return;
 			if (this.childrenData?.length < 2) return;
+			this.moveing = true;
 			clearInterval(this.autoplayTimeout);
 			this.resetBoundary();
-			this.moveing = true;
 			this.touch.touchStart(e);
 		},
 		onTouchmove(e) {
 			if (this.disabled) return;
 			if (this.childrenData?.length < 2) return;
-			this.moveing = true;
 			const res = this.touch.touchMove(e);
 			if (!res) return;
+			this.moveing = true;
 			let { moveX, moveY } = res;
 			this.setTransform(moveX, moveY);
 		},
 		onTouchend(e) {
+			this.moveing = false;
 			clearTimeout(this.durationTimeout);
 			this.durationTimeout = setTimeout(() => {
 				this.setAutoplay();
@@ -299,7 +300,6 @@ export default {
 			}, this.cmpDuration);
 
 			if (this.disabled) return;
-			this.moveing = false;
 			const { moveX, moveY } = this.touch.touchEnd(e);
 			if (this.direction === 'horizontal' && !moveX) return;
 			else if (this.direction === 'vertical' && !moveY) return;

@@ -3,7 +3,7 @@
 		<page-nav :autoBack="true" backColor="#000" titleAlignment="2" title="轮播图"></page-nav>
 		<view class="content">
 			<view class="demo-item">
-				<view class="title">基础用法（必须固定高度，默认100%）</view>
+				<view class="title">基础用法（必须固定宽度，默认100%）</view>
 				<view class="item-view">
 					<ste-swiper>
 						<ste-swiper-item v-for="(m, index) in list1" :index="index" :key="index">
@@ -46,7 +46,7 @@
 				<view class="title">显示指示器</view>
 				<view class="item-view">
 					<ste-swiper circular autoplay indicatorDots>
-						<ste-swiper-item v-for="(m, index) in list1" :index="index" :key="index">
+						<ste-swiper-item v-for="(m, index) in list2" :index="index" :key="index">
 							<view class="item">{{ m }}</view>
 						</ste-swiper-item>
 					</ste-swiper>
@@ -56,16 +56,16 @@
 				<view class="title">指示器颜色</view>
 				<view class="item-view">
 					<ste-swiper circular autoplay indicatorDots indicatorColor="#0f0" indicatorActiveColor="#f00">
-						<ste-swiper-item v-for="(m, index) in list1" :index="index" :key="index">
+						<ste-swiper-item v-for="(m, index) in list2" :index="index" :key="index">
 							<view class="item">{{ m }}</view>
 						</ste-swiper-item>
 					</ste-swiper>
 				</view>
 			</view>
 			<view class="demo-item">
-				<view class="title">同时显示前后页</view>
+				<view class="title">显示前后页</view>
 				<view class="item-view">
-					<ste-swiper circular autoplay previousMargin="60rpx" nextMargin="60rpx" >
+					<ste-swiper circular autoplay previousMargin="60" nextMargin="60">
 						<ste-swiper-item v-for="(m, index) in list2" :index="index" :key="index">
 							<view class="item">{{ m }}</view>
 						</ste-swiper-item>
@@ -93,7 +93,7 @@ export default {
 			padding: 30rpx;
 			height: 300rpx;
 			color: #fff;
-			background-image: linear-gradient(90deg, #3478f6, #6f8743);
+			background-image: linear-gradient(45deg, #f00, #0f0, #00f);
 		}
 	}
 }
