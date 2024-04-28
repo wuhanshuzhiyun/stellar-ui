@@ -220,9 +220,6 @@ export default {
 			immediate: true,
 		},
 	},
-	mounted() {
-		this.setAutoplay();
-	},
 	beforeDestroy() {
 		clearTimeout(this.childrenTimeout);
 		clearTimeout(this.durationTimeout);
@@ -242,6 +239,7 @@ export default {
 				this.setTransform();
 				if (this.initializing) {
 					this.resetBoundary();
+					this.setAutoplay();
 				}
 				setTimeout(() => {
 					this.initializing = false;

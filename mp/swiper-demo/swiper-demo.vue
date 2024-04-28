@@ -93,7 +93,7 @@ export default {
 			padding: 30rpx;
 			height: 300rpx;
 			color: #fff;
-			background-image: linear-gradient(45deg, #f00, #0f0, #00f);
+			background-image: linear-gradient(45deg, #f55, #5f5, #55f);
 		}
 	}
 }
