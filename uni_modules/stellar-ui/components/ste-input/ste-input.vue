@@ -116,6 +116,12 @@ import utils from '../../utils/utils.js';
  * @property {String} background 输入框背景色
  * @property {String} rootClass 自定义输入框类名
  * @property {Number} cursorSpacing 指定光标与键盘的距离
+ * @event {Function} blur 输入框失去焦点时触发
+ * @event {Function} focus 遮罩点击事件
+ * @event {Function} confirm 遮罩点击事件
+ * @event {Function} change 遮罩点击事件
+ * @event {Function} clear 遮罩点击事件
+ * @event {Function} input 输入事件
  */
 export default {
 	group: '表单组件',
