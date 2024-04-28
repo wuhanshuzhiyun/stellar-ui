@@ -1,6 +1,6 @@
 <template>
 	<view class="page">
-		<page-nav :autoBack="true" backColor="#000" titleAlignment="2" title="轮播图"></page-nav>
+		<page-nav :autoBack="true" backColor="#000" titleAlignment="2" title="轮播组件"></page-nav>
 		<view class="content">
 			<view class="demo-item">
 				<view class="title">基础用法（必须固定宽度，默认100%）</view>
