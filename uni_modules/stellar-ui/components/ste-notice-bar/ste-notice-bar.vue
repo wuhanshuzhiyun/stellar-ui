@@ -1,38 +1,39 @@
 <template>
 	<view class="ste-notice-bar-root" :style="[cmpStyle]">
-		<div class="msg-box-content" @touchstart="doPause" @touchend="doRun" @mousedown="doPause" @mouseup="doRun">
-			<div class="left">
+		<view class="msg-box-content" @touchstart="doPause" @touchend="doRun" @mousedown="doPause" @mouseup="doRun">
+			<view class="left">
 				<slot name="leftIcon">
 					<ste-image width="36" height="36" src="https://image.whzb.com/chain/StellarUI/notice-bar/tip.png" />
 				</slot>
-			</div>
-			<div v-if="direction == 'across'" class="center" :class="id" @click="handleClick">
-				<div :animation="animationData" :id="id" @transitionend="onAnimationEnd">
-					<ste-rich-text :text="list[index]"></ste-rich-text>
-				</div>
-			</div>
-			<view v-else class="center vertical" v-else @click="handleClick">
+			</view>
+			<view v-if="direction == 'across'" class="center" :class="id" @click="handleClick">
 				<view
-					v-for="(item, i) in list"
-					:key="i"
-					class="vertical-text-item"
-					:class="flag ? 'animation-play' : ''"
-					:style="{
-						animationPlayState: !touch ? 'running' : 'paused',
-						animationDuration: verticalDuration + 's',
-						animationDelay: (firstDone ? '0' : standTime) + 'ms',
-					}"
-					@animationend="verticalEnd"
+					:animation="animationData"
+					:id="id"
+					@transitionend="onAnimationEnd"
+					:style="{ ' -webkit-animation-play-state': 'paused' }"
 				>
-					{{ item }}
+					<ste-rich-text :text="list[index]"></ste-rich-text>
 				</view>
 			</view>
-			<view class="right-icon">
+			<view
+				v-else
+				class="center vertical"
+				@click="handleClick"
+				:animation="animationData"
+				@transitionend="onAnimationEnd"
+				:style="{ 'animation-play-state': touch ? 'paused' : 'running' }"
+			>
+				<view v-for="(item, i) in copyList" :key="i">
+					<ste-rich-text :text="item"></ste-rich-text>
+				</view>
+			</view>
+			<view v-if="$slots.rightIcon || closeMode" class="right-icon">
 				<slot name="rightIcon">
-					<ste-icon code="&#xe67b;" size="24" @click="handleClose" v-if="closeMode"></ste-icon>
+					<ste-icon code="&#xe67b;" size="24" @click="handleClose"></ste-icon>
 				</slot>
 			</view>
-		</div>
+		</view>
 	</view>
 </template>
 
@@ -53,10 +54,11 @@ import utils from '../../utils/utils.js';
  * @property {Number|String} width 宽度  默认 100%
  * @value 100% 小 {String}
  * @value  {{Number}} 自定义宽度，单位rpx {Number}
- * @property {Number} speed，across：滚动速率 (px/s)，vertical：滚动的速度（ms），默认 50
- * @property {Number} delay 延时多少秒，默认 1
- * @property {Number} standTime 垂直停留时间(ms)，默认 1000
- * @property {Boolean} scrollable 是否可以滚动 默认 false
+ * @property {Number} acrossSpeed，滚动速率 (px/s)，默认 50
+ * @property {Number} verticalSpeed，滚动的速度（ms），默认 500
+ * @property {Number} delay 延时（ms），默认 1000
+ * @property {Number} standTime 每次滚动前停留多少毫秒(竖向滚动时有效)（ms），默认 1000
+ * @property {Boolean} scrollable 是否可以滚动 默认 true
  * @event {Function} click 外层点击事件回调
  * @event {Function} close 关闭通知栏时触发
  */
@@ -95,11 +97,19 @@ export default {
 		},
 		speed: {
 			type: Number,
+			default: 500,
+		},
+		acrossSpeed: {
+			type: Number,
 			default: 50,
+		},
+		verticalSpeed: {
+			type: Number,
+			default: 500,
 		},
 		delay: {
 			type: Number,
-			default: 1,
+			default: 1000,
 		},
 		standTime: {
 			type: Number,
@@ -107,108 +117,120 @@ export default {
 		},
 		scrollable: {
 			type: Boolean,
-			default: false,
+			default: true,
 		},
 	},
 	data() {
 		return {
 			id: utils.guid(),
 			index: 0,
-			textTranslate: 0,
 			touch: false,
-			boxWidth: 0,
-			flag: true,
 			firstDone: false,
-			animationData: {},
+			animationData: null,
 			parentWidth: 0,
+			copyList: [],
 		};
 	},
-	async mounted() {
-		this.handleAnimation();
+	async mounted() {},
+	watch: {
+		list: {
+			handler(val) {
+				this.copyList = val;
+				if (val.length && this.scrollable) {
+					this.$nextTick(() => {
+						this.handleAnimation();
+					});
+				}
+			},
+			deep: true,
+			immediate: true,
+		},
 	},
-	// watch: {
-	// 	list: {
-	// 		handler(val) {},
-	// 		deep: true,
-	// 	},
-	// },
 	computed: {
 		cmpStyle() {
 			let style = {};
 			style['width'] = isNaN(Number(this.width)) ? this.width : utils.formatPx(this.width);
-			style['minHeight'] = utils.formatPx(68);
-			style['height'] = utils.formatPx(68);
 			style['background'] = this.background;
 			style['color'] = this.color;
 			return style;
 		},
 	},
 	methods: {
-		// 第一次执行动画
+		// 执行滚动动画
 		async handleAnimation() {
 			if (this.direction == 'across') {
 				// 获取滚动消息的长度来计算动画的执行时间
 				let dom = await utils.querySelector('#' + this.id, this);
-				console.log('dom.width ', dom.width);
 				let animation = uni.createAnimation({
-					duration: (dom.width / Number(this.speed)) * 1000,
+					duration: (dom.width / Number(this.acrossSpeed)) * 1000,
+					delay: this.firstDone ? 0 : this.delay,
 				});
 				animation.translateX('-100%').step();
 				this.animationData = animation.export();
+			} else {
+				let animation = uni.createAnimation({
+					duration: this.verticalSpeed,
+					delay: this.firstDone ? 0 : this.delay,
+				});
+				animation.translateY('-100%').step();
+				this.animationData = animation.export();
 			}
+			this.firstDone = true;
 		},
-		// 循环动画
+		// 还原动画
 		async nextAnimation() {
-			// 获取滚动消息的父级元素的长度实现无缝滚动
-			if (!this.parentWidth) {
-				let dom = await utils.querySelector('.' + this.id, this);
-				this.parentWidth = dom.width;
+			if (this.direction == 'across') {
+				// 获取滚动消息的父级元素的长度实现无缝滚动
+				if (!this.parentWidth) {
+					let dom = await utils.querySelector('.' + this.id, this);
+					this.parentWidth = dom.width;
+				}
+				// 先还原
+				let animation = uni.createAnimation({
+					duration: 0,
+				});
+				animation.translateX(this.parentWidth).step();
+				this.animationData = animation.export();
+				this.$nextTick(() => {
+					this.handleAnimation();
+				});
+			} else {
+				let animation = uni.createAnimation({
+					duration: 0,
+				});
+				animation.translateY(0).step();
+				this.animationData = animation.export();
+				setTimeout(
+					() => {
+						this.handleAnimation();
+					},
+					this.standTime > this.verticalSpeed ? this.standTime : this.verticalSpeed // 下一个动画要在前一个动画后
+				);
 			}
-			// 先还原
-			let animation = uni.createAnimation({
-				duration: 0,
-			});
-			animation.translateX(this.parentWidth).step();
-			this.animationData = animation.export();
-			// 获取滚动消息的长度来计算动画的执行时间
-			// let dom1 = await utils.querySelector('#' + this.id, this);
-			// let animation = uni.createAnimation({
-			// 	duration: (dom1.width / Number(this.speed)) * 1000,
-			// });
-			// console.log('dom1.width ', dom1.width);
-			// let dom2 = await utils.querySelector('.' + this.id, this);
-			// // this.textTranslate = dom2.width;
-			// animation.translateX(dom2.width).step();
-			// this.animationData = animation.export();
-			// console.log('dom2.width ', dom2.width);
 		},
 		// 动画结束
 		async onAnimationEnd() {
-			console.log('index', this.index);
-			this.index = this.index + 1 >= this.list.length ? 0 : this.index + 1;
-			this.$nextTick(() => {
-				this.nextAnimation();
-			});
-			// // #ifdef H5
-			// if (this.firstDone) {
-			// 	// #endif
-			// 	this.flag = false;
-			// 	this.index = this.index + 1 >= this.list.length ? 0 : this.index + 1;
-			// 	// 获取滚动消息的父级元素的长度实现无缝滚动
-			// 	this.$nextTick(async () => {
-			// 		let dom = await utils.querySelector('.' + this.id, this);
-			// 		this.textTranslate = dom.width;
-			// 		await this.getAnimationTime();
-			// 		this.flag = true;
-			// 	});
-			// 	// #ifdef H5
-			// }
-			// this.firstDone = true;
-			// // #endif
+			if (!this.touch) {
+				if (this.direction == 'across') {
+					this.index = this.index + 1 >= this.list.length ? 0 : this.index + 1;
+					this.$nextTick(() => {
+						this.nextAnimation();
+					});
+				} else {
+					this.index = this.index + 1 >= this.list.length ? 0 : this.index + 1;
+					this.copyList.push(this.copyList.shift());
+					this.nextAnimation();
+					console.log('this.index', this.index);
+				}
+			}
 		},
 		// 暂停
 		doPause() {
 			this.touch = true;
+			let animation = uni.createAnimation({});
+			animation.export();
+			this.animationData = '';
+			console.log('this.animationData', this.animationData);
 		},
 		// 取消暂停
 		doRun() {
@@ -228,8 +250,9 @@ export default {
 <style lang="scss" scoped>
 .ste-notice-bar-root {
 	width: 100%;
+	height: 68rpx;
 	padding: 16rpx;
-	background: #f9f9f9;
+	background: #ffffff;
 	border-radius: 16rpx;
 	display: flex;
 	align-items: center;
@@ -239,48 +262,56 @@ export default {
 		align-items: center;
 		overflow-x: hidden;
 		justify-content: flex-start;
+		flex: 1;
+		height: 100%;
 	}
 	.left {
 		flex-shrink: 0;
 		margin-right: 16rpx;
 		display: flex;
 		align-items: center;
+		height: 36rpx;
+		line-height: 36rpx;
 	}
 	.center {
 		flex: 1;
 		display: flex;
 		overflow: hidden;
 
-		> div {
-			fong-size: 24rpx;
+		> view {
+			font-size: 24rpx;
 			display: inline-block;
 			width: auto;
 			white-space: nowrap;
-			animation-delay: 1.5s;
 		}
-		.animation {
-			animation: marquee linear both running;
-			animation-iteration-count: 1;
+		.across {
 		}
-		.animation-none {
-			display: none;
+		.vertical {
+		}
+		.active {
+			animation-play-state: running;
+		}
+		.paused {
+			animation-play-state: paused;
 		}
 
-		.animation-play {
-			animation: marquee linear both running;
+		@keyframes acrossAnimation {
+			to {
+				transform: translateX(-100%);
+			}
+		}
+
+		@keyframes marqueeAnimation {
+			to {
+				transform: translateY(-100%);
+			}
 		}
 	}
 
-	@keyframes marquee {
-		to {
-			transform: translate(-100%);
-		}
-	}
-
-	@-webkit-keyframes marquee {
-		to {
-			transform: translate(-100%);
-		}
+	.vertical {
+		flex-direction: column;
+		height: 36rpx;
+		line-height: 36rpx;
 	}
 }
 </style>

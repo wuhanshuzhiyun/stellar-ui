@@ -23,21 +23,60 @@ JavaScript后面的演示代码中涉及到的变量和方法都使用本javasar
 <ste-notice-bar :list="list" background="#FBF8DC" color="red" :width="400"></ste-notice-bar>
 ```
 
+#### 垂直滚动
+通过`direction`设置滚动的方向，`across`：水平，`vertical`：垂直 水平滚动、默认`across`。
+```
+<ste-notice-bar :list="list" direction="vertical"></ste-notice-bar>
+```
+
+#### 滚动速率
+通过`acrossSpeed`设置水平方向的滚动速率 `(px/s)`。
+```
+<ste-notice-bar :list="list" :acrossSpeed="10"></ste-notice-bar>
+```
+
+#### 滚动的速度
+通过`verticalSpeed`设置垂直方向的滚动的速度`（ms）`。
+```
+<ste-notice-bar :list="list2" direction="vertical" :verticalSpeed="2000"></ste-notice-bar>
+```
+
+#### 延时滚动
+通过`delay`设置延时`（ms）`。
+```
+<ste-notice-bar :list="list" :delay="10000"></ste-notice-bar>
+<ste-notice-bar :list="list2" direction="vertical" delay="10000"></ste-notice-bar>
+```
+
+#### 停留时间
+通过`standTime`设置每次滚动前停留多少毫秒(竖向滚动时有效)`（ms）`。
+```
+<ste-notice-bar :list="list2" direction="vertical" :standTime="5000"></ste-notice-bar>
+```
+
+#### 是否可以滚动
+通过`scrollable`设置公共栏是否可以滚动，默认`true`。
+```
+<ste-notice-bar :list="list" :scrollable="false"></ste-notice-bar>
+<ste-notice-bar :list="list2" direction="vertical" :scrollable="false"></ste-notice-bar>
+```
+
 ### API
 #### 组件属性(Props)
 
-| 参数			| 说明									| 类型				| 默认值		| 可选值									| 支持版本	|
-| ---			| ---									| ---				| ---		| ---									| ---		|
-| `list`		| 滚动数据列表							| `Array`			| `[]`		| -										| -			|
-| `direction`	| 滚动的方向								| `String`			| `across`	| `across`：水平<br/>`vertical`：垂直	| -			|
-| `closeMode`	| 是否启用关闭模式						| `Boolean`			| `false`	| -										| -			|
-| `color`		| 文字颜色								| `String`			| `#000000`	| -										| -			|
-| `background`	| 背景色									| `String`			| `#ffffff`	| -										| -			|
-| `width`		| 宽度，默认100%（占满父容器宽度）		| `String\Number`	| `100%`	| -										| -			|
-| `speed`		| 滚动速率								| `Number`			| `50`		| -										| -			|
-| `delay`		| 延时多少秒开始滚动(为横向滚动时有效)	| `Number`			| `1`		| -										| -			|
-| `standTime`	| 每次滚动前停留多少毫秒(竖向滚动时有效)	| `Number`			| `1000`	| -										| -			|
-| `scrollable`	| 是否可以滚动							| `Boolean`			| `false`	| -										| -			|
+| 参数				| 说明								| 类型				| 默认值		| 可选值												| 支持版本	|
+| ---				| ---								| ---				| ---		| ---												| ---		|
+| `list`			| 滚动数据列表						| `Array`			| `[]`		| -													| -			|
+| `direction`		| 滚动的方向							| `String`			| `across`	| `across`：水平<br/>`vertical`：垂直					| -			|
+| `closeMode`		| 是否启用关闭模式					| `Boolean`			| `false`	| -													| -			|
+| `color`			| 文字颜色							| `String`			| `#000000`	| -													| -			|
+| `background`		| 背景色								| `String`			| `#ffffff`	| -													| -			|
+| `width`			| 宽度								| `String\Number`	| `100%`	| `"100%"`：填满<br/>`{{Number}}`：自定义宽度 单位rpx	| -			|
+| `acrossSpeed`		| 滚动速率 (px/s)					| `Number`			| `50`		| -													| -			|
+| `verticalSpeed`	| 滚动的速度（ms）					| `Number`			| `500`		| -													| -			|
+| `delay`			| 延时（ms）							| `Number`			| `1000`	| -													| -			|
+| `standTime`		| 每次滚动前停留多少毫秒(竖向滚动时有效)	| `Number`			| `1000`	| -													| -			|
+| `scrollable`		| 是否可以滚动						| `Boolean`			| `true`	| -													| -			|
 
 #### 组件事件(Events)
 
