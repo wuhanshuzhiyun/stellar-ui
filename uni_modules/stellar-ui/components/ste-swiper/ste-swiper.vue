@@ -199,6 +199,10 @@ export default {
 	watch: {
 		current: {
 			handler(v) {
+				if (!this.childrenData.length) {
+					this.dataIndex = v;
+					return;
+				}
 				this.dataIndex = v < 0 ? 0 : v >= this.childrenData.length ? this.childrenData.length - 1 : v;
 			},
 			immediate: true,
@@ -274,7 +278,6 @@ export default {
 			}
 		},
 		onTouchstart(e) {
-			console.log('onTouchstart');
 			if (this.disabled) return;
 			if (this.childrenData?.length < 2) return;
 			this.moveing = true;
