@@ -6,8 +6,14 @@
 		@touchmove.stop.prevent="touchmove"
 		@wheel.stop.prevent
 	>
-		<view class="dropdown-placeholder" :style="[cmpMenuPlaceholderStyle]" @click="close" />
-		<view class="menu-box" @click="handleMenuClick">
+		<view
+			class="dropdown-placeholder"
+			:style="[cmpMenuPlaceholderStyle]"
+			@click="close"
+			@touchmove.stop.prevent="touchmove"
+			@wheel.stop.prevent
+		/>
+		<view class="menu-box" @click="handleMenuClick" @touchmove.stop.prevent="touchmove" @wheel.stop.prevent>
 			<text class="title">{{ menuTitle || title }}</text>
 			<view class="menu-title-icon">
 				<ste-icon code="&#xe699;" size="32"></ste-icon>
