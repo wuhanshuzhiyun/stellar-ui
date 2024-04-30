@@ -128,9 +128,7 @@ export default {
 			acrossDuration: 0,
 			textTranslate: 0,
 			cardMsgClass: '',
-			timer: null,
 			h5flag: false,
-			flag: true,
 			closeShow: true,
 		};
 	},
@@ -167,11 +165,9 @@ export default {
 		},
 		cmpVerticalStyle() {
 			let style = {};
-			if (this.flag) {
-				style['animationPlayState'] = this.touch ? 'paused' : 'running';
-				style['animationDuration'] = this.verticalSpeed + 'ms';
-				style['animationDelay'] = (this.firstDone ? 0 : this.delay) + 'ms';
-			}
+			style['animationPlayState'] = this.touch ? 'paused' : 'running';
+			style['animationDuration'] = this.verticalSpeed + 'ms';
+			style['animationDelay'] = (this.firstDone ? 0 : this.delay) + 'ms';
 			return style;
 		},
 	},
