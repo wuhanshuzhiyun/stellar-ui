@@ -46,6 +46,29 @@ const addPx = (val) => {
 		return 0;
 	}
 };
+/**
+ * ste-dropdown-menu 下拉菜单
+ * @description 下拉菜单
+ * @tutorial https://stellar-ui.intecloud.com.cn//pc/index/index?name=ste-dropdown-menu
+ * @property {String} title 菜单标题，未设置时会显示选中项的值
+ * @property {String|Array} value 下拉菜单选中的值
+ * @property {String} inactiveColor 未选中颜色 #000000
+ * @property {String} activeColor 选中色 #0090FF
+ * @property {String} direction 展开方向 默认down
+ * @value up 向上展开 {String}
+ * @value down 向下展开 {String}
+ * @property {Number} duration 展开动画执行时间 默认0.2s
+ * @property {Boolean} showMask 是否展示遮罩 默认 true
+ * @property {Boolean} isMaskClick 是否点击遮罩关闭 默认 true
+ * @property {Number} zIndex 弹窗层级z-index
+ * @property {String} type 下拉选项的形状 默认block
+ * @value round 圆形 {String}
+ * @value block 块状 {String}
+ * @property {Number} max 可选数量 默认1
+ * @event {Function} change 选项改变时触发
+ * @event {Function} open 菜单打开
+ * @event {Function} close 菜单收起
+ **/
 export default {
 	group: '导航组件',
 	title: 'DropdownMenu 下拉菜单',
@@ -98,6 +121,11 @@ export default {
 			defualt: Number,
 			default: 1,
 		},
+	},
+	model: {
+		prop: 'value',
+		// 派发事件名，更新父组件数据
+		event: 'input',
 	},
 	provide() {
 		return {
@@ -176,6 +204,7 @@ export default {
 				} else {
 					val ? (this.chooseItems = [val]) : '';
 				}
+				// this.loadMenuTitle();
 			},
 			immediate: true,
 		},
@@ -190,17 +219,11 @@ export default {
 		},
 		loadMenuTitle() {
 			if (!this.title) {
-				if (Array.isArray(this.value)) {
-					let item = this.menuItems.find((e) => {
-						return this.value.find((v) => v === e.value);
-					});
-					this.menuTitle = item.title;
-				} else {
-					let item = this.menuItems.find((e) => {
-						return this.value == e.value;
-					});
-					this.menuTitle = item.title;
-				}
+				let item =
+					this.menuItems.find((e) => {
+						return this.chooseItems.find((v) => v == e.value);
+					}) || {};
+				this.menuTitle = item.title;
 			} else {
 				this.menuTitle = this.title;
 			}
@@ -245,7 +268,8 @@ export default {
 				// 当选中项再次被选中时，做取消选中操作
 				temp.splice(index, 1);
 			} else {
-				if (this.chooseItems.length < this.max) {
+				let max = this.max < 1 ? 1 : this.max;
+				if (this.chooseItems.length < max) {
 					temp.push(item.value);
 				} else {
 					temp.shift();
@@ -254,7 +278,9 @@ export default {
 			}
 
 			this.chooseItems = temp;
+			this.loadMenuTitle();
 			this.close();
+			this.$emit('input', this.chooseItems);
 			this.$emit('change', this.chooseItems);
 			this.$emit('item-choose', item);
 		},

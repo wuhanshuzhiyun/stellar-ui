@@ -9,6 +9,16 @@
 
 <script>
 import utils from '../../utils/utils.js';
+/**
+ * ste-dropdown-menu-item 下拉菜单项
+ * @description 下拉菜单项
+ * @tutorial https://stellar-ui.intecloud.com.cn//pc/index/index?name=ste-dropdown-menu
+ * @property {String} value 选中项对应的值
+ * @property {String} title 选中项对应的标题
+ * @property {Boolean} disabled 是否禁用 默认 false
+ * @property {Boolean} readonly 只读（不置灰） 默认 false
+ * @event {Function} click 选中时触发(可拦截选中)
+ **/
 export default {
 	group: '导航组件',
 	title: 'DropdownMenuItem 下拉菜单项',
@@ -48,6 +58,7 @@ export default {
 	},
 	mounted() {
 		this.parent.updateItems();
+		this.loadStatus();
 		this.parent.$on('item-choose', (value) => {
 			this.loadStatus();
 		});
