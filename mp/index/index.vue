@@ -172,6 +172,13 @@
 			</view>
 			<!-- ***导航组件*** -->
 			<view class="group-title">导航组件</view>
+			<view class="com-box" @click="nav('dropdown-menu')">
+				<view class="com-title">
+					<image :src="joinSrc('img/dropdown.png')" style="width: 36rpx; height: 36rpx" />
+					<text>DropdownMenu 下拉菜单</text>
+				</view>
+				<view class="com-arrow"><image :src="joinSrc('img/r-arrow.png')" /></view>
+			</view>
 			<view class="com-box" @click="nav('scroll-to')">
 				<view class="com-title">
 					<image :src="joinSrc('img/tabbar.png')" style="width: 36rpx; height: 36rpx" />
