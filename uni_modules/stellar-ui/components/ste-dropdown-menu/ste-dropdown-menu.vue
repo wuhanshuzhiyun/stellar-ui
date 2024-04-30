@@ -1,0 +1,358 @@
+<template>
+	<view
+		class="ste-dropdown-menu-root"
+		:class="[cmpRootClass]"
+		:style="[cmpRootStyle]"
+		@touchmove.stop.prevent="touchmove"
+		@wheel.stop.prevent
+	>
+		<view
+			class="dropdown-placeholder"
+			:style="[cmpMenuPlaceholderStyle]"
+			@click="close"
+			@touchmove.stop.prevent="touchmove"
+			@wheel.stop.prevent
+		/>
+		<view class="menu-box" @click="handleMenuClick" @touchmove.stop.prevent="touchmove" @wheel.stop.prevent>
+			<text class="title">{{ menuTitle || title }}</text>
+			<view class="menu-title-icon">
+				<ste-icon code="&#xe699;" size="32"></ste-icon>
+			</view>
+		</view>
+		<view
+			:class="hiddenContent ? 'dropdown-content hidden' : 'dropdown-content'"
+			:style="[cmpMenuContentStyle]"
+			@click="handleMaskClick"
+			@touchmove.stop.prevent="touchmove"
+			@wheel.stop.prevent
+		>
+			<view class="menu-item-content" @click.stop="handleMenuConentClick">
+				<slot></slot>
+			</view>
+		</view>
+	</view>
+</template>
+
+<script>
+import utils from '../../utils/utils.js';
+const DEFAULT_ROOT_QUERY = { height: 0, left: 0, top: 0, bottom: 0 };
+const DEFAULT_DURATION = 0.2;
+const MIN_DURATION = 0;
+const MAX_DURATION = 10;
+const addPx = (val) => {
+	if (utils.isNumber(val)) {
+		return `${val}px`;
+	} else {
+		return 0;
+	}
+};
+export default {
+	group: '导航组件',
+	title: 'DropdownMenu 下拉菜单',
+	name: 'ste-dropdown-menu',
+	options: {
+		virtualHost: true,
+	},
+	props: {
+		title: {
+			type: String,
+			default: '',
+		},
+		value: {
+			type: [String, Number, Array],
+			default: undefined,
+		},
+		inactiveColor: {
+			default: String,
+			default: '#000000',
+		},
+		activeColor: {
+			default: String,
+			default: '#0090FF',
+		},
+		direction: {
+			default: String,
+			default: 'down',
+		},
+		duration: {
+			default: Number,
+			default: 0.2,
+		},
+		showMask: {
+			default: Boolean,
+			default: true,
+		},
+		isMaskClick: {
+			default: Boolean,
+			default: true,
+		},
+		zIndex: {
+			default: Number,
+			default: 1000,
+		},
+		type: {
+			default: String,
+			default: 'block',
+		},
+		max: {
+			defualt: Number,
+			default: 1,
+		},
+	},
+	provide() {
+		return {
+			_menuComponent: { getParent: () => this },
+		};
+	},
+	data() {
+		return {
+			menuTitle: '',
+			chooseItems: [],
+			showMenu: false,
+			hiddenContent: false,
+			contentHeight: 0,
+			menuRootQuery: DEFAULT_ROOT_QUERY,
+			menuItems: [],
+		};
+	},
+	mounted() {},
+	computed: {
+		cmpRootClass() {
+			let classArr = [this.direction, this.showMenu ? 'open' : 'close'];
+			return classArr.join(' ');
+		},
+		cmpRootStyle() {
+			let style = {
+				'--duration': this.cmpDuration + 's',
+				'--active-color': this.activeColor,
+				'--inactive-color': this.inactiveColor,
+				'--menu-z-index': this.zIndex,
+			};
+			return style;
+		},
+		cmpMenuPlaceholderStyle() {
+			let style = { height: 0 };
+
+			if (this.showMenu) {
+				if (this.direction == 'down') {
+					style.height = addPx(this.menuRootQuery.top + this.menuRootQuery.height);
+				} else {
+					let windowHeight = uni.getSystemInfoSync().windowHeight;
+					style.height = addPx(windowHeight - this.menuRootQuery.bottom + this.menuRootQuery.height);
+				}
+			}
+			return style;
+		},
+		cmpMenuContentStyle() {
+			let style = {
+				height: addPx(this.contentHeight),
+				background: this.showMask ? 'rgba(0, 0, 0, 0.6)' : 'rgba(0, 0, 0, 0)',
+			};
+			if (this.direction == 'down') {
+				style.top = addPx(this.menuRootQuery.top + this.menuRootQuery.height);
+			} else {
+				style.top = 0;
+			}
+			return style;
+		},
+		cmpDuration() {
+			if (!utils.isNumber(this.duration)) {
+				return DEFAULT_DURATION;
+			}
+			if (this.duration > MAX_DURATION) {
+				return MAX_DURATION;
+			}
+			if (this.duration < MIN_DURATION) {
+				return MIN_DURATION;
+			}
+			return this.duration;
+		},
+	},
+	watch: {
+		value: {
+			handler(val) {
+				if (Array.isArray(val)) {
+					this.chooseItems = val;
+				} else {
+					val ? (this.chooseItems = [val]) : '';
+				}
+			},
+			immediate: true,
+		},
+	},
+	methods: {
+		updateItems() {
+			let menuItems = utils.getChildrenProps(this, 'ste-dropdown-menu-item');
+			if (menuItems.length !== this.menuItems.length) {
+				this.menuItems = menuItems;
+				this.loadMenuTitle();
+			}
+		},
+		loadMenuTitle() {
+			if (!this.title) {
+				if (Array.isArray(this.value)) {
+					let item = this.menuItems.find((e) => {
+						return this.value.find((v) => v === e.value);
+					});
+					this.menuTitle = item.title;
+				} else {
+					let item = this.menuItems.find((e) => {
+						return this.value == e.value;
+					});
+					this.menuTitle = item.title;
+				}
+			} else {
+				this.menuTitle = this.title;
+			}
+		},
+		touchmove(e) {
+			// TODO nvue 取消冒泡
+			e.stopPropagation();
+		},
+		async getContentHeight() {
+			let windowHeight = uni.getSystemInfoSync().windowHeight;
+			const res = await utils.querySelector('.ste-dropdown-menu-root', this);
+			this.menuRootQuery = res;
+			this.contentHeight =
+				this.direction == 'down' ? windowHeight - this.menuRootQuery.bottom : this.menuRootQuery.top;
+		},
+		async handleMenuClick() {
+			if (!this.showMenu) {
+				await this.getContentHeight();
+				this.open();
+			} else {
+				this.close();
+			}
+		},
+		open() {
+			this.showMenu = true;
+			this.hiddenContent = false;
+			this.$emit('open');
+		},
+		close() {
+			this.showMenu = false;
+			setTimeout(() => {
+				this.hiddenContent = true;
+				this.contentHeight = 0;
+				this.menuRootQuery = DEFAULT_ROOT_QUERY;
+				this.$emit('close');
+			}, this.cmpDuration * 1000);
+		},
+		choose(item) {
+			let temp = this.chooseItems;
+			let index = temp.findIndex((e) => e == item.value);
+			if (index > -1) {
+				// 当选中项再次被选中时，做取消选中操作
+				temp.splice(index, 1);
+			} else {
+				if (this.chooseItems.length < this.max) {
+					temp.push(item.value);
+				} else {
+					temp.shift();
+					temp.push(item.value);
+				}
+			}
+
+			this.chooseItems = temp;
+			this.close();
+			this.$emit('change', this.chooseItems);
+			this.$emit('item-choose', item);
+		},
+		handleMaskClick() {
+			if (this.isMaskClick) {
+				this.close();
+			}
+		},
+		handleMenuConentClick() {},
+	},
+};
+</script>
+
+<style lang="scss" scoped>
+.ste-dropdown-menu-root {
+	.menu-box {
+		padding: 20rpx 0;
+		.menu-title-icon {
+			display: inline-flex;
+			transition: all var(--duration) linear;
+		}
+		.title {
+			margin-right: 8rpx;
+		}
+		display: flex;
+		align-items: center;
+	}
+
+	.dropdown-placeholder {
+		position: fixed;
+		z-index: 1;
+		width: 100vw;
+		top: 0;
+		left: 0;
+	}
+
+	.dropdown-content {
+		transition: opacity var(--duration) linear;
+		position: fixed;
+		z-index: 1;
+		width: 100vw;
+		left: 0;
+		overflow: hidden;
+		top: 40rpx;
+		opacity: 0;
+
+		&.hidden {
+			z-index: -1 !important;
+		}
+
+		.menu-item-content {
+			width: 100%;
+			transition: all var(--duration);
+			transition-duration: var(--duration);
+			transform: translateY(-100%);
+		}
+	}
+
+	&.open {
+		.menu-title-icon {
+			transform: rotate(180deg);
+		}
+		.dropdown-content {
+			opacity: 1;
+			z-index: var(--menu-z-index);
+
+			.menu-item-content {
+				transform: translateY(0);
+			}
+		}
+	}
+
+	&.up {
+		.menu-title-icon {
+			transform: rotate(180deg);
+		}
+		.dropdown-content {
+			display: flex;
+			flex-direction: column;
+			justify-content: flex-end;
+
+			.menu-item-content {
+				transform: translateY(100%);
+			}
+		}
+		&.open {
+			.menu-title-icon {
+				transform: rotate(0);
+			}
+			.menu-item-content {
+				transform: translateY(0);
+			}
+
+			.dropdown-placeholder {
+				top: auto;
+				bottom: 0;
+			}
+		}
+	}
+}
+</style>

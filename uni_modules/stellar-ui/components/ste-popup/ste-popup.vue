@@ -114,8 +114,7 @@ export default {
 			animationData: null,
 			overlayAnimationData: null,
 			animationProp: { duration: this.duration, timingFunction: 'ease-out' },
-			clickTask: null, // click完成任务和allowStopStatus搭配使用
-			allowStopStatus: false, // 允许阻止后续的事件触发
+			clickTask: null,
 		};
 	},
 	created() {
@@ -177,11 +176,17 @@ export default {
 			if (this.clickTask) {
 				return;
 			}
+			let next = true;
 			this.allowStopStatus = false;
-			this.clickTask = new Promise((resolve) => {
-				this.$emit('close', this.allowStop, resolve);
+			this.clickTask = new Promise((resolve, reject) => {
+				this.$emit(
+					'close',
+					() => (next = false),
+					() => resolve(),
+					() => reject()
+				);
 			});
-			if (this.allowStopStatus) {
+			if (!next) {
 				await this.clickTask;
 			}
 			this.$emit('update:show', false);
