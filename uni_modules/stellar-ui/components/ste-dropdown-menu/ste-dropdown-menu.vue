@@ -264,11 +264,11 @@ export default {
 		choose(item) {
 			let temp = this.chooseItems;
 			let index = temp.findIndex((e) => e == item.value);
+			let max = this.max < 1 ? 1 : this.max;
 			if (index > -1) {
 				// 当选中项再次被选中时，做取消选中操作
 				temp.splice(index, 1);
 			} else {
-				let max = this.max < 1 ? 1 : this.max;
 				if (this.chooseItems.length < max) {
 					temp.push(item.value);
 				} else {
@@ -279,7 +279,9 @@ export default {
 
 			this.chooseItems = temp;
 			this.loadMenuTitle();
-			this.close();
+			if (this.chooseItems.length == max) {
+				this.close();
+			}
 			this.$emit('input', this.chooseItems);
 			this.$emit('change', this.chooseItems);
 			this.$emit('item-choose', item);
