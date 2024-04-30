@@ -7,50 +7,99 @@
 				<view class="item-block">
 					<view class="menu-item">
 						<view>
-							<ste-dropdown-menu title="选择项" @open="open" @close="close" @change="change">
-								<ste-dropdown-menu-item value="1" title="选项1" />
-								<ste-dropdown-menu-item value="2" title="选项2" />
-								<ste-dropdown-menu-item value="3" title="选项3" />
+							<ste-dropdown-menu v-model="menu1" @open="open" @close="close" @change="change">
+								<ste-dropdown-menu-item value="1" title="全部商品" />
+								<ste-dropdown-menu-item value="2" title="新款商品" />
+								<ste-dropdown-menu-item value="3" title="活动商品" />
 							</ste-dropdown-menu>
 						</view>
 						<view>
-							<ste-dropdown-menu title="选择项" @open="open" @close="close" @change="change">
-								<ste-dropdown-menu-item value="1" title="选项1" @click="itemClick" />
-								<ste-dropdown-menu-item value="2" title="选项2" />
-								<ste-dropdown-menu-item value="3" title="选项3" />
-							</ste-dropdown-menu>
-						</view>
-					</view>
-				</view>
-			</view>
-			<view class="demo-item">
-				<view class="title">向上展开</view>
-				<view class="item-block">
-					<view class="menu-item">
-						<view>
-							<ste-dropdown-menu title="手机" direction="up">
-								<ste-dropdown-menu-item value="1" title="选项1" />
-								<ste-dropdown-menu-item value="2" title="选项2" />
-							</ste-dropdown-menu>
-						</view>
-						<view>
-							<ste-dropdown-menu title="手机" direction="up">
-								<ste-dropdown-menu-item value="1" title="选项1" />
-								<ste-dropdown-menu-item value="2" title="选项2" />
+							<ste-dropdown-menu value="1" @open="open" @close="close" @change="change">
+								<ste-dropdown-menu-item value="1" title="默认排序" @click="itemClick" />
+								<ste-dropdown-menu-item value="2" title="销量排序" />
+								<ste-dropdown-menu-item value="3" title="价格排序" />
 							</ste-dropdown-menu>
 						</view>
 					</view>
 				</view>
 			</view>
 			<view class="demo-item">
-				<view class="title">禁用某项</view>
+				<view class="title">选中颜色 & 未选中颜色</view>
 				<view class="item-block">
 					<view class="menu-item">
 						<view>
-							<ste-dropdown-menu title="选择项">
+							<ste-dropdown-menu value="1" activeColor="#e9e">
+								<ste-dropdown-menu-item value="1" title="全部商品" />
+								<ste-dropdown-menu-item value="2" title="新款商品" />
+								<ste-dropdown-menu-item value="3" title="活动商品" />
+							</ste-dropdown-menu>
+						</view>
+						<view>
+							<ste-dropdown-menu value="2" inactiveColor="#53e">
+								<ste-dropdown-menu-item value="1" title="默认排序" />
+								<ste-dropdown-menu-item value="2" title="销量排序" />
+								<ste-dropdown-menu-item value="3" title="价格排序" />
+							</ste-dropdown-menu>
+						</view>
+					</view>
+				</view>
+			</view>
+			<view class="demo-item">
+				<view class="title">展开方向</view>
+				<view class="item-block">
+					<view class="menu-item">
+						<view>
+							<ste-dropdown-menu title="手机" direction="down">
 								<ste-dropdown-menu-item value="1" title="选项1" />
-								<ste-dropdown-menu-item value="2" title="选项2" disabled />
-								<ste-dropdown-menu-item value="3" title="选项3" />
+								<ste-dropdown-menu-item value="2" title="选项2" />
+							</ste-dropdown-menu>
+						</view>
+						<view>
+							<ste-dropdown-menu title="手机" direction="up">
+								<ste-dropdown-menu-item value="1" title="选项1" />
+								<ste-dropdown-menu-item value="2" title="选项2" />
+							</ste-dropdown-menu>
+						</view>
+					</view>
+				</view>
+			</view>
+			<view class="demo-item">
+				<view class="title">展开动画时间</view>
+				<view class="item-block">
+					<view class="menu-item">
+						<view>
+							<ste-dropdown-menu value="1" :duration="0.8">
+								<ste-dropdown-menu-item value="1" title="全部商品" />
+								<ste-dropdown-menu-item value="2" title="新款商品" />
+								<ste-dropdown-menu-item value="3" title="活动商品" />
+							</ste-dropdown-menu>
+						</view>
+						<view>
+							<ste-dropdown-menu value="2" :duration="0">
+								<ste-dropdown-menu-item value="1" title="默认排序" />
+								<ste-dropdown-menu-item value="2" title="销量排序" />
+								<ste-dropdown-menu-item value="3" title="价格排序" />
+							</ste-dropdown-menu>
+						</view>
+					</view>
+				</view>
+			</view>
+			<view class="demo-item">
+				<view class="title">遮罩</view>
+				<view class="item-block">
+					<view class="menu-item">
+						<view>
+							<ste-dropdown-menu value="1" :showMask="false" title="不显示遮罩">
+								<ste-dropdown-menu-item value="1" title="全部商品" />
+								<ste-dropdown-menu-item value="2" title="新款商品" />
+								<ste-dropdown-menu-item value="3" title="活动商品" />
+							</ste-dropdown-menu>
+						</view>
+						<view>
+							<ste-dropdown-menu value="2" title="遮罩不关闭" :isMaskClick="false">
+								<ste-dropdown-menu-item value="1" title="默认排序" />
+								<ste-dropdown-menu-item value="2" title="销量排序" />
+								<ste-dropdown-menu-item value="3" title="价格排序" />
 							</ste-dropdown-menu>
 						</view>
 					</view>
@@ -77,13 +126,29 @@
 					</view>
 				</view>
 			</view>
+			<view class="demo-item">
+				<view class="title">禁用某项</view>
+				<view class="item-block">
+					<view class="menu-item">
+						<view>
+							<ste-dropdown-menu title="选择项" direction="up">
+								<ste-dropdown-menu-item value="1" title="选项1" />
+								<ste-dropdown-menu-item value="2" title="选项2" disabled />
+								<ste-dropdown-menu-item value="3" title="选项3" />
+							</ste-dropdown-menu>
+						</view>
+					</view>
+				</view>
+			</view>
 		</view>
 	</view>
 </template>
 <script>
 export default {
 	data() {
-		return {};
+		return {
+			menu1: 1,
+		};
 	},
 	created() {},
 	methods: {
@@ -94,7 +159,10 @@ export default {
 			console.log('菜单被关闭');
 		},
 		change(e) {
-			console.log('选中改变', e);
+			console.log('选中改变', this.menu1);
+		},
+		btn1() {
+			this.menu1 = 2;
 		},
 		itemClick(stop, next, reject) {
 			stop();

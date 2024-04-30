@@ -4,7 +4,7 @@ const express = require('express');
 const router = express.Router();
 const Data = require('./utils/Data.js');
 const Code = require('./utils/Code.js');
-const wx = require('./utils/WeiXin.js');
+const Applet = require('./utils/Applet.js');
 const User = require('./utils/User.js');
 
 router.get('/list', async (req, res, next) => {
@@ -21,7 +21,7 @@ router.post('/create', async (req, res, next) => {
 	const { name, content, user, code, uuid } = req.body;
 	try {
 		const openid = await Code.checkCode(uuid, code);
-		const result = await wx.checkout(`${content} ${user}`, openid);
+		const result = await Applet.sensitiveWords(`${content} ${user}`, openid);
 		if (result.bool) {
 			next({ code: 401, message: result.message });
 			return;
@@ -71,7 +71,7 @@ router.get('/wxcode', async (req, res, next) => {
 			res.sendFile(filePath);
 			return;
 		}
-		const result = await wx.getWxacodeunlimit('pages/code/code', uuid, {
+		const result = await Applet.getAppletQrCode('pages/code/code', uuid, {
 			check_path: false,
 			width: 280,
 		});
@@ -88,7 +88,7 @@ router.get('/getwxcode', async (req, res, next) => {
 		if (!code || !uuid) {
 			return res.send({ code: 400, msg: '非法调用！' });
 		}
-		const openid = await wx.getOpenid(code);
+		const openid = await Applet.getOpenid(code);
 		if (!openid) return res.send({ code: 400, msg: '非法调用！' });
 		const result = await Code.createCode(uuid, openid);
 		res.send({ code: 0, data: result });
