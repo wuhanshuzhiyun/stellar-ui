@@ -61,6 +61,27 @@ JavaScript后面的演示代码中涉及到的变量和方法都使用本javasar
 <ste-notice-bar :list="list2" direction="vertical" :scrollable="false"></ste-notice-bar>
 ```
 
+#### 取消按钮
+通过`closeMode`设置是否启用关闭模式，默认`false`。
+```
+<ste-notice-bar :list="list" closeMode></ste-notice-bar>
+```
+
+#### 插槽
+通过`leftIcon`设置左边图标的插槽。
+通过`rightIcon`设置右边图标的插槽。
+```
+<ste-notice-bar :list="list">
+	<template #leftIcon>
+		<ste-icon color="#000000" code="&#xe682;" size="32"></ste-icon>
+	</template>
+	<template #rightIcon>
+		<ste-icon color="#000000" code="&#xe696;" size="32"></ste-icon>
+	</template>
+</ste-notice-bar>
+```
+
+
 ### API
 #### 组件属性(Props)
 
@@ -80,10 +101,11 @@ JavaScript后面的演示代码中涉及到的变量和方法都使用本javasar
 
 #### 组件事件(Events)
 
-|事件名		|说明								|	事件参数	|支持版本	|
-|---		|---								|---		|---		|
-| `click`	| 内容区域点击回调事件				|-			|			|
-| `close`	| 关闭模式下点击右侧关闭按钮时触发	|-			|			|
+|事件名		|说明							|	事件参数			|支持版本	|
+|---		|---							|---				|---		|
+| `click`	| 内容区域点击回调事件				|`index`:结束后的序值	|			|
+| `close`	| 关闭模式下点击右侧关闭按钮时触发	|`event`			|			|
+| `end`		| 滚动结束时触发					|`index`:结束后的序值	|			|
 
 #### 组件插槽(Slots)
 

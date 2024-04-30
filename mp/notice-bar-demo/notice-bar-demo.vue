@@ -36,7 +36,7 @@
 				<view class="title">延时滚动</view>
 				<view class="item-block notice-bar">
 					<ste-notice-bar :list="list" :delay="10000"></ste-notice-bar>
-					<ste-notice-bar :list="list2" direction="vertical" delay="10000"></ste-notice-bar>
+					<ste-notice-bar :list="list2" direction="vertical" :delay="10000"></ste-notice-bar>
 				</view>
 			</view>
 			<view class="demo-item">
@@ -50,6 +50,25 @@
 				<view class="item-block notice-bar">
 					<ste-notice-bar :list="list" :scrollable="false"></ste-notice-bar>
 					<ste-notice-bar :list="list2" direction="vertical" :scrollable="false"></ste-notice-bar>
+				</view>
+			</view>
+			<view class="demo-item">
+				<view class="title">取消按钮</view>
+				<view class="item-block">
+					<ste-notice-bar :list="list" closeMode></ste-notice-bar>
+				</view>
+			</view>
+			<view class="demo-item">
+				<view class="title">插槽</view>
+				<view class="item-block">
+					<ste-notice-bar :list="list">
+						<template #leftIcon>
+							<ste-icon color="#000000" code="&#xe682;" size="32"></ste-icon>
+						</template>
+						<template #rightIcon>
+							<ste-icon color="#000000" code="&#xe696;" size="32"></ste-icon>
+						</template>
+					</ste-notice-bar>
 				</view>
 			</view>
 		</view>
