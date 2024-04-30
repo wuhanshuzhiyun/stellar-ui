@@ -148,6 +148,18 @@ export default {
 			deep: true,
 			immediate: true,
 		},
+		index: {
+			handler() {
+				this.h5flag = false;
+			},
+			immediate: true,
+		},
+		copyList: {
+			handler() {
+				this.h5flag = false;
+			},
+			immediate: true,
+		},
 	},
 	computed: {
 		cmpStyle() {
@@ -201,18 +213,16 @@ export default {
 					}
 					this.cardMsgClass = '';
 					// h5里 文本内容切换会导致触发动画结束事件，屏蔽切换
-					// #ifndef H5
 					this.index = this.index + 1 >= this.list.length ? 0 : this.index + 1;
-					// #endif
 					this.$nextTick(() => {
 						this.handleAnimation();
 					});
 				} else {
 					this.cardMsgClass = '';
 					// h5里 文本内容切换会导致触发动画结束事件，屏蔽切换
-					// #ifndef H5
+
 					this.copyList.push(this.copyList.shift());
-					// #endif
+
 					this.index = this.index + 1 >= this.list.length ? 0 : this.index + 1;
 					setTimeout(
 						() => {
@@ -225,8 +235,10 @@ export default {
 				this.$emit('end', this.index);
 				// #ifdef H5
 			}
+			setTimeout(() => {
+				this.h5flag = true;
+			}, 50);
 			// #endif
-			this.h5flag = true;
 		},
 		// 暂停
 		doPause() {
