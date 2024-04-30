@@ -231,9 +231,16 @@ export default {
 				this.$emit('end', this.index);
 				// #ifdef H5
 			}
-			setTimeout(() => {
+			if (this.direction == 'across') {
 				this.h5flag = true;
-			}, 50);
+			} else {
+				setTimeout(
+					() => {
+						this.h5flag = true;
+					},
+					this.verticalSpeed > 20 ? this.verticalSpeed - 20 : 20
+				);
+			}
 			// #endif
 		},
 		// 暂停
