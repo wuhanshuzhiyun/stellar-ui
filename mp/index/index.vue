@@ -193,6 +193,13 @@
 				</view>
 				<view class="com-arrow"><image :src="joinSrc('img/r-arrow.png')" /></view>
 			</view>
+			<view class="com-box" @click="nav('swiper')">
+				<view class="com-title">
+					<image :src="joinSrc('img/countTo.png')" style="width: 36rpx; height: 36rpx" />
+					<text>Swipe 轮播组件</text>
+				</view>
+				<view class="com-arrow"><image :src="joinSrc('img/r-arrow.png')" /></view>
+			</view>
 		</view>
 	</view>
 </template>
