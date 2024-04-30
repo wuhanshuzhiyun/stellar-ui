@@ -1,12 +1,12 @@
 const Redis = require('./Redis');
-const wx = require('./WeiXin');
+const Applet = require('./Applet');
 const Utils = require('./Utils');
 
 class User {
 	static login(code) {
 		return new Promise(async (resolve, reject) => {
 			try {
-				const openid = await wx.getOpenid(code);
+				const openid = await Applet.getOpenid(code);
 				if (!openid) {
 					reject('getopenid error');
 					return;
