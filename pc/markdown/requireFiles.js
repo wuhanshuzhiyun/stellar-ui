@@ -32,11 +32,7 @@ export function componentFiles() {
 	const comGroups = {};
 	const components = Object.keys(comMdMap).map((key) => {
 		const obj = vueMap[key]?.default || {};
-		const {
-			group,
-			title,
-			name
-		} = obj;
+		const { group, title, name } = obj;
 
 		comGroups[group] = group || '其他';
 
@@ -44,7 +40,7 @@ export function componentFiles() {
 			title,
 			name: name || key,
 			key,
-			group
+			group,
 		};
 	});
 
@@ -60,7 +56,7 @@ export function componentFiles() {
 		templateMap,
 		comMdMap,
 		vueMap,
-		componentsData
+		componentsData,
 	};
 }
 
@@ -83,20 +79,18 @@ export function restsFiles() {
 			group,
 			title,
 			key,
-			sort
+			sort,
 		};
 	});
 	const jsons = require.context('@/pc/markdown/', true, /.+\.json$/);
 	const jsonMap = requireFiles(jsons, (path) => path.replace(deg, '$1'));
 	const restsData = Object.keys(jsonMap)
 		.map((key) => {
-			const {
-				group,
-				sort
-			} = jsonMap[key];
+			const { group, sort, lock } = jsonMap[key];
 			return {
 				title: group,
 				sort,
+				lock,
 				children: restsList.filter((item) => item.group === key).sort((a, b) => a.sort - b.sort),
 			};
 		})
@@ -104,6 +98,6 @@ export function restsFiles() {
 
 	return {
 		restsData,
-		restsMdMap
+		restsMdMap,
 	};
 }
