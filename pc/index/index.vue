@@ -4,6 +4,7 @@
 			<view class="group" v-for="group in datas" :key="group.key">
 				<view class="name">
 					{{ group.title }}
+					<ste-icon v-if="group.lock && !cmpLock" code="&#xe691;" size="16px" />
 				</view>
 				<view class="nav-children" v-if="group.children">
 					<view
@@ -11,7 +12,7 @@
 						v-for="nav in group.children"
 						:key="nav.key"
 						:class="activeName === nav.key ? 'active' : ''"
-						@click="toView(nav.key)"
+						@click="toView(nav.key, group.lock)"
 					>
 						<view class="name">
 							{{ nav.title || nav.name }}
@@ -50,9 +51,7 @@
 						maxlength="6"
 						style="width: 120px"
 					/>
-					<button type="primary" style="width: 120px; height: 32px; line-height: 32px" @click="setComment">
-						提交
-					</button>
+					<button type="primary" style="width: 120px; height: 32px; line-height: 32px" @click="setComment">提交</button>
 				</view>
 				<view class="comment-list" v-show="commentList.length">
 					<view class="comment-item" v-for="item in commentList" :key="item.id">
@@ -69,6 +68,15 @@
 		</view>
 		<view class="pc-view">
 			<iframe class="view-iframe" :src="cmpIframeUrl" frameborder="0" />
+		</view>
+		<view class="popup-view" v-if="showPopup">
+			<view class="popup-content">
+				<input type="password" placeholder="请输入管理员密码" v-model="popupPwd" />
+				<view class="popup-btn">
+					<button size="mini" type="warn" @click="showPopup = false">取消</button>
+					<button size="mini" type="primary" @click="setAdminPwd">确定</button>
+				</view>
+			</view>
 		</view>
 	</view>
 </template>
@@ -99,6 +107,9 @@ export default {
 				content: '',
 			},
 			iframeUrl: '/mp/index/index',
+			adminLock: uni.getStorageSync('admin-lock'),
+			showPopup: false,
+			popupPwd: '',
 		};
 	},
 	computed: {
@@ -108,6 +119,9 @@ export default {
 		cmpImage() {
 			if (!this.commentParams.uuid) return '';
 			return `${config.BASE_URL}/api/wxcode?uuid=${this.commentParams.uuid}`;
+		},
+		cmpLock() {
+			return this.adminLock === 'true';
 		},
 	},
 	watch: {
@@ -149,6 +163,7 @@ export default {
 	onShow() {
 		const uuid = this.initUUID();
 		this.commentParams.uuid = uuid;
+		console.log(this.datas);
 	},
 	methods: {
 		initUUID() {
@@ -179,10 +194,26 @@ export default {
 				// #endif
 			});
 		},
-		toView(key) {
+		toView(key, lock) {
+			if (lock && !this.cmpLock) {
+				this.showPopup = true;
+				return;
+			}
 			this.activeName = key;
 			// 修改URL地址参数，不刷新当前页面
 			history.replaceState({}, '', `/pc/index/index?name=${key}`);
+		},
+		setAdminPwd() {
+			if (this.popupPwd === config.AdminPwd) {
+				uni.setStorageSync('admin-lock', 'true');
+				this.adminLock = 'true';
+				this.showPopup = false;
+				return;
+			}
+			uni.showToast({
+				title: '密码不正确',
+				icon: 'none',
+			});
 		},
 		async copy(btn) {
 			// #ifdef H5
@@ -455,6 +486,38 @@ export default {
 			width: 100%;
 			height: 100%;
 			border-radius: 0 0 20px 20px;
+		}
+	}
+
+	.popup-view {
+		position: fixed;
+		top: 0;
+		left: 0;
+		right: 0;
+		bottom: 0;
+		background-color: rgba(0, 0, 0, 0.5);
+		z-index: 99;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		.popup-content {
+			padding: 20px 30px;
+			background-color: #fff;
+			border-radius: 4px;
+			input {
+				height: 40px;
+				padding: 0 10px;
+				line-height: 40px;
+				border: 1px solid #ddd;
+			}
+			.popup-btn {
+				margin-top: 20px;
+				width: 100%;
+				text-align: right;
+				button + button {
+					margin-left: 10px;
+				}
+			}
 		}
 	}
 }

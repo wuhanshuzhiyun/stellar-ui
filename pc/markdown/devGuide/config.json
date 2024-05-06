@@ -1,4 +1,5 @@
 {
 	"group": "研发组",
-	"sort": 2
+	"sort": 2,
+	"lock": true
 }
