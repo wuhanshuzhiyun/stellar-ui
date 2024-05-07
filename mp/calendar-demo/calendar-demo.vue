@@ -4,8 +4,8 @@
 		<view class="content">
 			<view class="demo-item">
 				<view class="title">基础用法</view>
-				<view class="item-block">
-					<ste-calendar />
+				<view class="demo-code">
+					<ste-calendar defaultDate="2024-07-01" />
 				</view>
 			</view>
 		</view>
@@ -33,10 +33,9 @@ export default {
 .page {
 	.content {
 		.demo-item {
-			.item-block {
-				> view {
-					margin: 0 8px 8px 0;
-				}
+			.demo-code {
+				width: 100%;
+				height: 720rpx;
 			}
 		}
 	}
