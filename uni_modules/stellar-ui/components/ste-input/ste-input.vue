@@ -237,8 +237,13 @@ export default {
 			classStr += `ste-input-${this.shape} `;
 
 			if (this.rootClass) {
-				classStr += `${this.rootClass}`;
+				classStr += `${this.rootClass} `;
 			}
+
+			if (this.type == 'textarea') {
+				classStr += 'textarea-type ';
+			}
+
 			return classStr;
 		},
 		cmpRootStyle() {
@@ -332,7 +337,7 @@ export default {
 	.content {
 		display: flex;
 		align-items: center;
-		padding: 20rpx 24rpx;
+		padding: 0 24rpx;
 		.suffix-box,
 		.prefix-box {
 			display: flex;
@@ -366,7 +371,7 @@ export default {
 				border: none;
 				padding: 0;
 				margin: 0;
-				height: var(--input-font-size);
+				height: calc(var(--input-font-size) * 2.8);
 				width: 100%;
 
 				font-size: var(--input-font-size);
@@ -375,6 +380,8 @@ export default {
 				text-align: var(--input-text-align);
 
 				background-color: transparent;
+
+				// letter-spacing: 10rpx;
 
 				&.textarea {
 					height: 160rpx;
@@ -411,7 +418,7 @@ export default {
 		border-color: transparent;
 
 		.content {
-			padding: 20rpx 0;
+			padding: 0 0;
 		}
 
 		.line {
@@ -429,6 +436,12 @@ export default {
 		.content {
 			padding: 0;
 			height: 100%;
+		}
+	}
+
+	&.textarea-type {
+		.content {
+			padding: 20rpx 24rpx;
 		}
 	}
 }
