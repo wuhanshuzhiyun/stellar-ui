@@ -54,3 +54,8 @@ view {
 	background-repeat: no-repeat;
 	background-size: 100% 100%;
 }
+// #ifdef H5
+.disabled {
+	cursor: no-drop !important;
+}
+// #endif
