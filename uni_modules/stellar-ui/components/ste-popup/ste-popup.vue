@@ -103,7 +103,7 @@ export default {
 		// 弹窗z-index
 		zIndex: {
 			type: [Number, String],
-			default: 1000,
+			default: 998,
 		},
 	},
 	data() {
