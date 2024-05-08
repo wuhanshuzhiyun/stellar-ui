@@ -8,7 +8,7 @@
 		:animation="overlayAnimationData"
 	>
 		<view class="content" :class="position" :style="[cmpContentStyle]" :animation="animationData" @click.stop>
-			<template v-if="keepContent ? true : pageDisplay !== 'none'">
+			<template v-if="cmpShowContent">
 				<scroll-view style="width: 100%; height: 100%" v-if="height > 0" :scroll-y="true">
 					<slot name="default"></slot>
 				</scroll-view>
@@ -155,14 +155,28 @@ export default {
 
 			return style;
 		},
+		cmpShowContent() {
+			if (this.keepContent) {
+				return true;
+			} else {
+				if (this.show) {
+					return this.animationFinish;
+				} else {
+					// 隐藏时在动画结束后再返回真实值
+					if (this.animationFinish) {
+						return this.show;
+					} else {
+						return true;
+					}
+				}
+			}
+		},
 	},
 	watch: {
 		show: {
 			handler(newVal) {
 				if (newVal) {
 					this.beginAnimation();
-				} else {
-					this.endAnimation();
 				}
 			},
 		},
@@ -196,6 +210,7 @@ export default {
 			if (!next) {
 				await this.clickTask;
 			}
+			this.endAnimation();
 			this.$emit('update:show', false);
 			setTimeout(() => {
 				this.clickTask = null;
@@ -206,6 +221,7 @@ export default {
 		},
 		// 打开弹窗时的动画
 		async beginAnimation() {
+			this.animationFinish = false;
 			this.pageDisplay = 'flex';
 			this.contentOpacity = 1;
 			await utils.sleep(50);
@@ -224,8 +240,13 @@ export default {
 			}
 			this.overlayAnimationData = overlayAnimation.export();
 			this.animationData = animation.export();
+
+			setTimeout(() => {
+				this.animationFinish = true;
+			}, this.duration);
 		},
 		endAnimation() {
+			this.animationFinish = false;
 			let animation = uni.createAnimation(this.animationProp);
 			let overlayAnimation = uni.createAnimation(this.animationProp);
 			overlayAnimation.opacity(0).step();
@@ -244,6 +265,7 @@ export default {
 			setTimeout(() => {
 				this.contentOpacity = 0;
 				this.pageDisplay = 'none';
+				this.animationFinish = true;
 			}, this.duration);
 		},
 	},
