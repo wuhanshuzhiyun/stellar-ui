@@ -1,5 +1,5 @@
 <template>
-	<view class="ste-calendar-root" :style="[{ opacity: initing ? 0 : 1 }, cmpRootStyle]">
+	<view class="ste-calendar-root" :style="[cmpRootStyle]">
 		<view v-if="showTitle" class="calendar-title">{{ title }}</view>
 		<view class="week-head">
 			<view class="week-row">
@@ -171,7 +171,6 @@ export default {
 	},
 	data() {
 		return {
-			initing: true,
 			startDate: null,
 			endDate: null,
 			dataList: [],
@@ -217,19 +216,20 @@ export default {
 	},
 	methods: {
 		init() {
-			if (!this.cmpDates.monthDatas?.length) return (this.initing = false);
-			if (this.cmpDates.monthDatas[0].key === this.cmpDefaultMonth) return (this.initing = false);
-			this.initing = true;
-			setTimeout(async () => {
-				try {
-					const box = await utils.querySelector('.date-content', this);
-					const el = await utils.querySelector(`#month-${this.cmpDefaultMonth}`, this);
-					console.log(el, box);
-					this.contentScrollTop = el?.top - box?.top || 0;
-				} catch (e) {
-					//TODO handle the exception
+			if (!this.cmpDates.monthDatas?.length) return;
+			let height = 0;
+			for (let i = 0; i < this.cmpDates.monthDatas.length; i++) {
+				const month = this.cmpDates.monthDatas[i];
+				if (month.key === this.cmpDefaultMonth) {
+					break;
 				}
-				this.initing = false;
+				height += utils.formatPx(80, 'num');
+				height += utils.formatPx(126, 'num') * month.weeks.length;
+			}
+			if (!height) return;
+			setTimeout(() => {
+				this.contentScrollTop = height;
+				console.log(height);
 			}, 30);
 		},
 		onSelect(day) {
@@ -401,6 +401,7 @@ export default {
 				&.active {
 					&.range {
 						background-color: var(--calendar-range-color);
+						color: var(--calendar-color);
 					}
 					&.start,
 					&.end {
