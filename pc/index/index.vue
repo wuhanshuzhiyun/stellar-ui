@@ -51,7 +51,9 @@
 						maxlength="6"
 						style="width: 120px"
 					/>
-					<button type="primary" style="width: 120px; height: 32px; line-height: 32px" @click="setComment">提交</button>
+					<button type="primary" style="width: 120px; height: 32px; line-height: 32px" @click="setComment">
+						提交
+					</button>
 				</view>
 				<view class="comment-list" v-show="commentList.length">
 					<view class="comment-item" v-for="item in commentList" :key="item.id">
@@ -110,6 +112,7 @@ export default {
 			adminLock: uni.getStorageSync('admin-lock'),
 			showPopup: false,
 			popupPwd: '',
+			key: '',
 		};
 	},
 	computed: {
@@ -197,6 +200,7 @@ export default {
 		toView(key, lock) {
 			if (lock && !this.cmpLock) {
 				this.showPopup = true;
+				this.key = key;
 				return;
 			}
 			this.activeName = key;
@@ -208,6 +212,9 @@ export default {
 				uni.setStorageSync('admin-lock', 'true');
 				this.adminLock = 'true';
 				this.showPopup = false;
+				this.activeName = this.key;
+				// 修改URL地址参数，不刷新当前页面
+				history.replaceState({}, '', `/pc/index/index?name=${this.key}`);
 				return;
 			}
 			uni.showToast({
