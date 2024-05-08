@@ -65,7 +65,17 @@ export function getCalendarData(minDate, maxDate, formatter = 'YYYY-MM-DD') {
 				} else {
 					_day = day++;
 				}
-				week.push({ dayText: _day, key: _day ? dayjs(`${monthData.key}-${_day}`).format(formatter) : Math.random() });
+				const key = _day ? dayjs(`${monthData.key}-${_day}`).format(formatter) : Math.random();
+				let disabled = !_day;
+				if (_day) {
+					disabled = (minDate && key < minDate) || (maxDate && key > maxDate);
+				}
+				week.push({
+					dayText: _day,
+					key,
+					disabled,
+					weekend: d === 0 || d === 6,
+				});
 			}
 			monthData.weeks.push(week);
 		}
@@ -78,6 +88,7 @@ export function getCalendarData(minDate, maxDate, formatter = 'YYYY-MM-DD') {
  * 格式化时间
  * @param {Object} date
  * @param {Object} formatter
+ * @returns {String}
  */
 export function formatDate(date, formatter = 'YYYY-MM-DD') {
 	return dayjs(date).format('YYYY-MM-DD');
