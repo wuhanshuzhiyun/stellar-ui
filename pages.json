@@ -13,6 +13,7 @@
 				}
 			}
 		},
+		// #ifdef H5
 		{
 			"path": "pages/404/404",
 			"name": "404",
@@ -39,6 +40,16 @@
 				}
 			}
 		},
+		{
+			"path": "pc/index/index",
+			"style": {
+				"navigationBarTitleText": "Stellar UI",
+				"h5": {
+					"titleNView": false
+				}
+			}
+		},
+		// #endif
 		// #ifdef MP-WEIXIN
 		{
 			"path": "pages/code/code",
@@ -54,15 +65,6 @@
 			}
 		},
 		// #endif
-		{
-			"path": "pc/index/index",
-			"style": {
-				"navigationBarTitleText": "Stellar UI",
-				"h5": {
-					"titleNView": false
-				}
-			}
-		},
 		{
 			"path": "mp/index/index",
 			"style": {
