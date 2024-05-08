@@ -184,7 +184,7 @@ export default {
 				'--calendar-height': utils.formatPx(this.height),
 				'--calendar-color': this.color,
 				'--calendar-bg-color': utils.Color.formatColor(this.color, 0.1),
-				'--calendar-range-color': utils.Color.formatColor(this.color, 0.6),
+				'--calendar-range-color': utils.Color.formatColor(this.color, 0.2),
 				'--calendar-disabled-color': utils.Color.formatColor(this.color, 0.3),
 				'--calendar-start-text': `"${this.startText}"`,
 				'--calendar-end-text': `"${this.endText}"`,
@@ -398,16 +398,11 @@ export default {
 					background-color: var(--calendar-color);
 					color: #fff;
 				}
-				&.active {
-					&.range {
-						background-color: var(--calendar-range-color);
-						color: var(--calendar-color);
-					}
-					&.start,
-					&.end {
-						background-color: var(--calendar-color);
-					}
+				&.active.range:not(.start):not(.end) {
+					background-color: var(--calendar-range-color);
+					color: var(--calendar-color);
 				}
+
 				&.start {
 					.day-head::before {
 						content: '';
