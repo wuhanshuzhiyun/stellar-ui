@@ -74,6 +74,7 @@ export function getCalendarData(minDate, maxDate, formatter = 'YYYY-MM-DD') {
 					dayText: _day,
 					key,
 					disabled,
+					weekend: d === 0 || d === 6,
 				});
 			}
 			monthData.weeks.push(week);

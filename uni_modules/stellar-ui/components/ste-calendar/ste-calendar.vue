@@ -24,6 +24,7 @@
 						:key="d.key"
 						@click="onSelect(d)"
 						:class="{
+							weekend: d.weekend,
 							range: mode === 'range',
 							active: dataList.indexOf(d.key) >= 0,
 							start: startDate === d.key,
@@ -202,6 +203,7 @@ export default {
 				if (this.mode === 'range' && this.dataList.length >= 2) {
 					this.startDate = this.dataList[0];
 					this.endDate = this.dataList[this.dataList.length - 1];
+					this.this.rangeDates();
 				}
 			},
 			immediate: true,
@@ -266,29 +268,31 @@ export default {
 				this.startDate = day.key;
 				this.endDate = null;
 			}
-			if (this.startDate && this.endDate) {
-				const start = formatDate(this.startDate);
-				const end = formatDate(this.endDate);
-				let list = [];
-				for (let i = new Date(start); i <= new Date(end); i.setDate(i.getDate() + 1)) {
-					list.push(formatDate(i, this.formatter));
-				}
-				if (list.length < 2) {
-					list = [this.startDate, this.endDate];
-				}
-				if (this.maxRange !== null && list.length > this.maxRange) {
-					this.endDate = null;
-					if (this.showRangePrompt) {
-						uni.showModal({
-							title: '提示',
-							content: this.rangePrompt ? this.rangePrompt : `选择天数不能超过${this.maxRange}天`,
-							showCancel: false,
-						});
-					}
-					return;
-				}
-				this.dataList = list;
+			this.rangeDates();
+		},
+		rangeDates() {
+			if (!this.startDate || !this.endDate) return;
+			const start = formatDate(this.startDate);
+			const end = formatDate(this.endDate);
+			let list = [];
+			for (let i = new Date(start); i <= new Date(end); i.setDate(i.getDate() + 1)) {
+				list.push(formatDate(i, this.formatter));
 			}
+			if (list.length < 2) {
+				list = [this.startDate, this.endDate];
+			}
+			if (this.maxRange !== null && list.length > this.maxRange) {
+				this.endDate = null;
+				if (this.showRangePrompt) {
+					uni.showModal({
+						title: '提示',
+						content: this.rangePrompt ? this.rangePrompt : `选择天数不能超过${this.maxRange}天`,
+						showCancel: false,
+					});
+				}
+				return;
+			}
+			this.dataList = list;
 		},
 		confirm() {
 			this.$emit('confirm', this.dataList);
@@ -383,6 +387,10 @@ export default {
 				// #ifdef H5
 				cursor: pointer;
 				// #endif
+
+				&.weekend {
+					color: var(--calendar-color);
+				}
 
 				&.active,
 				&.start,
