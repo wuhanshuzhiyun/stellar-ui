@@ -65,7 +65,7 @@ import utils from '../../utils/utils.js';
  * @property {String} color 主题颜色（选中日期的背景和确定按钮的颜色）
  * @property {String | Number | Date} minDate 最小可选日期
  * @property {String | Number | Date} maxDate 最大可选日期
- * @property {String | Number | Date} defaultDate 默认展示的日期
+ * @property {String | Number | Date} defaultMonth 默认展示的月份
  * @property {String | Number} maxCount mode=multiple时，最多可选多少个日期
  * @property {String} formatter 日期格式化(默认'YYYY-MM-DD')
  * @property {Boolean} showMark 是否显示月份背景色
@@ -79,6 +79,9 @@ import utils from '../../utils/utils.js';
  * @event {Function} select 点击/选择后触发
  */
 export default {
+	group: '表单组件',
+	title: 'Calendar 日历',
+	name: 'ste-calendar',
 	props: {
 		title: {
 			type: String,
@@ -117,8 +120,8 @@ export default {
 			type: [String, Number, Date],
 			default: () => 0,
 		},
-		defaultDate: {
-			type: [Number, String],
+		defaultMonth: {
+			type: [Number, String, Date],
 			default: () => 0,
 		},
 		maxCount: {
@@ -178,8 +181,8 @@ export default {
 	computed: {
 		cmpRootStyle() {
 			const style = {
-				'--calendar-width': this.width,
-				'--calendar-height': this.height,
+				'--calendar-width': utils.formatPx(this.width),
+				'--calendar-height': utils.formatPx(this.height),
 				'--calendar-color': this.color,
 				'--calendar-bg-color': utils.Color.formatColor(this.color, 0.1),
 				'--calendar-range-color': utils.Color.formatColor(this.color, 0.6),
@@ -192,8 +195,8 @@ export default {
 		cmpDates() {
 			return getCalendarData(this.minDate, this.maxDate, this.formatter);
 		},
-		cmpDefaultShow() {
-			return this.defaultDate ? dayjs(this.defaultDate).format('YYYY-MM') : dayjs().format('YYYY-MM');
+		cmpDefaultMonth() {
+			return this.defaultMonth ? dayjs(this.defaultMonth).format('YYYY-MM') : dayjs().format('YYYY-MM');
 		},
 	},
 	watch: {
@@ -214,23 +217,20 @@ export default {
 	},
 	methods: {
 		init() {
-			console.log(this.cmpDates.monthDatas);
-			if (!this.cmpDates.monthDatas?.length) return;
-			if (this.cmpDates.monthDatas[0].key !== this.cmpDefaultShow) {
-				this.initing = true;
-				setTimeout(async () => {
-					try {
-						const box = await utils.querySelector('.date-content', this);
-						const el = await utils.querySelector(`#month-${this.cmpDefaultShow}`, this);
-						this.contentScrollTop = el?.top - box?.top || 0;
-					} catch (e) {
-						//TODO handle the exception
-					}
-					this.initing = false;
-				}, 30);
-			} else {
+			if (!this.cmpDates.monthDatas?.length) return (this.initing = false);
+			if (this.cmpDates.monthDatas[0].key === this.cmpDefaultMonth) return (this.initing = false);
+			this.initing = true;
+			setTimeout(async () => {
+				try {
+					const box = await utils.querySelector('.date-content', this);
+					const el = await utils.querySelector(`#month-${this.cmpDefaultMonth}`, this);
+					console.log(el, box);
+					this.contentScrollTop = el?.top - box?.top || 0;
+				} catch (e) {
+					//TODO handle the exception
+				}
 				this.initing = false;
-			}
+			}, 30);
 		},
 		onSelect(day) {
 			if (!day.dayText) return;

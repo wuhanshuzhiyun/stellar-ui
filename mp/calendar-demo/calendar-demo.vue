@@ -71,10 +71,40 @@
 						</ste-popup>
 					</view>
 					<view class="demo-code">
-						<ste-button @click="show7 = true">默认日期</ste-button>
+						<ste-button @click="show7 = true">多选数量限制</ste-button>
 						<ste-popup :show.sync="show7" position="bottom">
 							<div style="padding-bottom: 20px">
+								<ste-calendar height="60vh" mode="multiple" :maxCount="5" @confirm="handleConfirm" />
+							</div>
+						</ste-popup>
+					</view>
+					<view class="demo-code">
+						<ste-button @click="show7 = true">范围数量限制</ste-button>
+						<ste-popup :show.sync="show7" position="bottom">
+							<div style="padding-bottom: 20px">
+								<ste-calendar height="60vh" mode="range" :maxRange="5" @confirm="handleConfirm" />
+							</div>
+						</ste-popup>
+					</view>
+					<view class="demo-code">
+						<ste-button @click="show8 = true">默认日期</ste-button>
+						<ste-popup :show.sync="show8" position="bottom">
+							<div style="padding-bottom: 20px">
 								<ste-calendar height="60vh" :list="[Date.now()]" @confirm="handleConfirm" />
+							</div>
+						</ste-popup>
+					</view>
+					<view class="demo-code">
+						<ste-button @click="show9 = true">默认展示月份</ste-button>
+						<ste-popup :show.sync="show9" position="bottom">
+							<div style="padding-bottom: 20px">
+								<ste-calendar
+									height="60vh"
+									minDate="2024-05-20"
+									maxDate="2024-12-01"
+									defaultMonth="2024-07"
+									@confirm="handleConfirm"
+								/>
 							</div>
 						</ste-popup>
 					</view>
@@ -94,6 +124,8 @@ export default {
 			show5: false,
 			show6: false,
 			show7: false,
+			show8: false,
+			show9: false,
 		};
 	},
 	created() {},
