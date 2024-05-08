@@ -1,7 +1,7 @@
 <template>
-	<div class="ste-checkbox-group-root" :style="[cmpStyle]">
+	<view class="ste-checkbox-group-root" :style="[cmpStyle]">
 		<slot></slot>
-	</div>
+	</view>
 </template>
 
 <script>

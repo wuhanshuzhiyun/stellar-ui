@@ -13,9 +13,9 @@
 				</view>
 			</slot>
 		</view>
-		<div class="text">
+		<view class="text">
 			<slot :slotProps="cmpSlotProps"></slot>
-		</div>
+		</view>
 	</view>
 </template>
 
