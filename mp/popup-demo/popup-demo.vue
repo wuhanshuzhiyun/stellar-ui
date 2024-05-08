@@ -119,7 +119,7 @@
 			<view class="popup-content">偏移</view>
 		</ste-popup>
 		<!-- 动画执行时间 -->
-		<ste-popup :show.sync="durationShow" width="300" height="300" :duration="800">
+		<ste-popup :show.sync="durationShow" width="300" height="300" :duration="800" :keepContent="false">
 			<view class="popup-content">动画执行时间</view>
 		</ste-popup>
 		<!-- 异步关闭 -->

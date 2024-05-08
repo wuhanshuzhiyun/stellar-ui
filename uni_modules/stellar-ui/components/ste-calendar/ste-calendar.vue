@@ -1,5 +1,5 @@
 <template>
-	<view class="ste-calendar-root" :style="[{ opacity: initing ? 0 : 1 }, cmpRootStyle]">
+	<view class="ste-calendar-root" :style="[cmpRootStyle]">
 		<view v-if="showTitle" class="calendar-title">{{ title }}</view>
 		<view class="week-head">
 			<view class="week-row">
@@ -65,7 +65,7 @@ import utils from '../../utils/utils.js';
  * @property {String} color 主题颜色（选中日期的背景和确定按钮的颜色）
  * @property {String | Number | Date} minDate 最小可选日期
  * @property {String | Number | Date} maxDate 最大可选日期
- * @property {String | Number | Date} defaultDate 默认展示的日期
+ * @property {String | Number | Date} defaultMonth 默认展示的月份
  * @property {String | Number} maxCount mode=multiple时，最多可选多少个日期
  * @property {String} formatter 日期格式化(默认'YYYY-MM-DD')
  * @property {Boolean} showMark 是否显示月份背景色
@@ -79,6 +79,9 @@ import utils from '../../utils/utils.js';
  * @event {Function} select 点击/选择后触发
  */
 export default {
+	group: '表单组件',
+	title: 'Calendar 日历',
+	name: 'ste-calendar',
 	props: {
 		title: {
 			type: String,
@@ -117,8 +120,8 @@ export default {
 			type: [String, Number, Date],
 			default: () => 0,
 		},
-		defaultDate: {
-			type: [Number, String],
+		defaultMonth: {
+			type: [Number, String, Date],
 			default: () => 0,
 		},
 		maxCount: {
@@ -168,7 +171,6 @@ export default {
 	},
 	data() {
 		return {
-			initing: true,
 			startDate: null,
 			endDate: null,
 			dataList: [],
@@ -178,11 +180,11 @@ export default {
 	computed: {
 		cmpRootStyle() {
 			const style = {
-				'--calendar-width': this.width,
-				'--calendar-height': this.height,
+				'--calendar-width': utils.formatPx(this.width),
+				'--calendar-height': utils.formatPx(this.height),
 				'--calendar-color': this.color,
 				'--calendar-bg-color': utils.Color.formatColor(this.color, 0.1),
-				'--calendar-range-color': utils.Color.formatColor(this.color, 0.6),
+				'--calendar-range-color': utils.Color.formatColor(this.color, 0.2),
 				'--calendar-disabled-color': utils.Color.formatColor(this.color, 0.3),
 				'--calendar-start-text': `"${this.startText}"`,
 				'--calendar-end-text': `"${this.endText}"`,
@@ -192,8 +194,8 @@ export default {
 		cmpDates() {
 			return getCalendarData(this.minDate, this.maxDate, this.formatter);
 		},
-		cmpDefaultShow() {
-			return this.defaultDate ? dayjs(this.defaultDate).format('YYYY-MM') : dayjs().format('YYYY-MM');
+		cmpDefaultMonth() {
+			return this.defaultMonth ? dayjs(this.defaultMonth).format('YYYY-MM') : dayjs().format('YYYY-MM');
 		},
 	},
 	watch: {
@@ -214,23 +216,21 @@ export default {
 	},
 	methods: {
 		init() {
-			console.log(this.cmpDates.monthDatas);
 			if (!this.cmpDates.monthDatas?.length) return;
-			if (this.cmpDates.monthDatas[0].key !== this.cmpDefaultShow) {
-				this.initing = true;
-				setTimeout(async () => {
-					try {
-						const box = await utils.querySelector('.date-content', this);
-						const el = await utils.querySelector(`#month-${this.cmpDefaultShow}`, this);
-						this.contentScrollTop = el?.top - box?.top || 0;
-					} catch (e) {
-						//TODO handle the exception
-					}
-					this.initing = false;
-				}, 30);
-			} else {
-				this.initing = false;
+			let height = 0;
+			for (let i = 0; i < this.cmpDates.monthDatas.length; i++) {
+				const month = this.cmpDates.monthDatas[i];
+				if (month.key === this.cmpDefaultMonth) {
+					break;
+				}
+				height += utils.formatPx(80, 'num');
+				height += utils.formatPx(126, 'num') * month.weeks.length;
 			}
+			if (!height) return;
+			setTimeout(() => {
+				this.contentScrollTop = height;
+				console.log(height);
+			}, 30);
 		},
 		onSelect(day) {
 			if (!day.dayText) return;
@@ -398,15 +398,11 @@ export default {
 					background-color: var(--calendar-color);
 					color: #fff;
 				}
-				&.active {
-					&.range {
-						background-color: var(--calendar-range-color);
-					}
-					&.start,
-					&.end {
-						background-color: var(--calendar-color);
-					}
+				&.active.range:not(.start):not(.end) {
+					background-color: var(--calendar-range-color);
+					color: var(--calendar-color);
 				}
+
 				&.start {
 					.day-head::before {
 						content: '';

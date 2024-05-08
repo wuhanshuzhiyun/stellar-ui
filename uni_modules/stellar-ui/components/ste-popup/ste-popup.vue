@@ -8,10 +8,12 @@
 		:animation="overlayAnimationData"
 	>
 		<view class="content" :class="position" :style="[cmpContentStyle]" :animation="animationData" @click.stop>
-			<scroll-view style="width: 100%; height: 100%" v-if="height > 0" :scroll-y="true">
-				<slot name="default"></slot>
-			</scroll-view>
-			<slot v-else name="default"></slot>
+			<template v-if="keepContent ? true : pageDisplay !== 'none'">
+				<scroll-view style="width: 100%; height: 100%" v-if="height > 0" :scroll-y="true">
+					<slot name="default"></slot>
+				</scroll-view>
+				<slot v-else name="default"></slot>
+			</template>
 			<view class="close-icon-box" @click="close" v-if="showClose">
 				<ste-icon code="&#xe6a0;" size="40"></ste-icon>
 			</view>
@@ -42,6 +44,7 @@ const DEFAULT_BORDER_RADIUS = 32;
  * @property {Number|String} offsetY 根据弹出位置，设置Y轴偏移量，单位px 默认 0
  * @property {Number} duration 动画持续时间，单位ms
  * @property {Number} zIndex 弹窗层级z-index
+ * @property {Boolean} keepContent 隐藏后是否不销毁弹窗内容元素 默认 true
  * @event {Function} close 关闭事件
  * @event {Function} maskClick 遮罩点击事件
  **/
@@ -103,7 +106,11 @@ export default {
 		// 弹窗z-index
 		zIndex: {
 			type: [Number, String],
-			default: 1000,
+			default: 998,
+		},
+		keepContent: {
+			type: Boolean,
+			default: true,
 		},
 	},
 	data() {
