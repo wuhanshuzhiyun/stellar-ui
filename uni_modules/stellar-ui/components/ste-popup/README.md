@@ -123,6 +123,7 @@ export default {
 | `offsetY`		| 根据弹出位置，设置Y轴偏移量，单位px			| `Number/String`	| `0`		| -								| -			|
 | `duration`	| 动画持续时间								| `Number`			| `200`		| -								| -			|
 | `zIndex`		| 弹窗层级z-index							| `Number`			| `1000`	| -								| -			|
+| `keepContent`	| 隐藏后是否不销毁弹窗内容元素				| `Boolean`			| `true`	| -								| `v1.10.1`	|
 
 #### 组件事件(Events)
 
