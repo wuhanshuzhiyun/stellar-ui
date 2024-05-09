@@ -1,7 +1,12 @@
 <template>
 	<view class="ste-switch-root" :style="[cmpStyle]" @click="click">
 		<view class="switch-node" :style="[cmpNodeStyle]">
-			<view v-if="loading" class="switch-loading" :style="[cmpLoadingStyle]"></view>
+			<ste-loading
+				v-if="loading"
+				:type="2"
+				:color="value ? activeColor : inactiveColor"
+				:size="size / 2"
+			></ste-loading>
 		</view>
 	</view>
 </template>
@@ -93,11 +98,6 @@ export default {
 			}
 			return style;
 		},
-		cmpLoadingStyle() {
-			let style = {};
-			style['borderColor'] = '#eeeeee '.repeat(3) + (this.value ? this.activeColor : this.inactiveColor);
-			return style;
-		},
 	},
 	methods: {
 		async click() {
@@ -135,22 +135,6 @@ export default {
 		display: inline-flex;
 		justify-content: center;
 		align-items: center;
-
-		.switch-loading {
-			width: 50%;
-			height: 50%;
-			border: 3rpx solid;
-			border-radius: 50%;
-			animation: ste-rotate 1s linear infinite;
-		}
-	}
-	@keyframes ste-rotate {
-		0% {
-			transform: rotate(0);
-		}
-		100% {
-			transform: rotate(1turn);
-		}
 	}
 }
 </style>

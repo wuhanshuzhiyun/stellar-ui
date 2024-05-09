@@ -12,7 +12,7 @@
 				<view></view>
 			</block>
 		</view>
-		<view class="text" :style="[cmpText]">
+		<view v-if="$slots.default" class="text" :style="[cmpText]">
 			<slot></slot>
 		</view>
 	</view>
@@ -72,11 +72,6 @@ export default {
 		cmpStyle() {
 			let style = {};
 			style['flexDirection'] = this.vertical ? 'column' : 'row';
-			if (this.vertical) {
-				style['rowGap'] = utils.formatPx(16);
-			} else {
-				style['columnGap'] = utils.formatPx(16);
-			}
 			return style;
 		},
 		cmpLoadinStyle() {
@@ -100,6 +95,7 @@ export default {
 			let style = {};
 			style['color'] = this.textColor ? this.textColor : this.color;
 			style['fontSize'] = utils.formatPx(this.textSize);
+			style['margin'] = this.vertical ? '16rpx 0 0 0 ' : '0 0 0 16rpx';
 			return style;
 		},
 	},
