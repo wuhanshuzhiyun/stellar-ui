@@ -326,6 +326,62 @@ let utils = {
 		}
 		return str;
 	},
+	/**
+	 * 替换html默认样式
+	 * @html 要替换的文本
+	 * @tag 标签名
+	 * @checkProperties 检测的样式属性，如果存在该属性，则不添加样式，支持字符串和数组
+	 * @replaceProperty 替换后的样式属性值
+	 */
+	richTextTagAddStyle(html, tag, checkProperties, replaceProperty) {
+		// 如果checkProperties为字符串，转成字符串数组
+		if (Object.prototype.toString.call(checkProperties) === '[object String]') {
+			checkProperties = [checkProperties];
+		}
+		// 构建正则表达式模式
+		var pattern = new RegExp(`<${tag}\\b((?:[^>]*\\s+)?style="[^"]*")?[^>]*>`, 'gi');
+
+		// 查找匹配的标签
+		var matches = html.match(pattern);
+		// 遍历匹配的标签并替换属性样式
+		if (matches) {
+			for (var i = 0; i < matches.length; i++) {
+				var match = matches[i];
+				var styleMatch = match.match(/style="([^"]+)"/i); // 提取标签中的style属性
+
+				if (styleMatch) {
+					var styleValue = styleMatch[1];
+					var styleProperties = styleValue.split(';');
+
+					// 检查样式属性是否符合要求
+					var hasMatchingProperty = false;
+					for (var j = 0; j < styleProperties.length; j++) {
+						var styleProperty = styleProperties[j].trim();
+
+						// 检查属性名是否完全匹配
+						var attributeName = styleProperty.split(':')[0].trim();
+						if (checkProperties.includes(attributeName)) {
+							hasMatchingProperty = true;
+							break;
+						}
+					}
+
+					// 如果标签匹配且样式属性不符合要求，则替换或添加指定属性的样式
+					if (!hasMatchingProperty) {
+						var replacedMatch = match.replace(/(style="[^"]*)(")/, `$1${replaceProperty}"`);
+						html = html.replace(match, replacedMatch);
+					}
+				} else {
+					// 如果标签中没有样式属性，则添加指定属性的样式
+					var replacedMatch = match.replace('>', ` style="${replaceProperty}">`);
+					html = html.replace(match, replacedMatch);
+				}
+			}
+		}
+
+		// 返回替换后的HTML文本
+		return html;
+	},
 };
 
 export default utils;

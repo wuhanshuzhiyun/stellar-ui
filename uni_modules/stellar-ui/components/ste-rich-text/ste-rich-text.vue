@@ -10,7 +10,7 @@
 	</view>
 </template>
 <script>
-import utils from '@/common/utils.js';
+import utils from '../../utils/utils.js';
 
 /**
  * ste-rich-text 按钮
