@@ -1,5 +1,5 @@
 <template>
-	<view class="ste-calendar-root" :style="[cmpRootStyle]">
+	<view class="ste-calendar-root" :style="[cmpRootStyle, { opacity: initing ? 0 : 1 }]">
 		<view v-if="showTitle" class="calendar-title">{{ title }}</view>
 		<view class="week-head">
 			<view class="week-row">
@@ -171,6 +171,7 @@ export default {
 	},
 	data() {
 		return {
+			initing: true,
 			startDate: null,
 			endDate: null,
 			dataList: [],
@@ -194,9 +195,6 @@ export default {
 		cmpDates() {
 			return getCalendarData(this.minDate, this.maxDate, this.formatter);
 		},
-		cmpDefaultMonth() {
-			return this.defaultMonth ? dayjs(this.defaultMonth).format('YYYY-MM') : dayjs().format('YYYY-MM');
-		},
 	},
 	watch: {
 		list: {
@@ -212,25 +210,31 @@ export default {
 		},
 	},
 	mounted() {
-		this.init();
+		this.showMonth();
 	},
 	methods: {
-		init() {
-			if (!this.cmpDates.monthDatas?.length) return;
+		showMonth(date = this.defaultMonth) {
+			const showDate = date ? dayjs(date).format('YYYY-MM') : null;
+			if (!showDate) return (this.initing = false);
+			if (!this.cmpDates.monthDatas?.length) return (this.initing = false);
 			let height = 0;
+			let show = false;
 			for (let i = 0; i < this.cmpDates.monthDatas.length; i++) {
 				const month = this.cmpDates.monthDatas[i];
-				if (month.key === this.cmpDefaultMonth) {
+				if (month.key === showDate) {
+					show = true;
 					break;
 				}
 				height += utils.formatPx(80, 'num');
 				height += utils.formatPx(126, 'num') * month.weeks.length;
 			}
-			if (!height) return;
+			if (!height || !show) return (this.initing = false);
+			this.contentScrollTop = 0;
 			setTimeout(() => {
+				console.log('contentScrollTop-->', height);
 				this.contentScrollTop = height;
-				console.log(height);
-			}, 30);
+				this.initing = false;
+			}, 25);
 		},
 		onSelect(day) {
 			if (!day.dayText) return;
