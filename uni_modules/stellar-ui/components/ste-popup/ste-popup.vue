@@ -115,7 +115,7 @@ export default {
 	},
 	data() {
 		return {
-			animationFinish: false, // 动画是否完成
+			animationFinish: true, // 动画是否完成
 			pageDisplay: 'none',
 			contentOpacity: 0,
 			animationData: null,
