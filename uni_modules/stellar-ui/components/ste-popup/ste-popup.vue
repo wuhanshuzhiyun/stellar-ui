@@ -45,7 +45,8 @@ const DEFAULT_BORDER_RADIUS = 32;
  * @property {Number} duration 动画持续时间，单位ms
  * @property {Number} zIndex 弹窗层级z-index
  * @property {Boolean} keepContent 隐藏后是否不销毁弹窗内容元素 默认 true
- * @event {Function} close 关闭事件
+ * @event {Function} close 弹窗关闭动画执行完毕事件
+ * @event {Function} open 弹窗打开动画执行完毕事件
  * @event {Function} maskClick 遮罩点击事件
  **/
 export default {
@@ -243,6 +244,7 @@ export default {
 
 			setTimeout(() => {
 				this.animationFinish = true;
+				this.$emit('open-after');
 			}, this.duration);
 		},
 		endAnimation() {
