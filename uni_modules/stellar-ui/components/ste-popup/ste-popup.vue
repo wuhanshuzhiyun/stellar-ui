@@ -201,21 +201,21 @@ export default {
 			let next = true;
 			this.allowStopStatus = false;
 			this.clickTask = new Promise((resolve, reject) => {
-				this.endAnimation();
-				this.$emit('update:show', false);
-				setTimeout(() => {
-					this.clickTask = null;
-					this.$emit(
-						'close',
-						() => (next = false),
-						() => resolve(),
-						() => reject()
-					);
-				}, this.duration);
+				this.$emit(
+					'close',
+					() => (next = false),
+					() => resolve(),
+					() => reject()
+				);
 			});
 			if (!next) {
 				await this.clickTask;
 			}
+			this.endAnimation();
+			this.$emit('update:show', false);
+			setTimeout(() => {
+				this.clickTask = null;
+			}, this.duration);
 		},
 		allowStop() {
 			this.allowStopStatus = true;
@@ -244,7 +244,7 @@ export default {
 
 			setTimeout(() => {
 				this.animationFinish = true;
-				this.$emit('open');
+				this.$emit('open-after');
 			}, this.duration);
 		},
 		endAnimation() {
