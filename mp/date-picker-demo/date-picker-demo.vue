@@ -72,6 +72,22 @@
 					</view>
 				</view>
 			</view>
+			<view class="demo-item">
+				<view class="title">选项高度</view>
+				<view class="item-block">
+					<view>
+						<ste-date-picker mode="date" itemHeight="50"></ste-date-picker>
+					</view>
+				</view>
+			</view>
+			<view class="demo-item">
+				<view class="title">每列可见数量</view>
+				<view class="item-block">
+					<view>
+						<ste-date-picker mode="date" :visibleItemCount="10"></ste-date-picker>
+					</view>
+				</view>
+			</view>
 		</view>
 	</view>
 </template>
