@@ -67,34 +67,50 @@
 						</ste-popup>
 					</view>
 					<view class="demo-code">
-						<ste-button @click="show7 = true">范围数量限制</ste-button>
-						<ste-popup :show.sync="show7" height="60vh" position="bottom">
+						<ste-button @click="show8 = true">范围数量限制</ste-button>
+						<ste-popup :show.sync="show8" height="60vh" position="bottom">
 							<div style="padding-bottom: 20px; height: 100%">
 								<ste-calendar mode="range" :maxRange="5" @confirm="handleConfirm" />
 							</div>
 						</ste-popup>
 					</view>
 					<view class="demo-code">
-						<ste-button @click="show8 = true">默认选择日期</ste-button>
-						<ste-popup :show.sync="show8" height="60vh" position="bottom">
+						<ste-button @click="show9 = true">默认选择日期</ste-button>
+						<ste-popup :show.sync="show9" height="60vh" position="bottom">
 							<div style="padding-bottom: 20px; height: 100%">
 								<ste-calendar :list="[Date.now()]" @confirm="handleConfirm" />
 							</div>
 						</ste-popup>
 					</view>
 					<view class="demo-code">
-						<ste-button @click="show9 = true">默认展示月份</ste-button>
-						<ste-popup :show.sync="show9" position="bottom" height="60vh" @open-after="setViewMonth">
+						<ste-button @click="show10 = true">默认展示月份</ste-button>
+						<ste-popup :show.sync="show10" position="bottom" height="60vh" @open-after="setViewMonth">
 							<div style="padding-bottom: 20px; height: 100%">
-								<ste-calendar ref="defaultMonth" minDate="2024-05-20" maxDate="2024-12-01" @confirm="handleConfirm" />
+								<ste-calendar ref="defaultMonth" minDate="2024-05-20" maxDate="2024-08-01" @confirm="handleConfirm" />
 							</div>
 						</ste-popup>
 					</view>
 					<view class="demo-code">
-						<ste-button @click="show10 = true">隐藏确定按钮</ste-button>
-						<ste-popup :show.sync="show10" position="bottom" height="60vh">
+						<ste-button @click="show11 = true">隐藏确定按钮</ste-button>
+						<ste-popup :show.sync="show11" position="bottom" height="60vh">
 							<div style="padding-bottom: 20px; height: 100%">
-								<ste-calendar minDate="2024-05-20" maxDate="2024-12-01" @select="handleConfirm" :showConfirm="false" />
+								<ste-calendar minDate="2024-05-20" maxDate="2024-08-01" @select="handleConfirm" :showConfirm="false" />
+							</div>
+						</ste-popup>
+					</view>
+					<view class="demo-code">
+						<ste-button @click="show12 = true">只读</ste-button>
+						<ste-popup :show.sync="show12" position="bottom" height="60vh">
+							<div style="padding-bottom: 20px; height: 100%">
+								<ste-calendar minDate="2024-05-20" maxDate="2024-06-10" readonly :list="['2024-05-21']" />
+							</div>
+						</ste-popup>
+					</view>
+					<view class="demo-code">
+						<ste-button @click="show13 = true">隐藏背景月份</ste-button>
+						<ste-popup :show.sync="show13" position="bottom" height="60vh">
+							<div style="padding-bottom: 20px; height: 100%">
+								<ste-calendar :showMark="false" @select="handleConfirm" />
 							</div>
 						</ste-popup>
 					</view>
@@ -117,6 +133,9 @@ export default {
 			show8: false,
 			show9: false,
 			show10: false,
+			show11: false,
+			show12: false,
+			show13: false,
 		};
 	},
 	created() {},
