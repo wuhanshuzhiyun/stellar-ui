@@ -9,7 +9,10 @@
 		:confirmColor="confirmColor"
 		:visibleItemCount="visibleItemCount"
 		:defaultIndex="innerDefaultIndex"
+		:itemHeight="itemHeight"
 		@change="change"
+		@cancel="cancel"
+		@confirm="confirm"
 	></ste-picker>
 </template>
 
@@ -17,31 +20,23 @@
 import utils from '../../utils/utils.js';
 import dayjs from '../../utils/dayjs.min.js';
 /**
- * ste-datetime 时间日期选择器
+ * ste-date-picker 时间日期选择器
  * @description 此选择器用于时间日期
- * @tutorial https://stellar-ui.intecloud.com.cn/pc/index/index?name=ste-datetime
- * @property {Boolean}			showToolbar			是否显示顶部的操作栏  ( 默认 true )
+ * @tutorial https://stellar-ui.intecloud.com.cn/pc/index/index?name=ste-date-picker
  * @property {String | Number}	value				绑定值
+ * @property {Boolean}			showToolbar			是否显示顶部的操作栏  ( 默认 true )
  * @property {String}			title				顶部标题
  * @property {String}			mode				展示格式 mode=date为日期选择，mode=time为时间选择，mode=year-month为年月选择，mode=datetime为日期时间选择  ( 默认 ‘datetime )
  * @property {Number}			maxDate				可选的最大时间  默认值为后10年
  * @property {Number}			minDate				可选的最小时间  默认值为前10年
- * @property {Number}			minHour				可选的最小小时，仅mode=time有效   ( 默认 0 )
- * @property {Number}			maxHour				可选的最大小时，仅mode=time有效	  ( 默认 23 )
- * @property {Number}			minMinute			可选的最小分钟，仅mode=time有效	  ( 默认 0 )
- * @property {Number}			maxMinute			可选的最大分钟，仅mode=time有效   ( 默认 59 )
  * @property {Function}			filter				选项过滤函数
  * @property {Function}			formatter			选项格式化函数
- * @property {Boolean}			loading				是否显示加载中状态   ( 默认 false )
- * @property {String | Number}	itemHeight			各列中，单个选项的高度   ( 默认 44 )
+ * @property {String | Number}	itemHeight			各列中，单个选项的高度   ( 默认 36 )
  * @property {String}			cancelText			取消按钮的文字  ( 默认 '取消' )
  * @property {String}			confirmText			确认按钮的文字  ( 默认 '确认' )
  * @property {String}			cancelColor			取消按钮的颜色  ( 默认 '#909193' )
  * @property {String}			confirmColor		确认按钮的颜色  ( 默认 '#3c9cff' )
  * @property {String | Number}	visibleItemCount	每列中可见选项的数量  ( 默认 5 )
- * @property {Boolean}			closeOnClickOverlay	是否允许点击遮罩关闭选择器  ( 默认 false )
- * @property {Array}			defaultIndex		各列的默认索引
- * @event {Function} close 关闭选择器时触发
  * @event {Function} confirm 点击确定按钮，返回当前选择的值
  * @event {Function} change 当选择值变化时触发
  * @event {Function} cancel 点击取消按钮
@@ -63,8 +58,8 @@ const times = (n, iteratee) => {
 
 export default {
 	group: '表单组件',
-	title: 'Datetime 时间选择器',
-	name: 'ste-datetime',
+	title: 'DatePicker 时间选择器',
+	name: 'ste-date-picker',
 	props: {
 		// 是否展示顶部的操作栏
 		showToolbar: {
@@ -90,37 +85,17 @@ export default {
 		},
 		// 可选的最大时间
 		maxDate: {
-			type: Number,
+			type: [Number, String],
 			// 最大默认值为后10年
 			default: new Date(new Date().getFullYear() + 10, 11, 31, 23, 59, 59).getTime(),
 		},
 		// 可选的最小时间
 		minDate: {
-			type: Number,
+			type: [Number, String, Object],
 			// 最小默认值为前10年
 			default: new Date(new Date().getFullYear() - 10, 0, 1).getTime(),
 		},
-		// 可选的最小小时，仅mode=time有效
-		minHour: {
-			type: Number,
-			default: 0,
-		},
-		// 可选的最大小时，仅mode=time有效
-		maxHour: {
-			type: Number,
-			default: 23,
-		},
-		// 可选的最小分钟，仅mode=time有效
-		minMinute: {
-			type: Number,
-			default: 0,
-		},
-		// 可选的最大分钟，仅mode=time有效
-		maxMinute: {
-			type: Number,
-			default: 59,
-		},
-		// 选项格式化函数
+		// 选项过滤函数
 		filter: {
 			type: [Function, null],
 			default: null,
@@ -133,7 +108,7 @@ export default {
 		// 各列中，单个选项的高度
 		itemHeight: {
 			type: [String, Number],
-			default: 44,
+			default: 36,
 		},
 		// 取消按钮的文字
 		cancelText: {
@@ -158,7 +133,7 @@ export default {
 		// 每列中可见选项的数量
 		visibleItemCount: {
 			type: [String, Number],
-			default: 6,
+			default: 5,
 		},
 	},
 
@@ -238,9 +213,9 @@ export default {
 					return value;
 				});
 				// 进行过滤
-				// if (this.filter) {
-				// 	values = this.filter(type, values);
-				// }
+				if (this.filter) {
+					values = this.filter(type, values);
+				}
 				return { type, values };
 			});
 			return results;
@@ -294,9 +269,9 @@ export default {
 		},
 		// 根据minDate、maxDate、minHour、maxHour等边界值，判断各列的开始和结束边界值
 		getBoundary(type, innerValue) {
-			const value = new Date(innerValue);
-			const boundary = new Date(this[`${type}Date`]);
-			const year = boundary.getFullYear();
+			const value = dayjs(innerValue);
+			const boundary = dayjs(this[`${type}Date`]);
+			const year = boundary.year();
 			let month = 1;
 			let date = 1;
 			let hour = 0;
@@ -311,15 +286,15 @@ export default {
 
 			// 获取边界值，逻辑是：当年达到了边界值(最大或最小年)，就检查月允许的最大和最小值，以此类推
 			let second = minute;
-			if (value.getFullYear() === year) {
-				month = boundary.getMonth() + 1;
-				if (value.getMonth() + 1 === month) {
-					date = boundary.getDate();
-					if (value.getDate() === date) {
-						hour = boundary.getHours();
-						if (value.getHours() === hour) {
-							minute = boundary.getMinutes();
-							if (value.getMinutes() === minute) second = boundary.getSeconds();
+			if (value.year() === year) {
+				month = boundary.month() + 1;
+				if (value.month() + 1 === month) {
+					date = boundary.date();
+					if (value.date() === date) {
+						hour = boundary.hour();
+						if (value.hour() === hour) {
+							minute = boundary.minute();
+							if (value.minute() === minute) second = boundary.second();
 						}
 					}
 				}
@@ -336,12 +311,15 @@ export default {
 		},
 		// 得出合法的时间
 		correctValue(value) {
-			let v = dayjs().valueOf();
-			if (value) {
-				v = dayjs(value).isBefore(dayjs(this.minDate)) ? this.minDate : value;
-				v = dayjs(value).isAfter(dayjs(this.maxDate)) ? this.maxDate : value;
+			let date = dayjs(value);
+			if (date.isValid()) {
+				date = date.isBefore(dayjs(this.minDate)) ? this.minDate : date;
+				date = date.isAfter(dayjs(this.maxDate)) ? this.maxDate : date;
+			} else {
+				date = dayjs();
 			}
-			return v;
+
+			return date.valueOf();
 		},
 		change(e) {
 			const { indexs, values } = e;
@@ -388,6 +366,12 @@ export default {
 				value: selectValue,
 				mode: this.mode,
 			});
+		},
+		cancel() {
+			this.$emit('cancel');
+		},
+		confirm() {
+			this.$emit('confirm', this.innerValue);
 		},
 	},
 };

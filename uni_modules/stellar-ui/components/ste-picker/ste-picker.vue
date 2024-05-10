@@ -1,9 +1,9 @@
 <template>
 	<view class="ste-picker-root">
 		<view class="ste-picker-toolbar" v-if="showToolbar">
-			<text class="cancel" :style="{ color: cancelColor }">{{ cancelText }}</text>
+			<text @click="cancel" class="cancel" :style="{ color: cancelColor }">{{ cancelText }}</text>
 			<text class="title">{{ title }}</text>
-			<text class="confirm" :style="{ color: confirmColor }">{{ confirmText }}</text>
+			<text @click="confirm" class="confirm" :style="{ color: confirmColor }">{{ confirmText }}</text>
 		</view>
 		<picker-view
 			@change="change"
@@ -13,7 +13,9 @@
 			:value="innerIndex"
 		>
 			<picker-view-column v-for="(col, key) in innerColumns" :key="key" class="ste-picker-column">
-				<view class="item" v-for="(item, index) in col" :key="index">{{ item }}</view>
+				<view class="item" v-for="(item, index) in col" :key="index" :style="[cmpPickerItemStyle]">
+					{{ item }}
+				</view>
 			</picker-view-column>
 		</picker-view>
 	</view>
@@ -54,7 +56,7 @@ export default {
 		},
 		visibleItemCount: {
 			type: Number,
-			default: 6,
+			default: 5,
 		},
 		showToolbar: {
 			type: Boolean,
@@ -99,12 +101,21 @@ export default {
 	},
 	computed: {
 		cmpIndicatorStyle() {
-			let style = `height: ${utils.addUnit(this.itemHeight)}`;
+			// let style = `height: ${utils.addUnit(this.itemHeight)}`;
+			let style = `height: ${this.itemHeight}px`;
 			return style;
 		},
 		cmpPickerViewStyle() {
 			let style = {
-				height: utils.addUnit(this.visibleItemCount * this.itemHeight),
+				// height: utils.addUnit(this.visibleItemCount * this.itemHeight),
+				height: this.visibleItemCount * this.itemHeight + 'px',
+			};
+			return style;
+		},
+		cmpPickerItemStyle() {
+			let style = {
+				// height: utils.addUnit(this.itemHeight),
+				height: this.itemHeight + 'px',
 			};
 			return style;
 		},
@@ -179,18 +190,22 @@ export default {
 				this.innerIndex = new Array(columns.length).fill(0);
 			}
 		},
+		cancel() {
+			this.$emit('cancel');
+		},
+		confirm() {
+			this.$emit('confirm');
+		},
 	},
 };
 </script>
 
 <style lang="scss" scoped>
 .ste-picker-root {
-	// height: 500rpx;
 	width: 100%;
 	background-color: #fff;
 	.ste-picker-view {
 		width: 100%;
-		// height: 100%;
 	}
 	.ste-picker-toolbar {
 		padding: 20rpx 20rpx;
@@ -199,6 +214,7 @@ export default {
 		justify-content: space-between;
 		font-size: 26rpx;
 		.cancel {
+			cursor: pointer;
 		}
 
 		.title {
@@ -207,9 +223,11 @@ export default {
 		}
 
 		.confirm {
+			cursor: pointer;
 		}
 	}
 	.item {
+		font-size: 26rpx;
 		display: flex;
 		align-items: center;
 		justify-content: center;

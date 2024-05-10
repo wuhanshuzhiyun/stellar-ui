@@ -453,7 +453,7 @@
 			}
 		},
 		{
-			"path": "mp/datetime-demo/datetime-demo",
+			"path": "mp/date-picker-demo/date-picker-demo",
 			"style": {
 				"navigationStyle": "custom",
 				"disableScroll": true,

@@ -101,6 +101,13 @@
 					<ste-image :src="joinSrc('img/r-arrow.png')" :width="32" :height="32" />
 				</view>
 			</view>
+			<view class="com-box" @click="nav('date-picker')">
+				<view class="com-title">
+					<image :src="joinSrc('img/datetime.png')" style="width: 36rpx; height: 36rpx" />
+					<text>DatePicker 时间选择</text>
+				</view>
+				<view class="com-arrow"><image :src="joinSrc('img/r-arrow.png')" /></view>
+			</view>
 			<view class="com-box" @click="nav('input')">
 				<view class="com-title">
 					<ste-image style="margin-right: 10rpx" :src="joinSrc('img/input.png')" :width="36" :height="36" />
