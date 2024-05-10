@@ -8,7 +8,7 @@
 		</view>
 		<scroll-view
 			class="date-content"
-			:class="{ 'show-confirm': showConfirm, 'show-title': showTitle }"
+			:class="{ 'show-confirm': cmpShowConfirm, 'show-title': showTitle }"
 			scroll-y
 			:scroll-top="contentScrollTop"
 		>
@@ -41,7 +41,7 @@
 				</view>
 			</view>
 		</scroll-view>
-		<view v-if="showConfirm" class="confirm-button" @click="confirm">确定</view>
+		<view v-if="cmpShowConfirm" class="confirm-button" @click="confirm">确定</view>
 	</view>
 </template>
 
@@ -62,7 +62,7 @@ import utils from '../../utils/utils.js';
  * @value range 可以选择日期范围
  * @property {String} startText 开始日期的提示文字
  * @property {String} endText 结束日期的提示文字
- * @property {String} color 主题颜色（选中日期的背景和确定按钮的颜色）
+ * @property {String} color 主题颜色（选中日期背景、周末文日期颜色和确定按钮）
  * @property {String | Number | Date} minDate 最小可选日期
  * @property {String | Number | Date} maxDate 最大可选日期
  * @property {String | Number | Date} defaultMonth 默认展示的月份
@@ -195,6 +195,9 @@ export default {
 		cmpDates() {
 			return getCalendarData(this.minDate, this.maxDate, this.formatter);
 		},
+		cmpShowConfirm() {
+			return this.showConfirm && !this.readonly;
+		},
 	},
 	watch: {
 		list: {
@@ -237,8 +240,7 @@ export default {
 			}, 25);
 		},
 		onSelect(day) {
-			if (!day.dayText) return;
-			if (day.disabled) return;
+			if (this.readonly || !day.dayText || day.disabled) return;
 			if (this.mode === 'single') {
 				this.dataList = [day.key];
 			} else if (this.mode === 'multiple') {
@@ -246,7 +248,7 @@ export default {
 			} else if (this.mode === 'range') {
 				this.onRange(day);
 			}
-			this.$emit('select', this.dataList);
+			this.$emit('select', this.dataList, day.key);
 		},
 		onMultiple(day) {
 			const index = this.dataList.indexOf(day.key);

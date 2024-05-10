@@ -6,17 +6,7 @@
 				<view class="title">基础用法</view>
 				<ste-calendar height="720" :showTitle="false" @confirm="handleConfirm" />
 			</view>
-			<view class="demo-item">
-				<view class="title">展示默认月份</view>
-				<ste-calendar
-					height="720"
-					:showTitle="false"
-					minDate="2024-06-20"
-					maxDate="2024-08-20"
-					defaultMonth="2024-07"
-					@confirm="handleConfirm"
-				/>
-			</view>
+
 			<view class="demo-item">
 				<view class="title">结合弹窗使用</view>
 				<view class="item-content">
@@ -24,7 +14,7 @@
 						<ste-button @click="show1 = true">默认(单个日期)</ste-button>
 						<ste-popup :show.sync="show1" height="60vh" position="bottom">
 							<div style="padding-bottom: 20px; height: 100%">
-								<ste-calendar@confirm ="handleConfirm" />
+								<ste-calendar @confirm="handleConfirm" />
 							</div>
 						</ste-popup>
 					</view>
@@ -94,10 +84,17 @@
 					</view>
 					<view class="demo-code">
 						<ste-button @click="show9 = true">默认展示月份</ste-button>
-
 						<ste-popup :show.sync="show9" position="bottom" height="60vh" @open-after="setViewMonth">
 							<div style="padding-bottom: 20px; height: 100%">
 								<ste-calendar ref="defaultMonth" minDate="2024-05-20" maxDate="2024-12-01" @confirm="handleConfirm" />
+							</div>
+						</ste-popup>
+					</view>
+					<view class="demo-code">
+						<ste-button @click="show10 = true">隐藏确定按钮</ste-button>
+						<ste-popup :show.sync="show10" position="bottom" height="60vh">
+							<div style="padding-bottom: 20px; height: 100%">
+								<ste-calendar minDate="2024-05-20" maxDate="2024-12-01" @select="handleConfirm" :showConfirm="false" />
 							</div>
 						</ste-popup>
 					</view>
@@ -119,6 +116,7 @@ export default {
 			show7: false,
 			show8: false,
 			show9: false,
+			show10: false,
 		};
 	},
 	created() {},
