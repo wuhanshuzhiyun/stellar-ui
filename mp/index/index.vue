@@ -82,10 +82,15 @@
 			<view class="group-title">表单组件</view>
 			<view class="com-box" @click="nav('calendar')">
 				<view class="com-title">
-					<image :src="joinSrc('img/calendar.png')" style="width: 36rpx; height: 36rpx" />
+					<ste-image
+						style="margin-right: 10rpx"
+						:src="joinSrc('img/calendar.png')"
+						:width="36"
+						:height="36"
+					/>
 					<text>Calendar 日历</text>
 				</view>
-				<view class="com-arrow"><image :src="joinSrc('img/r-arrow.png')" /></view>
+				<view class="com-arrow"><ste-image :src="joinSrc('img/r-arrow.png')" :width="32" :height="32" /></view>
 			</view>
 			<view class="com-box" @click="nav('checkbox')">
 				<view class="com-title">
@@ -103,10 +108,15 @@
 			</view>
 			<view class="com-box" @click="nav('date-picker')">
 				<view class="com-title">
-					<image :src="joinSrc('img/datetime.png')" style="width: 36rpx; height: 36rpx" />
+					<ste-image
+						style="margin-right: 10rpx"
+						:src="joinSrc('img/datetime.png')"
+						:width="36"
+						:height="36"
+					/>
 					<text>DatePicker 时间选择</text>
 				</view>
-				<view class="com-arrow"><image :src="joinSrc('img/r-arrow.png')" /></view>
+				<view class="com-arrow"><ste-image :src="joinSrc('img/r-arrow.png')" :width="32" :height="32" /></view>
 			</view>
 			<view class="com-box" @click="nav('input')">
 				<view class="com-title">
