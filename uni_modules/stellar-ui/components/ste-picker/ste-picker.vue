@@ -106,9 +106,11 @@ export default {
 			return style;
 		},
 		cmpPickerViewStyle() {
+			let borderRadius = utils.formatPx('12rpx');
 			let style = {
 				// height: utils.addUnit(this.visibleItemCount * this.itemHeight),
 				height: this.visibleItemCount * this.itemHeight + 'px',
+				'--border-radius': this.showToolbar ? `0 0 ${borderRadius} ${borderRadius}` : borderRadius,
 			};
 			return style;
 		},
@@ -204,22 +206,30 @@ export default {
 .ste-picker-root {
 	width: 100%;
 	background-color: #fff;
+	border-radius: 12rpx;
 	.ste-picker-view {
 		width: 100%;
+		border-radius: var(--border-radius);
+		/deep/ .uni-picker-view-wrapper {
+			border-radius: var(--border-radius);
+		}
+		/deep/ .ste-picker-column {
+			border-radius: var(--border-radius);
+		}
 	}
 	.ste-picker-toolbar {
-		padding: 20rpx 20rpx;
+		padding: 30rpx 40rpx;
 		display: flex;
 		align-items: center;
 		justify-content: space-between;
-		font-size: 26rpx;
+		font-size: 28rpx;
+		// font-weight: bold;
 		.cancel {
 			cursor: pointer;
 		}
 
 		.title {
 			font-size: 32rpx;
-			font-weight: bold;
 		}
 
 		.confirm {
