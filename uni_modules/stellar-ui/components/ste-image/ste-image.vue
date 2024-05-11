@@ -127,6 +127,18 @@ export default {
 		src() {
 			this.status = 0;
 		},
+		hiddenLoading: {
+			handler(v) {
+				if (v && this.hiddenError) this.status = 1;
+			},
+			immediate: true,
+		},
+		hiddenError: {
+			handler(v) {
+				if (v && this.hiddenLoading) this.status = 1;
+			},
+			immediate: true,
+		},
 	},
 	mounted() {
 		this.setIconSize();

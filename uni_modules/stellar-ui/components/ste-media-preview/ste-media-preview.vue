@@ -29,6 +29,7 @@
 						<image
 							:style="[cmpTransform]"
 							class="image"
+							:show-menu-by-longpress="dataShowmenu"
 							v-else
 							:src="item.url || item.path"
 							mode="aspectFit"
@@ -62,6 +63,7 @@ import TouchScaleing from './TouchScaleing.js';
  * @property {Number} index 默认展示的资源下标
  * @property {Boolean} showIndex 是否显示左下角索引
  * @property {Boolean} scale 是否支持双指缩放
+ * @property {Boolean} showmenu 是否开启图片长按菜单
  * @event {Function} beforeClose 关闭前触发
  * @event {Function} close 关闭后触发
  * @event {Function} change 切换时触发
@@ -100,6 +102,10 @@ export default {
 			type: Boolean,
 			default: () => false,
 		},
+		showmenu: {
+			type: Boolean,
+			default: () => true,
+		},
 	},
 	data() {
 		return {
@@ -110,6 +116,7 @@ export default {
 			translate: 0,
 			rotate: 0,
 			transition: 0,
+			dataShowmenu: true,
 		};
 	},
 	mounted() {
@@ -141,6 +148,12 @@ export default {
 			},
 			immediate: true,
 		},
+		showmenu: {
+			handler(v) {
+				this.dataShowmenu = v;
+			},
+			immediate: true,
+		},
 	},
 	methods: {
 		async onClose() {
@@ -163,6 +176,10 @@ export default {
 		async onTouchstart(e) {
 			if (!this.scale) return;
 			this.touch.touchStart(e.changedTouches);
+			const { x1, y1, x2, y2 } = this.touch.startParam;
+			if (x1 && y1 && x2 && y2) {
+				this.dataShowmenu = false;
+			}
 		},
 		onTouchmove(e) {
 			if (!this.scale) return;
@@ -178,6 +195,7 @@ export default {
 		},
 		onTouchend(e) {
 			if (!this.scale) return;
+			this.dataShowmenu = this.showmenu;
 			const bool = this.touch.touchEnd(e.changedTouches);
 			if (!bool) return;
 			this.transition = '0.3s';
