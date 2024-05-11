@@ -13,6 +13,7 @@
 		@change="change"
 		@cancel="cancel"
 		@confirm="confirm"
+		class="ste-date-picker-root"
 	></ste-picker>
 </template>
 
@@ -385,4 +386,8 @@ export default {
 };
 </script>
 
-<style></style>
+<style lang="scss" scoped>
+// .ste-date-picker-root {
+// 	border-radius: 12rpx;
+// }
+</style>
