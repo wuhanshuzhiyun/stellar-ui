@@ -3,58 +3,43 @@
 		<page-nav :autoBack="true" backColor="#000" titleAlignment="2" title="文本"></page-nav>
 		<view class="content">
 			<view class="demo-item">
-				<view class="title">可选</view>
-				<view class="h1">H-1</view>
-				<view class="h1">H-2</view>
-				<view class="h1">H-3</view>
-				<view class="h1">H-4</view>
-				<view class="h1">H-5</view>
-				<view class="h1">H-6</view>
-				<view class="h1">H-7</view>
-				<view class="h1">H-8</view>
-				<ste-sticky @fixed="onFixed">
-					<ste-button>粘性布局的按钮</ste-button>
+				<view class="title">基础用法</view>
+				<view class="message">滚动页面,即可看到下方的按钮会吸顶。</view>
+				<ste-sticky @fixed="onFixed" @unfixed="onUnfixed">
+					<ste-button :round="false">粘性布局的按钮</ste-button>
 				</ste-sticky>
-				<view class="h1">H1</view>
-				<view class="h1">H2</view>
-				<view class="h1">H3</view>
-				<view class="h1">H4</view>
-				<view class="h1">H5</view>
-				<view class="h1">H6</view>
-				<view class="h1">H7</view>
-				<view class="h1">H8</view>
-				<view class="h1">H9</view>
-				<view class="h1">H10</view>
-				<view class="h1">H11</view>
-				<view class="h1">H12</view>
-				<view class="h1">H13</view>
-				<view class="h1">H14</view>
-				<view class="h1">H15</view>
-				<view class="h1">H16</view>
-				<view class="h1">H17</view>
-				<view class="h1">H18</view>
-				<view class="h1">H19</view>
-				<view class="h1">H20</view>
-				<view class="h1">H21</view>
-				<view class="h1">H22</view>
-				<view class="h1">H23</view>
-				<view class="h1">H24</view>
-				<view class="h1">H25</view>
-				<view class="h1">H26</view>
-				<view class="h1">H27</view>
-				<view class="h1">H28</view>
-				<view class="h1">H29</view>
-				<view class="h1">H30</view>
-				<view class="h1">H31</view>
-				<view class="h1">H32</view>
-				<view class="h1">H33</view>
-				<view class="h1">H34</view>
-				<view class="h1">H35</view>
-				<view class="h1">H36</view>
-				<view class="h1">H37</view>
-				<view class="h1">H38</view>
-				<view class="h1">H39</view>
-				<view class="h1">H40</view>
+				<view class="content-view">
+					<view>其他内容</view>
+					<view>1</view>
+					<view>2</view>
+					<view>3</view>
+					<view>4</view>
+					<view>5</view>
+					<view>6</view>
+					<view>7</view>
+					<view>8</view>
+					<view>9</view>
+					<view>10</view>
+					<view>11</view>
+					<view>12</view>
+					<view>13</view>
+					<view>14</view>
+					<view>15</view>
+					<view>16</view>
+					<view>17</view>
+					<view>18</view>
+					<view>19</view>
+					<view>20</view>
+					<view>21</view>
+					<view>22</view>
+					<view>23</view>
+					<view>24</view>
+					<view>25</view>
+					<view>26</view>
+					<view>27</view>
+					<view>28</view>
+					<view>29</view>
+				</view>
 			</view>
 		</view>
 	</view>
@@ -66,8 +51,11 @@ export default {
 	},
 	created() {},
 	methods: {
-		onFixed(v) {
-			console.log('粘性布局：', v);
+		onFixed() {
+			console.log('粘性布局');
+		},
+		onUnfixed() {
+			console.log('非粘性布局');
 		},
 	},
 };
@@ -80,9 +68,12 @@ export default {
 			.item-block {
 				display: block;
 			}
-			.h1 {
-				font-size: 42rpx;
-				line-height: 90rpx;
+			.message {
+				margin-bottom: 12rpx;
+			}
+			.content-view {
+				margin-top: 12rpx;
+				height: 100vh;
 			}
 		}
 	}

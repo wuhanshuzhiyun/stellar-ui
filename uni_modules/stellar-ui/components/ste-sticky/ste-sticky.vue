@@ -11,17 +11,18 @@ import utils from '../../utils/utils';
  * @description 该组件与CSS中position: sticky属性实现的效果一致，当组件达到预设的到顶部距离时， 就会固定在指定位置，组件位置大于预设的顶部距离时，会重新按照正常的布局排列。
  * @tutorial https://www.uviewui.com/components/sticky.html
  * @property {String ｜ Number}	offsetTop		吸顶时与顶部的距离，单位px（默认 0 ）
- * @property {String ｜ Number}	customNavHeight	自定义导航栏的高度 （h5 默认44  其他默认 0 ）
- * @property {Boolean}			disabled		是否开启吸顶功能 （默认 false ）
+ * @property {String ｜ Number}	customNavHeight	航栏的高度（没有导航栏时，请设置为0）
+ * @property {Boolean}		disabled		是否开启吸顶功能 （默认 false ）
  * @property {String}			bgColor			组件背景颜色（默认 '#ffffff' ）
  * @property {String ｜ Number}	zIndex			吸顶时的z-index值
- * @property {Object}			customStyle		组件的样式，对象形式
  * @event {Function} fixed		组件吸顶时触发
  * @event {Function} unfixed	组件取消吸顶时触发
  * @example <ste-sticky offsetTop="200"><view>塞下秋来风景异，衡阳雁去无留意</view></ste-sticky>
  */
 export default {
 	name: 'ste-sticky',
+	group: '基础组件',
+	title: 'Sticky 吸顶',
 	props: {
 		// 吸顶容器到顶部某个距离的时候，进行吸顶
 		offsetTop: {
@@ -46,7 +47,7 @@ export default {
 		// z-index值
 		zIndex: {
 			type: [String, Number],
-			default: () => 100,
+			default: () => 98,
 		},
 	},
 	data() {
@@ -95,10 +96,10 @@ export default {
 			// 先断掉之前的观察
 			this.disconnectObserver('contentObserver');
 			const contentObserver = uni.createIntersectionObserver(this, {
-				thresholds: [0.5, 1],
+				thresholds: [0.8, 1],
 			});
 			// 到屏幕顶部的高度时触发
-			contentObserver.relativeToViewport({ top: -(this.relativeToViewportTop + 2) });
+			contentObserver.relativeToViewport({ top: -(this.relativeToViewportTop + 1) });
 			// 绑定观察的元素
 			contentObserver.observe(`#${this.elId}`, (res) => {
 				this.setFixed(res.boundingClientRect.top);
@@ -106,8 +107,10 @@ export default {
 			this.contentObserver = contentObserver;
 		},
 		setFixed(top) {
+			const bool = top <= this.relativeToViewportTop;
 			// 判断是否处于吸顶条件范围
-			this.$emit('fixed', top <= this.relativeToViewportTop);
+			if (bool) this.$emit('fixed');
+			else this.$emit('unfixed');
 		},
 		disconnectObserver(observerName) {
 			const observer = this[observerName];
