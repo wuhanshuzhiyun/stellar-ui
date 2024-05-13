@@ -24,7 +24,7 @@
 					v-if="cmpShowSwitch"
 					class="placeholder-list"
 					:current="switchIndex"
-					autoplay
+					:autoplay="autoplay"
 					:interval="interval"
 					circular
 					vertical
@@ -63,6 +63,7 @@ import utils from '../../utils/utils.js';
  * @property {String}			placeholder				占位提示符
  * @property {String[]}		hotWords	热词列表，默认值，[]
  * @property {Number}			interval	热词列表自动切换时间间隔，默认值，3000
+ * @property {Boolean}		autoplay	热词列表自动切换，默认值，true
  * @property {Boolean}		disabled	是否禁用状态，默认值，false
  * @property {Boolean}		hiddenLine	是否隐藏分割线 ，默认值，false
  * @property {Boolean}		hiddenBtn	是否隐藏搜索按钮 ，默认值，false
@@ -116,6 +117,11 @@ export default {
 		interval: {
 			type: Number,
 			default: () => 3000,
+		},
+		// 热词列表是否自动切换
+		autoplay: {
+			type: Boolean,
+			default: () => true,
 		},
 		// 是否禁用状态
 		disabled: {
