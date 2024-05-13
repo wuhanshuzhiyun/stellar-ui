@@ -140,7 +140,7 @@ export default {
 			handler(v) {
 				if (v) {
 					// 如果外部指定index，则使用外部index，不然使用内部dataIndex
-					if (this.index) {
+					if (this.index != null) {
 						this.dataIndex = this.index;
 					}
 				}
