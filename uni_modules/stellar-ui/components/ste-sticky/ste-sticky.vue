@@ -13,7 +13,7 @@ import utils from '../../utils/utils';
  * @property {String ｜ Number}	offsetTop		吸顶时与顶部的距离，单位px（默认 0 ）
  * @property {String ｜ Number}	customNavHeight	航栏的高度（没有导航栏时，请设置为0）
  * @property {Boolean}		disabled		是否开启吸顶功能 （默认 false ）
- * @property {String}			bgColor			组件背景颜色（默认 '#ffffff' ）
+ * @property {String}			background	组件背景，默认#fff
  * @property {String ｜ Number}	zIndex			吸顶时的z-index值
  * @event {Function} fixed		组件吸顶时触发
  * @event {Function} unfixed	组件取消吸顶时触发

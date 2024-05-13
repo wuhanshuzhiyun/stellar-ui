@@ -52,10 +52,10 @@ export default {
 	created() {},
 	methods: {
 		onFixed() {
-			console.log('粘性布局');
+			console.log('吸顶状态时触发');
 		},
 		onUnfixed() {
-			console.log('非粘性布局');
+			console.log('非吸顶状态时触发');
 		},
 	},
 };
