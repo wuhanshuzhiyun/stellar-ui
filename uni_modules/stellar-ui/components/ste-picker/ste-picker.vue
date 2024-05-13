@@ -223,7 +223,6 @@ export default {
 		align-items: center;
 		justify-content: space-between;
 		font-size: 28rpx;
-		// font-weight: bold;
 		.cancel {
 			cursor: pointer;
 		}

@@ -178,6 +178,8 @@ export default {
 			handler(newVal) {
 				if (newVal) {
 					this.beginAnimation();
+				} else {
+					this.endAnimation();
 				}
 			},
 		},
