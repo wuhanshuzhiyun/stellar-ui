@@ -453,6 +453,19 @@
 			}
 		},
 		{
+			"path": "mp/sticky-demo/sticky-demo",
+			"style": {
+				"navigationStyle": "custom",
+				"disableScroll": true,
+				"mp-alipay": {
+					"transparentTitle": "always",
+					"titlePenetrate": "YES",
+					"allowsBounceVertical": "NO",
+					"navigationBarTitleText": ""
+				}
+			}
+		},
+		{
 			"path": "mp/date-picker-demo/date-picker-demo",
 			"style": {
 				"navigationStyle": "custom",

@@ -26,7 +26,7 @@ export default class System {
 	static getNavbarBottom() {
 		if (System.navbarBottom === null) {
 			const menuButtonInfo = uni.getMenuButtonBoundingClientRect();
-			System.navbarBottom = menuButtonInfo + 8;
+			System.navbarBottom = menuButtonInfo.bottom + 8;
 		}
 		return System.navbarBottom;
 	}
