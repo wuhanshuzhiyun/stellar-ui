@@ -26,14 +26,14 @@
 							@click.stop="1"
 							:style="[dataIndex === index ? cmpTransform : null]"
 						/>
-						<image
-							:style="[cmpTransform]"
-							class="image"
-							:show-menu-by-longpress="dataShowmenu"
+						<ste-image
 							v-else
+							class="image"
+							:style="[cmpTransform]"
+							:showMenuByLongpress="dataShowmenu"
 							:src="item.url || item.path"
 							mode="aspectFit"
-						/>
+						></ste-image>
 					</view>
 				</swiper-item>
 			</swiper>
@@ -91,8 +91,8 @@ export default {
 			default: () => false,
 		},
 		index: {
-			type: Number,
-			default: () => 0,
+			type: [Number, null],
+			default: () => null,
 		},
 		showIndex: {
 			type: Boolean,
@@ -136,14 +136,14 @@ export default {
 		},
 	},
 	watch: {
-		index: {
-			handler(v) {
-				this.dataIndex = v;
-			},
-			immediate: true,
-		},
 		show: {
 			handler(v) {
+				if (v) {
+					// 如果外部指定index，则使用外部index，不然使用内部dataIndex
+					if (this.index) {
+						this.dataIndex = this.index;
+					}
+				}
 				this.dataShow = v;
 			},
 			immediate: true,
