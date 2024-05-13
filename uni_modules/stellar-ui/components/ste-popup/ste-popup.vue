@@ -8,7 +8,7 @@
 		:animation="overlayAnimationData"
 	>
 		<view class="content" :class="position" :style="[cmpContentStyle]" :animation="animationData" @click.stop>
-			<template v-if="cmpShowContent">
+			<template v-if="keepContent || showContent">
 				<scroll-view style="width: 100%; height: 100%" v-if="height > 0" :scroll-y="true">
 					<slot name="default"></slot>
 				</scroll-view>
@@ -109,6 +109,7 @@ export default {
 			type: [Number, String],
 			default: 998,
 		},
+		// 是否在动画完成后渲染或销毁内容元素
 		keepContent: {
 			type: Boolean,
 			default: true,
@@ -116,13 +117,13 @@ export default {
 	},
 	data() {
 		return {
-			animationFinish: true, // 动画是否完成
 			pageDisplay: 'none',
 			contentOpacity: 0,
 			animationData: null,
 			overlayAnimationData: null,
 			animationProp: { duration: this.duration, timingFunction: 'ease-out' },
 			clickTask: null,
+			showContent: false, // 配合keepContent属性来渲染或销毁内容元素
 		};
 	},
 	created() {
@@ -155,22 +156,6 @@ export default {
 			}
 
 			return style;
-		},
-		cmpShowContent() {
-			if (this.keepContent) {
-				return true;
-			} else {
-				if (this.show) {
-					return this.animationFinish;
-				} else {
-					// 隐藏时在动画结束后再返回真实值
-					if (this.animationFinish) {
-						return this.show;
-					} else {
-						return true;
-					}
-				}
-			}
 		},
 	},
 	watch: {
@@ -224,7 +209,6 @@ export default {
 		},
 		// 打开弹窗时的动画
 		async beginAnimation() {
-			this.animationFinish = false;
 			this.pageDisplay = 'flex';
 			this.contentOpacity = 1;
 			await utils.sleep(50);
@@ -245,12 +229,11 @@ export default {
 			this.animationData = animation.export();
 
 			setTimeout(() => {
-				this.animationFinish = true;
+				this.showContent = true;
 				this.$emit('open-after');
 			}, this.duration);
 		},
 		endAnimation() {
-			this.animationFinish = false;
 			let animation = uni.createAnimation(this.animationProp);
 			let overlayAnimation = uni.createAnimation(this.animationProp);
 			overlayAnimation.opacity(0).step();
@@ -269,7 +252,7 @@ export default {
 			setTimeout(() => {
 				this.contentOpacity = 0;
 				this.pageDisplay = 'none';
-				this.animationFinish = true;
+				this.showContent = false;
 			}, this.duration);
 		},
 	},
