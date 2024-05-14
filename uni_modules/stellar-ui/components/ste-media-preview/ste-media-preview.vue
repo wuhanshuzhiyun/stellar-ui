@@ -214,7 +214,7 @@ export default {
 			this.$emit('change', this.dataIndex);
 		},
 		onLongpress() {
-			this.$meit('longpress', this.dataIndex);
+			this.$emit('longpress', this.dataIndex);
 		},
 	},
 };
