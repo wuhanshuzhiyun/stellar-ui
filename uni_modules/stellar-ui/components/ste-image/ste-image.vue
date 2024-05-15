@@ -94,7 +94,8 @@ export default {
 	},
 	data() {
 		return {
-			status: 0,
+			status: 1,
+			initializing: true,
 			iconSize: 60,
 		};
 	},
@@ -142,17 +143,22 @@ export default {
 	},
 	mounted() {
 		this.setIconSize();
+		setTimeout(() => {
+			if (this.initializing) this.status = 0;
+		}, 25);
 	},
 	methods: {
 		click(e) {
 			this.$emit('click', e);
 		},
 		onLoadOver(e) {
-			this.status = 1;
+			this.initializing = false;
+			if (this.status !== 1) this.status = 1;
 			this.$emit('load', e);
 		},
 		onFault(e) {
-			this.status = 2;
+			this.initializing = false;
+			if (this.status !== 2) this.status = 2;
 			this.$emit('error', e);
 		},
 		setIconSize() {
