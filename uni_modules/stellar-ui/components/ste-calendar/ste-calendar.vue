@@ -30,6 +30,7 @@
 							start: startDate === d.key,
 							end: endDate === d.key,
 							disabled: d.disabled,
+							not: !d.dayText,
 						}"
 					>
 						<block v-if="d.dayText">
@@ -392,8 +393,10 @@ export default {
 				align-items: center;
 				// #ifdef H5
 				cursor: pointer;
+				&.not {
+					cursor: default !important;
+				}
 				// #endif
-
 				&.weekend {
 					color: var(--calendar-color);
 				}
