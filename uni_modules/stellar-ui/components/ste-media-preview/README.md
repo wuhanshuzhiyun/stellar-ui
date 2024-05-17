@@ -217,25 +217,25 @@ export default{
 ### API
 #### Props
 
-| 属性名			| 说明																| 类型							| 默认值		| 可选值	| 支持版本					|
-| ---					| ---																| ---							| ---			| ---		| ---							|
-| `show`			| 是否显示														| `Boolean`				| `false`	| -			| -								|
-| `urls`			| 预览的媒体URL数组									| `Array<string>`	| `[]`		| -			| -								|
-| `autoplay`	| 自动轮播时长，为0不自动轮播，单位ms	| `Number`				| `0`			| -			| -								|
-| `loop`			| 是否前后衔接播放										| `Boolean`				| `false`	| -			| -								|
-| `index`			| 默认展示的资源下标									| `Number`				| `0`			| -			| -								|
-| `showIndex`	| 是否显示左下角索引									| `Boolean`				| `true`	| -			| -								|
-| `scale`			| 是否支持双指缩放										| `Boolean`				| `false`	| -			| -								|
-| `showmenu`	| 是否开启图片长按菜单								| `Boolean`				| `true`	| -			| 微信小程序`2.13.0`	|
+| 属性名		| 说明								| 类型				| 默认值		| 可选值	| 支持版本			|
+| ---			| ---								| ---				| ---		| ---	| ---				|
+| `show`		| 是否显示							| `Boolean`			| `false`	| -		| -					|
+| `urls`		| 预览的媒体URL数组					| `Array<string>`	| `[]`		| -		| -					|
+| `autoplay`	| 自动轮播时长，为0不自动轮播，单位ms	| `Number`			| `0`		| -		| -					|
+| `loop`		| 是否前后衔接播放					| `Boolean`			| `false`	| -		| -					|
+| `index`		| 默认展示的资源下标					| `Number`			| `0`		| -		| -					|
+| `showIndex`	| 是否显示左下角索引					| `Boolean`			| `true`	| -		| -					|
+| `scale`		| 是否支持双指缩放					| `Boolean`			| `false`	| -		| -					|
+| `showmenu`	| 是否开启图片长按菜单					| `Boolean`			| `true`	| -		| 微信小程序`2.13.0`	|
 
 #### Event
 
-|事件名					|说明				|事件参数							|支持版本	|
-|---						|---				|---									|---			|
-| `beforeClose`	| 关闭前触发	| -										| -				|
-| `close`				| 关闭后触发	| -										| -				|
-| `change`			| 切换时触发	| `index`:切换后的下标	| -				|
-| `longpress`		| 长按时触发	| `index`:当前下标			| -				|
+|事件名			|说明		|事件参数				|支持版本	|
+|---			|---		|---					|---		|
+| `beforeClose`	| 关闭前触发	| -						| -			|
+| `close`		| 关闭后触发	| -						| -			|
+| `change`		| 切换时触发	| `index`:切换后的下标	| -			|
+| `longpress`	| 长按时触发	| `index`:当前下标		| -			|
 
 
 {{xuyajun}}
