@@ -185,7 +185,6 @@ export default {
 			// 加载文档
 			uni.request({ url }).then(async (res) => {
 				this.content = await md2html(res.data);
-				console.log('html-length', this.content.length);
 				// 渲染完成后，为所有的代码按钮加载复制功能
 				// #ifdef H5
 				this.$nextTick(() => {
