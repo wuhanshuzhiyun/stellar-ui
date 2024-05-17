@@ -17,6 +17,7 @@
 						@touchmove="onTouchmove"
 						@touchend="onTouchend"
 						@longpress="onLongpress"
+						:style="[dataIndex === index ? cmpTransform : null]"
 					>
 						<video
 							class="video"
@@ -24,12 +25,10 @@
 							v-if="item.type === 'video'"
 							:src="item.url || item.path"
 							@click.stop="1"
-							:style="[dataIndex === index ? cmpTransform : null]"
 						/>
 						<ste-image
 							v-else
 							class="image"
-							:style="[cmpTransform]"
 							:showMenuByLongpress="dataShowmenu"
 							:src="item.url || item.path"
 							mode="aspectFit"
