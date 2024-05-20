@@ -157,7 +157,7 @@ export default {
 						return;
 					}
 				}
-			}, 25);
+			}, 50);
 		},
 		onScroll(e) {
 			if (this.scrollType === 'active') return;
