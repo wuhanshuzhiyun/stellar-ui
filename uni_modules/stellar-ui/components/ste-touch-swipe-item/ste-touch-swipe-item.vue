@@ -13,6 +13,9 @@
  */
 export default {
 	name: 'ste-touch-swipe-item',
+	options: {
+		virtualHost: true,
+	},
 	inject: ['_flickPanel'],
 	props: {
 		disabled: {

@@ -7,6 +7,9 @@
 <script>
 export default {
 	name: 'ste-swiper-item',
+	options: {
+		virtualHost: true,
+	},
 	inject: ['_swiperComponent'],
 	props: {
 		index: {
@@ -52,3 +55,10 @@ export default {
 	},
 };
 </script>
+
+<style>
+.ste-swiper-item-root {
+	width: 100%;
+	height: 100%;
+}
+</style>

@@ -14,6 +14,9 @@ import utils from '../../utils/utils.js';
  */
 export default {
 	name: 'ste-scroll-to-item',
+	options: {
+		virtualHost: true,
+	},
 	inject: ['_scrollToComponent'],
 	props: {
 		index: {
