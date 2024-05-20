@@ -37,9 +37,7 @@ export default {
 		this.getData();
 	},
 	beforeDestroy() {
-		this.$nextTick(() => {
-			this.getData();
-		});
+		this.getData();
 	},
 	methods: {
 		getData() {

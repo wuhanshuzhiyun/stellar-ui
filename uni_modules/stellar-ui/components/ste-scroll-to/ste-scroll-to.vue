@@ -107,15 +107,24 @@ export default {
 					const top = child.top - box.top;
 					childrenTops.push(top > max ? max + 10 : top);
 				}
-				this.childrenTops = childrenTops;
-			}, 500);
+				let diff = this.childrenTops.length !== childrenTops.length;
+				if (!diff) {
+					for (let i = 0; i < childrenTops.length; i++) {
+						if (childrenTops[i] !== this.childrenTops[i]) {
+							diff = true;
+							break;
+						}
+					}
+				}
+				if (diff) this.childrenTops = childrenTops;
+			}, 50);
 		},
 		setScrollType(type) {
 			this.scrollType = type;
 			clearTimeout(this._scrollTypeTimeout);
 			this._scrollTypeTimeout = setTimeout(() => {
 				this.scrollType = 'init';
-			}, 500);
+			}, 350);
 		},
 		setScrollTopByIndex(index) {
 			clearTimeout(this._setScrollTopTimeout);

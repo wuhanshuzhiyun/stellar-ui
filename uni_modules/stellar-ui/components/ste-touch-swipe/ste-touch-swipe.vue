@@ -195,12 +195,21 @@ export default {
 			this.showNode = false;
 			this._timeout = setTimeout(() => {
 				const children = utils.getChildrenProps(this, 'ste-touch-swipe-item');
-				this.dataChildrenLength = children.length;
+				if (this.dataChildrenLength !== children.length) this.dataChildrenLength = children.length;
 				let disabledIndexs = [];
 				children.forEach((m, i) => {
 					if (m.disabled) disabledIndexs.push(i);
 				});
-				this.dataDisabledIndexs = disabledIndexs;
+				let diff = this.dataDisabledIndexs.length !== disabledIndexs.length;
+				if (!diff) {
+					for (let i = 0; i < this.dataDisabledIndexs.length; i++) {
+						if (this.dataDisabledIndexs[i] !== disabledIndexs[i]) {
+							diff = true;
+							break;
+						}
+					}
+				}
+				if (diff) this.dataDisabledIndexs = disabledIndexs;
 				this.$nextTick(async () => {
 					if (!this.boxEl) {
 						this.boxEl = await utils.querySelector('.ste-touch-swipe--root', this);
