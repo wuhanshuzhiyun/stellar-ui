@@ -61,6 +61,7 @@ export default class TouchScaleing {
 			this.startParam.y2 = y2;
 			this.startParam.id2 = id2;
 		}
+		return [x1, y1, x2, y2];
 	}
 	touchMove(changedTouches) {
 		if (changedTouches.length < 2) return false;

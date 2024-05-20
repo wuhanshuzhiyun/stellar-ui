@@ -174,10 +174,11 @@ export default {
 		},
 		async onTouchstart(e) {
 			if (!this.scale) return;
-			this.touch.touchStart(e.changedTouches);
-			const { x1, y1, x2, y2 } = this.touch.startParam;
+
+			const [x1, y1, x2, y2] = this.touch.touchStart(e.changedTouches);
+			console.log(x1, y1, x2, y2);
 			if (x1 && y1 && x2 && y2) {
-				this.dataShowmenu = false;
+				if (this.dataShowmenu) this.dataShowmenu = false;
 			}
 		},
 		onTouchmove(e) {
@@ -187,7 +188,11 @@ export default {
 			 */
 			const touch = this.touch;
 			const bool = touch.touchMove(e.changedTouches);
-			if (!bool) return;
+			if (!bool) {
+				if (this.dataShowmenu !== this.showmenu) this.dataShowmenu = this.showmenu;
+				return;
+			}
+			if (this.dataShowmenu) this.dataShowmenu = false;
 			this.scaling = touch.scale;
 			this.translate = `${touch.translateX}px,${touch.translateY}px`;
 			this.rotate = touch.rotate;
