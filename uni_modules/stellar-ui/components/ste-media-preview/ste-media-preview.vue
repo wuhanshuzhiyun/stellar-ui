@@ -187,10 +187,7 @@ export default {
 			 */
 			const touch = this.touch;
 			const bool = touch.touchMove(e.changedTouches);
-			if (!bool) {
-				if (this.dataShowmenu !== this.showmenu) this.dataShowmenu = this.showmenu;
-				return;
-			}
+			if (!bool) return;
 			if (this.dataShowmenu) this.dataShowmenu = false;
 			this.scaling = touch.scale;
 			this.translate = `${touch.translateX}px,${touch.translateY}px`;
@@ -198,7 +195,7 @@ export default {
 		},
 		onTouchend(e) {
 			if (!this.scale) return;
-			this.dataShowmenu = this.showmenu;
+			if (this.dataShowmenu !== this.showmenu) this.dataShowmenu = this.showmenu;
 			const bool = this.touch.touchEnd(e.changedTouches);
 			if (!bool) return;
 			this.transition = '0.3s';
