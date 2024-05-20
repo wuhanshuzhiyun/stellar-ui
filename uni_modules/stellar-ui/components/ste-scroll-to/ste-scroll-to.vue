@@ -8,7 +8,6 @@
 		:scroll-top="scrollTop"
 		:style="[cmpRootStyle]"
 		@scroll="onScroll"
-		@scrolltolower="onScrolltolower"
 	>
 		<view class="ste-scroll-to-content">
 			<slot />
@@ -166,7 +165,6 @@ export default {
 			this._scrollTop = scrollTop;
 			this.setActiveByTop(scrollTop);
 		},
-		onScrolltolower(e) {},
 	},
 };
 </script>
