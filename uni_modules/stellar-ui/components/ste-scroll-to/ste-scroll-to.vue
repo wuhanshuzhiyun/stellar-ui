@@ -124,7 +124,7 @@ export default {
 			clearTimeout(this._scrollTypeTimeout);
 			this._scrollTypeTimeout = setTimeout(() => {
 				this.scrollType = 'init';
-			}, 350);
+			}, 600);
 		},
 		setScrollTopByIndex(index) {
 			clearTimeout(this._setScrollTopTimeout);

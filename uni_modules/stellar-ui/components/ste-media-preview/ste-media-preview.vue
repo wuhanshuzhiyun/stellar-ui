@@ -176,7 +176,6 @@ export default {
 			if (!this.scale) return;
 
 			const [x1, y1, x2, y2] = this.touch.touchStart(e.changedTouches);
-			console.log(x1, y1, x2, y2);
 			if (x1 && y1 && x2 && y2) {
 				if (this.dataShowmenu) this.dataShowmenu = false;
 			}
