@@ -12,11 +12,10 @@
 	- 默认是水平滚动，宽度必须固定，可以通过`width`属性设置（默认为`100%`，也可以设置父标签宽度）
 	- 高度根据内容自适应
 - 内层使用`ste-swiper-item`子标签描述每一项
-	- 属性`index`是每一项的索引值，这是必须的
 ```html
 <view class="swiper-box">
 	<ste-swiper>
-		<ste-swiper-item v-for="(m, index) in list1" :index="index" :key="index">
+		<ste-swiper-item v-for="(m, index) in list1" :key="index">
 			<view class="item">{{ m }}</view>
 		</ste-swiper-item>
 	</ste-swiper>
@@ -51,7 +50,7 @@ export default{
 	- 纵向滑动时，`height` 属性是设置轮播的高度（默认是`100%`，也可以设置父标签高度）
 ```html
 <ste-swiper direction="vertical" height="300rpx">
-	<ste-swiper-item v-for="(m, index) in list1" :index="index" :key="index">
+	<ste-swiper-item v-for="(m, index) in list1" :key="index">
 		<view class="item">{{ m }}</view>
 	</ste-swiper-item>
 </ste-swiper>
@@ -61,7 +60,7 @@ export default{
 	- `circular` 属性是设置是否首尾相接，默认是`false`，可选值`true`	
 ```html
 <ste-swiper circular>
-	<ste-swiper-item v-for="(m, index) in list1" :index="index" :key="index">
+	<ste-swiper-item v-for="(m, index) in list1" :key="index">
 		<view class="item">{{ m }}</view>
 	</ste-swiper-item>
 </ste-swiper>
@@ -72,7 +71,7 @@ export default{
 	- `interval` 属性是设置自动轮播的时间间隔，默认是`3000`，单位是`ms`
 ```html
 <ste-swiper circular :interval="2000" autoplay>
-	<ste-swiper-item v-for="(m, index) in list1" :index="index" :key="index">
+	<ste-swiper-item v-for="(m, index) in list1" :key="index">
 		<view class="item">{{ m }}</view>
 	</ste-swiper-item>
 </ste-swiper>
@@ -82,7 +81,7 @@ export default{
 	- `indicatorDots` 属性是设置是否显示指示器，默认是`false`，可选值`true`
 ```html
 <ste-swiper circular autoplay indicatorDots>
-	<ste-swiper-item v-for="(m, index) in list2" :index="index" :key="index">
+	<ste-swiper-item v-for="(m, index) in list2" :key="index">
 		<view class="item">{{ m }}</view>
 	</ste-swiper-item>
 </ste-swiper>
@@ -103,7 +102,7 @@ export default{
 	- `indicatorActiveColor` 属性是设置当前选中的指示器的颜色，默认是`rgba(0,0,0,0.3)`
 ```html
 <ste-swiper circular autoplay indicatorDots indicatorColor="#0f0" indicatorActiveColor="#f00">
-	<ste-swiper-item v-for="(m, index) in list2" :index="index" :key="index">
+	<ste-swiper-item v-for="(m, index) in list2" :key="index">
 		<view class="item">{{ m }}</view>
 	</ste-swiper-item>
 </ste-swiper>
@@ -114,7 +113,7 @@ export default{
 	- `nextMargin` 属性是设置后边距，默认是`0`，单位是`rpx`
 ```html
 <ste-swiper circular autoplay previousMargin="60" nextMargin="60">
-	<ste-swiper-item v-for="(m, index) in list2" :index="index" :key="index">
+	<ste-swiper-item v-for="(m, index) in list2" :key="index">
 		<view class="item">{{ m }}</view>
 	</ste-swiper-item>
 </ste-swiper>
@@ -135,8 +134,8 @@ export default{
 | `duration`						| 切换动画时常																| `Number`					| `300`							| -																															| -				|
 | `swipeThreshold`			| 滑动灵敏度（0-1之间的小数，数值越小越灵敏）	| `Number`					| `0.35`						| -																															| -				|
 | `indicatorDots`				| 是否显示面板指示点													| `Boolean`					| `false`						| -																															| -				|
-| `indicatorColor`			| 指示点颜色																	| `String`					| `rgba(0,0,0,0.3)`	| -																															| -				|
-| `indicatorActiveColor`| 当前选中的指示点颜色												| `String`					| `#000000`					| -																															| -				|
+| `indicatorColor`			| 指示点颜色																	| `String`					| `#fff`	| -																															| -				|
+| `indicatorActiveColor`| 当前选中的指示点颜色												| `String`					| `#fff`					| -																															| -				|
 | `autoplay`						| 自动切换																		| `Boolean`					| `false`						| -																															| -				|
 | `interval`						| 自动切换时间间隔														| `Number`					| `3000`						| -																															| -				|
 | `circular`						| 首尾衔接滑动																| `Boolean`					| `false`						| -																															| -				|
@@ -154,10 +153,10 @@ export default{
 | ---				| ---																			| ---			| ---			|
 | `default`	| 默认插槽，请传入`ste-swiper-item`标签列表	| -				| -				|
 
-#### SwiperItem Props
-| 属性名	| 说明							| 类型			| 默认值	| 可选值	|支持版本	|
-| -----		| -----						| -----		| -----	| -----	| -----		|
-| `index`	| 标签下标（必须）	| `Number`| -			| -			| -				|
+#### Swiper Method
+| 方法名| 说明															|支持版本	|
+| -----	| -----														| -----		|
+| `init`| 初始化轮播信息，在渲染完成后调用	| -				|
 
 #### SwiperItem Slot
 |插槽名			|说明																				|插槽参数	|支持版本	|

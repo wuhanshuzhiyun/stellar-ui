@@ -21,7 +21,7 @@
 <script>
 import utils from '../../utils/utils.js';
 import TouchEvent from './TouchEvent.js';
-
+import { parentMixin } from '../../utils/mixin.js';
 /**
  * touch-swipe 手势切屏
  * @description 手势切屏组件
@@ -42,6 +42,7 @@ export default {
 	group: '导航组件',
 	title: 'TouchSwipe 手势切屏',
 	name: 'ste-touch-swipe',
+	mixins: [parentMixin('ste-touch-swipe')],
 	provide() {
 		return {
 			_flickPanel: { getParent: () => this },
@@ -94,7 +95,7 @@ export default {
 	},
 	data() {
 		return {
-			init: false,
+			initializing: true,
 			showNode: false,
 			boxEl: null,
 			touch: null,
@@ -107,10 +108,7 @@ export default {
 			_timeout: null,
 		};
 	},
-	async mounted() {
-		this.touch = new TouchEvent();
-		this.boxEl = await utils.querySelector('.ste-touch-swipe--root', this);
-	},
+
 	computed: {
 		cmpRootStyle() {
 			return {
@@ -146,7 +144,7 @@ export default {
 			}
 			return {
 				transform,
-				transitionDuration: !this.init || this.moveing ? 'inherit' : `${this.duration}s`,
+				transitionDuration: this.initializing || this.moveing ? 'inherit' : `${this.duration}s`,
 			};
 		},
 		cmpItemLefts() {
@@ -189,15 +187,19 @@ export default {
 			immediate: true,
 		},
 	},
+	async mounted() {
+		this.touch = new TouchEvent();
+		this.boxEl = await utils.querySelector('.ste-touch-swipe--root', this);
+		this.init();
+	},
 	methods: {
-		updateChildren() {
+		init() {
 			clearTimeout(this._timeout);
 			this.showNode = false;
 			this._timeout = setTimeout(() => {
-				const children = utils.getChildrenProps(this, 'ste-touch-swipe-item');
-				if (this.dataChildrenLength !== children.length) this.dataChildrenLength = children.length;
+				if (this.dataChildrenLength !== this.children.length) this.dataChildrenLength = this.children.length;
 				let disabledIndexs = [];
-				children.forEach((m, i) => {
+				this.children.forEach((m, i) => {
 					if (m.disabled) disabledIndexs.push(i);
 				});
 				let diff = this.dataDisabledIndexs.length !== disabledIndexs.length;
@@ -216,7 +218,7 @@ export default {
 					}
 					this.showNode = true;
 				});
-			});
+			}, 50);
 		},
 		setTransform() {
 			if (!this.cmpItemLefts?.length) return;
@@ -225,9 +227,11 @@ export default {
 			} else if (this.direction === 'vertical') {
 				this.translateY = -this.cmpItemTops[this.dataIndex];
 			}
-			setTimeout(() => {
-				this.init = true;
-			}, 50);
+			if (this.initializing) {
+				setTimeout(() => {
+					this.initializing = false;
+				}, 50);
+			}
 		},
 		nextItem(moveX, moveY) {
 			let index = this.dataIndex;

@@ -8,8 +8,8 @@
 					<ste-tabs :active.sync="active" sticky>
 						<ste-tab v-for="(m, i) in imgs" :key="i" :title="`标签${i + 1}`" />
 					</ste-tabs>
-					<ste-scroll-to height="1200" :active.sync="active">
-						<ste-scroll-to-item v-for="(m, i) in imgs" :key="i" :index="i">
+					<ste-scroll-to ref="scrollTo" height="1200" :active.sync="active">
+						<ste-scroll-to-item v-for="(m, i) in imgs" :key="i">
 							<view>内容{{ i + 1 }}</view>
 							<image :src="m" mode="widthFix"></image>
 						</ste-scroll-to-item>
@@ -37,7 +37,11 @@ export default {
 		};
 	},
 	watch: {},
-	created() {},
+	mounted() {
+		setTimeout(() => {
+			this.$refs.scrollTo.init();
+		}, 1000);
+	},
 	methods: {},
 };
 </script>

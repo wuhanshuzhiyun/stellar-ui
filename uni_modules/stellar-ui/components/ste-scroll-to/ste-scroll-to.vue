@@ -15,6 +15,7 @@
 
 <script>
 import utils from '../../utils/utils.js';
+import { parentMixin } from '../../utils/mixin.js';
 function isNum(num) {
 	return typeof num === 'number' && !isNaN(num);
 }
@@ -31,11 +32,7 @@ export default {
 	group: '导航组件',
 	title: 'ScrollTo 滚动锚点',
 	name: 'ste-scroll-to',
-	provide() {
-		return {
-			_scrollToComponent: { getParent: () => this },
-		};
-	},
+	mixins: [parentMixin('ste-scroll-to')],
 	props: {
 		active: {
 			type: Number,
@@ -49,7 +46,6 @@ export default {
 	data() {
 		return {
 			dataActive: 0,
-			children: [],
 			childrenTops: [],
 			scrollType: 'init',
 			scrollTop: 0,
@@ -85,12 +81,11 @@ export default {
 			return style;
 		},
 	},
+	mounted() {
+		this.init();
+	},
 	methods: {
-		updateChildren({ index, component }) {
-			this.children[index] = component;
-			this.getChildrenTops();
-		},
-		getChildrenTops() {
+		init() {
 			clearTimeout(this._childrenTimeout);
 			this._childrenTimeout = setTimeout(async () => {
 				const view = await utils.querySelector('.ste-scroll-to-root', this);
@@ -102,7 +97,7 @@ export default {
 					const comp = this.children[i];
 					const child = await utils.querySelector('.ste-scroll-to-item-root', comp);
 					const top = child.top - box.top;
-					childrenTops.push(top > max ? max + 10 : top);
+					childrenTops.push(top > max + 10 ? max + 10 : top);
 				}
 				let diff = this.childrenTops.length !== childrenTops.length;
 				if (!diff) {
@@ -121,11 +116,16 @@ export default {
 			clearTimeout(this._scrollTypeTimeout);
 			this._scrollTypeTimeout = setTimeout(() => {
 				this.scrollType = 'init';
-			}, 250);
+			}, 100);
 		},
 		setScrollTopByIndex(index) {
 			clearTimeout(this._setScrollTopTimeout);
 			this._setScrollTopTimeout = setTimeout(() => {
+				if (!index) {
+					this.scrollTop = 0;
+					this._scrollTop = 0;
+					return;
+				}
 				const childrenTops = this.childrenTops;
 				const top = childrenTops[index];
 				if (!isNum(top)) return;
@@ -135,13 +135,18 @@ export default {
 					if (!isNum(next)) return;
 					if (next > scrollTop + 10) return;
 				}
-				this.scrollTop = top;
-				this._scrollTop = top;
+				this.scrollTop = top || 0;
+				this._scrollTop = top || 0;
 			}, 50);
 		},
 		setActiveByTop(scrollTop) {
 			clearTimeout(this._setActiveTimeout);
 			this._setActiveTimeout = setTimeout(() => {
+				if (!scrollTop) {
+					this.$emit('change', 0);
+					this.$emit('update:active', 0);
+					return;
+				}
 				const childrenTops = this.childrenTops;
 				for (let i = 0; i < childrenTops.length; i++) {
 					const top = childrenTops[i];
@@ -156,11 +161,10 @@ export default {
 				}
 			}, 50);
 		},
-		onScroll(e) {
+		onScroll({ detail: { scrollTop } }) {
+			this._scrollTop = scrollTop;
 			if (this.scrollType === 'active') return;
 			this.setScrollType('scroll');
-			const { scrollTop } = e.detail;
-			this._scrollTop = scrollTop;
 			this.setActiveByTop(scrollTop);
 		},
 	},
