@@ -6,47 +6,15 @@
 
 <script>
 import utils from '../../utils/utils.js';
+import { childMixin } from '../../utils/mixin.js';
 /**
  * ste-scroll-to-item 锚点项
  * @description 锚点项
  * @tutorial https://stellar-ui.intecloud.com.cn/pc/index/index?name=ste-scroll-to
- * @property {Number}		index 当前锚点下标
  */
 export default {
 	name: 'ste-scroll-to-item',
-	options: {
-		virtualHost: true,
-	},
-	inject: ['_scrollToComponent'],
-	props: {
-		index: {
-			type: Number,
-			required: true,
-		},
-	},
-	data() {
-		return {
-			parent: null,
-		};
-	},
-	mounted() {
-		this.parent = this._scrollToComponent?.getParent();
-		this.getData();
-	},
-	updated() {
-		this.getData();
-	},
-	beforeDestroy() {
-		this.getData();
-	},
-	methods: {
-		getData() {
-			if (!this.parent) return;
-			this.$nextTick(async () => {
-				this.parent.updateChildren({ index: this.index, component: this });
-			});
-		},
-	},
+	mixins: [childMixin('ste-scroll-to')],
 };
 </script>
 
