@@ -1,7 +1,7 @@
 <template>
 	<view class="ste-dropdown-menu-item-root" :class="[cmpRootClass]" @click="handleClick">
-		<text>{{ title }}</text>
-		<view class="menu-item-icon">
+		<text class="text">{{ title }}</text>
+		<view class="menu-item-icon" v-if="type == 'block'">
 			<ste-icon code="&#xe67a;" size="32"></ste-icon>
 		</view>
 	</view>
@@ -51,10 +51,12 @@ export default {
 			parent: {},
 			status: false, // 是否选中状态 true: 选中，false: 未选中
 			clickTask: null,
+			type: 'block',
 		};
 	},
 	created() {
 		this.parent = this._menuComponent.getParent();
+		this.type = this.parent.type;
 	},
 	mounted() {
 		this.parent.updateItems();
@@ -75,6 +77,7 @@ export default {
 			if (this.disabled) {
 				classArr.push('disabled');
 			}
+			classArr.push(this.type);
 			return classArr.join(' ');
 		},
 	},
@@ -112,13 +115,13 @@ export default {
 <style lang="scss" scoped>
 .ste-dropdown-menu-item-root {
 	&.down {
-		border-top: solid 1rpx #e1e1ee;
+		border-top: solid 2rpx #e1e1ee;
 	}
 	&.up {
-		border-bottom: solid 1rpx #e1e1ee;
+		border-bottom: solid 2rpx #e1e1ee;
 	}
 	background-color: #ffffff;
-	padding: 20rpx;
+	padding: 24rpx;
 
 	display: flex;
 	align-items: center;
@@ -126,6 +129,10 @@ export default {
 	color: var(--inactive-color);
 	.menu-item-icon {
 		display: none;
+	}
+
+	.text {
+		font-size: 28rpx;
 	}
 
 	&.disabled {
@@ -137,6 +144,32 @@ export default {
 		.menu-item-icon {
 			display: inline-flex;
 			align-items: center;
+		}
+	}
+
+	&.round {
+		display: inline-flex;
+		border: none;
+		padding: 14rpx 10rpx;
+		border-radius: 48rpx;
+		border: 2rpx solid #0090ff;
+		width: 194rpx;
+		white-space: nowrap;
+
+		.text {
+			width: 100%;
+			text-align: center;
+			color: #0090ff;
+			white-space: nowrap;
+			text-overflow: ellipsis;
+			overflow: hidden;
+		}
+
+		&.active {
+			background-color: #0090ff;
+			.text {
+				color: #fff;
+			}
 		}
 	}
 }
