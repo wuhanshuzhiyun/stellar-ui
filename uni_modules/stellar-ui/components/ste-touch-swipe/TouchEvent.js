@@ -32,10 +32,7 @@ export default class TouchEvent {
 		this.moveX = moveX;
 		this.moveY = moveY;
 
-		return {
-			moveX,
-			moveY,
-		};
+		return { moveX, moveY };
 	}
 	// 滑动结束
 	touchEnd(e) {
@@ -70,10 +67,6 @@ export default class TouchEvent {
 			}
 		}
 
-		return {
-			direction,
-			moveX,
-			moveY,
-		};
+		return { direction, moveX, moveY };
 	}
 }

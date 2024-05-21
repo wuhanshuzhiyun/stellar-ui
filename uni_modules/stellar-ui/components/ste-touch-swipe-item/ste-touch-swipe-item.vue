@@ -5,6 +5,7 @@
 </template>
 
 <script>
+import { childMixin } from '../../utils/mixin.js';
 /**
  * ste-touch-swipe-item 手势切屏
  * @description 手势切屏组件
@@ -13,34 +14,12 @@
  */
 export default {
 	name: 'ste-touch-swipe-item',
-	options: {
-		virtualHost: true,
-	},
-	inject: ['_flickPanel'],
+	mixins: [childMixin('ste-touch-swipe')],
 	props: {
 		disabled: {
 			type: Boolean,
 			default: () => false,
 		},
-	},
-	data() {
-		return {
-			parent: {},
-		};
-	},
-	created() {
-		this.parent = this._flickPanel.getParent();
-	},
-	mounted() {
-		this.parent.updateChildren();
-	},
-	updated() {
-		this.parent.updateChildren();
-	},
-	beforeDestroy() {
-		this.$nextTick(() => {
-			this.parent.updateChildren();
-		});
 	},
 };
 </script>

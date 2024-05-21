@@ -9,12 +9,6 @@ import { childMixin } from '../../utils/mixin.js';
 export default {
 	name: 'ste-swiper-item',
 	mixins: [childMixin('ste-swiper')],
-	props: {
-		index: {
-			type: Number,
-			required: true,
-		},
-	},
 	data() {
 		return {
 			transformX: 0,
