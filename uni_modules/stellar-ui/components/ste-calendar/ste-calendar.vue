@@ -3,7 +3,14 @@
 		<view v-if="showTitle" class="calendar-title">{{ title }}</view>
 		<view class="week-head">
 			<view class="week-row">
-				<view class="week-item" v-for="(w, index) in cmpDates.weekTexts" :key="index">{{ w }}</view>
+				<view
+					class="week-item"
+					:class="{ weekend: index === 0 || index === 6 }"
+					v-for="(w, index) in cmpDates.weekTexts"
+					:key="index"
+				>
+					{{ w }}
+				</view>
 			</view>
 		</view>
 		<scroll-view
@@ -320,6 +327,9 @@ export default {
 		grid-gap: 0;
 		.week-item {
 			text-align: center;
+			&.weekend {
+				color: var(--calendar-color);
+			}
 		}
 		& + .week-row {
 			margin-top: 0;
@@ -397,9 +407,6 @@ export default {
 					cursor: default !important;
 				}
 				// #endif
-				&.weekend {
-					color: var(--calendar-color);
-				}
 
 				&.active,
 				&.start,
