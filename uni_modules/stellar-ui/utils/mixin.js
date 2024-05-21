@@ -1,3 +1,7 @@
+/**
+ * 父组件混入对象
+ * @param {String} name 父组件名称
+ */
 export function parentMixin(name) {
 	return {
 		provide() {
@@ -10,11 +14,13 @@ export function parentMixin(name) {
 				children: [],
 			};
 		},
-		mounted() {},
-		methods: {},
 	};
 }
 
+/**
+ * 子组件混入对象
+ * @param {String} parentName 父组件名称
+ */
 export function childMixin(parentName) {
 	return {
 		options: {

@@ -5,12 +5,10 @@
 </template>
 
 <script>
+import { childMixin } from '../../utils/mixin.js';
 export default {
 	name: 'ste-swiper-item',
-	options: {
-		virtualHost: true,
-	},
-	inject: ['_swiperComponent'],
+	mixins: [childMixin('ste-swiper')],
 	props: {
 		index: {
 			type: Number,
@@ -19,7 +17,6 @@ export default {
 	},
 	data() {
 		return {
-			parent: {},
 			transformX: 0,
 			transformY: 0,
 			transformZ: 0,
@@ -31,20 +28,6 @@ export default {
 				transform: `translate3d(${this.transformX}px,${this.transformY}px,${this.transformZ}px)`,
 			};
 		},
-	},
-	created() {
-		this.parent = this._swiperComponent.getParent();
-	},
-	mounted() {
-		this.parent.getChildren(this);
-	},
-	updated() {
-		this.parent.getChildren(this);
-	},
-	beforeDestroy() {
-		this.$nextTick(() => {
-			this.parent.getChildren(this);
-		});
 	},
 	methods: {
 		setTransform({ x = 0, y = 0, z = 0 }) {

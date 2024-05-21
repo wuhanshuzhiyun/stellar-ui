@@ -18,13 +18,13 @@
 		<view class="ste-swiper-dots" v-if="indicatorDots">
 			<view
 				class="swiper-dots-item"
-				v-for="(m, index) in childrenData"
+				v-for="(m, index) in children"
 				:key="index"
 				:class="{
 					active:
 						dataIndex === index ||
-						(index === 0 && dataIndex >= childrenData.length) ||
-						(index === childrenData.length && dataIndex === -1),
+						(index === 0 && dataIndex >= children.length) ||
+						(index === children.length && dataIndex === -1),
 				}"
 			/>
 		</view>
@@ -34,6 +34,8 @@
 <script>
 import utils from '../../utils/utils';
 import TouchEvent from '../ste-touch-swipe/TouchEvent.js';
+import { parentMixin } from '../../utils/mixin.js';
+
 /**
  * ste-swiper 轮播
  * @description 轮播组件
@@ -61,11 +63,7 @@ export default {
 	group: '导航组件',
 	title: 'Swiper 轮播组件',
 	name: 'ste-swiper',
-	provide() {
-		return {
-			_swiperComponent: { getParent: () => this },
-		};
-	},
+	mixins: [parentMixin('ste-swiper')],
 	props: {
 		// 当前所在滑块的 index
 		current: {
@@ -136,8 +134,6 @@ export default {
 			moveing: false,
 			reseting: false,
 			dataIndex: 0,
-			childrenComponents: {},
-			childrenData: [],
 			touch: new TouchEvent(),
 			boxWidth: null,
 			boxHeight: null,
@@ -173,9 +169,9 @@ export default {
 		cmpBoxStyle() {
 			let style = {};
 			if (this.direction === 'horizontal') {
-				style.gridTemplateColumns = `repeat(${this.childrenData.length || 'auto-fill'}, 100%)`;
+				style.gridTemplateColumns = `repeat(${this.children.length || 'auto-fill'}, 100%)`;
 			} else if (this.direction === 'vertical') {
-				style.gridTemplateRows = `repeat(${this.childrenData.length || 'auto-fill'}, 100%)`;
+				style.gridTemplateRows = `repeat(${this.children.length || 'auto-fill'}, 100%)`;
 			}
 			return style;
 		},
@@ -190,20 +186,20 @@ export default {
 			return { transform, transitionDuration: duration };
 		},
 		cmpStartComponent() {
-			return this.childrenData[0]?.component;
+			return this.children[0];
 		},
 		cmpEndComponent() {
-			return this.childrenData[this.childrenData.length - 1]?.component;
+			return this.children[this.children.length - 1];
 		},
 	},
 	watch: {
 		current: {
 			handler(v) {
-				if (!this.childrenData.length) {
+				if (!this.children.length) {
 					this.dataIndex = v;
 					return;
 				}
-				this.dataIndex = v < 0 ? 0 : v >= this.childrenData.length ? this.childrenData.length - 1 : v;
+				this.dataIndex = v < 0 ? 0 : v >= this.children.length ? this.children.length - 1 : v;
 			},
 			immediate: true,
 		},
@@ -213,12 +209,15 @@ export default {
 			},
 			immediate: true,
 		},
-		childrenData: {
+		children: {
 			handler() {
 				this.setTransform();
 			},
 			immediate: true,
 		},
+	},
+	mounted() {
+		this.init();
 	},
 	beforeDestroy() {
 		clearTimeout(this.childrenTimeout);
@@ -226,16 +225,12 @@ export default {
 		clearInterval(this.autoplayTimeout);
 	},
 	methods: {
-		getChildren(chil) {
-			this.childrenComponents[chil.index] = chil;
+		init() {
 			clearTimeout(this.childrenTimeout);
 			this.childrenTimeout = setTimeout(async () => {
 				const boxEl = await utils.querySelector('.swipe-content-view', this);
 				this.boxWidth = boxEl.width;
 				this.boxHeight = boxEl.height;
-				this.childrenData = utils
-					.getChildrenProps(this, 'ste-swiper-item')
-					.map((props, index) => ({ index, component: this.childrenComponents[index] }));
 				this.setTransform();
 				if (this.initializing) {
 					this.resetBoundary();
@@ -247,24 +242,24 @@ export default {
 			}, 25);
 		},
 		isMover(moveX = 0, moveY = 0) {
-			if (this.childrenData.length < 2) return;
+			if (this.children.length < 2) return;
 			if (this.circular) return true;
 			if (
 				this.direction === 'horizontal' &&
-				((this.dataIndex === 0 && moveX > 0) || (this.dataIndex === this.childrenData.length - 1 && moveX < 0))
+				((this.dataIndex === 0 && moveX > 0) || (this.dataIndex === this.children.length - 1 && moveX < 0))
 			) {
 				return false;
 			}
 			if (
 				this.direction === 'vertical' &&
-				((this.dataIndex === 0 && moveY > 0) || (this.dataIndex === this.childrenData.length - 1 && moveY < 0))
+				((this.dataIndex === 0 && moveY > 0) || (this.dataIndex === this.children.length - 1 && moveY < 0))
 			) {
 				return false;
 			}
 			return true;
 		},
 		setTransform(moveX = 0, moveY = 0) {
-			if (this.childrenData?.length < 2) return;
+			if (this.children?.length < 2) return;
 			const bool = this.isMover(moveX, moveY);
 			if (!bool) return;
 			if (this.direction === 'horizontal') {
@@ -277,7 +272,7 @@ export default {
 		},
 		onTouchstart(e) {
 			if (this.disabled) return;
-			if (this.childrenData?.length < 2) return;
+			if (this.children?.length < 2) return;
 			this.moveing = true;
 			clearInterval(this.autoplayTimeout);
 			this.resetBoundary();
@@ -285,7 +280,7 @@ export default {
 		},
 		onTouchmove(e) {
 			if (this.disabled) return;
-			if (this.childrenData?.length < 2) return;
+			if (this.children?.length < 2) return;
 			const res = this.touch.touchMove(e);
 			if (!res) return;
 			this.moveing = true;
@@ -324,9 +319,9 @@ export default {
 		setAutoplay() {
 			clearInterval(this.autoplayTimeout);
 			if (!this.autoplay) return;
-			if (this.childrenData?.length < 2) return;
+			if (this.children?.length < 2) return;
 			this.autoplayTimeout = setInterval(() => {
-				let next = this.dataIndex + 1 <= this.childrenData.length - 1 ? this.dataIndex + 1 : 0;
+				let next = this.dataIndex + 1 <= this.children.length - 1 ? this.dataIndex + 1 : 0;
 				if (this.circular) {
 					next = this.dataIndex + 1;
 				}
@@ -342,7 +337,7 @@ export default {
 			if (!this.circular) return;
 			const startComponent = this.cmpStartComponent;
 			const endComponent = this.cmpEndComponent;
-			const length = this.childrenData.length;
+			const length = this.children.length;
 			const width = this.boxWidth;
 			const height = this.boxHeight;
 			if (this.dataIndex <= 0) {
@@ -363,12 +358,12 @@ export default {
 		},
 		resetBoundary() {
 			this.reseting = true;
-			if (this.dataIndex === -1) this.dataIndex = this.childrenData.length - 1;
-			if (this.dataIndex === this.childrenData.length) this.dataIndex = 0;
+			if (this.dataIndex === -1) this.dataIndex = this.children.length - 1;
+			if (this.dataIndex === this.children.length) this.dataIndex = 0;
 			this.$emit('change', this.dataIndex);
 
-			const length = this.childrenData.length;
-			this.childrenData.forEach(({ component }, index) => {
+			const length = this.children.length;
+			this.children.forEach((component, index) => {
 				let x = 0,
 					y = 0;
 				if (this.circular) {
@@ -384,7 +379,7 @@ export default {
 			});
 			setTimeout(() => {
 				this.reseting = false;
-			}, 20);
+			}, 100);
 		},
 	},
 };
