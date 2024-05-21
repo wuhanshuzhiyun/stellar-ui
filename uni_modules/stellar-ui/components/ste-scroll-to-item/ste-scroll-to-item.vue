@@ -21,7 +21,7 @@ export default {
 	props: {
 		index: {
 			type: Number,
-			default: () => undefined,
+			required: true,
 		},
 	},
 	data() {
@@ -42,10 +42,6 @@ export default {
 	methods: {
 		getData() {
 			if (!this.parent) return;
-			if (this.index === undefined) {
-				console.error('ste-scroll-to-item组件的index值不能为空！');
-				return;
-			}
 			this.$nextTick(async () => {
 				this.parent.updateChildren({ index: this.index, component: this });
 			});

@@ -3,8 +3,6 @@
 		class="ste-scroll-to-root"
 		scroll-y
 		scroll-anchoring
-		scroll-with-animation
-		:scroll-animation-duration="300"
 		:scroll-top="scrollTop"
 		:style="[cmpRootStyle]"
 		@scroll="onScroll"
@@ -123,7 +121,7 @@ export default {
 			clearTimeout(this._scrollTypeTimeout);
 			this._scrollTypeTimeout = setTimeout(() => {
 				this.scrollType = 'init';
-			}, 600);
+			}, 250);
 		},
 		setScrollTopByIndex(index) {
 			clearTimeout(this._setScrollTopTimeout);
