@@ -24,6 +24,35 @@
 				</view>
 			</view>
 			<view class="demo-item">
+				<view class="title">按钮类型</view>
+				<view class="item-block">
+					<view class="menu-item">
+						<view>
+							<ste-dropdown-menu title="选择项1" type="round" value="2">
+								<ste-dropdown-menu-item value="1" title="选项名称" />
+								<ste-dropdown-menu-item value="2" title="选项名称" />
+								<ste-dropdown-menu-item value="3" title="选项名称" />
+								<ste-dropdown-menu-item value="4" title="选项名称" />
+								<ste-dropdown-menu-item value="5" title="选项名称" />
+								<ste-dropdown-menu-item value="6" title="选项名称" />
+								<ste-dropdown-menu-item value="7" title="选项名称" />
+							</ste-dropdown-menu>
+						</view>
+						<view>
+							<ste-dropdown-menu title="选择项2" type="round" :max="2">
+								<ste-dropdown-menu-item value="1" title="选项名称名称" />
+								<ste-dropdown-menu-item value="2" title="选项名称" />
+								<ste-dropdown-menu-item value="3" title="选项名称" />
+								<ste-dropdown-menu-item value="4" title="选项名称名称名称" />
+								<ste-dropdown-menu-item value="5" title="选项名称" />
+								<ste-dropdown-menu-item value="6" title="选项名称" />
+								<ste-dropdown-menu-item value="7" title="选项名称" />
+							</ste-dropdown-menu>
+						</view>
+					</view>
+				</view>
+			</view>
+			<view class="demo-item">
 				<view class="title">选中颜色 & 未选中颜色</view>
 				<view class="item-block">
 					<view class="menu-item">

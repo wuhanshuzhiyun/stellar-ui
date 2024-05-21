@@ -146,7 +146,7 @@ export default {
 	mounted() {},
 	computed: {
 		cmpRootClass() {
-			let classArr = [this.direction, this.showMenu ? 'open' : 'close'];
+			let classArr = [this.direction, this.showMenu ? 'open' : 'close', this.type];
 			return classArr.join(' ');
 		},
 		cmpRootStyle() {
@@ -169,6 +169,7 @@ export default {
 					style.height = addPx(windowHeight - this.menuRootQuery.bottom + this.menuRootQuery.height);
 				}
 			}
+
 			return style;
 		},
 		cmpMenuContentStyle() {
@@ -338,6 +339,20 @@ export default {
 			transition: all var(--duration);
 			transition-duration: var(--duration);
 			transform: translateY(-100%);
+		}
+	}
+
+	&.round {
+		.menu-item-content {
+			padding: 24rpx;
+			background-color: #fff;
+			border-top: solid 2rpx #e1e1ee;
+
+			display: flex;
+			justify-content: space-between;
+			flex-flow: wrap;
+
+			row-gap: 20rpx;
 		}
 	}
 
