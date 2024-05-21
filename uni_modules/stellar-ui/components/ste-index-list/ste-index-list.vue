@@ -15,7 +15,7 @@
 
 <script>
 import { parentMixin } from '../../utils/mixin.js';
-import mixin from './mixin.js';
+import mixin from '../ste-scroll-to/mixin.js';
 
 function isNum(num) {
 	return typeof num === 'number' && !isNaN(num);
@@ -31,9 +31,18 @@ function isNum(num) {
  */
 export default {
 	group: '导航组件',
-	title: 'ScrollTo 滚动锚点',
-	name: 'ste-scroll-to',
-	mixins: [parentMixin('ste-scroll-to'), mixin],
+	title: 'IndexList 索引列表',
+	name: 'ste-index-list',
+	mixins: [parentMixin('ste-index-list'), mixin],
+	computed: {
+		titles() {
+			const children = this.children;
+			console.log(children);
+			const list = children.map((c) => c.title);
+			console.log(list);
+			return list;
+		},
+	},
 };
 </script>
 
@@ -41,6 +50,5 @@ export default {
 .ste-scroll-to-root {
 	width: 100%;
 	height: var(--scroll-to-height);
-	position: relative;
 }
 </style>

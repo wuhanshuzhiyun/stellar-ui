@@ -8,13 +8,19 @@
 import utils from '../../utils/utils.js';
 import { childMixin } from '../../utils/mixin.js';
 /**
- * ste-scroll-to-item 锚点项
+ * ste-index-item 锚点项
  * @description 锚点项
  * @tutorial https://stellar-ui.intecloud.com.cn/pc/index/index?name=ste-scroll-to
  */
 export default {
-	name: 'ste-scroll-to-item',
-	mixins: [childMixin('ste-scroll-to')],
+	name: 'ste-index-item',
+	mixins: [childMixin('ste-index-list')],
+	props: {
+		title: {
+			type: String,
+			required: true,
+		},
+	},
 };
 </script>
 
