@@ -83,6 +83,7 @@ export default {
 				style['animationTimingFunction'] = 'steps(8)';
 			}
 			if (this.type == 2) {
+				style['border'] = `${utils.formatPx(4)} solid`;
 				style['borderColor'] = (this.color + ' ').repeat(3) + 'transparent';
 			}
 			return style;
@@ -139,7 +140,6 @@ export default {
 	.loading-type-2 {
 		width: 100%;
 		height: 100%;
-		border: 3rpx solid;
 		border-radius: 50%;
 		animation: ste-circular 1s linear infinite;
 	}
