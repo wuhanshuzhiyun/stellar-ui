@@ -101,11 +101,11 @@ export default {
 		},
 		indicatorColor: {
 			type: String,
-			default: () => 'rgba(0,0,0,0.3)',
+			default: () => '#fff',
 		},
 		indicatorActiveColor: {
 			type: String,
-			default: () => '#000000',
+			default: () => '#fff',
 		},
 		autoplay: {
 			type: Boolean,
@@ -410,15 +410,16 @@ export default {
 		display: flex;
 		align-items: center;
 		.swiper-dots-item {
-			width: 18rpx;
-			height: 18rpx;
-			border-radius: 50%;
+			width: 8rpx;
+			height: 8rpx;
+			border-radius: 6rpx;
 			background-color: var(--swiper-indicator-color);
 			&.active {
+				width: 24rpx;
 				background-color: var(--swiper-indicator-active-color);
 			}
 			& + .swiper-dots-item {
-				margin-left: 6rpx;
+				margin-left: 8rpx;
 			}
 		}
 	}

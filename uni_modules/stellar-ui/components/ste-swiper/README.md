@@ -134,8 +134,8 @@ export default{
 | `duration`						| 切换动画时常																| `Number`					| `300`							| -																															| -				|
 | `swipeThreshold`			| 滑动灵敏度（0-1之间的小数，数值越小越灵敏）	| `Number`					| `0.35`						| -																															| -				|
 | `indicatorDots`				| 是否显示面板指示点													| `Boolean`					| `false`						| -																															| -				|
-| `indicatorColor`			| 指示点颜色																	| `String`					| `rgba(0,0,0,0.3)`	| -																															| -				|
-| `indicatorActiveColor`| 当前选中的指示点颜色												| `String`					| `#000000`					| -																															| -				|
+| `indicatorColor`			| 指示点颜色																	| `String`					| `#fff`	| -																															| -				|
+| `indicatorActiveColor`| 当前选中的指示点颜色												| `String`					| `#fff`					| -																															| -				|
 | `autoplay`						| 自动切换																		| `Boolean`					| `false`						| -																															| -				|
 | `interval`						| 自动切换时间间隔														| `Number`					| `3000`						| -																															| -				|
 | `circular`						| 首尾衔接滑动																| `Boolean`					| `false`						| -																															| -				|
