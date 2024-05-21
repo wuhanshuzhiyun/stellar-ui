@@ -166,7 +166,6 @@ export default {
 	onShow() {
 		const uuid = this.initUUID();
 		this.commentParams.uuid = uuid;
-		console.log(this.datas);
 	},
 	methods: {
 		initUUID() {
