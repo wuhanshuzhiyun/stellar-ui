@@ -92,7 +92,7 @@ export default {
 			style['width'] = utils.formatPx(Number(this.size));
 			style['height'] = utils.formatPx(Number(this.size));
 			if (this.value) {
-				style['transform'] = `translatex(${utils.formatPx(Number(this.size + 2))})`;
+				style['transform'] = `translatex(${utils.formatPx(Number(this.size) + 2)})`;
 			} else {
 				style['marginLeft'] = utils.formatPx(2);
 			}
