@@ -101,7 +101,7 @@
 		<ste-popup :show.sync="showTop" height="300" width="100vw" position="top">
 			<view class="popup-content">上</view>
 		</ste-popup>
-		<ste-popup :show.sync="showBottom" height="300" width="100vw" position="bottom">
+		<ste-popup :show.sync="showBottom" height="300" width="100vw" position="bottom" round>
 			<view class="popup-content">下</view>
 		</ste-popup>
 		<ste-popup :show.sync="showLeft" width="300" height="100vh" position="left">

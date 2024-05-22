@@ -14,9 +14,12 @@
 				</scroll-view>
 				<slot v-else name="default"></slot>
 			</template>
-			<view class="close-icon-box" @click="close" v-if="showClose">
-				<ste-icon code="&#xe6a0;" size="40"></ste-icon>
+			<view class="close-icon-box" @click="close" v-if="showClose && position != 'center'">
+				<ste-icon code="&#xe6a0;" size="40" color="#666"></ste-icon>
 			</view>
+		</view>
+		<view class="close-icon-box-center" @click="close" v-if="showClose && position == 'center' && showContent">
+			<ste-icon code="&#xe6a0;" size="40" color="#fff"></ste-icon>
 		</view>
 	</view>
 </template>
@@ -138,6 +141,7 @@ export default {
 				zIndex: this.zIndex,
 				display: this.pageDisplay,
 				'--content-border-radius': utils.formatPx(this.round ? DEFAULT_BORDER_RADIUS : 0),
+				'--content-height': utils.addUnit(this.height / 2),
 			};
 		},
 		cmpContentStyle() {
@@ -272,6 +276,15 @@ export default {
 	justify-content: center;
 	align-items: center;
 	touch-action: none;
+
+	.close-icon-box-center {
+		position: absolute;
+		color: #fff;
+		top: calc(50% + var(--content-height) + 40rpx);
+		left: 50%;
+		transform: translate(-50%, 0);
+		display: flex;
+	}
 }
 
 .content {
@@ -281,8 +294,8 @@ export default {
 	position: absolute;
 	.close-icon-box {
 		position: absolute;
-		right: 16rpx;
-		top: 16rpx;
+		right: 18rpx;
+		top: 18rpx;
 		display: flex;
 	}
 	&.center {
