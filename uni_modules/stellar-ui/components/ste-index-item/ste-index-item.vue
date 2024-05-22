@@ -8,7 +8,11 @@
 				<view v-else class="index-item-title" :class="{ active }">{{ title }}</view>
 			</block>
 		</slot>
-		<slot />
+		<slot>
+			<view class="index-item-text-list">
+				<view class="index-item-text" v-for="(text, i) in list" :key="i">{{ text }}</view>
+			</view>
+		</slot>
 	</view>
 </template>
 
@@ -19,6 +23,8 @@ import { childMixin } from '../../utils/mixin.js';
  * ste-index-item 锚点项
  * @description 锚点项
  * @tutorial https://stellar-ui.intecloud.com.cn/pc/index/index?name=ste-scroll-to
+ * @property {String}	title 分组标题
+ * @property {Array<String>}	list 分组字符串列表
  */
 export default {
 	name: 'ste-index-item',
@@ -27,6 +33,10 @@ export default {
 		title: {
 			type: String,
 			required: true,
+		},
+		list: {
+			type: Array,
+			default: () => [],
 		},
 	},
 	data() {
@@ -61,6 +71,20 @@ export default {
 		color: var(--ste-index-list-inactive-color);
 		&.active {
 			color: var(--ste-index-list-active-color);
+		}
+	}
+	.index-item-text-list {
+		padding: 0 32rpx;
+		background-color: #fff;
+		.index-item-text {
+			width: 100%;
+			height: 92rpx;
+			line-height: 92rpx;
+			font-family: PingFang SC, PingFang SC;
+			font-weight: 400;
+			font-size: 32rpx;
+			color: #252525;
+			border-bottom: 2rpx solid #f9f9f9;
 		}
 	}
 }
