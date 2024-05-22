@@ -212,6 +212,7 @@ export default {
 			style['background'] = this.cmpChecked ? this.cmpCheckedColor : '#FFFFFF';
 			style['width'] = utils.formatPx(this.cmpIconSize);
 			style['height'] = utils.formatPx(this.cmpIconSize);
+			style['lineHeight'] = utils.formatPx(this.cmpIconSize);
 			// #ifdef H5
 			if (this.cmpDisabled || this.cmpReadonly) {
 				style['cursor'] = 'not-allowed';
@@ -276,7 +277,7 @@ export default {
 	.input-icon {
 		display: flex;
 		justify-content: center;
-		align-items: center;
+		align-items: flex-end;
 	}
 	.icon {
 		pointer-events: all;

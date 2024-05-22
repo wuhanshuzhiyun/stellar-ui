@@ -115,10 +115,10 @@ export default {
 <style lang="scss" scoped>
 .ste-dropdown-menu-item-root {
 	&.down {
-		border-top: solid 2rpx #e1e1ee;
+		border-top: solid 2rpx #f9f9f9;
 	}
 	&.up {
-		border-bottom: solid 2rpx #e1e1ee;
+		border-bottom: solid 2rpx #f9f9f9;
 	}
 	background-color: #ffffff;
 	padding: 24rpx;

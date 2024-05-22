@@ -16,7 +16,7 @@
 		<view class="menu-box" @click="handleMenuClick" @touchmove.stop.prevent="touchmove" @wheel.stop.prevent>
 			<text class="title">{{ menuTitle || title }}</text>
 			<view class="menu-title-icon">
-				<ste-icon code="&#xe699;" size="32"></ste-icon>
+				<ste-icon code="&#xe699;" size="14" color="#bbbbbb"></ste-icon>
 			</view>
 		</view>
 		<view
@@ -346,7 +346,7 @@ export default {
 		.menu-item-content {
 			padding: 24rpx;
 			background-color: #fff;
-			border-top: solid 2rpx #e1e1ee;
+			border-top: solid 2rpx #f9f9f9;
 
 			display: flex;
 			justify-content: space-between;

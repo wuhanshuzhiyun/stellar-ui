@@ -117,7 +117,7 @@ export default {
 		// 各列中，单个选项的高度
 		itemHeight: {
 			type: [String, Number],
-			default: 36,
+			default: 43,
 		},
 		// 取消按钮的文字
 		cancelText: {
