@@ -51,6 +51,152 @@
 </view>
 ```
 
+#### 自定义下拉内容
+如果不使用`ste-dropdown-menu-item`，可自定义插槽内容实现更多样式
+```html
+<template>
+<view class="menu-item">
+	<view>
+		<ste-dropdown-menu value="2" title="服务" ref="steDropMenu">
+			<view class="custom-menu-box">
+				<view class="menu-box">
+					<view class="left">
+						<view
+							v-for="(m, i) in customMenuData"
+							:class="i == m1 ? 'active' : ''"
+							@click="choose('1', i)"
+						>
+							{{ m.name }}
+						</view>
+					</view>
+					<view class="right">
+						<view
+							v-for="(m, i) in customMenuData[m1].child"
+							:class="i == m2 ? 'active' : ''"
+							@click="choose('2', i)"
+						>
+							{{ m }}
+						</view>
+					</view>
+				</view>
+				<view class="action-box">
+					<ste-button
+						width="320"
+						background="rgba(0,0,0,0)"
+						borderColor="#0090FF"
+						color="#0090FF"
+						@click="confirm"
+					>
+						重置
+					</ste-button>
+					<ste-button width="320" @click="confirm">确认</ste-button>
+				</view>
+			</view>
+		</ste-dropdown-menu>
+	</view>
+</view>
+</template>
+<script>
+export default {
+	data() {
+		return {
+			customMenuData: [
+				{ name: '服务台业务', child: ['雨伞租借', '礼品包装', '电费代收', '便民药箱', '赠品发放'] },
+				{ name: '客户心声', child: ['雨伞租借2', '礼品包装2', '电费代收2', '便民药箱2', '赠品发放3'] },
+				{ name: '招商服务', child: ['雨伞租借3', '礼品包装3', '电费代收3', '便民药箱3', '赠品发放3'] },
+			],
+			m1: 0,
+			m2: 0,
+		}
+	},
+	methods: {
+			choose(type, v) {
+		if (type == '1') {
+			this.m1 = v;
+			this.m2 = 0;
+		} else {
+			this.m2 = v;
+		}
+	},
+	confirm() {
+		this.$refs.steDropMenu.close();
+	},
+	}
+}
+</script>
+<style lang='scss'>
+.menu-item {
+	display: flex;
+	padding: 0 20rpx;
+	width: 100%;
+	box-shadow: 0 0 10px #ddd;
+	> view {
+		flex: 1;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+	}
+
+	.custom-menu-box {
+		background-color: #fff;
+		padding-top: 24rpx;
+
+		.menu-box {
+			width: 100%;
+			display: flex;
+			margin-bottom: 56rpx;
+			font-size: 28rpx;
+			.left {
+				width: 236rpx;
+				background-color: #f9f9f9;
+
+				> view {
+					height: 90rpx;
+					display: flex;
+					align-items: center;
+					justify-content: center;
+
+					&.active {
+						background-color: #fff;
+						color: #0090ff;
+					}
+				}
+			}
+
+			.right {
+				flex: 1;
+				margin-left: 26rpx;
+				margin-right: 18rpx;
+				background-color: #fff;
+				> view {
+					height: 90rpx;
+					display: flex;
+					align-items: center;
+
+					&:not(:last-child) {
+						border-bottom: 2rpx solid #f9f9f9;
+					}
+
+					&.active {
+						color: #0090ff;
+						font-weight: bold;
+					}
+				}
+			}
+		}
+
+		.action-box {
+			padding: 0 40rpx;
+			display: flex;
+			justify-content: space-between;
+
+			padding-bottom: 20rpx;
+		}
+	}
+}
+</style>
+```
+
 
 #### 选中颜色 & 未选中颜色用
 ```html
