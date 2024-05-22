@@ -79,7 +79,7 @@ export default {
 			let style = {};
 			style['width'] = utils.formatPx(Number(this.size) * 2 + 4);
 			style['height'] = utils.formatPx(Number(this.size) + 4);
-			style['borderRadius'] = utils.formatPx(this.size);
+			style['borderRadius'] = utils.formatPx((Number(this.size) + 4) / 2);
 			style['background'] = this.value ? this.activeColor : this.inactiveColor;
 			style['opacity'] = this.disabled ? '0.6' : '1';
 			// #ifdef H5
@@ -92,9 +92,9 @@ export default {
 			style['width'] = utils.formatPx(Number(this.size));
 			style['height'] = utils.formatPx(Number(this.size));
 			if (this.value) {
-				style['transform'] = `translatex(${utils.formatPx(Number(this.size))})`;
+				style['transform'] = `translatex(${utils.formatPx(Number(this.size + 2))})`;
 			} else {
-				style['marginLeft'] = utils.formatPx(4);
+				style['marginLeft'] = utils.formatPx(2);
 			}
 			return style;
 		},
