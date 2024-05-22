@@ -4,26 +4,12 @@
 
 {{compatibility}}
 
-#### 基础用法
 
-```html
-<template>
-	<view class="page">
-		<page-nav :autoBack="true" backColor="#000" titleAlignment="2" title="索引列表"></page-nav>
-		<view class="content">
-			<ste-index-list>
-				<ste-index-item v-for="item in data" :key="item.title" :title="item.title">
-					<view class="row-item" v-for="(m, i) in item.list" :key="i">{{ m }}</view>
-				</ste-index-item>
-			</ste-index-list>
-		</view>
-	</view>
-</template>
-
-<script>
-export default {
-	data() {
-		return {
+### Javascript 示例数据
+```javascript
+export default{
+	data(){
+		return{
 			data: [
 				{
 					title: '',
@@ -58,49 +44,102 @@ export default {
 					list: ['列表G1', '列表G2', '列表G3', '列表G4', '列表G5', '列表G6', '列表G7', '列表G8'],
 				},
 			],
-		};
-	},
-	methods: {},
-};
-</script>
-
-<style lang="scss" scoped>
-.page {
-	.content {
-		background: #fbfbfc;
-		padding: 0;
-		.row-item {
-			height: 90rpx;
-			line-height: 90rpx;
-			padding: 0 24rpx;
-			& + .row-item {
-				border-top: 1px solid #ddd;
-			}
 		}
+	}
+}
+```
+
+
+#### 基础用法
+- 标签`ste-index-list`为外层盒子
+- 标签`ste-index-item`为索引分组
+	- 属性`title`为当前索引分组标题
+	- 属性`list`为当前索引分组内容列表
+```html
+<ste-index-list>
+	<ste-index-item v-for="(item, index) in data" :key="index" :title="item.title" :list="item.list" />
+</ste-index-list>
+
+```
+#### 自定义颜色/标题/内容
+- 标签`ste-index-list`为外层盒子
+	- 属性`inactiveColor`为索引分组标题未选中颜色
+	- 属性`activeColor`为索引分组标题选中颜色
+- 标签`ste-index-item`为索引分组
+	- 插槽`title`为当前索引分组标题
+	- 插槽`default`为当前索引分组内容列表
+```html
+<ste-index-list inactiveColor="#0f0" activeColor="#f0f">
+	<ste-index-item v-for="item in data" :key="item.title" :title="item.title">
+		<template v-slot:title>
+			<view class="custom-title" v-show="item.title">{{ item.title }}</view>
+		</template>
+		<view class="row-item" v-for="(m, i) in item.list" :key="i">
+			<ste-icon code="&#xe677;" />
+			{{ m }}
+		</view>
+	</ste-index-item>
+</ste-index-list>
+<style lang="scss" scoped>
+.custom-title {
+	height: 60rpx;
+	line-height: 60rpx;
+	padding: 0 32rpx;
+	background-color: #f00;
+	color: #fff;
+}
+.row-item {
+	height: 92rpx;
+	line-height: 92rpx;
+	padding: 0 32rpx;
+
+	& + .row-item {
+		border-top: 1px solid #ddd;
 	}
 }
 </style>
 ```
 
 
-
 ### API
 
-#### ScrollTo Props
+#### IndexList Props
 
-| 属性名	| 说明																						|类型								|默认值		|可选值	| 支持版本	|
-| ---			|---																						| ---								| ---			| ---		| ---			|
-| `active`| 当前激活的索引下标，支持sync双向绑定，默认值0	| `Number`					| `0`			| -			| -				|
-| `height`| 高度，默认值100%																| `String`/`Number`	| `"100%"`| -			| -				|
-| `sticky`| 默认`title`是否粘性布局												| `Boolean`					| `true`	| -			| -				|
+| 属性名					| 说明																						|类型								|默认值			|可选值	| 支持版本	|
+| ---							|---																						| ---								| ---				| ---		| ---			|
+| `active`				| 当前激活的索引下标，支持sync双向绑定，默认值0		| `Number`					| `0`				| -			| -				|
+| `height`				| 高度，默认值100%																| `String`/`Number`	| `"100%"`	| -			| -				|
+| `sticky`				| `title`是否粘性布局，自定义`title`插槽时不生效	| `Boolean`					| `true`		| -			| -				|
+| `inactiveColor`	| 右边锚点状态非激活时的颜色											| `String`					| `#666666`	| -			| -				|
+| `activeColor`		| 右边锚点状态激活时的颜色												| `String`					| `#FF1A00`	| -			| -				|
 
-#### ScrollTo Events
-| 事件名		|说明						|事件参数										|支持版本	|
-|---			|---						|---												|---			|
-| `change`| 滚动锚点时触发	| `active`: 当前激活的锚点下标	| -				|
+#### IndexList Events
+| 事件名	|说明						|事件参数									|支持版本	|
+|---			|---						|---											|---			|
+| `change`| 滚动列表时触发	| `active`: 当前激活的索引	| -				|
 
-#### ScrollTo Method
+#### IndexList Method
 | 方法名| 说明															|支持版本	|
 | ---		| ---															|---			|
 | `init`| 初始化锚点信息，在渲染完成后调用	| -				|
+
+#### IndexList Slots
+| 方法名		| 说明						|支持版本	|
+| ---				| ---						|---			|
+| `default`	| 自定义列表内容	|-					|
+
+#### IndexItem Props
+
+| 属性名		| 说明			|类型			|默认值	|可选值	| 支持版本	|
+| ---			|---			| ---			| ---		| ---		| ---			|
+| `title`	| 分组标题，这是必需的	| `String`| `""`	| -			| -				|
+| `list`	| 分组字符串列表	| `Array<String>`| `""`	| -			| -				|
+
+#### IndexItem Slots
+| 方法名		| 说明						|支持版本	|
+| ---				| ---						|---			|
+| `default`	| 自定义列表内容	|-				|
+| `title`		| 自定义标题内容	|-				|			
+
+
 {{xuyajun}}

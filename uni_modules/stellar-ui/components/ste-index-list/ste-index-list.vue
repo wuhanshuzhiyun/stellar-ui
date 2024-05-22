@@ -26,6 +26,8 @@ import mixin from '../ste-scroll-to/mixin.js';
  * @property {Number}					active 当前激活的索引下标，支持sync双向绑定，默认值0
  * @property {String|Number}	height 高度，默认值100%
  * @property {Boolean}	sticky 默认标题是否粘性布局
+ * @property {String}	inactiveColor 右边锚点状态非激活时的颜色
+ * @property {String}	activeColor 右边锚点状态激活时的颜色	
  * @event {Function}					change 滚动索引列表时触发
  */
 export default {
