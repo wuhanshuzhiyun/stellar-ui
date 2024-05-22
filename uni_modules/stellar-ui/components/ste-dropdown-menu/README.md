@@ -22,6 +22,36 @@
 </view>
 ```
 
+#### 按钮类型
+- 默认是列表形式展示选项
+- 当`type`值为`round`时选项为按钮形式
+>>> 推荐选项名称字数小于6个字时使用按钮类型，过长的字会导致截断
+```html
+<view>
+	<ste-dropdown-menu title="选择项1" type="round" value="2">
+		<ste-dropdown-menu-item value="1" title="选项名称" />
+		<ste-dropdown-menu-item value="2" title="选项名称" />
+		<ste-dropdown-menu-item value="3" title="选项名称" />
+		<ste-dropdown-menu-item value="4" title="选项名称" />
+		<ste-dropdown-menu-item value="5" title="选项名称" />
+		<ste-dropdown-menu-item value="6" title="选项名称" />
+		<ste-dropdown-menu-item value="7" title="选项名称" />
+	</ste-dropdown-menu>
+</view>
+<view>
+	<ste-dropdown-menu title="选择项2" type="round" :max="2">
+		<ste-dropdown-menu-item value="1" title="选项名称名称" />
+		<ste-dropdown-menu-item value="2" title="选项名称" />
+		<ste-dropdown-menu-item value="3" title="选项名称" />
+		<ste-dropdown-menu-item value="4" title="选项名称名称名称" />
+		<ste-dropdown-menu-item value="5" title="选项名称" />
+		<ste-dropdown-menu-item value="6" title="选项名称" />
+		<ste-dropdown-menu-item value="7" title="选项名称" />
+	</ste-dropdown-menu>
+</view>
+```
+
+
 #### 选中颜色 & 未选中颜色用
 ```html
 <view>
