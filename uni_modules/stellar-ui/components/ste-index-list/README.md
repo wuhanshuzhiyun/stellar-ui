@@ -1,3 +1,12 @@
+# IndexList 索引列表
+
+通过折叠面板收纳内容区域。
+
+{{compatibility}}
+
+#### 基础用法
+
+```html
 <template>
 	<view class="page">
 		<page-nav :autoBack="true" backColor="#000" titleAlignment="2" title="索引列表"></page-nav>
@@ -71,3 +80,27 @@ export default {
 	}
 }
 </style>
+```
+
+
+
+### API
+
+#### ScrollTo Props
+
+| 属性名	| 说明																						|类型								|默认值		|可选值	| 支持版本	|
+| ---			|---																						| ---								| ---			| ---		| ---			|
+| `active`| 当前激活的索引下标，支持sync双向绑定，默认值0	| `Number`					| `0`			| -			| -				|
+| `height`| 高度，默认值100%																| `String`/`Number`	| `"100%"`| -			| -				|
+| `sticky`| 默认`title`是否粘性布局												| `Boolean`					| `true`	| -			| -				|
+
+#### ScrollTo Events
+| 事件名		|说明						|事件参数										|支持版本	|
+|---			|---						|---												|---			|
+| `change`| 滚动锚点时触发	| `active`: 当前激活的锚点下标	| -				|
+
+#### ScrollTo Method
+| 方法名| 说明															|支持版本	|
+| ---		| ---															|---			|
+| `init`| 初始化锚点信息，在渲染完成后调用	| -				|
+{{xuyajun}}

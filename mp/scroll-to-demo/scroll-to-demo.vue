@@ -40,7 +40,7 @@ export default {
 	mounted() {
 		setTimeout(() => {
 			this.$refs.scrollTo.init();
-		}, 1000);
+		}, 500);
 	},
 	methods: {},
 };

@@ -31,7 +31,7 @@ export default {
 	watch: {
 		active: {
 			handler(v) {
-				this.dataActive = v;
+				if (this.dataActive !== v) this.dataActive = v;
 			},
 			immediate: true,
 		},
@@ -111,12 +111,17 @@ export default {
 				this._scrollTop = top || 0;
 			}, 50);
 		},
+		setActive(index) {
+			if (this.dataActive === index) return;
+			this.dataActive = index;
+			this.$emit('change', index);
+			this.$emit('update:active', index);
+		},
 		setActiveByTop(scrollTop) {
 			clearTimeout(this._setActiveTimeout);
 			this._setActiveTimeout = setTimeout(() => {
 				if (!scrollTop) {
-					this.$emit('change', 0);
-					this.$emit('update:active', 0);
+					this.setActive(0);
 					return;
 				}
 				const childrenTops = this.childrenTops;
@@ -125,13 +130,11 @@ export default {
 					if (!isNum(top)) continue;
 					const next = childrenTops[i + 1];
 					if (!isNum(next) || next === top || (scrollTop >= top && next > scrollTop)) {
-						if (this.dataActive === i) return;
-						this.$emit('change', i);
-						this.$emit('update:active', i);
+						this.setActive(i);
 						return;
 					}
 				}
-			}, 50);
+			}, 20);
 		},
 		onScroll({ detail: { scrollTop } }) {
 			this._scrollTop = scrollTop;

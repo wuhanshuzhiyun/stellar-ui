@@ -1,5 +1,13 @@
 <template>
 	<view class="ste-scroll-to-item-root">
+		<slot name="title">
+			<block v-if="title">
+				<ste-sticky v-if="sticky">
+					<view class="index-item-title">{{ title }}</view>
+				</ste-sticky>
+				<view v-else class="index-item-title">{{ title }}</view>
+			</block>
+		</slot>
 		<slot />
 	</view>
 </template>
@@ -21,11 +29,28 @@ export default {
 			required: true,
 		},
 	},
+	data() {
+		return {
+			sticky: true,
+		};
+	},
+	mounted() {
+		this.$nextTick(() => {
+			this.sticky = this.parent.sticky;
+		});
+	},
 };
 </script>
 
 <style lang="scss" scoped>
 .ste-scroll-to-item-root {
 	width: 100%;
+	.index-item-title {
+		width: 100%;
+		height: 90rpx;
+		line-height: 90rpx;
+		padding: 0 24rpx;
+		background-color: #f5f5f5;
+	}
 }
 </style>
