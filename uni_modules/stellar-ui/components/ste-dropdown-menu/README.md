@@ -140,6 +140,7 @@ export default {
 	.custom-menu-box {
 		background-color: #fff;
 		padding-top: 24rpx;
+		border-top: solid 4rpx #f5f5f5;
 
 		.menu-box {
 			width: 100%;
