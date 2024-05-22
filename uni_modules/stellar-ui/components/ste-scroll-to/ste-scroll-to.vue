@@ -41,6 +41,5 @@ export default {
 .ste-scroll-to-root {
 	width: 100%;
 	height: var(--scroll-to-height);
-	position: relative;
 }
 </style>
