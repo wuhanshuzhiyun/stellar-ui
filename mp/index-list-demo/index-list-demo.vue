@@ -58,14 +58,14 @@ export default {
 <style lang="scss" scoped>
 .page {
 	.content {
-		background: #fbfbfc;
+		background: #fff;
 		padding: 0;
 		.row-item {
-			height: 90rpx;
-			line-height: 90rpx;
+			height: 92rpx;
+			line-height: 92rpx;
 			padding: 0 24rpx;
 			& + .row-item {
-				border-top: 1px solid #ddd;
+				border-top: 1px solid #f9f9f9;
 			}
 		}
 	}

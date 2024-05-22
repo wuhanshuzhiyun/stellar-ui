@@ -36,6 +36,7 @@ export default {
 			immediate: true,
 		},
 		dataActive(v) {
+			if (this.activeChange) this.activeChange(v);
 			if (this.scrollType === 'scroll') return;
 			const top = this.childrenTops[v];
 			if (!isNum(top)) return;

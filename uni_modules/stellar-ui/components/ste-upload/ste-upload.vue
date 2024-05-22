@@ -456,7 +456,7 @@ export default {
 					text-align: center;
 				}
 				.text {
-					margin-top: 18rpx;
+					margin-top: 16rpx;
 					font-size: 28rpx;
 					line-height: 40rpx;
 				}
@@ -470,7 +470,7 @@ export default {
 				z-index: 10;
 				width: 90rpx;
 				height: 90rpx;
-				background-color: #000;
+				background-color: rgba(0, 0, 0, 0.7);
 				color: #fff;
 				font-size: 12rpx;
 				top: -45rpx;

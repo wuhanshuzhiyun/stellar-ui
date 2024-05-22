@@ -3,9 +3,9 @@
 		<slot name="title">
 			<block v-if="title">
 				<ste-sticky v-if="sticky">
-					<view class="index-item-title">{{ title }}</view>
+					<view class="index-item-title" :class="{ active }">{{ title }}</view>
 				</ste-sticky>
-				<view v-else class="index-item-title">{{ title }}</view>
+				<view v-else class="index-item-title" :class="{ active }">{{ title }}</view>
 			</block>
 		</slot>
 		<slot />
@@ -32,12 +32,18 @@ export default {
 	data() {
 		return {
 			sticky: true,
+			active: false,
 		};
 	},
 	mounted() {
 		this.$nextTick(() => {
 			this.sticky = this.parent.sticky;
 		});
+	},
+	methods: {
+		setActive(bool) {
+			this.active = bool;
+		},
 	},
 };
 </script>
@@ -47,10 +53,15 @@ export default {
 	width: 100%;
 	.index-item-title {
 		width: 100%;
-		height: 90rpx;
-		line-height: 90rpx;
-		padding: 0 24rpx;
+		height: 80rpx;
+		line-height: 80rpx;
+		font-size: 32rpx;
+		padding: 0 32rpx;
 		background-color: #f5f5f5;
+		color: var(--ste-index-list-inactive-color);
+		&.active {
+			color: var(--ste-index-list-active-color);
+		}
 	}
 }
 </style>

@@ -1,12 +1,12 @@
 <template>
-	<view class="ste-index-list-root" :style="[cmpRootStyle]">
+	<view class="ste-index-list-root" :style="[cmpRootStyle, cmpIndexRootStyle]">
 		<scroll-view class="ste-scroll-to-root" scroll-y scroll-anchoring :scroll-top="scrollTop" @scroll="onScroll">
 			<view class="ste-scroll-to-content">
 				<slot />
 			</view>
 		</scroll-view>
 		<view class="ste-index-list">
-			<block v-for="(m, index) in titles" :key="index">
+			<block v-for="(m, index) in cmpTitles" :key="index">
 				<view v-if="m" class="ste-index-item" :class="{ active: index === dataActive }" @click="setActive(index)">
 					{{ m }}
 				</view>
@@ -38,12 +38,43 @@ export default {
 			type: Boolean,
 			default: () => true,
 		},
+		inactiveColor: {
+			type: String,
+			default: () => '#666',
+		},
+		activeColor: {
+			type: String,
+			default: () => '#FF1A00',
+		},
 	},
 	computed: {
-		titles() {
+		cmpIndexRootStyle() {
+			return {
+				'--ste-index-list-inactive-color': this.inactiveColor,
+				'--ste-index-list-active-color': this.activeColor,
+			};
+		},
+		cmpTitles() {
 			const children = this.children;
 			const list = children.map((c) => c.title);
 			return list;
+		},
+	},
+	watch: {
+		children: {
+			handler(val) {
+				this.activeChange(this.dataActive);
+			},
+			immediate: true,
+		},
+	},
+	methods: {
+		activeChange(index) {
+			this.$nextTick(() => {
+				this.children.forEach((child, i) => {
+					child.setActive(index === i);
+				});
+			});
 		},
 	},
 };
@@ -71,11 +102,13 @@ export default {
 		box-shadow: 0 0 8rpx rgba(0, 0, 0, 0.15);
 
 		.ste-index-item {
-			height: 48rpx;
-			line-height: 48rpx;
+			margin: 0 auto;
+			height: 44rpx;
+			line-height: 44rpx;
 			font-size: 24rpx;
+			color: var(--ste-index-list-inactive-color);
 			&.active {
-				color: #f55;
+				color: var(--ste-index-list-active-color);
 			}
 		}
 	}
