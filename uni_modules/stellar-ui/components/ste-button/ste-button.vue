@@ -181,22 +181,22 @@ export default {
 				case 100:
 					style.padding = `0 ${utils.formatPx(30)}`;
 					style.height = utils.formatPx(48);
-					style.fontSize = utils.formatPx(24);
+					style.fontSize = '24rpx';
 					break;
 				case 300:
 					style.padding = `0 ${utils.formatPx(72)}`;
 					style.height = utils.formatPx(80);
-					style.fontSize = utils.formatPx(32);
+					style.fontSize = '32rpx';
 					break;
 				case 400:
 					style.padding = `0 ${utils.formatPx(72)}`;
 					style.height = utils.formatPx(96);
-					style.fontSize = utils.formatPx(36);
+					style.fontSize = '36rpx';
 					break;
 				default:
 					style.padding = `0 ${utils.formatPx(40)}`;
 					style.height = utils.formatPx(68);
-					style.fontSize = utils.formatPx(28);
+					style.fontSize = '28rpx';
 					break;
 			}
 
