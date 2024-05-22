@@ -406,6 +406,7 @@ export default {
 <style lang="scss" scoped>
 .page {
 	.content {
+		padding: 0;
 		.sub-item {
 			padding-bottom: 18rpx;
 			& + .sub-item {

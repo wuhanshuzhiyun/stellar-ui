@@ -29,9 +29,7 @@
 						}"
 						@click="onClickTab(tab, index)"
 					>
-						<view class="tab-image" v-if="showImage">
-							<ste-image :src="tab.image" />
-						</view>
+						<view class="tab-image" v-if="showImage" :style="{ backgroundImage: `url(${tab.image})` }"></view>
 						<ste-badge
 							v-if="showTitle"
 							:isBlock="type === 'card'"
@@ -77,14 +75,12 @@
 							}"
 							@click="onClickTab(tab, index)"
 						>
-							<view class="tab-image" v-if="showImage">
-								<ste-image :src="tab.image" />
-							</view>
+							<view class="tab-image" v-if="showImage" :style="{ backgroundImage: `url(${tab.image})` }"></view>
 							<view class="tab-title" v-if="showTitle" :style="[cmpEllipsis]">
-								{{ tab.title }}
+								{{ tab.title && tab.title.length > 4 ? `${tab.title.slice(0, 4)}...` : tab.title }}
 							</view>
 							<view class="tab-sub-title" v-if="showSubtitle" :style="[cmpEllipsis]">
-								{{ tab.subTitle }}
+								{{ tab.subTitle && tab.subTitle.length > 4 ? `${tab.subTitle.slice(0, 4)}...` : tab.subTitle }}
 							</view>
 						</view>
 					</view>
@@ -510,10 +506,14 @@ export default {
 					width: var(--tabs-image-width);
 					height: var(--tabs-image-height);
 					border-radius: var(--tabs-image-radius);
-					border-width: var(--tabs-image-border-width);
+					// border-width: var(--tabs-image-border-width);
+					border-width: 0;
 					border-style: solid;
-					border-color: transparent;
+					border-color: var(--tabs-color);
+					background: rgba(187, 187, 187, 0.4);
+					// border-color: transparent;
 					overflow: hidden;
+					background-size: 100% 100%;
 					margin: 0 auto;
 					image {
 						width: 100%;
@@ -551,7 +551,8 @@ export default {
 
 				&.active {
 					.tab-image {
-						border-color: var(--tabs-color);
+						// border-color: var(--tabs-color);
+						border-width: var(--tabs-image-border-width);
 					}
 					.tab-title {
 						color: var(--tabs-active-title-color);
