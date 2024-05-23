@@ -3,22 +3,13 @@
 		<ste-button v-if="theme != 'add'" :rootStyle="cmpLeftButtonStyle" @click="minus" :disabled="cmpDisableMinus">
 			<ste-icon
 				code="&#xe67c;"
-				:size="btnSize / 2"
+				:size="cmpBtnSize * 0.65"
 				:color="cmpDisableMinus ? '#cccccc' : theme == 'line' ? '#000000' : mainColor"
 			></ste-icon>
 		</ste-button>
 		<view v-if="theme != 'add'" class="input" :style="[cmpInputStyle]">
 			<input
-				v-if="precision"
-				type="digit"
-				:value="Number(Number(value).toFixed(precision))"
-				@blur="blur"
-				@focus="focus"
-				:disabled="disabled || disableInput"
-			/>
-			<input
-				v-else
-				type="number"
+				:type="precision ? 'digit' : 'number'"
 				:value="Number(Number(value).toFixed(precision))"
 				@blur="blur"
 				@focus="focus"
@@ -28,7 +19,7 @@
 		<ste-button v-if="theme != 'add'" :rootStyle="cmpRightButtonStyle" @click="plus" :disabled="cmpDisablePlus">
 			<ste-icon
 				code="&#xe67e;"
-				:size="btnSize / 2"
+				:size="cmpBtnSize * 0.65"
 				:color="theme != 'line' ? '#ffffff' : theme == 'line' && cmpDisablePlus ? '#cccccc' : '#000000'"
 			></ste-icon>
 		</ste-button>
@@ -46,7 +37,7 @@
 			<ste-button :rootStyle="cmpRightButtonStyle" @click="plus" :disabled="cmpDisablePlus">
 				<ste-icon
 					code="&#xe67e;"
-					:size="btnSize / 2"
+					:size="cmpBtnSize * 0.65"
 					:color="theme != 'line' ? '#ffffff' : theme == 'line' && cmpDisablePlus ? '#cccccc' : '#000000'"
 				></ste-icon>
 			</ste-button>
@@ -121,8 +112,8 @@ export default {
 			default: 64,
 		},
 		btnSize: {
-			type: [Number, String],
-			default: 48,
+			type: [Number, String, null],
+			default: null,
 		},
 		precision: {
 			type: Number,
@@ -196,8 +187,8 @@ export default {
 	computed: {
 		cmpButtonStyle() {
 			let style = {};
-			style['width'] = utils.formatPx(this.btnSize);
-			style['height'] = utils.formatPx(this.btnSize);
+			style['width'] = utils.formatPx(this.cmpBtnSize);
+			style['height'] = utils.formatPx(this.cmpBtnSize);
 			style['padding'] = '0';
 			// #ifdef H5
 			style['cursor'] = this.disabled || this.cmpDisablePlus ? 'not-allowed' : 'pointer';
@@ -239,7 +230,7 @@ export default {
 		cmpInputStyle() {
 			let style = {};
 			style['width'] = utils.formatPx(this.inputWidth);
-			style['height'] = utils.formatPx(this.btnSize);
+			style['height'] = utils.formatPx(this.cmpBtnSize);
 			style['margin'] = `0 ${utils.formatPx(4)}`;
 			style['color'] = this.disabled || this.disableInput ? '#cccccc' : '#000000';
 			// #ifdef H5
@@ -276,6 +267,9 @@ export default {
 				style['overflow'] = 'hidden';
 			}
 			return style;
+		},
+		cmpBtnSize() {
+			return this.btnSize ? this.btnSize : this.theme == 'card' ? 48 : 60;
 		},
 	},
 	methods: {
