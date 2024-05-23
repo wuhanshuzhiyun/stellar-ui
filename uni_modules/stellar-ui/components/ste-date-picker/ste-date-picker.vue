@@ -1,20 +1,21 @@
 <template>
-	<ste-picker
-		:columns="columns"
-		:title="title"
-		:showToolbar="showToolbar"
-		:cancelText="cancelText"
-		:cancelColor="cancelColor"
-		:confirmText="confirmText"
-		:confirmColor="confirmColor"
-		:visibleItemCount="visibleItemCount"
-		:defaultIndex="innerDefaultIndex"
-		:itemHeight="itemHeight"
-		@change="change"
-		@cancel="cancel"
-		@confirm="confirm"
-		class="ste-date-picker-root"
-	></ste-picker>
+	<view class="ste-date-picker-root">
+		<ste-picker
+			:columns="columns"
+			:title="title"
+			:showToolbar="showToolbar"
+			:cancelText="cancelText"
+			:cancelColor="cancelColor"
+			:confirmText="confirmText"
+			:confirmColor="confirmColor"
+			:visibleItemCount="visibleItemCount"
+			:defaultIndex="innerDefaultIndex"
+			:itemHeight="itemHeight"
+			@change="change"
+			@cancel="cancel"
+			@confirm="confirm"
+		></ste-picker>
+	</view>
 </template>
 
 <script>
@@ -387,7 +388,9 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-// .ste-date-picker-root {
-// 	border-radius: 12rpx;
-// }
+.ste-date-picker-root {
+	/deep/ .ste-picker-view {
+		padding: 0 42rpx;
+	}
+}
 </style>
