@@ -12,8 +12,8 @@
 				<ste-upload v-model="fileList1" @read="onRead1" accept="media" multiple />
 			</view>
 			<view class="demo-item">
-				<view class="title">限制上传数量2</view>
-				<ste-upload v-model="fileList2" :maxCount="2" />
+				<view class="title">自定义上传图标，限制上传数量2</view>
+				<ste-upload v-model="fileList2" uploadIcon="&#xe67e;" :maxCount="2" />
 			</view>
 			<view class="demo-item">
 				<view class="title">限制文件大小2M</view>
