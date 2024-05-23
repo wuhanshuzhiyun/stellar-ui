@@ -131,21 +131,21 @@ export default {
 ### API
 #### 组件属性(Props)
 
-| 参数			| 说明																				| 类型				| 默认值		| 可选值																		| 支持版本	|
-| ---			| ---																				| ---				| ---		| ---																		| ---		|
-| `value`		| 当前输入的值，支持双向绑定															| `Number`			| `1`		| -																			| -			|
-| `min`			| 最小值																				| `Number`			| `0`		| -																			| -			|
-| `max`			| 最大值																				| `Number`			| `Infinity`| -																			| -			|
-| `step`		| 步长，每次加或减的值																	| `Number`			| `1`		| -																			| -			|
-| `precision`	| 数值精度																			| `Number`			| `0`		| -																			| -			|
-| `inputWidth`	| 输入框宽度，默认单位为`rpx`															| `Number/String`	| `64`		| -																			| -			|
-| `btnSize`		| 按钮大小以及输入框高度，默认单位为`rpx`												| `Number/String`	| `48`		| -																			| -			|
-| `mainColor`	| 主色，对`theme`为`line`时无效														| `String`			| `#0090FF`	| -																			| -			|
-| `disabled`	| 是否禁用步进器																		| `Boolean`			| `false`	| -																			| -			|
-| `disablePlus`	| 是否禁用增加按钮																	| `Boolean`			| `false`	| -																			| -			|
-| `disableMinus`| 是否禁用减少按钮																	| `Boolean`			| `false`	| -																			| -			|
-| `disablelnput`| 是否禁用输入框																		| `Boolean`			| `false`	| -																			| -			|
-| `theme`		| 是否禁用输入框																		| `String`			| `card`	| `card`：面型</br>`line`：线型</br>`add`：纯加购按钮							| -			|
+| 参数			| 说明																| 类型				| 默认值								| 可选值												| 支持版本	|
+| ---			| ---																| ---				| ---								| ---												| ---		|
+| `value`		| 当前输入的值，支持双向绑定											| `Number`			| `1`								| -													| -			|
+| `min`			| 最小值																| `Number`			| `0`								| -													| -			|
+| `max`			| 最大值																| `Number`			| `Infinity`						| -													| -			|
+| `step`		| 步长，每次加或减的值													| `Number`			| `1`								| -													| -			|
+| `precision`	| 数值精度															| `Number`			| `0`								| -													| -			|
+| `inputWidth`	| 输入框宽度，默认单位为`rpx`											| `Number/String`	| `64`								| -													| -			|
+| `btnSize`		| 按钮大小以及输入框高度，默认单位为`rpx`,`theme`为`line`时 高为宽的80%	| `Number/String`	| `card` : `48`	</br> `line` : `60`	| -													| -			|
+| `mainColor`	| 主色，对`theme`为`line`时无效										| `String`			| `#0090FF`							| -													| -			|
+| `disabled`	| 是否禁用步进器														| `Boolean`			| `false`							| -													| -			|
+| `disablePlus`	| 是否禁用增加按钮													| `Boolean`			| `false`							| -													| -			|
+| `disableMinus`| 是否禁用减少按钮													| `Boolean`			| `false`							| -													| -			|
+| `disablelnput`| 是否禁用输入框														| `Boolean`			| `false`							| -													| -			|
+| `theme`		| 是否禁用输入框														| `String`			| `card`							| `card`：面型</br>`line`：线型</br>`add`：纯加购按钮	| -			|
 徽标属性
 | `background`	| 背景																				| `String`			| `#ee0a24`	| -																			| -	|
 | `showDot`		| 是否展示为小红点																	| `Boolean`			| `true`	| -																			| -	|
