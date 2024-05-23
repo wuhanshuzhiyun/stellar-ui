@@ -3,7 +3,7 @@
 		<ste-button v-if="theme != 'add'" :rootStyle="cmpLeftButtonStyle" @click="minus" :disabled="cmpDisableMinus">
 			<ste-icon
 				code="&#xe67c;"
-				:size="cmpBtnSize * 0.65"
+				:size="(theme == 'card' ? cmpBtnSize : cmpBtnSize * 0.8) * 0.65"
 				:color="cmpDisableMinus ? '#cccccc' : theme == 'line' ? '#000000' : mainColor"
 			></ste-icon>
 		</ste-button>
@@ -19,7 +19,7 @@
 		<ste-button v-if="theme != 'add'" :rootStyle="cmpRightButtonStyle" @click="plus" :disabled="cmpDisablePlus">
 			<ste-icon
 				code="&#xe67e;"
-				:size="cmpBtnSize * 0.65"
+				:size="(theme == 'card' ? cmpBtnSize : cmpBtnSize * 0.8) * 0.65"
 				:color="theme != 'line' ? '#ffffff' : theme == 'line' && cmpDisablePlus ? '#cccccc' : '#000000'"
 			></ste-icon>
 		</ste-button>
@@ -37,7 +37,7 @@
 			<ste-button :rootStyle="cmpRightButtonStyle" @click="plus" :disabled="cmpDisablePlus">
 				<ste-icon
 					code="&#xe67e;"
-					:size="cmpBtnSize * 0.65"
+					:size="(theme == 'card' ? cmpBtnSize : cmpBtnSize * 0.8) * 0.65"
 					:color="theme != 'line' ? '#ffffff' : theme == 'line' && cmpDisablePlus ? '#cccccc' : '#000000'"
 				></ste-icon>
 			</ste-button>
@@ -188,7 +188,7 @@ export default {
 		cmpButtonStyle() {
 			let style = {};
 			style['width'] = utils.formatPx(this.cmpBtnSize);
-			style['height'] = utils.formatPx(this.cmpBtnSize);
+			style['height'] = utils.formatPx(this.theme == 'card' ? this.cmpBtnSize : this.cmpBtnSize * 0.8);
 			style['padding'] = '0';
 			// #ifdef H5
 			style['cursor'] = this.disabled || this.cmpDisablePlus ? 'not-allowed' : 'pointer';
@@ -230,7 +230,7 @@ export default {
 		cmpInputStyle() {
 			let style = {};
 			style['width'] = utils.formatPx(this.inputWidth);
-			style['height'] = utils.formatPx(this.cmpBtnSize);
+			style['height'] = utils.formatPx(this.theme == 'card' ? this.cmpBtnSize : this.cmpBtnSize * 0.8);
 			style['margin'] = `0 ${utils.formatPx(4)}`;
 			style['color'] = this.disabled || this.disableInput ? '#cccccc' : '#000000';
 			// #ifdef H5
@@ -263,6 +263,7 @@ export default {
 			let style = {};
 			if (this.theme == 'line') {
 				style['border'] = `${utils.formatPx('0.6')} solid #EEEEEE`;
+				style['height'] = utils.formatPx(this.theme == 'card' ? this.cmpBtnSize : this.cmpBtnSize * 0.8);
 				style['borderRadius'] = utils.formatPx(24);
 				style['overflow'] = 'hidden';
 			}
