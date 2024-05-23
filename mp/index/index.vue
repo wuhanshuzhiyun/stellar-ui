@@ -279,7 +279,7 @@
 			<view class="com-box" @click="nav('read-more')">
 				<view class="com-title">
 					<ste-image :src="joinSrc('img/section.png')" :width="36" :height="36" />
-					<text>ReadMore 阅读更多s</text>
+					<text>ReadMore 阅读更多</text>
 				</view>
 				<view class="com-arrow">
 					<ste-image :src="joinSrc('img/r-arrow.png')" :width="32" :height="32" />
