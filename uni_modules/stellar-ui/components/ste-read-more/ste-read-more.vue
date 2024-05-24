@@ -7,6 +7,7 @@
 		</view>
 		<view class="action-box" :style="[cmpActionStyle]" v-if="cmpShowAction">
 			<text @click="handleToggleStatus">{{ open ? openText : closeText }}</text>
+			<ste-icon :code="open ? '&#xe678;' : '&#xe676;'" size="28"></ste-icon>
 		</view>
 	</view>
 </template>
@@ -37,11 +38,11 @@ export default {
 		},
 		fontSize: {
 			type: [String, Number],
-			default: 24,
+			default: 28,
 		},
 		color: {
 			type: String,
-			default: '#2979ff',
+			default: '#666666',
 		},
 	},
 	data() {
@@ -114,6 +115,12 @@ export default {
 		position: relative;
 		padding-top: 200rpx;
 		margin-top: -200rpx;
+
+		font-size: 28rpx;
+
+		text {
+			margin-right: 16rpx;
+		}
 	}
 }
 </style>
