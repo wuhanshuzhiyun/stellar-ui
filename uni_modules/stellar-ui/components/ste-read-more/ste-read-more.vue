@@ -7,7 +7,7 @@
 		</view>
 		<view class="action-box" :style="[cmpActionStyle]" v-if="cmpShowAction">
 			<text @click="handleToggleStatus">{{ open ? openText : closeText }}</text>
-			<ste-icon :code="open ? '&#xe678;' : '&#xe676;'" size="28"></ste-icon>
+			<ste-icon :code="open ? '&#xe678;' : '&#xe676;'" size="28" marginBottom="3"></ste-icon>
 		</view>
 	</view>
 </template>
@@ -89,9 +89,10 @@ export default {
 	},
 	methods: {
 		init() {
-			utils.querySelector('.content', this).then((rect) => {
-				console.log('rect is ', rect);
-				this.showToggle = parseInt(rect.height) > parseInt(utils.formatPx(this.showHeight));
+			utils.sleep(200).then(() => {
+				utils.querySelector('.content', this).then((rect) => {
+					this.showToggle = parseInt(rect.height) > parseInt(utils.formatPx(this.showHeight));
+				});
 			});
 		},
 		handleToggleStatus() {
@@ -115,10 +116,11 @@ export default {
 		position: relative;
 		padding-top: 200rpx;
 		margin-top: -200rpx;
-
-		font-size: 28rpx;
+		margin-bottom: 20rpx;
 
 		text {
+			cursor: pointer;
+			font-size: 28rpx;
 			margin-right: 16rpx;
 		}
 	}
