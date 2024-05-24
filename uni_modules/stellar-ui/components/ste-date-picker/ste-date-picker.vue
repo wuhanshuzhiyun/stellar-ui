@@ -323,8 +323,11 @@ export default {
 		correctValue(value) {
 			let date = dayjs(value);
 			if (date.isValid()) {
-				date = date.isBefore(dayjs(this.minDate)) ? this.minDate : date;
-				date = date.isAfter(dayjs(this.maxDate)) ? this.maxDate : date;
+				if (date.isBefore(dayjs(this.minDate))) {
+					date = this.minDate;
+				} else if (date.isAfter(dayjs(this.maxDate))) {
+					date = this.maxDate;
+				}
 			} else {
 				date = dayjs();
 			}

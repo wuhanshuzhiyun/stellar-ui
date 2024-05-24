@@ -1,3 +1,5 @@
+{{0527schedule}}
+
 {{0520schedule}}
 
 {{0506schedule}}
