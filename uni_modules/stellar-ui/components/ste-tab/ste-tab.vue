@@ -71,7 +71,7 @@ export default {
 		$props: {
 			handler() {
 				this.$nextTick(() => {
-					this.parent.init();
+					this.parent.getChildrenProps();
 				});
 			},
 			deep: true,

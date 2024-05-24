@@ -377,17 +377,7 @@ export default {
 			this.showComponent = false;
 			clearTimeout(this._updateChildrenTimeout);
 			this._updateChildrenTimeout = setTimeout(() => {
-				this.tabPropsList = this.children.map((m) => ({
-					title: m.title,
-					subTitle: m.subTitle,
-					image: m.image,
-					name: m.name,
-					index: m.index,
-					disabled: m.disabled,
-					showDot: m.showDot,
-					badge: m.badge,
-					showZeroBadge: m.showZeroBadge,
-				}));
+				this.getChildrenProps();
 				this.$nextTick(async () => {
 					this.listBoxEl = await utils.querySelector('.tab-list-box', this);
 					this.listEl = await utils.querySelector('.tab-list-box .tab-list.view-list', this);
@@ -395,6 +385,19 @@ export default {
 					this.showComponent = true;
 				});
 			}, 100);
+		},
+		getChildrenProps() {
+			this.tabPropsList = this.children.map((m) => ({
+				title: m.title,
+				subTitle: m.subTitle,
+				image: m.image,
+				name: m.name,
+				index: m.index,
+				disabled: m.disabled,
+				showDot: m.showDot,
+				badge: m.badge,
+				showZeroBadge: m.showZeroBadge,
+			}));
 		},
 		onClickTab(tab, index) {
 			this.$emit('click-tab', { index, ...tab });
