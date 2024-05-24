@@ -27,8 +27,9 @@ import mixin from '../ste-scroll-to/mixin.js';
  * @property {String|Number}	height 高度，默认值100%
  * @property {Boolean}	sticky 默认标题是否粘性布局
  * @property {String}	inactiveColor 右边锚点状态非激活时的颜色
- * @property {String}	activeColor 右边锚点状态激活时的颜色	
+ * @property {String}	activeColor 右边锚点状态激活时的颜色
  * @event {Function}					change 滚动索引列表时触发
+ * @event {Function}					clickItem 点击原生列表时触发，参数1-当前索引区域，参数2-当前点击的内容
  */
 export default {
 	group: '导航组件',
@@ -77,6 +78,9 @@ export default {
 					child.setActive(index === i);
 				});
 			});
+		},
+		onClickItem(title, text) {
+			this.$emit('clickItem', title, text);
 		},
 	},
 };

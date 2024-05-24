@@ -10,7 +10,7 @@
 		</slot>
 		<slot>
 			<view class="index-item-text-list">
-				<view class="index-item-text" v-for="(text, i) in list" :key="i">{{ text }}</view>
+				<view class="index-item-text" v-for="(text, i) in list" :key="i" @click="onClickItem(text)">{{ text }}</view>
 			</view>
 		</slot>
 	</view>
@@ -53,6 +53,9 @@ export default {
 	methods: {
 		setActive(bool) {
 			this.active = bool;
+		},
+		onClickItem(item) {
+			this.parent.onClickItem(this.title, item);
 		},
 	},
 };

@@ -5,7 +5,7 @@
 			<view class="demo-item">
 				<view class="title">基础用法</view>
 				<view style="width: 100%; height: 750rpx">
-					<ste-index-list>
+					<ste-index-list @clickItem="onClickItem">
 						<ste-index-item v-for="(item, index) in data" :key="index" :title="item.title" :list="item.list" />
 					</ste-index-list>
 				</view>
@@ -35,10 +35,6 @@ export default {
 	data() {
 		return {
 			data: [
-				{
-					title: '',
-					list: ['列表1', '列表2', '列表3', '列表4', '列表5', '列表6', '列表7', '列表8'],
-				},
 				{
 					title: 'A',
 					list: ['列表A1', '列表A2', '列表A3', '列表A4', '列表A5', '列表A6', '列表A7', '列表A8'],
@@ -70,7 +66,14 @@ export default {
 			],
 		};
 	},
-	methods: {},
+	methods: {
+		onClickItem(title, text) {
+			uni.showToast({
+				title: `【${title}】-【${text}】`,
+				icon: 'none',
+			});
+		},
+	},
 };
 </script>
 

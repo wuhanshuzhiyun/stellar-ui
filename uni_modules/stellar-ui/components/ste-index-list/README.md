@@ -12,10 +12,6 @@ export default{
 		return{
 			data: [
 				{
-					title: '',
-					list: ['列表1', '列表2', '列表3', '列表4', '列表5', '列表6', '列表7', '列表8'],
-				},
-				{
 					title: 'A',
 					list: ['列表A1', '列表A2', '列表A3', '列表A4', '列表A5', '列表A6', '列表A7', '列表A8'],
 				},
@@ -52,14 +48,23 @@ export default{
 
 #### 基础用法
 - 标签`ste-index-list`为外层盒子
+	- 事件`clickItem`监听点击索引分组事件
 - 标签`ste-index-item`为索引分组
 	- 属性`title`为当前索引分组标题
 	- 属性`list`为当前索引分组内容列表
 ```html
-<ste-index-list>
+<ste-index-list  @clickItem="onClickItem">
 	<ste-index-item v-for="(item, index) in data" :key="index" :title="item.title" :list="item.list" />
 </ste-index-list>
 
+methods: {
+	onClickItem(title, text) {
+		uni.showToast({
+			title: `【${title}】-【${text}】`,
+			icon: 'none',
+		});
+	},
+},
 ```
 #### 自定义颜色/标题/内容
 - 标签`ste-index-list`为外层盒子
@@ -114,9 +119,10 @@ export default{
 | `activeColor`		| 右边锚点状态激活时的颜色												| `String`					| `#FF1A00`	| -			| -				|
 
 #### IndexList Events
-| 事件名	|说明						|事件参数									|支持版本	|
-|---			|---						|---											|---			|
-| `change`| 滚动列表时触发	| `active`: 当前激活的索引	| -				|
+| 事件名			|说明																		|事件参数																							|支持版本	|
+|---					|---																		|---																									|---			|
+| `change`		| 滚动列表或点击右侧导航时触发						| `active`: 当前激活的索引															| -				|
+| `clickItem`	| 点击列表时触发（使用插槽自定义列表无效）	|  `参数1`索引区域`title`<br/>`参数2`当前点击的内容	| -				|
 
 #### IndexList Method
 | 方法名| 说明															|支持版本	|
