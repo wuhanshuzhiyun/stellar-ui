@@ -37,6 +37,7 @@
 							:content="tab.badge"
 							:showZero="tab.showZeroBadge"
 							isInline
+							:rootStyle="{ maxWidth: '100%' }"
 						>
 							<view class="tab-title" :style="[cmpEllipsis, cmpTitleStyle]">
 								{{ tab.title }}
@@ -106,6 +107,7 @@
 <script>
 import utils from '../../utils/utils.js';
 import props from './props.js';
+import { parentMixin } from '../../utils/mixin.js';
 /**
  * ste-tabs 标签页
  * @description 标签页组件
@@ -161,11 +163,7 @@ export default {
 	title: 'Tabs 标签页',
 	name: 'ste-tabs',
 	props,
-	provide() {
-		return {
-			_tabsComponent: { getParent: () => this },
-		};
-	},
+	mixins: [parentMixin('ste-tabs')],
 	data() {
 		return {
 			dataActive: 0,
@@ -367,20 +365,36 @@ export default {
 				this.tabEls = await utils.querySelector('.tab-list-box .tab-list.view-list .tab-item', this, true);
 			}, 10);
 		},
+		children() {
+			this.init();
+		},
+	},
+	mounted() {
+		this.init();
 	},
 	methods: {
-		updateTabs() {
+		init() {
 			this.showComponent = false;
 			clearTimeout(this._updateChildrenTimeout);
 			this._updateChildrenTimeout = setTimeout(() => {
-				this.tabPropsList = utils.getChildrenProps(this, 'ste-tab');
+				this.tabPropsList = this.children.map((m) => ({
+					title: m.title,
+					subTitle: m.subTitle,
+					image: m.image,
+					name: m.name,
+					index: m.index,
+					disabled: m.disabled,
+					showDot: m.showDot,
+					badge: m.badge,
+					showZeroBadge: m.showZeroBadge,
+				}));
 				this.$nextTick(async () => {
 					this.listBoxEl = await utils.querySelector('.tab-list-box', this);
 					this.listEl = await utils.querySelector('.tab-list-box .tab-list.view-list', this);
 					this.tabEls = await utils.querySelector('.tab-list-box .tab-list.view-list .tab-item', this, true);
 					this.showComponent = true;
 				});
-			});
+			}, 100);
 		},
 		onClickTab(tab, index) {
 			this.$emit('click-tab', { index, ...tab });
@@ -442,7 +456,6 @@ export default {
 			this.pullTransform = false;
 			setTimeout(() => {
 				this.openPullDown = false;
-				resolve();
 			}, 200);
 		},
 		onSliding(index) {
@@ -502,6 +515,8 @@ export default {
 				padding-bottom: var(--tabs-tab-padding-bottom);
 				text-align: center;
 				white-space: initial;
+				overflow: hidden;
+
 				.tab-image {
 					width: var(--tabs-image-width);
 					height: var(--tabs-image-height);

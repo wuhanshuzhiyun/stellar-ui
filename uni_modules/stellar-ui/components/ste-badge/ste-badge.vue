@@ -1,5 +1,5 @@
 <template>
-	<view class="ste-badge-root" :style="{ display: isInline ? 'inline-block' : 'block' }">
+	<view class="ste-badge-root" :style="[rootStyle, { display: isInline ? 'inline-block' : 'block' }]">
 		<view
 			class="ste-badge-content"
 			:style="[cmpContentStyle]"
@@ -97,6 +97,10 @@ export default {
 		isInline: {
 			type: Boolean,
 			default: false,
+		},
+		rootStyle: {
+			type: Object,
+			default: () => ({}),
 		},
 	},
 	data() {

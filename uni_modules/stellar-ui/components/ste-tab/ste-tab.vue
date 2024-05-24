@@ -6,6 +6,7 @@
 
 <script>
 import utils from '../../utils/utils.js';
+import { childMixin } from '../../utils/mixin.js';
 /**
  * ste-tab 标签页选项
  * @description 标签页选项组件
@@ -21,7 +22,7 @@ export default {
 	group: '基础组件',
 	title: 'Tab 标签',
 	name: 'ste-tab',
-	inject: ['_tabsComponent'],
+	mixins: [childMixin('ste-tabs')],
 	props: {
 		// 标题
 		title: {
@@ -64,36 +65,6 @@ export default {
 		showZeroBadge: {
 			type: Boolean,
 			default: () => false,
-		},
-	},
-
-	data() {
-		return {
-			parent: {},
-		};
-	},
-	created() {
-		this.parent = this._tabsComponent.getParent();
-	},
-	mounted() {
-		this.parent.updateTabs();
-	},
-	updated() {
-		this.parent.updateTabs();
-	},
-	beforeDestroy() {
-		this.$nextTick(() => {
-			this.parent.updateTabs();
-		});
-	},
-	watch: {
-		$props: {
-			handler(v) {
-				this.$nextTick(() => {
-					this.parent.updateTabs(v);
-				});
-			},
-			deep: true,
 		},
 	},
 };
