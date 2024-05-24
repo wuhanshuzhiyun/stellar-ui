@@ -67,6 +67,16 @@ export default {
 			default: () => false,
 		},
 	},
+	watch: {
+		$props: {
+			handler() {
+				this.$nextTick(() => {
+					this.parent.init();
+				});
+			},
+			deep: true,
+		},
+	},
 };
 </script>
 
