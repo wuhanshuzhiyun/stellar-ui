@@ -16,7 +16,7 @@
 		<view class="menu-box" @click="handleMenuClick" @touchmove.stop.prevent="touchmove" @wheel.stop.prevent>
 			<text class="title">{{ menuTitle || title }}</text>
 			<view class="menu-title-icon">
-				<ste-icon code="&#xe699;" size="14" color="#bbbbbb"></ste-icon>
+				<ste-icon code="&#xe699;" size="16" color="#bbbbbb"></ste-icon>
 			</view>
 		</view>
 		<view
@@ -306,7 +306,8 @@ export default {
 			transition: all var(--duration) linear;
 		}
 		.title {
-			margin-right: 8rpx;
+			font-size: 28rpx;
+			margin-right: 16rpx;
 		}
 		display: flex;
 		align-items: center;

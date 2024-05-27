@@ -5,10 +5,12 @@
 			<view class="demo-item">
 				<view class="title">基础使用</view>
 				<view class="item-block">
-					<view>
+					<view class="more-block">
+						<view class="title">演示效果</view>
 						<ste-read-more>{{ moreStr }}</ste-read-more>
 					</view>
-					<view>
+					<view class="more-block">
+						<view class="title">演示效果</view>
 						<ste-read-more>{{ moreStr2 }}</ste-read-more>
 					</view>
 				</view>
@@ -16,7 +18,8 @@
 			<view class="demo-item">
 				<view class="title">收起后展示按钮</view>
 				<view class="item-block">
-					<view>
+					<view class="more-block">
+						<view class="title">演示效果</view>
 						<ste-read-more toggle>{{ moreStr }}</ste-read-more>
 					</view>
 				</view>
@@ -24,7 +27,8 @@
 			<view class="demo-item">
 				<view class="title">提示文字</view>
 				<view class="item-block">
-					<view>
+					<view class="more-block">
+						<view class="title">演示效果</view>
 						<ste-read-more toggle openText="收起吧" closeText="展开吧" color="#f1f" fontSize="32">
 							{{ moreStr }}
 						</ste-read-more>
@@ -34,7 +38,7 @@
 			<view class="demo-item">
 				<view class="title">异步初始化</view>
 				<view class="item-block">
-					<view>
+					<view class="more-block" v-if="moreStr3">
 						<ste-read-more ref="steReadMore">{{ moreStr3 }}</ste-read-more>
 					</view>
 				</view>
@@ -66,12 +70,36 @@ export default {
 
 <style lang="scss" scoped>
 .page {
+	background-color: #f5f5f5;
 	.content {
+		padding: 0 20rpx;
 		.demo-item {
 			.item-block {
-				> view {
-					// margin: 0 36px 36px 0;
-					margin-bottom: 36rpx;
+				// > view {
+				// 	// margin: 0 36px 36px 0;
+				// 	margin-bottom: 36rpx;
+				// }
+
+				.more-block {
+					background-color: #fff;
+					border-radius: 16rpx;
+					padding: 24rpx 24rpx 24rpx 24rpx;
+
+					color: #666666;
+
+					&:not(:last-child) {
+						margin-bottom: 80rpx;
+					}
+
+					.title {
+						font-size: 32rpx;
+						font-weight: bold;
+						display: flex;
+						align-items: center;
+						justify-content: center;
+
+						margin-bottom: 16rpx;
+					}
 				}
 			}
 		}
