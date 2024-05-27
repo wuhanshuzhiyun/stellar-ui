@@ -98,7 +98,7 @@ export default {
 			initializing: true,
 			showNode: false,
 			boxEl: null,
-			touch: null,
+			touch: new TouchEvent(),
 			moveing: false,
 			translateX: 0,
 			translateY: 0,
@@ -188,7 +188,6 @@ export default {
 		},
 	},
 	async mounted() {
-		this.touch = new TouchEvent();
 		this.boxEl = await utils.querySelector('.ste-touch-swipe--root', this);
 		this.init();
 	},
@@ -250,14 +249,14 @@ export default {
 				return Math.abs(moveY) > this.boxEl.height * this.swipeThreshold;
 			}
 		},
-		onTouchstart(e) {
+		onTouchstart({ changedTouches }) {
 			if (this.disabled || !this.touch) return;
 			this.moveing = true;
-			this.touch.touchStart(e);
+			this.touch.touchStart(changedTouches);
 		},
-		onTouchmove(e) {
+		onTouchmove({ changedTouches }) {
 			if (this.disabled || this.duration === 0 || !this.touch || !this.moveing) return;
-			const res = this.touch.touchMove(e);
+			const res = this.touch.touchMove(changedTouches);
 			if (!res) return;
 			let { moveX, moveY } = res;
 			const [nextIndex, nextDisabled] = this.nextItem(moveX, moveY);
@@ -274,10 +273,10 @@ export default {
 				this.translateY = -this.cmpItemTops[this.dataIndex] + Math.floor(moveY);
 			}
 		},
-		onTouchend(e) {
+		onTouchend({ changedTouches }) {
 			if (this.disabled || !this.touch) return;
 			this.moveing = false;
-			const { moveX, moveY } = this.touch.touchEnd(e);
+			const { moveX, moveY } = this.touch.touchEnd(changedTouches);
 			if (this.direction === 'horizontal' && !moveX) return;
 			else if (this.direction === 'vertical' && !moveY) return;
 			const [nextIndex, nextDisabled] = this.nextItem(moveX, moveY);

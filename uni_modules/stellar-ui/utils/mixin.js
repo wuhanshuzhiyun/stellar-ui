@@ -51,7 +51,7 @@ export function childMixin(parentName) {
 		},
 		methods: {
 			getParentData() {
-				if (this.parent.children && this.parent.children.indexOf(this) === -1) {
+				if (this.parent?.children && this.parent.children.indexOf(this) === -1) {
 					this.parent.children.push(this);
 				}
 			},

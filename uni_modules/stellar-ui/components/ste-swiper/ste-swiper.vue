@@ -270,24 +270,24 @@ export default {
 				this.setBoundary(0, moveY);
 			}
 		},
-		onTouchstart(e) {
+		onTouchstart({ changedTouches }) {
 			if (this.disabled) return;
 			if (this.children?.length < 2) return;
 			this.moveing = true;
 			clearInterval(this.autoplayTimeout);
 			this.resetBoundary();
-			this.touch.touchStart(e);
+			this.touch.touchStart(changedTouches);
 		},
-		onTouchmove(e) {
+		onTouchmove({ changedTouches }) {
 			if (this.disabled) return;
 			if (this.children?.length < 2) return;
-			const res = this.touch.touchMove(e);
+			const res = this.touch.touchMove(changedTouches);
 			if (!res) return;
 			this.moveing = true;
 			let { moveX, moveY } = res;
 			this.setTransform(moveX, moveY);
 		},
-		onTouchend(e) {
+		onTouchend({ changedTouches }) {
 			this.moveing = false;
 			clearTimeout(this.durationTimeout);
 			this.durationTimeout = setTimeout(() => {
@@ -296,7 +296,7 @@ export default {
 			}, this.cmpDuration);
 
 			if (this.disabled) return;
-			const { moveX, moveY } = this.touch.touchEnd(e);
+			const { moveX, moveY } = this.touch.touchEnd(changedTouches);
 			if (this.direction === 'horizontal' && !moveX) return;
 			else if (this.direction === 'vertical' && !moveY) return;
 			const bool = this.isMover(moveX, moveY);
