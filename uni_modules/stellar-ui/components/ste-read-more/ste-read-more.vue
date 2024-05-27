@@ -6,7 +6,7 @@
 			</view>
 		</view>
 		<view class="action-box" :style="[cmpActionStyle]" v-if="cmpShowAction">
-			<text @click="handleToggleStatus">{{ open ? openText : closeText }}</text>
+			<view @click="handleToggleStatus">{{ open ? openText : closeText }}</view>
 			<ste-icon :code="open ? '&#xe678;' : '&#xe676;'" size="28" marginBottom="3"></ste-icon>
 		</view>
 	</view>
