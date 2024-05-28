@@ -61,6 +61,7 @@ export default {
 			dataTranslateX: 0,
 			leftWidth: 0,
 			rightWidth: 0,
+			changeCallback: null,
 		};
 	},
 	computed: {
@@ -97,6 +98,28 @@ export default {
 	},
 	mounted() {},
 	methods: {
+		/**
+		 * 打开侧滑
+		 * @param {'right'|'left'} 打开哪一端，默认同mode属性
+		 */
+		open(direction = this.cmpMode) {
+			setTimeout(async () => {
+				if (direction === 'left') {
+					const l = await utils.querySelector('.swipe-action-left', this);
+					if (!l) return;
+					this.setTransform(l.width);
+					this.dataTranslateX = l.width;
+				} else {
+					const r = await utils.querySelector('.swipe-action-right', this);
+					if (!r) return;
+					this.setTransform(-r.width);
+					this.dataTranslateX = -r.width;
+				}
+			}, 30);
+		},
+		close() {
+			this.setTransform(0);
+		},
 		setTransform(moveX) {
 			this.translateX = moveX;
 		},
@@ -122,17 +145,23 @@ export default {
 			const e = this.touch.touchMove(changedTouches);
 			if (!e) return;
 			let x = this.dataTranslateX + e.moveX;
-			if (!this.cmpLeft && x > 0) {
+			if (this.dataTranslateX > 0 && x < 0) {
+				// 左侧按钮显示的时候，不能直接滑动到右侧按钮
 				x = 0;
-			}
-			if (this.cmpLeft && x > this.leftWidth) {
+			} else if (this.dataTranslateX < 0 && x > 0) {
+				// 右侧按钮显示的时候，不能直接滑动到左侧按钮
+				x = 0;
+			} else if (!this.cmpLeft && x > 0) {
+				// 没有左侧按钮时，不能滑动到左侧
+				x = 0;
+			} else if (this.cmpLeft && x > this.leftWidth) {
+				// 左侧按钮显示时，左侧滑动距离不能超过按钮宽度
 				x = this.leftWidth;
-			}
-
-			if (!this.cmpRight && x < 0) {
+			} else if (!this.cmpRight && x < 0) {
+				// 没有右侧按钮时，不能滑动到右侧
 				x = 0;
-			}
-			if (this.cmpRight && x < -this.rightWidth) {
+			} else if (this.cmpRight && x < -this.rightWidth) {
+				// 右侧按钮显示时，右侧滑动距离不能超过按钮宽度
 				x = -this.rightWidth;
 			}
 			this.setTransform(x);
@@ -153,11 +182,13 @@ export default {
 			} else if (x < 0 && moveX > 0 && moveX > this.rightWidth * this.cmpSwipeThreshold) {
 				x = 0;
 			}
-
 			setTimeout(() => {
 				this.setTransform(x);
 				this.dataTranslateX = x;
-			}, 50);
+			}, 10);
+		},
+		onchange(callback) {
+			this.changeCallback = callback;
 		},
 	},
 };

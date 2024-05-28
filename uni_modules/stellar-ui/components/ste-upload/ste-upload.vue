@@ -47,13 +47,12 @@
 				</slot>
 			</view>
 		</view>
-		<!-- #ifndef MP-WEIXIN -->
 		<ste-media-preview
 			:show="previewIndex || previewIndex === 0"
 			:urls="cmpPreviewList"
 			:index.sync="previewIndex"
-		></ste-media-preview>
-		<!-- #endif -->
+			@close="previewIndex = null"
+		/>
 	</view>
 </template>
 
@@ -205,9 +204,7 @@ export default {
 	data() {
 		return {
 			dataValue: [],
-			// #ifndef MP-WEIXIN
 			previewIndex: null,
-			// #endif
 			// #ifdef MP-ALIPAY
 			mediaType: 'image',
 			// #endif
@@ -360,16 +357,7 @@ export default {
 		previewItem(index, item) {
 			if (this.disabled) return;
 			if (!this.previewFullImage) return;
-			if (['video', 'image'].indexOf(item.type) === -1) return;
-			// #ifdef MP-WEIXIN
-			wx.previewMedia({
-				current: index,
-				sources: this.dataValue
-					.filter((item) => ['video', 'image'].indexOf(item.type) !== -1)
-					.map((item) => ({ ...item, url: item.url || item.path, poster: item.thumbPath })),
-			});
-			return;
-			// #endif
+			console.log('?');
 			this.previewIndex = index;
 		},
 		// #ifdef MP-ALIPAY

@@ -5,24 +5,37 @@
 			<view class="demo-item">
 				<view class="title">基础用法</view>
 				<view class="item-block">
-					<ste-swipe-action>
-						<template v-slot:left>
-							<button size="mini">左侧按钮</button>
-						</template>
-						<template>
-							<view class="content-view">内容区域</view>
-						</template>
+					<ste-swipe-action ref="swipe">
+						<view class="content-view">内容区域</view>
 						<template v-slot:right>
-							<button size="mini">右侧按钮</button>
+							<div class="right-btn">删除</div>
 						</template>
 					</ste-swipe-action>
+					<view style="margin-top: 12rpx">
+						<ste-button size="mini" @click="openSwipe">打开</ste-button>
+						<ste-button size="mini" @click="closeSwipe">关闭</ste-button>
+					</view>
 				</view>
 			</view>
 		</view>
 	</view>
 </template>
 
-<script></script>
+<script>
+export default {
+	data() {
+		return {};
+	},
+	methods: {
+		openSwipe() {
+			this.$refs.swipe.open();
+		},
+		closeSwipe() {
+			this.$refs.swipe.close();
+		},
+	},
+};
+</script>
 
 <style lang="scss" scoped>
 .page {
@@ -31,6 +44,16 @@
 			.item-block {
 				display: block;
 				.content-view {
+					height: 90rpx;
+					border: 1px solid #ddd;
+				}
+				.right-btn {
+					background-color: #dd524d;
+					color: #fff;
+					line-height: 90rpx;
+					text-align: center;
+					width: 100rpx;
+					height: 100%;
 				}
 			}
 		}
