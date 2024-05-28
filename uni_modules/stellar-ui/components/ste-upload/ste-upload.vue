@@ -357,7 +357,7 @@ export default {
 		previewItem(index, item) {
 			if (this.disabled) return;
 			if (!this.previewFullImage) return;
-			console.log('?');
+			if (['video', 'image'].indexOf(item.type) === -1) return;
 			this.previewIndex = index;
 		},
 		// #ifdef MP-ALIPAY
