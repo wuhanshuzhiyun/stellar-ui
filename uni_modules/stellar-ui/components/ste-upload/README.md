@@ -226,7 +226,7 @@ export default{
 | `previewWidth`	| 预览图和上传区域的宽度，单位为rpx																		| `String`/`Number`					| `200`									| -														|
 | `previewHeight`	| 预览图和上传区域的高度，单位为rpx																		| `String`/`Number`					| `200`									| -														|
 | `previewImage`	| 是否在选择完成后展示预览图																					| `Boolean`									| `true`								| -														|
-| `previewImage`	| 是否在点击预览图后展示全屏图片预览																	| `Boolean`									| `true`								| -														|
+| `previewFullImage`	| 是否在点击预览图后展示全屏图片预览																	| `Boolean`									| `true`								| -														|
 | `multiple`			| 是否支持多选文件，部分安卓机型不支持																	| `Boolean`									| `false`								| -														|
 | `disabled`			| 是否禁用																														| `Boolean`									| `false`								| -														|
 | `showUpload`		| 是否展示文件上传按钮																								| `Boolean`									| `true`								| -														|

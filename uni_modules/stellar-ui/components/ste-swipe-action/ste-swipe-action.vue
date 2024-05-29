@@ -1,14 +1,35 @@
 <template>
-	<view class="ste-swipe-action-root" @touchstart="onTouchstart" @touchmove="onTouchmove" @touchend="onTouchend">
+	<view class="ste-swipe-action-root">
 		<view class="swipe-action-view" :style="[cmpTransform]">
-			<view class="swipe-action-left">
-				<slot name="left"></slot>
+			<view class="swipe-action-left-icon" v-if="cmpLeftIcon" @click="iconOpen('left')">
+				<view class="swipe-icon" :class="{ active: dataTranslateX > 0 }">
+					<ste-icon code="&#xe674;" size="30rpx" />
+				</view>
 			</view>
-			<view class="swipe-action-content">
-				<slot></slot>
+			<view class="swipe-action-right-icon" v-if="cmpRightIcon" @click="iconOpen('right')">
+				<view class="swipe-icon" :class="{ active: dataTranslateX < 0 }">
+					<ste-icon code="&#xe673;" size="30rpx" />
+				</view>
 			</view>
-			<view class="swipe-action-right">
-				<slot name="right"></slot>
+			<view
+				@mousedown="onTouchstart"
+				@mousemove="onTouchmove"
+				@mouseup="onTouchend"
+				@mouseleave="onTouchend"
+				@touchstart="onTouchstart"
+				@touchmove.stop="onTouchmove"
+				@touchend="onTouchend"
+				@touchcancel="onTouchend"
+			>
+				<view class="swipe-action-left">
+					<slot name="left"></slot>
+				</view>
+				<view class="swipe-action-content">
+					<slot></slot>
+				</view>
+				<view class="swipe-action-right">
+					<slot name="right"></slot>
+				</view>
 			</view>
 		</view>
 	</view>
@@ -18,7 +39,22 @@
 import utils from '../../utils/utils.js';
 import { childMixin } from '../../utils/mixin.js';
 import TouchEvent from '../ste-touch-swipe/TouchEvent.js';
-
+/**
+ * SwipeAction 滑动单元格
+ * @description 滑动单元格
+ * @tutorial https://stellar-ui.intecloud.com.cn/pc/index/index?name=ste-swipe-action
+ * @property {String}	mode 模式
+ * @value right 右侧滑动
+ * @value left 左侧滑动
+ * @value all 左右滑动
+ * @property {Boolean}		disabled		禁用
+ * @property {String ｜ Number}	swipeThreshold	灵敏度（0-1之间的小数，数值越小灵敏度越高）
+ * @property {String ｜ Number}	duration	动画时长，单位ms（默认300）
+ * @property {Boolean}	leftIcon	是否显示左侧图标（默认false）
+ * @property {Boolean}	rightIcon	是否显示右侧图标（默认false）
+ * @event {Function} open	打开滑块时触发，参数为方向('left'|'right')
+ * @event {Function} close 关闭滑块时触发
+ */
 export default {
 	group: '展示组件',
 	title: 'SwipeAction 滑动单元格',
@@ -27,10 +63,6 @@ export default {
 	props: {
 		mode: {
 			type: String,
-			default: () => null,
-		},
-		name: {
-			type: [Number, String],
 			default: () => null,
 		},
 		disabled: {
@@ -97,11 +129,7 @@ export default {
 			};
 		},
 	},
-	mounted() {
-		if (this.parent && this.name === null) {
-			console.error('ste-swipe-action-group下的ste-swipe-action标签未设置name属性');
-		}
-	},
+	mounted() {},
 	methods: {
 		/**
 		 * 打开侧滑
@@ -112,24 +140,25 @@ export default {
 				if (direction === 'left') {
 					const l = await utils.querySelector('.swipe-action-left', this);
 					if (!l) return;
-					if (this.translateX === l.width) return;
 					this.setTransform(l.width);
-					this.dataTranslateX = l.width;
 				} else {
 					const r = await utils.querySelector('.swipe-action-right', this);
 					if (!r) return;
-					if (this.translateX === -r.width) return;
 					this.setTransform(-r.width);
-					this.dataTranslateX = -r.width;
 				}
 			}, 30);
 		},
 		close() {
-			if (this.translateX === 0) return;
 			this.setTransform(0);
 		},
+		iconOpen(direction) {
+			if (this.dataTranslateX) this.close();
+			else this.open(direction);
+		},
 		setTransform(moveX) {
+			if (this.dataTranslateX === moveX) return;
 			this.translateX = moveX;
+			this.dataTranslateX = moveX;
 			if (this.changeCallback) this.changeCallback(moveX);
 			if (moveX === 0) this.$emit('close');
 			else this.$emit('open', moveX > 0 ? 'left' : 'right');
@@ -195,7 +224,6 @@ export default {
 			}
 			setTimeout(() => {
 				this.setTransform(x);
-				this.dataTranslateX = x;
 			}, 10);
 		},
 		onchange(callback) {
@@ -208,7 +236,43 @@ export default {
 <style lang="scss" scoped>
 .ste-swipe-action-root {
 	width: 100%;
+	position: relative;
 	overflow: hidden;
+
+	.swipe-action-left-icon,
+	.swipe-action-right-icon {
+		width: 30rpx;
+		height: 60rpx;
+		position: absolute;
+		top: 50%;
+		z-index: 10;
+		transform: translateY(-50%);
+		overflow: hidden;
+		box-shadow: 0 0 10rpx rgba(0, 0, 0, 0.1);
+		background-color: #fff;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		.swipe-icon {
+			width: 30rpx;
+			height: 30rpx;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			transition: 300ms;
+			&.active {
+				transform: rotate(180deg);
+			}
+		}
+	}
+	.swipe-action-left-icon {
+		left: 0;
+		border-radius: 0 30rpx 30rpx 0;
+	}
+	.swipe-action-right-icon {
+		right: 0;
+		border-radius: 30rpx 0 0 30rpx;
+	}
 	.swipe-action-view {
 		width: 100%;
 		position: relative;
