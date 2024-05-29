@@ -12,6 +12,10 @@
 				<ste-upload v-model="fileList1" @read="onRead1" accept="media" multiple />
 			</view>
 			<view class="demo-item">
+				<view class="title">上传单张图片，隐藏删除按钮和全屏预览</view>
+				<ste-upload v-model="fileList7" maxCount="1" :deletable="false"></ste-upload>
+			</view>
+			<view class="demo-item">
 				<view class="title">自定义上传图标，限制上传数量2</view>
 				<ste-upload v-model="fileList2" uploadIcon="&#xe67e;" :maxCount="2" />
 			</view>
@@ -33,6 +37,7 @@
 					</template>
 				</ste-upload>
 			</view>
+
 			<view class="demo-item">
 				<view class="title">读取文件前置处理</view>
 				<ste-upload @beforeRead="beforeRead" @read="onSuccessRead"></ste-upload>
@@ -56,6 +61,7 @@ export default {
 			fileList4: [],
 			fileList5: [{ url: 'https://image.whzb.com/chain/StellarUI/bg1.jpg', type: 'image', size: 1234 }],
 			fileList6: [],
+			fileList7: [],
 		};
 	},
 	watch: {
@@ -88,6 +94,13 @@ export default {
 			}, 1000);
 		},
 		fileList6(v) {
+			setTimeout(() => {
+				v.forEach((item) => {
+					item.status = 'success';
+				});
+			}, 1000);
+		},
+		fileList7(v) {
 			setTimeout(() => {
 				v.forEach((item) => {
 					item.status = 'success';

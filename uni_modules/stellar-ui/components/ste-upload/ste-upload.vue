@@ -219,7 +219,7 @@ export default {
 				'--ste-upload-width': utils.formatPx(this.previewWidth),
 				'--ste-upload-height': utils.formatPx(this.previewHeight),
 				'--ste-upload-radius': utils.formatPx(this.radius),
-				'--ste-upload-item-margin': this.maxCount === 1 ? 0 : utils.formatPx(18),
+				'--ste-upload-item-margin': this.maxCount.toString() === '1' ? 0 : utils.formatPx(18),
 			};
 			return style;
 		},
@@ -231,6 +231,9 @@ export default {
 			return this.dataValue
 				.filter((item) => ['video', 'image'].indexOf(item.type) !== -1)
 				.map((item) => item.thumbPath || item.url || item.path);
+		},
+		cmpPreviewFullImage() {
+			return this.previewFullImage && (this.maxCount !== 1 || this.deletable);
 		},
 	},
 	watch: {
@@ -248,9 +251,11 @@ export default {
 	methods: {
 		toSelectFile() {
 			if (this.maxCount !== 1 || this.deletable) return;
-			this.selectFile();
+			this.selectFile(() => {
+				this.deleteItem(0);
+			});
 		},
-		selectFile() {
+		selectFile(callback) {
 			if (this.disabled) return;
 			let accept = this.accept, // 文件类型, 可选值为all media image file video
 				capture = this.capture, //  图片或者视频选取模式，当accept为image | media 类型时设置capture可选值为camera可以直接调起摄像头
@@ -283,10 +288,12 @@ export default {
 					multiple,
 					count,
 				}).then((fileList) => {
+					if (typeof callback === 'function') callback(fileList);
 					this.readNext(fileList);
 				});
 			} else {
 				readFile(accept, count, multiple).then((fileList) => {
+					if (typeof callback === 'function') callback(fileList);
 					this.readNext(fileList);
 				});
 			}
@@ -361,7 +368,7 @@ export default {
 		},
 		previewItem(index, item) {
 			if (this.disabled) return;
-			if (!this.previewFullImage) return;
+			if (!this.cmpPreviewFullImage) return;
 			if (['video', 'image'].indexOf(item.type) === -1) return;
 			this.previewIndex = index;
 		},
