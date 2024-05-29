@@ -2,7 +2,7 @@
 	<view class="ste-upload-root" :style="[cmpRootStyle]">
 		<view class="upload-list">
 			<block v-if="previewImage">
-				<view class="image-item" v-for="(item, index) in dataValue" :key="index">
+				<view class="image-item" v-for="(item, index) in dataValue" :key="index" @click="toSelectFile">
 					<image
 						class="image"
 						:src="item.thumbPath || item.url || item.path"
@@ -219,6 +219,7 @@ export default {
 				'--ste-upload-width': utils.formatPx(this.previewWidth),
 				'--ste-upload-height': utils.formatPx(this.previewHeight),
 				'--ste-upload-radius': utils.formatPx(this.radius),
+				'--ste-upload-item-margin': this.maxCount === 1 ? 0 : utils.formatPx(18),
 			};
 			return style;
 		},
@@ -245,6 +246,10 @@ export default {
 		},
 	},
 	methods: {
+		toSelectFile() {
+			if (this.maxCount !== 1 || this.deletable) return;
+			this.selectFile();
+		},
 		selectFile() {
 			if (this.disabled) return;
 			let accept = this.accept, // 文件类型, 可选值为all media image file video
@@ -398,8 +403,8 @@ export default {
 			display: flex;
 			align-items: center;
 			justify-content: center;
-			margin-bottom: 18rpx;
-			margin-right: 18rpx;
+			margin-bottom: var(--ste-upload-item-margin);
+			margin-right: var(--ste-upload-item-margin);
 			position: relative;
 			background: #f7f7f7;
 			overflow: hidden;
