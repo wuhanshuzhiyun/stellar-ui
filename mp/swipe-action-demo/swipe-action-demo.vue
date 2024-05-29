@@ -5,16 +5,12 @@
 			<view class="demo-item">
 				<view class="title">基础用法</view>
 				<view class="item-block">
-					<ste-swipe-action ref="swipe" @open="onOpen" @close="onClose">
+					<ste-swipe-action @open="onOpen" @close="onClose">
 						<view class="content-view">内容区域</view>
 						<template v-slot:right>
 							<div class="test-btn">删除</div>
 						</template>
 					</ste-swipe-action>
-					<view style="margin-top: 12rpx">
-						<ste-button size="mini" @click="openSwipe">打开</ste-button>
-						<ste-button size="mini" @click="closeSwipe">关闭</ste-button>
-					</view>
 				</view>
 			</view>
 			<view class="demo-item">
@@ -29,6 +25,25 @@
 							<div class="test-btn">删除</div>
 						</template>
 					</ste-swipe-action>
+				</view>
+			</view>
+			<view class="demo-item">
+				<view class="title">组</view>
+				<view class="item-block">
+					<ste-swipe-action-group rightIcon @open="onOpen" @close="onClose">
+						<ste-swipe-action>
+							<view class="content-view">11111</view>
+							<template v-slot:right>
+								<div class="test-btn">删除</div>
+							</template>
+						</ste-swipe-action>
+						<ste-swipe-action>
+							<view class="content-view">22222</view>
+							<template v-slot:right>
+								<div class="test-btn">删除</div>
+							</template>
+						</ste-swipe-action>
+					</ste-swipe-action-group>
 				</view>
 			</view>
 		</view>
@@ -47,15 +62,15 @@ export default {
 		closeSwipe() {
 			this.$refs.swipe.close();
 		},
-		onOpen(direction) {
+		onOpen(direction, index) {
 			uni.showToast({
-				title: `打开方向：${direction}`,
+				title: index || index === 0 ? `第${index + 1}条的打开方向:${direction}` : `打开方向：${direction}`,
 				icon: 'none',
 			});
 		},
-		onClose() {
+		onClose(index) {
 			uni.showToast({
-				title: '关闭',
+				title: index || index === 0 ? `关闭第${index + 1}条` : '关闭',
 				icon: 'none',
 			});
 		},
@@ -71,7 +86,8 @@ export default {
 				display: block;
 				.content-view {
 					height: 90rpx;
-					border: 1px solid #ddd;
+					border-bottom: 1px solid #ddd;
+					background-color: #fafafa;
 				}
 				.test-btn {
 					background-color: #dd524d;
