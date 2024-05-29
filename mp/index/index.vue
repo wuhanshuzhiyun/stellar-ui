@@ -103,6 +103,15 @@
 					<ste-image :src="joinSrc('img/r-arrow.png')" :width="32" :height="32" />
 				</view>
 			</view>
+			<view class="com-box" @click="nav('code-input')">
+				<view class="com-title">
+					<ste-image :src="joinSrc('img/code-input.png')" :width="36" :height="36" />
+					<text>CodeInput 验证码输入</text>
+				</view>
+				<view class="com-arrow">
+					<ste-image :src="joinSrc('img/r-arrow.png')" :width="32" :height="32" />
+				</view>
+			</view>
 			<view class="com-box" @click="nav('date-picker')">
 				<view class="com-title">
 					<ste-image :src="joinSrc('img/datetime.png')" :width="36" :height="36" />
