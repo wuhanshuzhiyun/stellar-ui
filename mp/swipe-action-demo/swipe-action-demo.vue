@@ -5,16 +5,30 @@
 			<view class="demo-item">
 				<view class="title">基础用法</view>
 				<view class="item-block">
-					<ste-swipe-action ref="swipe">
+					<ste-swipe-action ref="swipe" @open="onOpen" @close="onClose">
 						<view class="content-view">内容区域</view>
 						<template v-slot:right>
-							<div class="right-btn">删除</div>
+							<div class="test-btn">删除</div>
 						</template>
 					</ste-swipe-action>
 					<view style="margin-top: 12rpx">
 						<ste-button size="mini" @click="openSwipe">打开</ste-button>
 						<ste-button size="mini" @click="closeSwipe">关闭</ste-button>
 					</view>
+				</view>
+			</view>
+			<view class="demo-item">
+				<view class="title">左右滑动</view>
+				<view class="item-block">
+					<ste-swipe-action mode="all" @open="onOpen" @close="onClose">
+						<template v-slot:left>
+							<div class="test-btn">收藏</div>
+						</template>
+						<view class="content-view">内容区域</view>
+						<template v-slot:right>
+							<div class="test-btn">删除</div>
+						</template>
+					</ste-swipe-action>
 				</view>
 			</view>
 		</view>
@@ -33,6 +47,18 @@ export default {
 		closeSwipe() {
 			this.$refs.swipe.close();
 		},
+		onOpen(direction) {
+			uni.showToast({
+				title: `打开方向：${direction}`,
+				icon: 'none',
+			});
+		},
+		onClose() {
+			uni.showToast({
+				title: '关闭',
+				icon: 'none',
+			});
+		},
 	},
 };
 </script>
@@ -47,7 +73,7 @@ export default {
 					height: 90rpx;
 					border: 1px solid #ddd;
 				}
-				.right-btn {
+				.test-btn {
 					background-color: #dd524d;
 					color: #fff;
 					line-height: 90rpx;

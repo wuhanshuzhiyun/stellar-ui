@@ -20,6 +20,7 @@ import { childMixin } from '../../utils/mixin.js';
 import TouchEvent from '../ste-touch-swipe/TouchEvent.js';
 
 export default {
+	group: '展示组件',
 	title: 'SwipeAction 滑动单元格',
 	name: 'ste-swipe-action',
 	mixins: [childMixin('ste-swipe-action-group')],
@@ -81,7 +82,7 @@ export default {
 			return this.swipeThreshold || this.parent?.swipeThreshold || 0.35;
 		},
 		cmpDuration() {
-			return this.duration || this.parent?.duration || 200;
+			return this.duration || this.parent?.duration || 300;
 		},
 		cmpLeftIcon() {
 			return this.leftIcon !== null ? this.leftIcon : this.parent?.leftIcon;
@@ -96,7 +97,11 @@ export default {
 			};
 		},
 	},
-	mounted() {},
+	mounted() {
+		if (this.parent && this.name === null) {
+			console.error('ste-swipe-action-group下的ste-swipe-action标签未设置name属性');
+		}
+	},
 	methods: {
 		/**
 		 * 打开侧滑
@@ -107,21 +112,27 @@ export default {
 				if (direction === 'left') {
 					const l = await utils.querySelector('.swipe-action-left', this);
 					if (!l) return;
+					if (this.translateX === l.width) return;
 					this.setTransform(l.width);
 					this.dataTranslateX = l.width;
 				} else {
 					const r = await utils.querySelector('.swipe-action-right', this);
 					if (!r) return;
+					if (this.translateX === -r.width) return;
 					this.setTransform(-r.width);
 					this.dataTranslateX = -r.width;
 				}
 			}, 30);
 		},
 		close() {
+			if (this.translateX === 0) return;
 			this.setTransform(0);
 		},
 		setTransform(moveX) {
 			this.translateX = moveX;
+			if (this.changeCallback) this.changeCallback(moveX);
+			if (moveX === 0) this.$emit('close');
+			else this.$emit('open', moveX > 0 ? 'left' : 'right');
 		},
 		async onTouchstart({ changedTouches }) {
 			if (this.cmpDisabled) return;
@@ -164,7 +175,7 @@ export default {
 				// 右侧按钮显示时，右侧滑动距离不能超过按钮宽度
 				x = -this.rightWidth;
 			}
-			this.setTransform(x);
+			this.translateX = x;
 		},
 		onTouchend({ changedTouches }) {
 			this.moveing = false;
