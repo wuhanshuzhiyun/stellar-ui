@@ -43,6 +43,21 @@ import utils from '../../utils/utils.js';
  * ste-code-input 验证码输入
  * @description 验证码输入组件
  * @tutorial https://stellar-ui.intecloud.com.cn/pc/index/index?name=ste-code-input
+ * @property {Number|String} value 初始内容，支持双向绑定
+ * @property {String} mode 输入框类型
+ * @value box 盒子模式 {String}
+ * @value line 底部横线模式 {String}
+ * @property {Number} maxlength 最大长度
+ * @property {Number|String} space 字符间的距离
+ * @property {String} fontColor 字体颜色
+ * @property {String} borderColor 边框和线条颜色
+ * @property {Number|String} fontSize 字体大小
+ * @property {Number|String} size 输入框的大小，宽等于高
+ * @property {Number|String} formatter 替换输入值
+ * @property {Boolean} focus 是否自动获取焦点
+ * @property {Boolean} disabledDot 是否禁止输入"."符号
+ * @event {Function} change 输入内容发生改变时触发
+ * @event {Function} finish 输入字符个数达maxlength值时触发
  */
 export default {
 	group: '表单组件',
@@ -71,12 +86,12 @@ export default {
 		// 字体颜色
 		fontColor: {
 			type: String,
-			default: '#606266',
+			default: '#000000',
 		},
 		// 边框和线条颜色
 		borderColor: {
 			type: String,
-			default: '#c9cacc',
+			default: '#DDDDDD',
 		},
 		// 字体大小
 		fontSize: {
@@ -88,6 +103,7 @@ export default {
 			type: [String, Number],
 			default: 64,
 		},
+		// 替换输入值
 		formatter: {
 			type: [String, Number],
 			default: '',
