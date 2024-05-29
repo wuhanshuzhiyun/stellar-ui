@@ -1,14 +1,26 @@
 <template>
-	<view class="ste-swipe-action-root" @touchstart="onTouchstart" @touchmove="onTouchmove" @touchend="onTouchend">
+	<view class="ste-swipe-action-root">
 		<view class="swipe-action-view" :style="[cmpTransform]">
-			<view class="swipe-action-left">
-				<slot name="left"></slot>
+			<view class="swipe-action-left-icon" v-if="cmpLeftIcon" @click="iconOpen('left')">
+				<view class="swipe-icon" :class="{ active: dataTranslateX > 0 }">
+					<ste-icon code="&#xe674;" size="30rpx" />
+				</view>
 			</view>
-			<view class="swipe-action-content">
-				<slot></slot>
+			<view class="swipe-action-right-icon" v-if="cmpRightIcon" @click="iconOpen('right')">
+				<view class="swipe-icon" :class="{ active: dataTranslateX < 0 }">
+					<ste-icon code="&#xe673;" size="30rpx" />
+				</view>
 			</view>
-			<view class="swipe-action-right">
-				<slot name="right"></slot>
+			<view @touchstart="onTouchstart" @touchmove="onTouchmove" @touchend="onTouchend">
+				<view class="swipe-action-left">
+					<slot name="left"></slot>
+				</view>
+				<view class="swipe-action-content">
+					<slot></slot>
+				</view>
+				<view class="swipe-action-right">
+					<slot name="right"></slot>
+				</view>
 			</view>
 		</view>
 	</view>
@@ -114,22 +126,26 @@ export default {
 					if (!l) return;
 					if (this.translateX === l.width) return;
 					this.setTransform(l.width);
-					this.dataTranslateX = l.width;
 				} else {
 					const r = await utils.querySelector('.swipe-action-right', this);
 					if (!r) return;
 					if (this.translateX === -r.width) return;
 					this.setTransform(-r.width);
-					this.dataTranslateX = -r.width;
 				}
 			}, 30);
 		},
 		close() {
-			if (this.translateX === 0) return;
+			if (!this.translateX) return;
 			this.setTransform(0);
+		},
+		iconOpen(direction) {
+			console.log(this.dataTranslateX);
+			if (this.dataTranslateX) this.close();
+			else this.open(direction);
 		},
 		setTransform(moveX) {
 			this.translateX = moveX;
+			this.dataTranslateX = moveX;
 			if (this.changeCallback) this.changeCallback(moveX);
 			if (moveX === 0) this.$emit('close');
 			else this.$emit('open', moveX > 0 ? 'left' : 'right');
@@ -195,7 +211,6 @@ export default {
 			}
 			setTimeout(() => {
 				this.setTransform(x);
-				this.dataTranslateX = x;
 			}, 10);
 		},
 		onchange(callback) {
@@ -208,7 +223,43 @@ export default {
 <style lang="scss" scoped>
 .ste-swipe-action-root {
 	width: 100%;
+	position: relative;
 	overflow: hidden;
+
+	.swipe-action-left-icon,
+	.swipe-action-right-icon {
+		width: 30rpx;
+		height: 60rpx;
+		position: absolute;
+		top: 50%;
+		z-index: 10;
+		transform: translateY(-50%);
+		overflow: hidden;
+		box-shadow: 0 0 10rpx rgba(0, 0, 0, 0.1);
+		background-color: #fff;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		.swipe-icon {
+			width: 30rpx;
+			height: 30rpx;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			transition: 300ms;
+			&.active {
+				transform: rotate(180deg);
+			}
+		}
+	}
+	.swipe-action-left-icon {
+		left: 0;
+		border-radius: 0 30rpx 30rpx 0;
+	}
+	.swipe-action-right-icon {
+		right: 0;
+		border-radius: 30rpx 0 0 30rpx;
+	}
 	.swipe-action-view {
 		width: 100%;
 		position: relative;

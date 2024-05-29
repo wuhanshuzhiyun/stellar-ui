@@ -18,9 +18,9 @@
 				</view>
 			</view>
 			<view class="demo-item">
-				<view class="title">左右滑动</view>
+				<view class="title">左右滑动,滑动按钮</view>
 				<view class="item-block">
-					<ste-swipe-action mode="all" @open="onOpen" @close="onClose">
+					<ste-swipe-action mode="all" @open="onOpen" @close="onClose" leftIcon rightIcon>
 						<template v-slot:left>
 							<div class="test-btn">收藏</div>
 						</template>
