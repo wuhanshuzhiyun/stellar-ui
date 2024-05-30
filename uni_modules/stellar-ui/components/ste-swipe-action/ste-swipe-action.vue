@@ -163,10 +163,10 @@ export default {
 			if (moveX === 0) this.$emit('close');
 			else this.$emit('open', moveX > 0 ? 'left' : 'right');
 		},
-		async onTouchstart({ changedTouches }) {
+		async onTouchstart(e) {
 			if (this.cmpDisabled) return;
 			this.moveing = true;
-			this.touch.touchStart(changedTouches);
+			this.touch.touchStart(e);
 			if (this.cmpLeft) {
 				const l = await utils.querySelector('.swipe-action-left', this);
 				if (l?.width) this.leftWidth = l.width;
@@ -180,11 +180,11 @@ export default {
 				this.rightWidth = 0;
 			}
 		},
-		onTouchmove({ changedTouches }) {
+		onTouchmove(e) {
 			if (this.cmpDisabled) return;
-			const e = this.touch.touchMove(changedTouches);
-			if (!e) return;
-			let x = this.dataTranslateX + e.moveX;
+			const d = this.touch.touchMove(e);
+			if (!d) return;
+			let x = this.dataTranslateX + d.moveX;
 			if (this.dataTranslateX > 0 && x < 0) {
 				// 左侧按钮显示的时候，不能直接滑动到右侧按钮
 				x = 0;
@@ -206,10 +206,10 @@ export default {
 			}
 			this.translateX = x;
 		},
-		onTouchend({ changedTouches }) {
+		onTouchend(e) {
 			this.moveing = false;
 			if (this.cmpDisabled) return;
-			const { moveX } = this.touch.touchEnd(changedTouches);
+			const { moveX } = this.touch.touchEnd(e);
 			let x = this.dataTranslateX;
 			if (x === 0) {
 				if (moveX > 0 && this.cmpLeft && moveX > this.leftWidth * this.cmpSwipeThreshold) {

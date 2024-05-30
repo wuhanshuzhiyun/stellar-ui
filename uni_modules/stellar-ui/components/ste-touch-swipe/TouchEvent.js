@@ -11,19 +11,19 @@ export default class TouchEvent {
 		this.minDis = minDis;
 	}
 
-	_getInfo(changedTouches) {
-		return changedTouches?.length ? changedTouches[0] : { pageX: null, pageY: null };
+	_getInfo(e) {
+		return e.changedTouches?.length ? changedTouches[0] : e;
 	}
 
 	// 滑动开始
-	touchStart(changedTouches) {
-		const { pageX, pageY } = this._getInfo(changedTouches);
+	touchStart(e) {
+		const { pageX, pageY } = this._getInfo(e);
 		this.startX = pageX;
 		this.startY = pageY;
 	}
-	touchMove(changedTouches) {
+	touchMove(e) {
 		if (this.startX === null || this.startY === null) return null;
-		const { pageX, pageY } = this._getInfo(changedTouches);
+		const { pageX, pageY } = this._getInfo(e);
 		const moveX = pageX - this.startX;
 		const moveY = pageY - this.startY;
 		if (Math.abs(moveX - this.moveX) < 1 && Math.abs(moveY - this.moveY) < 1) {
@@ -35,7 +35,7 @@ export default class TouchEvent {
 		return { moveX, moveY };
 	}
 	// 滑动结束
-	touchEnd(changedTouches) {
+	touchEnd(e) {
 		if (this.startX === null || this.startY === null) {
 			return {
 				direction: null,
@@ -43,7 +43,7 @@ export default class TouchEvent {
 				moveY: 0,
 			};
 		}
-		const { pageX, pageY } = this._getInfo(changedTouches);
+		const { pageX, pageY } = this._getInfo(e);
 		const moveX = pageX - this.startX;
 		const moveY = pageY - this.startY;
 		this.startX = null;

@@ -30,7 +30,7 @@
 			<view class="demo-item">
 				<view class="title">组</view>
 				<view class="item-block">
-					<ste-swipe-action-group rightIcon @open="onOpen" @close="onClose">
+					<ste-swipe-action-group @open="onOpen" @close="onClose">
 						<ste-swipe-action>
 							<view class="content-view">11111</view>
 							<template v-slot:right>

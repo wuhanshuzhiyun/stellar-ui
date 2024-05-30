@@ -249,14 +249,14 @@ export default {
 				return Math.abs(moveY) > this.boxEl.height * this.swipeThreshold;
 			}
 		},
-		onTouchstart({ changedTouches }) {
+		onTouchstart(e) {
 			if (this.disabled || !this.touch) return;
 			this.moveing = true;
-			this.touch.touchStart(changedTouches);
+			this.touch.touchStart(e);
 		},
-		onTouchmove({ changedTouches }) {
+		onTouchmove(e) {
 			if (this.disabled || this.duration === 0 || !this.touch || !this.moveing) return;
-			const res = this.touch.touchMove(changedTouches);
+			const res = this.touch.touchMove(e);
 			if (!res) return;
 			let { moveX, moveY } = res;
 			const [nextIndex, nextDisabled] = this.nextItem(moveX, moveY);
@@ -273,10 +273,10 @@ export default {
 				this.translateY = -this.cmpItemTops[this.dataIndex] + Math.floor(moveY);
 			}
 		},
-		onTouchend({ changedTouches }) {
+		onTouchend(e) {
 			if (this.disabled || !this.touch) return;
 			this.moveing = false;
-			const { moveX, moveY } = this.touch.touchEnd(changedTouches);
+			const { moveX, moveY } = this.touch.touchEnd(e);
 			if (this.direction === 'horizontal' && !moveX) return;
 			else if (this.direction === 'vertical' && !moveY) return;
 			const [nextIndex, nextDisabled] = this.nextItem(moveX, moveY);
