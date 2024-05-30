@@ -46,6 +46,14 @@ import utils from '../../utils/utils.js';
  * @property {Boolean}				hiddenError						是否隐藏加载失败的内容
  * @property {Boolean}				showMenuByLongpress		长按图片显示发送给朋友、收藏、保存图片、搜一搜、打开名片/前往群聊/打开小程序（若图片中包含对应二维码或小程序码）的菜单。
  * @property {Boolean}				lazyLoad							图片懒加载，在即将进入一定范围（上下三屏）时才开始加载
+ * @property {String}					display								盒子模型
+ * @value inline-flex 行内弹性盒子（默认）
+ * @value flex 块级弹性盒子
+ * @value block 块级盒子
+ * @value inline-block 行内块级盒子
+ * @value none 隐藏
+ * @value inherit 继承父元素
+ * @value inline 行内元素
  * @event {Function}			click 点击事件
  * @event {Function}			load 加载成功事件
  * @event {Function}			error 加载失败事件
@@ -91,6 +99,10 @@ export default {
 			type: Boolean,
 			default: () => false,
 		},
+		display: {
+			type: Boolean,
+			default: () => 'inline-flex',
+		},
 	},
 	data() {
 		return {
@@ -119,6 +131,7 @@ export default {
 			return {
 				'--image-root-width': width,
 				'--image-root-height': height,
+				'--image-root-display': this.display,
 				'--image-root-radius': utils.formatPx(this.radius),
 				'--image-root-background-color': this.status === 1 ? 'none' : 'rgba(127,127,127,.05)',
 			};
@@ -182,7 +195,7 @@ export default {
 .ste-image-root {
 	width: var(--image-root-width);
 	height: var(--image-root-height);
-	display: inline-flex;
+	display: var(--image-root-display);
 	font-size: 24rpx;
 	color: #bbbbbb;
 	justify-content: center;
