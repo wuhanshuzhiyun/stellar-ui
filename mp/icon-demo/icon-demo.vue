@@ -57,7 +57,9 @@
 								:marginBottom="8"
 								@click="isShowUnicode = true"
 							></ste-icon>
-							&nbsp;&nbsp;&nbsp;{{ isShowUnicode ? '隐藏unicode' : '展示unicode' }}
+							&nbsp;&nbsp;&nbsp;{{
+								isShowUnicode ? '隐藏unicode' : '展示unicode'
+							}}（点击对应icon可复制其code）
 						</view>
 						<view v-for="item in glyphs" class="icon-item" @click="copy(item.unicode)">
 							<view class="icon-content">
@@ -78,7 +80,7 @@ export default {
 	data() {
 		return {
 			iconUrl:
-				'https://at.alicdn.com/t/c/font_4457057_csks8xrazle.json?spm=a313x.manage_type_myprojects.i1.11.2ba93a81DPlvdy&file=font_4457057_csks8xrazle.json',
+				'https://at.alicdn.com/t/c/font_4457057_f7j9wsh9d4h.json?spm=a313x.manage_type_myprojects.i1.11.2ba93a81on7sxn&file=font_4457057_f7j9wsh9d4h.json',
 			glyphs: [],
 			tabIndex: 0,
 			isShowUnicode: false,
