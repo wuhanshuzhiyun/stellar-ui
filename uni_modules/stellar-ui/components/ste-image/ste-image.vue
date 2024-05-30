@@ -100,7 +100,7 @@ export default {
 			default: () => false,
 		},
 		display: {
-			type: Boolean,
+			type: String,
 			default: () => 'inline-flex',
 		},
 	},
