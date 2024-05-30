@@ -156,8 +156,8 @@ export default {
 			else this.open(direction);
 		},
 		setTransform(moveX) {
-			if (this.dataTranslateX === moveX) return;
 			this.translateX = moveX;
+			if (this.dataTranslateX === moveX) return;
 			this.dataTranslateX = moveX;
 			if (this.changeCallback) this.changeCallback(moveX);
 			if (moveX === 0) this.$emit('close');
