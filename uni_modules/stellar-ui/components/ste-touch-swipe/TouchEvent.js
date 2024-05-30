@@ -12,7 +12,7 @@ export default class TouchEvent {
 	}
 
 	_getInfo(e) {
-		return e.changedTouches?.length ? changedTouches[0] : e;
+		return e.changedTouches?.length ? e.changedTouches[0] : e;
 	}
 
 	// 滑动开始
