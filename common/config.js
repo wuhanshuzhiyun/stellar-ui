@@ -1,7 +1,7 @@
 // 全局常量
 
-const IMAGE_BASE_URL = 'https://image.whzb.com/chain/inte-mall/'; // 图片根地址
-const IMAGE_COMMON = '00-普通图片/00-开发版/';
+const IMAGE_BASE_URL = 'https://image.whzb.com/chain/StellarUI/'; // 图片根地址
+const IMAGE_COMMON = '';
 const BASE_URL = 'https://stellar-ui.intecloud.com.cn';
 // const BASE_URL = "http://127.0.0.1:3000"
 
