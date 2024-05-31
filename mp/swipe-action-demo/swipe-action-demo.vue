@@ -14,6 +14,21 @@
 				</view>
 			</view>
 			<view class="demo-item">
+				<view class="title">调用方法打开或关闭</view>
+				<view class="item-block">
+					<ste-swipe-action ref="swipe">
+						<view class="content-view">内容区域</view>
+						<template v-slot:right>
+							<div class="test-btn">删除</div>
+						</template>
+					</ste-swipe-action>
+					<view style="margin-top: 12rpx">
+						<ste-button style="margin: 12rpx" mode="200" @click="openSwipe">打开</ste-button>
+						<ste-button style="margin: 12rpx" mode="200" @click="closeSwipe">关闭</ste-button>
+					</view>
+				</view>
+			</view>
+			<view class="demo-item">
 				<view class="title">左右滑动,滑动按钮</view>
 				<view class="item-block">
 					<ste-swipe-action mode="all" @open="onOpen" @close="onClose" leftIcon rightIcon>
@@ -30,7 +45,7 @@
 			<view class="demo-item">
 				<view class="title">组</view>
 				<view class="item-block">
-					<ste-swipe-action-group @open="onOpen" @close="onClose">
+					<ste-swipe-action-group @open="onOpen" @close="onClose" ref="swipeGroup">
 						<ste-swipe-action>
 							<view class="content-view">11111</view>
 							<template v-slot:right>
@@ -44,6 +59,12 @@
 							</template>
 						</ste-swipe-action>
 					</ste-swipe-action-group>
+					<view>
+						<ste-button style="margin: 12rpx" mode="200" @click="openSwipeGroup(0)">打开第1行</ste-button>
+						<ste-button style="margin: 12rpx" mode="200" @click="closeSwipeGroup(0)">关闭第1行</ste-button>
+						<ste-button style="margin: 12rpx" mode="200" @click="openSwipeGroup(1)">打开第2行</ste-button>
+						<ste-button style="margin: 12rpx" mode="200" @click="closeSwipeGroup(1)">关闭第2行</ste-button>
+					</view>
 				</view>
 			</view>
 		</view>
@@ -61,6 +82,12 @@ export default {
 		},
 		closeSwipe() {
 			this.$refs.swipe.close();
+		},
+		openSwipeGroup(index) {
+			this.$refs.swipeGroup.open('right', index);
+		},
+		closeSwipeGroup(index) {
+			this.$refs.swipeGroup.close(index);
 		},
 		onOpen(direction, index) {
 			uni.showToast({

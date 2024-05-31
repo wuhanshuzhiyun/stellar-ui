@@ -152,6 +152,7 @@ export default {
 			this.setTransform(0);
 		},
 		iconOpen(direction) {
+			if (this.cmpDisabled) return;
 			if (this.dataTranslateX) this.close();
 			else this.open(direction);
 		},

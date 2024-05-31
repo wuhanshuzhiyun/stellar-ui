@@ -71,6 +71,12 @@ export default {
 			child.open(direction);
 			this.closeRestsChildren(index);
 		},
+		close(index) {
+			const child = this.children[index];
+			if (!child) return;
+			child.close();
+		},
+
 		closeRestsChildren(index) {
 			if (!this.autoClose) return;
 			this.children.forEach((child, i) => {
