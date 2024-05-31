@@ -258,10 +258,13 @@ export default {
 			}
 			return true;
 		},
-		setTransform(moveX = 0, moveY = 0) {
+		async setTransform(moveX = 0, moveY = 0) {
 			if (this.children?.length < 2) return;
 			const bool = this.isMover(moveX, moveY);
 			if (!bool) return;
+			const boxEl = await utils.querySelector('.swipe-content-view', this);
+			this.boxWidth = boxEl.width;
+			this.boxHeight = boxEl.height;
 			if (this.direction === 'horizontal') {
 				this.translateX = -this.dataIndex * this.boxWidth + moveX;
 				this.setBoundary(moveX);

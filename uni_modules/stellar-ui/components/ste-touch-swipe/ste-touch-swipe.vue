@@ -188,7 +188,6 @@ export default {
 		},
 	},
 	async mounted() {
-		this.boxEl = await utils.querySelector('.ste-touch-swipe--root', this);
 		this.init();
 	},
 	methods: {
@@ -212,7 +211,7 @@ export default {
 				}
 				if (diff) this.dataDisabledIndexs = disabledIndexs;
 				this.$nextTick(async () => {
-					if (!this.boxEl) {
+					if (!this.boxEl || !this.boxEl.width || !this.boxEl.height) {
 						this.boxEl = await utils.querySelector('.ste-touch-swipe--root', this);
 					}
 					this.showNode = true;
@@ -249,8 +248,11 @@ export default {
 				return Math.abs(moveY) > this.boxEl.height * this.swipeThreshold;
 			}
 		},
-		onTouchstart(e) {
+		async onTouchstart(e) {
 			if (this.disabled || !this.touch) return;
+			if (!this.boxEl || !this.boxEl.width || !this.boxEl.height) {
+				this.boxEl = await utils.querySelector('.ste-touch-swipe--root', this);
+			}
 			this.moveing = true;
 			this.touch.touchStart(e);
 		},
