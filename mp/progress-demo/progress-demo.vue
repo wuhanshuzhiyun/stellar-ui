@@ -11,7 +11,7 @@
 					<view style="width: 100%">
 						<ste-progress
 							:percentage="45"
-							activeBg="https://image.whzb.com/chain/inte-mall/00-普通图片/00-开发版/img/p-red.png"
+							activeBg="https://image.whzb.com/chain/StellarUI/image/p-red.png"
 							inactiveBg="#CCCCCC"
 						></ste-progress>
 					</view>
@@ -101,7 +101,7 @@
 							:percentage="50"
 							strokeWidth="36"
 							inactiveBg="#E8EDF3"
-							activeBg="https://image.whzb.com/chain/inte-mall/00-普通图片/00-开发版/img/p-blue.png"
+							activeBg="https://image.whzb.com/chain/StellarUI/image/p-blue.png"
 						>
 							<view class="c-progress-1">
 								<text>已抢50%</text>
@@ -118,7 +118,7 @@
 							:percentage="50"
 							strokeWidth="16"
 							inactiveBg="#F8E1E0"
-							activeBg="https://image.whzb.com/chain/inte-mall/00-普通图片/00-开发版/img/p-red.png"
+							activeBg="https://image.whzb.com/chain/StellarUI/image/p-red.png"
 						>
 							<view class="c-progress-2">
 								<text></text>

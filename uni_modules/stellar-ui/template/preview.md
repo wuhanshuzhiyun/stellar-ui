@@ -33,6 +33,8 @@
 <div class="preview">
 	<p class="title">扫描下方小程序二维码，体验组件库示例：</p>
 	<div class="box">
+		<img src="https://image.whzb.com/chain/StellarUI/微信体验版.png"></img>
+		<img src="https://image.whzb.com/chain/StellarUI/微信.jpg"></img>
 		<img src="https://image.whzb.com/chain/StellarUI/支付宝.png"></img>
 	</div>
 	<div class="bottom">

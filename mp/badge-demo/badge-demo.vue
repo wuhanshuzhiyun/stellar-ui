@@ -40,7 +40,7 @@
 					</view>
 					<view>
 						<ste-badge
-							background="https://image.whzb.com/chain/inte-mall/00-普通图片/00-开发版/img/fire.png"
+							background="https://image.whzb.com/chain/StellarUI/image/fire.png"
 						>
 							<view class="avator"></view>
 						</ste-badge>

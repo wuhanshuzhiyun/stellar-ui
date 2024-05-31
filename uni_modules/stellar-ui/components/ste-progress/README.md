@@ -10,7 +10,7 @@
 - 支持设置激活部分的背景(`activeBg`)和未激活部分(`inactiveBg`)的背景
 ```html
 <ste-progress :percentage="40"></ste-progress>
-<ste-progress :percentage="45" activeBg="https://image.whzb.com/chain/inte-mall/00-普通图片/00-开发版/img/p-red.png" inactiveBg="#CCCCCC"></ste-progress>
+<ste-progress :percentage="45" activeBg="https://image.whzb.com/chain/StellarUI/image/p-red.png" inactiveBg="#CCCCCC"></ste-progress>
 <ste-progress :percentage="50"activeBg="linear-gradient(to right, rgb(66, 83, 216), rgb(213, 51, 186))"></ste-progress>
 ```
 

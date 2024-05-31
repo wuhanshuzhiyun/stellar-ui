@@ -12,9 +12,7 @@ export default {
 		};
 	},
 	mounted() {
-		this.imgUrl = `https://image.whzb.com/chain/inte-mall/00-普通图片/00-开发版/img/gialab/${
-			this?.$Route?.query?.name ?? ''
-		}.png`;
+		this.imgUrl = `https://image.whzb.com/chain/StellarUI/gialab/${this?.$Route?.query?.name ?? ''}.png`;
 	},
 	methods: {
 		goToHome() {

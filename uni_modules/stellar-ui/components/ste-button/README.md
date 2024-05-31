@@ -23,7 +23,7 @@
 通过`background`设置背景，支持纯颜色、背景图、渐变色
 ```html
 <ste-button background="#ff1e19" >按钮</ste-button>
-<ste-button background="https://image.whzb.com/chain/inte-mall/00-普通图片/00-开发版/1平台/我的/精选会员瓷片.png">背景图</ste-button>
+<ste-button background="https://image.whzb.com/chain/StellarUI/image/精选会员瓷片.png">背景图</ste-button>
 <ste-button background="linear-gradient(to right, rgb(66, 83, 216), rgb(213, 51, 186))">渐变色</ste-button>
 ```
 

@@ -35,7 +35,7 @@
 					</view>
 					<view>
 						<ste-button
-							background="https://image.whzb.com/chain/inte-mall/00-普通图片/00-开发版/1平台/我的/精选会员瓷片.png"
+							background="https://image.whzb.com/chain/StellarUI/image/精选会员瓷片.png"
 							@click="handleClick('背景图')"
 						>
 							背景图

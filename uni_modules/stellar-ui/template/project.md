@@ -53,10 +53,10 @@
 <div class="project">
 	<div class="item">
 		<div class="top">
-			<img src="https://image.whzb.com/chain/inte-mall/00-普通图片/00-开发版/img/头像/邻里购.png"></img>
+			<img src="https://image.whzb.com/chain/StellarUI/头像/邻里购.png"></img>
 		</div>	
 		<div class="bottom">
-			<img src="https://image.whzb.com/chain/inte-mall/00-普通图片/00-开发版/img/头像/邻里购头像.png"></img>
+			<img src="https://image.whzb.com/chain/StellarUI/头像/邻里购头像.png"></img>
 			<div class="info">
 				<p class="title">邻里购</p>
 				<p class="desc">中百邻里购是中百旗下电商平台，主营蔬果、肉蛋、粮油、酒水、休食、家清、百货等，提供外卖、自提、包邮等商品服务，构建邻里生活服务圈。</p>
@@ -65,10 +65,10 @@
 	</div>
 	<div class="item">
 		<div class="top">
-			<img src="https://image.whzb.com/chain/inte-mall/00-普通图片/00-开发版/img/头像/百荟.png"></img>
+			<img src="https://image.whzb.com/chain/StellarUI/头像/百荟.png"></img>
 		</div>
 		<div class="bottom">
-			<img src="https://image.whzb.com/chain/inte-mall/00-普通图片/00-开发版/img/头像/百荟头像.png"></img>
+			<img src="https://image.whzb.com/chain/StellarUI/头像/百荟头像.png"></img>
 			<div class="info">
 				<p class="title">百荟</p>
 				<p class="desc">百荟平台是数智云公司自建的本地综合生活服务线上平台。集商业服务、生活服务、政务综合服务于一体的15分钟便民生活圈服务平台。</p>
@@ -77,10 +77,10 @@
 	</div>
 	<div class="item">
 		<div class="top">
-			<img src="https://image.whzb.com/chain/inte-mall/00-普通图片/00-开发版/img/头像/中百百货.png"></img>
+			<img src="https://image.whzb.com/chain/StellarUI/头像/中百百货.png"></img>
 		</div>
 		<div class="bottom">
-			<img src="https://image.whzb.com/chain/inte-mall/00-普通图片/00-开发版/img/头像/中百百货头像.png"></img>
+			<img src="https://image.whzb.com/chain/StellarUI/头像/中百百货头像.png"></img>
 			<div class="info">
 				<p class="title">中百百货</p>
 				<p class="desc">中百百货线上商城。</p>
