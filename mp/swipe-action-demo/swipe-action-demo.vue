@@ -23,13 +23,13 @@
 						</template>
 					</ste-swipe-action>
 					<view style="margin-top: 12rpx">
-						<ste-button style="margin: 12rpx" mode="200" @click="openSwipe">打开</ste-button>
-						<ste-button style="margin: 12rpx" mode="200" @click="closeSwipe">关闭</ste-button>
+						<ste-button mode="200" @click="openSwipe">打开</ste-button>
+						<ste-button mode="200" @click="closeSwipe">关闭</ste-button>
 					</view>
 				</view>
 			</view>
 			<view class="demo-item">
-				<view class="title">左右滑动,滑动按钮</view>
+				<view class="title">滑动方向,滑动按钮</view>
 				<view class="item-block">
 					<ste-swipe-action mode="all" @open="onOpen" @close="onClose" leftIcon rightIcon>
 						<template v-slot:left>
@@ -43,7 +43,7 @@
 				</view>
 			</view>
 			<view class="demo-item">
-				<view class="title">组</view>
+				<view class="title">单元格组</view>
 				<view class="item-block">
 					<ste-swipe-action-group @open="onOpen" @close="onClose" ref="swipeGroup">
 						<ste-swipe-action>
@@ -59,11 +59,11 @@
 							</template>
 						</ste-swipe-action>
 					</ste-swipe-action-group>
-					<view>
-						<ste-button style="margin: 12rpx" mode="200" @click="openSwipeGroup(0)">打开第1行</ste-button>
-						<ste-button style="margin: 12rpx" mode="200" @click="closeSwipeGroup(0)">关闭第1行</ste-button>
-						<ste-button style="margin: 12rpx" mode="200" @click="openSwipeGroup(1)">打开第2行</ste-button>
-						<ste-button style="margin: 12rpx" mode="200" @click="closeSwipeGroup(1)">关闭第2行</ste-button>
+					<view style="margin-top: 12rpx">
+						<ste-button mode="200" @click="openSwipeGroup(0)">打开第1行</ste-button>
+						<ste-button mode="200" @click="closeSwipeGroup(0)">关闭第1行</ste-button>
+						<ste-button mode="200" @click="openSwipeGroup(1)">打开第2行</ste-button>
+						<ste-button mode="200" @click="closeSwipeGroup(1)">关闭第2行</ste-button>
 					</view>
 				</view>
 			</view>
@@ -113,8 +113,8 @@ export default {
 				display: block;
 				.content-view {
 					height: 90rpx;
-					border-bottom: 1px solid #ddd;
-					background-color: #fafafa;
+					border-bottom: 1px solid #fff;
+					background-color: #f5f5f5;
 				}
 				.test-btn {
 					background-color: #dd524d;
