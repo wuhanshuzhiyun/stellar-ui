@@ -174,13 +174,17 @@ export default {
 		dataIndex: {
 			handler(v) {
 				if (!this.cmpItemLefts.length) return;
-				this.setTransform(v);
+				this.$nextTick(async () => {
+					await this.getBoxSize();
+					this.setTransform(v);
+				});
 			},
 			immediate: true,
 		},
 		cmpItemLefts: {
 			handler(v) {
-				this.$nextTick(() => {
+				this.$nextTick(async () => {
+					await this.getBoxSize();
 					this.setTransform(this.dataIndex);
 				});
 			},
@@ -188,6 +192,7 @@ export default {
 		},
 	},
 	async mounted() {
+		await this.getBoxSize();
 		this.init();
 	},
 	methods: {
@@ -211,12 +216,14 @@ export default {
 				}
 				if (diff) this.dataDisabledIndexs = disabledIndexs;
 				this.$nextTick(async () => {
-					if (!this.boxEl || !this.boxEl.width || !this.boxEl.height) {
-						this.boxEl = await utils.querySelector('.ste-touch-swipe--root', this);
-					}
+					await this.getBoxSize();
 					this.showNode = true;
 				});
 			}, 50);
+		},
+		async getBoxSize() {
+			if (this.boxEl && this.boxEl.width > 0 && this.boxEl.height > 0) return;
+			this.boxEl = await utils.querySelector('.ste-touch-swipe--root', this);
 		},
 		setTransform() {
 			if (!this.cmpItemLefts?.length) return;
@@ -248,12 +255,10 @@ export default {
 				return Math.abs(moveY) > this.boxEl.height * this.swipeThreshold;
 			}
 		},
-		async onTouchstart(e) {
+		onTouchstart(e) {
 			if (this.disabled || !this.touch) return;
-			if (!this.boxEl || !this.boxEl.width || !this.boxEl.height) {
-				this.boxEl = await utils.querySelector('.ste-touch-swipe--root', this);
-			}
 			this.moveing = true;
+			this.getBoxSize();
 			this.touch.touchStart(e);
 		},
 		onTouchmove(e) {

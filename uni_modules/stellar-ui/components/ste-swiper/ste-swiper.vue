@@ -205,13 +205,19 @@ export default {
 		},
 		dataIndex: {
 			handler() {
-				this.setTransform();
+				this.$nextTick(async () => {
+					await this.getBoxSize();
+					this.setTransform();
+				});
 			},
 			immediate: true,
 		},
 		children: {
 			handler() {
-				this.setTransform();
+				this.$nextTick(async () => {
+					await this.getBoxSize();
+					this.setTransform();
+				});
 			},
 			immediate: true,
 		},
@@ -228,9 +234,7 @@ export default {
 		init() {
 			clearTimeout(this.childrenTimeout);
 			this.childrenTimeout = setTimeout(async () => {
-				const boxEl = await utils.querySelector('.swipe-content-view', this);
-				this.boxWidth = boxEl.width;
-				this.boxHeight = boxEl.height;
+				await this.getBoxSize();
 				this.setTransform();
 				if (this.initializing) {
 					this.resetBoundary();
@@ -258,13 +262,16 @@ export default {
 			}
 			return true;
 		},
+		async getBoxSize() {
+			if (this.boxWidth > 0 && this.boxHeight > 0) return;
+			const boxEl = await utils.querySelector('.swipe-content-view', this);
+			this.boxWidth = boxEl.width;
+			this.boxHeight = boxEl.height;
+		},
 		async setTransform(moveX = 0, moveY = 0) {
 			if (this.children?.length < 2) return;
 			const bool = this.isMover(moveX, moveY);
 			if (!bool) return;
-			const boxEl = await utils.querySelector('.swipe-content-view', this);
-			this.boxWidth = boxEl.width;
-			this.boxHeight = boxEl.height;
 			if (this.direction === 'horizontal') {
 				this.translateX = -this.dataIndex * this.boxWidth + moveX;
 				this.setBoundary(moveX);
@@ -273,10 +280,11 @@ export default {
 				this.setBoundary(0, moveY);
 			}
 		},
-		onTouchstart(e) {
+		async onTouchstart(e) {
 			if (this.disabled) return;
 			if (this.children?.length < 2) return;
 			this.moveing = true;
+			await this.getBoxSize();
 			clearInterval(this.autoplayTimeout);
 			this.resetBoundary();
 			this.touch.touchStart(e);
