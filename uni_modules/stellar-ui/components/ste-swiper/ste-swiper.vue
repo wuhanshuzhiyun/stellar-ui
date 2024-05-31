@@ -205,6 +205,7 @@ export default {
 		},
 		dataIndex: {
 			handler() {
+				if (!this.children.length) return;
 				this.$nextTick(async () => {
 					await this.getBoxSize();
 					this.setTransform();
@@ -213,7 +214,8 @@ export default {
 			immediate: true,
 		},
 		children: {
-			handler() {
+			handler(v) {
+				if (!v.length) return;
 				this.$nextTick(async () => {
 					await this.getBoxSize();
 					this.setTransform();

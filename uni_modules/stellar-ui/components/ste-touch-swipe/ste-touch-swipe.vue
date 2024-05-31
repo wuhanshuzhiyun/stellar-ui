@@ -171,24 +171,19 @@ export default {
 			},
 			immediate: true,
 		},
-		dataIndex: {
-			handler(v) {
-				if (!this.cmpItemLefts.length) return;
-				this.$nextTick(async () => {
-					await this.getBoxSize();
-					this.setTransform(v);
-				});
-			},
-			immediate: true,
+		dataIndex() {
+			if (!this.children.length) return;
+			this.$nextTick(async () => {
+				await this.getBoxSize();
+				this.setTransform();
+			});
 		},
-		cmpItemLefts: {
-			handler(v) {
-				this.$nextTick(async () => {
-					await this.getBoxSize();
-					this.setTransform(this.dataIndex);
-				});
-			},
-			immediate: true,
+		cmpItemLefts() {
+			if (!this.children.length) return;
+			this.$nextTick(async () => {
+				await this.getBoxSize();
+				this.setTransform();
+			});
 		},
 	},
 	async mounted() {

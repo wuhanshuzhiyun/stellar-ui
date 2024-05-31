@@ -36,6 +36,7 @@ export default {
 			immediate: true,
 		},
 		dataActive(v) {
+			if (!this.children.length) return;
 			if (this.activeChange) this.activeChange(v);
 			if (this.scrollType === 'scroll') return;
 			const top = this.childrenTops[v];
@@ -44,6 +45,7 @@ export default {
 			this.setScrollTopByIndex(v);
 		},
 		childrenTops() {
+			if (!this.children.length) return;
 			this.scrollType = 'init';
 			this.setScrollTopByIndex(this.dataActive);
 		},
