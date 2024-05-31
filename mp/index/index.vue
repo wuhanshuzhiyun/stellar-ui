@@ -294,6 +294,15 @@
 					<ste-image :src="joinSrc('img/r-arrow.png')" :width="32" :height="32" />
 				</view>
 			</view>
+			<view class="com-box" @click="nav('swipe-action')">
+				<view class="com-title">
+					<ste-image :src="joinSrc('img/countTo.png')" :width="36" :height="36" />
+					<text>SwipeAction 滑动单元格</text>
+				</view>
+				<view class="com-arrow">
+					<ste-image :src="joinSrc('img/r-arrow.png')" :width="32" :height="32" />
+				</view>
+			</view>
 			<!-- ***电商组件*** -->
 			<view class="group-title">电商组件</view>
 			<view class="com-box" @click="nav('price')">
