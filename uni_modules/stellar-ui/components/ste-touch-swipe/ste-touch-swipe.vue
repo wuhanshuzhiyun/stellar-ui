@@ -1,5 +1,5 @@
 <template>
-	<view class="ste-touch-swipe--root" :style="[cmpRootStyle]">
+	<view class="ste-touch-swipe-root" :style="[cmpRootStyle]">
 		<view
 			class="content"
 			@mousedown="onTouchstart"
@@ -167,6 +167,7 @@ export default {
 	watch: {
 		index: {
 			handler(v) {
+				if (this.dataIndex === v) return;
 				this.dataIndex = v;
 			},
 			immediate: true,
@@ -178,10 +179,15 @@ export default {
 				this.setTransform();
 			});
 		},
-		cmpItemLefts() {
+		children() {
 			if (!this.children.length) return;
 			this.$nextTick(async () => {
 				await this.getBoxSize();
+			});
+		},
+		cmpItemLefts() {
+			if (!this.children.length) return;
+			this.$nextTick(async () => {
 				this.setTransform();
 			});
 		},
@@ -218,7 +224,9 @@ export default {
 		},
 		async getBoxSize() {
 			if (this.boxEl && this.boxEl.width > 0 && this.boxEl.height > 0) return;
-			this.boxEl = await utils.querySelector('.ste-touch-swipe--root', this);
+			console.log('????????????????????????');
+			this.boxEl = await utils.querySelector('.ste-touch-swipe-root', this);
+			return;
 		},
 		setTransform() {
 			if (!this.cmpItemLefts?.length) return;
@@ -309,7 +317,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.ste-touch-swipe--root {
+.ste-touch-swipe-root {
 	width: var(--touch-swipe-width);
 	height: var(--touch-swipe-height);
 	.content {
