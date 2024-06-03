@@ -62,11 +62,11 @@ export default {
 	data() {
 		return {
 			medias: [
-				'https://image.whzb.com/chain/StellarUI/图片.jpg',
+				'https://image.whzb.com/chain/StellarUI/image/banner1.png',
 				'https://image.whzb.com/chain/StellarUI/竖屏1.mp4',
 				'https://image.whzb.com/chain/StellarUI/验证码背景.png',
 				'https://image.whzb.com/chain/StellarUI/bg4.jpg',
-				'https://image.whzb.com/chain/StellarUI/横屏2.mp4',
+				'https://image.whzb.com/chain/StellarUI/image/banner2.png',
 				'https://image.whzb.com/chain/StellarUI/bg3.jpg',
 			],
 			show: false,

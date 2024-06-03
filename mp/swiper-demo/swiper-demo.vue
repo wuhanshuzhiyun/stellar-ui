@@ -80,8 +80,16 @@
 export default {
 	data() {
 		return {
-			list1: ['1111', '2222'],
-			list2: ['1111', '2222', '3333', '4444'],
+			list1: [
+				'https://image.whzb.com/chain/StellarUI/image/banner1.png',
+				'https://image.whzb.com/chain/StellarUI/image/banner2.png',
+			],
+			list2: [
+				'https://image.whzb.com/chain/StellarUI/image/banner1.png',
+				'https://image.whzb.com/chain/StellarUI/image/banner2.png',
+				'https://image.whzb.com/chain/StellarUI/image/banner1.png',
+				'https://image.whzb.com/chain/StellarUI/image/banner2.png',
+			],
 		};
 	},
 };
