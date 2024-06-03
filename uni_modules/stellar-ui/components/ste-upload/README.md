@@ -215,27 +215,28 @@ export default{
 ### API
 ### Props
 
-| 参数						| 说明																																| 类型												| 默认值									| 可选值												|
-| --							| --																																| --												| --										| --													|
-| `v-model`				| 已经上传的文件列表，`File`类型见下方说明														| `Array<File>`							| `[]`									| -														|
-| `accept`				| 文件类型																														| `String`									| `'image'`							| 见下方说明										|
-| `capture`				| 图片或者视频选取模式,当`accept`为`image`/`video`/`media`类型时生效	| `Array<"album"/"camera">`	| `['album', 'camera']`	| -														|
-| `camera`				| 相机类型 当 `accept` 为 `image` / `video` / `media` 时生效					| `String`									| `back`								| `back`:后置<br/>`front`:前置	|
-| `compressed`		| 当 `accept` 为 `image` / `video` / `media` 时生效，是否压缩视频			| `String`									| `true`								| -														|
-| `maxDuration`		| 当 `accept` 为 `video`/ `media` 时生效，拍摄视频最长拍摄时间，单位秒	| `Number`									| `60`									| -														|
-| `previewWidth`	| 预览图和上传区域的宽度，单位为rpx																		| `String`/`Number`					| `200`									| -														|
-| `previewHeight`	| 预览图和上传区域的高度，单位为rpx																		| `String`/`Number`					| `200`									| -														|
-| `previewImage`	| 是否在选择完成后展示预览图																					| `Boolean`									| `true`								| -														|
-| `previewFullImage`	| 是否在点击预览图后展示全屏图片预览																	| `Boolean`									| `true`								| -														|
-| `multiple`			| 是否支持多选文件，部分安卓机型不支持																	| `Boolean`									| `false`								| -														|
-| `disabled`			| 是否禁用																														| `Boolean`									| `false`								| -														|
-| `showUpload`		| 是否展示文件上传按钮																								| `Boolean`									| `true`								| -														|
-| `deletable`			| 是否展示删除文件按钮																								| `Boolean`									| `true`								| -														|
-| `maxSize`				| 文件大小限制，单位为kb，0为不限制																		| `Number`									| `0`										| -														|
-| `maxCount`			| 最大上传文件数量																										| `Number`									| `9`										| -														|
-| `uploadIcon`		| 上传按钮图标,同`icon`组件`code`																			| `String`									| `'&#xe69b;'`					| -														|
-| `uploadText`		| 上传按钮文字																												| `String`									| `'点击上传'`						| -														|
-| `radius`				| 圆角弧度，单位为rpx																								| `String`/`Number`					| `9`										| -														|
+| 参数							| 说明																																| 类型												| 默认值									| 可选值												|
+| --								| --																																| --												| --										| --													|
+| `v-model`					| 已经上传的文件列表，`File`类型见下方说明														| `Array<File>`							| `[]`									| -														|
+| `accept`					| 文件类型																														| `String`									| `'image'`							| 见下方说明										|
+| `capture`					| 图片或者视频选取模式,当`accept`为`image`/`video`/`media`类型时生效	| `Array<"album"/"camera">`	| `['album', 'camera']`	| -														|
+| `camera`					| 相机类型 当 `accept` 为 `image` / `video` / `media` 时生效					| `String`									| `back`								| `back`:后置<br/>`front`:前置	|
+| `compressed`			| 当 `accept` 为 `image` / `video` / `media` 时生效，是否压缩视频			| `String`									| `true`								| -														|
+| `maxDuration`			| 当 `accept` 为 `video`/ `media` 时生效，拍摄视频最长拍摄时间，单位秒	| `Number`									| `60`									| -														|
+| `previewWidth`		| 预览图和上传区域的宽度，单位为rpx																		| `String`/`Number`					| `200`									| -														|
+| `previewHeight`		| 预览图和上传区域的高度，单位为rpx																		| `String`/`Number`					| `200`									| -														|
+| `previewImage`		| 是否在选择完成后展示预览图																					| `Boolean`									| `true`								| -														|
+| `previewFullImage`| 是否在点击预览图后展示全屏图片预览																	| `Boolean`									| `true`								| -														|
+| `multiple`				| 是否支持多选文件，部分安卓机型不支持																| `Boolean`									| `false`								| -														|
+| `disabled`				| 是否禁用																														| `Boolean`									| `false`								| -														|
+| `showUpload`			| 是否展示文件上传按钮																								| `Boolean`									| `true`								| -														|
+| `deletable`				| 是否展示删除文件按钮																								| `Boolean`									| `true`								| -														|
+| `maxSize`					| 文件大小限制，单位为kb，0为不限制																		| `Number`									| `0`										| -														|
+| `maxCount`				| 最大上传文件数量																										| `Number`									| `9`										| -														|
+| `uploadIcon`			| 上传按钮图标,同`icon`组件`code`																		| `String`									| `'&#xe69b;'`					| -														|
+| `uploadText`			| 上传按钮文字																												| `String`									| `'点击上传'`						| -														|
+| `radius`					| 圆角弧度，单位为rpx																								| `String`/`Number`					| `9`										| -														|
+| `flexWrap`				| 超出内容是否换行																										| `String`									| `wrap`								| 同css的`flex-wrap`							|
 
 #### File对象
 | Key					| 类型			| 说明																												| 可选值															|

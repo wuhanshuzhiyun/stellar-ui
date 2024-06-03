@@ -89,6 +89,9 @@ import { readMediaFile, readFile } from './ReadFile.js';
  * @property {String} uploadIcon 上传按钮图标,同icon组件code
  * @property {String} uploadText 上传按钮文字
  * @property {Number | String} radius 圆角弧度，单位rpx
+ * @property {String} flexWrap 超出内容是否换行，同css的flex-wrap
+ * @value wrap 换行(默认)
+ * @value nowrap 不换行
  * @event {Function} beforeRead 文件读取前的触发
  * @event {Function} read 文件读取后的回调函数
  * @event {Function} oversize 文件大小超出限制的回调函数
@@ -200,6 +203,11 @@ export default {
 			type: [String, Number],
 			default: () => 9,
 		},
+		// 子元素是否换行
+		flexWrap: {
+			type: String,
+			default: () => 'wrap',
+		},
 	},
 	data() {
 		return {
@@ -219,6 +227,7 @@ export default {
 				'--ste-upload-width': utils.formatPx(this.previewWidth),
 				'--ste-upload-height': utils.formatPx(this.previewHeight),
 				'--ste-upload-radius': utils.formatPx(this.radius),
+				'--ste-upload-flex-wrap': utils.formatPx(this.flexWrap),
 				'--ste-upload-item-margin': this.maxCount.toString() === '1' ? 0 : utils.formatPx(18),
 			};
 			return style;
@@ -401,7 +410,7 @@ export default {
 		display: flex;
 		flex-direction: row;
 		justify-content: flex-start;
-		flex-wrap: wrap;
+		flex-wrap: var(--ste-upload-flex-wrap);
 
 		.image-item {
 			width: var(--ste-upload-width);
