@@ -1,6 +1,6 @@
 {
 	"name": "stellar-ui",
-	"version": "1.13.8",
+	"version": "1.14.0",
 	"description": "StellarUI组件库",
 	"main": "stellar-ui/index.js",
 	"private": false,

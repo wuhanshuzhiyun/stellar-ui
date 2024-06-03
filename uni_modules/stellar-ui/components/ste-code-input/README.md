@@ -34,8 +34,8 @@
 
 #### 自定义显示
 ```html
-<ste-code-input formatter="·" fontSize="100" :maxlength="4"></ste-code-input>
-<ste-code-input mode="line" formatter="*" :space="0" :maxlength="4"></ste-code-input>
+<ste-code-input formatter="·" fontSize="100" :maxlength="4" value="1"></ste-code-input>
+<ste-code-input mode="line" formatter="*" :space="0" :maxlength="4" value="12"></ste-code-input>
 ```
 
 
