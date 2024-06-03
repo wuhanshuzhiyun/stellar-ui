@@ -14,7 +14,7 @@ import { parentMixin } from '../../utils/mixin.js';
  * @value right 右侧滑动
  * @value left 左侧滑动
  * @value all 左右滑动
- * @property {Boolean}		autoClose		是否自动关闭其他swipe按钮组
+ * @property {Boolean}		autoClose		是否自动关闭其他swipe
  * @property {Boolean}		disabled		禁用
  * @property {String ｜ Number}	swipeThreshold	灵敏度（0-1之间的小数，数值越小灵敏度越高）
  * @property {String ｜ Number}	duration	动画时长，单位ms（默认300）

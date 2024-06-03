@@ -144,21 +144,52 @@ export default{
 ```
 
 ### API
-#### Swiper Props
+#### SwipeAction Props
 
-| 属性名						| 说明																					| 类型								| 默认值																			| 可选值	| 支持版本	|
-| -----							| -----																				| -----							| -----																			| -----	| -----		|
-| `offsetTop`				| 吸顶时与顶部的距离，单位rpx（默认 0 ）				| `Number`,`String`	| `0`																				| -			| -				|
-| `customNavHeight`	| 航栏的高度，单位rpx（没有导航栏时，请设置为0）	| `Number`,`String`	| H5时为`44`<br/>小程序时根据胶囊位置自动计算	| -			| -				|
-| `disabled`				| 是否禁用																			| `Boolean`					| `false`																		| -			| -				|
-| `background`			| 组件背景，默认																| `String`					| `#FFF`																		| -			| -				|
-| `zIndex`					| 吸顶时的z-index值														| `Number`					| `98`																			| -			| -				|
+| 属性名					| 说明																				| 类型								| 默认值		| 可选值																											| 支持版本	|
+| -----						| -----																			| -----							| -----		| -----																											| -----		|
+| `mode`					| 模式																				| `String`					| `right`	| `right`：右侧滑动<br/>`left`：左侧滑动<br/>`all`：左右滑动	| -				|
+| `disabled`			| 禁用																				| `Boolean`					| `false`	| -																													| -				|
+| `swipeThreshold`| 灵敏度（0-1之间的小数，数值越小灵敏度越高）	| `Number`					| `0.35`	| -																													| -				|
+| `duration`			| 动画时长，单位ms														| `Number`,`String`	| `300`		| -																													| -				|
+| `leftIcon`			| 是否显示左侧图标														| `Boolean`					| `false`	| -																													| -				|
+| `rightIcon`			| 是否显示右侧图标														| `Boolean`					| `false`	| -																													| -				|
 
-#### Swiper Events
-|事件名			|说明							|事件参数	|支持版本	|
-| ---				| ---							| ---			| ---			|
-| `fixed`		| 吸顶状态时触发				| -				| -				|
-| `unfixed`	| 非吸顶状态时触发	| -				| -				|
+#### SwipeAction Method
+|方法名		|说明									|方法参数																			|支持版本	|
+| ---			| ---									| ---																					| ---			|
+| `open`	| 打开滑块，参数为方向	| `left`/`right`：需要打开的方向，默认同`mode`	| -				|
+| `close`	| 关闭滑块							| -																						| -				|
+
+#### SwipeAction Events
+|事件名		|说明												|事件参数										|支持版本	|
+| ---			| ---												| ---												| ---			|
+| `open`	| 打开滑块时触发，参数为方向	| `left`/`right`：打开的方向	| -				|
+| `close`	| 关闭滑块时触发							| -													| -				|
+
+#### SwipeActionGroup Props
+
+| 属性名					| 说明																				| 类型								| 默认值		| 可选值																											| 支持版本	|
+| -----						| -----																			| -----							| -----		| -----																											| -----		|
+| `mode`					| 模式																				| `String`					| `right`	| `right`：右侧滑动<br/>`left`：左侧滑动<br/>`all`：左右滑动	| -				|
+| `autoClose`			| 是否自动关闭其他swipe											| `Boolean`					| `true`	| -																													| -				|
+| `disabled`			| 禁用																				| `Boolean`					| `false`	| -																													| -				|
+| `swipeThreshold`| 灵敏度（0-1之间的小数，数值越小灵敏度越高）	| `Number`					| `0.35`	| -																													| -				|
+| `duration`			| 动画时长，单位ms														| `Number`,`String`	| `300`		| -																													| -				|
+| `leftIcon`			| 是否显示左侧图标														| `Boolean`					| `false`	| -																													| -				|
+| `rightIcon`			| 是否显示右侧图标														| `Boolean`					| `false`	| -																													| -				|
+
+#### SwipeActionGroup Method
+| 方法名	| 说明			| 方法参数																																| 支持版本	|
+| ---			| ---			| ---																																		| ---			|
+| `open`	| 打开滑块	| `left`/`right`:需要打开的方向，默认同`mode`,<br/>`index`:需要打开的下标	| -				|
+| `close`	| 关闭滑块	| `index`																																| -				|
+
+#### SwipeActionGroup Events
+| 事件名	| 说明						| 事件参数																				| 支持版本	|
+| ---			| ---						| ---																						| ---			|
+| `open`	| 打开滑块时触发	| `left`/`right`：打开的方向,`index`：打开的下标	| -				|
+| `close`	| 关闭滑块时触发	| -																							| -				|
 
 
 {{xuyajun}}
