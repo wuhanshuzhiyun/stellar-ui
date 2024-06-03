@@ -215,7 +215,8 @@ export default {
 		},
 		children: {
 			handler(v) {
-				this.$nextTick(async () => {
+				if (!v || v.length < 2) return;
+				this.$nextTick(() => {
 					this.init();
 				});
 			},

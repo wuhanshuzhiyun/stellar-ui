@@ -7,7 +7,7 @@
 				<view class="item-view">
 					<ste-swiper>
 						<ste-swiper-item v-for="(m, index) in list1" :index="index" :key="index">
-							<view class="item">{{ m }}</view>
+							<image :src="m" class="item" />
 						</ste-swiper-item>
 					</ste-swiper>
 				</view>
@@ -17,7 +17,7 @@
 				<view class="item-view">
 					<ste-swiper direction="vertical" height="300rpx">
 						<ste-swiper-item v-for="(m, index) in list1" :index="index" :key="index">
-							<view class="item">{{ m }}</view>
+							<image :src="m" class="item" />
 						</ste-swiper-item>
 					</ste-swiper>
 				</view>
@@ -27,7 +27,7 @@
 				<view class="item-view">
 					<ste-swiper circular>
 						<ste-swiper-item v-for="(m, index) in list1" :index="index" :key="index">
-							<view class="item">{{ m }}</view>
+							<image :src="m" class="item" />
 						</ste-swiper-item>
 					</ste-swiper>
 				</view>
@@ -37,7 +37,7 @@
 				<view class="item-view">
 					<ste-swiper circular autoplay>
 						<ste-swiper-item v-for="(m, index) in list1" :index="index" :key="index">
-							<view class="item">{{ m }}</view>
+							<image :src="m" class="item" />
 						</ste-swiper-item>
 					</ste-swiper>
 				</view>
@@ -47,7 +47,7 @@
 				<view class="item-view">
 					<ste-swiper circular autoplay indicatorDots>
 						<ste-swiper-item v-for="(m, index) in list2" :index="index" :key="index">
-							<view class="item">{{ m }}</view>
+							<image :src="m" class="item" />
 						</ste-swiper-item>
 					</ste-swiper>
 				</view>
@@ -57,7 +57,7 @@
 				<view class="item-view">
 					<ste-swiper circular autoplay indicatorDots indicatorColor="#0f0" indicatorActiveColor="#f00">
 						<ste-swiper-item v-for="(m, index) in list2" :index="index" :key="index">
-							<view class="item">{{ m }}</view>
+							<image :src="m" class="item" />
 						</ste-swiper-item>
 					</ste-swiper>
 				</view>
@@ -67,7 +67,7 @@
 				<view class="item-view">
 					<ste-swiper circular autoplay previousMargin="60" nextMargin="60">
 						<ste-swiper-item v-for="(m, index) in list2" :index="index" :key="index">
-							<view class="item">{{ m }}</view>
+							<image :src="m" class="item" />
 						</ste-swiper-item>
 					</ste-swiper>
 				</view>
@@ -98,10 +98,7 @@ export default {
 .page {
 	.content {
 		.item {
-			padding: 30rpx;
 			height: 300rpx;
-			color: #fff;
-			background-image: linear-gradient(45deg, #f55, #5f5, #55f);
 		}
 	}
 }
