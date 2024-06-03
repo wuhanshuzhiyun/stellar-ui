@@ -224,9 +224,7 @@ export default {
 		},
 		async getBoxSize() {
 			if (this.boxEl && this.boxEl.width > 0 && this.boxEl.height > 0) return;
-			console.log('????????????????????????');
 			this.boxEl = await utils.querySelector('.ste-touch-swipe-root', this);
-			return;
 		},
 		setTransform() {
 			if (!this.cmpItemLefts?.length) return;

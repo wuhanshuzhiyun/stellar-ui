@@ -215,18 +215,14 @@ export default {
 		},
 		children: {
 			handler(v) {
-				if (!v.length) return;
 				this.$nextTick(async () => {
-					await this.getBoxSize();
-					this.setTransform();
+					this.init();
 				});
 			},
 			immediate: true,
 		},
 	},
-	mounted() {
-		this.init();
-	},
+	mounted() {},
 	beforeDestroy() {
 		clearTimeout(this.childrenTimeout);
 		clearTimeout(this.durationTimeout);
@@ -238,10 +234,9 @@ export default {
 			this.childrenTimeout = setTimeout(async () => {
 				await this.getBoxSize();
 				this.setTransform();
-				if (this.initializing) {
-					this.resetBoundary();
-					this.setAutoplay();
-				}
+				this.resetBoundary();
+				this.setAutoplay();
+
 				setTimeout(() => {
 					this.initializing = false;
 				}, 25);
@@ -270,7 +265,7 @@ export default {
 			this.boxWidth = boxEl.width;
 			this.boxHeight = boxEl.height;
 		},
-		async setTransform(moveX = 0, moveY = 0) {
+		setTransform(moveX = 0, moveY = 0) {
 			if (this.children?.length < 2) return;
 			const bool = this.isMover(moveX, moveY);
 			if (!bool) return;
