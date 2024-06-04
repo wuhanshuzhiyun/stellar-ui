@@ -215,7 +215,7 @@ export default {
 		},
 		children: {
 			handler(v) {
-				if (!v || v.length < 2) return;
+				if (!v || !v.length) return;
 				this.$nextTick(() => {
 					this.init();
 				});
@@ -223,7 +223,9 @@ export default {
 			immediate: true,
 		},
 	},
-	mounted() {},
+	mounted() {
+		this.init();
+	},
 	beforeDestroy() {
 		clearTimeout(this.childrenTimeout);
 		clearTimeout(this.durationTimeout);
