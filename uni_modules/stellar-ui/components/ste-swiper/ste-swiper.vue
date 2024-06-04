@@ -325,6 +325,7 @@ export default {
 				return;
 			}
 			this.dataIndex = index;
+			if (index < 0 || index >= this.children.length) return;
 			this.$emit('change', index);
 		},
 		setAutoplay() {
@@ -369,9 +370,15 @@ export default {
 		},
 		resetBoundary() {
 			this.reseting = true;
-			if (this.dataIndex === -1) this.dataIndex = this.children.length - 1;
-			if (this.dataIndex === this.children.length) this.dataIndex = 0;
-			this.$emit('change', this.dataIndex);
+			let change = false;
+			if (this.dataIndex === -1) {
+				this.dataIndex = this.children.length - 1;
+				change = true;
+			} else if (this.dataIndex === this.children.length) {
+				this.dataIndex = 0;
+				change = true;
+			}
+			if (change) this.$emit('change', this.dataIndex);
 
 			const length = this.children.length;
 			this.children.forEach((component, index) => {

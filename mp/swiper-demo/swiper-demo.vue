@@ -25,7 +25,7 @@
 			<view class="demo-item">
 				<view class="title">首尾衔接轮播</view>
 				<view class="item-view">
-					<ste-swiper circular>
+					<ste-swiper circular @change="onChange">
 						<ste-swiper-item v-for="(m, index) in list1" :index="index" :key="index">
 							<image :src="m" class="item" />
 						</ste-swiper-item>
@@ -91,6 +91,11 @@ export default {
 				'https://image.whzb.com/chain/StellarUI/image/banner2.png',
 			],
 		};
+	},
+	methods: {
+		onChange(v) {
+			console.log(v);
+		},
 	},
 };
 </script>
