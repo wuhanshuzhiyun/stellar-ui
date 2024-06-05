@@ -518,6 +518,19 @@
 			}
 		},
 		{
+			"path": "mp/number-keyboard-demo/number-keyboard-demo",
+			"style": {
+				"navigationStyle": "custom",
+				"disableScroll": true,
+				"mp-alipay": {
+					"transparentTitle": "always",
+					"titlePenetrate": "YES",
+					"allowsBounceVertical": "NO",
+					"navigationBarTitleText": ""
+				}
+			}
+		},
+		{
 			"path": "mp/code-input-demo/code-input-demo",
 			"style": {
 				"navigationStyle": "custom",
