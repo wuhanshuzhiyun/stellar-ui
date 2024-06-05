@@ -7,6 +7,7 @@
 			:showClear="showClear"
 			:textColor="textColor"
 			:textSize="textSize"
+			:rightKeys="rightKeys"
 			@clear="onClear"
 			@change="onChange"
 			@confirm="onConfirm"
@@ -29,6 +30,14 @@ export default {
 			default: () => 'popup',
 		},
 		show: {
+			type: Boolean,
+			default: () => false,
+		},
+		rightKeys: {
+			type: Boolean,
+			default: () => false,
+		},
+		randomKeys: {
 			type: Boolean,
 			default: () => false,
 		},
@@ -66,8 +75,7 @@ export default {
 	},
 	computed: {
 		cmpNumbers() {
-			let str = '1234567890';
-			return str.split('');
+			return ['1', '2', '3', '4', '5', '6', '7', '8', '9', '0', '00', '.'];
 		},
 
 		cmpRootStyle() {

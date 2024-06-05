@@ -1,5 +1,5 @@
 <template>
-	<view class="number-keyboard">
+	<view class="number-keyboard" :style="[cmpRootStyle]">
 		<view class="number-keyboard-left">
 			<block v-for="num in list" :key="num">
 				<view
@@ -11,7 +11,7 @@
 				</view>
 			</block>
 		</view>
-		<view class="number-keyboard-right">
+		<view class="number-keyboard-right" v-if="rightKeys">
 			<view class="number-keyboard-item" @click="onBackspace">
 				<ste-icon code="&#xe6a7;" :color="textColor" :size="textSize" />
 			</view>
@@ -35,8 +35,16 @@ export default {
 		showClear: { type: Boolean },
 		textColor: { type: String },
 		textSize: { type: [Number, String] },
+		rightKeys: { type: Boolean },
 	},
-
+	computed: {
+		cmpRootStyle() {
+			return {
+				'--ste-number-keyboard-aspect': this.rightKeys ? '8 / 5' : '6 / 5',
+				'--ste-number-keyboard-columns': this.rightKeys ? '3fr 1fr' : '1fr',
+			};
+		},
+	},
 	methods: {
 		onChange(v) {
 			this.$emit('change', v);
@@ -58,9 +66,9 @@ export default {
 <style lang="scss" scoped>
 .number-keyboard {
 	width: 100%;
-	aspect-ratio: 16 / 10; /* 宽高比为16:9，形成正方形 */
+	aspect-ratio: var(--ste-number-keyboard-aspect);
+	grid-template-columns: var(--ste-number-keyboard-columns);
 	display: grid;
-	grid-template-columns: 3fr 1fr;
 	background-color: #f9f9f9;
 	column-gap: 16rpx;
 	.number-keyboard-left {
