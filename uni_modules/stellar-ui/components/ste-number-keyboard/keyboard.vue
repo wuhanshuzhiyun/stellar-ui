@@ -12,10 +12,10 @@
 			</block>
 		</view>
 		<view class="number-keyboard-right">
-			<view class="number-keyboard-item" @click="backspaceClick">
-				<ste-icon code="&#xe6a7;" color="#000" size="48" />
+			<view class="number-keyboard-item" @click="onBackspace">
+				<ste-icon code="&#xe6a7;" :color="textColor" :size="textSize" />
 			</view>
-			<view class="number-keyboard-item clear" v-if="showClear" @click="backspaceClick">清除</view>
+			<view class="number-keyboard-item clear" v-if="showClear" @click="onClear">清除</view>
 			<view class="number-keyboard-item confirm" :class="{ disabled, 'show-clear': showClear }" @click="onConfirm">
 				{{ confirmText }}
 			</view>
@@ -25,31 +25,27 @@
 
 <script>
 export default {
-	props: {
-		list: {
-			type: Array,
-			required: true,
-		},
-		confirmText: {
-			type: String,
-			default: () => '确定',
-		},
-		disabled: {
-			type: Boolean,
-			default: () => false,
-		},
-		showClear: {
-			type: Boolean,
-			default: () => true,
-		},
+	options: {
+		virtualHost: true,
 	},
+	props: {
+		list: { type: Array },
+		confirmText: { type: String },
+		disabled: { type: Boolean },
+		showClear: { type: Boolean },
+		textColor: { type: String },
+		textSize: { type: [Number, String] },
+	},
+
 	methods: {
-		// 点击退格键
-		backspaceClick() {
-			this.$emit('backspace');
-		},
 		onChange(v) {
 			this.$emit('change', v);
+		},
+		onBackspace() {
+			this.$emit('backspace');
+		},
+		onClear() {
+			this.$emit('clear');
 		},
 		onConfirm() {
 			if (this.disabled) return;
@@ -86,8 +82,8 @@ export default {
 		justify-content: center;
 		font-family: DIN, DIN;
 		font-weight: bold;
-		font-size: 48rpx;
-		color: #000000;
+		font-size: var(--ste-number-keyboard-text-size);
+		color: var(--ste-number-keyboard-text-color);
 		border-radius: 8rpx;
 
 		&:active {
@@ -95,24 +91,24 @@ export default {
 		}
 
 		&.clear {
-			font-size: 32rpx;
+			font-size: var(--ste-number-keyboard-clear-text-size);
 		}
 
 		&.confirm {
 			flex-direction: column;
 			grid-row: span 3;
-			font-size: 42rpx;
-			background: #0090ff;
+			font-size: var(--ste-number-keyboard-confirm-text-size);
+			background: var(--ste-number-keyboard-confirm-bg);
 			color: #fff;
 			&.show-clear {
 				grid-row: span 2;
 			}
 			&:active {
-				background-color: #11aaff;
+				background-color: var(--ste-number-keyboard-confirm-bg-active);
 			}
 
 			&.disabled {
-				background: rgba(238, 238, 238, 0.4);
+				background: rgba(238, 238, 238, 0.4) !important;
 			}
 		}
 
