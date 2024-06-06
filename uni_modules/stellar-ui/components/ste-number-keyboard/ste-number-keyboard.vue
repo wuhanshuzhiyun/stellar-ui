@@ -1,15 +1,42 @@
 <template>
 	<view class="ste-number-keyboard-root" :style="[cmpRootStyle]">
-		<keyboard
-			:list="cmpNumbers"
-			:confirmText="confirmText"
-			:disabled="confirmDisabled"
-			:showClear="showClear"
-			:textColor="textColor"
-			:textSize="textSize"
-			:rightKeys="rightKeys"
-			@change="onChange"
-		/>
+		<block v-if="mode === 'popup'">
+			<ste-popup :show.sync="dataShow" @close="onClose" position="bottom" :show-close="false">
+				<view style="padding: 30rpx 30rpx 60rpx 30rpx; background-color: #f5f5f5">
+					<view class="keyboard-popup-head">
+						<view></view>
+						<view class="keyboard-title">
+							<slot>数字键盘</slot>
+						</view>
+						<view class="keyboard-close" @click="onClose">
+							<ste-icon code="&#xe676;" size="36" />
+						</view>
+					</view>
+					<keyboard
+						:list="cmpNumbers"
+						:confirmText="confirmText"
+						:disabled="confirmDisabled"
+						:showClear="showClear"
+						:textColor="textColor"
+						:textSize="textSize"
+						:rightKeys="rightKeys"
+						@change="onChange"
+					/>
+				</view>
+			</ste-popup>
+		</block>
+		<block v-else>
+			<keyboard
+				:list="cmpNumbers"
+				:confirmText="confirmText"
+				:disabled="confirmDisabled"
+				:showClear="showClear"
+				:textColor="textColor"
+				:textSize="textSize"
+				:rightKeys="rightKeys"
+				@change="onChange"
+			/>
+		</block>
 	</view>
 </template>
 
@@ -22,6 +49,10 @@ export default {
 	name: 'ste-number-keyboard',
 	components: { keyboard },
 	props: {
+		value: {
+			type: String,
+			default: () => '',
+		},
 		mode: {
 			type: String,
 			default: () => 'popup',
@@ -72,7 +103,10 @@ export default {
 		},
 	},
 	data() {
-		return {};
+		return {
+			dataValue: '',
+			dataShow: false,
+		};
 	},
 	computed: {
 		cmpNumbers() {
@@ -111,13 +145,67 @@ export default {
 			};
 		},
 	},
+	watch: {
+		show: {
+			handler(v) {
+				this.dataShow = v;
+			},
+			immutable: true,
+		},
+		value: {
+			handler(v) {
+				this.dataValue = v;
+			},
+			immutable: true,
+		},
+	},
+
 	methods: {
-		onChange(v) {
-			console.log(v);
-			if (v === 'backspace') this.$emit('backspace');
-			else if (v === 'clear') this.$emit('clear');
-			else if (v === 'confirm') this.$emit('confirm');
-			else this.$emit('change', v);
+		async onChange(v) {
+			if (v === 'confirm') {
+				this.$emit('confirm', this.dataValue);
+				this.onClose();
+				return;
+			}
+
+			switch (v) {
+				case 'backspace':
+					this.dataValue = this.dataValue.slice(0, this.dataValue.length - 1);
+					this.$emit('backspace');
+					break;
+				case 'clear':
+					this.dataValue = '';
+					this.$emit('clear');
+					break;
+				default:
+					await this.beforInput(v);
+					this.dataValue += v;
+					this.$emit('click', v);
+					break;
+			}
+			this.$emit('input', this.dataValue);
+			this.$emit('change', this.dataValue);
+			this.$emit('update:value', this.dataValue);
+		},
+		onClose() {
+			this.dataShow = false;
+			this.$emit('update:show', false);
+		},
+		async beforInput(v) {
+			let next = true;
+			const stop = new Promise((resolve, reject) => {
+				this.$emit(
+					'beforeinput',
+					v,
+					() => (next = false),
+					() => resolve(),
+					() => reject()
+				);
+			});
+			if (!next) {
+				console.log('beforeinput被阻止');
+				await stop;
+			}
 		},
 	},
 };
@@ -125,5 +213,17 @@ export default {
 
 <style lang="scss" scoped>
 .ste-number-keyboard-root {
+	.keyboard-popup-head {
+		width: 100%;
+		display: flex;
+		justify-content: space-between;
+		padding-bottom: 30rpx;
+		color: #888;
+		.keyboard-close {
+			&:active {
+				background: rgba(200, 200, 200, 0.5);
+			}
+		}
+	}
 }
 </style>
