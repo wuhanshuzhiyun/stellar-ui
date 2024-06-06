@@ -21,6 +21,18 @@
 import utils from '../../utils/utils.js';
 const SCREEN_WIDTH = utils.System.getWindowWidth();
 const SCREEN_HEIGHT = utils.System.getWindowHeight();
+const DEFAULT_BOUNDARY = { top: 0, left: 0, right: 0, bottom: 0 };
+/**
+ * ste-drag 拖拽
+ * @description 拖拽
+ * @tutorial https://stellar-ui.intecloud.com.cn/pc/index/index?name=ste-drag
+ * @property {String} attract 是否开启自动吸边（根据 screenWidth 进行吸边）默认 false
+ * @property {String} direction 拖拽元素的拖拽方向限制 默认 all
+ * @value all 不限制方向 {String}
+ * @value x 横向拖拽 {String}
+ * @value y 竖向多拽 {String}
+ * @property {Object} boundary 拖拽元素的拖拽边界 默认屏幕为边界
+ **/
 export default {
 	group: '基础组件',
 	title: 'Drag 拖拽',
@@ -30,17 +42,13 @@ export default {
 			type: Boolean,
 			default: false,
 		},
-		attractDirection: {
-			type: String,
-			default: 'x',
-		},
 		direction: {
 			type: String,
 			default: 'all',
 		},
 		boundary: {
 			type: Object,
-			default: () => ({ top: 0, left: 0, right: 0, bottom: 0 }),
+			default: () => DEFAULT_BOUNDARY,
 		},
 	},
 	data() {
@@ -58,6 +66,7 @@ export default {
 			elWidth: 0,
 			elHeight: 0,
 			canMove: false,
+			boundaryData: this.boundary,
 		};
 	},
 	computed: {
@@ -71,7 +80,19 @@ export default {
 			this.elHeight = rec.height;
 			this.initTop = rec.top;
 			this.initLeft = rec.left;
+
+			setTimeout(() => {
+				this.touchEnd();
+			}, 200);
 		});
+	},
+	watch: {
+		boundary: {
+			handler(val) {
+				this.boundaryData = { ...DEFAULT_BOUNDARY, ...val };
+			},
+			immediate: true,
+		},
 	},
 	methods: {
 		// #ifdef WEB
@@ -88,13 +109,11 @@ export default {
 		},
 		// #endif
 		touchStart(e) {
-			console.log('touchStart');
 			const touch = this.getMoveObj(e);
 			this.start = { x: touch.pageX, y: touch.pageY };
 			this.preTranslate = this.translate;
 		},
 		touchMove(e) {
-			console.log('touchMove');
 			e.preventDefault();
 
 			const touch = this.getMoveObj(e);
@@ -103,20 +122,20 @@ export default {
 			let y = this.preTranslate.y + (touch.pageY - this.start.y);
 			let yTop = y + this.initTop;
 
-			if (xLeft <= this.boundary.left) {
-				x = this.boundary.left - this.initLeft;
+			if (xLeft <= this.boundaryData.left) {
+				x = this.boundaryData.left - this.initLeft;
 			}
 
-			if (xLeft >= SCREEN_WIDTH - (this.boundary.right + this.elWidth)) {
-				x = SCREEN_WIDTH - (this.boundary.right + this.elWidth) - this.initLeft;
+			if (xLeft >= SCREEN_WIDTH - (this.boundaryData.right + this.elWidth)) {
+				x = SCREEN_WIDTH - (this.boundaryData.right + this.elWidth) - this.initLeft;
 			}
 
-			if (yTop <= this.boundary.top) {
-				y = this.boundary.top - this.initTop;
+			if (yTop <= this.boundaryData.top) {
+				y = this.boundaryData.top - this.initTop;
 			}
 
-			if (yTop >= SCREEN_HEIGHT - (this.boundary.bottom + this.elHeight)) {
-				y = SCREEN_HEIGHT - (this.boundary.bottom + this.elHeight) - this.initTop;
+			if (yTop >= SCREEN_HEIGHT - (this.boundaryData.bottom + this.elHeight)) {
+				y = SCREEN_HEIGHT - (this.boundaryData.bottom + this.elHeight) - this.initTop;
 			}
 
 			this.translate = {
@@ -125,7 +144,6 @@ export default {
 			};
 		},
 		touchEnd(e) {
-			console.log('touchEnd');
 			this.removeListenner && this.removeListenner();
 			// 是否执行贴边
 			if (!this.attract) {
@@ -133,25 +151,28 @@ export default {
 			}
 
 			let { x: moveLeft, y: moveTop } = this.translate;
-			if (this.attractDirection == 'y') {
-				const screenCenterY = (SCREEN_HEIGHT - this.boundary.top - this.boundary.bottom) / 2;
-				const centerY = screenCenterY - this.initTop - this.elHeight / 2;
-				if (moveTop < centerY) {
-					moveTop = this.boundary.top - this.initTop;
-				} else {
-					moveTop = SCREEN_HEIGHT - this.elHeight - this.boundary.bottom - this.initTop;
-				}
-				this.translate = { ...this.translate, y: moveTop };
+			const screenCenterX = (SCREEN_WIDTH - this.boundaryData.right - this.boundaryData.left) / 2;
+			const centerX = screenCenterX - this.initLeft - this.elWidth / 2;
+			if (moveLeft < centerX) {
+				moveLeft = this.boundaryData.left - this.initLeft;
 			} else {
-				const screenCenterX = (SCREEN_WIDTH - this.boundary.right - this.boundary.left) / 2;
-				const centerX = screenCenterX - this.initLeft - this.elWidth / 2;
-				if (moveLeft < centerX) {
-					moveLeft = this.boundary.left - this.initLeft;
-				} else {
-					moveLeft = SCREEN_WIDTH - this.elWidth - this.boundary.right - this.initLeft;
-				}
-				this.translate = { ...this.translate, x: moveLeft };
+				moveLeft = SCREEN_WIDTH - this.elWidth - this.boundaryData.right - this.initLeft;
 			}
+			this.translate = { ...this.translate, x: moveLeft };
+
+			// 竖向吸边
+			// if (this.attractDirection == 'y') {
+			// 	const screenCenterY = (SCREEN_HEIGHT - this.boundaryData.top - this.boundaryData.bottom) / 2;
+			// 	const centerY = screenCenterY - this.initTop - this.elHeight / 2;
+			// 	if (moveTop < centerY) {
+			// 		moveTop = this.boundaryData.top - this.initTop;
+			// 	} else {
+			// 		moveTop = SCREEN_HEIGHT - this.elHeight - this.boundaryData.bottom - this.initTop;
+			// 	}
+			// 	this.translate = { ...this.translate, y: moveTop };
+			// } else {
+
+			// }
 
 			this.attractTransition = true;
 			setTimeout(() => {
