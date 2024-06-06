@@ -225,18 +225,23 @@ export default {
 		overflow: hidden;
 	}
 	&-item {
-		display: flex;
-		justify-content: center;
-		align-items: center;
+		// display: flex;
+		// justify-content: center;
+		// align-items: center;
+		// position: relative;
 		position: relative;
-
 		&-text {
 			font-size: var(--font-size);
 			color: var(--font-color);
+
+			position: absolute;
+			top: 50%;
+			left: 50%;
+			transform: translate(-50%, -50%);
 		}
 
 		&-dot {
-			display: inline-block;
+			display: inline-flex;
 			line-height: 1;
 			position: absolute;
 			left: 50%;

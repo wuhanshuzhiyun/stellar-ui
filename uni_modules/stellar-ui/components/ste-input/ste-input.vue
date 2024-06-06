@@ -383,7 +383,8 @@ export default {
 				// letter-spacing: 10rpx;
 
 				&.textarea {
-					height: 160rpx;
+					min-height: 160rpx;
+					height: 100%;
 				}
 			}
 
@@ -441,6 +442,11 @@ export default {
 	&.textarea-type {
 		.content {
 			padding: 20rpx 24rpx;
+			height: 100%;
+
+			.input-box {
+				height: 100%;
+			}
 		}
 	}
 }
