@@ -21,6 +21,7 @@
 		"uni-simple-router": "^2.0.8-beta.4"
 	},
 	"devDependencies": {
-		"file-loader": "^6.2.0"
+		"file-loader": "^6.2.0",
+		"vue-inset-loader": "^1.2.6"
 	}
 }
