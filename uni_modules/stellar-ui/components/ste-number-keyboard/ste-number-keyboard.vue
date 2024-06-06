@@ -8,10 +8,7 @@
 			:textColor="textColor"
 			:textSize="textSize"
 			:rightKeys="rightKeys"
-			@clear="onClear"
 			@change="onChange"
-			@confirm="onConfirm"
-			@backspace="onBackspace"
 		/>
 	</view>
 </template>
@@ -35,7 +32,7 @@ export default {
 		},
 		rightKeys: {
 			type: Boolean,
-			default: () => false,
+			default: () => true,
 		},
 		randomKeys: {
 			type: Boolean,
@@ -44,6 +41,10 @@ export default {
 		confirmText: {
 			type: String,
 			default: () => '确定',
+		},
+		customKeys: {
+			type: Array,
+			default: () => [],
 		},
 		confirmDisabled: {
 			type: Boolean,
@@ -79,11 +80,21 @@ export default {
 			if (this.randomKeys) {
 				utils.randomArray(keys);
 			}
-			if (!this.rightKeys) {
-				const end = keys.pop();
-				keys.push('clear', end, 'backspace');
+
+			if (Array.isArray(this.customKeys)) {
+				keys.push(...this.customKeys);
 			}
-			console.log(keys);
+
+			if (!this.rightKeys) {
+				const d = keys.length % 3;
+				if (d === 1) {
+					const end = keys.pop();
+					keys.push('clear', end, 'backspace');
+				} else {
+					keys.push('clear', 'backspace');
+				}
+			}
+
 			return keys;
 		},
 
@@ -102,16 +113,11 @@ export default {
 	},
 	methods: {
 		onChange(v) {
-			this.$emit('change', v);
-		},
-		onBackspace() {
-			this.$emit('backspace');
-		},
-		onClear() {
-			this.$emit('clear');
-		},
-		onConfirm() {
-			this.$emit('confirm');
+			console.log(v);
+			if (v === 'backspace') this.$emit('backspace');
+			else if (v === 'clear') this.$emit('clear');
+			else if (v === 'confirm') this.$emit('confirm');
+			else this.$emit('change', v);
 		},
 	},
 };
