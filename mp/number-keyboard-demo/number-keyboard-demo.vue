@@ -34,6 +34,40 @@
 				</view>
 				<ste-number-keyboard :customKeys="['00', '.']" v-model="value4" :show.sync="show4" />
 			</view>
+			<view class="demo-item">
+				<view class="title">自定义颜色/字体大小/确认文本</view>
+				<view class="test-input" @click="show5 = true">
+					<text v-if="value5">{{ value5 }}</text>
+					<text v-else class="placeholder">请输入</text>
+				</view>
+				<ste-number-keyboard
+					v-model="value5"
+					:show.sync="show5"
+					textColor="#f00"
+					textSize="40"
+					confirmBg="#f00"
+					confirmColor="#0f0"
+					confirmText="完成"
+				/>
+			</view>
+			<view class="demo-item">
+				<view class="title">点击前事件（自定义功能）</view>
+				<view class="test-input" @click="show6 = true">
+					<text v-if="value6">{{ value6 }}</text>
+					<text v-else class="placeholder">请输入</text>
+				</view>
+				<ste-number-keyboard :customKeys="['-']" v-model="value6" :show.sync="show6" @beforeinput="beforeinput" />
+			</view>
+			<view class="demo-item">
+				<view class="title">在文档流中展示</view>
+				<view class="test-input">
+					<text v-if="value7">{{ value7 }}</text>
+					<text v-else class="placeholder">请输入</text>
+				</view>
+				<view style="padding: 30rpx; background-color: #f5f5f5; margin-top: 12rpx">
+					<ste-number-keyboard mode="page" v-model="value7" />
+				</view>
+			</view>
 		</view>
 	</view>
 </template>
@@ -50,12 +84,18 @@ export default {
 			show3: false,
 			value4: '',
 			show4: false,
+			value5: '',
+			show5: false,
+			value6: '',
+			show6: false,
+			value7: '',
 		};
 	},
 	methods: {
 		beforeinput(v, suspend, next, stop) {
 			suspend();
-			if (v === '0') {
+			if (v === '-') {
+				console.log('你点击了-');
 				stop();
 			} else {
 				next();

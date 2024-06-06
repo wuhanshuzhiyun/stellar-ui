@@ -51,10 +51,10 @@ import utils from '../../utils/utils.js';
  * @property {String} mode 键盘模式，默认 popup弹窗模式
  * @value popup 弹窗模式（默认）
  * @value page 在dom文档流中直接展示
- * @property {String} value 输入初始值，支持v-model双向绑定
+ * @property {String} value 输入值，支持v-model双向绑定
  * @property {String} show 是否显示键盘，支持.sync绑定，mode="popup"时生效
  * @property {Boolean} rightKeys 是否显示右侧功能键，默认true
- * @property {Boolean} randomKeys 是否显示右侧功能键，默认false
+ * @property {Boolean} randomKeys 按键是否随机排列，默认false
  * @property {String} confirmText 右侧确认按钮文本，默认'确认'
  * @property {Boolean} confirmDisabled 右侧确认是否禁用，默认false
  * @property {Array<String>} customKeys 自定义按键，建议数量不大于2
@@ -103,7 +103,7 @@ export default {
 		cmpNumbers() {
 			let keys = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '0'];
 			if (this.randomKeys) {
-				utils.randomArray(keys);
+				utils.randomArray(keys, this.dataShow);
 			}
 
 			if (Array.isArray(this.customKeys)) {
@@ -202,7 +202,6 @@ export default {
 				);
 			});
 			if (!next) {
-				console.log('beforeinput被阻止');
 				await stop;
 			}
 		},
