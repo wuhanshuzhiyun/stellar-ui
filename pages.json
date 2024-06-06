@@ -542,6 +542,33 @@
 					"navigationBarTitleText": ""
 				}
 			}
+		},
+		{
+			"path": "mp/toast-demo/toast-demo",
+			"style": {
+				"navigationStyle": "custom",
+				"disableScroll": true,
+				"mp-alipay": {
+					"transparentTitle": "always",
+					"titlePenetrate": "YES",
+					"allowsBounceVertical": "NO",
+					"navigationBarTitleText": ""
+				}
+			}
+
+		},
+		{
+			"path": "mp/drag-demo/drag-demo",
+			"style": {
+				"navigationStyle": "custom",
+				"disableScroll": true,
+				"mp-alipay": {
+					"transparentTitle": "always",
+					"titlePenetrate": "YES",
+					"allowsBounceVertical": "NO",
+					"navigationBarTitleText": ""
+				}
+			}
 		}
 	],
 	"globalStyle": {

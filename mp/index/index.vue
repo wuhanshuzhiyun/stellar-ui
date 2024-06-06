@@ -307,6 +307,15 @@
 					<ste-image :src="joinSrc('组件图标/r-arrow.png')" :width="32" :height="32" />
 				</view>
 			</view>
+			<view class="com-box" @click="nav('toast')">
+				<view class="com-title">
+					<ste-image :src="joinSrc('组件图标/toast.png')" :width="36" :height="36" />
+					<text>Toast 轻提示</text>
+				</view>
+				<view class="com-arrow">
+					<ste-image :src="joinSrc('组件图标/r-arrow.png')" :width="32" :height="32" />
+				</view>
+			</view>
 			<!-- ***电商组件*** -->
 			<view class="group-title">电商组件</view>
 			<view class="com-box" @click="nav('price')">
