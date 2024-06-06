@@ -43,64 +43,55 @@
 <script>
 import keyboard from './keyboard.vue';
 import utils from '../../utils/utils.js';
+
+/**
+ * ste-number-keyboard 数字键盘
+ * @description 数字键盘
+ * @tutorial https://stellar-ui.intecloud.com.cn/pc/index/index?name=ste-number-keyboard
+ * @property {String} mode 键盘模式，默认 popup弹窗模式
+ * @value popup 弹窗模式（默认）
+ * @value page 在dom文档流中直接展示
+ * @property {String} value 输入初始值，支持v-model双向绑定
+ * @property {String} show 是否显示键盘，支持.sync绑定，mode="popup"时生效
+ * @property {Boolean} rightKeys 是否显示右侧功能键，默认true
+ * @property {Boolean} randomKeys 是否显示右侧功能键，默认false
+ * @property {String} confirmText 右侧确认按钮文本，默认'确认'
+ * @property {Boolean} confirmDisabled 右侧确认是否禁用，默认false
+ * @property {Array<String>} customKeys 自定义按键，建议数量不大于2
+ * @property {Boolean} showClear 是否显示清空按钮，默认true
+ * @property {String} textColor 按键文字颜色，默认#000000
+ * @property {String|Number} textSize 按键文字大小，默认48,单位rpx
+ * @property {String} confirmBg 确认按钮背景颜色，默认#0090FF
+ * @property {String} confirmColor 确认按钮文字颜色，默认#FFFFFF
+
+ * @event {Function} confirm 确认按钮点击事件
+ * @event {Function} change 输入值改变时触发
+ * @event {Function} clear 清空按钮点击事件
+ * @event {Function} close 关闭弹窗键盘触发
+ * @event {Function} backspace 删除按钮点击事件
+ * @event {Function} click 点击功能键之外的键盘触发（功能键包括：确认/删除/清除）
+ * @event {Function} beforeinput 输入之前触发，功能键之外的键盘点击时为输入（参数1为当前点击的按钮，参数2为开启等待的回调函数，参数3为执行后续操作的回调函数，参数4为阻止后续执行的回调函数）
+ */
+
 export default {
 	group: '展示组件',
 	title: 'NumberKeyboard 数字键盘',
 	name: 'ste-number-keyboard',
 	components: { keyboard },
 	props: {
-		value: {
-			type: String,
-			default: () => '',
-		},
-		mode: {
-			type: String,
-			default: () => 'popup',
-		},
-		show: {
-			type: Boolean,
-			default: () => false,
-		},
-		rightKeys: {
-			type: Boolean,
-			default: () => true,
-		},
-		randomKeys: {
-			type: Boolean,
-			default: () => false,
-		},
-		confirmText: {
-			type: String,
-			default: () => '确定',
-		},
-		customKeys: {
-			type: Array,
-			default: () => [],
-		},
-		confirmDisabled: {
-			type: Boolean,
-			default: () => false,
-		},
-		showClear: {
-			type: Boolean,
-			default: () => true,
-		},
-		textColor: {
-			type: String,
-			default: () => '#000',
-		},
-		textSize: {
-			type: [Number, String],
-			default: () => 48,
-		},
-		confirmBg: {
-			type: String,
-			default: () => '#0090ff',
-		},
-		confirmColor: {
-			type: String,
-			default: () => '#fff',
-		},
+		mode: { type: String, default: () => 'popup' },
+		value: { type: String, default: () => '' },
+		show: { type: Boolean, default: () => false },
+		rightKeys: { type: Boolean, default: () => true },
+		randomKeys: { type: Boolean, default: () => false },
+		confirmText: { type: String, default: () => '确定' },
+		confirmDisabled: { type: Boolean, default: () => false },
+		customKeys: { type: Array, default: () => [] },
+		showClear: { type: Boolean, default: () => true },
+		textColor: { type: String, default: () => '#000' },
+		textSize: { type: [Number, String], default: () => 48 },
+		confirmBg: { type: String, default: () => '#0090FF' },
+		confirmColor: { type: String, default: () => '#fff' },
 	},
 	data() {
 		return {
@@ -120,6 +111,10 @@ export default {
 			}
 
 			if (!this.rightKeys) {
+				if (!this.showClear) {
+					keys.push('backspace');
+					return;
+				}
 				const d = keys.length % 3;
 				if (d === 1) {
 					const end = keys.pop();
@@ -162,34 +157,38 @@ export default {
 
 	methods: {
 		async onChange(v) {
-			if (v === 'confirm') {
-				this.$emit('confirm', this.dataValue);
-				this.onClose();
-				return;
+			try {
+				if (v === 'confirm') {
+					this.$emit('confirm', this.dataValue);
+					this.onClose();
+					return;
+				}
+				switch (v) {
+					case 'backspace':
+						this.dataValue = this.dataValue.slice(0, this.dataValue.length - 1);
+						this.$emit('backspace');
+						break;
+					case 'clear':
+						this.dataValue = '';
+						this.$emit('clear');
+						break;
+					default:
+						await this.beforInput(v);
+						this.dataValue += v;
+						this.$emit('click', v);
+						break;
+				}
+				this.$emit('input', this.dataValue);
+				this.$emit('change', this.dataValue);
+				this.$emit('update:value', this.dataValue);
+			} catch (e) {
+				console.error(e);
 			}
-
-			switch (v) {
-				case 'backspace':
-					this.dataValue = this.dataValue.slice(0, this.dataValue.length - 1);
-					this.$emit('backspace');
-					break;
-				case 'clear':
-					this.dataValue = '';
-					this.$emit('clear');
-					break;
-				default:
-					await this.beforInput(v);
-					this.dataValue += v;
-					this.$emit('click', v);
-					break;
-			}
-			this.$emit('input', this.dataValue);
-			this.$emit('change', this.dataValue);
-			this.$emit('update:value', this.dataValue);
 		},
 		onClose() {
 			this.dataShow = false;
 			this.$emit('update:show', false);
+			this.$emit('close');
 		},
 		async beforInput(v) {
 			let next = true;
