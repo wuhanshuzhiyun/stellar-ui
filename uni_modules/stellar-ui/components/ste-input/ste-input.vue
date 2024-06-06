@@ -279,7 +279,6 @@ export default {
 	methods: {
 		onInput(e) {
 			if (!this.disabled && !this.readonly) {
-				this.dataValue = e.detail.value;
 				this.$emit('input', e.detail.value);
 			}
 		},
