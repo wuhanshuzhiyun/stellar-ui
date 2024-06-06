@@ -32,12 +32,7 @@
 				<view class="item-block">
 					<view>
 						<ste-drag attract>
-							<ste-button>横向贴边</ste-button>
-						</ste-drag>
-					</view>
-					<view>
-						<ste-drag attract attractDirection="y">
-							<ste-button>竖向贴边</ste-button>
+							<ste-button>贴边</ste-button>
 						</ste-drag>
 					</view>
 				</view>
@@ -45,8 +40,8 @@
 			<view class="demo-item">
 				<view class="title">边界</view>
 				<view class="item-block">
-					<view style="width: 300px; height: 150px; border: solid 1px red" class="test111">
-						<ste-drag :boundary="{ left: 22, top: 354, right: 108, bottom: 428 }">
+					<view class="boundary-box">
+						<ste-drag :boundary="boundary">
 							<ste-button>边界</ste-button>
 						</ste-drag>
 					</view>
@@ -58,10 +53,18 @@
 <script>
 export default {
 	data() {
-		return {};
+		return {
+			boundary: null,
+		};
 	},
 	created() {},
-	mounted() {},
+	mounted() {
+		const boundary = { left: 22, top: 354 };
+		const systemInfo = uni.getSystemInfoSync();
+		boundary.right = systemInfo.windowWidth - 22 - 300;
+		boundary.bottom = systemInfo.windowHeight - 354 - 150;
+		this.boundary = boundary;
+	},
 	methods: {},
 };
 </script>
@@ -73,6 +76,16 @@ export default {
 			.item-block {
 				> view {
 					margin: 0 8px 8px 0;
+				}
+
+				.boundary-box {
+					width: 300px;
+					height: 150px;
+					border: solid 1px red;
+
+					position: fixed;
+					left: 22px;
+					top: 354px;
 				}
 			}
 		}
