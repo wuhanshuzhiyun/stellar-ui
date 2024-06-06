@@ -25,7 +25,7 @@
 			<view class="demo-item">
 				<view class="title">首尾衔接轮播</view>
 				<view class="item-view">
-					<ste-swiper circular @change="onChange">
+					<ste-swiper circular>
 						<ste-swiper-item v-for="(m, index) in list1" :index="index" :key="index">
 							<image :src="m" class="item" />
 						</ste-swiper-item>
@@ -35,7 +35,7 @@
 			<view class="demo-item">
 				<view class="title">自动轮播</view>
 				<view class="item-view">
-					<ste-swiper circular autoplay>
+					<ste-swiper circular autoplay @change="onChange">
 						<ste-swiper-item v-for="(m, index) in list1" :index="index" :key="index">
 							<image :src="m" class="item" />
 						</ste-swiper-item>
@@ -93,8 +93,8 @@ export default {
 		};
 	},
 	methods: {
-		onChange(v) {
-			console.log(v);
+		onChange(index, source) {
+			console.log(index, source);
 		},
 	},
 };

@@ -75,7 +75,16 @@ export default {
 	},
 	computed: {
 		cmpNumbers() {
-			return ['1', '2', '3', '4', '5', '6', '7', '8', '9', '0', '00', '.'];
+			let keys = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '0'];
+			if (this.randomKeys) {
+				utils.randomArray(keys);
+			}
+			if (!this.rightKeys) {
+				const end = keys.pop();
+				keys.push('clear', end, 'backspace');
+			}
+			console.log(keys);
+			return keys;
 		},
 
 		cmpRootStyle() {

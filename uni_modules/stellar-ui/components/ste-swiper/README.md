@@ -144,9 +144,9 @@ export default{
 
 
 #### Swiper Events
-|事件名		|说明						|事件参数	|支持版本	|
-| ---			| ---						| ---			| ---			|
-| `change`| 监听`item`切换	| index		| -				|
+|事件名		|说明						|事件参数																																													|支持版本											|
+| ---			| ---						| ---																																															| ---													|
+| `change`| 监听`item`切换	| 参数1`index`:当前轮播图下标<br/>参数2`source`:autoplay 自动播放导致swiper变化，touch 用户划动引起swiper变化。	|参数2`source`支持版本`1.14.5`	|
 
 #### Swiper Slot
 |插槽名			|说明																			|插槽参数	|支持版本	|

@@ -350,6 +350,20 @@ let utils = {
 		// 返回替换后的HTML文本
 		return html;
 	},
+
+	randomArray(arr) {
+		const indexs = [];
+		arr.forEach(() => {
+			indexs.push(Math.floor(Math.random() * arr.length));
+		});
+		for (let i = 0; i < arr.length; i++) {
+			if (i === indexs[i]) continue;
+			let m = arr[i];
+			arr[i] = arr[indexs[i]];
+			arr[indexs[i]] = m;
+		}
+		return arr;
+	},
 };
 
 export default utils;

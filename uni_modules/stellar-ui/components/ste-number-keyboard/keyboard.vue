@@ -4,10 +4,16 @@
 			<block v-for="num in list" :key="num">
 				<view
 					class="number-keyboard-item"
-					:class="{ zero: num === '0', span3: list.length === 10, span2: list.length === 11 }"
+					:class="{ zero: num === '0', span3: list.length === 10, span2: list.length === 11, clear: num === 'clear' }"
 					@click="onChange(num)"
 				>
-					{{ num }}
+					<view v-if="isNaN(num)">
+						<ste-icon v-if="num === 'backspace'" code="&#xe6a7;" :color="textColor" :size="textSize" />
+						<text v-else-if="num === 'clear'">清除</text>
+					</view>
+					<view v-else>
+						{{ num }}
+					</view>
 				</view>
 			</block>
 		</view>

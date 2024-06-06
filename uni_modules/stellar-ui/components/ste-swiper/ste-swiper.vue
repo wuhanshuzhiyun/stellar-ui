@@ -142,6 +142,7 @@ export default {
 			childrenTimeout: null, // 子元素更新定时器
 			durationTimeout: null, // 滑动动画时长定时器
 			autoplayTimeout: null, // 自动切换定时器
+			source: 'autoplay',
 		};
 	},
 	computed: {
@@ -324,9 +325,10 @@ export default {
 				this.setTransform();
 				return;
 			}
+			this.source = 'touch';
 			this.dataIndex = index;
 			if (index < 0 || index >= this.children.length) return;
-			this.$emit('change', index);
+			this.$emit('change', index, this.source);
 		},
 		setAutoplay() {
 			clearInterval(this.autoplayTimeout);
@@ -338,7 +340,9 @@ export default {
 					next = this.dataIndex + 1;
 				}
 				this.setBoundary(-1, -1);
+				this.source = 'autoplay';
 				this.dataIndex = next;
+				if (next >= 0 && next <= this.children.length - 1) this.$emit('change', next, this.source);
 				clearTimeout(this.durationTimeout);
 				this.durationTimeout = setTimeout(() => {
 					this.resetBoundary();
@@ -378,7 +382,9 @@ export default {
 				this.dataIndex = 0;
 				change = true;
 			}
-			if (change) this.$emit('change', this.dataIndex);
+			if (change) {
+				this.$emit('change', this.dataIndex, this.source);
+			}
 
 			const length = this.children.length;
 			this.children.forEach((component, index) => {
