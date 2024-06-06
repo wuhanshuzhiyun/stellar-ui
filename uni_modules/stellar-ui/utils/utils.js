@@ -64,7 +64,7 @@ let utils = {
 		}
 
 		// #ifdef H5
-		if (newVal.indexOf('rpx') >= 0) {
+		if (newVal && newVal.indexOf('rpx') >= 0) {
 			newVal = this.formatPx(newVal);
 		}
 		// #endif
@@ -141,8 +141,7 @@ let utils = {
 			try {
 				uni
 					.createSelectorQuery()
-					.in(component)
-					[selectFn](selectors)
+					.in(component)[selectFn](selectors)
 					.boundingClientRect((data) => {
 						resolve(data);
 					})

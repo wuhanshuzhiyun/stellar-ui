@@ -40,6 +40,15 @@
 					<ste-image :src="joinSrc('组件图标/r-arrow.png')" :width="32" :height="32" />
 				</view>
 			</view>
+			<view class="com-box" @click="nav('drag')">
+				<view class="com-title">
+					<ste-image :src="joinSrc('组件图标/drag.png')" :width="36" :height="36" />
+					<text>Drag 拖拽</text>
+				</view>
+				<view class="com-arrow">
+					<ste-image :src="joinSrc('组件图标/r-arrow.png')" :width="32" :height="32" />
+				</view>
+			</view>
 			<view class="com-box" @click="nav('icon')">
 				<view class="com-title">
 					<ste-image :src="joinSrc('组件图标/icon.png')" :width="36" :height="36" />
