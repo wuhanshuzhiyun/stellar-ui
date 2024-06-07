@@ -11,7 +11,7 @@
 #### H5端
 在需要使用的页面需要引入组件
 ```html
-<ste-toast></ste-toast>
+<root-portal><ste-toast id="steToast"></ste-toast></root-portal>
 ```
 #### 小程序端
 在`main.js`里引入混淆
@@ -122,7 +122,7 @@ click10() {
 - `success`：提示打开成功的回调函数
 - `fail`：提示打开失败的回调函数
 - `complete`：提示结束的回调函数（提示打开、失败都会执行）	
-- `close`：complete
+- `close`：提示关闭的的回调函数
 ```
 click11() {
 	this.showToast({
