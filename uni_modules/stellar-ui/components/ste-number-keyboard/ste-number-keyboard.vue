@@ -177,9 +177,9 @@ export default {
 						break;
 					default:
 						await this.beforInput(v);
+						this.$emit('click', v);
 						if (this.maxlength && this.dataValue.length >= this.maxlength) return;
 						this.dataValue += v;
-						this.$emit('click', v);
 						break;
 				}
 				this.$emit('input', this.dataValue);
