@@ -14,12 +14,39 @@
 <root-portal><ste-toast id="steToast"></ste-toast></root-portal>
 ```
 #### 小程序端
-在`main.js`里引入混淆
+1. 安装 `vue-inset-loader` 插件
+```
+npm install vue-inset-loader --save-dev
+```
+2. 配置 `page.json` 信息
+```
+"insetLoader": {
+	"config": {
+		"toast": "<root-portal><ste-toast id='steToast'></ste-toast></root-portal>"
+	},
+	// 全局配置  
+	"label": ["toast"],
+	"rootEle": "view"
+},
+```
+3. 配置 `vue.config.js` 信息
+```
+chainWebpack: (config) => {
+	config.resolveLoader.alias.set('vue-inset-loader', __dirname + '/node_modules/vue-inset-loader');
+	config.module
+		.rule('vue-inset-loader')
+		.test(/\.vue$/)
+		.use('vue-inset-loader')
+		.loader('vue-inset-loader')
+		.end();
+},
+```
+4. 在`main.js`里引入混淆文件`app-mixin.js`
 ```
 import mixin from './app-mixin.js';
 Vue.mixin(mixin);
 ```
-在混淆文件`app-mixin.js`里引入组件的`js`文件,将`showToast`和`hideToast`方法混入全局，每个页面通过 `this.` 来使用对应的方法
+5. 在混淆文件`app-mixin.js`里引入组件的`js`文件,将`showToast`和`hideToast`方法混入全局，每个页面通过 `this.` 来使用对应的方法
 ```
 import useSteToast from '@/uni_modules/stellar-ui/components/ste-toast/ste-toast.js';
 let steToast = useSteToast();
