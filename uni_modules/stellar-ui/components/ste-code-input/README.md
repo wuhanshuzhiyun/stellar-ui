@@ -54,6 +54,7 @@
 | `formatter`	| 替换输入值				| `String`			| -			| -											| -			|
 | `focus`		| 是否自动获取焦点		| `Boolean`			| `false`	| -											| -			|
 | `disabledDot`	| 是否禁止输入"."符号	| `Boolean`			| `true`	| -											| -			|
+| `readOnly`	| 是否只读				| `Boolean`			| `false`	| -											| `v1.14.12`|
 
 #### Events
 |事件名		|说明								|事件参数				|支持版本	|

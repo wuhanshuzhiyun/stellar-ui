@@ -20,6 +20,7 @@
 			></view>
 		</view>
 		<input
+			v-if="!readOnly"
 			type="number"
 			:focus="focus"
 			:value="inputValue"
@@ -55,7 +56,8 @@ import utils from '../../utils/utils.js';
  * @property {Number|String} size 输入框的大小，宽等于高
  * @property {Number|String} formatter 替换输入值
  * @property {Boolean} focus 是否自动获取焦点
- * @property {Boolean} disabledDot 是否禁止输入"."符号
+ * @property {Boolean} disabledDot 是否禁止输入"."符号 默认 true
+ * @property {Boolean} readOnly 是否只读 默认 false
  * @event {Function} change 输入内容发生改变时触发
  * @event {Function} finish 输入字符个数达maxlength值时触发
  */
@@ -117,6 +119,10 @@ export default {
 		disabledDot: {
 			type: Boolean,
 			default: true,
+		},
+		readOnly: {
+			type: Boolean,
+			default: false,
 		},
 	},
 	data() {
