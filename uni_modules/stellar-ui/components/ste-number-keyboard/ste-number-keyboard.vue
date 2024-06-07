@@ -52,6 +52,7 @@ import utils from '../../utils/utils.js';
  * @value popup 弹窗模式（默认）
  * @value page 在dom文档流中直接展示
  * @property {String} value 输入值，支持v-model双向绑定
+ * @property {Number,String} maxlength 输入最大长度
  * @property {String} show 是否显示键盘，支持.sync绑定，mode="popup"时生效
  * @property {Boolean} rightKeys 是否显示右侧功能键，默认true
  * @property {Boolean} randomKeys 按键是否随机排列，默认false
@@ -82,6 +83,7 @@ export default {
 	props: {
 		mode: { type: String, default: () => 'popup' },
 		value: { type: String, default: () => '' },
+		maxlength: { type: [Number, String], default: () => null },
 		show: { type: Boolean, default: () => false },
 		rightKeys: { type: Boolean, default: () => true },
 		randomKeys: { type: Boolean, default: () => false },
@@ -175,6 +177,7 @@ export default {
 						break;
 					default:
 						await this.beforInput(v);
+						if (this.maxlength && this.dataValue.length >= this.maxlength) return;
 						this.dataValue += v;
 						this.$emit('click', v);
 						break;

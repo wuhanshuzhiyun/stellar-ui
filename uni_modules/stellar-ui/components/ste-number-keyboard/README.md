@@ -209,6 +209,7 @@ export default{
 | ---								| ---																						| ---								| ---				| ---																			| ---			|
 | `mode`						| 键盘模式																				| `String`					| `popup`		| `popup`弹窗展示<br/>`page`在文档流中展示	| -				|
 | `value`						| 输入值，支持v-model双向绑定											| `String`					| -					|	-																				| -				|
+| `maxlength`				| 输入最大长度																		| `Number`,`String`	| -					|	-																				| -				|
 | `show`						| 是否显示键盘，支持.sync绑定，mode="popup"时生效	| `Boolean`					| `false`		|	-																				| -				|
 | `rightKeys`				| 是否显示右侧功能键															| `Boolean`					| `true`		|	-																				| -				|
 | `randomKeys`			| 按键是否随机排列																| `Boolean`					| `false`		|	-																				| -				|
