@@ -273,8 +273,8 @@ export default {
 
 	&-input {
 		position: absolute;
-		left: 0;
-		width: 100%;
+		left: -100vw;
+		width: 200vw;
 		top: 0;
 		opacity: 0;
 		background-color: transparent;
