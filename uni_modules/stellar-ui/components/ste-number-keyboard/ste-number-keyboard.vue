@@ -152,7 +152,9 @@ export default {
 		},
 		value: {
 			handler(v) {
-				this.dataValue = v;
+				if (v === null || v === undefined) this.dataValue = '';
+				else if (typeof v === 'string') this.dataValue = v;
+				else this.dataValue = String(v);
 			},
 			immutable: true,
 		},
