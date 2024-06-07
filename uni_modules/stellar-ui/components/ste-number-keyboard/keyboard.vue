@@ -49,10 +49,16 @@ export default {
 	},
 	computed: {
 		cmpRootStyle() {
+			let width = 8,
+				height = 5;
+			if (!this.rightKeys) {
+				width = 7;
+				height = 3;
+			}
 			// 向上取整，保证每行至少有3个按钮
 			const rows = Math.ceil(this.list.length / 3);
-			const w = 8 * (this.rightKeys ? 4 : 3);
-			const h = 5 * rows;
+			const w = width * (this.rightKeys ? 4 : 3);
+			const h = height * rows;
 			return {
 				'--ste-number-keyboard-aspect': `${w} / ${h}`,
 				'--ste-number-keyboard-columns': this.rightKeys ? '3fr 1fr' : '1fr',

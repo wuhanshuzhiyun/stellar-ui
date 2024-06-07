@@ -19,12 +19,12 @@
 				<ste-number-keyboard :rightKeys="false" v-model="value2" :show.sync="show2" />
 			</view>
 			<view class="demo-item">
-				<view class="title">隐藏清除按钮</view>
+				<view class="title">隐藏清除按钮,value最大长度</view>
 				<view class="test-input" @click="show3 = true">
 					<text v-if="value3">{{ value3 }}</text>
 					<text v-else class="placeholder">请输入</text>
 				</view>
-				<ste-number-keyboard :showClear="false" v-model="value3" :show.sync="show3" />
+				<ste-number-keyboard :showClear="false" v-model="value3" :show.sync="show3" maxlength="6" />
 			</view>
 			<view class="demo-item">
 				<view class="title">自定义按键（建议不超过两个）</view>

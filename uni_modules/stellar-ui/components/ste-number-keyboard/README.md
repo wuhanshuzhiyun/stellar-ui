@@ -20,7 +20,7 @@
 ```
 
 #### 基础用法
-- 属性`value`: 输入框的值，支持`v-model`双向绑定
+- 属性`value`: 输入的值，支持`v-model`双向绑定
 - 属性`show`: 是否显示键盘，支持`sync`双向绑定
 ```html
 <view class="test-input" @click="show1 = true">
@@ -60,14 +60,15 @@ export default{
 }
 </script>
 ```
-#### 隐藏清除按钮
+#### 隐藏清除按钮,value最大长度
 - 属性`showClear`: 是否显示清除按钮，默认显示
+- 属性`maxlength`: 最大`value`长度，默认不限制
 ```html
 <view class="test-input" @click="show3 = true">
 	<text v-if="value3">{{ value3 }}</text>
 	<text v-else class="placeholder">请输入</text>
 </view>
-<ste-number-keyboard :showClear="false" v-model="value3" :show.sync="show3" />
+<ste-number-keyboard :showClear="false" v-model="value3" :show.sync="show3" maxlength="6"/>
 
 <script>
 export default{
@@ -208,9 +209,9 @@ export default{
 | 参数							| 说明																						| 类型								| 默认值			| 可选值																		| 支持版本	|
 | ---								| ---																						| ---								| ---				| ---																			| ---			|
 | `mode`						| 键盘模式																				| `String`					| `popup`		| `popup`弹窗展示<br/>`page`在文档流中展示	| -				|
-| `value`						| 输入值，支持v-model双向绑定											| `String`					| -					|	-																				| -				|
-| `maxlength`				| 输入最大长度																		| `Number`,`String`	| -					|	-																				| -				|
-| `show`						| 是否显示键盘，支持.sync绑定，mode="popup"时生效	| `Boolean`					| `false`		|	-																				| -				|
+| `value`						| 输入值，支持`v-model`双向绑定										| `String`					| -					|	-																				| -				|
+| `maxlength`				| `value`最大长度																| `Number`,`String`	| -					|	-																				| -				|
+| `show`						| 是否显示键盘，支持`.sync`绑定，mode="popup"时生效	| `Boolean`					| `false`		|	-																				| -				|
 | `rightKeys`				| 是否显示右侧功能键															| `Boolean`					| `true`		|	-																				| -				|
 | `randomKeys`			| 按键是否随机排列																| `Boolean`					| `false`		|	-																				| -				|
 | `confirmText`			| 右侧确认按钮文本																| `String`					| `确定`			|	-																				| -				|
