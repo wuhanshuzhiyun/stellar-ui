@@ -1,7 +1,7 @@
 <template>
 	<view class="ste-number-keyboard-root" :style="[cmpRootStyle]">
 		<block v-if="mode === 'popup'">
-			<ste-popup :show.sync="dataShow" @close="onClose" position="bottom" :show-close="false">
+			<ste-popup :show.sync="dataShow" @close="onClose" position="bottom" :show-close="false" @open="onOpen">
 				<view style="padding: 30rpx 30rpx 60rpx 30rpx; background-color: #f5f5f5">
 					<view class="keyboard-popup-head">
 						<view></view>
@@ -64,13 +64,14 @@ import utils from '../../utils/utils.js';
  * @property {String} confirmBg 确认按钮背景颜色，默认#0090FF
  * @property {String} confirmColor 确认按钮文字颜色，默认#FFFFFF
 
- * @event {Function} confirm 确认按钮点击事件
  * @event {Function} change 输入值改变时触发
  * @event {Function} clear 清空按钮点击事件
- * @event {Function} close 关闭弹窗键盘触发
  * @event {Function} backspace 删除按钮点击事件
- * @event {Function} click 点击功能键之外的键盘触发（功能键包括：确认/删除/清除）
+ * @event {Function} confirm 确认按钮点击事件
+ * @event {Function} click 点击功能键(确认/删除/清除)之外的键盘触发
  * @event {Function} beforeinput 输入之前触发，功能键之外的键盘点击时为输入（参数1为当前点击的按钮，参数2为开启等待的回调函数，参数3为执行后续操作的回调函数，参数4为阻止后续执行的回调函数）
+ * @event {Function} close 关闭弹窗键盘触发
+ * @event {Function} open 打开弹窗键盘触发
  */
 
 export default {
@@ -182,13 +183,16 @@ export default {
 				this.$emit('change', this.dataValue);
 				this.$emit('update:value', this.dataValue);
 			} catch (e) {
-				console.error(e);
+				if (e) console.error(e);
 			}
 		},
 		onClose() {
 			this.dataShow = false;
 			this.$emit('update:show', false);
 			this.$emit('close');
+		},
+		onOpen() {
+			this.$emit('open');
 		},
 		async beforInput(v) {
 			let next = true;

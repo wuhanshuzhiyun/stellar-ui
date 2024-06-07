@@ -56,7 +56,7 @@
 					<text v-if="value6">{{ value6 }}</text>
 					<text v-else class="placeholder">请输入</text>
 				</view>
-				<ste-number-keyboard :customKeys="['-']" v-model="value6" :show.sync="show6" @beforeinput="beforeinput" />
+				<ste-number-keyboard :customKeys="['返回']" v-model="value6" :show.sync="show6" @beforeinput="beforeinput" />
 			</view>
 			<view class="demo-item">
 				<view class="title">在文档流中展示</view>
@@ -93,11 +93,18 @@ export default {
 	},
 	methods: {
 		beforeinput(v, suspend, next, stop) {
+			// 等待后续操作
 			suspend();
-			if (v === '-') {
-				console.log('你点击了-');
+			// 执行自定义操作
+			if (v === '返回') {
+				// 阻止默认后续操作
 				stop();
+				uni.showToast({
+					title: '点击了返回',
+					icon: 'none',
+				});
 			} else {
+				// 继续默认后续操作
 				next();
 			}
 		},
