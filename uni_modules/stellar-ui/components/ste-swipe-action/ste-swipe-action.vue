@@ -17,7 +17,7 @@
 				@mouseup="onTouchend"
 				@mouseleave="onTouchend"
 				@touchstart="onTouchstart"
-				@touchmove.stop="onTouchmove"
+				@touchmove="onTouchmove"
 				@touchend="onTouchend"
 				@touchcancel="onTouchend"
 			>
