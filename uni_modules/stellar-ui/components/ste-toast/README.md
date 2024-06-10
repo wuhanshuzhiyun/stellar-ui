@@ -5,7 +5,6 @@
 {{compatibility}}
 
 
-### 代码演示
 
 ### 使用方法
 1. 安装 `ste-vue-inset-loader` 插件
@@ -57,6 +56,8 @@ import useSteToast from '@/uni_modules/stellar-ui/components/ste-toast/ste-toast
 let steToast = useSteToast();
 steToast.showToast()
 ```
+
+### 代码演示
 
 #### 文字提示
 `title`为提示内容，提示弹窗根据内容自动撑开，最大宽度为260px，超过自动换行，也可手动插入换行符`\n`
