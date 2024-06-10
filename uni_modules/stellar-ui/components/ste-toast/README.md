@@ -32,13 +32,12 @@ npm install vue-inset-loader --save-dev
 3. 配置 `vue.config.js` 信息
 ```
 chainWebpack: (config) => {
-	config.resolveLoader.alias.set('vue-inset-loader', __dirname + '/node_modules/vue-inset-loader');
 	config.module
-		.rule('vue-inset-loader')
-		.test(/\.vue$/)
-		.use('vue-inset-loader')
-		.loader('vue-inset-loader')
-		.end();
+	.rule('vue')
+	.test(/\.vue$/)
+	.use()
+	.loader(path.resolve(__dirname, './node_modules/vue-inset-loader'))
+	.end();
 },
 ```
 4. 在`main.js`里引入混淆文件`app-mixin.js`
@@ -50,7 +49,6 @@ Vue.mixin(mixin);
 ```
 import useSteToast from '@/uni_modules/stellar-ui/components/ste-toast/ste-toast.js';
 let steToast = useSteToast();
-let $state = steToast.$state;
 export default {
 	methods: {
 		showToast: steToast.showToast,
@@ -58,6 +56,12 @@ export default {
 	},
 };
 
+```
+6. js文件中使用
+```
+import useSteToast from '@/uni_modules/stellar-ui/components/ste-toast/ste-toast.js';
+let steToast = useSteToast();
+steToast.showToast()
 ```
 
 #### 文字提示

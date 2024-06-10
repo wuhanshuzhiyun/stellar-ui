@@ -1,4 +1,4 @@
-import store from '@/common/store.js';
+import store from '../../utils/store.js';
 import Vuex from 'vuex';
 let $state = new Vuex.Store({
 	state: {
