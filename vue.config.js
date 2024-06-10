@@ -10,12 +10,11 @@ module.exports = {
 	chainWebpack: (config) => {
 		config.resolveLoader.alias.set('file-loader', __dirname + '/node_modules/file-loader');
 		config.module.rule('markdown').test(/\.md$/).use('file-loader').loader('file-loader').end();
-		config.resolveLoader.alias.set('vue-inset-loader', __dirname + '/node_modules/vue-inset-loader');
 		config.module
-			.rule('vue-inset-loader')
+			.rule('vue')
 			.test(/\.vue$/)
-			.use('vue-inset-loader')
-			.loader('vue-inset-loader')
+			.use()
+			.loader(path.resolve(__dirname, './node_modules/ste-vue-inset-loader'))
 			.end();
 	},
 	configureWebpack: {

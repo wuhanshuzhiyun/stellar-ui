@@ -1,8 +1,5 @@
 <template>
 	<view class="page">
-		<!--#ifdef H5-->
-		<root-portal><ste-toast id="steToast"></ste-toast></root-portal>
-		<!--#endif-->
 		<page-nav :autoBack="true" backColor="#000" titleAlignment="2" title="轻提示"></page-nav>
 		<view class="content">
 			<view class="demo-item">

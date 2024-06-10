@@ -8,15 +8,9 @@
 ### 代码演示
 
 ### 使用方法
-#### H5端
-在需要使用的页面需要引入组件
-```html
-<root-portal><ste-toast id="steToast"></ste-toast></root-portal>
+1. 安装 `ste-vue-inset-loader` 插件
 ```
-#### 小程序端
-1. 安装 `vue-inset-loader` 插件
-```
-npm install vue-inset-loader --save-dev
+npm install ste-vue-inset-loader --save-dev
 ```
 2. 配置 `page.json` 信息
 ```
@@ -36,7 +30,7 @@ chainWebpack: (config) => {
 	.rule('vue')
 	.test(/\.vue$/)
 	.use()
-	.loader(path.resolve(__dirname, './node_modules/vue-inset-loader'))
+	.loader(path.resolve(__dirname, './node_modules/ste-vue-inset-loader'))
 	.end();
 },
 ```
