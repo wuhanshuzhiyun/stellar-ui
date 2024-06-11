@@ -1,13 +1,13 @@
-import dayjs from '../../utils/dayjs.min.js';
+import utils from '../../utils/utils.js';
 
 /**
  * 获取从当前月份开始的12个月
  */
 function getMonthList(minDate, maxDate) {
-	const start = minDate ? dayjs(minDate) : dayjs();
+	const start = minDate ? utils.dayjs(minDate) : utils.dayjs();
 	const sY = Number(start.format('YYYY'));
 	const sM = Number(start.format('MM'));
-	const end = maxDate ? dayjs(maxDate) : null;
+	const end = maxDate ? utils.dayjs(maxDate) : null;
 	let eY, eM;
 	if (end) {
 		eY = Number(end.format('YYYY'));
@@ -19,7 +19,7 @@ function getMonthList(minDate, maxDate) {
 	const months = [];
 	for (let y = sY; y <= eY; y++) {
 		for (let m = y === sY ? sM : 1; m <= (y === eY ? eM : 12); m++) {
-			months.push(dayjs(`${y}-${m < 10 ? '0' + m : m}-01`));
+			months.push(utils.dayjs(`${y}-${m < 10 ? '0' + m : m}-01`));
 		}
 	}
 	return months;
@@ -65,7 +65,7 @@ export function getCalendarData(minDate, maxDate, formatter = 'YYYY-MM-DD') {
 				} else {
 					_day = day++;
 				}
-				const key = _day ? dayjs(`${monthData.key}-${_day}`).format(formatter) : Math.random();
+				const key = _day ? utils.dayjs(`${monthData.key}-${_day}`).format(formatter) : Math.random();
 				let disabled = !_day;
 				if (_day) {
 					disabled = (minDate && key < minDate) || (maxDate && key > maxDate);

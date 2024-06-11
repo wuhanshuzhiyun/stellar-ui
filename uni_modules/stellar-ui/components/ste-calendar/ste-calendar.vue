@@ -55,7 +55,6 @@
 
 <script>
 import { formatDate, getCalendarData } from './self-date.js';
-import dayjs from '../../utils/dayjs.min.js';
 import utils from '../../utils/utils.js';
 /**
  * ste-calendar 日历
@@ -225,7 +224,7 @@ export default {
 	},
 	methods: {
 		showMonth(date = this.defaultMonth) {
-			const showDate = date ? dayjs(date).format('YYYY-MM') : null;
+			const showDate = date ? utils.dayjs(date).format('YYYY-MM') : null;
 			if (!showDate) return (this.initing = false);
 			if (!this.cmpDates.monthDatas?.length) return (this.initing = false);
 			let height = 0;

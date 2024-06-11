@@ -346,7 +346,7 @@ export default {
 				clearTimeout(this.durationTimeout);
 				this.durationTimeout = setTimeout(() => {
 					this.resetBoundary();
-				}, this.cmpDuration - 100);
+				}, this.cmpDuration - 20);
 			}, this.interval);
 		},
 		setBoundary(moveX = 0, moveY = 0) {
@@ -374,36 +374,38 @@ export default {
 		},
 		resetBoundary() {
 			this.reseting = true;
-			let change = false;
-			if (this.dataIndex === -1) {
-				this.dataIndex = this.children.length - 1;
-				change = true;
-			} else if (this.dataIndex === this.children.length) {
-				this.dataIndex = 0;
-				change = true;
-			}
-			if (change) {
-				this.$emit('change', this.dataIndex, this.source);
-			}
-
-			const length = this.children.length;
-			this.children.forEach((component, index) => {
-				let x = 0,
-					y = 0;
-				if (this.circular) {
-					if (index === length - 1 && this.dataIndex === 0 && length > 2) {
-						x = this.direction === 'horizontal' ? -length * this.boxWidth : 0;
-						y = this.direction === 'vertical' ? -length * this.boxHeight : 0;
-					} else if (index === 0 && this.dataIndex === length - 1 && length > 2) {
-						x = this.direction === 'horizontal' ? length * this.boxWidth : 0;
-						y = this.direction === 'vertical' ? length * this.boxHeight : 0;
-					}
-				}
-				component?.setTransform({ x, y });
-			});
 			setTimeout(() => {
-				this.reseting = false;
-			}, 100);
+				let change = false;
+				if (this.dataIndex === -1) {
+					this.dataIndex = this.children.length - 1;
+					change = true;
+				} else if (this.dataIndex === this.children.length) {
+					this.dataIndex = 0;
+					change = true;
+				}
+				if (change) {
+					this.$emit('change', this.dataIndex, this.source);
+				}
+
+				const length = this.children.length;
+				this.children.forEach((component, index) => {
+					let x = 0,
+						y = 0;
+					if (this.circular) {
+						if (index === length - 1 && this.dataIndex === 0 && length > 2) {
+							x = this.direction === 'horizontal' ? -length * this.boxWidth : 0;
+							y = this.direction === 'vertical' ? -length * this.boxHeight : 0;
+						} else if (index === 0 && this.dataIndex === length - 1 && length > 2) {
+							x = this.direction === 'horizontal' ? length * this.boxWidth : 0;
+							y = this.direction === 'vertical' ? length * this.boxHeight : 0;
+						}
+					}
+					component?.setTransform({ x, y });
+				});
+				setTimeout(() => {
+					this.reseting = false;
+				}, 60);
+			}, 20);
 		},
 	},
 };
