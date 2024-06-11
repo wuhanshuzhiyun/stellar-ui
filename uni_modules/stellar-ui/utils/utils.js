@@ -1,11 +1,13 @@
 import Color from './Color.js';
 import System from './System.js';
+import dayjs from './dayjs.min.js';
 let throLast = 0; // 节流方法用变量
 let throTimer = null; // 节流方法用的变量
 
 let utils = {
 	Color,
 	System,
+	dayjs,
 	/**
 	 * 格式化像素单位为px
 	 * @param value {Number | String} 像素单位值
@@ -141,7 +143,8 @@ let utils = {
 			try {
 				uni
 					.createSelectorQuery()
-					.in(component)[selectFn](selectors)
+					.in(component)
+					[selectFn](selectors)
 					.boundingClientRect((data) => {
 						resolve(data);
 					})
