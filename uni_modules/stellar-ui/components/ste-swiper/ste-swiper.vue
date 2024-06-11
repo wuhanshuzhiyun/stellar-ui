@@ -404,8 +404,8 @@ export default {
 				});
 				setTimeout(() => {
 					this.reseting = false;
-				}, 60);
-			}, 20);
+				}, 50);
+			}, 50);
 		},
 	},
 };
