@@ -37,7 +37,7 @@ export default {
 		},
 		space: {
 			type: [Number, String],
-			default: false,
+			default: '',
 		},
 		alignCenter: {
 			type: Boolean,
