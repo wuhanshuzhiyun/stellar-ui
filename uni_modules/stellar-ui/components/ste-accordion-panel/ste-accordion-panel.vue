@@ -24,7 +24,7 @@
 						:valueKey="valueKey"
 						:titleKey="titleKey"
 						:messageKey="messageKey"
-						:openItems="openItems"
+						:openNodes="openNodes"
 						:accordion="accordion"
 						:depth="depth + 1"
 						:parentValue="item[valueKey]"
@@ -79,7 +79,7 @@ export default {
 			type: Boolean,
 			default: () => true,
 		},
-		openItems: {
+		openNodes: {
 			type: Array,
 			default: () => [],
 		},
@@ -118,7 +118,7 @@ export default {
 					return { open: false, hasChildren: !!node[this.childrenKey]?.length };
 				});
 				this.optionsMap = utils.getTreeNodeMap(options, this.valueKey, this.childrenKey);
-				this.openItems.forEach((v) => this.open(v));
+				this.openNodes.forEach((v) => this.open(v));
 			}
 			this.dataOptions = options;
 		},
