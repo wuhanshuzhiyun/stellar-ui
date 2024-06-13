@@ -366,6 +366,65 @@ let utils = {
 		}
 		return arr;
 	},
+
+	/**
+	 * 格式化树形结构
+	 */
+	formatTree(
+		tree,
+		valueKey = 'value',
+		childrenKey = 'children',
+		otherAttributes = {},
+		parentValue = '__root__',
+		zIndex = 0
+	) {
+		const result = tree.map((item) => {
+			if (item[childrenKey] && item[childrenKey].length) {
+				item[childrenKey] = this.formatTree(
+					item[childrenKey],
+					valueKey,
+					childrenKey,
+					otherAttributes,
+					item[valueKey],
+					zIndex + 1
+				);
+			}
+			let _otherAttributes = otherAttributes;
+			if (typeof otherAttributes === 'function') {
+				_otherAttributes = _otherAttributes(item);
+			}
+			return Object.assign({ parentValue, zIndex }, _otherAttributes, item);
+		});
+		return result;
+	},
+	/**
+	 * 扁平化树形结构
+	 */
+	flattenTree(tree, childrenKey = 'children') {
+		let result = [];
+		function _flatten(node) {
+			result.push(node);
+			if (node[childrenKey] && node[childrenKey].length > 0) {
+				for (let child of node[childrenKey]) {
+					_flatten(child);
+				}
+			}
+		}
+		// 从根节点开始展平
+		_flatten(tree[0]);
+		return result;
+	},
+	/**
+	 * 获取树形结构节点MAP
+	 */
+	getTreeNodeMap(tree, valueKey = 'value', childrenKey = 'children') {
+		const map = {};
+		const arr = this.flattenTree(tree, childrenKey);
+		arr.forEach((node) => {
+			map[node[valueKey]] = node;
+		});
+		return map;
+	},
 };
 
 export default utils;
