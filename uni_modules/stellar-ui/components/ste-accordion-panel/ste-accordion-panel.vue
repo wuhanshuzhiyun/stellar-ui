@@ -3,7 +3,7 @@
 		<block v-for="(item, index) in dataOptions" :key="index">
 			<view class="accordion-panel-item" :class="{ open: item.open }">
 				<view class="accordion-panel-item-content" @click="onClick(item)">
-					<slot :item="item" :index="index" :zIndex="zIndex">
+					<slot :item="item" :index="index" :depth="depth">
 						<view class="accordion-panel-item-head" :class="item.titleClass">
 							<view class="accordion-panel-item-title">{{ item[titleKey] }}</view>
 							<view
@@ -18,16 +18,16 @@
 				</view>
 				<view class="accordion-panel-children" v-if="item.children">
 					<ste-accordion-panel
+						ref="steAccordionPanel"
 						@click="onClick"
-						@open="onOpen"
-						@close="onClose"
 						:options="item.children"
 						:valueKey="valueKey"
 						:titleKey="titleKey"
 						:messageKey="messageKey"
 						:openItems="openItems"
 						:parentValue="item[valueKey]"
-						:z-index="zIndex + 1"
+						:accordion="accordion"
+						:depth="depth + 1"
 					/>
 				</view>
 			</view>
@@ -37,6 +37,17 @@
 
 <script>
 import utils from '../../utils/utils.js';
+
+const getParents = (node, nodeMap) => {
+	const parents = [];
+	if (node.parentValue === '__root__') return parents;
+	const parent = nodeMap[node.parentValue];
+	if (!parent) return parents;
+	parents.push(parent);
+	parents.push(...getParents(parent, nodeMap));
+	return parents;
+};
+
 export default {
 	name: 'ste-accordion-panel',
 	props: {
@@ -72,8 +83,7 @@ export default {
 			type: Array,
 			default: () => [],
 		},
-		// 层级，用于设置z-index
-		zIndex: {
+		depth: {
 			type: Number,
 			default: () => 0,
 		},
@@ -115,32 +125,38 @@ export default {
 			const node = this.optionsMap[value];
 			if (!node) return;
 			node.open = true;
-			const openParent = (node) => {
-				if (node.parentValue === '__root__') return;
-				const parent = this.optionsMap[node.parentValue];
-				if (!parent) return;
-				if (parent.open) return;
+			const parents = getParents(node, this.optionsMap);
+			parents.forEach((parent) => {
 				parent.open = true;
-				openParent(parent);
-			};
-			openParent(node);
+				this.closeSibling(parent);
+			});
 		},
-
-		onClick(item, zIndex = this.zIndex) {
-			this.$emit('click', item, zIndex);
-			if (item.hasChildren && zIndex === this.zIndex) {
-				if (!item.open) this.onOpen(item, zIndex);
-				else this.onClose(item, zIndex);
+		onClick(node) {
+			this.$emit('click', node);
+			if (this.parentValue === node.parentValue) {
+				if (node.open) this.closeNode(node);
+				else this.openNode(node);
 			}
 		},
-
-		onOpen(item, zIndex) {
-			item.open = true;
-			this.$emit('open', item, zIndex);
+		openNode(node) {
+			node.open = true;
+			this.closeSibling(node);
+			this.$emit('open', node);
 		},
-		onClose(item, zIndex) {
-			item.open = false;
-			this.$emit('close', item, zIndex);
+		closeNode(node) {
+			node.open = false;
+			this.$emit('close', node);
+		},
+
+		closeSibling(node) {
+			if (!this.accordion) return;
+			const sibling =
+				this.parentValue === '__root__'
+					? Object.keys(this.optionsMap)
+							.map((k) => this.optionsMap[k])
+							.filter((s) => s.parentValue === node.parentValue && s.open && s[this.valueKey] !== node[this.valueKey])
+					: this.dataOptions.filter((s) => s.open && s[this.valueKey] !== node[this.valueKey]);
+			sibling.forEach((s) => (s.open = false));
 		},
 	},
 };

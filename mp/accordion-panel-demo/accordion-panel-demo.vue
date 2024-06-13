@@ -4,7 +4,12 @@
 		<view class="content">
 			<view class="demo-item">
 				<view class="title">基础示例</view>
-				<ste-accordion-panel :options="options" @click="onOpen" :openItems="['1-1-2']"></ste-accordion-panel>
+				<ste-accordion-panel
+					ref="accordion"
+					:options="options"
+					@click="onOpen"
+					:openItems="['1-1']"
+				></ste-accordion-panel>
 			</view>
 		</view>
 	</view>
@@ -28,10 +33,7 @@ export default {
 									title: '标题1-1-2',
 									value: '1-1-2',
 									message: '这是一条说明信息',
-									children: [
-										{ title: '标题1-1-2-1', value: '1-1-2-1', message: '这是一条说明信息' },
-										{ title: '标题1-1-2-2', value: '1-1-2-2', message: '这是一条说明信息' },
-									],
+									hasChildren: true,
 								},
 							],
 						},
@@ -78,9 +80,14 @@ export default {
 		};
 	},
 	methods: {
-		onOpen(item, zindex) {
-			console.log(item, zindex);
+		onOpen(item) {
+			console.log(item);
 		},
+	},
+	mounted() {
+		setTimeout(() => {
+			this.$refs.accordion.open('2-2');
+		}, 5000);
 	},
 };
 </script>

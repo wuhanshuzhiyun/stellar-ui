@@ -376,7 +376,7 @@ let utils = {
 		childrenKey = 'children',
 		otherAttributes = {},
 		parentValue = '__root__',
-		zIndex = 0
+		depth = 0
 	) {
 		const result = tree.map((item) => {
 			if (item[childrenKey] && item[childrenKey].length) {
@@ -386,14 +386,14 @@ let utils = {
 					childrenKey,
 					otherAttributes,
 					item[valueKey],
-					zIndex + 1
+					depth + 1
 				);
 			}
 			let _otherAttributes = otherAttributes;
 			if (typeof otherAttributes === 'function') {
 				_otherAttributes = _otherAttributes(item);
 			}
-			return Object.assign({ parentValue, zIndex }, _otherAttributes, item);
+			return Object.assign({ parentValue, depth }, _otherAttributes, item);
 		});
 		return result;
 	},
@@ -411,7 +411,7 @@ let utils = {
 			}
 		}
 		// 从根节点开始展平
-		_flatten(tree[0]);
+		tree.forEach((node) => _flatten(node));
 		return result;
 	},
 	/**
