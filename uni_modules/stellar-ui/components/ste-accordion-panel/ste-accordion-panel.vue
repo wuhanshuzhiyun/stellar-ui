@@ -25,9 +25,9 @@
 						:titleKey="titleKey"
 						:messageKey="messageKey"
 						:openItems="openItems"
-						:parentValue="item[valueKey]"
 						:accordion="accordion"
 						:depth="depth + 1"
+						:parentValue="item[valueKey]"
 					/>
 				</view>
 			</view>
@@ -83,6 +83,7 @@ export default {
 			type: Array,
 			default: () => [],
 		},
+		// 以下是递归属性，请勿在业务中使用
 		depth: {
 			type: Number,
 			default: () => 0,
