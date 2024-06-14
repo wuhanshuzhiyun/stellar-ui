@@ -15,7 +15,6 @@ import utils from '../../utils/utils.js';
  * @value  row  横向 {{String}}
  * @value  column 竖向 {{String}}
  * @property {Boolean} dot 点状步骤条 默认 false
- * @property {Number|String} space 步骤条间距，默认为自动计算，单位为rpx
  * @event {Function} clickStep 点击步骤的标题或图标时触发
  */
 
@@ -39,10 +38,6 @@ export default {
 			type: Boolean,
 			default: false,
 		},
-		space: {
-			type: [Number, String],
-			default: '',
-		},
 	},
 	provide() {
 		return {
@@ -57,14 +52,14 @@ export default {
 	display: flex;
 	width: 100%;
 	flex: 1;
+}
+.ste-steps-column {
+	flex-flow: column;
+	height: 100%;
+}
 
-	.ste-steps-column {
-		flex-direction: column;
-	}
-
-	.ste-steps-row {
-		flex-direction: row;
-		flex: 1;
-	}
+.ste-steps-row {
+	flex-direction: row;
+	flex: 1;
 }
 </style>
