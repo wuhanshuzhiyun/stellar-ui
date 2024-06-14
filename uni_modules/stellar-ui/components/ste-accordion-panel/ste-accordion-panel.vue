@@ -4,7 +4,7 @@
 			<view class="accordion-panel-item" :class="{ open: node.open }">
 				<view class="accordion-panel-item-content" @click="onClick(node)">
 					<slot :node="node" :index="index" :depth="depth">
-						<view class="accordion-panel-item-head" :class="headClass">
+						<view class="accordion-panel-item-head" :style="[headStyle]">
 							<view class="accordion-panel-item-right">
 								<view class="accordion-panel-item-image" v-if="node.image !== false && (cmpTitleImage || node.image)">
 									<image :src="node.image ? node.image : cmpTitleImage" mode=""></image>
@@ -32,7 +32,6 @@
 						:options="node.children"
 						:valueKey="valueKey"
 						:titleKey="titleKey"
-						:messageKey="messageKey"
 						:openNodes="openNodes"
 						:accordion="accordion"
 						:depth="depth + 1"
@@ -62,69 +61,55 @@ const defaultImages = [
 	'https://image.whzb.com/chain/StellarUI/component-icons/ste-accordion-panel-children.png',
 ];
 
+/**
+ * ste-accordion-panel 折叠面板
+ * @description 折叠面板组件
+ * @tutorial https://stellar-ui.intecloud.com.cn/pc/index/index?name=ste-accordion-panel
+ * @property {Array} options 选项数组（支持树形结构）
+ * @property {String} valueKey 选项的值字段名（默认：value）
+ * @property {String} titleKey 选项的标题字段名（默认：title）
+ * @property {String} childrenKey 选项的子选项字段名（默认：children）
+ * @property {Boolean} accordion 是否手风琴模式（默认：true）
+ * @property {Object} headStyle 自定义头部样式
+ * @property {Array} openNodes 默认展开的节点数组（数组内容为节点value值，请在组件加载前设置，加载后若要展开请调用open方法）
+ * @property {Array} titleImages 标题图片数组（图片在数组中的位置对应展示的层级，若某一层不展示图片则在对应位置填入false）
+ * @event {Function} click 点击节点触发，参数为当前节点对象
+ * @event {Function} open 打开节点时触发，参数为当前节点对象
+ * @event {Function} close 关闭节点时触发，参数为当前节点对象
+ * @event {Function} beforeOpen 打开节点前触发，第一个参数为当前节点对象（第二个参数为suspend函数，用于等待后续代码执行）（第三个参数为next函数，继续执行后续代码，可接收一个对象数值，该数组会替换当前节点的children）（第四个参数为stop，阻止后续代码执行）
+ */
+
 export default {
+	group: '折叠面板',
+	title: 'AccordionPanel 折叠面板',
 	name: 'ste-accordion-panel',
 	props: {
-		options: {
-			type: Array,
-			default: () => [],
-		},
-		valueKey: {
-			type: String,
-			default: () => 'value',
-		},
-		titleKey: {
-			type: String,
-			default: () => 'title',
-		},
-		messageKey: {
-			type: String,
-			default: () => 'message',
-		},
-		childrenKey: {
-			type: String,
-			default: () => 'children',
-		},
-		lazy: {
-			type: Boolean,
-			default: () => true,
-		},
-		accordion: {
-			type: Boolean,
-			default: () => true,
-		},
-		headClass: {
-			type: String,
-			default: () => '',
-		},
-		openNodes: {
-			type: Array,
-			default: () => [],
-		},
-		titleImages: {
-			type: Array,
-			default: () => [],
-		},
+		options: { type: Array, default: () => [] },
+		valueKey: { type: String, default: () => 'value' },
+		titleKey: { type: String, default: () => 'title' },
+		childrenKey: { type: String, default: () => 'children' },
+		accordion: { type: Boolean, default: () => true },
+		headStyle: { type: Object, default: () => ({}) },
+		openNodes: { type: Array, default: () => [] },
+		titleImages: { type: Array, default: () => [] },
+		searchTitle: { type: String, default: () => '' },
 		// 以下是递归属性，请勿在业务中使用
-		depth: {
-			type: Number,
-			default: () => 0,
-		},
-		parentValue: {
-			type: [Number, String],
-			default: () => '__root__',
-		},
+		depth: { type: Number, default: () => 0 },
+		parentValue: { type: [Number, String], default: () => '__root__' },
 	},
 	data() {
 		return {
 			dataOptions: [],
 			optionsMap: {},
+			viewOptions: [],
+			dataSearchTitle: '',
+			searchTime: null,
 		};
 	},
 	computed: {
 		cmpTitleImage() {
 			const userImage = this.titleImages[this.depth];
-			if (userImage === false) return;
+			if (userImage === false) return null;
 			const defaultImage = defaultImages[this.depth];
 			return userImage ? userImage : defaultImage;
 		},
@@ -136,6 +121,18 @@ export default {
 			},
 			immediate: true,
 			deep: true,
+		},
+		searchTitle: {
+			handler(v) {
+				this.dataSearchTitle = v;
+			},
+			immediate: true,
+		},
+		dataSearchTitle: {
+			handler(v) {
+				this.onSearch(v);
+			},
+			immediate: true,
 		},
 	},
 	methods: {
@@ -160,6 +157,7 @@ export default {
 				this.closeSibling(parent);
 			});
 		},
+
 		onClick(node) {
 			this.$emit('click', node);
 			if (this.parentValue === node.parentValue) {
@@ -168,6 +166,32 @@ export default {
 			}
 		},
 
+		search(title) {
+			this.dataSearchTitle = title;
+		},
+		onSearch(title) {
+			clearTimeout(this.searchTime);
+			if (this.parentValue !== '__root__' || !title) {
+				this.viewOptions = this.dataOptions;
+				return;
+			}
+			this.searchTime = setTimeout(() => {
+				const nodeValues = utils.getParentNodes(
+					this.dataOptions,
+					(node) => node[this.titleKey]?.indexOf(title) !== -1,
+					this.valueKey,
+					this.childrenKey
+				);
+				// const newOptions = utils.formatTree(this.dataOptions, this.valueKey, this.childrenKey);
+				// console.log(newOptions);
+				// this.viewOptions = utils.filterTreeNode(
+				// 	newOptions,
+				// 	(node) => nodeValues.indexOf(node[this.valueKey]) !== -1,
+				// 	this.childrenKey
+				// );
+				// console.log(this.viewOptions);
+			}, 500);
+		},
 		async beforeOpen(node, suspend, next, stop) {
 			let is_next = true;
 			const beforeOpen = new Promise((resolve, reject) => {
@@ -214,7 +238,9 @@ export default {
 
 		async openNode(node) {
 			try {
-				await this.beforeOpen(node);
+				if (!this.dataSearchTitle) {
+					await this.beforeOpen(node);
+				}
 				node.open = true;
 				this.closeSibling(node);
 				this.$emit('open', node);
@@ -266,21 +292,29 @@ export default {
 				display: flex;
 				align-items: center;
 				justify-content: space-between;
+				font-family: PingFang SC, PingFang SC;
+				font-weight: 500;
+				font-size: 28rpx;
+				color: #000000;
+
 				.accordion-panel-item-right {
 					width: calc(100% - 30rpx);
 					height: 100%;
 					display: flex;
 					align-items: center;
-					font-family: PingFang SC, PingFang SC;
-					font-weight: 500;
-					font-size: 28rpx;
-					color: #000000;
+
 					.accordion-panel-item-image {
 						width: 48rpx;
 						height: 48rpx;
 						margin-right: 16rpx;
+
+						image {
+							width: 100%;
+							height: 100%;
+						}
 					}
 				}
+
 				.accordion-panel-item-open {
 					width: 30rpx;
 					height: 30rpx;
