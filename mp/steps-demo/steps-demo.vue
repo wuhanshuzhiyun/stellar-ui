@@ -78,7 +78,6 @@ export default {
 	data() {
 		return {
 			active: 0,
-			active2: 1,
 		};
 	},
 	methods: {
