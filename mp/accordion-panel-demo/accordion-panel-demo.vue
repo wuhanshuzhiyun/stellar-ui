@@ -8,7 +8,7 @@
 					ref="accordion"
 					:options="options"
 					@click="onOpen"
-					:openItems="['1-1']"
+					:openNodes="['1-1']"
 				></ste-accordion-panel>
 			</view>
 		</view>

@@ -24,10 +24,10 @@
 						:valueKey="valueKey"
 						:titleKey="titleKey"
 						:messageKey="messageKey"
-						:openItems="openItems"
-						:parentValue="item[valueKey]"
+						:openNodes="openNodes"
 						:accordion="accordion"
 						:depth="depth + 1"
+						:parentValue="item[valueKey]"
 					/>
 				</view>
 			</view>
@@ -79,10 +79,11 @@ export default {
 			type: Boolean,
 			default: () => true,
 		},
-		openItems: {
+		openNodes: {
 			type: Array,
 			default: () => [],
 		},
+		// 以下是递归属性，请勿在业务中使用
 		depth: {
 			type: Number,
 			default: () => 0,
@@ -117,7 +118,7 @@ export default {
 					return { open: false, hasChildren: !!node[this.childrenKey]?.length };
 				});
 				this.optionsMap = utils.getTreeNodeMap(options, this.valueKey, this.childrenKey);
-				this.openItems.forEach((v) => this.open(v));
+				this.openNodes.forEach((v) => this.open(v));
 			}
 			this.dataOptions = options;
 		},
