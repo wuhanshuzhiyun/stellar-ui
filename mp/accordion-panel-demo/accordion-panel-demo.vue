@@ -7,7 +7,8 @@
 				<ste-accordion-panel
 					ref="accordion"
 					:options="options"
-					@click="onOpen"
+					@open="onOpen"
+					@beforeOpen="beforeOpen"
 					:openNodes="['1-1']"
 				></ste-accordion-panel>
 			</view>
@@ -61,17 +62,18 @@ export default {
 		};
 	},
 	methods: {
-		onOpen(node, callback) {
+		beforeOpen(node, suspend, next, stop) {
 			if (node.value === '1-1-2') {
-				uni.showLoading();
+				suspend();
 				setTimeout(() => {
-					callback([
+					next([
 						{ title: '标题1-1-2-1', value: '1-1-2-1' },
 						{ title: '标题1-1-2-2', value: '1-1-2-2' },
 					]);
-					uni.hideLoading();
 				}, 2000);
 			}
+		},
+		onOpen(node) {
 			console.log(node);
 		},
 	},

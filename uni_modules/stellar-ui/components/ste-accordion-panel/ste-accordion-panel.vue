@@ -1,40 +1,42 @@
 <template>
 	<view class="ste-accordion-panel-root">
-		<block v-for="(item, index) in dataOptions" :key="index">
-			<view class="accordion-panel-item" :class="{ open: item.open }">
-				<view class="accordion-panel-item-content" @click="onClick(item)">
-					<slot :item="item" :index="index" :depth="depth">
+		<block v-for="(node, index) in dataOptions" :key="index">
+			<view class="accordion-panel-item" :class="{ open: node.open }">
+				<view class="accordion-panel-item-content" @click="onClick(node)">
+					<slot :node="node" :index="index" :depth="depth">
 						<view class="accordion-panel-item-head" :class="headClass">
 							<view class="accordion-panel-item-right">
-								<view class="accordion-panel-item-image" v-if="item.image !== false && (cmpTitleImage || item.image)">
-									<image :src="item.image ? item.image : cmpTitleImage" mode=""></image>
+								<view class="accordion-panel-item-image" v-if="node.image !== false && (cmpTitleImage || node.image)">
+									<image :src="node.image ? node.image : cmpTitleImage" mode=""></image>
 								</view>
-								<view class="accordion-panel-item-title">
-									{{ item[titleKey] }}
-								</view>
+								<view class="accordion-panel-item-title">{{ node[titleKey] }}</view>
 							</view>
 							<view
 								class="accordion-panel-item-open"
 								style="width: 30rpx; height: 30rpx; line-height: 30rpx"
-								v-if="item.hasChildren"
+								v-if="node.hasChildren"
 							>
 								<ste-icon code="&#xe678;" size="30" />
 							</view>
 						</view>
 					</slot>
 				</view>
-				<view class="accordion-panel-children" v-if="item.children">
+
+				<view class="accordion-panel-item-loading" v-if="node.loading">
+					<ste-loading size="30" />
+				</view>
+				<view class="accordion-panel-children" v-if="node.children">
 					<ste-accordion-panel
-						ref="steAccordionPanel"
 						@click="onClick"
-						:options="item.children"
+						@beforeOpen="beforeOpen"
+						:options="node.children"
 						:valueKey="valueKey"
 						:titleKey="titleKey"
 						:messageKey="messageKey"
 						:openNodes="openNodes"
 						:accordion="accordion"
 						:depth="depth + 1"
-						:parentValue="item[valueKey]"
+						:parentValue="node[valueKey]"
 					/>
 				</view>
 			</view>
@@ -136,7 +138,6 @@ export default {
 			deep: true,
 		},
 	},
-	mounted() {},
 	methods: {
 		init() {
 			let options = this.options;
@@ -166,33 +167,60 @@ export default {
 				else this.openNode(node);
 			}
 		},
-		async openNode(node) {
-			let next = true;
-			const stop = new Promise((resolve, reject) => {
+
+		async beforeOpen(node, suspend, next, stop) {
+			let is_next = true;
+			const beforeOpen = new Promise((resolve, reject) => {
 				this.$emit(
 					'beforeOpen',
-					() => {
-						node.loading = true;
-						next = false;
+					node,
+					typeof suspend === 'function'
+						? suspend
+						: () => {
+								is_next = false;
+								this.$set(node, 'loading', true);
+						  },
+					(children = []) => {
+						const _children = utils.formatTree(
+							children,
+							this.valueKey,
+							this.childrenKey,
+							(node) => {
+								return { open: false, loading: false, hasChildren: !!node[this.childrenKey]?.length };
+							},
+							node[this.valueKey],
+							node.depth + 1
+						);
+						if (this.parentValue === '__root__') {
+							Object.assign(this.optionsMap, utils.getTreeNodeMap(_children));
+						}
+						typeof next === 'function' ? next(_children) : resolve(_children);
 					},
-					(children = []) => resolve(children),
-					() => reject()
+					typeof stop === 'function' ? stop : () => reject()
 				);
 			});
-			if (!next) {
+			if (!is_next) {
 				try {
-					const children = await stop;
+					const children = await beforeOpen;
 					this.$set(node, this.childrenKey, children);
+					this.$set(node, 'loading', false);
 				} catch (e) {
-					//TODO handle the exception
-					node.loading = false;
-					return;
+					// TODO handle the exception
+					this.$set(node, 'loading', false);
+					throw e;
 				}
 			}
-			node.loading = false;
-			node.open = true;
-			this.closeSibling(node);
-			this.$emit('open', node);
+		},
+
+		async openNode(node) {
+			try {
+				await this.beforeOpen(node);
+				node.open = true;
+				this.closeSibling(node);
+				this.$emit('open', node);
+			} catch (e) {
+				//TODO handle the exception
+			}
 		},
 		closeNode(node) {
 			node.open = false;
@@ -260,6 +288,13 @@ export default {
 					transition: 300ms;
 				}
 			}
+		}
+		.accordion-panel-item-loading {
+			width: 100%;
+			height: 80rpx;
+			display: flex;
+			justify-content: center;
+			align-items: center;
 		}
 		.accordion-panel-children {
 			display: none;
