@@ -1,5 +1,5 @@
 <template>
-	<view class="ste-steps-root">
+	<view class="ste-steps-root" :class="[`ste-steps-${direction}`]">
 		<slot></slot>
 	</view>
 </template>
@@ -11,10 +11,11 @@ import utils from '../../utils/utils.js';
  * @description 步骤条组件,拆分展示某项流程的步骤，引导用户按流程完成任务或向用户展示当前状态。。
  * @tutorial https://stellar-ui.intecloud.com.cn/pc/index/index?name=ste-steps
  * @property {Number} active 步骤进度默认 0
- * @property {Boolean} vertical 垂直方向 默认 false
+ * @property {Boolean} direction 步骤条方向 默认 row
+ * @value  row  横向 {{String}}
+ * @value  column 竖向 {{String}}
  * @property {Boolean} dot 点状步骤条 默认 false
  * @property {Number|String} space 步骤条间距，默认为自动计算，单位为rpx
- * @property {Boolean} alignCenter 是否水平居中，只对横向步骤条有效 默认 false
  * @event {Function} clickStep 点击步骤的标题或图标时触发
  */
 
@@ -22,14 +23,17 @@ export default {
 	group: '展示组件',
 	title: 'Steps 步骤条',
 	name: 'steps',
+	options: {
+		virtualHost: true,
+	},
 	props: {
 		active: {
 			type: Number,
 			default: 0,
 		},
-		vertical: {
-			type: Boolean,
-			default: false,
+		direction: {
+			type: String,
+			default: 'row',
 		},
 		dot: {
 			type: Boolean,
@@ -39,26 +43,28 @@ export default {
 			type: [Number, String],
 			default: '',
 		},
-		alignCenter: {
-			type: Boolean,
-			default: false,
-		},
 	},
-	computed: {
-		cmpStyle() {
-			let style = {};
-			style['columnGap'] = utils.formatPx(this.gutter);
-			// #ifdef H5
-			if (this.disabled || this.readonly) {
-				style['cursor'] = 'not-allowed';
-			} else {
-				style['cursor'] = 'pointer';
-			}
-			// #endif
-			return style;
-		},
+	provide() {
+		return {
+			steps: this,
+		};
 	},
 };
 </script>
 
-<style></style>
+<style lang="scss" scoped>
+.ste-steps-root {
+	display: flex;
+	width: 100%;
+	flex: 1;
+
+	.ste-steps-column {
+		flex-direction: column;
+	}
+
+	.ste-steps-row {
+		flex-direction: row;
+		flex: 1;
+	}
+}
+</style>
