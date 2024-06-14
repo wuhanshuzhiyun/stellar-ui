@@ -40,7 +40,7 @@ Vue.mixin(mixin);
 ```
 5. 在混淆文件`app-mixin.js`里引入组件的`js`文件,将`showToast`和`hideToast`方法混入全局，每个页面通过 `this.` 来使用对应的方法
 ```
-import useSteToast from '@/uni_modules/stellar-ui/components/ste-toast/ste-toast.js';
+import useSteToast from '@/node_modules/stellar-ui/components/ste-toast/ste-toast.js';
 let steToast = useSteToast();
 export default {
 	methods: {
@@ -52,7 +52,7 @@ export default {
 ```
 6. js文件中使用
 ```
-import useSteToast from '@/uni_modules/stellar-ui/components/ste-toast/ste-toast.js';
+import useSteToast from '@/node_modules/stellar-ui/components/ste-toast/ste-toast.js';
 let steToast = useSteToast();
 steToast.showToast()
 ```
