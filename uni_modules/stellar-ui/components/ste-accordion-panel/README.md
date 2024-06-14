@@ -98,23 +98,34 @@ export default {
 
 
 ### API
-#### Tabs Props
+#### Props
 背景之外的颜色属性只支持`16进制`、`RGB`、`RGBA`格式
-| 属性名				| 说明										| 类型						| 默认值				| 可选值	| 支持版本	|
-| -----					| -----									| -----					| -----				| -----	| -----		|
-| `options`			| 节点数组（支持树形结构）	| `Array<Node>`	| `[]`				|	-			| -				|
-| `valueKey`		| 节点的值字段名					| `String`			| `"value"`		|	-			| -				|
-| `titleKey`		| 节点的标题字段名				| `String`			| `"title"`		|	-			| -				|
-| `childrenKey`	| 节点的子节点字段名			| `String`			| `"children"`|	-			| -				|
-| `accordion`		| 是否手风琴模式					| `Boolean`			| `true`			|	-			| -				|
-| `headStyle`		| 自定义头部样式					| `Object`			| `{}`				|	-			| -				|
+| 属性名				| 说明																																										| 类型						| 默认值				| 可选值	| 支持版本	|
+| -----					| -----																																									| -----					| -----				| -----	| -----		|
+| `options`			| 节点数组（支持树形结构）																																	| `Array<Node>`	| `[]`				|	-			| -				|
+| `valueKey`		| 节点的值字段名																																					| `String`			| `"value"`		|	-			| -				|
+| `titleKey`		| 节点的标题字段名																																				| `String`			| `"title"`		|	-			| -				|
+| `childrenKey`	| 节点的子节点字段名																																			| `String`			| `"children"`|	-			| -				|
+| `accordion`		| 是否手风琴模式																																					| `Boolean`			| `true`			|	-			| -				|
+| `headStyle`		| 自定义头部样式																																					| `Object`			| `{}`				|	-			| -				|
+| `openNodes`		| 默认展开的节点数组（数组内容为节点value值，请在组件加载前设置，加载后若要展开请调用open方法）	| `Array`				| `[]`				|	-			| -				|
+| `titleImages`	| 标题图片数组（图片在数组中的位置对应展示的层级，若某一层不展示图片则在对应位置填入false）			| `Array`				| `[]`				|	-			| -				|
 
-#### Tabs Events
+#### Events
 
-| 事件名		| 说明																																| 事件参数							| 支持版本	|
-| ---				| ---																																| ---									| ---			|
-| `confirm`	| 监听用户点击确定按钮，参数为用户选中的日期列表												| `Array<Date>`				| -				|
-| `select`	| 监听用户选择日期，参数一为用户选中的日期列表，参数二为当前点击的日期	| `Array<Date>`,`Date`| -				|
+| 事件名			| 说明						| 事件参数							| 支持版本	|
+| ---					| ---						| ---									| ---			|
+| `click`			| 点击节点触发		| `node`							| -				|
+| `open`			| 打开节点触发		| `node`							| -				|
+| `close`			| 关闭节点触发		| `node`							| -				|
+| `beforeOpen`| 打开节点前触发	| 见上基础用法详细说明	| -				|
+
+#### Method
+
+| 事件名| 说明			| 事件参数	| 支持版本	|
+| ---		| ---			| ---			| ---			|
+| `open`| 打开指定节点	| `value`	| -				|
+
 
 
 {{xuyajun}}
