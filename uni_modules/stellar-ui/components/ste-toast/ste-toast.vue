@@ -132,7 +132,7 @@ export default {
 	.base {
 		position: fixed;
 		text-align: center;
-		z-index: 1110;
+		z-index: 9999;
 		top: 40%;
 		left: 0;
 		transform: translateY(-40%);
@@ -164,7 +164,7 @@ export default {
 		width: 100vw;
 		height: 100vh;
 		background-color: transparent;
-		z-index: 1200;
+		z-index: 10000;
 		top: 0;
 		left: 0;
 	}
