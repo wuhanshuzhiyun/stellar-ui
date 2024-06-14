@@ -368,7 +368,7 @@ let utils = {
 	},
 
 	/**
-	 * 格式化树形结构
+	 * 格式化树形结构(深拷贝后的，不会修改原数据)
 	 */
 	formatTree(
 		tree,
@@ -378,41 +378,43 @@ let utils = {
 		parentValue = '__root__',
 		depth = 0
 	) {
-		const result = tree.map((item) => {
-			if (item[childrenKey] && item[childrenKey].length) {
-				item[childrenKey] = this.formatTree(
-					item[childrenKey],
-					valueKey,
-					childrenKey,
-					otherAttributes,
-					item[valueKey],
-					depth + 1
-				);
-			}
-			let _otherAttributes = otherAttributes;
-			if (typeof otherAttributes === 'function') {
-				_otherAttributes = _otherAttributes(item);
-			}
-			return Object.assign({ parentValue, depth }, _otherAttributes, item);
-		});
-		return result;
+		const _formatTree = (tree, valueKey, childrenKey, otherAttributes, parentValue, depth) => {
+			const result = tree.map((item) => {
+				if (item[childrenKey] && item[childrenKey].length) {
+					item[childrenKey] = _formatTree(
+						item[childrenKey],
+						valueKey,
+						childrenKey,
+						otherAttributes,
+						item[valueKey],
+						depth + 1
+					);
+				}
+				let _otherAttributes = otherAttributes;
+				if (typeof otherAttributes === 'function') {
+					_otherAttributes = _otherAttributes(item);
+				}
+				return Object.assign({ parentValue, depth }, _otherAttributes, item);
+			});
+			return result;
+		};
+		return _formatTree(tree, valueKey, childrenKey, otherAttributes, parentValue, depth);
 	},
 	/**
 	 * 扁平化树形结构
 	 */
 	flattenTree(tree, childrenKey = 'children') {
-		let result = [];
-		function _flatten(node) {
-			result.push(node);
-			if (node[childrenKey] && node[childrenKey].length > 0) {
-				for (let child of node[childrenKey]) {
-					_flatten(child);
+		function _flatten(tree, childrenKey) {
+			let result = [];
+			tree.forEach((node) => {
+				result.push(node);
+				if (node[childrenKey] && node[childrenKey].length > 0) {
+					result.push(..._flatten(node[childrenKey], childrenKey));
 				}
-			}
+			});
+			return result;
 		}
-		// 从根节点开始展平
-		tree.forEach((node) => _flatten(node));
-		return result;
+		return _flatten(tree, childrenKey);
 	},
 	/**
 	 * 获取树形结构节点MAP
@@ -424,6 +426,50 @@ let utils = {
 			map[node[valueKey]] = node;
 		});
 		return map;
+	},
+	/**
+	 * 获取树形结构中包含指定节点的所有上级节点信息
+	 */
+	getParentNodes(tree, filterFunc, valueKey = 'value', childrenKey = 'children') {
+		const flatten = this.flattenTree(this.formatTree(tree, valueKey, childrenKey), childrenKey);
+		const nodes = flatten.filter(filterFunc);
+		const result = [];
+		nodes.forEach((node) => {
+			const _nodeValues = [];
+			let _node = node;
+			const bool = result.find((n) => n[valueKey] === _node[valueKey]);
+			if (bool) return;
+			_nodeValues.push(_node);
+			for (let i = node.depth - 1; i >= 0; i--) {
+				const bool = result.find((n) => n[valueKey] === _node.parentValue);
+				if (bool) continue;
+				const parent = flatten.find((n) => n[valueKey] === _node.parentValue);
+				if (!bool) {
+					_nodeValues.push(parent);
+				}
+				_node = parent;
+			}
+			result.push(..._nodeValues);
+		});
+		return result;
+	},
+	/**
+	 * 保留树形结构中指定的节点
+	 */
+	filterTreeNode(tree, filterFunc, childrenKey = 'children') {
+		function _filter(tree, filterFunc, childrenKey) {
+			const result = [];
+			tree.forEach((node) => {
+				if (filterFunc(node)) {
+					result.push(node);
+				}
+				if (node[childrenKey] && node[childrenKey].length > 0) {
+					node[childrenKey] = _filter(node[childrenKey]);
+				}
+			});
+			return result;
+		}
+		return _filter(tree, filterFunc, childrenKey);
 	},
 };
 

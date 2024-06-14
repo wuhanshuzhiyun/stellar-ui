@@ -1,225 +1,231 @@
-# Badge 徽标
-
-在右上角展示徽标数字或小红点。
+# Calendar 日历
+日历组件
 
 {{compatibility}}
 
-### 代码演示
-#### 徽标内容
-通过`content`属性，设置子元素的右上角的徽标
+### 基础用法
+- 属性`height`用于设置日历的高度，单位为`rpx`，默认`100%`
+- 属性`showTitle`用于设置是否显示日历的标题，默认`true`
+- 属性`title`用户设置日历的标题，默认`日期选择`
+- 事件`confirm`用于监听用户点击确定按钮事件，参数为选中的日期数组
 ```html
-<ste-badge content="1">
-	<view class="child"></view>
-</ste-badge>
-<ste-badge content="99+">
-	<view class="child"></view>
-</ste-badge>
-<ste-badge content="hot">
-	<view class="child"></view>
-</ste-badge>
-
-
-
-<style>
-.child {
-	height: 80rpx;
-	width: 80rpx;
-	border-radius: 8rpx;
-	background-color: #f2f3f5;
-}
-</style>
-
+<template>
+	<ste-calendar height="720" :showTitle="false" @confirm="handleConfirm" />
+</template>
+<script>
+	export default{
+		methods: {
+			handleConfirm(v) {
+				uni.showToast({
+					title: '确定选择：' + v.join(' '),
+					icon: 'none',
+					duration: 1500,
+				});
+			},
+		},
+	}
+</script>
 ```
 
-#### 背景
-通过`background`属性，设置徽标内容的背景
-- 支持纯色、渐变色、背景图
+### 结合弹窗使用
 
+#### 基础使用
 ```html
-<ste-badge content="1" background="rgb(25, 137, 250)">
-	<view class="avator"></view>
-</ste-badge>
-<ste-badge content="99+" background="linear-gradient(to right, rgb(66, 83, 216), rgb(213, 51, 186))">
-	<view class="avator"></view>
-</ste-badge>
-<ste-badge background="https://img95.699pic.com/xsj/0a/5y/dc.jpg%21/fw/700/watermark/url/L3hzai93YXRlcl9kZXRhaWwyLnBuZw/align/southeast">
-	<view class="avator"></view>
-</ste-badge>
-
-
-<style>
-.child {
-	height: 80rpx;
-	width: 80rpx;
-	border-radius: 8rpx;
-	background-color: #f2f3f5;
-}
-</style>
+<ste-button @click="show1 = true">默认(单个日期)</ste-button>
+<ste-popup :show.sync="show1" height="60vh" position="bottom">
+	<div style="padding-bottom: 20px; height: 100%">
+		<ste-calendar @confirm ="handleConfirm" />
+	</div>
+</ste-popup>
 ```
 
-#### 小红点
-通过`showDot`属性，设置是否显示小红点
-
+#### 多个日期
+- 属性`mode`用于设置日历的模式，可选值`single`、`multiple`、`range`，默认`single`
+	- 设置为`multiple`可以选择多个日期
 ```html
-<ste-badge showDot>
-	<view class="avator"></view>
-</ste-badge>
-<ste-badge showDot background="rgb(25, 137, 250)">
-	<view class="avator"></view>
-</ste-badge>
-
-<style>
-.child {
-	height: 80rpx;
-	width: 80rpx;
-	border-radius: 8rpx;
-	background-color: #f2f3f5;
-}
-</style>
+<ste-button @click="show2 = true">多个日期</ste-button>
+<ste-popup :show.sync="show2" height="60vh" position="bottom">
+	<div style="padding-bottom: 20px; height: 100%">
+		<ste-calendar mode="multiple" @confirm="handleConfirm" />
+	</div>
+</ste-popup>
 ```
 
-#### 徽标位置
-通过`position`属性，设置徽标的位置
-
+#### 日期范围
+- 属性`mode`用于设置日历的模式，可选值`single`、`multiple`、`range`，默认`single`
+	- 设置为`single`可以选择日期范围
 ```html
-<ste-badge content="1">
-	<view class="avator"></view>
-</ste-badge>
-<ste-badge content="1" position="topLeft">
-	<view class="avator"></view>
-</ste-badge>
-<ste-badge content="1" position="bottomLeft">
-	<view class="avator"></view>
-</ste-badge>
-<ste-badge content="1" position="bottomRight">
-	<view class="avator"></view>
-</ste-badge>
-
-<style>
-.child {
-	height: 80rpx;
-	width: 80rpx;
-	border-radius: 8rpx;
-	background-color: #f2f3f5;
-}
-</style>
+<ste-button @click="show2 = true">日期范围</ste-button>
+<ste-popup :show.sync="show2" height="60vh" position="bottom">
+	<div style="padding-bottom: 20px; height: 100%">
+		<ste-calendar mode="single" @confirm="handleConfirm" />
+	</div>
+</ste-popup>
 ```
 
-#### 偏移
-当设置了`offsetX`或`offsetY`值时，徽标会基于当前设置徽标位置(`position`)往中心点进行偏移
-
+#### 自定义主题色
+- 属性`color`可以设置日历的主题色，包括周末日期颜色、日期选中颜色、日期范围选中颜色、确定按钮颜色
 ```html
-<ste-badge content="1" :offsetX="5" :offsetY="5">
-	<view class="avator"></view>
-</ste-badge>
-<ste-badge content="1" position="topLeft" :offsetX="5" :offsetY="5">
-	<view class="avator"></view>
-</ste-badge>
-<ste-badge content="1" position="bottomLeft" :offsetX="5" :offsetY="5">
-	<view class="avator"></view>
-</ste-badge>
-<ste-badge content="1" position="bottomRight" :offsetX="5" :offsetY="5">
-	<view class="avator"></view>
-</ste-badge>
-
-<style>
-.child {
-	height: 80rpx;
-	width: 80rpx;
-	border-radius: 8rpx;
-	background-color: #f2f3f5;
-}
-</style>
+<ste-button @click="show4 = true">自定义主题色</ste-button>
+<ste-popup :show.sync="show4" height="60vh" position="bottom">
+	<div style="padding-bottom: 20px; height: 100%">
+		<ste-calendar color="#3478f6" @confirm="handleConfirm" />
+	</div>
+</ste-popup>
 ```
 
-#### 为0时是否显示徽标
-当`content`为`Number`类型时并且值等于`0`时，默认不会显示，如果`showZero`为`true`，则会显示
+#### 自定义文案
+- 属性`title`可以设置标题文案
+- 属性`startText`可以设置开始日期的文案，`mode`值为`range`时生效
+- 属性`endText`可以设置结束日期的文案，`mode`值为`range`时生效
 ```html
-<ste-badge :content="0" showZero>
-	<view class="avator"></view>
-</ste-badge>
-
-<style>
-.child {
-	height: 80rpx;
-	width: 80rpx;
-	border-radius: 8rpx;
-	background-color: #f2f3f5;
-}
-</style>
+<ste-button @click="show5 = true">自定义文案</ste-button>
+<ste-popup :show.sync="show5" height="60vh" position="bottom">
+	<div style="padding-bottom: 20px; height: 100%">
+		<ste-calendar mode="range" title="酒店预约" startText="住店" endText="离店" @confirm="handleConfirm" />
+	</div>
+</ste-popup>
 ```
 
-#### 最大值
-当`content`为`Number`类型时并且值大于`max`时，会显示`{{max}}+`，`max`默认值为`99`
+#### 日期最大范围
+- 属性`minDate`可以设置日期的最小可选范围
+- 属性`maxDate`可以设置日期的最大可选范围
 
 ```html
-<ste-badge :content="100" >
-	<view class="avator"></view>
-</ste-badge>
-<ste-badge :content="99">
-	<view class="avator"></view>
-</ste-badge>
-
-<style>
-.child {
-	height: 80rpx;
-	width: 80rpx;
-	border-radius: 8rpx;
-	background-color: #f2f3f5;
-}
-</style>
+<ste-button @click="show6 = true">日期最大范围</ste-button>
+<ste-popup :show.sync="show6" height="60vh" position="bottom">
+	<div style="padding-bottom: 20px; height: 100%">
+		<ste-calendar mode="range" minDate="2024-05-10" maxDate="2024-05-20" @confirm="handleConfirm" />
+	</div>
+</ste-popup>
 ```
 
-#### 自定义内容
-通过`content`插槽，自定义徽标的内容
+#### 多选数量限制
+- 属性`maxCount`用于设置多选模式下最多可选的日期数量
+
 ```html
-<ste-badge>
-	<template slot="content">
-		<ste-icon code="&#xe676;" size="18"></ste-icon>
-	</template>
-	<view class="avator"></view>
-</ste-badge>
-<ste-badge>
-	<template slot="content">
-		<ste-icon code="&#xe67b;" size="12"></ste-icon>
-	</template>
-	<view class="avator"></view>
-</ste-badge>
-
-<style>
-.child {
-	height: 80rpx;
-	width: 80rpx;
-	border-radius: 8rpx;
-	background-color: #f2f3f5;
-}
-</style>
+<ste-button @click="show7 = true">多选数量限制</ste-button>
+<ste-popup :show.sync="show7" height="60vh" position="bottom">
+	<div style="padding-bottom: 20px; height: 100%">
+		<ste-calendar mode="multiple" :maxCount="5" @confirm="handleConfirm" />
+	</div>
+</ste-popup>
 ```
+
+#### 多选数量限制
+- 属性`maxRange`用于设置范围模式下最多可选的日期数量
+- 属性`showRangePrompt`用于设置范围模式下是否显示超出数量时的提示文案
+- 属性`rangePrompt`用于设置范围模式下超出数量时的提示文案
+
+```html
+<ste-button @click="show7 = true">范围数量限制</ste-button>
+<ste-popup :show.sync="show7" height="60vh" position="bottom">
+	<div style="padding-bottom: 20px; height: 100%">
+		<ste-calendar mode="range" :maxRange="5" @confirm="handleConfirm" />
+	</div>
+</ste-popup>
+```
+
+#### 默认选择日期
+- 属性`list`用于设置默认选择的日期
+
+```html
+<ste-button @click="show8 = true">默认选择日期</ste-button>
+<ste-popup :show.sync="show8" height="60vh" position="bottom">
+	<div style="padding-bottom: 20px; height: 100%">
+		<ste-calendar :list="[Date.now()]" @confirm="handleConfirm" />
+	</div>
+</ste-popup>
+```
+#### 默认展示月份
+- 属性`defaultMonth`用于设置默认展示的月份，因为弹窗中的日历不在文档流，无法设置滚动距离，所以需要在弹窗动画结束之后手动设置默认展示的月份
+
+```html
+<ste-button @click="show9 = true">默认展示月份</ste-button>
+<ste-popup :show.sync="show9" position="bottom" height="60vh" @open-after="setViewMonth">
+	<div style="padding-bottom: 20px; height: 100%">
+		<ste-calendar ref="defaultMonth" minDate="2024-05-20" maxDate="2024-12-01" @confirm="handleConfirm" />
+	</div>
+</ste-popup>
+<script>
+	export default{
+		methods: {
+			setViewMonth() {
+				this.$refs.defaultMonth.showMonth('2024-07');
+			},
+		},
+	}
+</script>
+```
+#### 隐藏确定按钮
+- 属性`showConfirm`用于设置是否显示确定按钮
+- 事件`select`用于监听选择日期的事件
+
+```html
+<ste-button @click="show10 = true">隐藏确定按钮</ste-button>
+<ste-popup :show.sync="show10" position="bottom" height="60vh">
+	<div style="padding-bottom: 20px; height: 100%">
+		<ste-calendar minDate="2024-05-20" maxDate="2024-12-01" @select="handleConfirm" :showConfirm="false" />
+	</div>
+</ste-popup>
+```
+#### 只读
+- 属性`readonly`用于设置是否只读
+
+```html
+<ste-button @click="show11 = true">只读</ste-button>
+<ste-popup :show.sync="show11" position="bottom" height="60vh">
+	<div style="padding-bottom: 20px; height: 100%">
+		<ste-calendar minDate="2024-05-20" maxDate="2024-06-10" readonly :list="['2024-05-21']" />
+	</div>
+</ste-popup>
+```
+
+#### 隐藏背景月份
+- 属性`showMark`用于设置是否显示背景月份
+
+```html
+<ste-button @click="show12 = true">隐藏背景月份</ste-button>
+<ste-popup :show.sync="show12" position="bottom" height="60vh">
+	<div style="padding-bottom: 20px; height: 100%">
+		<ste-calendar :showMark="false" @select="handleConfirm" />
+	</div>
+</ste-popup>
+```
+
+
+
 
 ### API
-#### 组件属性(Props)
+#### Tabs Props
+背景之外的颜色属性只支持`16进制`、`RGB`、`RGBA`格式
+| 属性名						| 说明																						| 类型						| 默认值										| 可选值																											| 支持版本	|
+| -----							| -----																					| -----					| -----										| -----																											| -----		|
+| `mode`						| 选择模式																				| `String`			| `"single"`							| `"single"`单选<br/>`"multiple"`多选<br/>`"range"`范围选择	| -				|
+| `title`						| 标题文本																				| `String`			| `"日期选择"`							| -																													| -				|
+| `showTitle`				| 是否显示标题																		| `Boolean`			| `true`									| -																													| -				|
+| `list`						| 已选中的日期																		| `Array<Date>`	| `[]`										| -																													| -				|
+| `startText`				| 开始日期的提示文字，`mode`=`range`时生效				| `String`			| `[]`										| -																													| -				|
+| `endText`					| 结束日期的提示文字，`mode`=`range`时生效				| `String`			| `[]`										| -																													| -				|
+| `color`						| 主题颜色，选中日期背景、周末文日期颜色和确定按钮	| `String`			| `#FF1A00`								| -																													| -				|
+| `minDate`					| 最小可选日期																		| `Date`				| `0`											| -																													| -				|
+| `maxDate`					| 最大可选日期																		| `Date`				| `0`											| -																													| -				|
+| `defaultMonth`		| 默认展示月份																		| `Date`				| `0`											| -																													| -				|
+| `maxCount`				| `mode`=`multiple`时，最多可选多少个日期					| `Number`			| `0`											| -																													| -				|
+| `formatter`				| 日期格式化																			| `String`			| `"YYYY-MM-DD"`					| -																													| -				|
+| `showMark`				| 是否显示月份背景色															| `Boolean`			| `true`									| -																													| -				|
+| `readonly`				| 是否为只读状态，只读状态下禁止选择日期					| `Boolean`			| `false`									| -																													| -				|
+| `maxRange`				| 日期区间最多可选天数，`mode`=`range`时有效			| `Number`			| `0`											| -																													| -				|
+| `rangePrompt`			| 范围选择超过最多可选天数时的提示文案						| `String`			| `"选择天数不能超过XX天"`	| -																													| -				|
+| `showRangePrompt`	| 范围选择超过最多可选天数时，是否展示提示文案			| `Number`			| `0`											| -																													| -				|
+| `allowSameDay`		| 是否允许日期范围的起止时间为同一天							| `Boolean`			| `true`									| -																													| -				|
 
-| 参数					| 说明																																										| 类型							| 默认值			| 可选值																																			| 支持版本		|
-| ---						| ---																																										| ---							| ---				| ---																																				| ---				|
-| `content`			| 徽标内容																																								| `Number/String`	| -					| -																																					| -					|
-| `background`	| 背景																																										| `String`				| `#ee0a24`	| -																																					| -					|
-| `showDot`			| 是否展示为小红点																																				| `Boolean`				| `true`		| -																																					| -					|
-| `position`		| 徽标位置																																								| `String`				| `topRight`| topRight：上右<br/>topLeft：上左<br/>bottomLeft：下左<br/>bottomRight：下右	| -					|
-| `offsetX`			| x轴偏移量																																							| `Number/String`	| `auto`		| -																																					| -					|
-| `offsetY`			| y轴偏移量																																							| `Number/String`	| `auto`		| -																																					| -					|
-| `showZero`		| 当 content 为数字 0 或字符串 '0' 时，是否展示徽标																				| `Boolean`				| `true`		| -																																					| -					|
-| `max`					| 最大值，超过最大值会显示 {max}+，仅当 content 为数字时有效，当 content 为数字 0 时不处理	| `Number`				| `99`			| 0：当 content 为数字 0 时不处理<br/>{{Number}}：超过最大值会显示 {max}+			| `v1.1.5`	|
-| `showBorder`	| 是否显示边框																																						| `Boolean`				| `false`		| -																																					| `v1.9.0`	|
-| `borderColor`	| 边框颜色																																								| `String`				| `#fff`		| -																																					| `v1.9.0`	|
-| `zIndex`			| 层级																																										| `Number`				| `2`				| -																																					| `v1.9.0`	|
-| `isInline`		| display属性是否为inline-block																													| `Boolean`				| `false`		| -																																					| `v1.10.0`	|
-| `rootStyle`		| 组件root节点内联样式																																		| `Object`				| `{}`			| -																																					| `v1.13.0`	|
+#### Tabs Events
 
-#### 组件插槽(Slots)
+| 事件名		| 说明																																| 事件参数							| 支持版本	|
+| ---				| ---																																| ---									| ---			|
+| `confirm`	| 监听用户点击确定按钮，参数为用户选中的日期列表												| `Array<Date>`				| -				|
+| `select`	| 监听用户选择日期，参数一为用户选中的日期列表，参数二为当前点击的日期	| `Array<Date>`,`Date`| -				|
 
-|名称	|说明			|支持版本	|
-|---	|---			|---		|
-|default|默认插槽		|-			|
-|content|自定义徽标内容	|-			|
 
-{{fuyuwei}}
+{{xuyajun}}
