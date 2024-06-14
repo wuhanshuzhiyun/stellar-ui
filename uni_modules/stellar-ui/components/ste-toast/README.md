@@ -155,7 +155,7 @@ click11() {
 		title: '提示内容',
 		success() {
 			setTimeout(() => {
-				uni.showToast({
+				this.showToast({
 					title: '成功',
 					icon: 'none',
 				});
@@ -168,7 +168,7 @@ click12() {
 		title: '提示内容',
 		complete() {
 			setTimeout(() => {
-				uni.showToast({
+				this.showToast({
 					title: '结束',
 					icon: 'none',
 				});
@@ -180,7 +180,7 @@ click13() {
 	this.showToast({
 		title: '提示内容',
 		close() {
-			uni.showToast({
+			this.showToast({
 				title: '关闭',
 				icon: 'none',
 			});
