@@ -32,8 +32,11 @@
 						:options="node.children"
 						:valueKey="valueKey"
 						:titleKey="titleKey"
-						:openNodes="openNodes"
+						:childrenKey="childrenKey"
 						:accordion="accordion"
+						:headStyle="headStyle"
+						:openNodes="openNodes"
+						:titleImages="titleImages"
 						:depth="depth + 1"
 						:parentValue="node[valueKey]"
 					/>
@@ -65,10 +68,10 @@ const defaultImages = [
  * ste-accordion-panel 折叠面板
  * @description 折叠面板组件
  * @tutorial https://stellar-ui.intecloud.com.cn/pc/index/index?name=ste-accordion-panel
- * @property {Array} options 选项数组（支持树形结构）
- * @property {String} valueKey 选项的值字段名（默认：value）
- * @property {String} titleKey 选项的标题字段名（默认：title）
- * @property {String} childrenKey 选项的子选项字段名（默认：children）
+ * @property {Array} options 节点数组（支持树形结构）
+ * @property {String} valueKey 节点的值字段名（默认：value）
+ * @property {String} titleKey 节点的标题字段名（默认：title）
+ * @property {String} childrenKey 节点的子节点字段名（默认：children）
  * @property {Boolean} accordion 是否手风琴模式（默认：true）
  * @property {Object} headStyle 自定义头部样式
  * @property {Array} openNodes 默认展开的节点数组（数组内容为节点value值，请在组件加载前设置，加载后若要展开请调用open方法）
@@ -76,11 +79,11 @@ const defaultImages = [
  * @event {Function} click 点击节点触发，参数为当前节点对象
  * @event {Function} open 打开节点时触发，参数为当前节点对象
  * @event {Function} close 关闭节点时触发，参数为当前节点对象
- * @event {Function} beforeOpen 打开节点前触发，第一个参数为当前节点对象（第二个参数为suspend函数，用于等待后续代码执行）（第三个参数为next函数，继续执行后续代码，可接收一个对象数值，该数组会替换当前节点的children）（第四个参数为stop，阻止后续代码执行）
+ * @event {Function} beforeOpen 打开节点前触发，第一个参数为当前节点对象（第二个参数为suspend函数，用于等待后续操作）（第三个参数为next函数，继续执行后续代码，可接收一个对象数组，该数组会替换当前节点的children）（第四个参数为stop，阻止后续代码执行）
  */
 
 export default {
-	group: '折叠面板',
+	group: '展示组件',
 	title: 'AccordionPanel 折叠面板',
 	name: 'ste-accordion-panel',
 	props: {
@@ -120,7 +123,6 @@ export default {
 				this.init();
 			},
 			immediate: true,
-			deep: true,
 		},
 		searchTitle: {
 			handler(v) {
