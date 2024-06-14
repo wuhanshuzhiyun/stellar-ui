@@ -4,10 +4,17 @@
 			<view class="accordion-panel-item" :class="{ open: item.open }">
 				<view class="accordion-panel-item-content" @click="onClick(item)">
 					<slot :item="item" :index="index" :depth="depth">
-						<view class="accordion-panel-item-head" :class="item.titleClass">
-							<view class="accordion-panel-item-title">{{ item[titleKey] }}</view>
+						<view class="accordion-panel-item-head" :class="headClass">
+							<view class="accordion-panel-item-right">
+								<view class="accordion-panel-item-image" v-if="item.image !== false && (cmpTitleImage || item.image)">
+									<image :src="item.image ? item.image : cmpTitleImage" mode=""></image>
+								</view>
+								<view class="accordion-panel-item-title">
+									{{ item[titleKey] }}
+								</view>
+							</view>
 							<view
-								class="accordion-panel-item-icon"
+								class="accordion-panel-item-open"
 								style="width: 30rpx; height: 30rpx; line-height: 30rpx"
 								v-if="item.hasChildren"
 							>
@@ -48,6 +55,11 @@ const getParents = (node, nodeMap) => {
 	return parents;
 };
 
+const defaultImages = [
+	'https://image.whzb.com/chain/StellarUI/component-icons/ste-accordion-panel.png',
+	'https://image.whzb.com/chain/StellarUI/component-icons/ste-accordion-panel-children.png',
+];
+
 export default {
 	name: 'ste-accordion-panel',
 	props: {
@@ -79,7 +91,15 @@ export default {
 			type: Boolean,
 			default: () => true,
 		},
+		headClass: {
+			type: String,
+			default: () => '',
+		},
 		openNodes: {
+			type: Array,
+			default: () => [],
+		},
+		titleImages: {
 			type: Array,
 			default: () => [],
 		},
@@ -99,7 +119,14 @@ export default {
 			optionsMap: {},
 		};
 	},
-	computed: {},
+	computed: {
+		cmpTitleImage() {
+			const userImage = this.titleImages[this.depth];
+			if (userImage === false) return;
+			const defaultImage = defaultImages[this.depth];
+			return userImage ? userImage : defaultImage;
+		},
+	},
 	watch: {
 		options: {
 			handler() {
@@ -115,7 +142,7 @@ export default {
 			let options = this.options;
 			if (this.parentValue === '__root__') {
 				options = utils.formatTree(this.options, this.valueKey, this.childrenKey, (node) => {
-					return { open: false, hasChildren: !!node[this.childrenKey]?.length };
+					return { open: false, loading: false, hasChildren: !!node[this.childrenKey]?.length };
 				});
 				this.optionsMap = utils.getTreeNodeMap(options, this.valueKey, this.childrenKey);
 				this.openNodes.forEach((v) => this.open(v));
@@ -139,7 +166,30 @@ export default {
 				else this.openNode(node);
 			}
 		},
-		openNode(node) {
+		async openNode(node) {
+			let next = true;
+			const stop = new Promise((resolve, reject) => {
+				this.$emit(
+					'beforeOpen',
+					() => {
+						node.loading = true;
+						next = false;
+					},
+					(children = []) => resolve(children),
+					() => reject()
+				);
+			});
+			if (!next) {
+				try {
+					const children = await stop;
+					this.$set(node, this.childrenKey, children);
+				} catch (e) {
+					//TODO handle the exception
+					node.loading = false;
+					return;
+				}
+			}
+			node.loading = false;
 			node.open = true;
 			this.closeSibling(node);
 			this.$emit('open', node);
@@ -151,12 +201,7 @@ export default {
 
 		closeSibling(node) {
 			if (!this.accordion) return;
-			const sibling =
-				this.parentValue === '__root__'
-					? Object.keys(this.optionsMap)
-							.map((k) => this.optionsMap[k])
-							.filter((s) => s.parentValue === node.parentValue && s.open && s[this.valueKey] !== node[this.valueKey])
-					: this.dataOptions.filter((s) => s.open && s[this.valueKey] !== node[this.valueKey]);
+			const sibling = this.dataOptions.filter((s) => s.open && s[this.valueKey] !== node[this.valueKey]);
 			sibling.forEach((s) => (s.open = false));
 		},
 	},
@@ -173,7 +218,7 @@ export default {
 		&.open {
 			& > .accordion-panel-item-content {
 				box-shadow: 0px 4rpx 10rpx 2rpx rgba(0, 0, 0, 0.04);
-				.accordion-panel-item-head .accordion-panel-item-icon {
+				.accordion-panel-item-head .accordion-panel-item-open {
 					transform: rotate(180deg);
 				}
 			}
@@ -190,11 +235,25 @@ export default {
 				width: 100%;
 				height: 80rpx;
 				padding: 16rpx 0;
-				line-height: 48rpx;
 				display: flex;
 				align-items: center;
 				justify-content: space-between;
-				.accordion-panel-item-icon {
+				.accordion-panel-item-right {
+					width: calc(100% - 30rpx);
+					height: 100%;
+					display: flex;
+					align-items: center;
+					font-family: PingFang SC, PingFang SC;
+					font-weight: 500;
+					font-size: 28rpx;
+					color: #000000;
+					.accordion-panel-item-image {
+						width: 48rpx;
+						height: 48rpx;
+						margin-right: 16rpx;
+					}
+				}
+				.accordion-panel-item-open {
 					width: 30rpx;
 					height: 30rpx;
 					line-height: 30rpx;

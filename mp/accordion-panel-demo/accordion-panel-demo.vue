@@ -28,13 +28,8 @@ export default {
 							title: '标题1-1',
 							value: '1-1',
 							children: [
-								{ title: '标题1-1-1', value: '1-1-1', message: '这是一条说明信息' },
-								{
-									title: '标题1-1-2',
-									value: '1-1-2',
-									message: '这是一条说明信息',
-									hasChildren: true,
-								},
+								{ title: '标题1-1-1', value: '1-1-1' },
+								{ title: '标题1-1-2', value: '1-1-2', hasChildren: true },
 							],
 						},
 						{
@@ -59,36 +54,28 @@ export default {
 					value: '2',
 					children: [
 						{ title: '标题2-1', value: '2-1' },
-						{
-							title: '标题2-2',
-							value: '2-2',
-							children: [
-								{ title: '标题2-2-1', value: '2-2-1' },
-								{
-									title: '标题2-2-2',
-									value: '2-2-2',
-									children: [
-										{ title: '标题2-2-2-1', value: '2-2-2-1' },
-										{ title: '标题2-2-2-2', value: '2-2-2-2' },
-									],
-								},
-							],
-						},
+						{ title: '标题2-2', value: '2-2' },
 					],
 				},
 			],
 		};
 	},
 	methods: {
-		onOpen(item) {
-			console.log(item);
+		onOpen(node, callback) {
+			if (node.value === '1-1-2') {
+				uni.showLoading();
+				setTimeout(() => {
+					callback([
+						{ title: '标题1-1-2-1', value: '1-1-2-1' },
+						{ title: '标题1-1-2-2', value: '1-1-2-2' },
+					]);
+					uni.hideLoading();
+				}, 2000);
+			}
+			console.log(node);
 		},
 	},
-	mounted() {
-		setTimeout(() => {
-			this.$refs.accordion.open('2-2');
-		}, 5000);
-	},
+	mounted() {},
 };
 </script>
 
