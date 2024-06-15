@@ -13,6 +13,7 @@
 					</view>
 				</view>
 			</view>
+			<!-- #ifndef MP-ALIPAY -->
 			<view class="demo-item">
 				<view class="title">可选择清晰度</view>
 				<view class="item-block">
@@ -21,6 +22,7 @@
 					</view>
 				</view>
 			</view>
+			<!-- #endif -->
 		</view>
 	</view>
 </template>
