@@ -158,10 +158,12 @@ export default {
 	},
 	created() {},
 	mounted() {
-		utils.querySelector('.ste-slider-root', this).then((rect) => {
-			this.sliderRect = rect;
-		});
+		this.handleWindowResize();
+		uni.onWindowResize(this.handleWindowResize);
 		this.calculateStepMarks();
+	},
+	beforeDestroy() {
+		uni.offWindowResize(this.handleWindowResize);
 	},
 	computed: {
 		cmpRootClass() {
@@ -245,6 +247,11 @@ export default {
 		},
 	},
 	methods: {
+		handleWindowResize() {
+			utils.querySelector('.ste-slider-root', this).then((rect) => {
+				this.sliderRect = rect;
+			});
+		},
 		// #ifdef WEB
 		// 适配web端没有touch事件
 		onDown(e, isSecond) {
