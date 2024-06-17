@@ -144,7 +144,7 @@ export default {
 				options = utils.formatTree(this.options, this.valueKey, this.childrenKey, (node) => {
 					return { open: false, loading: false, hasChildren: !!node[this.childrenKey]?.length };
 				});
-				this.optionsMap = utils.getTreeNodeMap(options, this.valueKey, this.childrenKey);
+				this.optionsMap = this.getTreeNodeMap(options);
 				this.openNodes.forEach((v) => this.open(v));
 			}
 			this.dataOptions = options;
@@ -159,7 +159,14 @@ export default {
 				this.closeSibling(parent);
 			});
 		},
-
+		getTreeNodeMap(tree) {
+			const map = {};
+			const arr = utils.flattenTree(tree, this.childrenKey);
+			arr.forEach((node) => {
+				map[node[this.valueKey]] = node;
+			});
+			return map;
+		},
 		onClick(node) {
 			this.$emit('click', node);
 			if (this.parentValue === node.parentValue) {
@@ -218,7 +225,7 @@ export default {
 							node.depth + 1
 						);
 						if (this.parentValue === '__root__') {
-							Object.assign(this.optionsMap, utils.getTreeNodeMap(_children));
+							Object.assign(this.optionsMap, this.getTreeNodeMap(_children));
 						}
 						typeof next === 'function' ? next(_children) : resolve(_children);
 					},

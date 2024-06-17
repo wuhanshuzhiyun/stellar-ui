@@ -417,17 +417,6 @@ let utils = {
 		return _flatten(tree, childrenKey);
 	},
 	/**
-	 * 获取树形结构节点MAP
-	 */
-	getTreeNodeMap(tree, valueKey = 'value', childrenKey = 'children') {
-		const map = {};
-		const arr = this.flattenTree(tree, childrenKey);
-		arr.forEach((node) => {
-			map[node[valueKey]] = node;
-		});
-		return map;
-	},
-	/**
 	 * 获取树形结构中包含指定节点的所有上级节点信息
 	 */
 	getParentNodes(tree, filterFunc, valueKey = 'value', childrenKey = 'children') {
