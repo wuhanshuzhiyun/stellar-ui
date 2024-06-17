@@ -274,10 +274,16 @@ export default {
 			const bool = this.isMover(moveX, moveY);
 			if (!bool) return;
 			if (this.direction === 'horizontal') {
-				this.translateX = -this.dataIndex * this.boxWidth + moveX;
+				if (Math.abs(moveX) < Math.abs(moveY)) return;
+				const translateX = -this.dataIndex * this.boxWidth + moveX;
+				if (moveX !== 0 && Math.abs(this.translateX - translateX) < 3) return;
+				this.translateX = translateX;
 				this.setBoundary(moveX);
 			} else if (this.direction === 'vertical') {
-				this.translateY = -this.dataIndex * this.boxHeight + moveY;
+				if (Math.abs(moveX) > Math.abs(moveY)) return;
+				const translateY = -this.dataIndex * this.boxHeight + moveY;
+				if (moveY !== 0 && Math.abs(this.translateY - translateY) < 3) return;
+				this.translateY = translateY;
 				this.setBoundary(0, moveY);
 			}
 		},
