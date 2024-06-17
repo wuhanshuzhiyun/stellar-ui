@@ -80,13 +80,13 @@
 export default{
 	methods:{
 		onOpen(direction) {
-			uni.showToast({
+			this.showToast({
 				title: `打开方向：${direction}`,
 				icon: 'none',
 			});
 		},
 		onClose() {
-			uni.showToast({
+			this.showToast({
 				title: '关闭',
 				icon: 'none',
 			});

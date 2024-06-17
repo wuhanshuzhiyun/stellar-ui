@@ -59,7 +59,7 @@ export default{
 
 methods: {
 	onClickItem(title, text) {
-		uni.showToast({
+		this.showToast({
 			title: `【${title}】-【${text}】`,
 			icon: 'none',
 		});

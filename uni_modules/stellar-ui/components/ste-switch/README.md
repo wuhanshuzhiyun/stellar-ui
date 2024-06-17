@@ -21,13 +21,13 @@ export default {
 	},
 	methods: {
 		click1(value) {
-			uni.showToast({
+			this.showToast({
 				icon: 'none',
 				title: `点击：${value} 开关的值`,
 			});
 		},
 		click2(value, allowStop, resolve) {
-			uni.showToast({
+			this.showToast({
 				icon: 'none',
 				title: `点击：${value} 开关的值`,
 			});
@@ -36,7 +36,7 @@ export default {
 		},
 		change(value) {
 			setTimeout(() => {
-				uni.showToast({
+				this.showToast({
 					icon: 'none',
 					title: `改变：${value} 开关的值`,
 				});

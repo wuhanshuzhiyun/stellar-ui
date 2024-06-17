@@ -154,7 +154,7 @@ export default{
 	},
 	methods:{
 		onLongpress(index) {
-			uni.showToast({
+			this.showToast({
 				title: `长按了第【${index + 1}】个媒体资源`,
 				icon: 'none',
 			});
@@ -202,7 +202,7 @@ export default{
 			});
 		},
 		onClose() {
-			uni.showToast({
+			this.showToast({
 				title: '弹窗关闭了',
 				icon: 'none',
 			});

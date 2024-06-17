@@ -161,13 +161,13 @@ export default{
 	methods:{
 		beforeRead(fileList, suspend, next, stop) {
 			suspend();
-			uni.showToast({ title: 'suspend-read', icon: 'none' });
+			this.showToast({ title: 'suspend-read', icon: 'none' });
 			setTimeout(() => {
 				next();
 			}, 2000);
 		},
 		onSuccessRead(fileList) {
-			uni.showToast({ title: 'success-read', icon: 'none' });
+			this.showToast({ title: 'success-read', icon: 'none' });
 		},
 	}
 }
@@ -197,13 +197,13 @@ export default{
 	methods:{
 		beforeDelete(index, suspend, next, stop) {
 			suspend();
-			uni.showToast({ title: 'suspend-delete', icon: 'none' });
+			this.showToast({ title: 'suspend-delete', icon: 'none' });
 			setTimeout(() => {
 				next();
 			}, 2000);
 		},
 		onSuccessDelete(index, fileList) {
-			uni.showToast({ title: 'success-delete', icon: 'none' });
+			this.showToast({ title: 'success-delete', icon: 'none' });
 		},
 	}
 }

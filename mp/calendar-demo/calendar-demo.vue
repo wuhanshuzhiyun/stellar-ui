@@ -141,7 +141,7 @@ export default {
 	created() {},
 	methods: {
 		handleConfirm(v) {
-			uni.showToast({
+			this.showToast({
 				title: '确定选择：' + v.join(' '),
 				icon: 'none',
 				duration: 1500,

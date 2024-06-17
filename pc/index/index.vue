@@ -215,7 +215,7 @@ export default {
 				history.replaceState({}, '', `/pc/index/index?name=${this.key}`);
 				return;
 			}
-			uni.showToast({
+			this.showToast({
 				title: '密码不正确',
 				icon: 'none',
 			});
@@ -265,11 +265,11 @@ export default {
 		},
 		setComment() {
 			if (!this.commentParams.content) {
-				uni.showToast({ title: '请输入反馈意见', icon: 'none' });
+				this.showToast({ title: '请输入反馈意见', icon: 'none' });
 				return;
 			}
 			if (!this.commentParams.code) {
-				uni.showToast({ title: '请输入验证码', icon: 'none' });
+				this.showToast({ title: '请输入验证码', icon: 'none' });
 				return;
 			}
 			uni.request({
@@ -279,14 +279,14 @@ export default {
 				success: ({ data }) => {
 					if (data.code === 0) {
 						this.getComment(this.activeName);
-						uni.showToast({
+						this.showToast({
 							title: '提交完成',
 						});
 						return;
 					} else if (data.code === 401) {
-						uni.showToast({ title: `内容涉及${data.message}信息，请修改后重新评论`, icon: 'none' });
+						this.showToast({ title: `内容涉及${data.message}信息，请修改后重新评论`, icon: 'none' });
 					} else {
-						uni.showToast({ title: data.message, icon: 'none' });
+						this.showToast({ title: data.message, icon: 'none' });
 					}
 				},
 			});

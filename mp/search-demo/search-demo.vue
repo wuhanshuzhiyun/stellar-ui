@@ -150,13 +150,13 @@ export default {
 		},
 		onSearch(v) {
 			console.log('search', v);
-			uni.showToast({
+			this.showToast({
 				icon: 'none',
 				title: `搜索：${v}`,
 			});
 		},
 		onClick(v) {
-			uni.showToast({
+			this.showToast({
 				icon: 'none',
 				title: `点击触发：${v}`,
 			});

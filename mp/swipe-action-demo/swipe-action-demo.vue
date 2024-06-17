@@ -90,13 +90,13 @@ export default {
 			this.$refs.swipeGroup.close(index);
 		},
 		onOpen(direction, index) {
-			uni.showToast({
+			this.showToast({
 				title: index || index === 0 ? `第${index + 1}条的打开方向:${direction}` : `打开方向：${direction}`,
 				icon: 'none',
 			});
 		},
 		onClose(index) {
-			uni.showToast({
+			this.showToast({
 				title: index || index === 0 ? `关闭第${index + 1}条` : '关闭',
 				icon: 'none',
 			});

@@ -33,25 +33,25 @@ export default {
 	},
 	methods: {
 		blur(event) {
-			uni.showToast({
+			this.showToast({
 				icon: 'none',
 				title: `失焦事件`,
 			});
 		},
 		focus() {
-			uni.showToast({
+			this.showToast({
 				icon: 'none',
 				title: `聚焦事件`,
 			});
 		},
 		click1(value) {
-			uni.showToast({
+			this.showToast({
 				icon: 'none',
 				title: `点击按钮：${value} 输入值`,
 			});
 		},
 		click2(value, allowStop, resolve) {
-			uni.showToast({
+			this.showToast({
 				icon: 'none',
 				title: `点击按钮：${value} 输入值`,
 			});
@@ -60,7 +60,7 @@ export default {
 		},
 		change(value) {
 			setTimeout(() => {
-				uni.showToast({
+				this.showToast({
 					icon: 'none',
 					title: `改变：${value} 输入值`,
 				});

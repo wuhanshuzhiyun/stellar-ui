@@ -117,7 +117,7 @@ export default {
 				title: '提示内容',
 				success() {
 					setTimeout(() => {
-						uni.showToast({
+						this.showToast({
 							title: '成功',
 							icon: 'none',
 						});
@@ -130,7 +130,7 @@ export default {
 				title: '提示内容',
 				complete() {
 					setTimeout(() => {
-						uni.showToast({
+						this.showToast({
 							title: '结束',
 							icon: 'none',
 						});
@@ -142,7 +142,7 @@ export default {
 			this.showToast({
 				title: '提示内容',
 				close() {
-					uni.showToast({
+					this.showToast({
 						title: '关闭',
 						icon: 'none',
 					});
