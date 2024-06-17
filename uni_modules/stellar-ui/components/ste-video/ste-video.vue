@@ -34,7 +34,7 @@
 			@play="play"
 			@pause="pause"
 			@ended="ended"
-			@timeupdate="thro(timeupdate, $event, { delay: 1000 })"
+			@timeupdate="timeupdate"
 			@fullscreenchange="fullscreenchange"
 			@waiting="waiting"
 			@error="error"
@@ -94,13 +94,7 @@
 				</view>
 				<!-- 进度条 -->
 				<view class="progress-box" v-if="reRenderFlag">
-					<ste-slider
-						:value="playProgress"
-						@change="handleProgressChange"
-						barHeight="4"
-						buttonSize="26"
-						:readonly="!playState"
-					>
+					<ste-slider :value="playProgress" @change="handleProgressChange" barHeight="4" buttonSize="26">
 						<view class="progress-bar" slot="button" />
 					</ste-slider>
 				</view>
@@ -222,6 +216,9 @@ export default {
 			if (this.isFull) {
 				classArr.push('full');
 			}
+			if (this.autoHeight) {
+				classArr.push('auto-height');
+			}
 
 			return classArr.join(' ');
 		},
@@ -284,8 +281,8 @@ export default {
 			}, 200);
 		},
 		handleProgressChange(v) {
-			console.log('进度改变');
-			this.video.seek(this.videoDuration * (v / 100));
+			this.videoCurrent = this.videoDuration * (v / 100);
+			this.video.seek(this.videoCurrent);
 		},
 		// 由于video的点击事件会导致其他点击事件也触发，所以通过一些标识符判断来触发不同逻辑
 		handleClick() {
@@ -351,9 +348,10 @@ export default {
 			this.$emit('ended', e);
 		},
 		timeupdate(e) {
+			console.log('eee e', e.detail);
 			this.videoDuration = e.detail.duration;
 			this.videoCurrent = e.detail.currentTime;
-			// this.playProgress = (this.videoCurrent / this.videoDuration) * 100;
+			this.playProgress = (this.videoCurrent / this.videoDuration) * 100;
 		},
 		fullscreenchange(e) {
 			this.isFull = e.detail.fullScreen;
@@ -416,7 +414,7 @@ export default {
 .ste-video-root {
 	position: relative;
 	overflow: hidden;
-
+	width: 100%;
 	.ste-video {
 		width: 100%;
 		display: block;
@@ -426,6 +424,13 @@ export default {
 		width: 100%;
 		height: 100%;
 		pointer-events: auto;
+	}
+
+	&.auto-height {
+		height: 100%;
+		.ste-video {
+			height: 100%;
+		}
 	}
 
 	&.full {

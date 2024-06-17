@@ -43,7 +43,12 @@ export default {
 
 ### API
 #### 组件属性(Props)
-属性可参考原生[video](https://zh.uniapp.dcloud.io/component/video.html)
+| 参数			| 说明					| 类型		| 默认值		| 可选值	| 支持版本	|
+| ---			| ---					| ---		| ---		| ---	| ---		|
+| `resolution`	| 清晰度选择项数据		| `Array`	| ``		| -		| -			|
+| `autoHeight`	| 是否视频高度跟随父容器	| `Boolean`	| `false`	| -		| -			|
+
+其他属性可参考原生[video](https://zh.uniapp.dcloud.io/component/video.html)
 
 
 #### 组件事件(Events)

@@ -5,6 +5,11 @@ export default {
 			type: String,
 			default: ''
 		},
+		// 是否视频高度跟随父容器
+		autoHeight: {
+			type: Boolean,
+			default: false
+		},
 		// 清晰度
 		resolution: {
 			type: Array,

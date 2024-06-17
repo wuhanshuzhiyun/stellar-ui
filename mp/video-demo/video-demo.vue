@@ -8,7 +8,7 @@
 					<view style="width: 100%">
 						<ste-video
 							title="视频标题视频标题"
-							src="https://qiniu-web-assets.dcloud.net.cn/unidoc/zh/2minute-demo.mp4"
+							src="https://zboa.whzb.com/newapp_cc_img_dev/blade/upload/20240617/be8318a4ed5a2ab58130fde96decf696.mp4"
 						></ste-video>
 					</view>
 				</view>
