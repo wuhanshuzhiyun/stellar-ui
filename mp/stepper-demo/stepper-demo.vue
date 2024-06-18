@@ -1,5 +1,5 @@
 <template>
-	<view class="page">
+	<view class="page" v-if="show">
 		<page-nav :autoBack="true" backColor="#000" titleAlignment="2" title="步进器"></page-nav>
 		<view class="content">
 			<view class="demo-item">
