@@ -566,7 +566,7 @@
 
 		},
 		{
-			"path": "mp/accordion-panel-demo/accordion-panel-demo",
+			"path": "mp/tree-demo/tree-demo",
 			"style": {
 				"navigationStyle": "custom",
 				"disableScroll": true,

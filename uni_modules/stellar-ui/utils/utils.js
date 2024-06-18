@@ -368,97 +368,124 @@ let utils = {
 	},
 
 	/**
-	 * 格式化树形结构(深拷贝后的，不会修改原数据)
+	 * 格式化树形结构(返回的是深拷贝后的数据，不会修改原数据)
+	 * @param {Array} tree 树形数组
+	 * @param {String} valueKey 值的键
+	 * @param {String} childrenKey 下级数组键
+	 * @param {Object | Function} otherAttributes 为每个对象添加的属性（可以是一个方法，参数是当前节点，返回的对象属性会被添加到当前节点中）
 	 */
 	formatTree(
 		tree,
 		valueKey = 'value',
 		childrenKey = 'children',
 		otherAttributes = {},
-		parentValue = '__root__',
+		parentNode = '__root__',
 		depth = 0
 	) {
-		const _formatTree = (tree, valueKey, childrenKey, otherAttributes, parentValue, depth) => {
+		const _formatTree = (tree, parentNode, depth) => {
 			const result = tree.map((item) => {
 				if (item[childrenKey] && item[childrenKey].length) {
-					item[childrenKey] = _formatTree(
-						item[childrenKey],
-						valueKey,
-						childrenKey,
-						otherAttributes,
-						item[valueKey],
-						depth + 1
-					);
+					item[childrenKey] = _formatTree(item[childrenKey], item[valueKey], depth + 1);
 				}
 				let _otherAttributes = otherAttributes;
 				if (typeof otherAttributes === 'function') {
 					_otherAttributes = _otherAttributes(item);
 				}
-				return Object.assign({ parentValue, depth }, _otherAttributes, item);
+				return Object.assign({ parentNode, depth }, _otherAttributes, item);
 			});
 			return result;
 		};
-		return _formatTree(tree, valueKey, childrenKey, otherAttributes, parentValue, depth);
+		return _formatTree(tree, parentNode, depth);
 	},
 	/**
-	 * 扁平化树形结构
+	 * 根据value查找树中的某个节点
 	 */
-	flattenTree(tree, childrenKey = 'children') {
-		function _flatten(tree, childrenKey) {
+	findTreeNode(tree, value, valueKey = 'value', childrenKey = 'children') {
+		const _findTreeNode = (tree) => {
+			for (let i = 0; i < tree.length; i++) {
+				const item = tree[i];
+				if (item[valueKey] === value) {
+					return item;
+				}
+				if (item[childrenKey] && item[childrenKey].length) {
+					const result = _findTreeNode(item[childrenKey]);
+					if (result) {
+						return result;
+					}
+				}
+			}
+			return null;
+		};
+		return _findTreeNode(tree);
+	},
+
+	/**
+	 * 扁平化树形结构
+	 * @param {Array}  tree 树形数组
+	 * @param {String} childrenKey 下级数组键
+	 * @param {Function} filterFunc 回调函数，返回true或false判断是否将当前节点的下级扁平化
+	 */
+	flattenTree(tree, childrenKey = 'children', filterFunc = (node) => true) {
+		function _flatten(tree) {
 			let result = [];
 			tree.forEach((node) => {
 				result.push(node);
-				if (node[childrenKey] && node[childrenKey].length > 0) {
-					result.push(..._flatten(node[childrenKey], childrenKey));
+				if (node[childrenKey] && node[childrenKey].length > 0 && filterFunc(node)) {
+					const nodes = _flatten(node[childrenKey]);
+					nodes.forEach((n) => result.push(n));
 				}
 			});
 			return result;
 		}
-		return _flatten(tree, childrenKey);
+		return _flatten(tree);
 	},
+
 	/**
 	 * 获取树形结构中包含指定节点的所有上级节点信息
 	 */
 	getParentNodes(tree, filterFunc, valueKey = 'value', childrenKey = 'children') {
 		const flatten = this.flattenTree(this.formatTree(tree, valueKey, childrenKey), childrenKey);
 		const nodes = flatten.filter(filterFunc);
+		const findNode = (arr, value) => arr.find((n) => n[valueKey] === value);
+
 		const result = [];
 		nodes.forEach((node) => {
-			const _nodeValues = [];
-			let _node = node;
-			const bool = result.find((n) => n[valueKey] === _node[valueKey]);
-			if (bool) return;
-			_nodeValues.push(_node);
-			for (let i = node.depth - 1; i >= 0; i--) {
-				const bool = result.find((n) => n[valueKey] === _node.parentValue);
-				if (bool) continue;
-				const parent = flatten.find((n) => n[valueKey] === _node.parentValue);
-				if (!bool) {
-					_nodeValues.push(parent);
-				}
-				_node = parent;
+			const isAdd = findNode(result, node[valueKey]);
+			if (isAdd) return;
+			const datas = [node];
+			if (node.parentNode === '__root__') return;
+			let parent = findNode(flatten, node.parentNode);
+			while (parent) {
+				const isAdd = findNode(result, parent[valueKey]);
+				if (!isAdd) datas.unshift(parent);
+				parent = findNode(flatten, parent.parentNode);
 			}
-			result.push(..._nodeValues);
+			result.push(...datas);
 		});
 		return result;
 	},
+
 	/**
-	 * 保留树形结构中指定的节点
+	 * 保留树形结构中的指定节点
 	 */
-	filterTreeNode(tree, filterFunc, childrenKey = 'children') {
-		function _filter(tree, filterFunc, childrenKey) {
+	filterTree(tree, filterFunc, valueKey = 'value', childrenKey = 'children') {
+		// 先找到所有的节点包括上级节点
+		const nodes = this.getParentNodes(tree, filterFunc, valueKey, childrenKey);
+		const nodeValues = nodes.map((n) => n[valueKey]);
+		const _flatten = (tree) => {
 			const result = [];
-			tree.forEach((node) => {
-				if (filterFunc(node)) {
+			tree.forEach((n) => {
+				const node = { ...n };
+				if (nodeValues.includes(node[valueKey])) {
 					result.push(node);
 				}
-				if (node[childrenKey] && node[childrenKey].length > 0) {
-					node[childrenKey] = _filter(node[childrenKey]);
+				if (node[childrenKey] && node[childrenKey].length) {
+					node[childrenKey] = _flatten(node[childrenKey]);
 				}
 			});
 			return result;
-		}
-		return _filter(tree, filterFunc, childrenKey);
+		};
+		return _flatten(tree);
 	},
 };
 
