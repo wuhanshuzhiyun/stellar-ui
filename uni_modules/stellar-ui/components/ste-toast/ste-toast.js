@@ -21,6 +21,8 @@ function useSteToast() {
 		showToast(params) {
 			// 关闭前面的弹窗
 			$state.openBegin = false;
+			// 关闭系统的弹窗
+			uni.hideToast();
 			setTimeout(() => {
 				$state.openBegin = true;
 				$state.title = params.title ?? '';

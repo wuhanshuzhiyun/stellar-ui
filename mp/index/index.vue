@@ -4,7 +4,7 @@
 			<text>Stellar UI</text>
 		</view>
 		<view class="scroll-box">
-			<view class="top">
+			<view class="top" @click="test">
 				<view class="top-1">
 					<ste-image
 						:src="joinSrc('https://image.whzb.com/chain/StellarUI/logo.png')"
@@ -384,6 +384,18 @@ export default {
 			const path = '/mp/' + routerName + '-demo/' + routerName + '-demo';
 			uni.navigateTo({
 				url: path,
+			});
+		},
+		test() {
+			uni.setClipboardData({
+				data: 55555,
+				success() {
+					uni.showToast({
+						icon: 'none',
+						title: ' 复制成功。',
+						duration: 3000,
+					});
+				},
 			});
 		},
 	},
