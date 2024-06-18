@@ -1,5 +1,5 @@
-# AccordionPanel 折叠面板
-- 折叠面板
+# Tree 树形控件
+- 树形控件
 
 {{compatibility}}
 
@@ -55,7 +55,7 @@
 - 事件`close`用于监听关闭节点
 ```html
 <template>
-	<ste-accordion-panel :options="options" @open="onOpen" @close="onClose"></ste-accordion-panel>
+	<ste-tree :options="options" @open="onOpen" @close="onClose"></ste-tree>
 </template>
 <script>
 export default {
@@ -77,7 +77,7 @@ export default {
 - 方法`close`用于关闭指定节点
 ```html
 <template>
-	<ste-accordion-panel ref="accordion" :options="options" :openNodes="['1-2-2']"></ste-accordion-panel>
+	<ste-tree ref="accordion" :options="options" :openNodes="['1-2-2']"></ste-tree>
 	<ste-button @click="openNode" mode="100">打开标题2</ste-button>
 	<ste-button @click="closeNode" mode="100">关闭标题2</ste-button>
 </template>
@@ -102,7 +102,7 @@ export default {
 ```html
 <template>
 	<ste-input placeholder="请输入标题内容" v-model="searchTitle"></ste-input>
-	<ste-accordion-panel :options="options" :searchTitle="searchTitle"></ste-accordion-panel>
+	<ste-tree :options="options" :searchTitle="searchTitle"></ste-tree>
 </template>
 <script>
 export default {
@@ -120,7 +120,7 @@ export default {
 
 ```html
 <template>
-	<ste-accordion-panel :options="options" :accordion="false"></ste-accordion-panel>
+	<ste-tree :options="options" :accordion="false"></ste-tree>
 </template>
 ```
 
@@ -135,7 +135,7 @@ export default {
 
 ```html
 <template>
-	<ste-accordion-panel :options="lazyLoadOptions" @beforeOpen="beforeOpen"></ste-accordion-panel>
+	<ste-tree :options="lazyLoadOptions" @beforeOpen="beforeOpen"></ste-tree>
 </template>
 <script>
 export default {
@@ -171,18 +171,18 @@ export default {
 - 插槽`loading`用于自定义懒加载动画
 ```html
 <template>
-	<ste-accordion-panel :options="options">
+	<ste-tree :options="options">
 		<template v-slot="{ node, depth }">
 			<view class="item-title">
 				<image
 					v-if="depth === 0"
 					class="title-image"
-					src="https://image.whzb.com/chain/StellarUI/component-icons/ste-accordion-panel.png"
+					src="https://image.whzb.com/chain/StellarUI/component-icons/ste-tree.png"
 				></image>
 				<image
 					v-if="depth === 1"
 					class="title-image"
-					src="https://image.whzb.com/chain/StellarUI/component-icons/ste-accordion-panel-children.png"
+					src="https://image.whzb.com/chain/StellarUI/component-icons/ste-tree-children.png"
 				></image>
 				<view class="item-text">{{ node.title }}</view>
 			</view>
@@ -192,7 +192,7 @@ export default {
 				{{ open ? '-' : '+' }}
 			</view>
 		</template>
-	</ste-accordion-panel>
+	</ste-tree>
 </template>
 <script>
 ```
