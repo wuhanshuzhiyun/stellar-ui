@@ -348,7 +348,6 @@ export default {
 			this.$emit('ended', e);
 		},
 		timeupdate(e) {
-			console.log('eee e', e.detail);
 			this.videoDuration = e.detail.duration;
 			this.videoCurrent = e.detail.currentTime;
 			this.playProgress = (this.videoCurrent / this.videoDuration) * 100;
