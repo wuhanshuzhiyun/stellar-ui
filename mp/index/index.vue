@@ -334,6 +334,15 @@
 					<ste-image :src="joinSrc('组件图标/r-arrow.png')" :width="32" :height="32" />
 				</view>
 			</view>
+			<view class="com-box" @click="nav('tree')">
+				<view class="com-title">
+					<ste-image :src="joinSrc('组件图标/tree.png')" :width="36" :height="36" />
+					<text>Tree 树型控件</text>
+				</view>
+				<view class="com-arrow">
+					<ste-image :src="joinSrc('组件图标/r-arrow.png')" :width="32" :height="32" />
+				</view>
+			</view>
 			<view class="com-box" @click="nav('video')">
 				<view class="com-title">
 					<ste-image :src="joinSrc('组件图标/video.png')" :width="36" :height="36" />
