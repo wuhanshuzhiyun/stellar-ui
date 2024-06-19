@@ -46,16 +46,10 @@
 				<view class="title">单元格组</view>
 				<view class="item-block">
 					<ste-swipe-action-group @open="onOpen" @close="onClose" ref="swipeGroup">
-						<ste-swipe-action>
-							<view class="content-view">11111</view>
+						<ste-swipe-action v-for="(m, i) in datas" :key="m">
+							<view class="content-view">{{ m }}</view>
 							<template v-slot:right>
-								<div class="test-btn">删除</div>
-							</template>
-						</ste-swipe-action>
-						<ste-swipe-action>
-							<view class="content-view">22222</view>
-							<template v-slot:right>
-								<div class="test-btn">删除</div>
+								<div class="test-btn" @click="datas.splice(i, 1)">删除</div>
 							</template>
 						</ste-swipe-action>
 					</ste-swipe-action-group>
@@ -74,7 +68,9 @@
 <script>
 export default {
 	data() {
-		return {};
+		return {
+			datas: ['1111111111', '22222222222', '3333333333333333', '444444444444444444444'],
+		};
 	},
 	methods: {
 		openSwipe() {
