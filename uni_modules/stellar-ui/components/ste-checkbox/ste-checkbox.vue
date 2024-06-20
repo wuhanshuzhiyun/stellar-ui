@@ -182,6 +182,7 @@ export default {
 			return {
 				checked: this.cmpChecked,
 				disabled: this.cmpDisabled,
+				readonly: this.cmpReadonly,
 			};
 		},
 		cmpStyle() {
