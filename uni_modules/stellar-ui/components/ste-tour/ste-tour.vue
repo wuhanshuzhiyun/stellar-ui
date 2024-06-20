@@ -24,7 +24,7 @@
 					</slot>
 				</view>
 				<view class="message-step-footer" v-if="steps.length > 1">
-					<view class="step-num">{{ dataStep + 1 }}/{{ steps.length }}</view>
+					<view class="step-num">{{ dataCurrent + 1 }}/{{ steps.length }}</view>
 					<view class="step-btns">
 						<ste-button
 							:round="false"
@@ -39,7 +39,7 @@
 							{{ prevStepTxt }}
 						</ste-button>
 						<ste-button :round="false" mode="100" @click="onNext">
-							{{ dataStep < steps.length - 1 ? nextStepTxt : completeTxt }}
+							{{ dataCurrent < steps.length - 1 ? nextStepTxt : completeTxt }}
 						</ste-button>
 					</view>
 				</view>
@@ -50,7 +50,21 @@
 
 <script>
 import utils from '../../utils/utils.js';
+/**
+ * ste-tour 指引
+ * @description 指引组件
+ * @tutorial https://stellar-ui.intecloud.com.cn/pc/index/index?name=ste-tour
+ * @property {Boolean} show 是否显示
+ * @property {Number} current 当前步骤，默认0
+ * @event {Function} click 点击节点触发，参数为当前节点对象
+ * @event {Function} open 打开节点时触发，参数为当前节点对象
+ * @event {Function} close 关闭节点时触发，参数为当前节点对象
+ * @event {Function} beforeOpen 打开节点前触发，第一个参数为当前节点对象（第二个参数为suspend函数，用于等待后续操作）（第三个参数为next函数，继续执行后续代码，可接收一个对象数组，该数组会替换当前节点的children）（第四个参数为stop，阻止后续代码执行）
+ */
 export default {
+	group: '展示组件',
+	title: 'Tour 指引',
+	name: 'ste-tour',
 	props: {
 		show: { type: Boolean, default: () => false },
 		current: { type: Number, default: () => 0 },
@@ -60,7 +74,7 @@ export default {
 		showTitleBar: { type: Boolean, default: () => false },
 		maskColse: { type: Boolean, default: () => true },
 		showPrevStep: { type: Boolean, default: () => true },
-		mask: { type: Boolean, default: () => false },
+		mask: { type: Boolean, default: () => true },
 		background: { type: Boolean, default: () => 'rgba(0,0,0,.5)' },
 		radius: { type: [Number, String], default: () => 18 },
 		messageBg: { type: String, default: () => '#fff' },
@@ -72,7 +86,7 @@ export default {
 	data() {
 		return {
 			dataShow: false,
-			dataStep: 0,
+			dataCurrent: 0,
 			stepTimeout: null,
 			dataStyle: {},
 			messageStyle: {},
@@ -90,7 +104,7 @@ export default {
 			};
 		},
 		cmpStep() {
-			return this.steps[this.dataStep];
+			return this.steps[this.dataCurrent];
 		},
 		windowSize() {
 			return {
@@ -99,20 +113,20 @@ export default {
 			};
 		},
 		cmpShowPrevStep() {
-			return this.showPrevStep && this.dataStep > 0;
+			return this.showPrevStep && this.dataCurrent > 0;
 		},
 	},
 	watch: {
 		show: {
 			handler(val) {
 				this.dataShow = val;
-				if (val) this.dataStep = 0;
+				if (val) this.dataCurrent = 0;
 			},
 			immediate: true,
 		},
 		current: {
 			handler(val) {
-				this.dataStep = val;
+				if (val >= 0 && val <= this.steps.length - 1) this.dataCurrent = val;
 			},
 			immediate: true,
 		},
@@ -123,7 +137,7 @@ export default {
 			},
 			immediate: true,
 		},
-		dataStep: {
+		dataCurrent: {
 			handler(val) {
 				this.showTour();
 			},
@@ -220,15 +234,19 @@ export default {
 			this.arrowsStyle = {};
 		},
 		onNext() {
-			if (this.dataStep < this.steps.length - 1) {
-				this.dataStep += 1;
+			if (this.dataCurrent < this.steps.length - 1) {
+				this.dataCurrent += 1;
+				this.$emit('update:current', this.dataCurrent);
+				this.$emit('change', this.dataCurrent);
 			} else {
 				this.close();
 			}
 		},
 		onUp() {
-			if (this.dataStep > 0) {
-				this.dataStep -= 1;
+			if (this.dataCurrent > 0) {
+				this.dataCurrent -= 1;
+				this.$emit('update:current', this.dataCurrent);
+				this.$emit('change', this.dataCurrent);
 			}
 		},
 	},

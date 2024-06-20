@@ -36,8 +36,8 @@
 import utils from '../../utils/utils.js';
 
 /**
- * ste-tree 折叠面板
- * @description 折叠面板组件
+ * ste-tree 树形控件
+ * @description 树形控件组件
  * @tutorial https://stellar-ui.intecloud.com.cn/pc/index/index?name=ste-tree
  * @property {Array} options 节点数组（支持树形结构）
  * @property {String} valueKey 节点的值字段名（默认：value）
