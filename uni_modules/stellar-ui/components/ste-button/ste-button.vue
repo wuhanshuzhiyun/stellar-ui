@@ -101,7 +101,7 @@ export default {
 	name: 'ste-button',
 	props: {
 		mode: {
-			type: Number,
+			type: [Number, String],
 			default: 200,
 		},
 		color: {

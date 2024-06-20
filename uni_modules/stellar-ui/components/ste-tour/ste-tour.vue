@@ -17,13 +17,13 @@
 					</view>
 				</view>
 				<view class="message-content-text">
-					<slot name="message" :item="cmpStep">
+					<slot :item="cmpStep">
 						<view class="message-text">
 							{{ cmpStep.message }}
 						</view>
 					</slot>
 				</view>
-				<view class="message-step-footer" v-if="steps.length > 1">
+				<view class="message-step-footer" v-if="cmpShowFooter">
 					<view class="step-num">{{ dataCurrent + 1 }}/{{ steps.length }}</view>
 					<view class="step-btns">
 						<ste-button
@@ -35,10 +35,11 @@
 							mode="100"
 							@click="onUp"
 							v-if="cmpShowPrevStep"
+							:rootStyle="{ padding: '0 10px' }"
 						>
 							{{ prevStepTxt }}
 						</ste-button>
-						<ste-button :round="false" mode="100" @click="onNext">
+						<ste-button :round="false" :rootStyle="{ padding: '0 10px' }" mode="100" @click="onNext">
 							{{ dataCurrent < steps.length - 1 ? nextStepTxt : completeTxt }}
 						</ste-button>
 					</view>
@@ -57,18 +58,9 @@ import utils from '../../utils/utils.js';
  * @property {Boolean} show 是否显示
  * @property {Number} current 当前步骤，多个步骤时有效
  * @property {Array} steps 步骤数组，格式为：[{title: '', message: '', target:'el-id'}]
- * @property {Array} offset 偏移量，格式为：[x, y]
- * @property {String} location 显示位置
- * @value auto 自动（默认）
- * @value top 上
- * @value bottom 下
- * @value top-start 上左
- * @value top-center 上中
- * @value top-end 上右
- * @value bottom-start 下左
- * @value bottom-center 下中
- * @value bottom-end 下右
+ * @property {Array} offset 位置偏移量，格式为：[x, y]
  * @property {Boolean} showTitleBar 是否显示标题栏
+ * @property {Boolean} showFooter 是否显示底部按钮栏（仅多步骤时生效）
  * @property {Boolean} mask 是否显示遮罩层
  * @property {Boolean} maskColse 是否点击遮罩层关闭
  * @property {Boolean} showPrevStep 是否显示上一步按钮
@@ -80,7 +72,7 @@ import utils from '../../utils/utils.js';
  * @property {String} prevStepTxt 上一步按钮文字
  * @property {String} completeTxt 完成按钮文字
  * @event {Function} change 步骤切换时触发
-*/
+ */
 export default {
 	group: '展示组件',
 	title: 'Tour 指引',
@@ -90,12 +82,12 @@ export default {
 		current: { type: Number, default: () => 0 },
 		steps: { type: Array, default: () => [] },
 		offset: { type: Array, default: () => [0, 0] },
-		location: { type: String, default: () => 'auto' },
 		showTitleBar: { type: Boolean, default: () => false },
+		showFooter: { type: Boolean, default: () => true },
 		mask: { type: Boolean, default: () => true },
 		maskColse: { type: Boolean, default: () => true },
 		showPrevStep: { type: Boolean, default: () => true },
-		background: { type: Boolean, default: () => 'rgba(0,0,0,.5)' },
+		background: { type: String, default: () => 'rgba(0,0,0,.5)' },
 		radius: { type: [Number, String], default: () => 18 },
 		messageBg: { type: String, default: () => '#fff' },
 		messageColor: { type: String, default: () => '#000' },
@@ -118,7 +110,7 @@ export default {
 			return {
 				'--ste-tour-radius': utils.formatPx(this.radius),
 				'--ste-tour-mask': this.mask ? `0 0 0 250vh ${this.background}` : 'none',
-				'--ste-tour-message-shadow': this.mask ? 'none' : '0 0 30rpx 0 #ccc',
+				'--ste-tour-message-shadow': this.mask ? 'none' : `0 0 ${utils.formatPx(30)} 0 #ccc`,
 				'--ste-tour-message-bg': this.messageBg,
 				'--ste-tour-message-color': this.messageColor,
 			};
@@ -134,6 +126,9 @@ export default {
 		},
 		cmpShowPrevStep() {
 			return this.showPrevStep && this.dataCurrent > 0;
+		},
+		cmpShowFooter() {
+			return this.showFooter && this.steps.length > 1;
 		},
 	},
 	watch: {
@@ -159,7 +154,8 @@ export default {
 		},
 		dataCurrent: {
 			handler(val) {
-				this.showTour();
+				if (this.dataShow) this.showTour();
+				else this.closeTour();
 			},
 			immediate: true,
 		},
@@ -180,7 +176,10 @@ export default {
 				const step = this.cmpStep;
 				if (!step) return;
 				utils.querySelector(`#${step.target}`, this.$parent).then((el) => {
-					if (!el) return console.error(`未找到ID为${step.target}的元素`);
+					if (!el) {
+						console.error(`未找到ID为${step.target}的元素`);
+						return;
+					}
 					const { top, left, bottom, right, width, height } = el;
 
 					this.dataStyle = {
@@ -191,11 +190,11 @@ export default {
 						display: 'block',
 					};
 
-					let [y, x] = this.location?.split('-') || [];
+					let [y, x] = step.position?.split('-') || [];
 					const { vw, vh } = this.windowSize;
 					const _bottom = vh - bottom;
 					const _right = vw - right;
-					if (!y || y === 'auto') {
+					if (!y) {
 						if (top > _bottom) {
 							y = 'top';
 						} else {
@@ -317,10 +316,13 @@ export default {
 				display: flex;
 				justify-content: space-between;
 				align-items: center;
-				padding-bottom: 20rpx;
+				margin-bottom: 20rpx;
+				min-width: 360rpx;
 				.head-title {
 					height: 60rpx;
 					line-height: 60rpx;
+					font-size: 30rpx;
+					margin-right: 30rpx;
 				}
 
 				.head-close {
@@ -337,7 +339,8 @@ export default {
 				display: flex;
 				justify-content: space-between;
 				align-items: center;
-				padding-top: 20rpx;
+				margin-top: 20rpx;
+				min-width: 360rpx;
 				.step-num {
 					font-size: 24rpx;
 					color: var(--ste-tour-message-color);

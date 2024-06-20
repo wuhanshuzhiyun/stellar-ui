@@ -4,25 +4,51 @@
 		<view class="content">
 			<view class="demo-item">
 				<view class="title">基础用法</view>
-
-				<button @click="show = true" id="button">基础提示</button>
+				<view id="button" class="button-box">
+					<ste-button @click="show = true">基础提示</ste-button>
+				</view>
 
 				<ste-tour :show.sync="show" :steps="steps"></ste-tour>
 			</view>
 			<view class="demo-item">
-				<view class="title">偏移量</view>
-				<button id="button-2" @click="show2 = true">描述位置偏移</button>
-				<ste-tour :show.sync="show2" :steps="steps2" :offset="[100, 10]"></ste-tour>
+				<view class="title">位置偏移量</view>
+				<view id="button-2" class="button-box">
+					<ste-button @click="show2 = true">描述位置偏移</ste-button>
+				</view>
+				<ste-tour :show.sync="show2" :steps="steps2" :offset="[20, 10]"></ste-tour>
 			</view>
 			<view class="demo-item">
-				<view class="title">多步骤</view>
-				<button @click="show3 = true">多步骤</button>
-				<view style="display: inline-block; padding: 6rpx 20rpx" id="button-2">
-					<button size="mini" id="step-1">步骤1</button>
-					<button size="mini" id="step-2">步骤2</button>
-					<button size="mini" id="step-3">步骤3</button>
+				<view class="title">多步骤，显示标题栏</view>
+				<ste-button @click="show3 = true">多步骤带标题</ste-button>
+				<view style="display: inline-block; padding: 6rpx 20rpx">
+					<view id="step-1" class="button-box">步骤1</view>
+					<view id="step-2" class="button-box">步骤2</view>
+					<view id="step-3" class="button-box">步骤3</view>
 				</view>
-				<ste-tour :show.sync="show3" :steps="steps3"></ste-tour>
+				<ste-tour showTitleBar :show.sync="show3" :steps="steps3"></ste-tour>
+			</view>
+			<view class="demo-item">
+				<view class="title">不显示背景蒙层</view>
+				<view id="button-4" class="button-box">
+					<ste-button @click="show4 = true">不显示背景蒙层</ste-button>
+				</view>
+				<ste-tour :show.sync="show4" :steps="steps4" :mask="false"></ste-tour>
+			</view>
+			<view class="demo-item">
+				<view class="title">插槽自定义样式</view>
+				<view id="button-5" class="button-box">
+					<ste-button @click="show5 = true">插槽自定义内容</ste-button>
+				</view>
+				<ste-tour :show.sync="show5" :steps="steps5">
+					<template v-slot="{ item }">
+						<image
+							src="https://image.whzb.com/chain/StellarUI/image/banner1.png"
+							mode="widthFix"
+							style="width: 300rpx"
+						></image>
+						<text style="color: red">{{ item.message }}</text>
+					</template>
+				</ste-tour>
 			</view>
 		</view>
 	</view>
@@ -42,6 +68,10 @@ export default {
 				{ title: '步骤2', message: '再点这里', target: 'step-2' },
 				{ title: '步骤3', message: '然后点这里', target: 'step-3' },
 			],
+			show4: false,
+			steps4: [{ message: '点这里', target: 'button-4' }],
+			show5: false,
+			steps5: [{ message: '看我看我', target: 'button-5' }],
 		};
 	},
 	computed: {},
@@ -53,6 +83,10 @@ export default {
 .page {
 	.content {
 		.demo-item {
+			.button-box {
+				display: inline-block;
+				padding: 20rpx;
+			}
 		}
 	}
 }
