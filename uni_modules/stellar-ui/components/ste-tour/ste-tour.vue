@@ -55,12 +55,32 @@ import utils from '../../utils/utils.js';
  * @description 指引组件
  * @tutorial https://stellar-ui.intecloud.com.cn/pc/index/index?name=ste-tour
  * @property {Boolean} show 是否显示
- * @property {Number} current 当前步骤，默认0
- * @event {Function} click 点击节点触发，参数为当前节点对象
- * @event {Function} open 打开节点时触发，参数为当前节点对象
- * @event {Function} close 关闭节点时触发，参数为当前节点对象
- * @event {Function} beforeOpen 打开节点前触发，第一个参数为当前节点对象（第二个参数为suspend函数，用于等待后续操作）（第三个参数为next函数，继续执行后续代码，可接收一个对象数组，该数组会替换当前节点的children）（第四个参数为stop，阻止后续代码执行）
- */
+ * @property {Number} current 当前步骤，多个步骤时有效
+ * @property {Array} steps 步骤数组，格式为：[{title: '', message: '', target:'el-id'}]
+ * @property {Array} offset 偏移量，格式为：[x, y]
+ * @property {String} location 显示位置
+ * @value auto 自动（默认）
+ * @value top 上
+ * @value bottom 下
+ * @value top-start 上左
+ * @value top-center 上中
+ * @value top-end 上右
+ * @value bottom-start 下左
+ * @value bottom-center 下中
+ * @value bottom-end 下右
+ * @property {Boolean} showTitleBar 是否显示标题栏
+ * @property {Boolean} mask 是否显示遮罩层
+ * @property {Boolean} maskColse 是否点击遮罩层关闭
+ * @property {Boolean} showPrevStep 是否显示上一步按钮
+ * @property {String} background 遮罩层背景色
+ * @property {Number|String} radius 提示框圆角，单位rpx，默认18
+ * @property {String} messageBg 提示框背景色
+ * @property {String} messageColor 提示框文字颜色
+ * @property {String} nextStepTxt	下一步按钮文字
+ * @property {String} prevStepTxt 上一步按钮文字
+ * @property {String} completeTxt 完成按钮文字
+ * @event {Function} change 步骤切换时触发
+*/
 export default {
 	group: '展示组件',
 	title: 'Tour 指引',
@@ -72,9 +92,9 @@ export default {
 		offset: { type: Array, default: () => [0, 0] },
 		location: { type: String, default: () => 'auto' },
 		showTitleBar: { type: Boolean, default: () => false },
+		mask: { type: Boolean, default: () => true },
 		maskColse: { type: Boolean, default: () => true },
 		showPrevStep: { type: Boolean, default: () => true },
-		mask: { type: Boolean, default: () => true },
 		background: { type: Boolean, default: () => 'rgba(0,0,0,.5)' },
 		radius: { type: [Number, String], default: () => 18 },
 		messageBg: { type: String, default: () => '#fff' },
