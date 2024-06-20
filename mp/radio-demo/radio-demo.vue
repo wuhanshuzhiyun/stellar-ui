@@ -55,7 +55,9 @@
 								:color="slotProps.checked ? '#ee0a24' : '#000000'"
 							></ste-icon>
 						</template>
-						自定义图标
+						<template #default="{ slotProps }">
+							{{ slotProps.checked ? '已选中' : '未选中' }}
+						</template>
 					</ste-radio>
 					<ste-radio v-model="value7" name="b">
 						<template #icon="{ slotProps }">
@@ -65,7 +67,33 @@
 								:color="slotProps.checked ? '#ee0a24' : '#000000'"
 							></ste-icon>
 						</template>
-						自定义图标
+						<template #default="{ slotProps }">
+							{{ slotProps.checked ? '已选中' : '未选中' }}
+						</template>
+					</ste-radio>
+					<ste-radio v-model="value7" name="c" disabled>
+						<template #icon="{ slotProps }">
+							<ste-icon
+								code="&#xe677;"
+								size="50"
+								:color="slotProps.disabled ? '#eeeeee' : '#000000'"
+							></ste-icon>
+						</template>
+						<template #default="{ slotProps }">
+							{{ slotProps.disabled ? '禁止' : '未禁止' }}
+						</template>
+					</ste-radio>
+					<ste-radio v-model="value7" name="d" readonly>
+						<template #icon="{ slotProps }">
+							<ste-icon
+								code="&#xe677;"
+								size="50"
+								:color="slotProps.readonly ? 'green' : '#000000'"
+							></ste-icon>
+						</template>
+						<template #default="{ slotProps }">
+							{{ slotProps.readonly ? '只读' : '未只读' }}
+						</template>
 					</ste-radio>
 				</view>
 			</view>

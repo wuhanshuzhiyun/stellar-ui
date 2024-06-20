@@ -97,7 +97,7 @@ export default {
 <ste-radio v-model="value6" name="b" checkedColor="#ee0a24">红色</ste-radio>
 ```
 #### 自定义图标  
-通过 `icon` 插槽自定义图标，可以通过 `slotProps`下`checked`判断是否为选中状态,`disabled`判断是否为禁止状态。
+通过 `icon` 插槽自定义图标，可以通过 `slotProps`下`checked`判断是否为选中状态，`disabled`判断是否为禁止状态，`readonly`判断是否为禁止状态。
 ```
 <ste-radio v-model="value7" name="a">
 	<template #icon="{ slotProps }">
@@ -107,7 +107,9 @@ export default {
 			:color="slotProps.checked ? '#ee0a24' : '#000000'"
 		></ste-icon>
 	</template>
-	自定义图标
+	<template #default="{ slotProps }">
+		{{ slotProps.checked ? '已选中' : '未选中' }}
+	</template>
 </ste-radio>
 <ste-radio v-model="value7" name="b">
 	<template #icon="{ slotProps }">
@@ -117,7 +119,33 @@ export default {
 			:color="slotProps.checked ? '#ee0a24' : '#000000'"
 		></ste-icon>
 	</template>
-	自定义图标
+	<template #default="{ slotProps }">
+		{{ slotProps.checked ? '已选中' : '未选中' }}
+	</template>
+</ste-radio>
+<ste-radio v-model="value7" name="c" disabled>
+	<template #icon="{ slotProps }">
+		<ste-icon
+			code="&#xe677;"
+			size="50"
+			:color="slotProps.disabled ? '#eeeeee' : '#000000'"
+		></ste-icon>
+	</template>
+	<template #default="{ slotProps }">
+		{{ slotProps.disabled ? '禁止' : '未禁止' }}
+	</template>
+</ste-radio>
+<ste-radio v-model="value7" name="d" readonly>
+	<template #icon="{ slotProps }">
+		<ste-icon
+			code="&#xe677;"
+			size="50"
+			:color="slotProps.readonly ? 'green' : '#000000'"
+		></ste-icon>
+	</template>
+	<template #default="{ slotProps }">
+		{{ slotProps.readonly ? '只读' : '未只读' }}
+	</template>
 </ste-radio>
 ```
 
@@ -248,9 +276,9 @@ export default {
 
 
 #### Radio Slots
-|插槽名		|说明			|插槽参数									|支持版本	|
-| ---		| ---			| ---										| ---		|
-| `default`	| 单选框文本内容	|`{ checked: boolean, disabled: boolean }`	| -			|
-| `icon`	| 单选框图标		|`{ checked: boolean, disabled: boolean }`	| -			|
+|插槽名		|说明			|插槽参数														|支持版本	|
+| ---		| ---			| ---															| ---		|
+| `default`	| 单选框文本内容	|`{ checked: boolean, disabled: boolean, readonly: boolean }`	| -			|
+| `icon`	| 单选框图标		|`{ checked: boolean, disabled: boolean, readonly: boolean }`	| -			|
 
 {{qinpengfei}}
