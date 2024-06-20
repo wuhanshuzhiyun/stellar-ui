@@ -97,7 +97,7 @@ export default {
 <ste-radio v-model="value6" name="b" checkedColor="#ee0a24">红色</ste-radio>
 ```
 #### 自定义图标  
-通过 `icon` 插槽自定义图标，可以通过 `slotProps`下`checked`判断是否为选中状态，`disabled`判断是否为禁止状态，`readonly`判断是否为禁止状态。
+通过 `icon` 插槽自定义图标，可以通过 `slotProps`下`checked`判断是否为选中状态，`disabled`判断是否为禁止状态，`readonly`判断是否为只读状态。
 ```
 <ste-radio v-model="value7" name="a">
 	<template #icon="{ slotProps }">

@@ -44,16 +44,56 @@
 			<view class="demo-item">
 				<view class="title">自定义图标</view>
 				<view class="item-block checkbox-box">
-					<ste-checkbox v-model="value13">
-						<template #icon="{ slotProps }">
-							<ste-icon
-								code="&#xe677;"
-								size="50"
-								:color="slotProps.checked ? '#ee0a24' : '#000000'"
-							></ste-icon>
-						</template>
-						自定义图标
-					</ste-checkbox>
+					<ste-checkbox-group v-model="value13">
+						<ste-checkbox name="a">
+							<template #icon="{ slotProps }">
+								<ste-icon
+									code="&#xe677;"
+									size="50"
+									:color="slotProps.checked ? '#ee0a24' : '#000000'"
+								></ste-icon>
+							</template>
+							<template #default="{ slotProps }">
+								{{ slotProps.checked ? '已选中' : '未选中' }}
+							</template>
+						</ste-checkbox>
+						<ste-checkbox name="b">
+							<template #icon="{ slotProps }">
+								<ste-icon
+									code="&#xe677;"
+									size="50"
+									:color="slotProps.checked ? '#ee0a24' : '#000000'"
+								></ste-icon>
+							</template>
+							<template #default="{ slotProps }">
+								{{ slotProps.checked ? '已选中' : '未选中' }}
+							</template>
+						</ste-checkbox>
+						<ste-checkbox name="c" disabled>
+							<template #icon="{ slotProps }">
+								<ste-icon
+									code="&#xe677;"
+									size="50"
+									:color="slotProps.disabled ? '#eeeeee' : '#000000'"
+								></ste-icon>
+							</template>
+							<template #default="{ slotProps }">
+								{{ slotProps.disabled ? '禁止' : '未禁止' }}
+							</template>
+						</ste-checkbox>
+						<ste-checkbox name="d" readonly>
+							<template #icon="{ slotProps }">
+								<ste-icon
+									code="&#xe677;"
+									size="50"
+									:color="slotProps.readonly ? 'green' : '#000000'"
+								></ste-icon>
+							</template>
+							<template #default="{ slotProps }">
+								{{ slotProps.readonly ? '只读' : '未只读' }}
+							</template>
+						</ste-checkbox>
+					</ste-checkbox-group>
 				</view>
 			</view>
 			<view class="demo-item">
@@ -145,7 +185,7 @@ export default {
 			value10: false,
 			value11: true,
 			value12: true,
-			value13: false,
+			value13: ['a'],
 			value14: false,
 			value15: false,
 			value16: false,
