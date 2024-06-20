@@ -5,7 +5,7 @@
 			<view class="demo-item">
 				<view class="title">基础用法</view>
 
-				<button @click="show = true" id="button">基础用法</button>
+				<button @click="show = true" id="button">基础提示</button>
 
 				<ste-tour :show.sync="show" :steps="steps"></ste-tour>
 			</view>
@@ -16,10 +16,11 @@
 			</view>
 			<view class="demo-item">
 				<view class="title">多步骤</view>
+				<button @click="show3 = true">多步骤</button>
 				<view style="display: inline-block; padding: 6rpx 20rpx" id="button-2">
-					<button id="step-1" @click="show3 = true">步骤1</button>
-					<button id="step-2" @click="show3 = true">步骤2</button>
-					<button id="step-3" @click="show3 = true">步骤3</button>
+					<button size="mini" id="step-1">步骤1</button>
+					<button size="mini" id="step-2">步骤2</button>
+					<button size="mini" id="step-3">步骤3</button>
 				</view>
 				<ste-tour :show.sync="show3" :steps="steps3"></ste-tour>
 			</view>
@@ -38,7 +39,7 @@ export default {
 			show3: false,
 			steps3: [
 				{ title: '步骤1', message: '先点这里', target: 'step-1' },
-				{ title: '步骤2', message: '再再这里', target: 'step-2' },
+				{ title: '步骤2', message: '再点这里', target: 'step-2' },
 				{ title: '步骤3', message: '然后点这里', target: 'step-3' },
 			],
 		};
