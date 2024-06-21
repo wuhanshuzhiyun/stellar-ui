@@ -143,8 +143,7 @@ let utils = {
 			try {
 				uni
 					.createSelectorQuery()
-					.in(component)
-					[selectFn](selectors)
+					.in(component)[selectFn](selectors)
 					.boundingClientRect((data) => {
 						resolve(data);
 					})
@@ -391,7 +390,10 @@ let utils = {
 				if (typeof otherAttributes === 'function') {
 					_otherAttributes = _otherAttributes(item);
 				}
-				return Object.assign({ parentNode, depth }, _otherAttributes, item);
+				return Object.assign({
+					parentNode,
+					depth
+				}, _otherAttributes, item);
 			});
 			return result;
 		};
@@ -475,7 +477,9 @@ let utils = {
 		const _flatten = (tree) => {
 			const result = [];
 			tree.forEach((n) => {
-				const node = { ...n };
+				const node = {
+					...n
+				};
 				if (nodeValues.includes(node[valueKey])) {
 					result.push(node);
 				}
@@ -487,6 +491,40 @@ let utils = {
 		};
 		return _flatten(tree);
 	},
+	/**
+	 * 对比两个对象是否完全相等
+	 * @param {Object} 比较的对象
+	 * @param {Object} 比较的对象
+	 * @param {ignoreKeys} 忽略比较的key
+	 */
+	deepEqual(obj1, obj2, ignoreKeys = []) {
+		if (obj1 === obj2) {
+			return true; // 简单类型相等或引用相等
+		}
+
+		if (obj1 == null || obj2 == null || typeof obj1 !== 'object' || typeof obj2 !== 'object') {
+			return false; // 其中一个为null，或者不是对象
+		}
+
+		const keys1 = Object.keys(obj1).filter(key => !ignoreKeys.includes(key));
+		const keys2 = Object.keys(obj2).filter(key => !ignoreKeys.includes(key));
+
+		if (keys1.length !== keys2.length) {
+			return false; // 忽略指定key后，对象属性数量不相等
+		}
+
+		for (let key of keys1) {
+			if (!obj2.hasOwnProperty(key)) {
+				return false; // obj2 没有 obj1 的属性
+			}
+
+			if (!this.deepEqual(obj1[key], obj2[key], ignoreKeys)) {
+				return false; // 递归比较子对象，忽略指定key
+			}
+		}
+
+		return true;
+	}
 };
 
 export default utils;
