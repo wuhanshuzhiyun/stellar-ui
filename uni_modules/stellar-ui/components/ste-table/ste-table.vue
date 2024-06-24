@@ -1,65 +1,67 @@
 <template>
-	<view class="ste-table-root" :class="[cmpRootClass]">
-		<view class="ste-table-content">
-			<view class="ste-table-header">
-				<view
-					class="ste-table-cell"
-					:class="[headerClass(column)]"
-					:style="[headerStyle(column)]"
-					v-for="column in columns"
-					:key="column.prop"
-					@click="headerClick(column, $event)"
-				>
-					<view class="cell-box" v-if="column.type == 'checkbox'">
-						<ste-icon
-							code="&#xe6ac;"
-							color="#3491FA"
-							size="32"
-							v-if="checkAllState == 'all'"
-							@click="changeCheckAll"
-						/>
-						<ste-icon
-							code="&#xe6ad;"
-							color="#3491FA"
-							size="32"
-							v-else-if="checkAllState == 'indeterminate'"
-							@click="changeCheckAll"
-						/>
-						<ste-icon code="&#xe6af;" color="#BBBBBB" size="32" v-else @click="changeCheckAll" />
-					</view>
-					<view class="cell-box" v-else>
-						{{ column.label }}
-					</view>
-				</view>
-			</view>
-			<view class="ste-table-body">
-				<view
-					class="ste-table-row"
-					:class="'row-' + index"
-					v-for="(row, index) in data"
-					:key="index"
-					@click="rowClick(row, $event)"
-				>
-					<slot :row="row"></slot>
-				</view>
-				<view class="ste-table-row sum" v-if="showSummary">
+	<ste-sticky :offsetTop="offsetTop">
+		<view class="ste-table-root" :class="[cmpRootClass]">
+			<view class="ste-table-content">
+				<view class="ste-table-header">
 					<view
 						class="ste-table-cell"
-						v-for="(column, index) in columns"
-						:key="index"
 						:class="[headerClass(column)]"
+						:style="[headerStyle(column)]"
+						v-for="column in columns"
+						:key="column.prop"
+						@click="headerClick(column, $event)"
 					>
-						<view class="cell-box">
-							<view v-if="index === 0" class="sum-header">{{ sumText }}</view>
-							<view v-else>
-								{{ sumData[index] || '-' }}
+						<view class="cell-box" v-if="column.type == 'checkbox'">
+							<ste-icon
+								code="&#xe6ac;"
+								color="#3491FA"
+								size="32"
+								v-if="checkAllState == 'all'"
+								@click="changeCheckAll"
+							/>
+							<ste-icon
+								code="&#xe6ad;"
+								color="#3491FA"
+								size="32"
+								v-else-if="checkAllState == 'indeterminate'"
+								@click="changeCheckAll"
+							/>
+							<ste-icon code="&#xe6af;" color="#BBBBBB" size="32" v-else @click="changeCheckAll" />
+						</view>
+						<view class="cell-box" v-else>
+							{{ column.label }}
+						</view>
+					</view>
+				</view>
+				<view class="ste-table-body">
+					<view
+						class="ste-table-row"
+						:class="'row-' + index"
+						v-for="(row, index) in data"
+						:key="index"
+						@click="rowClick(row, $event)"
+					>
+						<slot :row="row"></slot>
+					</view>
+					<view class="ste-table-row sum" v-if="showSummary">
+						<view
+							class="ste-table-cell"
+							v-for="(column, index) in columns"
+							:key="index"
+							:class="[headerClass(column)]"
+						>
+							<view class="cell-box">
+								<view v-if="index === 0" class="sum-header">{{ sumText }}</view>
+								<view v-else>
+									{{ sumData[index] || '-' }}
+								</view>
 							</view>
 						</view>
 					</view>
 				</view>
 			</view>
 		</view>
-	</view>
+	</ste-sticky>
 </template>
 
 <script>
@@ -82,7 +84,7 @@ export default {
 		},
 		offsetTop: {
 			type: [Number, String],
-			default: '',
+			default: 0,
 		},
 		border: {
 			type: Boolean,
@@ -278,11 +280,17 @@ export default {
 </script>
 
 <style lang="scss">
+$default-border: 2rpx solid #ebebeb;
+
 .ste-table-root {
 	width: 100%;
 	&.border {
 		.ste-table-cell {
-			border: 1rpx solid #ebebeb;
+			border-right: $default-border;
+		}
+
+		.ste-table-content {
+			border-left: $default-border;
 		}
 	}
 
@@ -297,7 +305,8 @@ export default {
 	.ste-table-content {
 		width: 100%;
 		display: table;
-		border-collapse: collapse;
+		// border-collapse: collapse;
+		table-layout: fixed;
 		.ste-table-header {
 			width: 100%;
 			display: table-row;
@@ -305,14 +314,14 @@ export default {
 				background-color: #e8f7ff;
 				font-weight: bold;
 				font-size: 28rpx;
+				border-top: $default-border;
 			}
 		}
 
 		.ste-table-cell {
 			display: table-cell;
 
-			border-bottom: 1rpx solid #ebebeb;
-			border-top: 1rpx solid #ebebeb;
+			border-bottom: $default-border;
 
 			padding: 0 32rpx;
 			height: 80rpx;
