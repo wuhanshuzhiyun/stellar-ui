@@ -5,11 +5,17 @@
 			<view class="demo-item">
 				<view class="title">基础使用11</view>
 				<view class="item-block">
+					<view style="width: 100%; height: 30vh; background-color: #e1e"></view>
+					<!-- <ste-sticky @fixed="onFixed" @unfixed="onUnfixed">
+						<ste-button :round="false">粘性布局的按钮</ste-button>
+					</ste-sticky> -->
 					<view style="width: 100%">
 						<ste-table
+							offsetTop="100"
+							sticky
+							border
 							ref="steTable"
 							:data="rows"
-							border
 							:selectable="selectableData"
 							:stripe="false"
 							emptyText="---"
@@ -26,14 +32,12 @@
 								<!-- <ste-table-column label="序号" type="index" align="center"></ste-table-column> -->
 								<ste-table-column label="姓名" prop="name"></ste-table-column>
 								<ste-table-column label="出生日期" prop="birth" width="200">
-									<span>$.{{ row.birth }}</span>
+									<span slot="empty">无初始</span>
 								</ste-table-column>
-								<ste-table-column label="性别" prop="sex" align="right">
-									<span slot="empty">无性别</span>
-								</ste-table-column>
-								<!-- 								<ste-table-column label="操作">
+
+								<ste-table-column label="操作">
 									<ste-button :mode="100" @click="handleEdit">编辑</ste-button>
-								</ste-table-column> -->
+								</ste-table-column>
 							</template>
 						</ste-table>
 					</view>
@@ -42,6 +46,7 @@
 						<ste-button :mode="100" @click="clearSelect">取消所有选择</ste-button>
 						<ste-button :mode="100" @click="toggleRowSelection">选中第二行</ste-button>
 					</view>
+					<view style="width: 100%; height: 200vh; background-color: #e1e"></view>
 				</view>
 			</view>
 		</view>
@@ -55,7 +60,7 @@ export default {
 				{ name: '张三', birth: '2023.12.31', sex: '男' },
 				{ name: '李四', birth: '2024.01.01', sex: '女' },
 				{ name: '王五', birth: '2024.11.01', sex: '女' },
-				{ name: '赵六', birth: '2024.09.01', sex: '女' },
+				{ name: '赵六', birth: '', sex: '女' },
 				{ name: '王七', birth: '2024.01.01', sex: '' },
 			],
 			name: '性别',

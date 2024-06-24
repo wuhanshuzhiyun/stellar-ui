@@ -2,11 +2,11 @@
 	<view class="ste-table-cell" :class="[cmpRootClass]" @click="cellClick">
 		<template v-if="type">
 			<view class="cell-box" v-if="type == 'checkbox'" @click="changeCheck">
-				<ste-icon code="&#xe6ac;" color="#3491FA" size="32" v-if="checkShow" />
+				<ste-icon code="&#xe6ac;" color="#3491FA" size="32" v-if="cmpShowCheck" />
 				<ste-icon code="&#xe6af;" color="#BBBBBB" size="32" v-else />
 			</view>
 			<view class="cell-box" v-if="type == 'radio'" @click="changeCheck">
-				<ste-icon code="&#xe6b5;" size="32" v-if="checkShow" />
+				<ste-icon code="&#xe6b5;" size="32" v-if="cmpShowCheck" />
 				<ste-icon code="&#xe6b1;" color="#BBBBBB" size="32" v-else />
 			</view>
 			<view class="cell-box" v-if="type == 'index'">
@@ -91,6 +91,7 @@ export default {
 		cmpRootClass() {
 			let classArr = [];
 			classArr.push(this.type);
+
 			if (this.align && this.align !== 'left') {
 				classArr.push('align-' + this.align);
 			}
@@ -99,7 +100,7 @@ export default {
 			}
 			return classArr.join(' ');
 		},
-		checkShow() {
+		cmpShowCheck() {
 			if (!this.parent.checkStates || this.parent.checkStates.length == 0) return false;
 			let item = this.parent.checkStates.find((e) => e == this.row.rowIndex);
 			if (item != undefined) {
@@ -109,10 +110,6 @@ export default {
 		},
 	},
 	methods: {
-		showCheck() {
-			if (!this.parent.checkStates || this.parent.checkStates.length == 0) return false;
-			return !!this.parent.checkStates.find((e) => e == this.row.rowIndex);
-		},
 		changeCheck() {
 			this.parent.handleCheck(this.row);
 		},
@@ -131,11 +128,11 @@ export default {
 };
 </script>
 <style lang="scss" scoped>
+$default-border: 2rpx solid #ebebeb;
 .ste-table-cell {
 	display: table-cell;
 	padding: 0 32rpx;
-	border-bottom: 1rpx solid #ebebeb;
-	border-top: 1rpx solid #ebebeb;
+	border-bottom: $default-border;
 	text-align: left;
 	height: 80rpx;
 	font-size: 24rpx;
@@ -147,7 +144,7 @@ export default {
 	}
 
 	&.border {
-		border: 1rpx solid #ebebeb;
+		border-right: $default-border;
 	}
 
 	&.selection {
