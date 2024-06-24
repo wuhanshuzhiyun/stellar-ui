@@ -1,12 +1,13 @@
 <template>
 	<view
-		v-if="show"
+		v-if="load"
 		class="ste-signature-root"
 		:style="[cmpRootStyle]"
 		:class="customClass"
 		@mousedown="onTouchStart"
 		@mousemove="onTouchMove"
 		@mouseup="onTouchEnd"
+		@mosueleave="onTouchEnd"
 	>
 		<canvas
 			disable-scroll
@@ -55,7 +56,7 @@ export default {
 	data() {
 		return {
 			canvasId: 'ste-signature',
-			show: false,
+			load: false,
 			ctx: null,
 			strokes: [],
 			strokeing: [],
@@ -75,12 +76,16 @@ export default {
 		});
 	},
 	methods: {
-		back() {},
-		clear() {},
+		back() {
+			this.strokes.pop();
+			this.drawAll();
+		},
+		clear() {
+			this.ctx.clearRect(0, 0, this.width, this.height);
+		},
 		save(callback) {},
-
 		async initCanvas() {
-			this.show = true;
+			this.load = true;
 			this.ctx = uni.createCanvasContext(this.canvasId, this);
 			// 设置线条圆角
 			this.ctx.setLineCap('round');
@@ -91,7 +96,7 @@ export default {
 		// 画图
 		drawAll(ctx = this.ctx) {
 			// 清除画布
-			ctx.clearRect(0, 0, this.width, this.height);
+			this.clear();
 			this.strokes.forEach((stroke) => {
 				if (!stroke.length) return;
 				ctx.beginPath();
@@ -121,8 +126,7 @@ export default {
 			// #ifdef H5
 			this.strokeing = [this.getH5MousePosition(e)];
 			// #endif
-			this.strokes.push(this.strokeing);
-			this.drawAll();
+			this.drawStrokeing();
 		},
 		onTouchMove(e) {
 			if (!this.strokeing?.length) return;
@@ -132,9 +136,10 @@ export default {
 			// #ifdef H5
 			this.strokeing.push(this.getH5MousePosition(e));
 			// #endif
-			this.drawAll();
+			this.drawStrokeing();
 		},
 		onTouchEnd(e) {
+			this.strokes.push(this.strokeing);
 			this.strokeing = [];
 		},
 
