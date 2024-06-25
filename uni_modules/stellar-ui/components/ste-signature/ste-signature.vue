@@ -55,7 +55,7 @@ export default {
 	},
 	data() {
 		return {
-			canvasId: 'ste-signature',
+			canvasId: utils.guid(8),
 			load: false,
 			ctx: null,
 			strokes: [],
@@ -71,21 +71,45 @@ export default {
 		},
 	},
 	mounted() {
+		this.load = true;
 		this.$nextTick(() => {
 			this.initCanvas();
 		});
 	},
 	methods: {
+		clear() {
+			this.strokes = [];
+			this.drawAll();
+		},
 		back() {
 			this.strokes.pop();
 			this.drawAll();
 		},
-		clear() {
-			this.ctx.clearRect(0, 0, this.width, this.height);
+		async save(callback, error) {
+			if (!this.strokes.length) {
+				if (error) error('请绘制签名');
+				return;
+			}
+			const canvas = await utils.querySelector(`.ste-signature-root`, this);
+			uni.canvasToTempFilePath(
+				{
+					canvasId: this.canvasId,
+					width: canvas.width,
+					height: canvas.height,
+					destWidth: canvas.width * 2, // 设置导出图片的宽度，这里设置为canvas宽度的两倍
+					destHeight: canvas.height * 2, // 设置导出图片的高度，这里设置为canvas高度的两倍
+					fileType: this.type, // 设置导出图片的类型，如'png'、'jpg'等
+					success: (res) => {
+						if (callback) callback(res.tempFilePath);
+					},
+					fail: (err) => {
+						console.log(err, 'err');
+					},
+				},
+				this
+			);
 		},
-		save(callback) {},
 		async initCanvas() {
-			this.load = true;
 			this.ctx = uni.createCanvasContext(this.canvasId, this);
 			// 设置线条圆角
 			this.ctx.setLineCap('round');
@@ -96,17 +120,23 @@ export default {
 		// 画图
 		drawAll(ctx = this.ctx) {
 			// 清除画布
-			this.clear();
+			this.ctx.clearRect(0, 0, 1920, 1080);
+			if (!this.strokes?.length) {
+				ctx.stroke(); // 进行绘制
+				ctx.draw(true); // 执行绘制操作
+				return;
+			}
 			this.strokes.forEach((stroke) => {
 				if (!stroke.length) return;
 				ctx.beginPath();
 				ctx.moveTo(stroke[0].x, stroke[0].y); // 移动到起始点
 				stroke.forEach(({ x, y }, index) => {
+					if (index == 0) return;
 					ctx.lineTo(x, y); // 结束点坐标
 				});
+				ctx.stroke(); // 进行绘制
+				ctx.draw(true); // 执行绘制操作
 			});
-			ctx.stroke(); // 进行绘制
-			ctx.draw(true); // 执行绘制操作
 		},
 		drawStrokeing(ctx = this.ctx) {
 			const length = this.strokeing?.length;
@@ -157,6 +187,5 @@ export default {
 
 <style scoped lang="scss">
 .ste-signature-root {
-	border: 1px solid #000;
 }
 </style>
