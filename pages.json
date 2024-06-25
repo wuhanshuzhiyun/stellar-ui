@@ -47,18 +47,6 @@
 					"navigationBarTitleText": ""
 				}
 			}
-		}, {
-			"path": "pages/baidu/baidu",
-			"name": "baidu",
-			"style": {
-				"navigationStyle": "custom",
-				"mp-alipay": {
-					"transparentTitle": "always",
-					"titlePenetrate": "YES",
-					"allowsBounceVertical": "NO",
-					"navigationBarTitleText": ""
-				}
-			}
 		},
 		{
 			"path": "pc/index/index",
