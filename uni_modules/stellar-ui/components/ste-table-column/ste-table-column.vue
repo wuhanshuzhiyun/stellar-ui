@@ -2,12 +2,19 @@
 	<view class="ste-table-cell" :class="[cmpRootClass]" @click="cellClick">
 		<template v-if="type">
 			<view class="cell-box" v-if="type == 'checkbox'" @click="changeCheck">
-				<ste-icon code="&#xe6ac;" color="#3491FA" size="32" v-if="cmpShowCheck" />
-				<ste-icon code="&#xe6af;" color="#BBBBBB" size="32" v-else />
+				<ste-icon code="&#xe6ae;" color="#E6E6E6" size="32" v-if="!cmpCanCheck" />
+				<template v-else>
+					<ste-icon code="&#xe6ac;" color="#3491FA" size="32" v-if="cmpShowCheck" />
+					<ste-icon code="&#xe6af;" color="#BBBBBB" size="32" v-else />
+				</template>
 			</view>
 			<view class="cell-box" v-if="type == 'radio'" @click="changeCheck">
-				<ste-icon code="&#xe6b5;" size="32" v-if="cmpShowCheck" />
-				<ste-icon code="&#xe6b1;" color="#BBBBBB" size="32" v-else />
+				<radio-icon :disabled="!cmpCanCheck" :check="cmpShowCheck"></radio-icon>
+				<!-- <ste-icon code="&#xe6b2;" color="#E6E6E6" size="32" v-if="!cmpCanCheck" />
+				<template>
+					<ste-icon code="&#xe6b5;" size="32" v-if="cmpShowCheck" />
+					<ste-icon code="&#xe6b1;" color="#BBBBBB" size="32" v-else />
+				</template> -->
 			</view>
 			<view class="cell-box" v-if="type == 'index'">
 				{{ row.rowIndex + 1 }}
@@ -16,7 +23,7 @@
 		<template v-else>
 			<slot v-if="row[prop] || !$slots.empty">
 				<view class="cell-box">
-					{{ formatterText() }}
+					{{ cellText() }}
 				</view>
 			</slot>
 			<view class="cell-box" v-else>
@@ -27,11 +34,12 @@
 </template>
 
 <script>
-const DEFAULT_FORMATTER = (e) => e;
+import RadioIcon from './radio-icon.vue';
 import { childMixin } from '../../utils/mixin.js';
 export default {
 	name: 'ste-table-column',
 	mixins: [childMixin('ste-table')],
+	components: { RadioIcon },
 	options: {
 		virtualHost: true,
 	},
@@ -42,8 +50,8 @@ export default {
 			default: '',
 		},
 		index: {
-			type: String,
-			default: '',
+			type: [Function, null, Object],
+			default: null,
 		},
 		label: {
 			type: String,
@@ -61,10 +69,6 @@ export default {
 			type: String,
 			default: '',
 		},
-		formatter: {
-			type: [Function, null],
-			default: null,
-		},
 		align: {
 			type: String,
 			default: 'left',
@@ -72,14 +76,6 @@ export default {
 		headerAlign: {
 			type: String,
 			default: 'left',
-		},
-		selectable: {
-			type: [Function, null, Object],
-			default: null,
-		},
-		reserveSelection: {
-			type: Boolean,
-			default: false,
 		},
 	},
 	data() {
@@ -108,13 +104,20 @@ export default {
 			}
 			return false;
 		},
+		cmpCanCheck() {
+			if (this.parent.selectable) {
+				return this.parent.selectable(this.row, this.row.rowIndex);
+			}
+			return true;
+		},
 	},
 	methods: {
 		changeCheck() {
-			this.parent.handleCheck(this.row);
+			if (this.cmpCanCheck) {
+				this.parent.handleCheck(this.row);
+			}
 		},
-		formatterText(e) {
-			// TODO 格式化
+		cellText(e) {
 			if (this.row[this.prop]) {
 				return this.row[this.prop];
 			} else {
@@ -134,11 +137,11 @@ $default-border: 2rpx solid #ebebeb;
 	padding: 0 32rpx;
 	border-bottom: $default-border;
 	text-align: left;
-	height: 80rpx;
+	min-height: 80rpx;
 	font-size: 24rpx;
 
 	.cell-box {
-		height: 100%;
+		min-height: 80rpx;
 		display: flex;
 		align-items: center;
 	}
