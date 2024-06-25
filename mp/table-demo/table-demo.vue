@@ -2,7 +2,7 @@
 	<view class="page">
 		<page-nav :autoBack="true" backColor="#000" titleAlignment="2" title="表格"></page-nav>
 		<view class="content">
-			<!-- 			<view class="demo-item">
+			<view class="demo-item">
 				<view class="title">基础使用</view>
 				<view class="item-block">
 					<view style="width: 100%">
@@ -193,7 +193,7 @@
 						</ste-table>
 					</view>
 				</view>
-			</view> -->
+			</view>
 			<view class="demo-item">
 				<view class="title">自定义边框</view>
 				<view class="item-block">
