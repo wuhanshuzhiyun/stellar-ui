@@ -440,6 +440,7 @@ export default {
 	}
 
 	&.textarea-type {
+		height: 100%;
 		.content {
 			padding: 20rpx 24rpx;
 			height: 100%;
