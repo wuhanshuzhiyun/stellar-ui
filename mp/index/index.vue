@@ -6,11 +6,7 @@
 		<view class="scroll-box">
 			<view class="top" @click="test">
 				<view class="top-1">
-					<ste-image
-						:src="joinSrc('https://image.whzb.com/chain/StellarUI/logo.png')"
-						:width="100"
-						:height="100"
-					/>
+					<ste-image :src="joinSrc('https://image.whzb.com/chain/StellarUI/logo.png')" :width="100" :height="100" />
 					<view class="title">
 						<view class="title-1">Stellar UI {{ version }}</view>
 						<view class="title-2">微信平台快速开发的UI框架</view>
@@ -213,6 +209,15 @@
 					<ste-image :src="joinSrc('组件图标/r-arrow.png')" :width="32" :height="32" />
 				</view>
 			</view>
+			<view class="com-box" @click="nav('signature')">
+				<view class="com-title">
+					<ste-image :src="joinSrc('组件图标/signature.png')" :width="36" :height="36" />
+					<text>Signature 签名</text>
+				</view>
+				<view class="com-arrow">
+					<ste-image :src="joinSrc('组件图标/r-arrow.png')" :width="32" :height="32" />
+				</view>
+			</view>
 			<!-- ***导航组件*** -->
 			<view class="group-title">导航组件</view>
 			<view class="com-box" @click="nav('dropdown-menu')">
@@ -361,6 +366,16 @@
 					<ste-image :src="joinSrc('组件图标/r-arrow.png')" :width="32" :height="32" />
 				</view>
 			</view>
+			<view class="com-box" @click="nav('tour')">
+				<view class="com-title">
+					<ste-image :src="joinSrc('组件图标/tour.png')" :width="36" :height="36" />
+					<text>Tour 指引</text>
+				</view>
+				<view class="com-arrow">
+					<ste-image :src="joinSrc('组件图标/r-arrow.png')" :width="32" :height="32" />
+				</view>
+			</view>
+
 			<view class="com-box" @click="nav('video')">
 				<view class="com-title">
 					<ste-image :src="joinSrc('组件图标/video.png')" :width="36" :height="36" />

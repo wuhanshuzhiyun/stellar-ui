@@ -1,11 +1,11 @@
 <template>
 	<view class="page">
-		<page-nav :autoBack="true" backColor="#000" titleAlignment="2" title="轻提示"></page-nav>
+		<page-nav :autoBack="true" backColor="#000" titleAlignment="2" title="指引"></page-nav>
 		<view class="content">
 			<view class="demo-item">
 				<view class="title">基础用法</view>
 				<view id="button" class="button-box">
-					<ste-button @click="show = true">基础提示</ste-button>
+					<ste-button @click="show = true">基础指引</ste-button>
 				</view>
 
 				<ste-tour :show.sync="show" :steps="steps"></ste-tour>
