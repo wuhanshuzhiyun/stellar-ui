@@ -18,6 +18,7 @@
 					@clear="onClear"
 					:focus="focus"
 					:clearable="clearable"
+					:fontColor="inputTextColor"
 					background="transparent"
 				/>
 				<swiper
