@@ -102,30 +102,30 @@ export default {
 
 ### API
 #### Props
-| 参数				| 说明															| 类型				| 默认值		| 可选值																																													| 支持版本	|
-| ---				| ---															| ---				| ---		| ---																																													| ---		|
-| `value`			| 绑定值(支持时间戳、字符串格式)，支持v-model双向绑定				| `Number/String`	| -			| -																																														| -			|
-| `showToolbar`		| 是否显示顶部操作栏												| `Boolean`			| `true`	| -																																														| -			|
-| `title`			| 顶部标题														| `String`			| -			| -																																														| -			|
-| `mode`			| 展示格式														| `String`			| `all`		| `all`：年月日时分秒 <br/>`datetime`：年月日时分<br/>`date`：年月日<br/>`year-month`：年月<br/>`month-day`：月日<br/>`datetime`：时分秒<br/>`hour-minute`：时分<br/>`minute-second`：分秒	| -			|
-| `maxDate`			| 可选的最大时间	（支持时间戳、字符串格式），默认为当前时间后十年	| `Number/String`	| -			| -																																														| -			|
-| `minDate`			| 可选的最小时间	（支持时间戳、字符串格式），默认为当前时间前十年	| `Number/String`	| -			| -																																														| -			|
-| `filter`			| 选项过滤函数													| `Function`		| -			| -																																														| -			|
-| `formatter`		| 选项格式化函数													| `Function`		| -			| -																																														| -			|
-| `itemHeight`		| 各列中，单个选项的高度（单位px）								| `Number`			| `36`		| -																																														| -			|
-| `cancelText`		| 取消按钮的文字													| `String`			| `"取消"`	| -																																														| -			|
-| `confirmText`		| 确认按钮的文字													| `String`			| `"确认"`	| -																																														| -			|
-| `cancelColor`		| 取消按钮的颜色													| `String`			| `#909193`	| -																																														| -			|
-| `confirmColor`	| 确认按钮的颜色													| `String`			| `#3c9cff`	| -																																														| -			|
-| `visibleItemCount`| 各每列中可见选项的数量											| `Number`			| `5`		| -																																														| -			|
+| 参数				| 说明																			| 类型				| 默认值		| 可选值																																													| 支持版本	|
+| ---				| ---																			| ---				| ---		| ---																																													| ---		|
+| `value`			| 绑定值(支持时间戳、字符串格式)，若是时间戳必须是`Number`格式，支持v-model双向绑定	| `Number/String`	| -			| -																																														| -			|
+| `showToolbar`		| 是否显示顶部操作栏																| `Boolean`			| `true`	| -																																														| -			|
+| `title`			| 顶部标题																		| `String`			| -			| -																																														| -			|
+| `mode`			| 展示格式																		| `String`			| `all`		| `all`：年月日时分秒 <br/>`datetime`：年月日时分<br/>`date`：年月日<br/>`year-month`：年月<br/>`month-day`：月日<br/>`datetime`：时分秒<br/>`hour-minute`：时分<br/>`minute-second`：分秒	| -			|
+| `maxDate`			| 可选的最大时间	（支持时间戳、字符串格式），默认为当前时间后十年					| `Number/String`	| -			| -																																														| -			|
+| `minDate`			| 可选的最小时间	（支持时间戳、字符串格式），默认为当前时间前十年					| `Number/String`	| -			| -																																														| -			|
+| `filter`			| 选项过滤函数																	| `Function`		| -			| -																																														| -			|
+| `formatter`		| 选项格式化函数																	| `Function`		| -			| -																																														| -			|
+| `itemHeight`		| 各列中，单个选项的高度（单位px）												| `Number`			| `36`		| -																																														| -			|
+| `cancelText`		| 取消按钮的文字																	| `String`			| `"取消"`	| -																																														| -			|
+| `confirmText`		| 确认按钮的文字																	| `String`			| `"确认"`	| -																																														| -			|
+| `cancelColor`		| 取消按钮的颜色																	| `String`			| `#909193`	| -																																														| -			|
+| `confirmColor`	| 确认按钮的颜色																	| `String`			| `#3c9cff`	| -																																														| -			|
+| `visibleItemCount`| 各每列中可见选项的数量															| `Number`			| `5`		| -																																														| -			|
 
 
 #### Events
-|事件名		|说明				|事件参数						|支持版本	|
-| ---		| ---				| ---							|---		|
-| `change`	| 当选择值变化时触发	| `value`: 当前时间的时间戳值	|-			|
-| `confirm`	| 点击确定按钮		| `value`: 当前时间的时间戳值	|-			|
-| `cancel`	| 点击取消按钮		| -								|-			|
+|事件名		|说明				|事件参数							|支持版本	|
+| ---		| ---				| ---								|---		|
+| `change`	| 当选择值变化时触发	| `value`: 当前时间的时间戳值(毫秒)	|-			|
+| `confirm`	| 点击确定按钮		| `value`: 当前时间的时间戳值(毫秒)	|-			|
+| `cancel`	| 点击取消按钮		| -									|-			|
 
 
 
