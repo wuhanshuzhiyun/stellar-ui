@@ -72,6 +72,26 @@
 import utils from '../../utils/utils.js';
 import { parentMixin } from '../../utils/mixin.js';
 const DEFAULT_SUM_TEXT = '合计';
+/**
+ * ste-table 表格
+ * @description 表格。
+ * @tutorial https://stellar-ui.intecloud.com.cn/pc/index/index?name=ste-table
+ * @property {Array} data 表格数据，默认 []
+ * @property {Boolean} fixed 表头是否定位为fixed	，默认 false
+ * @property {Number|String	} offsetTop 定位fixed时top的距离	 默认 0
+ * @property {Boolean} border 是否带有纵向边框，默认 false
+ * @property {Boolean} stripe 是否斑马纹	，默认 false
+ * @property {String} emptyText 空数据时显示的文本内容，也可以通过 slot="empty" 设置	  默认 '暂无数据'
+ * @property {Boolean} showSummary，是否在表尾显示合计行	，默认 false
+ * @property {String} sumText，合计行第一列的文本，默认 '合计'
+ * @property {Function} summaryMethod 自定义的合计计算方法，默认 null
+ * @property {Function} selectable 仅对 type=selection 的列有效，类型为 Function，Function 的返回值用来决定这一行的 CheckBox 是否可以勾选，默认 null
+ * @event {Function} select 当用户手动勾选数据行的 Checkbox 时触发的事件
+ * @event {Function} selectAll 当用户手动勾选全选 Checkbox 时触发的事件
+ * @event {Function} cellClick 当某个单元格被点击时会触发该事件
+ * @event {Function} rowClick 当某一行被点击时会触发该事件
+ * @event {Function} headerClick 当某一列的表头被点击时会触发该事件
+ */
 export default {
 	group: '展示组件',
 	title: 'Table 表格',

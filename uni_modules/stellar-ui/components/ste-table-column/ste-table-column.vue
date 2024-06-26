@@ -37,6 +37,18 @@
 import RadioIcon from './radio-icon.vue';
 import utils from '../../utils/utils.js';
 import { childMixin } from '../../utils/mixin.js';
+/**
+ * ste-table-column 表格列
+ * @description 表格列组件
+ * @tutorial https://stellar-ui.intecloud.com.cn/pc/index/index?name=ste-table
+ * @property {String} type 对应列的类型
+ * @property {String} label 显示的标题
+ * @property {String} prop 对应列内容的字段名
+ * @property {String} width 对应列的宽度
+ * @property {String} minWidth 对应列的最小宽度
+ * @property {String} align 对齐方式
+ * @property {String} headerAlign，表头对齐方式，若不设置该项，则使用表格的对齐方式
+ */
 export default {
 	name: 'ste-table-column',
 	mixins: [childMixin('ste-table')],

@@ -418,8 +418,8 @@ export default {
 | `border`			| 是否带有纵向边框																						| `Boolean`						| `false`	| -		| -			|
 | `stripe`			| 是否斑马纹																								| `Boolean`						| `false`	| -		| -			|
 | `emptyText`		| 空数据时显示的文本内容，也可以通过 slot="empty" 设置													| `String`						| `暂无数据`	| -		| -			|
-| `showSummary`		| 是否在表尾显示合计行																					| `String`						| `合计`		| -		| -			|
-| `sumText`			| 合计行第一列的文本																						| `String`						| -			| -		|
+| `showSummary`		| 是否在表尾显示合计行																					| `Boolean`						| `false`	| -		| -			|
+| `sumText`			| 合计行第一列的文本																						| `String`						| `合计`		| -		|
 | `summaryMethod`	| 自定义的合计计算方法																					| `Function({ columns, data })`	| `null`	| -		| -			|
 | `selectable`		| 仅对 type=selection 的列有效，类型为 Function，Function 的返回值用来决定这一行的 CheckBox 是否可以勾选	| `Function(row, index)`		| `null`	| -		| -			|
 
@@ -443,14 +443,14 @@ export default {
 
 #### TableColumn Props
 
-| 属性名		| 说明											| 类型		| 默认值		| 可选值																						| 支持版本	|
-| -----			| -----											| -----		| -----		| -----																						| -----		|
-| `type`		| 对应列的类型									| `String`	| `right`	| `checkbox`：显示多选框<br/>`radio`：显示单选框<br/>`index`：显示该行的索引（从 1 开始计算	| -			|
-| `label`		| 显示的标题										| `String`	| -			| -																							| -			|
-| `prop`		| 对应列内容的字段名								| `String`	| -			| -																							| -			|
-| `width`		| 对应列的宽度									| `String`	| -			| -																							| -			|
-| `minWidth`	| 对应列的最小宽度								| `String`	| -			| -																							| -			|
-| `align`		| 对齐方式										| `String`	| `left`	| -																							| -			|
-| `headerAlign`	| 表头对齐方式，若不设置该项，则使用表格的对齐方式	| `String`	| `left`	| `left`：左对齐<br/>`center`：居中对齐<br/>`right`：右对齐									| -			|
+| 属性名		| 说明											| 类型		| 默认值	| 可选值																						| 支持版本	|
+| -----			| -----											| -----		| -----	| -----																						| -----		|
+| `type`		| 对应列的类型									| `String`	| -		| `checkbox`：显示多选框<br/>`radio`：显示单选框<br/>`index`：显示该行的索引（从 1 开始计算	| -			|
+| `label`		| 显示的标题										| `String`	| -		| -																							| -			|
+| `prop`		| 对应列内容的字段名								| `String`	| -		| -																							| -			|
+| `width`		| 对应列的宽度									| `String`	| -		| -																							| -			|
+| `minWidth`	| 对应列的最小宽度								| `String`	| -		| -																							| -			|
+| `align`		| 对齐方式										| `String`	| `left`| -																							| -			|
+| `headerAlign`	| 表头对齐方式，若不设置该项，则使用表格的对齐方式	| `String`	| `left`| `left`：左对齐<br/>`center`：居中对齐<br/>`right`：右对齐									| -			|
 
 {{fuyuwei}}
