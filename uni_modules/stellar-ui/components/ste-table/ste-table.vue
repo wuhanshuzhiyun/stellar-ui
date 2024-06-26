@@ -1,7 +1,8 @@
 <template>
-	<view class="ste-table-root" :class="[cmpRootClass]">
+	<view class="ste-table-root" :class="[cmpRootClass]" :style="[{ '--offset-top': offsetTop }]">
 		<view class="ste-table-content">
 			<!-- <ste-sticky :offsetTop="offsetTop" :disabled="!sticky"> -->
+			<view class="fixed-placeholder" v-if="fixed" />
 			<view class="ste-table-header">
 				<view
 					class="ste-table-cell"
@@ -118,6 +119,10 @@ export default {
 			type: [Function, null],
 			default: null,
 		},
+		fixed: {
+			type: Boolean,
+			default: false,
+		},
 	},
 	data() {
 		return {
@@ -133,8 +138,12 @@ export default {
 		};
 	},
 	computed: {
+		cmpRootStyle() {},
 		cmpRootClass() {
 			let classArr = [];
+			if (this.fixed) {
+				classArr.push('fixed');
+			}
 			if (this.border) {
 				classArr.push('border');
 			}
@@ -313,6 +322,19 @@ $default-border: 2rpx solid #ebebeb;
 
 .ste-table-root {
 	width: 100%;
+
+	&.fixed {
+		.ste-table-content {
+			.fixed-placeholder {
+				width: 100%;
+				height: 80rpx;
+			}
+			.ste-table-header {
+				position: fixed;
+				top: var(--offset-top);
+			}
+		}
+	}
 	&.border {
 		.ste-table-cell {
 			border-right: $default-border;
@@ -335,7 +357,8 @@ $default-border: 2rpx solid #ebebeb;
 		width: 100%;
 		display: table;
 		// border-collapse: collapse;
-		table-layout: fixed;
+		// table-layout: fixed;
+
 		.ste-table-header {
 			width: 100%;
 			display: table-row;

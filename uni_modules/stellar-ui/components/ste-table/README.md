@@ -413,8 +413,8 @@ export default {
 | 属性名			| 说明																									| 类型							| 默认值		| 可选值	| 支持版本	|
 | -----				| -----																									| -----							| -----		| -----	| -----		|
 | `data`			| 表格数据																								| `Array`						| -			| -		| -			|
-| `sticky`			| 是否吸顶																								| `Boolean`						| `false`	| -		| -			|
-| `offsetTop`		| 吸顶时与顶部的距离，单位rpx（默认 0 ）																	| `Number/String`				| -			| -		| -			|
+| `fixed`			| 表头是否定位为fixed																					| `Boolean`						| `false`	| -		| -			|
+| `offsetTop`		| 定位fixed时top的距离																					| `Number/String`				| -			| -		| -			|
 | `border`			| 是否带有纵向边框																						| `Boolean`						| `false`	| -		| -			|
 | `stripe`			| 是否斑马纹																								| `Boolean`						| `false`	| -		| -			|
 | `emptyText`		| 空数据时显示的文本内容，也可以通过 slot="empty" 设置													| `String`						| `暂无数据`	| -		| -			|

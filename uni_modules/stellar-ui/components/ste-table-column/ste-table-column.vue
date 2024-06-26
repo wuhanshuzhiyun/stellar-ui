@@ -1,5 +1,5 @@
 <template>
-	<view class="ste-table-cell" :class="[cmpRootClass]" @click="cellClick">
+	<view class="ste-table-cell" :class="[cmpRootClass]" :style="[cmpRootStyle]" @click="cellClick">
 		<template v-if="type">
 			<view class="cell-box" v-if="type == 'checkbox'" @click="changeCheck">
 				<ste-icon code="&#xe6ae;" color="#E6E6E6" size="32" v-if="!cmpCanCheck" />
@@ -35,6 +35,7 @@
 
 <script>
 import RadioIcon from './radio-icon.vue';
+import utils from '../../utils/utils.js';
 import { childMixin } from '../../utils/mixin.js';
 export default {
 	name: 'ste-table-column',
@@ -84,6 +85,16 @@ export default {
 		};
 	},
 	computed: {
+		cmpRootStyle() {
+			let style = {};
+			if (this.width) {
+				style.width = utils.addUnit(this.width);
+			}
+			if (this.minWidth) {
+				style.minWidth = utils.addUnit(this.minWidth);
+			}
+			return style;
+		},
 		cmpRootClass() {
 			let classArr = [];
 			classArr.push(this.type);
