@@ -511,11 +511,14 @@ export default {
 				}
 			}
 			.tab-item {
-				display: inline-block;
+				display: inline-flex;
+				flex-direction: column;
 				vertical-align: top;
 				width: var(--tabs-tab-width);
 				padding: var(--tabs-tab-padding);
 				padding-bottom: var(--tabs-tab-padding-bottom);
+				justify-content: center;
+				align-items: center;
 				text-align: center;
 				white-space: initial;
 				overflow: hidden;

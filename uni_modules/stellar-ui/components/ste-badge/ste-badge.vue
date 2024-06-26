@@ -49,6 +49,9 @@ export default {
 	group: '基础组件',
 	title: 'Badge 徽标',
 	name: 'ste-badge',
+	options: {
+		virtualHost: true,
+	},
 	props: {
 		content: {
 			type: [String, Number],
