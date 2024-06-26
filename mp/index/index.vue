@@ -298,6 +298,15 @@
 					<ste-image :src="joinSrc('组件图标/r-arrow.png')" :width="32" :height="32" />
 				</view>
 			</view>
+			<view class="com-box" @click="nav('number-keyboard')">
+				<view class="com-title">
+					<ste-image :src="joinSrc('组件图标/numberKeyboard.png')" :width="36" :height="36" />
+					<text>NumberKeyboard 数字键盘</text>
+				</view>
+				<view class="com-arrow">
+					<ste-image :src="joinSrc('组件图标/r-arrow.png')" :width="32" :height="32" />
+				</view>
+			</view>
 			<view class="com-box" @click="nav('read-more')">
 				<view class="com-title">
 					<ste-image :src="joinSrc('组件图标/section.png')" :width="36" :height="36" />
@@ -320,6 +329,15 @@
 				<view class="com-title">
 					<ste-image :src="joinSrc('组件图标/countTo.png')" :width="36" :height="36" />
 					<text>SwipeAction 滑动单元格</text>
+				</view>
+				<view class="com-arrow">
+					<ste-image :src="joinSrc('组件图标/r-arrow.png')" :width="32" :height="32" />
+				</view>
+			</view>
+			<view class="com-box" @click="nav('table')">
+				<view class="com-title">
+					<ste-image :src="joinSrc('组件图标/table.png')" :width="36" :height="36" />
+					<text>Table 表格</text>
 				</view>
 				<view class="com-arrow">
 					<ste-image :src="joinSrc('组件图标/r-arrow.png')" :width="32" :height="32" />

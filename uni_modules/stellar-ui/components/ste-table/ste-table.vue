@@ -1,17 +1,19 @@
 <template>
-	<ste-sticky :offsetTop="offsetTop">
-		<view class="ste-table-root" :class="[cmpRootClass]">
-			<view class="ste-table-content">
-				<view class="ste-table-header">
-					<view
-						class="ste-table-cell"
-						:class="[headerClass(column)]"
-						:style="[headerStyle(column)]"
-						v-for="column in columns"
-						:key="column.prop"
-						@click="headerClick(column, $event)"
-					>
-						<view class="cell-box" v-if="column.type == 'checkbox'">
+	<view class="ste-table-root" :class="[cmpRootClass]">
+		<view class="ste-table-content">
+			<!-- <ste-sticky :offsetTop="offsetTop" :disabled="!sticky"> -->
+			<view class="ste-table-header">
+				<view
+					class="ste-table-cell"
+					:class="[headerClass(column)]"
+					:style="[headerStyle(column)]"
+					v-for="column in columns"
+					:key="column.prop"
+					@click="headerClick(column, $event)"
+				>
+					<view class="cell-box" v-if="column.type == 'checkbox'">
+						<ste-icon code="&#xe6ae;" color="#E6E6E6" size="32" v-if="canCheckStates.length === 0" />
+						<template v-else>
 							<ste-icon
 								code="&#xe6ac;"
 								color="#3491FA"
@@ -27,41 +29,42 @@
 								@click="changeCheckAll"
 							/>
 							<ste-icon code="&#xe6af;" color="#BBBBBB" size="32" v-else @click="changeCheckAll" />
-						</view>
-						<view class="cell-box" v-else>
-							{{ column.label }}
-						</view>
+						</template>
+					</view>
+					<view class="cell-box" v-else>
+						{{ column.label }}
 					</view>
 				</view>
-				<view class="ste-table-body">
+			</view>
+			<!-- </ste-sticky> -->
+			<view class="ste-table-body">
+				<view
+					class="ste-table-row"
+					:class="'row-' + index"
+					v-for="(row, index) in data"
+					:key="index"
+					@click="rowClick(row, $event)"
+				>
+					<slot :row="row"></slot>
+				</view>
+				<view class="ste-table-row sum" v-if="showSummary">
 					<view
-						class="ste-table-row"
-						:class="'row-' + index"
-						v-for="(row, index) in data"
+						class="ste-table-cell"
+						v-for="(column, index) in columns"
 						:key="index"
-						@click="rowClick(row, $event)"
+						:class="[headerClass(column)]"
 					>
-						<slot :row="row"></slot>
-					</view>
-					<view class="ste-table-row sum" v-if="showSummary">
-						<view
-							class="ste-table-cell"
-							v-for="(column, index) in columns"
-							:key="index"
-							:class="[headerClass(column)]"
-						>
-							<view class="cell-box">
-								<view v-if="index === 0" class="sum-header">{{ sumText }}</view>
-								<view v-else>
-									{{ sumData[index] || '-' }}
-								</view>
+						<view class="cell-box">
+							<view v-if="index === 0" class="sum-header">{{ sumText }}</view>
+							<view v-else>
+								{{ sumData[index] || '-' }}
 							</view>
 						</view>
 					</view>
 				</view>
 			</view>
 		</view>
-	</ste-sticky>
+	</view>
 </template>
 
 <script>
@@ -111,6 +114,10 @@ export default {
 			type: [Function, null],
 			default: null,
 		},
+		selectable: {
+			type: [Function, null],
+			default: null,
+		},
 	},
 	data() {
 		return {
@@ -120,6 +127,7 @@ export default {
 			// column组件中的选中状态
 			checkStatesSet: new Set(),
 			checkStates: [],
+			canCheckStates: [],
 			checkAllState: 'none', // none 未选中、indeterminate 半选中、all 全选中
 			selectType: '', // 表格选中的类型 checkbox(多选) 或 radio(单选)
 		};
@@ -192,7 +200,9 @@ export default {
 			this.columns = result;
 			this.calcSum();
 			this.loadSelectType();
+			this.loadCanCheckArr();
 		},
+		// 获取当前表格选中类型(单选或多选)
 		loadSelectType() {
 			this.columns.forEach((e) => {
 				if (e.type) {
@@ -201,9 +211,27 @@ export default {
 				}
 			});
 		},
-		changeCheckAll(state) {
+		// 根据传入的selectable方法获取所有可选择的行
+		loadCanCheckArr() {
+			let tmp = [];
+			this.tableData.forEach((e, index) => {
+				let flag = true;
+				try {
+					flag = this.selectable(e, index);
+				} catch (err) {}
+				if (flag) {
+					tmp.push(index);
+				}
+			});
+			this.canCheckStates = tmp;
+		},
+		// 更改表头选中项的状态
+		changeCheckAll() {
 			if (this.checkAllState !== 'all') {
-				this.$emit('selectAll', this.tableData);
+				this.$emit(
+					'selectAll',
+					this.canCheckStates.map((e) => this.tableData[e])
+				);
 			}
 			this.toggleAllSelection();
 		},
@@ -230,7 +258,7 @@ export default {
 
 			// 处理当前全选框的状态
 			if (this.checkStates.length > 0) {
-				if (this.tableData.length === this.checkStates.length) {
+				if (this.canCheckStates.length === this.checkStates.length) {
 					this.checkAllState = 'all';
 				} else {
 					this.checkAllState = 'indeterminate';
@@ -261,6 +289,7 @@ export default {
 		},
 		toggleRowSelection(row, selected) {
 			let index = this.tableData.findIndex((e) => utils.deepEqual(row, e, ['rowIndex']));
+			if (this.canCheckStates.indexOf(index) <= -1) return;
 			row.rowIndex = index;
 			this.handleCheck(row);
 		},
@@ -268,8 +297,8 @@ export default {
 			if (this.checkAllState === 'all') {
 				this.clearSelection();
 			} else {
-				this.tableData.forEach((e, index) => {
-					this.checkStatesSet.add(index);
+				this.canCheckStates.forEach((e) => {
+					this.checkStatesSet.add(e);
 				});
 				this.checkStates = Array.from(this.checkStatesSet);
 				this.checkAllState = 'all';
