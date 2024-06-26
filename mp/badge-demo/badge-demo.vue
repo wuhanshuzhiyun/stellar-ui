@@ -39,9 +39,7 @@
 						</ste-badge>
 					</view>
 					<view>
-						<ste-badge
-							background="https://image.whzb.com/chain/StellarUI/image/fire.png"
-						>
+						<ste-badge background="https://image.whzb.com/chain/StellarUI/image/fire.png">
 							<view class="avator"></view>
 						</ste-badge>
 					</view>
@@ -145,7 +143,7 @@
 					<view>
 						<ste-badge>
 							<template slot="content">
-								<ste-icon code="&#xe676;" size="14"></ste-icon>
+								<ste-icon code="&#xe67a;" size="20"></ste-icon>
 							</template>
 							<view class="avator"></view>
 						</ste-badge>
@@ -153,7 +151,7 @@
 					<view>
 						<ste-badge>
 							<template slot="content">
-								<ste-icon code="&#xe67b;" size="14"></ste-icon>
+								<ste-icon code="&#xe67b;" size="16"></ste-icon>
 							</template>
 							<view class="avator"></view>
 						</ste-badge>

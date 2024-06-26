@@ -367,7 +367,7 @@ export default {
 
 			// 此月份的最大天数
 			const maxDay = dayjs(`${dateArr[0]}-${dateArr[1]}`).daysInMonth();
-			dateArr[2] = Math.min(maxDay, dateArr[2]);
+			dateArr[2] = Math.min(maxDay, dateArr[2]) || 1;
 
 			selectValue = Number(new Date(dateArr[0], dateArr[1] - 1, dateArr[2], dateArr[3], dateArr[4], dateArr[5]));
 			selectValue = this.correctValue(selectValue);

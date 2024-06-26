@@ -105,10 +105,10 @@
 				<view class="item-block">
 					<view>
 						<ste-button @click="handleClick('按钮')">
-							<text style="display: inline-block">
+							<view class="btn-box-1">
 								<ste-icon code="&#xe68f;" :size="32" color="#FFFFFF" :marginRight="8"></ste-icon>
-							</text>
-							<text>购卡</text>
+								<text>购卡</text>
+							</view>
 						</ste-button>
 					</view>
 					<view>
@@ -159,6 +159,20 @@ export default {
 					.loading-icon-box {
 						.iconfont {
 							animation: ste-roatae 1s linear infinite;
+						}
+					}
+
+					.btn-box-1 {
+						display: flex;
+						align-items: center;
+						justify-content: center;
+						/deep/ .ste-icon-root {
+							/* #ifdef MP */
+							margin-top: 3rpx;
+							/* #endif */
+							/* #ifdef H5 || WEB */
+							margin-top: -2rpx;
+							/* #endif */
 						}
 					}
 				}
