@@ -1,15 +1,23 @@
 <template>
 	<view class="page">
-		<page-nav :autoBack="true" backColor="#000" titleAlignment="2" title="滑块"></page-nav>
+		<page-nav :autoBack="true" backColor="#000" titleAlignment="2" title="签名"></page-nav>
 		<view class="content">
 			<view class="demo-item">
 				<view class="title">基础用法</view>
-				<ste-signature height="300" ref="signature1" />
+				<view class="signature-box">
+					<ste-signature ref="signature" type="jpg" />
+				</view>
 				<ste-button @click="clear">清除</ste-button>
 				<ste-button @click="upstep">上一步</ste-button>
-				<ste-button @click="save">保存</ste-button>
+				<ste-button @click="save">保存并预览</ste-button>
+				<ste-media-preview :show.sync="show" :urls="urls"></ste-media-preview>
 			</view>
-			<image v-if="base64" :src="base64" mode="widthFix" style="width: 100%"></image>
+			<view class="demo-item">
+				<view class="title">画笔颜色和线宽</view>
+				<view class="signature-box">
+					<ste-signature strokeColor="#f0f" lineWidth="1" />
+				</view>
+			</view>
 		</view>
 	</view>
 </template>
@@ -18,20 +26,30 @@
 export default {
 	data() {
 		return {
-			base64: '',
+			show: false,
+			urls: '',
 		};
 	},
 	methods: {
 		clear() {
-			this.$refs.signature1.clear();
+			this.$refs.signature.clear();
 		},
 		upstep() {
-			this.$refs.signature1.back();
+			this.$refs.signature.back();
 		},
 		save() {
-			this.$refs.signature1.save((base64) => {
-				this.base64 = base64;
-			});
+			this.$refs.signature.save(
+				(base64) => {
+					this.urls = [base64];
+					this.show = true;
+				},
+				(err) => {
+					uni.showToast({
+						title: err,
+						icon: 'none',
+					});
+				}
+			);
 		},
 	},
 };
@@ -40,7 +58,11 @@ export default {
 .page {
 	.content {
 		.demo-item {
-			.item-block {
+			.signature-box {
+				width: 100%;
+				height: 300rpx;
+				background-color: #f5f5f5;
+				margin-bottom: 30rpx;
 			}
 		}
 	}

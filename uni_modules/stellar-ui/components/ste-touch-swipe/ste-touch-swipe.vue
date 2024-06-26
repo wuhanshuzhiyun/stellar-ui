@@ -173,20 +173,20 @@ export default {
 			immediate: true,
 		},
 		dataIndex() {
-			if (!this.children.length) return;
+			if (!this.cmpChildrenLength) return;
 			this.$nextTick(async () => {
 				await this.getBoxSize();
 				this.setTransform();
 			});
 		},
 		children() {
-			if (!this.children.length) return;
+			if (!this.cmpChildrenLength) return;
 			this.$nextTick(async () => {
 				await this.getBoxSize();
 			});
 		},
 		cmpItemLefts() {
-			if (!this.children.length) return;
+			if (!this.cmpChildrenLength) return;
 			this.$nextTick(async () => {
 				this.setTransform();
 			});

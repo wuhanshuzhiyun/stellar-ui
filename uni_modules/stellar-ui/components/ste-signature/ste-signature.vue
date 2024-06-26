@@ -23,6 +23,22 @@
 
 <script>
 import utils from '../../utils/utils';
+/**
+ * ste-signature 签名
+ * @description 签名组件
+ * @tutorial https://stellar-ui.intecloud.com.cn/pc/index/index?name=ste-signature
+ * @property {String} customClass 自定义 class
+ * @property {Number} lineWidth 线条的宽度
+ * @property {String} strokeColor 线条颜色，支持 rgb，rgba，hex，hsl，hsla，颜色名称等格式
+ * @property {String} type 保存图片类型
+ * @value png 默认
+ * @value jpg
+ * @property {String|Number} width 宽度,单位rpx
+ * @property {String|Number} height 高度,单位rpx
+ * @event {Function} start 开始签名事件
+ * @event {Function} signing 正在签名事件（指某次笔画进行中）
+ * @event {Function} end 结束签名事件
+ */
 export default {
 	group: '表单组件',
 	title: 'Signature 签名',
@@ -79,11 +95,11 @@ export default {
 	methods: {
 		clear() {
 			this.strokes = [];
-			this.drawAll();
+			this.drawStrokes();
 		},
 		back() {
 			this.strokes.pop();
-			this.drawAll();
+			this.drawStrokes();
 		},
 		async save(callback, error) {
 			if (!this.strokes.length) {
@@ -115,27 +131,25 @@ export default {
 			this.ctx.setLineCap('round');
 			this.ctx.setStrokeStyle(this.strokeColor); // 设置线颜色为黑色
 			this.ctx.setLineWidth(this.lineWidth); // 设置线宽
-			this.drawAll();
+			this.drawStrokes();
 		},
-		// 画图
-		drawAll(ctx = this.ctx) {
-			// 清除画布
+		drawStrokes(ctx = this.ctx) {
 			this.ctx.clearRect(0, 0, 1920, 1080);
 			if (!this.strokes?.length) {
-				ctx.stroke(); // 进行绘制
-				ctx.draw(true); // 执行绘制操作
+				ctx.stroke();
+				ctx.draw(true);
 				return;
 			}
 			this.strokes.forEach((stroke) => {
 				if (!stroke.length) return;
 				ctx.beginPath();
-				ctx.moveTo(stroke[0].x, stroke[0].y); // 移动到起始点
+				ctx.moveTo(stroke[0].x, stroke[0].y);
 				stroke.forEach(({ x, y }, index) => {
 					if (index == 0) return;
-					ctx.lineTo(x, y); // 结束点坐标
+					ctx.lineTo(x, y);
 				});
-				ctx.stroke(); // 进行绘制
-				ctx.draw(true); // 执行绘制操作
+				ctx.stroke();
+				ctx.draw(true);
 			});
 		},
 		drawStrokeing(ctx = this.ctx) {
@@ -144,10 +158,10 @@ export default {
 			ctx.beginPath();
 			const end = this.strokeing[length - 1];
 			const start = this.strokeing[length - 2] || end;
-			ctx.moveTo(start.x, start.y); // 移动到起始点
-			ctx.lineTo(end.x, end.y); // 结束点坐标
-			ctx.stroke(); // 进行绘制
-			ctx.draw(true); // 执行绘制操作
+			ctx.moveTo(start.x, start.y);
+			ctx.lineTo(end.x, end.y);
+			ctx.stroke();
+			ctx.draw(true);
 		},
 		onTouchStart(e) {
 			// #ifdef MP
@@ -157,6 +171,7 @@ export default {
 			this.strokeing = [this.getH5MousePosition(e)];
 			// #endif
 			this.drawStrokeing();
+			this.$emit('start');
 		},
 		onTouchMove(e) {
 			if (!this.strokeing?.length) return;
@@ -167,10 +182,12 @@ export default {
 			this.strokeing.push(this.getH5MousePosition(e));
 			// #endif
 			this.drawStrokeing();
+			this.$emit('signing');
 		},
 		onTouchEnd(e) {
 			this.strokes.push(this.strokeing);
 			this.strokeing = [];
+			this.$emit('end');
 		},
 
 		// #ifdef H5
