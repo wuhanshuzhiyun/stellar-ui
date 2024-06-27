@@ -7,10 +7,10 @@
 		@click="clickRoot"
 	>
 		<view class="ste-tour-view" :style="[dataStyle]"></view>
-		<view class="ste-tour-message" :style="[messageStyle]" @click.stop="true">
+		<view class="ste-tour-message" :style="[messageStyle]">
 			<view class="message-arrows" :style="[arrowsStyle]" />
 			<view class="message-content">
-				<view class="message-head" v-if="showTitleBar">
+				<view class="message-head" v-if="showTitleBar" @click.stop="true">
 					<view class="head-title">{{ cmpStep.title }}</view>
 					<view class="head-close" @click="close">
 						<ste-icon code="&#xe67b;" size="30" />
@@ -18,12 +18,12 @@
 				</view>
 				<view class="message-content-text">
 					<slot :item="cmpStep">
-						<view class="message-text">
+						<view class="message-text" @click.stop="true">
 							{{ cmpStep.message }}
 						</view>
 					</slot>
 				</view>
-				<view class="message-step-footer" v-if="cmpShowFooter">
+				<view class="message-step-footer" @click.stop="true" v-if="cmpShowFooter">
 					<view class="step-num">{{ dataCurrent + 1 }}/{{ steps.length }}</view>
 					<view class="step-btns">
 						<ste-button
