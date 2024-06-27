@@ -116,7 +116,7 @@ export default {
 		position: relative;
 		padding-top: 200rpx;
 		margin-top: -200rpx;
-		margin-bottom: 20rpx;
+		// margin-bottom: 20rpx;
 
 		text {
 			cursor: pointer;

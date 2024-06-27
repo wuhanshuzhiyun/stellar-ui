@@ -10,6 +10,12 @@
 						<ste-read-more>{{ moreStr }}</ste-read-more>
 					</view>
 					<view class="more-block">
+						<view class="title">间距和字号</view>
+						<ste-read-more>
+							<text style="font-size: 35rpx; letter-spacing: 6rpx">{{ moreStr }}</text>
+						</ste-read-more>
+					</view>
+					<view class="more-block">
 						<view class="title">演示效果</view>
 						<ste-read-more>{{ moreStr2 }}</ste-read-more>
 					</view>
@@ -83,7 +89,7 @@ export default {
 				.more-block {
 					background-color: #fff;
 					border-radius: 16rpx;
-					padding: 24rpx 24rpx 24rpx 24rpx;
+					padding: 24rpx 24rpx 20rpx 24rpx;
 
 					color: #666666;
 
