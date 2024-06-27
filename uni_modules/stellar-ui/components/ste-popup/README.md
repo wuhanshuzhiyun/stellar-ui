@@ -113,6 +113,7 @@ export default {
 | ---			| ---										| ---				| ---		| ---							| ---		|
 | `show`		| 是否显示弹出层,使用`sync`修饰符来双向绑定	| `Boolean`			| `false`	| -								| -			|
 | `backGround`	| 内容容器的背景色							| `String`			| `#ffffff`	| -								| -			|
+| `showMask`	| 是否显示遮罩								| `Boolean`			| `true`	| -								| -			|
 | `isMaskClick`	| 是否可以点击遮罩层关闭						| `Boolean`			| `true`	| -								| -			|
 | `width`		| 内容区宽度									| `Number/String`	| `auto`	| -								| -			|
 | `height`		| 内容区高度									| `Number/String`	| `auto`	| -								| -			|

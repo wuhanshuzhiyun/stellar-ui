@@ -29,7 +29,7 @@ const DEFAULT_BORDER_RADIUS = 32;
 /**
  * ste-popup 弹出层
  * @description 弹出层组件
- * @tutorial https://stellar-ui.intecloud.com.cn//pc/index/index?name=ste-popup
+ * @tutorial https://stellar-ui.intecloud.com.cn/pc/index/index?name=ste-popup
  * @property {Boolean} show 是否显示弹出层,使用sync修饰符来双向绑定 默认 false
  * @property {String} backgroundColor 内容容器的背景色 默认 #ffffff
  * @property {Boolean} isMaskClick 是否可以点击遮罩层关闭 默认 true
@@ -65,6 +65,11 @@ export default {
 		backgroundColor: {
 			type: String,
 			default: '#ffffff',
+		},
+		// 是否显示遮罩
+		showMask: {
+			type: Boolean,
+			default: true,
 		},
 		// 蒙版点击是否关闭弹窗
 		isMaskClick: {
@@ -140,6 +145,7 @@ export default {
 			return {
 				zIndex: this.zIndex,
 				display: this.pageDisplay,
+				backgroundColor: this.showMask ? 'rgba(0, 0, 0, 0.6)' : 'transparent',
 				'--content-border-radius': utils.formatPx(this.round ? DEFAULT_BORDER_RADIUS : 0),
 				'--content-height': utils.addUnit(this.height / 2),
 			};
@@ -268,7 +274,6 @@ export default {
 	height: 100vh;
 	width: 100vw;
 	overflow: hidden;
-	background-color: rgba(0, 0, 0, 0.6);
 	position: fixed;
 	left: 0;
 	top: 0;
@@ -294,8 +299,8 @@ export default {
 	position: absolute;
 	.close-icon-box {
 		position: absolute;
-		right: 18rpx;
-		top: 18rpx;
+		right: 24rpx;
+		top: 24rpx;
 		display: flex;
 	}
 	&.center {
