@@ -29,6 +29,12 @@ export default {
 		};
 	},
 	watch: {
+		children: {
+			handler() {
+				this.init();
+			},
+			immediate: true,
+		},
 		active: {
 			handler(v) {
 				if (this.dataActive !== v) this.dataActive = v;
@@ -49,15 +55,13 @@ export default {
 			this.scrollType = 'init';
 			this.setScrollTopByIndex(this.dataActive);
 		},
+
 	},
 	computed: {
 		cmpRootStyle() {
 			const style = { '--scroll-to-height': utils.formatPx(this.height) };
 			return style;
 		},
-	},
-	mounted() {
-		this.init();
 	},
 	methods: {
 		init() {
@@ -91,7 +95,7 @@ export default {
 			clearTimeout(this._scrollTypeTimeout);
 			this._scrollTypeTimeout = setTimeout(() => {
 				this.scrollType = 'init';
-			}, 100);
+			}, 150);
 		},
 		setScrollTopByIndex(index) {
 			clearTimeout(this._setScrollTopTimeout);
