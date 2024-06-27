@@ -1,10 +1,11 @@
 {
 	"insetLoader": {
 		"config": {
-			"toast": "<root-portal><ste-toast id='steToast'></ste-toast></root-portal>"
+			"toast": "<root-portal><ste-toast id='steToast'></ste-toast></root-portal>",
+			"msgBox": "<root-portal><ste-message-box id='steMessageBox'></ste-message-box></root-portal>"
 		},
 		// 全局配置  
-		"label": ["toast"],
+		"label": ["toast", "msgBox"],
 		"rootEle": "view"
 	},
 	"pages": [ //pages数组中第一项表示应用启动页，参考：https://uniapp.dcloud.io/collocation/pages

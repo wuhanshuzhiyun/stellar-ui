@@ -11,7 +11,7 @@
 ```
 npm install ste-vue-inset-loader --save-dev
 ```
-2. 配置 `page.json` 信息
+2. 配置 `pages.json` 信息
 ```
 "insetLoader": {
 	"config": {
