@@ -11,14 +11,14 @@
 				<ste-tour :show.sync="show" :steps="steps"></ste-tour>
 			</view>
 			<view class="demo-item">
-				<view class="title">位置偏移量</view>
+				<view class="title">位置偏移和插槽</view>
 				<view id="button-2" class="button-box">
 					<ste-button @click="show2 = true">描述位置偏移</ste-button>
 				</view>
 				<ste-tour :show.sync="show2" :steps="steps2" :offset="[20, 10]"></ste-tour>
 				<br />
 				<view
-					id="button-6"
+					id="button-5"
 					style="
 						border: 1px solid #ddd;
 						width: 120rpx;
@@ -28,11 +28,11 @@
 						text-align: center;
 						margin-left: 60rpx;
 					"
-					@click="show6 = true"
+					@click="show5 = true"
 				>
-					异形
+					插槽
 				</view>
-				<ste-tour :show.sync="show6" :steps="steps6" :offset="[-20, -30]" messageBg="transparent" radius="60">
+				<ste-tour :show.sync="show5" :steps="steps5" :offset="[-20, -30]" messageBg="transparent" radius="60">
 					<image
 						src="https://image.whzb.com/chain/StellarUI/component-icons/tour.png"
 						mode="widthFix"
@@ -57,24 +57,6 @@
 				</view>
 				<ste-tour :show.sync="show4" :steps="steps4" :mask="false"></ste-tour>
 			</view>
-			<view class="demo-item">
-				<view class="title">插槽自定义样式</view>
-				<view id="button-5" class="button-box">
-					<ste-button @click="show5 = true">插槽自定义内容</ste-button>
-				</view>
-				<ste-tour :show.sync="show5" :steps="steps5">
-					<template v-slot="{ item }">
-						<view style="padding: 24rpx">
-							<image
-								src="https://image.whzb.com/chain/StellarUI/image/banner1.png"
-								mode="widthFix"
-								style="width: 300rpx"
-							></image>
-							<text style="color: red">{{ item.message }}</text>
-						</view>
-					</template>
-				</ste-tour>
-			</view>
 		</view>
 	</view>
 </template>
@@ -87,8 +69,6 @@ export default {
 			steps: [{ message: '点这里', target: 'button' }],
 			show2: false,
 			steps2: [{ message: '点这里', target: 'button-2' }],
-			show6: false,
-			steps6: [{ message: '点这里', target: 'button-6' }],
 			show3: false,
 			steps3: [
 				{ title: '步骤1', message: '先点这里', target: 'step-1' },
