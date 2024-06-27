@@ -87,4 +87,16 @@
 			</div>
 		</div>
 	</div>
+	<div class="item">
+		<div class="top">
+			<img src="https://image.whzb.com/chain/StellarUI/头像/数智云巡店助手.png"></img>
+		</div>
+		<div class="bottom">
+			<img src="https://image.whzb.com/chain/StellarUI/头像/数智云巡店助手头像.png"></img>
+			<div class="info">
+				<p class="title">数智云巡店助手</p>
+				<p class="desc">建立一套连锁超市巡店助手系统，以满足社超总部、区域经理、区域督导的巡店需求，结合门店自查统计，社超营运中心通过巡店助手系统提供的支持数据，更好，更优，服务于社超店铺经营，从而实现武汉中百便利店有限公司整体经营利润的提升。</p>
+			</div>
+		</div>
+	</div>
 </div>
