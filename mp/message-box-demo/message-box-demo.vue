@@ -5,20 +5,58 @@
 			<view class="demo-item">
 				<view class="title">基础使用</view>
 				<view class="item-block">
-					<view style="width: 100%">
-						<!-- <ste-button :mode="100">打开弹框</ste-button> -->
-						<!-- <ste-message-box></ste-message-box> -->
+					<view>
+						<ste-button @click="msgBox">提示</ste-button>
 					</view>
 				</view>
 			</view>
 			<view class="demo-item">
-				<view class="title">使用</view>
+				<view class="title">带图标</view>
 				<view class="item-block">
-					<view style="width: 100%">
-						<ste-button :mode="100" @click="click1">打开1</ste-button>
+					<view>
+						<ste-button @click="msgBoxIcon1">图标1</ste-button>
 					</view>
 					<view>
-						<ste-button :mode="100" @click="click2">打开2</ste-button>
+						<ste-button @click="msgBoxIcon2">图标2</ste-button>
+					</view>
+					<view>
+						<ste-button @click="msgBoxIcon3">图标3</ste-button>
+					</view>
+				</view>
+			</view>
+			<view class="demo-item">
+				<view class="title">自定义按钮</view>
+				<view class="item-block">
+					<view>
+						<ste-button @click="msgBoxBtn1">按钮文字</ste-button>
+					</view>
+					<view>
+						<ste-button @click="msgBoxBtn2">按钮颜色</ste-button>
+					</view>
+					<view>
+						<ste-button @click="msgBoxBtn3">无取消按钮</ste-button>
+					</view>
+				</view>
+			</view>
+			<view class="demo-item">
+				<view class="title">带输入框</view>
+				<view class="item-block">
+					<view>
+						<ste-button @click="msgBoxInput">输入框</ste-button>
+					</view>
+				</view>
+			</view>
+			<view class="demo-item">
+				<view class="title">回调事件</view>
+				<view class="item-block">
+					<view>
+						<ste-button @click="msgBoxCallback1">取消</ste-button>
+					</view>
+					<view>
+						<ste-button @click="msgBoxCallback2">确认</ste-button>
+					</view>
+					<view>
+						<ste-button @click="msgBoxCallback3">完成</ste-button>
 					</view>
 				</view>
 			</view>
@@ -32,27 +70,88 @@ export default {
 	},
 	created() {},
 	methods: {
-		click1() {
-			this.showToast({
-				title: '提示内容',
-				duration: 1500,
-				mask: true,
+		msgBox() {
+			this.showMsgBox({
+				title: '提示',
+				content: '确认删除订单吗？',
 			});
 		},
-		click2() {
+		msgBoxIcon1() {
 			this.showMsgBox({
-				title: '你好',
-				content: '你真的好吗',
-				// editable: true,
+				title: '提示',
+				icon: 'info',
+			});
+		},
+		msgBoxIcon2() {
+			this.showMsgBox({
+				title: '提示',
+				icon: 'success',
+			});
+		},
+		msgBoxIcon3() {
+			this.showMsgBox({
+				title: '提示',
 				icon: 'error',
-				confirm: (v) => {
-					console.log('点击了确认', v);
+			});
+		},
+		msgBoxBtn1() {
+			this.showMsgBox({
+				title: '提示',
+				content: '确认删除订单吗？',
+				cancelText: '算了',
+				confirmText: '删吧',
+			});
+		},
+		msgBoxBtn2() {
+			this.showMsgBox({
+				title: '提示',
+				content: '确认删除订单吗？',
+				cancelColor: '#e1e',
+				confirmColor: '#a8ae1e',
+			});
+		},
+		msgBoxBtn3() {
+			this.showMsgBox({
+				title: '提示',
+				content: '确认删除订单吗？',
+				showCancel: false,
+			});
+		},
+		msgBoxInput() {
+			this.showMsgBox({
+				title: '提示',
+				content: '确认删除订单吗？',
+				editable: true,
+				placeholderText: '请输入',
+			});
+		},
+		msgBoxCallback1() {
+			this.showMsgBox({
+				title: '提示',
+				cancel: () => {
+					this.showToast({
+						title: '点击了取消',
+					});
 				},
-				cancel: (v) => {
-					console.log('点击了取消', v);
+			});
+		},
+		msgBoxCallback2() {
+			this.showMsgBox({
+				title: '提示',
+				confirm: () => {
+					this.showToast({
+						title: '点击了确认',
+					});
 				},
-				complete: (v) => {
-					console.log('弹框完成', v);
+			});
+		},
+		msgBoxCallback3() {
+			this.showMsgBox({
+				title: '提示',
+				complete: () => {
+					this.showToast({
+						title: '弹框完成',
+					});
 				},
 			});
 		},

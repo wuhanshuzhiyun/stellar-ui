@@ -27,10 +27,7 @@ function useSteMsgBox() {
 	return {
 		/*打开弹窗*/
 		showMsgBox(params) {
-			// 关闭前面的弹窗
-			$state.openBegin = false;
-			// 关闭系统的弹窗
-			uni.hideToast();
+			console.log('params is ', params)
 			setTimeout(() => {
 				$state.openBegin = true;
 				$state.title = params.title ?? DEFAULT_CONFIG.title;

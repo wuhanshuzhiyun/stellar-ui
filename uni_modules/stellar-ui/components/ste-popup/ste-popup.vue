@@ -126,7 +126,6 @@ export default {
 	data() {
 		return {
 			pageDisplay: 'none',
-			contentOpacity: 0,
 			animationData: null,
 			overlayAnimationData: null,
 			animationProp: { duration: this.duration, timingFunction: 'ease-out' },
@@ -220,7 +219,6 @@ export default {
 		// 打开弹窗时的动画
 		async beginAnimation() {
 			this.pageDisplay = 'flex';
-			this.contentOpacity = 1;
 			await utils.sleep(50);
 			let animation = uni.createAnimation(this.animationProp);
 			let overlayAnimation = uni.createAnimation(this.animationProp);
@@ -260,7 +258,6 @@ export default {
 			this.animationData = animation.export();
 
 			setTimeout(() => {
-				this.contentOpacity = 0;
 				this.pageDisplay = 'none';
 				this.showContent = false;
 			}, this.duration);

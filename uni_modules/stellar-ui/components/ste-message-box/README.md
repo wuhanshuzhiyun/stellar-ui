@@ -55,6 +55,112 @@ steMsgBox.showMsgBox();
 ```
 
 ### 代码演示
+#### 基础使用
+可在标题(`title`)和内容(`content`)中使用`\n`来实现换行
+```
+this.showMsgBox({
+	title: '提示',
+	content: '确认删除订单吗？',
+});
+```
+
+#### 带图标
+- 内置三种图标类型：`info`、`success`、`error`
+- 当显示图标时，内容(`content`)会失效，只显示标题(`title`)
+```
+msgBoxIcon1() {
+	this.showMsgBox({
+		title: '提示',
+		icon: 'info',
+	});
+},
+msgBoxIcon2() {
+	this.showMsgBox({
+		title: '提示',
+		icon: 'success',
+	});
+},
+msgBoxIcon3() {
+	this.showMsgBox({
+		title: '提示',
+		icon: 'error',
+	});
+},
+```
+
+#### 自定义按钮
+```
+msgBoxBtn1() {
+	this.showMsgBox({
+		title: '提示',
+		content: '确认删除订单吗？',
+		cancelText: '算了',
+		confirmText: '删吧',
+	});
+},
+msgBoxBtn2() {
+	this.showMsgBox({
+		title: '提示',
+		content: '确认删除订单吗？',
+		cancelColor: '#e1e',
+		confirmColor: '#a8ae1e',
+	});
+},
+msgBoxBtn3() {
+	this.showMsgBox({
+		title: '提示',
+		content: '确认删除订单吗？',
+		showCancel: false,
+	});
+},
+```
+
+#### 显示输入框
+当显示输入框时，内容(`content`)将不显示
+```
+msgBoxInput() {
+	this.showMsgBox({
+		title: '提示',
+		content: '确认删除订单吗？',
+		editable: true,
+		placeholderText: '请输入',
+	});
+},
+```
+
+#### 回调事件
+```
+msgBoxCallback1() {
+	this.showMsgBox({
+		title: '提示',
+		cancel: () => {
+			this.showToast({
+				title: '点击了取消',
+			});
+		},
+	});
+},
+msgBoxCallback2() {
+	this.showMsgBox({
+		title: '提示',
+		confirm: () => {
+			this.showToast({
+				title: '点击了确认',
+			});
+		},
+	});
+},
+msgBoxCallback3() {
+	this.showMsgBox({
+		title: '提示',
+		complete: () => {
+			this.showToast({
+				title: '弹框完成',
+			});
+		},
+	});
+},
+```
 
 ### API
 #### 组件属性(Props)

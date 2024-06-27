@@ -1,6 +1,12 @@
 <template>
-	<view class="ste-message-box-root" :style="[cmpRootStyle]" :class="[cmpRootClass]" v-if="show">
-		<view class="ste-message-box-content">
+	<view
+		class="ste-message-box-root"
+		:style="[cmpRootStyle]"
+		:class="[cmpRootClass]"
+		:animation="maskAnimationData"
+		v-if="show"
+	>
+		<view class="ste-message-box-content" :animation="animationData">
 			<view class="content-box">
 				<view class="icon-box" v-if="icon">
 					<ste-icon :code="cmpIconCode" color="#999999" size="45"></ste-icon>
@@ -35,6 +41,8 @@ import utils from '../../utils/utils.js';
 import useSteMsgBox from './ste-message-box.js';
 let steMsgBox = useSteMsgBox();
 let $state = steMsgBox.$state;
+const DURATION = 200;
+const ANIMATION_PROP = { duration: DURATION, timingFunction: 'ease-out' };
 const ICON_OBJ = {
 	info: '&#xe67d;',
 	success: '&#xe67a;',
@@ -63,8 +71,6 @@ export default {
 	name: 'ste-message-box',
 	data() {
 		return {
-			pageShow: true,
-			show: false,
 			title: '确认删除订单？',
 			content: '',
 			icon: '',
@@ -80,7 +86,11 @@ export default {
 			cancel: null,
 			complete: null,
 			// 内部值
+			pageShow: true,
+			show: false,
 			inputValue: '',
+			animationData: null,
+			maskAnimationData: null,
 			iconObj: {
 				info: '&#xe67d;',
 				success: '&#xe67a;',
@@ -89,19 +99,17 @@ export default {
 		};
 	},
 	created() {
-		// console.log('message box created');
 		this.pageShow = true;
 	},
 	destroyed() {
-		// console.log('message box destroyed');
 		this.pageShow = false;
 		steMsgBox.hideMsgBox();
 	},
 	computed: {
 		cmpRootStyle() {
 			let style = {
-				'--cancel-color': $state.cancelColor,
-				'--confirm-color': $state.confirmColor,
+				'--cancel-color': this.cancelColor,
+				'--confirm-color': this.confirmColor,
 			};
 			return style;
 		},
@@ -109,6 +117,9 @@ export default {
 			let classArr = [];
 			if (this.icon) {
 				classArr.push('icon-type');
+			}
+			if (!this.content) {
+				classArr.push('no-content');
 			}
 			return classArr.join(' ');
 		},
@@ -129,23 +140,46 @@ export default {
 					this.icon = $state.icon;
 					this.cancelText = $state.cancelText || this.cancelText;
 					this.confirmText = $state.confirmText || this.confirmText;
-					this.showCancel = $state.showCancel || this.showCancel;
+					this.confirmColor = $state.confirmColor || this.confirmColor;
+					this.showCancel = $state.showCancel === false ? false : this.showCancel;
+					this.cancelColor = $state.cancelColor || this.cancelColor;
 					this.editable = $state.editable || this.editable;
 					this.placeholderText = $state.placeholderText || this.placeholderText;
 
 					this.confirm = $state.confirm;
 					this.cancel = $state.cancel;
 					this.complete = $state.complete;
-
-					this.show = newVal;
+					console.log('$state. is ', $state, this.showCancel);
+					this.showBox();
 				} else {
-					this.show = false;
+					this.closeBox();
 				}
 			},
-			immediate: true,
+			// immediate: true,
 		},
 	},
 	methods: {
+		async showBox() {
+			this.show = true;
+			await utils.sleep(50);
+			let animation = uni.createAnimation(ANIMATION_PROP);
+			let maskAnimation = uni.createAnimation(ANIMATION_PROP);
+			maskAnimation.opacity(1).step();
+			animation.scale(1).step();
+			this.animationData = animation.export();
+			this.maskAnimationData = maskAnimation.export();
+		},
+		closeBox() {
+			let animation = uni.createAnimation(ANIMATION_PROP);
+			let maskAnimation = uni.createAnimation(ANIMATION_PROP);
+			maskAnimation.opacity(0).step({ duration: DURATION });
+			animation.scale(0).step();
+			this.animationData = animation.export();
+			this.maskAnimationData = maskAnimation.export();
+			setTimeout(() => {
+				this.show = false;
+			}, DURATION);
+		},
 		handleInput(e) {
 			this.inputValue = e.detail.value;
 		},
@@ -186,6 +220,15 @@ export default {
 		}
 	}
 
+	&.no-content {
+		.ste-message-title {
+			padding-bottom: 32rpx !important;
+		}
+		.msg {
+			padding: 0 !important;
+		}
+	}
+
 	.ste-message-box-content {
 		background: #ffffff;
 		border-radius: 16rpx;
@@ -194,6 +237,7 @@ export default {
 		max-width: 504rpx;
 		display: inline-flex;
 		flex-direction: column;
+		transform: scale(0);
 		.content-box {
 			.icon-box {
 				padding-top: 4rpx;
