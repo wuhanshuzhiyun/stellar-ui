@@ -219,7 +219,7 @@ export default {
 						case 'top':
 							messageStyle.bottom = `${_bottom + height + _y + (arrowsWidth - 5)}px`;
 							arrowsStyle.bottom = `-${arrowsWidth}px`;
-							arrowsStyle.borderColor = '#fff transparent transparent';
+							arrowsStyle.borderColor = `${this.messageBg} transparent transparent`;
 
 							break;
 						case 'bottom':
@@ -298,7 +298,6 @@ export default {
 		z-index: 1002;
 		border-radius: var(--ste-tour-radius);
 		display: none;
-		padding: 20rpx 24rpx;
 		box-shadow: var(--ste-tour-message-shadow);
 		.message-arrows {
 			position: absolute;
@@ -316,8 +315,8 @@ export default {
 				display: flex;
 				justify-content: space-between;
 				align-items: center;
-				margin-bottom: 20rpx;
 				min-width: 360rpx;
+				padding: 20rpx 24rpx;
 				.head-title {
 					height: 60rpx;
 					line-height: 60rpx;
@@ -333,13 +332,16 @@ export default {
 				}
 			}
 			.message-content-text {
+				.message-text {
+					padding: 20rpx 24rpx;
+				}
 			}
 
 			.message-step-footer {
 				display: flex;
 				justify-content: space-between;
 				align-items: center;
-				margin-top: 20rpx;
+				padding: 20rpx 24rpx;
 				min-width: 360rpx;
 				.step-num {
 					font-size: 24rpx;

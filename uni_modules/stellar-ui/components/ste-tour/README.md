@@ -64,6 +64,43 @@ export default {
 };
 </script>
 ```
+- 异形插槽可以通过`messageBg`属性将默认背景改为透明，然后通过插槽自定义背景样式，实现自定义描述内容。
+```html
+<template>
+	<view
+		id="button-6"
+		style="
+			border: 1px solid #ddd;
+			width: 120rpx;
+			height: 120rpx;
+			line-height: 120rpx;
+			border-radius: 60rpx;
+			text-align: center;
+			margin-left: 60rpx;
+		"
+		@click="show6 = true"
+	>
+		异形
+	</view>
+	<ste-tour :show.sync="show6" :steps="steps6" :offset="[-20, -30]" messageBg="transparent" radius="60">
+		<image
+			src="https://image.whzb.com/chain/StellarUI/component-icons/tour.png"
+			mode="widthFix"
+			style="width: 630rpx"
+		></image>
+	</ste-tour>
+</template>
+<script>
+export default {
+	data(){
+		return{
+			show6: false,
+			steps6: [{ message: '点这里', target: 'button-2' }],
+		}
+	},
+};
+</script>
+```
 
 ### 多步骤，显示标题栏
 - 属性`offset`用于设置位置偏移量，数组形式，数组中两个元素分别表示横纵方向上的偏移量
@@ -122,12 +159,14 @@ export default {
 	</view>
 	<ste-tour :show.sync="show5" :steps="steps5">
 		<template v-slot="{ item }">
-			<image
-				src="https://image.whzb.com/chain/StellarUI/image/banner1.png"
-				mode="widthFix"
-				style="width: 300rpx"
-			></image>
-			<text style="color: red">{{ item.message }}</text>
+			<view style="padding: 24rpx">
+				<image
+					src="https://image.whzb.com/chain/StellarUI/image/banner1.png"
+					mode="widthFix"
+					style="width: 300rpx"
+				></image>
+				<text style="color: red">{{ item.message }}</text>
+			</view>
 		</template>
 	</ste-tour>
 <script>
