@@ -143,7 +143,7 @@ export default {
 					this.confirmColor = $state.confirmColor || this.confirmColor;
 					this.showCancel = $state.showCancel === false ? false : this.showCancel;
 					this.cancelColor = $state.cancelColor || this.cancelColor;
-					this.editable = $state.editable || this.editable;
+					this.editable = $state.editable === false ? false : this.editable;
 					this.placeholderText = $state.placeholderText || this.placeholderText;
 
 					this.confirm = $state.confirm;
