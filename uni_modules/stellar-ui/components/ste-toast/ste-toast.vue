@@ -7,7 +7,11 @@
 						<ste-image :src="image" :width="72" :height="72" display="block"></ste-image>
 					</block>
 					<block v-else>
-						<ste-icon v-if="icon != 'loading'" :code="cmpIcon" :size="72"></ste-icon>
+						<ste-icon
+							v-if="icon != 'loading'"
+							:code="cmpIcon"
+							:size="icon != 'error' ? 72 : 72 * 0.8"
+						></ste-icon>
 						<ste-loading v-else :size="72" color="#FFFFFF"></ste-loading>
 					</block>
 				</view>
