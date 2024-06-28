@@ -2,19 +2,15 @@
 	<view class="ste-table-cell" :class="[cmpRootClass]" :style="[cmpRootStyle]" @click="cellClick">
 		<template v-if="type">
 			<view class="cell-box" v-if="type == 'checkbox'" @click="changeCheck">
-				<ste-icon code="&#xe6ae;" color="#E6E6E6" size="32" v-if="!cmpCanCheck" />
+				<check-box-icon :disabled="cmpDisableCheck" :readonly="cmpReadonlyCheck" :checked="cmpShowCheck" />
+				<!-- 				<ste-icon code="&#xe6ae;" color="#E6E6E6" size="32" v-if="!cmpCanCheck" />
 				<template v-else>
 					<ste-icon code="&#xe6ac;" color="#3491FA" size="32" v-if="cmpShowCheck" />
 					<ste-icon code="&#xe6af;" color="#BBBBBB" size="32" v-else />
-				</template>
+				</template> -->
 			</view>
 			<view class="cell-box" v-if="type == 'radio'" @click="changeCheck">
-				<radio-icon :disabled="!cmpCanCheck" :check="cmpShowCheck"></radio-icon>
-				<!-- <ste-icon code="&#xe6b2;" color="#E6E6E6" size="32" v-if="!cmpCanCheck" />
-				<template>
-					<ste-icon code="&#xe6b5;" size="32" v-if="cmpShowCheck" />
-					<ste-icon code="&#xe6b1;" color="#BBBBBB" size="32" v-else />
-				</template> -->
+				<radio-icon :disabled="!cmpCanCheck" :checked="cmpShowCheck" />
 			</view>
 			<view class="cell-box" v-if="type == 'index'">
 				{{ row.rowIndex + 1 }}
@@ -35,6 +31,7 @@
 
 <script>
 import RadioIcon from './radio-icon.vue';
+import CheckBoxIcon from './checkbox-icon.vue';
 import utils from '../../utils/utils.js';
 import { childMixin } from '../../utils/mixin.js';
 /**
@@ -52,7 +49,7 @@ import { childMixin } from '../../utils/mixin.js';
 export default {
 	name: 'ste-table-column',
 	mixins: [childMixin('ste-table')],
-	components: { RadioIcon },
+	components: { RadioIcon, CheckBoxIcon },
 	options: {
 		virtualHost: true,
 	},
@@ -127,16 +124,23 @@ export default {
 			}
 			return false;
 		},
-		cmpCanCheck() {
+		cmpDisableCheck() {
 			if (this.parent.selectable) {
-				return this.parent.selectable(this.row, this.row.rowIndex);
+				return !this.parent.selectable(this.row, this.row.rowIndex);
 			}
-			return true;
+			return false;
+		},
+		cmpReadonlyCheck() {
+			if (this.parent.readable) {
+				return this.parent.readable(this.row, this.row.rowIndex);
+			}
+			return false;
 		},
 	},
 	methods: {
 		changeCheck() {
-			if (this.cmpCanCheck) {
+			console.log('changeCheck');
+			if (!this.cmpDisableCheck && !this.cmpReadonlyCheck) {
 				this.parent.handleCheck(this.row);
 			}
 		},

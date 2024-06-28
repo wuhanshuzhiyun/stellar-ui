@@ -7,7 +7,7 @@
 <script>
 export default {
 	props: {
-		check: {
+		checked: {
 			type: Boolean,
 			default: false,
 		},
@@ -22,8 +22,8 @@ export default {
 	computed: {
 		cmpRootClass() {
 			let classArr = [];
-			if (this.check) {
-				classArr.push('check');
+			if (this.checked) {
+				classArr.push('checked');
 			}
 			if (this.disabled) {
 				classArr.push('disabled');
@@ -45,7 +45,7 @@ $default-color: #3491fa;
 	border: 2rpx solid #dddddd;
 	position: relative;
 
-	&.check {
+	&.checked {
 		border: none;
 		background-color: rgba(52, 145, 250, 0.2);
 		.icon-1 {

@@ -86,6 +86,7 @@ const DEFAULT_SUM_TEXT = '合计';
  * @property {String} sumText，合计行第一列的文本，默认 '合计'
  * @property {Function} summaryMethod 自定义的合计计算方法，默认 null
  * @property {Function} selectable 仅对 type=selection 的列有效，类型为 Function，Function 的返回值用来决定这一行的 CheckBox 是否可以勾选，默认 null
+ * @property {Function} readable 仅对 type=selection 的列有效，类型为 Function，Function 的返回值用来决定这一行的 CheckBox 是否可以勾选，默认 null
  * @event {Function} select 当用户手动勾选数据行的 Checkbox 时触发的事件
  * @event {Function} selectAll 当用户手动勾选全选 Checkbox 时触发的事件
  * @event {Function} cellClick 当某个单元格被点击时会触发该事件
@@ -136,6 +137,10 @@ export default {
 			default: null,
 		},
 		selectable: {
+			type: [Function, null],
+			default: null,
+		},
+		readable: {
 			type: [Function, null],
 			default: null,
 		},
@@ -244,11 +249,10 @@ export default {
 		loadCanCheckArr() {
 			let tmp = [];
 			this.tableData.forEach((e, index) => {
-				let flag = true;
-				try {
-					flag = this.selectable(e, index);
-				} catch (err) {}
-				if (flag) {
+				let selectFlag = this.selectable ? this.selectable(e, index) : true;
+				let readonlyFlag = this.readable ? !this.readable(e, index) : true;
+
+				if (selectFlag && readonlyFlag) {
 					tmp.push(index);
 				}
 			});

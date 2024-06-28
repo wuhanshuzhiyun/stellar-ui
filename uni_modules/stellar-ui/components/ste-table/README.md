@@ -297,12 +297,37 @@ export default {
 	<template v-slot="{ row }">
 		<ste-table-column label="姓名" prop="name"></ste-table-column>
 		<ste-table-column label="生日" prop="birth"></ste-table-column>
-		<ste-table-column label="性别" prop="sex"></ste-table-column>
-		<ste-table-column label="操作">
+		<ste-table-column label="操作1" align="center">
+			<view style="display: flex; justify-content: center">
+				<ste-icon
+					code="&#xe6b0;"
+					color="red"
+					size="32"
+					v-if="row.name === '张三'"
+				></ste-icon>
+				<ste-icon code="&#xe6b0;" size="32" v-else></ste-icon>
+			</view>
+		</ste-table-column>
+		<ste-table-column label="操作2">
 			<ste-button :mode="100" @click="handleEdit">编辑</ste-button>
 		</ste-table-column>
 	</template>
 </ste-table>
+<script />
+export default {
+	data() {
+		return {
+			rows: [
+				{ name: '张三', birth: '2023.12.31', sex: '男' },
+				{ name: '李四', birth: '2024.01.01', sex: '女' },
+				{ name: '王五', birth: '2024.11.01', sex: '女' },
+				{ name: '赵六', birth: '2024.11.01', sex: '女' },
+				{ name: '王七', birth: '2024.01.01', sex: '男' },
+			],
+		}
+	}
+}
+<script>
 ```
 
 #### 自定义边框样式
@@ -342,7 +367,21 @@ export default {
 		</template>
 	</ste-table>
 </view>
-
+<script />
+export default {
+	data() {
+		return {
+			rows: [
+				{ name: '张三', birth: '2023.12.31', sex: '男' },
+				{ name: '李四', birth: '2024.01.01', sex: '女' },
+				{ name: '王五', birth: '2024.11.01', sex: '女' },
+				{ name: '赵六', birth: '2024.11.01', sex: '女' },
+				{ name: '王七', birth: '2024.01.01', sex: '男' },
+			],
+		}
+	}
+}
+<script>
 <style lang="scss">
 .my-table {
 	
@@ -422,6 +461,7 @@ export default {
 | `sumText`			| 合计行第一列的文本																						| `String`						| `合计`		| -		|
 | `summaryMethod`	| 自定义的合计计算方法																					| `Function({ columns, data })`	| `null`	| -		| -			|
 | `selectable`		| 仅对 type=selection 的列有效，类型为 Function，Function 的返回值用来决定这一行的 CheckBox 是否可以勾选	| `Function(row, index)`		| `null`	| -		| -			|
+| `readonly`		| 仅对 type=selection 的列有效，类型为 Function，Function 的返回值用来决定这一行的 CheckBox 是否只读		| `Function(row, index)`		| `null`	| -		| -			|
 
 #### Table Events
 |事件名			|说明											|事件参数																|支持版本	|

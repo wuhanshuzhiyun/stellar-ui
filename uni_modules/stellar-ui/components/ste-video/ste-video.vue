@@ -260,7 +260,7 @@ export default {
 		},
 		handleFull(state) {
 			if (state) {
-				this.video.requestFullScreen();
+				this.video.requestFullScreen({ direction: 90 });
 			} else {
 				this.firstFullDone = true;
 				this.video.exitFullScreen();

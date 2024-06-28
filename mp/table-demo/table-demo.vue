@@ -97,10 +97,10 @@
 				</view>
 			</view>
 			<view class="demo-item">
-				<view class="title">禁用某项选择</view>
+				<view class="title">禁用和只读选项</view>
 				<view class="item-block">
 					<view style="width: 100%">
-						<ste-table :data="rows" :selectable="selectableFun">
+						<ste-table :data="rows" :selectable="selectableFun" :readable="readonlyFun">
 							<template v-slot="{ row }">
 								<ste-table-column label="选择" type="checkbox"></ste-table-column>
 								<ste-table-column label="姓名" prop="name"></ste-table-column>
@@ -185,8 +185,18 @@
 							<template v-slot="{ row }">
 								<ste-table-column label="姓名" prop="name"></ste-table-column>
 								<ste-table-column label="生日" prop="birth"></ste-table-column>
-								<ste-table-column label="性别" prop="sex"></ste-table-column>
-								<ste-table-column label="操作">
+								<ste-table-column label="操作1" align="center">
+									<view style="display: flex; justify-content: center">
+										<ste-icon
+											code="&#xe6b0;"
+											color="red"
+											size="32"
+											v-if="row.name === '张三'"
+										></ste-icon>
+										<ste-icon code="&#xe6b0;" size="32" v-else></ste-icon>
+									</view>
+								</ste-table-column>
+								<ste-table-column label="操作2">
 									<ste-button :mode="100" @click="handleEdit">编辑</ste-button>
 								</ste-table-column>
 							</template>
@@ -318,6 +328,9 @@ export default {
 		},
 		selectableFun(row, index) {
 			return row.name !== '张三';
+		},
+		readonlyFun(row, index) {
+			return row.name === '李四';
 		},
 		handleEdit() {
 			console.log('编辑了');
