@@ -78,42 +78,42 @@ export default {
 		},
 		msgBoxIcon1() {
 			this.showMsgBox({
-				title: '提示',
+				title: '提示1',
 				icon: 'info',
 			});
 		},
 		msgBoxIcon2() {
 			this.showMsgBox({
-				title: '提示',
+				title: '提示2',
 				icon: 'success',
 			});
 		},
 		msgBoxIcon3() {
 			this.showMsgBox({
-				title: '提示',
+				title: '提示3',
 				icon: 'error',
 			});
 		},
 		msgBoxBtn1() {
 			this.showMsgBox({
-				title: '提示',
-				content: '确认删除订单吗？',
+				title: '提示1',
+				content: '确认删除订单吗1？',
 				cancelText: '算了',
 				confirmText: '删吧',
 			});
 		},
 		msgBoxBtn2() {
 			this.showMsgBox({
-				title: '提示',
-				content: '确认删除订单吗？',
+				title: '提示2',
+				content: '确认删除订单吗2？',
 				cancelColor: '#e1e',
 				confirmColor: '#a8ae1e',
 			});
 		},
 		msgBoxBtn3() {
 			this.showMsgBox({
-				title: '提示',
-				content: '确认删除订单吗？',
+				title: '提示3',
+				content: '确认删除订单吗3？',
 				showCancel: false,
 			});
 		},
@@ -127,7 +127,7 @@ export default {
 		},
 		msgBoxCallback1() {
 			this.showMsgBox({
-				title: '提示',
+				title: '提示1',
 				cancel: () => {
 					this.showToast({
 						title: '点击了取消',
@@ -137,7 +137,7 @@ export default {
 		},
 		msgBoxCallback2() {
 			this.showMsgBox({
-				title: '提示',
+				title: '提示2',
 				confirm: () => {
 					this.showToast({
 						title: '点击了确认',
@@ -147,7 +147,7 @@ export default {
 		},
 		msgBoxCallback3() {
 			this.showMsgBox({
-				title: '提示',
+				title: '提示3',
 				complete: () => {
 					this.showToast({
 						title: '弹框完成',

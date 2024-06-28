@@ -141,9 +141,9 @@ export default {
 					this.cancelText = $state.cancelText || this.cancelText;
 					this.confirmText = $state.confirmText || this.confirmText;
 					this.confirmColor = $state.confirmColor || this.confirmColor;
-					this.showCancel = $state.showCancel === false ? false : this.showCancel;
+					this.showCancel = $state.showCancel === false ? false : true;
 					this.cancelColor = $state.cancelColor || this.cancelColor;
-					this.editable = $state.editable === false ? false : this.editable;
+					this.editable = $state.editable ?? false;
 					this.placeholderText = $state.placeholderText || this.placeholderText;
 
 					this.confirm = $state.confirm;
