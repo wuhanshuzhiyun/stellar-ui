@@ -15,14 +15,8 @@ export default {
 	data() {
 		return {
 			list: [
-				[
-					{ label: '选项1-1', value: '11' },
-					{ label: '选项1-2', value: '12' },
-				],
-				[
-					{ label: '选项2-1', value: '21' },
-					{ label: '选项2-2', value: '22' },
-				],
+				{ label: '选项1-1', value: '11' },
+				{ label: '选项1-2', value: '12' },
 			],
 		};
 	},

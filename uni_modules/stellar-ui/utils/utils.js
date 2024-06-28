@@ -143,7 +143,8 @@ let utils = {
 			try {
 				uni
 					.createSelectorQuery()
-					.in(component)[selectFn](selectors)
+					.in(component)
+					[selectFn](selectors)
 					.boundingClientRect((data) => {
 						resolve(data);
 					})
@@ -390,10 +391,14 @@ let utils = {
 				if (typeof otherAttributes === 'function') {
 					_otherAttributes = _otherAttributes(item);
 				}
-				return Object.assign({
-					parentNode,
-					depth
-				}, _otherAttributes, item);
+				return Object.assign(
+					{
+						parentNode,
+						depth,
+					},
+					_otherAttributes,
+					item
+				);
 			});
 			return result;
 		};
@@ -478,7 +483,7 @@ let utils = {
 			const result = [];
 			tree.forEach((n) => {
 				const node = {
-					...n
+					...n,
 				};
 				if (nodeValues.includes(node[valueKey])) {
 					result.push(node);
@@ -506,8 +511,8 @@ let utils = {
 			return false; // 其中一个为null，或者不是对象
 		}
 
-		const keys1 = Object.keys(obj1).filter(key => !ignoreKeys.includes(key));
-		const keys2 = Object.keys(obj2).filter(key => !ignoreKeys.includes(key));
+		const keys1 = Object.keys(obj1).filter((key) => !ignoreKeys.includes(key));
+		const keys2 = Object.keys(obj2).filter((key) => !ignoreKeys.includes(key));
 
 		if (keys1.length !== keys2.length) {
 			return false; // 忽略指定key后，对象属性数量不相等
@@ -524,7 +529,19 @@ let utils = {
 		}
 
 		return true;
-	}
+	},
+	/**
+	 * 获取数字列表（包含头尾）。
+	 * @param {number} min - 最小值。默认为1。
+	 * @param {number} max - 最大值。默认为10。
+	 * @param {number} step - 步长。默认为1。
+	 */
+	getNumbers(min, max, step) {
+		const minNum = Number(min || 1),
+			maxNum = Number(max || 10),
+			stepNum = Number(step || 1);
+		return Array.from({ length: Math.ceil((maxNum - minNum + 1) / stepNum) }, (_, i) => minNum + i * stepNum);
+	},
 };
 
 export default utils;

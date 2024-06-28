@@ -28,7 +28,7 @@ function getMonthList(minDate, maxDate) {
 /**
  * 获取每个月的天数
  */
-function getMonthDays(year, month) {
+export function getMonthDays(year, month) {
 	// 是否是闰年
 	const isLeapYear = (year % 4 === 0 && year % 100 !== 0) || year % 400 === 0;
 	// 每个月的天数
