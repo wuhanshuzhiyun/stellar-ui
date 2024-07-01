@@ -179,11 +179,13 @@ export default {
 
 	.head-is-dot {
 		top: 12rpx;
-		margin-bottom: 0 0 !important;
-		margin-top: 14rpx 0 !important;
+		margin-bottom: 0 !important;
+		margin-top: 14rpx !important;
 
 		.ste-step-line {
 			top: 14rpx !important;
+			left: auto !important;
+			right: auto !important;
 		}
 
 		.ste-step-icon {

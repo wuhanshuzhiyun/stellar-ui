@@ -138,7 +138,7 @@ export default {
 	margin-right: var(--margin-right) !important;
 	transform: translateY(calc(var(--margin-bottom) - var(--margin-top))) !important ;
 
-	height: calc(var(--size)) !important;
+	// height: calc(var(--size)) !important;
 	width: calc(var(--size)) !important;
 	line-height: calc(var(--size) - var(--border) * 2) !important;
 	font-family: var(--font-family) !important;
