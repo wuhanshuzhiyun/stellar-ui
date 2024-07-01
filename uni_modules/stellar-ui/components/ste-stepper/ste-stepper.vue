@@ -1,11 +1,14 @@
 <template>
 	<view class="ste-stepper-root" :style="[cmpStyle]">
 		<ste-button v-if="theme != 'add'" :rootStyle="cmpLeftButtonStyle" @click="minus" :disabled="cmpDisableMinus">
-			<ste-icon
-				code="&#xe67c;"
-				:size="(theme == 'card' ? cmpBtnSize : cmpBtnSize * 0.8) * 0.65"
-				:color="cmpDisableMinus ? '#cccccc' : theme == 'line' ? '#000000' : mainColor"
-			></ste-icon>
+			<view class="button-icon">
+				<ste-icon
+					code="&#xe67c;"
+					:size="(theme == 'card' ? cmpBtnSize : cmpBtnSize * 0.8) * 0.65"
+					:color="cmpDisableMinus ? '#cccccc' : theme == 'line' ? '#000000' : mainColor"
+					:inlineBlock="false"
+				></ste-icon>
+			</view>
 		</ste-button>
 		<view v-if="theme != 'add'" class="input" :style="[cmpInputStyle]">
 			<input
@@ -17,11 +20,14 @@
 			/>
 		</view>
 		<ste-button v-if="theme != 'add'" :rootStyle="cmpRightButtonStyle" @click="plus" :disabled="cmpDisablePlus">
-			<ste-icon
-				code="&#xe67e;"
-				:size="(theme == 'card' ? cmpBtnSize : cmpBtnSize * 0.8) * 0.65"
-				:color="theme != 'line' ? '#ffffff' : theme == 'line' && cmpDisablePlus ? '#cccccc' : '#000000'"
-			></ste-icon>
+			<view class="button-icon">
+				<ste-icon
+					code="&#xe67e;"
+					:size="(theme == 'card' ? cmpBtnSize : cmpBtnSize * 0.8) * 0.65"
+					:color="theme != 'line' ? '#ffffff' : theme == 'line' && cmpDisablePlus ? '#cccccc' : '#000000'"
+					:inlineBlock="false"
+				></ste-icon>
+			</view>
 		</ste-button>
 		<ste-badge
 			v-else
@@ -35,11 +41,14 @@
 			:max="badgeMax"
 		>
 			<ste-button :rootStyle="cmpRightButtonStyle" @click="plus" :disabled="cmpDisablePlus">
-				<ste-icon
-					code="&#xe67e;"
-					:size="(theme == 'card' ? cmpBtnSize : cmpBtnSize * 0.8) * 0.65"
-					:color="theme != 'line' ? '#ffffff' : theme == 'line' && cmpDisablePlus ? '#cccccc' : '#000000'"
-				></ste-icon>
+				<view class="button-icon">
+					<ste-icon
+						code="&#xe67e;"
+						:size="(theme == 'card' ? cmpBtnSize : cmpBtnSize * 0.8) * 0.65"
+						:color="theme != 'line' ? '#ffffff' : theme == 'line' && cmpDisablePlus ? '#cccccc' : '#000000'"
+						:inlineBlock="false"
+					></ste-icon>
+				</view>
 			</ste-button>
 		</ste-badge>
 	</view>
@@ -348,6 +357,12 @@ export default {
 			height: 100%;
 			font-size: 28rpx;
 		}
+	}
+
+	.button-icon {
+		display: flex;
+		justify-content: center;
+		align-items: center;
 	}
 }
 </style>

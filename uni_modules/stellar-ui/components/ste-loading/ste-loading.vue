@@ -125,7 +125,7 @@ export default {
 		}
 		.i:before {
 			display: block;
-			width: 12%;
+			width: 10%;
 			height: 25%;
 			margin: 0 auto;
 			background-color: currentColor;
