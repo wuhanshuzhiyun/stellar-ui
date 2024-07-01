@@ -163,7 +163,7 @@ export default {
 	display: flex;
 
 	.ste-step-line {
-		height: 100% !important;
+		height: calc(4rpx + 100%) !important;
 		width: 2rpx !important;
 	}
 
