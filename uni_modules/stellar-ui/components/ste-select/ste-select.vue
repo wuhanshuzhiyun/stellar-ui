@@ -1,33 +1,57 @@
 <template>
 	<view class="ste-select-root" :style="[cmpRootStyle]">
-		<view class="select-content" :style="[contentStyle]">
-			<view v-if="selected && selected.length">
+		<view class="select-content" :style="[contentStyle]" @click="openOptions">
+			<view v-if="confirmValue && confirmValue.length">
 				<slot>
 					<view class="content-text">
-						<text v-for="(value, index) in selected" :key="value">{{ getLabelByValue(index, value) }}</text>
+						<block v-if="mode === 'default'">
+							<text v-for="(value, index) in confirmValue" :key="value">{{ getLabelByValue(index, value) }}</text>
+						</block>
+						<text>{{ getDateByValue() }}</text>
 					</view>
 				</slot>
 			</view>
 			<view class="placeholder-text" v-else>{{ placeholder }}</view>
 		</view>
-		<view class="select-options" :style="[cmpOptionsStyle]">
-			<scroll-view scroll-y class="options-col" v-for="(col, index) in cmpList" :key="index">
-				<view
-					class="options-item"
-					:class="{ active: selected.indexOf(item[valueKey]) !== -1 }"
-					v-for="(item, i) in col"
-					:key="item[valueKey]"
-					@click="onSelect(index, item)"
-				>
-					{{ item[labelKey] }}
-				</view>
-			</scroll-view>
+		<view class="options-content" :style="[optionsStyle]">
+			<view class="select-options" :style="[cmpOptionsStyle]">
+				<block v-if="mode === 'default'">
+					<scroll-view scroll-y class="options-col" v-for="(col, index) in cmpList" :key="index">
+						<view
+							class="options-item"
+							v-for="(item, i) in col"
+							:key="item[valueKey]"
+							:class="{ active: active(index, item) }"
+							@click="onSelect(index, item)"
+						>
+							{{ item[labelKey] }}
+						</view>
+					</scroll-view>
+				</block>
+				<block v-else>
+					<picker-view style="height: 600rpx" :value="cmpDateValue" @change="onDateChange">
+						<picker-view-column v-for="(col, index) in cmpList" :key="index">
+							<view class="time-item" v-for="(item, i) in col" :key="item">
+								<text>
+									{{ item }}
+								</text>
+								<text v-if="dateUnit">{{ cmpDateUnits[index] }}</text>
+							</view>
+						</picker-view-column>
+					</picker-view>
+				</block>
+			</view>
+			<view class="options-btns">
+				<view class="options-cancel" @click="cancel">取消</view>
+				<view class="options-confirm" @click="confirm">确定</view>
+			</view>
 		</view>
 	</view>
 </template>
 
 <script>
 import utils from '../../utils/utils';
+import { formatDate, getDefaultDate, getFormatStr } from './defaultDate';
 export default {
 	props: {
 		value: {
@@ -37,6 +61,22 @@ export default {
 		list: {
 			type: Array,
 			default: () => [],
+		},
+		mode: {
+			type: String,
+			default: () => 'default',
+		},
+		minDate: {
+			type: [Number, String, Date],
+			default: () => null, // 最小日期，格式为'YYYY-MM-DD'
+		},
+		maxDate: {
+			type: [Number, String, Date],
+			default: () => null, // 最大日期，格式为'YYYY-MM-DD'
+		},
+		dateUnit: {
+			type: Boolean,
+			default: () => true,
 		},
 		width: {
 			type: [Number, String],
@@ -78,8 +118,10 @@ export default {
 	data() {
 		return {
 			selected: [], // 当前选中的值
+			confirmValue: [], // 确定按钮的值，用于多选模式下保存选中的值，用于单选模式下保存选中的值（仅单列时生效）
 			showOptions: false, // 是否显示下拉选项
 			contentStyle: {},
+			optionsStyle: {}, // 选项框样式，用于控制选项框的宽度和高度等属性
 		};
 	},
 	computed: {
@@ -90,22 +132,104 @@ export default {
 				'--ste-select-background': this.background,
 			};
 		},
+
 		cmpList() {
-			// 处理list数据
-			if (!this.list || !this.list.length) return [];
+			if (this.mode !== 'default') {
+				let v = this.selected;
+				if (!v.length) {
+					v = new Date();
+				}
+				return getDefaultDate(v, this.mode, this.minDate, this.maxDate);
+			}
+			if (!this.list || !this.list.length)
+				// 处理list数据
+				return [];
 			if (Array.isArray(this.list[0])) {
 				return this.list;
 			}
 			return [this.list];
 		},
+		cmpDateUnits() {
+			if (['date', 'datetime', 'month'].indexOf(this.mode) !== -1) {
+				return ['年', '月', '日', '时', '分', '秒'];
+			} else {
+				return ['时', '分', '秒'];
+			}
+		},
+		cmpDateValue() {
+			// 处理日期模式下的value值，返回格式为'YYYY-MM-DD'的字符串或数组（多选模式下）
+			if (this.model === 'default') return [];
+			const date = utils.dayjs();
+			let y = date.year(),
+				m = date.month() + 1,
+				d = date.date(),
+				h = date.hour(),
+				i = date.minute(),
+				s = date.second();
+			if (Array.isArray(this.selected)) {
+				if (this.selected[0]) y = this.selected[0];
+				if (this.selected[1]) m = this.selected[1];
+				if (this.selected[2]) d = this.selected[2];
+				if (this.selected[3]) h = this.selected[3];
+				if (this.selected[4]) i = this.selected[4];
+				if (this.selected[5]) s = this.selected[5];
+			} else if (this.selected) {
+				const v = utils.dayjs(this.selected);
+				y = v.year();
+				m = v.month() + 1;
+				d = v.date();
+				h = v.hour();
+				i = v.minute();
+				s = v.second();
+			}
+			const value = [y, m, d, h, i, s];
+			return this.cmpList.map((item, i) => (item.indexOf(value[i]) >= 0 ? item.indexOf(value[i]) : 0));
+		},
 		cmpOptionsStyle() {
 			return {
-				display: this.cmpList?.length ? 'grid' : 'block',
-				gridTemplateColumns: `repeat(${this.cmpList.length || 1}, minmax(100px, 1fr))`,
+				display: this.mode === 'default' && this.cmpList?.length ? 'grid' : 'block',
+				gridTemplateColumns: `repeat(${this.cmpList.length || 1}, 1fr)`,
 			};
 		},
 	},
+	watch: {
+		value: {
+			handler(v) {
+				this.selected = v || []; // 监听value变化，更新selected值
+				this.confirmValue = v || []; // 更新确认值
+			},
+			immediate: true, // 立即执行一次，确保初始化时正确赋值。
+		},
+	},
+	mounted() {},
 	methods: {
+		async openOptions() {
+			if (this.showOptions) {
+				this.showOptions = false; // 关闭选项列表
+				this.contentStyle = {};
+				this.optionsStyle = {};
+			} else {
+				const { width, height, top, left, bottom, right } = await utils.querySelector('.ste-select-root', this);
+				const style = { position: 'fixed', left: `${left}px`, width: `${width}px` };
+				this.showOptions = true; // 打开选项列表
+				this.contentStyle = Object.assign(
+					{ top: `${top}px`, height: `${height}px`, 'box-shadow': '0 0 0 250vh rgba(0,0,0,.5)' },
+					style
+				);
+				this.optionsStyle = Object.assign({ top: `${bottom + 8}px`, display: 'block' }, style);
+			}
+		},
+		cancel() {
+			this.showOptions = false; // 关闭选项列表
+			this.contentStyle = {};
+			this.optionsStyle = {};
+		},
+		confirm() {
+			this.confirmValue = this.selected; // 更新确认值
+			this.showOptions = false; // 关闭选项列表
+			this.contentStyle = {};
+			this.optionsStyle = {};
+		},
 		onSelect(col, item) {
 			if (this.multiple && this.cmpList.length === 1) {
 				// 只有一列选项的时候，多选
@@ -118,6 +242,14 @@ export default {
 			selected[col] = item[this.valueKey];
 			this.selected = selected;
 		},
+		active(index, item) {
+			if (this.cmpList.length > 1) {
+				return this.selected[index] === item[this.valueKey];
+			} else {
+				return this.selected.includes(item[this.valueKey]);
+			}
+		},
+
 		getLabelByValue(index, value) {
 			if (this.multiple && this.cmpList.length === 1) {
 				const item = this.cmpList[0].find((item) => item[this.valueKey] === value);
@@ -126,27 +258,90 @@ export default {
 			const item = this.cmpList[index].find((item) => item[this.valueKey] === value);
 			return item?.[this.labelKey] || '';
 		},
+		getDateByValue() {
+			if (Array.isArray(this.confirmValue)) {
+				return formatDate(this.confirmValue, this.mode);
+			} else {
+				return this.confirmValue;
+			}
+		},
+		onDateChange({ detail: { value } }) {
+			const result = [];
+			value.forEach((i, index) => {
+				result.push(this.cmpList[index][i]);
+			});
+			if (Array.isArray(this.value)) {
+				this.selected = result;
+			} else {
+				this.selected = formatDate(result, this.mode).format(getFormatStr(this.mode));
+			}
+		},
 	},
 };
 </script>
 
 <style lang="scss" scoped>
 .ste-select-root {
-	position: relative;
 	width: var(--ste-select-width);
 	height: var(--ste-select-height);
+	position: relative;
+	background-color: var(--ste-select-background);
 	.select-content {
-		z-index: 998;
+		width: var(--ste-select-width);
+		height: var(--ste-select-height);
+		position: relative;
+		z-index: 997;
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		padding: 0 20rpx; // 调整内边距，以适应不同的选项高度。
+		border-radius: 8rpx;
+		overflow: hidden;
+		.placeholder-text {
+			color: #999999;
+		}
 	}
-	.select-options {
-		max-height: 420rpx;
-		.options-col {
-			height: 100%;
-			.options-item {
-				padding: 12rpx; // 调整选项的padding值，以适应不同的选项高度。
-				&.active {
-					color: #f00;
+	.options-content {
+		display: none;
+		position: absolute;
+		z-index: 998;
+		border-radius: 8rpx;
+		background-color: #fff;
+		overflow: hidden;
+		.select-options {
+			max-height: 696rpx;
+			.options-col {
+				height: 100%;
+				.options-item {
+					padding: 12rpx; // 调整选项的padding值，以适应不同的选项高度。
+					&.active {
+						color: #f00;
+					}
 				}
+			}
+			.time-item {
+				width: 100%;
+				height: 100%;
+				display: flex;
+				align-items: center;
+				justify-content: center;
+			}
+		}
+		.options-btns {
+			width: 100%;
+			height: 96rpx;
+			display: flex;
+			align-items: center;
+			justify-content: space-between;
+			font-size: 28rpx;
+			line-height: 96rpx;
+			.options-cancel {
+				color: #999999;
+				padding: 0 40rpx;
+			}
+			.options-confirm {
+				color: #0090ff;
+				padding: 0 40rpx; // 调整按钮的padding值，以适应不同的选项高度。
 			}
 		}
 	}

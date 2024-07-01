@@ -4,12 +4,17 @@
 		<view class="content">
 			<view class="demo-item">
 				<view class="title">基础用法</view>
-				<ste-select :list="list"></ste-select>
+				<ste-select
+					:list="list"
+					mode="date"
+					minDate="2020-07-12"
+					maxDate="2022-07-12"
+					value="2020-07-21"
+				></ste-select>
 			</view>
 		</view>
 	</view>
 </template>
-
 <script>
 export default {
 	data() {
