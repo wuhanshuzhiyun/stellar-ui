@@ -2,7 +2,7 @@
 	<view class="page">
 		<page-nav :autoBack="true" backColor="#000" titleAlignment="2" title="步骤条"></page-nav>
 		<view class="content">
-			<view style="text-align: center; margin-top: 30rpx; position: sticky; top: 30rpx">
+			<view style="text-align: center; margin-top: 30rpx; position: sticky; top: 30rpx; z-index: 100">
 				<ste-button @click="goToNext">下一步</ste-button>
 			</view>
 			<view class="demo-item">
