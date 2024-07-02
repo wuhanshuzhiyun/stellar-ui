@@ -249,7 +249,7 @@ export default {
 	.ste-message-box-content {
 		background: #ffffff;
 		border-radius: 16rpx;
-		border: 2rpx solid #eeeeee;
+		// border: 2rpx solid #eeeeee;
 		min-width: 400rpx;
 		max-width: 504rpx;
 		display: inline-flex;
