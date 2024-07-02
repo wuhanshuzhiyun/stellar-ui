@@ -1,17 +1,20 @@
 <template>
-	<view class="ste-select-root" :style="[cmpRootStyle]">
-		<view class="select-content" :style="[contentStyle]" @click="openOptions">
+	<view class="ste-select-root" :class="{ open: showOptions }" :style="[cmpRootStyle]">
+		<view class="select-content" :style="[contentStyle]">
 			<view v-if="confirmValue && confirmValue.length">
 				<slot>
 					<view class="content-text">
-						<block v-if="mode === 'default'">
-							<text v-for="(value, index) in confirmValue" :key="value">{{ getLabelByValue(index, value) }}</text>
-						</block>
-						<text>{{ getDateByValue() }}</text>
+						<text v-if="mode === 'default'">{{ getLabelByValue() }}</text>
+						<text v-else>{{ getDateByValue() }}</text>
 					</view>
 				</slot>
 			</view>
 			<view class="placeholder-text" v-else>{{ placeholder }}</view>
+			<view class="open-icon-event" @click="openOptions">
+				<view class="open-icon">
+					<ste-icon code="&#xe676;" size="20" display="block" />
+				</view>
+			</view>
 		</view>
 		<view class="options-content" :style="[optionsStyle]">
 			<view class="select-options" :style="[cmpOptionsStyle]">
@@ -29,7 +32,12 @@
 					</scroll-view>
 				</block>
 				<block v-else>
-					<picker-view style="height: 600rpx" :value="cmpDateValue" @change="onDateChange">
+					<picker-view
+						style="height: 600rpx"
+						indicator-style="height: 43px"
+						:value="cmpDateValue"
+						@change="onDateChange"
+					>
 						<picker-view-column v-for="(col, index) in cmpList" :key="index">
 							<view class="time-item" v-for="(item, i) in col" :key="item">
 								<text>
@@ -55,7 +63,7 @@ import { formatDate, getDefaultDate, getFormatStr } from './defaultDate';
 export default {
 	props: {
 		value: {
-			type: [String, Number, Array], // 支持单选和多选模式，多选模式下value为数组，单选模式下value为字符串或数字
+			type: Array, // 支持单选和多选模式，多选模式下value为数组，单选模式下value为字符串或数字
 			default: () => [], // 默认多选模式，value为空数组，单选模式下value为undefined或null
 		},
 		list: {
@@ -89,6 +97,10 @@ export default {
 		background: {
 			type: String,
 			default: () => '#fff',
+		},
+		optionsWidth: {
+			type: [Number, String],
+			default: () => 'auto', // 选项框宽度，用于控制选项框的宽度和高度等属性，多选模式下生效（仅单列时生效）
 		},
 		placeholder: {
 			type: String,
@@ -160,29 +172,30 @@ export default {
 			// 处理日期模式下的value值，返回格式为'YYYY-MM-DD'的字符串或数组（多选模式下）
 			if (this.model === 'default') return [];
 			const date = utils.dayjs();
+
 			let y = date.year(),
 				m = date.month() + 1,
 				d = date.date(),
 				h = date.hour(),
 				i = date.minute(),
-				s = date.second();
-			if (Array.isArray(this.selected)) {
+				s = date.second(),
+				value = [];
+
+			if (['date', 'datetime', 'month'].indexOf(this.mode) !== -1) {
 				if (this.selected[0]) y = this.selected[0];
 				if (this.selected[1]) m = this.selected[1];
 				if (this.selected[2]) d = this.selected[2];
 				if (this.selected[3]) h = this.selected[3];
 				if (this.selected[4]) i = this.selected[4];
 				if (this.selected[5]) s = this.selected[5];
-			} else if (this.selected) {
-				const v = utils.dayjs(this.selected);
-				y = v.year();
-				m = v.month() + 1;
-				d = v.date();
-				h = v.hour();
-				i = v.minute();
-				s = v.second();
+				value = [y, m, d, h, i, s];
+			} else {
+				if (this.selected[0]) h = this.selected[0];
+				if (this.selected[1]) i = this.selected[1];
+				if (this.selected[2]) s = this.selected[2];
+				value = [h, i, s];
 			}
-			const value = [y, m, d, h, i, s];
+
 			return this.cmpList.map((item, i) => (item.indexOf(value[i]) >= 0 ? item.indexOf(value[i]) : 0));
 		},
 		cmpOptionsStyle() {
@@ -196,7 +209,7 @@ export default {
 		value: {
 			handler(v) {
 				this.selected = v || []; // 监听value变化，更新selected值
-				this.confirmValue = v || []; // 更新确认值
+				this.confirmValue = this.selected;
 			},
 			immediate: true, // 立即执行一次，确保初始化时正确赋值。
 		},
@@ -216,6 +229,7 @@ export default {
 					{ top: `${top}px`, height: `${height}px`, 'box-shadow': '0 0 0 250vh rgba(0,0,0,.5)' },
 					style
 				);
+
 				this.optionsStyle = Object.assign({ top: `${bottom + 8}px`, display: 'block' }, style);
 			}
 		},
@@ -225,7 +239,10 @@ export default {
 			this.optionsStyle = {};
 		},
 		confirm() {
-			this.confirmValue = this.selected; // 更新确认值
+			this.confirmValue = this.selected;
+			this.$emit('input', this.selected);
+			this.$emit('confirm', this.selected); // 触发confirm事件，传递selected值。
+			this.$emit('change', this.selected);
 			this.showOptions = false; // 关闭选项列表
 			this.contentStyle = {};
 			this.optionsStyle = {};
@@ -249,32 +266,29 @@ export default {
 				return this.selected.includes(item[this.valueKey]);
 			}
 		},
-
-		getLabelByValue(index, value) {
-			if (this.multiple && this.cmpList.length === 1) {
-				const item = this.cmpList[0].find((item) => item[this.valueKey] === value);
-				return item?.[this.labelKey] || '';
-			}
-			const item = this.cmpList[index].find((item) => item[this.valueKey] === value);
-			return item?.[this.labelKey] || '';
+		getLabelByValue() {
+			let view = '';
+			this.confirmValue.forEach((value, index) => {
+				if (this.multiple && this.cmpList.length === 1) {
+					const item = this.cmpList[0].find((item) => item[this.valueKey] === value);
+					view += item?.[this.labelKey] || '';
+				} else {
+					const item = this.cmpList[index].find((item) => item[this.valueKey] === value);
+					view += item?.[this.labelKey] || '';
+				}
+			});
+			return view;
 		},
 		getDateByValue() {
-			if (Array.isArray(this.confirmValue)) {
-				return formatDate(this.confirmValue, this.mode);
-			} else {
-				return this.confirmValue;
-			}
+			const v = formatDate(this.confirmValue, this.mode);
+			return v ? v.format(getFormatStr(this.mode)) : '';
 		},
 		onDateChange({ detail: { value } }) {
 			const result = [];
 			value.forEach((i, index) => {
 				result.push(this.cmpList[index][i]);
 			});
-			if (Array.isArray(this.value)) {
-				this.selected = result;
-			} else {
-				this.selected = formatDate(result, this.mode).format(getFormatStr(this.mode));
-			}
+			this.selected = result;
 		},
 	},
 };
@@ -286,6 +300,13 @@ export default {
 	height: var(--ste-select-height);
 	position: relative;
 	background-color: var(--ste-select-background);
+	&.open {
+		.select-content {
+			.open-icon-event > .open-icon {
+				transform: rotate(180deg);
+			}
+		}
+	}
 	.select-content {
 		width: var(--ste-select-width);
 		height: var(--ste-select-height);
@@ -300,6 +321,25 @@ export default {
 		.placeholder-text {
 			color: #999999;
 		}
+		.open-icon-event {
+			width: 60rpx;
+			height: 60rpx;
+			padding: 16rpx;
+			position: absolute;
+			right: 0;
+			top: 50%;
+			transform: translateY(-50%);
+			.open-icon {
+				background-color: #ebebeb; // 设置一个背景颜色，以便在开发过程中能够看到这个元素。
+				border-radius: 16rpx;
+				width: 32rpx;
+				height: 32rpx;
+				display: flex;
+				align-items: center;
+				justify-content: center;
+				transition: 300ms;
+			}
+		}
 	}
 	.options-content {
 		display: none;
@@ -310,6 +350,7 @@ export default {
 		overflow: hidden;
 		.select-options {
 			max-height: 696rpx;
+			padding: 0 40rpx;
 			.options-col {
 				height: 100%;
 				.options-item {
