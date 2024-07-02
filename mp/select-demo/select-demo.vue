@@ -4,23 +4,27 @@
 		<view class="content">
 			<view class="demo-item">
 				<view class="title">基础用法</view>
-				<ste-select :list="list"></ste-select>
+				<ste-select :list="list" mode="date" :value="value" @change="onChange"></ste-select>
 			</view>
 		</view>
 	</view>
 </template>
-
 <script>
 export default {
 	data() {
 		return {
+			value: [],
 			list: [
 				{ label: '选项1-1', value: '11' },
 				{ label: '选项1-2', value: '12' },
 			],
 		};
 	},
-	methods: {},
+	methods: {
+		onChange(v) {
+			console.log('onChange', v);
+		},
+	},
 };
 </script>
 

@@ -1,5 +1,9 @@
-import store from '../../utils/store.js';
+import Vue from 'vue';
 import Vuex from 'vuex';
+
+Vue.use(Vuex);
+console.log('*********** ste-message-box.js ***********');
+const DEFAULT_KEY = '$steMsgBoxKey';
 const DEFAULT_CONFIG = {
 	title: '',
 	content: '',
@@ -14,45 +18,62 @@ const DEFAULT_CONFIG = {
 	success: null,
 	fail: null,
 	complete: null,
-}
+};
 
-let $state = new Vuex.Store({
-	state: {
-		openBegin: false,
-		...DEFAULT_CONFIG,
-	},
-}).state;
+const store = new Vuex.Store({
+	state: {},
+	mutations: {
+		initializeState(state, key) {
+			if (!state[key]) {
+				Vue.set(state, key, {
+					selector: key,
+					openBegin: false,
+					...DEFAULT_CONFIG,
 
-function useSteMsgBox() {
-	return {
-		/*打开弹窗*/
-		showMsgBox(params) {
-			console.log('params is ', params)
-			setTimeout(() => {
-				$state.openBegin = true;
-				$state.title = params.title ?? DEFAULT_CONFIG.title;
-				$state.content = params.content ?? DEFAULT_CONFIG.content;
-				$state.icon = params.icon ?? DEFAULT_CONFIG.icon;
-				$state.showCancel = params.showCancel ?? DEFAULT_CONFIG.showCancel;
-				$state.cancelText = params.cancelText ?? DEFAULT_CONFIG.cancelText;
-				$state.cancelColor = params.cancelColor ?? DEFAULT_CONFIG.cancelColor;
-				$state.confirmText = params.confirmText ?? DEFAULT_CONFIG.confirmText;
-				$state.confirmColor = params.confirmColor ?? DEFAULT_CONFIG.confirmColor;
-				$state.editable = params.editable ?? DEFAULT_CONFIG.editable;
-				$state.placeholderText = params.placeholderText ?? DEFAULT_CONFIG.placeholderText;
-
-				$state.confirm = params.confirm ?? function() {};
-				$state.cancel = params.cancel ?? function() {};
-				$state.complete = params.complete ?? function() {};
-
+				});
+			}
+		},
+		setState(state, {
+			key,
+			params
+		}) {
+			Object.assign(state[key], params);
+		},
+		resetState(state, key) {
+			Object.assign(state[key], {
+				openBegin: false
 			});
 		},
-		/*关闭弹窗*/
-		hideMsgBox() {
-			$state.openBegin = false;
+	},
+});
+
+function useSteMsgBox(key) {
+	key = key ?? DEFAULT_KEY;
+	store.commit('initializeState', key);
+
+	return {
+		showMsgBox(params) {
+			store.commit('setState', {
+				key,
+				params: {
+					...DEFAULT_CONFIG,
+					...params,
+					confirm: params.confirm ?? function() {},
+					cancel: params.cancel ?? function() {},
+					complete: params.complete ?? function() {},
+					openBegin: true
+				}
+			});
 		},
-		/**响应式数据*/
-		$state,
+		hideMsgBox() {
+			store.commit('resetState', key);
+		},
+		$state: store.state[key],
+		$store: store,
 	};
 }
+
 export default useSteMsgBox;
+export {
+	DEFAULT_KEY,
+}

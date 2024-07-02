@@ -37,8 +37,8 @@ Vue.mixin(mixin);
 ```
 5. 在混淆文件`app-mixin.js`里引入组件的`js`文件,将`showToast`和`hideToast`方法混入全局，每个页面通过 `this.` 来使用对应的方法
 ```
-import useMsgBox from '@/uni_modules/stellar-ui/components/ste-message-box/ste-message-box.js';
-let steMsgBox = useMsgBox();
+import useSteMsgBox from '@/uni_modules/stellar-ui/components/ste-message-box/ste-message-box.js';
+let steMsgBox = useSteMsgBox();
 export default {
 	methods: {
 		showMsgBox: steMsgBox.showMsgBox,
@@ -49,8 +49,8 @@ export default {
 ```
 6. js文件中使用
 ```
-import useMsgBox from '@/uni_modules/stellar-ui/components/ste-message-box/ste-message-box.js';
-let steMsgBox = useMsgBox();
+import useSteMsgBox from '@/uni_modules/stellar-ui/components/ste-message-box/ste-message-box.js';
+let steMsgBox = useSteMsgBox();
 steMsgBox.showMsgBox();
 ```
 
@@ -126,6 +126,37 @@ msgBoxInput() {
 		placeholderText: '请输入',
 	});
 },
+```
+
+#### 插槽
+如果提供的弹框内容不满足需求，可以使用插槽自定义弹框内容。
+可以通过指定唯一标识`selector`的方式，在一个页面中使用多个`ste-message-box`，`useSteMsgBox(selector)`会返回一个指定了selector的组件实例。
+```
+<ste-button @click="customClick">插槽</ste-button>
+<ste-message-box selector="myMsgBox">
+	<view style="display: flex; justify-content: center; padding-bottom: 20rpx;width: 504rpx">
+		<ste-rate v-model="rate"></ste-rate>
+	</view>
+</ste-message-box>
+<script>
+import useSteMsgBox from '@/uni_modules/stellar-ui/components/ste-message-box/ste-message-box.js';
+const msgBox = useSteMsgBox('myMsgBox');
+export default {
+	data() {
+		return {
+			rate: 0,
+		}
+	},
+	methods: {
+		customClick() {
+			msgBox.showMsgBox({
+				title: '评分',
+			});
+		},
+	}
+}
+</script>
+
 ```
 
 #### 回调事件

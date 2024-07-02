@@ -13,15 +13,17 @@
 				</view>
 				<view class="ste-message-title">{{ title }}</view>
 				<view class="msg" v-if="!icon">
-					<view class="text" v-if="!editable">{{ content }}</view>
-					<view v-else>
-						<input
-							:value="inputValue"
-							class="ste-message-box-input"
-							:placeholder="placeholderText"
-							@input="handleInput"
-						/>
-					</view>
+					<slot>
+						<view class="text" v-if="!editable">{{ content }}</view>
+						<view v-else>
+							<input
+								:value="inputValue"
+								class="ste-message-box-input"
+								:placeholder="placeholderText"
+								@input="handleInput"
+							/>
+						</view>
+					</slot>
 				</view>
 			</view>
 			<view class="footer">
@@ -37,10 +39,9 @@
 </template>
 
 <script>
+import { mapState } from 'vuex';
 import utils from '../../utils/utils.js';
-import useSteMsgBox from './ste-message-box.js';
-let steMsgBox = useSteMsgBox();
-let $state = steMsgBox.$state;
+import useSteMsgBox, { DEFAULT_KEY } from './ste-message-box.js';
 const DURATION = 200;
 const ANIMATION_PROP = { duration: DURATION, timingFunction: 'ease-out' };
 const ICON_OBJ = {
@@ -69,6 +70,12 @@ export default {
 	group: '展示组件',
 	title: 'MessageBox 弹框',
 	name: 'ste-message-box',
+	props: {
+		selector: {
+			type: String,
+			default: DEFAULT_KEY,
+		},
+	},
 	data() {
 		return {
 			title: '确认删除订单？',
@@ -96,14 +103,17 @@ export default {
 				success: '&#xe67a;',
 				error: '&#xe67b;',
 			},
+			open: false,
+			tmpMsg: null,
 		};
 	},
+	beforeCreate() {},
 	created() {
 		this.pageShow = true;
 	},
 	destroyed() {
 		this.pageShow = false;
-		steMsgBox.hideMsgBox();
+		this.cmpSteMsgBox.hideMsgBox();
 	},
 	computed: {
 		cmpRootStyle() {
@@ -126,13 +136,20 @@ export default {
 		cmpIconCode() {
 			return ICON_OBJ[this.icon] ? ICON_OBJ[this.icon] : ICON_OBJ.info;
 		},
+		cmpSteMsgBox() {
+			if (!this.tmpMsg) {
+				this.tmpMsg = useSteMsgBox(this.selector);
+			}
+			return this.tmpMsg;
+		},
 		openBegin() {
-			return $state.openBegin;
+			return this.cmpSteMsgBox.$state.openBegin;
 		},
 	},
 	watch: {
 		openBegin: {
 			handler(newVal) {
+				let $state = this.tmpMsg.$state;
 				if (newVal) {
 					this.inputValue = '';
 					this.title = $state.title;
@@ -143,13 +160,12 @@ export default {
 					this.confirmColor = $state.confirmColor || this.confirmColor;
 					this.showCancel = $state.showCancel === false ? false : true;
 					this.cancelColor = $state.cancelColor || this.cancelColor;
-					this.editable = $state.editable ?? false;
+					this.editable = $state.editable === false ? false : true;
 					this.placeholderText = $state.placeholderText || this.placeholderText;
 
 					this.confirm = $state.confirm;
 					this.cancel = $state.cancel;
 					this.complete = $state.complete;
-					console.log('$state. is ', $state, this.showCancel);
 					this.showBox();
 				} else {
 					this.closeBox();
@@ -193,7 +209,7 @@ export default {
 		},
 		handleComplete() {
 			this.complete(this.inputValue);
-			steMsgBox.hideMsgBox();
+			this.tmpMsg.hideMsgBox();
 		},
 	},
 };
@@ -213,6 +229,7 @@ export default {
 	align-items: center;
 	touch-action: none;
 	background-color: rgba(0, 0, 0, 0.6);
+	z-index: 99999;
 
 	&.icon-type {
 		.ste-message-title {
@@ -232,7 +249,7 @@ export default {
 	.ste-message-box-content {
 		background: #ffffff;
 		border-radius: 16rpx;
-		border: 2rpx solid #eeeeee;
+		// border: 2rpx solid #eeeeee;
 		min-width: 400rpx;
 		max-width: 504rpx;
 		display: inline-flex;
@@ -262,7 +279,7 @@ export default {
 
 			.msg {
 				padding: 0 32rpx 34rpx 32rpx;
-
+				text-align: center;
 				.text {
 					width: 100%;
 					font-size: 28rpx;
@@ -276,6 +293,7 @@ export default {
 					border-radius: 8px 8px 8px 8px;
 					text-align: center;
 					padding: 0 24rpx;
+					font-size: 28rpx;
 				}
 			}
 		}
