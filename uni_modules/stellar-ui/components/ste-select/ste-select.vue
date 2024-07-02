@@ -4,8 +4,7 @@
 			<view v-if="confirmValue && confirmValue.length">
 				<slot>
 					<view class="content-text">
-						<text v-if="cmpShowDate">{{ getDateByValue() }}</text>
-						<text v-else>{{ getLabelByValue() }}</text>
+						<text>{{ getViewData() }}</text>
 					</view>
 				</slot>
 			</view>
@@ -60,7 +59,7 @@
 
 <script>
 import utils from '../../utils/utils';
-import { formatDate, getDefaultDate, getFormatStr } from './defaultDate';
+import { formatDate, getDateList, getFormatStr, getNowDate } from './defaultDate';
 export default {
 	props: {
 		value: {
@@ -155,7 +154,7 @@ export default {
 				if (!v.length) {
 					v = new Date();
 				}
-				return getDefaultDate(v, this.mode, this.minDate, this.maxDate);
+				return getDateList(v, this.mode, this.minDate, this.maxDate);
 			}
 			if (!this.list || !this.list.length)
 				// 处理list数据
@@ -175,31 +174,7 @@ export default {
 		cmpDateValue() {
 			// 处理日期模式下的value值，返回格式为'YYYY-MM-DD'的字符串或数组（多选模式下）
 			if (!this.cmpShowDate) return [];
-			const date = utils.dayjs();
-
-			let y = date.year(),
-				m = date.month() + 1,
-				d = date.date(),
-				h = date.hour(),
-				i = date.minute(),
-				s = date.second(),
-				value = [];
-
-			if (['date', 'datetime', 'month'].indexOf(this.mode) !== -1) {
-				if (this.selected[0]) y = this.selected[0];
-				if (this.selected[1]) m = this.selected[1];
-				if (this.selected[2]) d = this.selected[2];
-				if (this.selected[3]) h = this.selected[3];
-				if (this.selected[4]) i = this.selected[4];
-				if (this.selected[5]) s = this.selected[5];
-				value = [y, m, d, h, i, s];
-			} else {
-				if (this.selected[0]) h = this.selected[0];
-				if (this.selected[1]) i = this.selected[1];
-				if (this.selected[2]) s = this.selected[2];
-				value = [h, i, s];
-			}
-
+			const value = getNowDate(this.selected, this.mode);
 			return this.cmpList.map((item, i) => (item.indexOf(value[i]) >= 0 ? item.indexOf(value[i]) : 0));
 		},
 		cmpOptionsStyle() {
@@ -226,6 +201,10 @@ export default {
 				this.contentStyle = {};
 				this.optionsStyle = {};
 			} else {
+				if (this.cmpShowDate && this.selected.length === 0) {
+					// 处理日期模式下，selected为空的情况，默认选中当前日期。
+					this.selected = getNowDate(null, this.mode);
+				}
 				const { width, height, top, left, bottom, right } = await utils.querySelector('.ste-select-root', this);
 				const style = { position: 'fixed', left: `${left}px`, width: `${width}px` };
 				this.showOptions = true; // 打开选项列表
@@ -233,7 +212,6 @@ export default {
 					{ top: `${top}px`, height: `${height}px`, 'box-shadow': '0 0 0 250vh rgba(0,0,0,.5)' },
 					style
 				);
-
 				this.optionsStyle = Object.assign({ top: `${bottom + 8}px`, display: 'block' }, style);
 			}
 		},
@@ -268,6 +246,13 @@ export default {
 				return this.selected[index] === item[this.valueKey];
 			} else {
 				return this.selected.includes(item[this.valueKey]);
+			}
+		},
+		getViewData() {
+			if (this.cmpShowDate) {
+				return this.getDateByValue();
+			} else {
+				return this.getLabelByValue();
 			}
 		},
 		getLabelByValue() {

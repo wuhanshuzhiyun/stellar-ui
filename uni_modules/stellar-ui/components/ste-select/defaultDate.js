@@ -24,6 +24,30 @@ export function getFormatStr(mode, unit) {
 }
 
 /**
+ * 获取当前时间
+ * @param {Date|Array|string} defaultDate 默认时间，默认当前时间
+ * @param {"date"|"datetime"|"time"|"month"|"minute"} mode 模式
+ */
+export function getNowDate(defaultDate, mode) {
+	let date = formatDate(defaultDate);
+	if (!date) date = utils.dayjs();
+	let y = date.year(),
+		m = date.month() + 1,
+		d = date.date(),
+		h = date.hour(),
+		i = date.minute(),
+		s = date.second(),
+		value = [];
+
+	if (['date', 'datetime', 'month'].indexOf(mode) !== -1) {
+		value = [y, m, d, h, i, s];
+	} else {
+		value = [h, i, s];
+	}
+	return value;
+}
+
+/**
  * 格式化时间值
  * @param {string | Array | Date} value 时间
  * @param {"date"|"datetime"|"time"|"month"|"minute"} mode 模式
@@ -84,7 +108,7 @@ export function getSeconds() {
  * @param {string} maxDate - 最大值
  * @returns {Object[][]} 默认数据对象
  */
-export function getDefaultDate(value, mode = 'date', minDate = null, maxDate = null) {
+export function getDateList(value, mode = 'date', minDate = null, maxDate = null) {
 	let _v = formatDate(value, mode);
 	const date = utils.dayjs(Date.now());
 	const _value = _v ? _v : date;

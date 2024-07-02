@@ -4,7 +4,7 @@
 		<view class="content">
 			<view class="demo-item">
 				<view class="title">基础用法</view>
-				<ste-select :list="list" mode="minute" :value="value" @change="onChange"></ste-select>
+				<ste-select :list="list" mode="date" :value="value" @change="onChange"></ste-select>
 			</view>
 		</view>
 	</view>
