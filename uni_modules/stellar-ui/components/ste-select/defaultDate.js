@@ -88,18 +88,6 @@ export function getDays(date, min, max) {
 	return Array.from({ length: maxDay - minDay + 1 }, (_, i) => minDay + i);
 }
 
-export function getHours() {
-	return Array.from({ length: 24 }, (_, i) => i);
-}
-
-export function getMinutes() {
-	return Array.from({ length: 60 }, (_, i) => i);
-}
-
-export function getSeconds() {
-	return Array.from({ length: 60 }, (_, i) => i);
-}
-
 /**
  * 获取默认数据。
  * @param {string | Array | Date} value - 默认值
@@ -110,7 +98,7 @@ export function getSeconds() {
  */
 export function getDateList(value, mode = 'date', minDate = null, maxDate = null) {
 	let _v = formatDate(value, mode);
-	const date = utils.dayjs(Date.now());
+	const date = utils.dayjs();
 	const _value = _v ? _v : date;
 	const min = minDate ? utils.dayjs(minDate) : null;
 	const max = maxDate ? utils.dayjs(maxDate) : null;
@@ -118,9 +106,9 @@ export function getDateList(value, mode = 'date', minDate = null, maxDate = null
 	const years = getYears(min, max);
 	const months = getMonths(_value, min, max);
 	const days = getDays(_value, min, max);
-	const hours = getHours();
-	const minutes = getMinutes();
-	const seconds = getSeconds();
+	const hours = Array.from({ length: 24 }, (_, i) => i);
+	const minutes = Array.from({ length: 60 }, (_, i) => i);
+	const seconds = Array.from({ length: 60 }, (_, i) => i);
 
 	const defaultData = []; // 默认数据数组，用于存储所有数据（包括年、月、日、时、分、秒）
 	// 根据模式，将对应的数据添加到defaultData数组中，并返回该数组作为默认数据。

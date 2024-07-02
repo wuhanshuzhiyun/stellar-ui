@@ -40,4 +40,10 @@ export default class System {
 		}
 		return System.navbarBottom;
 	}
+
+	static getElementBoundary(el) {
+		const vw = System.getWindowWidth(); // 计算vw单位
+		const vh = System.getWindowHeight(); // 计算vh单位
+		return { top: el.top, left: el.left, bottom: vh - el.bottom, right: vw - el.right };
+	}
 }

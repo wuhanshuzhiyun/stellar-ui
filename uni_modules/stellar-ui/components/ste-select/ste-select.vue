@@ -150,11 +150,7 @@ export default {
 
 		cmpList() {
 			if (this.cmpShowDate) {
-				let v = this.selected;
-				if (!v.length) {
-					v = new Date();
-				}
-				return getDateList(v, this.mode, this.minDate, this.maxDate);
+				return getDateList(this.selected, this.mode, this.minDate, this.maxDate);
 			}
 			if (!this.list || !this.list.length)
 				// 处理list数据
@@ -201,18 +197,52 @@ export default {
 				this.contentStyle = {};
 				this.optionsStyle = {};
 			} else {
-				if (this.cmpShowDate && this.selected.length === 0) {
-					// 处理日期模式下，selected为空的情况，默认选中当前日期。
-					this.selected = getNowDate(null, this.mode);
+				if (this.cmpShowDate && this.selected.length === 0)
+					this.selected = getNowDate(null, this.mode).slice(0, this.cmpList.length);
+				const el = await utils.querySelector('.ste-select-root', this);
+				const { width, height, top, left, bottom, right } = el;
+				this.contentStyle = {
+					position: 'fixed',
+					left: `${left}px`,
+					width: `${width}px`,
+					top: `${top}px`,
+					height: `${height}px`,
+					'box-shadow': '0 0 0 250vh rgba(0,0,0,.5)',
+				};
+
+				const boundary = utils.System.getElementBoundary(el);
+				let y = 'bottom',
+					x = 'start';
+				if (boundary.top - boundary.bottom > 0) {
+					t = 'top';
 				}
-				const { width, height, top, left, bottom, right } = await utils.querySelector('.ste-select-root', this);
-				const style = { position: 'fixed', left: `${left}px`, width: `${width}px` };
+				if (boundary.right - boundary.left > 0) {
+					x = 'end';
+				}
+				const style = {
+					position: 'fixed',
+					display: 'block',
+					width: this.optionsWidth === 'auto' ? `${width}px` : this.optionsWidth,
+				};
+				switch (y) {
+					case 'top':
+						style.bottom = `${boundary.bottom + height + 8}px`;
+						break;
+					case 'bottom':
+						style.top = `${bottom + 8}px`;
+						break;
+				}
+
+				switch (x) {
+					case 'start':
+						style.left = `${left}px`;
+						break;
+					case 'end':
+						style.right = `${boundary.right}px`;
+						break;
+				}
+				this.optionsStyle = style;
 				this.showOptions = true; // 打开选项列表
-				this.contentStyle = Object.assign(
-					{ top: `${top}px`, height: `${height}px`, 'box-shadow': '0 0 0 250vh rgba(0,0,0,.5)' },
-					style
-				);
-				this.optionsStyle = Object.assign({ top: `${bottom + 8}px`, display: 'block' }, style);
 			}
 		},
 		cancel() {
