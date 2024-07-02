@@ -4,8 +4,8 @@
 			<view v-if="confirmValue && confirmValue.length">
 				<slot>
 					<view class="content-text">
-						<text v-if="mode === 'default'">{{ getLabelByValue() }}</text>
-						<text v-else>{{ getDateByValue() }}</text>
+						<text v-if="cmpShowDate">{{ getDateByValue() }}</text>
+						<text v-else>{{ getLabelByValue() }}</text>
 					</view>
 				</slot>
 			</view>
@@ -18,20 +18,7 @@
 		</view>
 		<view class="options-content" :style="[optionsStyle]">
 			<view class="select-options" :style="[cmpOptionsStyle]">
-				<block v-if="mode === 'default'">
-					<scroll-view scroll-y class="options-col" v-for="(col, index) in cmpList" :key="index">
-						<view
-							class="options-item"
-							v-for="(item, i) in col"
-							:key="item[valueKey]"
-							:class="{ active: active(index, item) }"
-							@click="onSelect(index, item)"
-						>
-							{{ item[labelKey] }}
-						</view>
-					</scroll-view>
-				</block>
-				<block v-else>
+				<block v-if="cmpShowDate">
 					<picker-view
 						style="height: 600rpx"
 						indicator-style="height: 43px"
@@ -47,6 +34,20 @@
 							</view>
 						</picker-view-column>
 					</picker-view>
+				</block>
+
+				<block v-else>
+					<scroll-view scroll-y class="options-col" v-for="(col, index) in cmpList" :key="index">
+						<view
+							class="options-item"
+							v-for="(item, i) in col"
+							:key="item[valueKey]"
+							:class="{ active: active(index, item) }"
+							@click="onSelect(index, item)"
+						>
+							{{ item[labelKey] }}
+						</view>
+					</scroll-view>
 				</block>
 			</view>
 			<view class="options-btns">
@@ -137,6 +138,9 @@ export default {
 		};
 	},
 	computed: {
+		cmpShowDate() {
+			return ['date', 'datetime', 'time', 'month', 'minute'].indexOf(this.mode) !== -1;
+		},
 		cmpRootStyle() {
 			return {
 				'--ste-select-width': utils.formatPx(this.width),
@@ -146,7 +150,7 @@ export default {
 		},
 
 		cmpList() {
-			if (this.mode !== 'default') {
+			if (this.cmpShowDate) {
 				let v = this.selected;
 				if (!v.length) {
 					v = new Date();
@@ -170,7 +174,7 @@ export default {
 		},
 		cmpDateValue() {
 			// 处理日期模式下的value值，返回格式为'YYYY-MM-DD'的字符串或数组（多选模式下）
-			if (this.model === 'default') return [];
+			if (!this.cmpShowDate) return [];
 			const date = utils.dayjs();
 
 			let y = date.year(),
@@ -200,7 +204,7 @@ export default {
 		},
 		cmpOptionsStyle() {
 			return {
-				display: this.mode === 'default' && this.cmpList?.length ? 'grid' : 'block',
+				display: !this.cmpShowDate && this.cmpList?.length ? 'grid' : 'block',
 				gridTemplateColumns: `repeat(${this.cmpList.length || 1}, 1fr)`,
 			};
 		},
