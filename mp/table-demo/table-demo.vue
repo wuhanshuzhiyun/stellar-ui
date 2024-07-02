@@ -181,10 +181,10 @@
 				<view class="title">自定义列</view>
 				<view class="item-block">
 					<view style="width: 100%">
-						<ste-table :data="rows">
+						<ste-table :data="rows" :formatter="formatterFun">
 							<template v-slot="{ row }">
 								<ste-table-column label="姓名" prop="name"></ste-table-column>
-								<ste-table-column label="生日" prop="birth"></ste-table-column>
+								<ste-table-column label="状态" customKey="state"></ste-table-column>
 								<ste-table-column label="操作1" align="center">
 									<view style="display: flex; justify-content: center">
 										<ste-icon
@@ -303,18 +303,18 @@ export default {
 	data() {
 		return {
 			rows: [
-				{ name: '张三', birth: '2023.12.31', sex: '男' },
-				{ name: '李四', birth: '2024.01.01', sex: '女' },
-				{ name: '王五', birth: '2024.11.01', sex: '女' },
-				{ name: '赵六', birth: '2024.11.01', sex: '女' },
-				{ name: '王七', birth: '2024.01.01', sex: '男' },
+				{ name: '张三', birth: '2023.12.31', sex: '男', state: 1 },
+				{ name: '李四', birth: '2024.01.01', sex: '女', state: 2 },
+				{ name: '王五', birth: '2024.11.01', sex: '女', state: 1 },
+				{ name: '赵六', birth: '2024.11.01', sex: '女', state: 2 },
+				{ name: '王七', birth: '2024.01.01', sex: '男', state: 1 },
 			],
 			rows2: [
-				{ name: '张三', birth: '2023.12.31', sex: '男' },
-				{ name: '李四', birth: '2024.01.01', sex: '女' },
-				{ name: '王五', birth: '2024.11.01', sex: '女' },
-				{ name: '', birth: '', sex: '女' },
-				{ name: '王七', birth: '2024.01.01', sex: '' },
+				{ name: '张三', birth: '2023.12.31', sex: '男', state: 1 },
+				{ name: '李四', birth: '2024.01.01', sex: '女', state: 2 },
+				{ name: '王五', birth: '2024.11.01', sex: '女', state: 1 },
+				{ name: '', birth: '', sex: '女', state: 2 },
+				{ name: '王七', birth: '2024.01.01', sex: '', state: 1 },
 			],
 		};
 	},
@@ -323,8 +323,16 @@ export default {
 		indexFun(index) {
 			return index + 2;
 		},
-		formatterFun(row, cellvalue) {
-			return 'n: ' + cellvalue;
+		formatterFun(row, key) {
+			if (key === 'state') {
+				if (row.state === 1) {
+					return '进行中';
+				} else if (row.state === 2) {
+					return '已完成';
+				} else {
+					return '无状态';
+				}
+			}
 		},
 		selectableFun(row, index) {
 			return row.name !== '张三';
