@@ -530,18 +530,6 @@ let utils = {
 
 		return true;
 	},
-	/**
-	 * 获取数字列表（包含头尾）。
-	 * @param {number} min - 最小值。
-	 * @param {number} max - 最大值。
-	 * @param {number} step - 步长。默认为1。
-	 */
-	getNumbers(min, max, step = 1) {
-		const minNum = Number(min),
-			maxNum = Number(max),
-			stepNum = Number(step);
-		return Array.from({ length: Math.ceil((maxNum - minNum + 1) / stepNum) }, (_, i) => minNum + i * stepNum);
-	},
 };
 
 export default utils;
