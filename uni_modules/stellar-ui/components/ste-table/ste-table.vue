@@ -80,7 +80,7 @@ const DEFAULT_SUM_TEXT = '合计';
  * @property {Boolean} fixed 表头是否定位为fixed	，默认 false
  * @property {Number|String	} offsetTop 定位fixed时top的距离	 默认 0
  * @property {Boolean} border 是否带有纵向边框，默认 false
- * @property {Boolean} stripe 是否斑马纹	，默认 false
+ * @property {Boolean} stripe 是否斑马纹	，默认 true
  * @property {String} emptyText 空数据时显示的文本内容，也可以通过 slot="empty" 设置	  默认 '暂无数据'
  * @property {Boolean} showSummary，是否在表尾显示合计行	，默认 false
  * @property {String} sumText，合计行第一列的文本，默认 '合计'
