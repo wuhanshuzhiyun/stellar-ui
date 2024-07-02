@@ -686,6 +686,19 @@
 					"navigationBarTitleText": ""
 				}
 			}
+		},
+		{
+			"path": "mp/animate-demo/animate-demo",
+			"style": {
+				"navigationStyle": "custom",
+				"disableScroll": true,
+				"mp-alipay": {
+					"transparentTitle": "always",
+					"titlePenetrate": "YES",
+					"allowsBounceVertical": "NO",
+					"navigationBarTitleText": ""
+				}
+			}
 		}
 	],
 	"globalStyle": {
