@@ -1,14 +1,12 @@
 <template>
 	<view class="ste-select-root" :class="{ open: showOptions }" :style="[cmpRootStyle]">
 		<view class="select-content" :style="[contentStyle]">
-			<view v-if="confirmValue && confirmValue.length">
-				<slot>
-					<view class="content-text">
-						<text>{{ getViewData() }}</text>
-					</view>
-				</slot>
-			</view>
-			<view class="placeholder-text" v-else>{{ placeholder }}</view>
+			<slot>
+				<view class="content-text" v-if="confirmValue && confirmValue.length">
+					<text>{{ getViewData() }}</text>
+				</view>
+				<view class="placeholder-text" v-else>{{ placeholder }}</view>
+			</slot>
 			<view class="open-icon-event" @click="openOptions">
 				<view class="open-icon">
 					<ste-icon code="&#xe676;" size="20" display="block" />
@@ -204,8 +202,8 @@ export default {
 				this.contentStyle = {
 					position: 'fixed',
 					left: `${left}px`,
-					width: `${width}px`,
 					top: `${top}px`,
+					width: `${width}px`,
 					height: `${height}px`,
 					'box-shadow': '0 0 0 250vh rgba(0,0,0,.5)',
 				};
