@@ -14,6 +14,7 @@
 			@change="change"
 			@cancel="cancel"
 			@confirm="confirm"
+			rootClass="ste-date-picker-view"
 		></ste-picker>
 	</view>
 </template>
@@ -392,8 +393,8 @@ export default {
 
 <style lang="scss" scoped>
 .ste-date-picker-root {
-	/deep/ .ste-picker-view {
-		padding: 0 42rpx;
-	}
+	// /deep/ view {
+	// 	padding: 0 42rpx;
+	// }
 }
 </style>
