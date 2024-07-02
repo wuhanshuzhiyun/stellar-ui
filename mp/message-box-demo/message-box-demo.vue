@@ -47,6 +47,19 @@
 				</view>
 			</view>
 			<view class="demo-item">
+				<view class="title">插槽</view>
+				<view class="item-block">
+					<view>
+						<ste-button @click="customClick">插槽</ste-button>
+						<ste-message-box selector="myMsgBox">
+							<view style="display: flex; justify-content: center; padding-bottom: 20rpx; width: 504rpx">
+								<ste-rate v-model="rate"></ste-rate>
+							</view>
+						</ste-message-box>
+					</view>
+				</view>
+			</view>
+			<view class="demo-item">
 				<view class="title">回调事件</view>
 				<view class="item-block">
 					<view>
@@ -64,16 +77,25 @@
 	</view>
 </template>
 <script>
+import useSteMsgBox from '@/uni_modules/stellar-ui/components/ste-message-box/ste-message-box.js';
+const msgBox = useSteMsgBox('myMsgBox');
 export default {
 	data() {
-		return {};
+		return {
+			rate: 0,
+		};
 	},
 	created() {},
 	methods: {
+		customClick() {
+			msgBox.showMsgBox({
+				title: '评分',
+			});
+		},
 		msgBox() {
 			this.showMsgBox({
-				title: '提示',
-				content: '确认删除订单吗？',
+				title: '提示123',
+				content: '确认删除订单吗？123',
 			});
 		},
 		msgBoxIcon1() {
