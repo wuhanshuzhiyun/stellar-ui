@@ -280,6 +280,15 @@
 			</view>
 			<!-- ***展示组件*** -->
 			<view class="group-title">展示组件</view>
+			<view class="com-box" @click="nav('animate')">
+				<view class="com-title">
+					<ste-image :src="joinSrc('组件图标/animate.png')" :width="36" :height="36" />
+					<text>Animate 动画</text>
+				</view>
+				<view class="com-arrow">
+					<ste-image :src="joinSrc('组件图标/r-arrow.png')" :width="32" :height="32" />
+				</view>
+			</view>
 			<view class="com-box" @click="nav('loading')">
 				<view class="com-title">
 					<ste-image :src="joinSrc('组件图标/loading.png')" :width="36" :height="36" />
