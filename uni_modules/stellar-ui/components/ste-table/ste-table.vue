@@ -356,6 +356,7 @@ $default-border: 2rpx solid #ebebeb;
 			.ste-table-header {
 				position: fixed;
 				top: var(--offset-top);
+				z-index: 101;
 			}
 		}
 	}
