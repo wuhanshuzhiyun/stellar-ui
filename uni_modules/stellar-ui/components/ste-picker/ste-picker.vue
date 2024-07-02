@@ -1,5 +1,5 @@
 <template>
-	<view class="ste-picker-root">
+	<view class="ste-picker-root" :class="[rootClass]">
 		<view class="ste-picker-toolbar" v-if="showToolbar">
 			<text @click="cancel" class="cancel" :style="{ color: cancelColor }">{{ cancelText }}</text>
 			<text class="title">{{ title }}</text>
@@ -85,6 +85,10 @@ export default {
 		defaultIndex: {
 			type: Array,
 			default: () => [],
+		},
+		rootClass: {
+			type: String,
+			default: '',
 		},
 	},
 	data() {
@@ -207,6 +211,15 @@ export default {
 	width: 100%;
 	background-color: #fff;
 	border-radius: 12rpx;
+
+	&.ste-date-picker-view {
+		padding: 0 38rpx;
+		.ste-picker-toolbar {
+			padding-left: 0;
+			padding-right: 0;
+		}
+	}
+
 	.ste-picker-view {
 		width: 100%;
 		border-radius: var(--border-radius);
