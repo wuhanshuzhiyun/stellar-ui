@@ -4,7 +4,7 @@
 		<view class="content">
 			<view class="demo-item">
 				<view class="title">基础用法</view>
-				<ste-select :list="list" :value="value" @change="onChange"></ste-select>
+				<ste-select :list="list" mode="date" :value="value" @change="onChange"></ste-select>
 			</view>
 		</view>
 	</view>
@@ -13,38 +13,17 @@
 export default {
 	data() {
 		return {
-			value: '',
+			value: [],
 			list: [
-				[
-					{
-						label:
-							'选项1-1选项1-1选项1-1选项1-1选项1-1选项1-1选项1-1选项1-1选项1-1选项1-1选项1-1选项1-1选项1-1选项1-1选项1-1选项1-1',
-						value: '11',
-					},
-					{ label: '选项1-2', value: '12' },
-					{ label: '选项1-3', value: '13' },
-					{ label: '选项1-4', value: '14' },
-					{ label: '选项1-5', value: '15' },
-					{ label: '选项1-6', value: '16' },
-					{ label: '选项1-7', value: '17' },
-					{ label: '选项1-8', value: '18' },
-					{ label: '选项1-9', value: '19' },
-				],
-				[
-					{
-						label:
-							'选项2-1-1选项2-1-1选项2-1-1选项2-1-1选项2-1-1选项2-1-1选项2-1-1选项2-1-1选项2-1-1选项2-1-1选项2-1-1选项2-1-1选项2-1-1选项2-1-1选项2-1-1选项2-1-1',
-						value: '11',
-					},
-					{ label: '选项2-1-2', value: '212' },
-					{ label: '选项2-1-3', value: '213' },
-					{ label: '选项2-1-4', value: '214' },
-					{ label: '选项2-1-5', value: '215' },
-					{ label: '选项2-1-6', value: '216' },
-					{ label: '选项2-1-7', value: '217' },
-					{ label: '选项2-1-8', value: '218' },
-					{ label: '选项2-1-9', value: '219' },
-				],
+				{ label: '选项2011', value: 2011 },
+				{ label: '选项2012', value: 2012 },
+				{ label: '选项2013', value: 2013 },
+				// { label: '选项2014', value: 2014 },
+				// { label: '选项2015', value: 2015 },
+				// { label: '选项2016', value: 2016 },
+				// { label: '选项2017', value: 2017 },
+				// { label: '选项2018', value: 2018 },
+				// { label: '选项2019', value: 2019 },
 			],
 		};
 	},
