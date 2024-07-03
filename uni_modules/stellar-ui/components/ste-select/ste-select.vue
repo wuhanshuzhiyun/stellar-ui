@@ -47,7 +47,7 @@
 					</scroll-view>
 				</block>
 			</view>
-			<view class="options-btns">
+			<view class="options-btns" v-if="cmpList.length > 1">
 				<view class="options-cancel" @click="cancel">取消</view>
 				<view class="options-confirm" @click="confirm">确定</view>
 			</view>
@@ -61,7 +61,7 @@ import { formatDate, getDateList, getFormatStr, getNowDate } from './defaultDate
 export default {
 	props: {
 		value: {
-			type: Array, // 支持单选和多选模式，多选模式下value为数组，单选模式下value为字符串或数字
+			type: [Array, String, Number], // 支持单选和多选模式，多选模式下value为数组，单选模式下value为字符串或数字
 			default: () => [], // 默认多选模式，value为空数组，单选模式下value为undefined或null
 		},
 		list: {
@@ -136,7 +136,12 @@ export default {
 	},
 	computed: {
 		cmpShowDate() {
-			return ['date', 'datetime', 'time', 'month', 'minute'].indexOf(this.mode) !== -1;
+			return ['date', 'datetime', 'time', 'month', 'minute'].includes(this.mode);
+		},
+		// 是否允许value不为数组
+		cmpNotArrValue() {
+			// 单列的单选模式允许value不为数组
+			return this.cmpList.length === 1 && !this.multiple;
 		},
 		cmpRootStyle() {
 			return {
@@ -159,17 +164,17 @@ export default {
 			return [this.list];
 		},
 		cmpDateUnits() {
-			if (['date', 'datetime', 'month'].indexOf(this.mode) !== -1) {
+			if (['date', 'datetime', 'month'].includes(this.mode)) {
 				return ['年', '月', '日', '时', '分', '秒'];
 			} else {
 				return ['时', '分', '秒'];
 			}
 		},
 		cmpDateValue() {
-			// 处理日期模式下的value值，返回格式为'YYYY-MM-DD'的字符串或数组（多选模式下）
+			// 处理日期模式下的value值，返回格式为'YYYY-MM-DD'的字符串或数组
 			if (!this.cmpShowDate) return [];
 			const value = getNowDate(this.selected, this.mode);
-			return this.cmpList.map((item, i) => (item.indexOf(value[i]) >= 0 ? item.indexOf(value[i]) : 0));
+			return this.cmpList.map((item, i) => (item.includes(value[i]) ? item.indexOf(value[i]) : 0));
 		},
 		cmpOptionsStyle() {
 			return {
@@ -181,7 +186,14 @@ export default {
 	watch: {
 		value: {
 			handler(v) {
-				this.selected = v || []; // 监听value变化，更新selected值
+				if (!Array.isArray(v)) {
+					if (!this.cmpNotArrValue) {
+						console.error('ste-select: value必须为数组（单列单选模式value可以为string或number类型）');
+					}
+					this.selected = v || v === 0 ? [v] : [];
+				} else {
+					this.selected = v || [];
+				}
 				this.confirmValue = this.selected;
 			},
 			immediate: true, // 立即执行一次，确保初始化时正确赋值。
@@ -195,8 +207,9 @@ export default {
 				this.contentStyle = {};
 				this.optionsStyle = {};
 			} else {
-				if (this.cmpShowDate && this.selected.length === 0)
+				if (this.cmpShowDate && this.selected.length < this.cmpList.length) {
 					this.selected = getNowDate(null, this.mode).slice(0, this.cmpList.length);
+				}
 				const el = await utils.querySelector('.ste-select-root', this);
 				const { width, height, top, left, bottom, right } = el;
 				this.contentStyle = {
@@ -253,9 +266,7 @@ export default {
 			this.$emit('input', this.selected);
 			this.$emit('confirm', this.selected); // 触发confirm事件，传递selected值。
 			this.$emit('change', this.selected);
-			this.showOptions = false; // 关闭选项列表
-			this.contentStyle = {};
-			this.optionsStyle = {};
+			this.$nextTick(() => this.cancel());
 		},
 		onSelect(col, item) {
 			if (this.multiple && this.cmpList.length === 1) {
@@ -268,6 +279,7 @@ export default {
 			const selected = [...this.selected];
 			selected[col] = item[this.valueKey];
 			this.selected = selected;
+			if (this.cmpList.length === 1 && !this.multiple) this.confirm();
 		},
 		active(index, item) {
 			if (this.cmpList.length > 1) {
@@ -367,13 +379,19 @@ export default {
 		overflow: hidden;
 		.select-options {
 			max-height: 696rpx;
-			padding: 0 40rpx;
+			padding: 0 16rpx;
 			.options-col {
 				height: 100%;
 				.options-item {
-					padding: 12rpx; // 调整选项的padding值，以适应不同的选项高度。
+					width: 100%;
+					height: 82rpx;
+					line-height: 82rpx;
 					&.active {
-						color: #f00;
+						color: #3491fa;
+					}
+
+					& + .options-item {
+						border-top: 1px solid #f5f5f5;
 					}
 				}
 			}

@@ -13,7 +13,7 @@
 export default {
 	data() {
 		return {
-			value: [],
+			value: [2021, 7, 13],
 			list: [
 				{ label: '选项1-1', value: '11' },
 				{ label: '选项1-2', value: '12' },

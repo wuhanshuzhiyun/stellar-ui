@@ -39,7 +39,7 @@ export function getNowDate(defaultDate, mode) {
 		s = date.second(),
 		value = [];
 
-	if (['date', 'datetime', 'month'].indexOf(mode) !== -1) {
+	if (['date', 'datetime', 'month'].includes(mode)) {
 		value = [y, m, d, h, i, s];
 	} else {
 		value = [h, i, s];
@@ -57,12 +57,12 @@ export function formatDate(value, mode = 'date') {
 	if (Array.isArray(_v)) {
 		if (!_v.length) {
 			_v = null;
-		} else if (['date', 'datetime', 'month'].indexOf(mode) !== -1) {
+		} else if (['date', 'datetime', 'month'].includes(mode)) {
 			const date = _v.slice(0, 3);
 			const time = _v.slice(3);
 			_v = `${date.join('-')}`;
 			_v += time.length ? ` ${time.join(':')}` : '';
-		} else if (['time', 'minute'].indexOf(mode) !== -1) {
+		} else if (['time', 'minute'].includes(mode)) {
 			_v = `${utils.dayjs().format('YYYY-MM-DD')} ${_v.join(':')}`;
 		}
 	}
