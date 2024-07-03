@@ -269,6 +269,8 @@ export default {
 					'selectAll',
 					this.canCheckStates.map((e) => this.tableData[e])
 				);
+			} else {
+				this.$emit('selectAll', []);
 			}
 			this.toggleAllSelection();
 		},
