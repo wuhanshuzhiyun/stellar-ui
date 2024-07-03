@@ -3,14 +3,9 @@
 		<template v-if="type">
 			<view class="cell-box" v-if="type == 'checkbox'" @click="changeCheck">
 				<check-box-icon :disabled="cmpDisableCheck" :readonly="cmpReadonlyCheck" :checked="cmpShowCheck" />
-				<!-- 				<ste-icon code="&#xe6ae;" color="#E6E6E6" size="32" v-if="!cmpCanCheck" />
-				<template v-else>
-					<ste-icon code="&#xe6ac;" color="#3491FA" size="32" v-if="cmpShowCheck" />
-					<ste-icon code="&#xe6af;" color="#BBBBBB" size="32" v-else />
-				</template> -->
 			</view>
 			<view class="cell-box" v-if="type == 'radio'" @click="changeCheck">
-				<radio-icon :disabled="!cmpCanCheck" :checked="cmpShowCheck" />
+				<radio-icon :disabled="cmpDisableCheck" :checked="cmpShowCheck" />
 			</view>
 			<view class="cell-box" v-if="type == 'index'">
 				{{ row.rowIndex + 1 }}
@@ -59,9 +54,9 @@ export default {
 			type: String,
 			default: '',
 		},
-		index: {
-			type: [Function, null, Object],
-			default: null,
+		customKey: {
+			type: String,
+			default: '',
 		},
 		label: {
 			type: String,
@@ -139,16 +134,23 @@ export default {
 	},
 	methods: {
 		changeCheck() {
-			console.log('changeCheck');
 			if (!this.cmpDisableCheck && !this.cmpReadonlyCheck) {
 				this.parent.handleCheck(this.row);
 			}
 		},
 		cellText(e) {
-			if (this.row[this.prop]) {
-				return this.row[this.prop];
+			if (this.parent.formatter) {
+				let text = this.parent.formatter(this.row, this.customKey);
+				if (!text) {
+					text = this.row[this.prop];
+				}
+				return text;
 			} else {
-				return this.parent.emptyText || '-';
+				if (this.row[this.prop]) {
+					return this.row[this.prop];
+				} else {
+					return this.parent.emptyText || '-';
+				}
 			}
 		},
 		cellClick(event) {

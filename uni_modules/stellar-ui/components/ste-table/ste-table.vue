@@ -148,6 +148,10 @@ export default {
 			type: Boolean,
 			default: false,
 		},
+		formatter: {
+			type: [Function, null],
+			default: null,
+		},
 	},
 	data() {
 		return {

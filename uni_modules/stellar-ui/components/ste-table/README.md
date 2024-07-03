@@ -292,11 +292,13 @@ export default {
 ```
 
 #### 自定义列
+当需要格式化某列时，可以不设置列的`prop`，但需要设置`customKey`值，然后给表格传入一个`formatter`方法，
+方法中第一个参数是每一行的数据，第二个参数是列的`customKey`，示例如下
 ```html
-<ste-table :data="rows">
+<ste-table :data="rows" :formatter="formatterFun">
 	<template v-slot="{ row }">
 		<ste-table-column label="姓名" prop="name"></ste-table-column>
-		<ste-table-column label="生日" prop="birth"></ste-table-column>
+		<ste-table-column label="状态" customKey="state"></ste-table-column>
 		<ste-table-column label="操作1" align="center">
 			<view style="display: flex; justify-content: center">
 				<ste-icon
@@ -324,6 +326,19 @@ export default {
 				{ name: '赵六', birth: '2024.11.01', sex: '女' },
 				{ name: '王七', birth: '2024.01.01', sex: '男' },
 			],
+		}
+	},
+	methods: {
+		formatterFun(row, key) {
+			if (key === 'state') {
+				if (row.state === 1) {
+					return '进行中';
+				} else if (row.state === 2) {
+					return '已完成';
+				} else {
+					return '无状态';
+				}
+			}
 		}
 	}
 }
@@ -449,19 +464,20 @@ export default {
 ### API
 #### Table Props
 
-| 属性名			| 说明																								| 类型							| 默认值		| 可选值	| 支持版本	|
-| -----				| -----																								| -----							| -----		| -----	| -----		|
-| `data`			| 表格数据																							| `Array`						| -			| -		| -			|
+| 属性名			| 说明																									| 类型							| 默认值		| 可选值	| 支持版本	|
+| -----				| -----																									| -----							| -----		| -----	| -----		|
+| `data`			| 表格数据																								| `Array`						| -			| -		| -			|
 | `fixed`			| 表头是否定位为fixed																					| `Boolean`						| `false`	| -		| -			|
-| `offsetTop`		| 定位fixed时top的距离																				| `Number/String`				| -			| -		| -			|
-| `border`			| 是否带有纵向边框																					| `Boolean`						| `false`	| -		| -			|
-| `stripe`			| 是否斑马纹																							| `Boolean`						| `true`	| -		| -			|
+| `offsetTop`		| 定位fixed时top的距离																					| `Number/String`				| -			| -		| -			|
+| `border`			| 是否带有纵向边框																						| `Boolean`						| `false`	| -		| -			|
+| `stripe`			| 是否斑马纹																								| `Boolean`						| `true`	| -		| -			|
 | `emptyText`		| 空数据时显示的文本内容，也可以通过 slot="empty" 设置													| `String`						| `暂无数据`	| -		| -			|
 | `showSummary`		| 是否在表尾显示合计行																					| `Boolean`						| `false`	| -		| -			|
-| `sumText`			| 合计行第一列的文本																					| `String`						| `合计`		| -		|
+| `sumText`			| 合计行第一列的文本																						| `String`						| `合计`		| -		|
 | `summaryMethod`	| 自定义的合计计算方法																					| `Function({ columns, data })`	| `null`	| -		| -			|
 | `selectable`		| 仅对 type=selection 的列有效，类型为 Function，Function 的返回值用来决定这一行的 CheckBox 是否可以勾选	| `Function(row, index)`		| `null`	| -		| -			|
 | `readonly`		| 仅对 type=selection 的列有效，类型为 Function，Function 的返回值用来决定这一行的 CheckBox 是否只读		| `Function(row, index)`		| `null`	| -		| -			|
+| `formatter`		| 格式化方法，需要配合`TableColumn`中的`customKey`属性													| `Function(row, key)`			| `null`	| -		| `v1.17.3`	|
 
 #### Table Events
 |事件名			|说明											|事件参数																|支持版本	|
@@ -492,5 +508,6 @@ export default {
 | `minWidth`	| 对应列的最小宽度								| `String`	| -		| -																							| -			|
 | `align`		| 对齐方式										| `String`	| `left`| -																							| -			|
 | `headerAlign`	| 表头对齐方式，若不设置该项，则使用表格的对齐方式	| `String`	| `left`| `left`：左对齐<br/>`center`：居中对齐<br/>`right`：右对齐									| -			|
+| `customKey`	| 自定义唯一key值								| `String`	| -		| -																							| `v1.17.3`	|
 
 {{fuyuwei}}
