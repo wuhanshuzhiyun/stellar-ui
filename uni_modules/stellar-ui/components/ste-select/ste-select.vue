@@ -3,19 +3,22 @@
 		<view class="select-mask" @click="clickMask">
 			<view class="select-content" :style="[contentStyle]" @click.stop="stop">
 				<slot>
-					<view
-						class="content-text"
-						:class="{ multiple: Array.isArray(cmpViewValue) }"
-						v-if="confirmValue && confirmValue.length"
-					>
-						<block v-if="Array.isArray(cmpViewValue)" v-for="(v, i) in cmpViewValue">
-							<view class="view-item" :key="v" v-if="v">
-								{{ v }}
-							</view>
+					<scroll-view scroll-x class="content-text" :class="{ multiple: cmpMultiple }">
+						<block v-if="cmpFilterable"></block>
+						<block v-else>
+							<block v-if="confirmValue && confirmValue.length">
+								<block v-if="cmpMultiple">
+									<block v-for="(v, i) in cmpViewValue">
+										<view class="view-item" :key="v" v-if="v">
+											{{ v }}
+										</view>
+									</block>
+								</block>
+								<text v-else>{{ cmpViewValue }}</text>
+							</block>
+							<view class="placeholder-text" v-else>{{ placeholder }}</view>
 						</block>
-						<text v-else>{{ cmpViewValue }}</text>
-					</view>
-					<view class="placeholder-text" v-else>{{ placeholder }}</view>
+					</scroll-view>
 				</slot>
 				<view class="open-icon-event" @click="openOptions">
 					<view class="open-icon">
@@ -25,18 +28,18 @@
 			</view>
 
 			<view class="options-content" :style="[optionsStyle]" @click.stop="stop">
-				<view class="select-options" :style="[cmpOptionsStyle]">
-					<block v-if="cmpShowDate">
+				<view class="select-options">
+					<block v-if="cmpList.length > 1">
 						<picker-view
 							style="height: 600rpx"
 							indicator-style="height: 43px"
-							:value="cmpDateValue"
+							:value="cmpMultiseriateValue"
 							@change="onDateChange"
 						>
 							<picker-view-column v-for="(col, index) in cmpList" :key="index">
 								<view class="time-item" v-for="(item, i) in col" :key="item">
 									<text>
-										{{ item }}
+										{{ cmpShowDate ? item : item[labelKey] }}
 									</text>
 									<text v-if="dateUnit">{{ cmpDateUnits[index] }}</text>
 								</view>
@@ -58,7 +61,7 @@
 						</scroll-view>
 					</block>
 				</view>
-				<view class="options-btns" v-if="cmpShowDate">
+				<view class="options-btns" v-if="cmpList.length > 1">
 					<view class="options-cancel" @click="clickCancel">取消</view>
 					<view class="options-confirm" @click="clickConfirm">确定</view>
 				</view>
@@ -87,9 +90,11 @@ export default {
 		labelKey: { type: String, default: () => 'label' },
 		valueKey: { type: String, default: () => 'value' },
 		multiple: { type: Boolean, default: () => false },
+		allowCreate: { type: Boolean, default: () => false },
 	},
 	data() {
 		return {
+			dataFilterable: '', // 输入框搜索值
 			selected: [], // 当前选中的值
 			confirmValue: [], // 确定按钮的值，用于多选模式下保存选中的值，用于单选模式下保存选中的值（仅单列时生效）
 			showOptions: false, // 是否显示下拉选项
@@ -98,12 +103,15 @@ export default {
 		};
 	},
 	computed: {
+		// 是否是日期模式（包括日期、时间、日期时间、月份）
 		cmpShowDate() {
 			return ['date', 'datetime', 'time', 'month', 'minute'].includes(this.mode);
 		},
-		cmpShowInput() {
-			return this.cmpList.length === 1 && this.mode === 'input';
+		// 是否是筛选模式（包括筛选、筛选多列）
+		cmpFilterable() {
+			return this.mode === 'filterable';
 		},
+		// 是否是多选模式（多列或者单列多选）
 		cmpMultiple() {
 			return !this.cmpShowDate && (this.cmpList.length > 1 || this.multiple);
 		},
@@ -136,15 +144,19 @@ export default {
 				return ['时', '分', '秒'];
 			}
 		},
-		cmpDateValue() {
-			// 处理日期模式下的value值，返回格式为'YYYY-MM-DD'的字符串或数组
-			if (!this.cmpShowDate) return [];
-			const value = getNowDate(this.selected, this.mode);
-			return this.cmpList.map((item, i) => (item.includes(value[i]) ? item.indexOf(value[i]) : 0));
+		cmpMultiseriateValue() {
+			if (this.cmpShowDate) {
+				const value = getNowDate(this.selected, this.mode);
+				return this.cmpList.map((item, i) => (item.includes(value[i]) ? item.indexOf(value[i]) : 0));
+			}
+			const value = [...this.selected];
+			return this.cmpList.map((item, i) => item.findIndex((v) => v[this.valueKey] === value[i]));
 		},
 		cmpViewValue() {
 			if (this.cmpShowDate) {
-				const v = formatDate(this.confirmValue, this.mode);
+				let values = this.confirmValue;
+				if (values.length < this.cmpList.length) values = this.initDate(values);
+				const v = formatDate(values, this.mode);
 				return v ? v.format(getFormatStr(this.mode)) : '';
 			}
 			let view = [];
@@ -153,18 +165,11 @@ export default {
 					const item = this.cmpList[0].find((item) => item[this.valueKey] === value);
 					view.push(item?.[this.labelKey] || '');
 				} else {
-					const item = this.cmpList[index].find((item) => item[this.valueKey] === value);
+					const item = this.cmpList[index]?.find((item) => item[this.valueKey] === value);
 					view.push(item?.[this.labelKey] || '');
 				}
 			});
 			return !this.cmpMultiple && view[0] ? view[0] : view;
-		},
-		cmpOptionsStyle() {
-			return {
-				display: !this.cmpShowDate && this.cmpList?.length > 1 ? 'grid' : 'block',
-				textAlign: !this.cmpShowDate && this.cmpList?.length > 1 ? 'center' : 'left',
-				gridTemplateColumns: `repeat(${this.cmpList.length || 1}, ${100 / this.cmpList.length}%)`,
-			};
 		},
 	},
 	watch: {
@@ -186,14 +191,37 @@ export default {
 	mounted() {},
 	methods: {
 		stop: () => {},
+		initDate(values) {
+			const result = [];
+			const now = getNowDate(null, this.mode).slice(0, this.cmpList.length);
+			this.cmpList.forEach((item, i) => {
+				const v = values[i] || values[i] === 0 ? values[i] : now[i]; // 默认选中当前时间。
+				result.push(v);
+			});
+			return result;
+		},
+		initOptions(values) {
+			const result = [];
+			this.cmpList.forEach((item, i) => {
+				const v = values[i] || values[i] === 0 ? values[i] : item[0][this.valueKey]; // 默认选中当前时间。
+				result.push(v);
+			});
+			return result;
+		},
 		async openOptions() {
 			if (this.showOptions) {
 				this.showOptions = false; // 关闭选项列表
 				this.contentStyle = {};
 				this.optionsStyle = {};
 			} else {
-				if (this.cmpShowDate && this.selected.length < this.cmpList.length) {
-					this.selected = getNowDate(null, this.mode).slice(0, this.cmpList.length);
+				if (this.selected.length < this.cmpList.length) {
+					let selected = [];
+					if (this.cmpShowDate) {
+						selected = this.initDate(this.selected);
+					} else if (this.cmpList.length > 1) {
+						selected = this.initOptions(this.selected);
+					}
+					this.selected = selected;
 				}
 				const el = await utils.querySelector('.ste-select-root', this);
 				const { width, height, top, left, bottom, right } = el;
@@ -280,7 +308,7 @@ export default {
 				this.selected = selected;
 			}
 			this.onConfirm();
-			if (this.cmpList.length === 1 && !this.multiple) this.$nextTick(() => this.onCancel());
+			if (!this.multiple) this.$nextTick(() => this.onCancel());
 		},
 		active(index, item) {
 			if (this.cmpList.length > 1) {
@@ -289,12 +317,11 @@ export default {
 				return this.selected.includes(item[this.valueKey]);
 			}
 		},
-		getLabelByValue() {},
-		getDateByValue() {},
 		onDateChange({ detail: { value } }) {
 			const result = [];
 			value.forEach((i, index) => {
-				result.push(this.cmpList[index][i]);
+				const value = this.cmpList[index][i];
+				result.push(this.cmpShowDate ? value : value[this.valueKey]);
 			});
 			this.selected = result;
 		},
@@ -341,32 +368,39 @@ export default {
 		overflow: hidden;
 		.content-text {
 			width: 100%;
+			height: 100%;
+			white-space: nowrap;
 			&.multiple {
 				padding: 2px 0;
-			}
-			.view-item {
-				max-width: 100%;
-				display: inline-block;
-				line-height: var(--ste-select-multiple-line-height);
-				padding: 0 12rpx;
-				border-radius: 6rpx;
-				border: 1px solid #eee;
-				margin: 0 8rpx 8rpx 0;
-				text-overflow: ellipsis;
-				white-space: nowrap; // 文本不换行，防止文字溢出
-				overflow: hidden; // 隐藏溢出内容，并显示省略号
+				.view-item {
+					max-width: 100%;
+					line-height: var(--ste-select-multiple-line-height);
+					display: inline-block;
+					padding: 0 12rpx;
+					border-radius: 6rpx;
+					border: 1px solid #eee;
+					margin-right: 8px;
+					text-overflow: ellipsis;
+					white-space: nowrap; // 文本不换行，防止文字溢出
+					overflow: hidden; // 隐藏溢出内容，并显示省略号
+				}
+				.placeholder-text {
+					line-height: var(--ste-select-multiple-line-height);
+					border-top: 1px solid transparent;
+					border-bottom: 1px solid transparent;
+				}
 			}
 		}
 		.placeholder-text {
-			width: 100%;
-			height: 100%;
 			color: #999999;
 		}
 		.open-icon-event {
-			width: 60rpx;
-			height: 60rpx;
-			padding: 16rpx;
+			width: var(--ste-select-multiple-line-height);
+			height: var(--ste-select-multiple-line-height);
 			position: absolute;
+			display: flex;
+			align-items: center;
+			justify-content: center;
 			right: 0;
 			top: 50%;
 			transform: translateY(-50%);
@@ -395,6 +429,7 @@ export default {
 			.options-col {
 				padding: 0 16rpx;
 				height: 100%;
+				max-height: 696rpx;
 				.options-item {
 					width: 100%;
 					height: 82rpx;
