@@ -143,8 +143,7 @@ let utils = {
 			try {
 				uni
 					.createSelectorQuery()
-					.in(component)
-					[selectFn](selectors)
+					.in(component)[selectFn](selectors)
 					.boundingClientRect((data) => {
 						resolve(data);
 					})
@@ -391,8 +390,7 @@ let utils = {
 				if (typeof otherAttributes === 'function') {
 					_otherAttributes = _otherAttributes(item);
 				}
-				return Object.assign(
-					{
+				return Object.assign({
 						parentNode,
 						depth,
 					},
@@ -496,6 +494,9 @@ let utils = {
 		};
 		return _flatten(tree);
 	},
+	isEmpty(value) {
+		return value === null || value === undefined || value === '';
+	},
 	/**
 	 * 对比两个对象是否完全相等
 	 * @param {Object} 比较的对象
@@ -503,7 +504,7 @@ let utils = {
 	 * @param {ignoreKeys} 忽略比较的key
 	 */
 	deepEqual(obj1, obj2, ignoreKeys = []) {
-		if (obj1 === obj2) {
+		if ((obj1 === obj2) || (this.isEmpty(obj1) && thi.isEmpty(obj2))) {
 			return true; // 简单类型相等或引用相等
 		}
 

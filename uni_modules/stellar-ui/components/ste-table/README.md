@@ -147,10 +147,11 @@ export default {
 }
 <script>
 ```
-#### 禁用选择项
+#### 禁用或只读选择项
 传入一个自定义方法来指定某行是否能选择，方法会传入当前行数据(`row`)和下标(`index`)
+只读同理
 ```html
-<ste-table :data="rows" :selectable="selectableFun">
+<ste-table :data="rows" :selectable="selectableFun" :readable="readonlyFun">
 	<template v-slot="{ row }">
 		<ste-table-column label="选择" type="checkbox"></ste-table-column>
 		<ste-table-column label="姓名" prop="name"></ste-table-column>
@@ -175,6 +176,9 @@ export default {
 	methods: {
 		selectableFun(row, index) {
 			return row.name !== '张三';
+		},
+		readonlyFun(row, index) {
+			return row.name === '李四';
 		},
 	}
 }
@@ -476,7 +480,7 @@ export default {
 | `sumText`			| 合计行第一列的文本																						| `String`						| `合计`		| -		|
 | `summaryMethod`	| 自定义的合计计算方法																					| `Function({ columns, data })`	| `null`	| -		| -			|
 | `selectable`		| 仅对 type=selection 的列有效，类型为 Function，Function 的返回值用来决定这一行的 CheckBox 是否可以勾选	| `Function(row, index)`		| `null`	| -		| -			|
-| `readonly`		| 仅对 type=selection 的列有效，类型为 Function，Function 的返回值用来决定这一行的 CheckBox 是否只读		| `Function(row, index)`		| `null`	| -		| -			|
+| `readable`		| 仅对 type=selection 的列有效，类型为 Function，Function 的返回值用来决定这一行的 CheckBox 是否只读		| `Function(row, index)`		| `null`	| -		| -			|
 | `formatter`		| 格式化方法，需要配合`TableColumn`中的`customKey`属性													| `Function(row, key)`			| `null`	| -		| `v1.17.3`	|
 
 #### Table Events
