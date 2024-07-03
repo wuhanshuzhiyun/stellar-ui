@@ -3,8 +3,17 @@
 		<view class="select-mask" @click="clickMask">
 			<view class="select-content" :style="[contentStyle]" @click.stop="stop">
 				<slot>
-					<view class="content-text" v-if="confirmValue && confirmValue.length">
-						<text>{{ cmpViewValue }}</text>
+					<view
+						class="content-text"
+						:class="{ multiple: Array.isArray(cmpViewValue) }"
+						v-if="confirmValue && confirmValue.length"
+					>
+						<block v-if="Array.isArray(cmpViewValue)" v-for="(v, i) in cmpViewValue">
+							<view class="view-item" :key="v" v-if="v">
+								{{ v }}
+							</view>
+						</block>
+						<text v-else>{{ cmpViewValue }}</text>
 					</view>
 					<view class="placeholder-text" v-else>{{ placeholder }}</view>
 				</slot>
@@ -75,11 +84,9 @@ export default {
 		maskClose: { type: Boolean, default: () => true },
 		optionsWidth: { type: [Number, String], default: () => 'auto' },
 		placeholder: { type: String, default: () => '请选择' },
-		connector: { type: String, default: () => ',' },
 		labelKey: { type: String, default: () => 'label' },
 		valueKey: { type: String, default: () => 'value' },
 		multiple: { type: Boolean, default: () => false },
-		filterable: { type: Boolean, default: () => false },
 	},
 	data() {
 		return {
@@ -94,16 +101,18 @@ export default {
 		cmpShowDate() {
 			return ['date', 'datetime', 'time', 'month', 'minute'].includes(this.mode);
 		},
-		// 是否允许value不为数组
-		cmpNotArrValue() {
-			// 单列的单选模式允许value不为数组
-			return this.cmpList.length === 1 && !this.multiple;
+		cmpShowInput() {
+			return this.cmpList.length === 1 && this.mode === 'input';
+		},
+		cmpMultiple() {
+			return !this.cmpShowDate && (this.cmpList.length > 1 || this.multiple);
 		},
 		cmpRootStyle() {
 			return {
 				'--ste-select-width': utils.formatPx(this.width),
 				'--ste-select-height': utils.formatPx(this.height),
 				'--ste-select-line-height': utils.formatPx(this.height, 'num') - 2 + 'px',
+				'--ste-select-multiple-line-height': utils.formatPx(this.height, 'num') - 8 + 'px',
 				'--ste-select-background': this.background,
 			};
 		},
@@ -148,13 +157,13 @@ export default {
 					view.push(item?.[this.labelKey] || '');
 				}
 			});
-			return view.join(this.connector);
+			return !this.cmpMultiple && view[0] ? view[0] : view;
 		},
 		cmpOptionsStyle() {
 			return {
 				display: !this.cmpShowDate && this.cmpList?.length > 1 ? 'grid' : 'block',
 				textAlign: !this.cmpShowDate && this.cmpList?.length > 1 ? 'center' : 'left',
-				gridTemplateColumns: `repeat(${this.cmpList.length || 1}, 1fr)`,
+				gridTemplateColumns: `repeat(${this.cmpList.length || 1}, ${100 / this.cmpList.length}%)`,
 			};
 		},
 	},
@@ -164,7 +173,7 @@ export default {
 				if (Array.isArray(v)) {
 					this.selected = v;
 				} else {
-					if (!this.cmpNotArrValue) {
+					if (this.cmpList.length > 1 || this.multiple) {
 						console.error('ste-select: value必须为数组（单列单选模式value可以为string或number类型）');
 					}
 					this.selected = v || v === 0 ? [v] : [];
@@ -252,7 +261,7 @@ export default {
 		onConfirm() {
 			this.confirmValue = [...this.selected];
 			let value = this.confirmValue;
-			if (this.cmpNotArrValue && !Array.isArray(this.value)) {
+			if (!this.cmpMultiple && !Array.isArray(this.value)) {
 				value = this.confirmValue[0];
 			}
 			this.$emit('input', value);
@@ -330,6 +339,24 @@ export default {
 		padding: 0 20rpx; // 调整内边距，以适应不同的选项高度。
 		border-radius: 8rpx;
 		overflow: hidden;
+		.content-text {
+			width: 100%;
+			&.multiple {
+				padding: 2px 0;
+			}
+			.view-item {
+				max-width: 100%;
+				display: inline-block;
+				line-height: var(--ste-select-multiple-line-height);
+				padding: 0 12rpx;
+				border-radius: 6rpx;
+				border: 1px solid #eee;
+				margin: 0 8rpx 8rpx 0;
+				text-overflow: ellipsis;
+				white-space: nowrap; // 文本不换行，防止文字溢出
+				overflow: hidden; // 隐藏溢出内容，并显示省略号
+			}
+		}
 		.placeholder-text {
 			width: 100%;
 			height: 100%;
