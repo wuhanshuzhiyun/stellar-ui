@@ -63,74 +63,23 @@ import utils from '../../utils/utils';
 import { formatDate, getDateList, getFormatStr, getNowDate } from './defaultDate';
 export default {
 	props: {
-		value: {
-			type: [Array, String, Number], // 支持单选和多选模式，多选模式下value为数组，单选模式下value为字符串或数字
-			default: () => [], // 默认多选模式，value为空数组，单选模式下value为undefined或null
-		},
-		list: {
-			type: Array,
-			default: () => [],
-		},
-		mode: {
-			type: String,
-			default: () => 'default',
-		},
-		minDate: {
-			type: [Number, String, Date],
-			default: () => null, // 最小日期，格式为'YYYY-MM-DD'
-		},
-		maxDate: {
-			type: [Number, String, Date],
-			default: () => null, // 最大日期，格式为'YYYY-MM-DD'
-		},
-		dateUnit: {
-			type: Boolean,
-			default: () => true,
-		},
-		width: {
-			type: [Number, String],
-			default: () => '100%',
-		},
-		height: {
-			type: [Number, String],
-			default: () => 60,
-		},
-		background: {
-			type: String,
-			default: () => '#fff',
-		},
-		maskClose: {
-			type: Boolean,
-			default: () => true, // 是否允许点击遮罩关闭选项框，默认允许关闭
-		},
-		optionsWidth: {
-			type: [Number, String],
-			default: () => 'auto', // 选项框宽度，用于控制选项框的宽度
-		},
-		placeholder: {
-			type: String,
-			default: () => '请选择',
-		},
-		connector: {
-			type: String,
-			default: () => ',', // 多选、多列内容连接符
-		},
-		labelKey: {
-			type: String,
-			default: () => 'label',
-		},
-		valueKey: {
-			type: String,
-			default: () => 'value',
-		},
-		multiple: {
-			type: Boolean,
-			default: () => false, // 默认单选模式，多选模式下multiple为true（仅单列时生效）
-		},
-		filterable: {
-			type: Boolean,
-			default: () => false, // 是否支持搜索功能
-		},
+		value: { type: [Array, String, Number], default: () => [] },
+		list: { type: Array, default: () => [] },
+		mode: { type: String, default: () => 'default' },
+		minDate: { type: [Number, String, Date], default: () => null },
+		maxDate: { type: [Number, String, Date], default: () => null },
+		dateUnit: { type: Boolean, default: () => true },
+		width: { type: [Number, String], default: () => '100%' },
+		height: { type: [Number, String], default: () => 64 },
+		background: { type: String, default: () => '#fff' },
+		maskClose: { type: Boolean, default: () => true },
+		optionsWidth: { type: [Number, String], default: () => 'auto' },
+		placeholder: { type: String, default: () => '请选择' },
+		connector: { type: String, default: () => ',' },
+		labelKey: { type: String, default: () => 'label' },
+		valueKey: { type: String, default: () => 'value' },
+		multiple: { type: Boolean, default: () => false },
+		filterable: { type: Boolean, default: () => false },
 	},
 	data() {
 		return {
@@ -154,6 +103,7 @@ export default {
 			return {
 				'--ste-select-width': utils.formatPx(this.width),
 				'--ste-select-height': utils.formatPx(this.height),
+				'--ste-select-line-height': utils.formatPx(this.height, 'num') - 2 + 'px',
 				'--ste-select-background': this.background,
 			};
 		},
@@ -202,7 +152,8 @@ export default {
 		},
 		cmpOptionsStyle() {
 			return {
-				display: !this.cmpShowDate && this.cmpList?.length ? 'grid' : 'block',
+				display: !this.cmpShowDate && this.cmpList?.length > 1 ? 'grid' : 'block',
+				textAlign: !this.cmpShowDate && this.cmpList?.length > 1 ? 'center' : 'left',
 				gridTemplateColumns: `repeat(${this.cmpList.length || 1}, 1fr)`,
 			};
 		},
@@ -371,16 +322,17 @@ export default {
 	.select-content {
 		width: var(--ste-select-width);
 		height: var(--ste-select-height);
+		line-height: var(--ste-select-line-height);
 		background-color: var(--ste-select-background);
+		border: 1px solid #ebebeb;
 		position: relative;
 		z-index: 1;
-		display: flex;
-		align-items: center;
-		justify-content: space-between;
 		padding: 0 20rpx; // 调整内边距，以适应不同的选项高度。
 		border-radius: 8rpx;
 		overflow: hidden;
 		.placeholder-text {
+			width: 100%;
+			height: 100%;
 			color: #999999;
 		}
 		.open-icon-event {
@@ -411,14 +363,20 @@ export default {
 		background-color: #fff;
 		overflow: hidden;
 		.select-options {
+			width: 100%;
 			max-height: 696rpx;
-			padding: 0 16rpx;
 			.options-col {
+				padding: 0 16rpx;
 				height: 100%;
 				.options-item {
 					width: 100%;
 					height: 82rpx;
 					line-height: 82rpx;
+					// 文本溢出省略号
+					text-overflow: ellipsis;
+					white-space: nowrap; // 文本不换行，防止文字溢出
+					overflow: hidden; // 隐藏溢出内容，并显示省略号
+
 					&.active {
 						color: #3491fa;
 					}
@@ -439,18 +397,18 @@ export default {
 		.options-btns {
 			width: 100%;
 			height: 96rpx;
+			line-height: 96rpx;
 			display: flex;
 			align-items: center;
 			justify-content: space-between;
 			font-size: 28rpx;
-			line-height: 96rpx;
 			.options-cancel {
 				color: #999999;
 				padding: 0 40rpx;
 			}
 			.options-confirm {
 				color: #0090ff;
-				padding: 0 40rpx; // 调整按钮的padding值，以适应不同的选项高度。
+				padding: 0 40rpx;
 			}
 		}
 	}
