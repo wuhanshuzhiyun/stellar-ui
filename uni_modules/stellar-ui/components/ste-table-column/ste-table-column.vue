@@ -163,14 +163,14 @@ export default {
 $default-border: 2rpx solid #ebebeb;
 .ste-table-cell {
 	display: table-cell;
-	padding: 0 32rpx;
+	padding: 24rpx 32rpx;
 	border-bottom: $default-border;
 	text-align: left;
 	min-height: 80rpx;
 	font-size: 24rpx;
+	vertical-align: middle;
 
 	.cell-box {
-		min-height: 80rpx;
 		display: flex;
 		align-items: center;
 	}
