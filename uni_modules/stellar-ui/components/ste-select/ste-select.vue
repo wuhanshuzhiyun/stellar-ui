@@ -1,55 +1,58 @@
 <template>
 	<view class="ste-select-root" :class="{ open: showOptions }" :style="[cmpRootStyle]">
-		<view class="select-content" :style="[contentStyle]">
-			<slot>
-				<view class="content-text" v-if="confirmValue && confirmValue.length">
-					<text>{{ getViewData() }}</text>
-				</view>
-				<view class="placeholder-text" v-else>{{ placeholder }}</view>
-			</slot>
-			<view class="open-icon-event" @click="openOptions">
-				<view class="open-icon">
-					<ste-icon code="&#xe676;" size="20" display="block" />
+		<view class="select-mask" @click="clickMask">
+			<view class="select-content" :style="[contentStyle]" @click.stop="stop">
+				<slot>
+					<view class="content-text" v-if="confirmValue && confirmValue.length">
+						<text>{{ cmpViewValue }}</text>
+					</view>
+					<view class="placeholder-text" v-else>{{ placeholder }}</view>
+				</slot>
+				<view class="open-icon-event" @click="openOptions">
+					<view class="open-icon">
+						<ste-icon code="&#xe676;" size="20" display="block" />
+					</view>
 				</view>
 			</view>
-		</view>
-		<view class="options-content" :style="[optionsStyle]">
-			<view class="select-options" :style="[cmpOptionsStyle]">
-				<block v-if="cmpShowDate">
-					<picker-view
-						style="height: 600rpx"
-						indicator-style="height: 43px"
-						:value="cmpDateValue"
-						@change="onDateChange"
-					>
-						<picker-view-column v-for="(col, index) in cmpList" :key="index">
-							<view class="time-item" v-for="(item, i) in col" :key="item">
-								<text>
-									{{ item }}
-								</text>
-								<text v-if="dateUnit">{{ cmpDateUnits[index] }}</text>
-							</view>
-						</picker-view-column>
-					</picker-view>
-				</block>
 
-				<block v-else>
-					<scroll-view scroll-y class="options-col" v-for="(col, index) in cmpList" :key="index">
-						<view
-							class="options-item"
-							v-for="(item, i) in col"
-							:key="item[valueKey]"
-							:class="{ active: active(index, item) }"
-							@click="onSelect(index, item)"
+			<view class="options-content" :style="[optionsStyle]" @click.stop="stop">
+				<view class="select-options" :style="[cmpOptionsStyle]">
+					<block v-if="cmpShowDate">
+						<picker-view
+							style="height: 600rpx"
+							indicator-style="height: 43px"
+							:value="cmpDateValue"
+							@change="onDateChange"
 						>
-							{{ item[labelKey] }}
-						</view>
-					</scroll-view>
-				</block>
-			</view>
-			<view class="options-btns" v-if="cmpList.length > 1">
-				<view class="options-cancel" @click="cancel">取消</view>
-				<view class="options-confirm" @click="confirm">确定</view>
+							<picker-view-column v-for="(col, index) in cmpList" :key="index">
+								<view class="time-item" v-for="(item, i) in col" :key="item">
+									<text>
+										{{ item }}
+									</text>
+									<text v-if="dateUnit">{{ cmpDateUnits[index] }}</text>
+								</view>
+							</picker-view-column>
+						</picker-view>
+					</block>
+
+					<block v-else>
+						<scroll-view scroll-y class="options-col" v-for="(col, index) in cmpList" :key="index">
+							<view
+								class="options-item"
+								v-for="(item, i) in col"
+								:key="item[valueKey]"
+								:class="{ active: active(index, item) }"
+								@click="onSelect(index, item)"
+							>
+								{{ item[labelKey] }}
+							</view>
+						</scroll-view>
+					</block>
+				</view>
+				<view class="options-btns" v-if="cmpShowDate">
+					<view class="options-cancel" @click="clickCancel">取消</view>
+					<view class="options-confirm" @click="clickConfirm">确定</view>
+				</view>
 			</view>
 		</view>
 	</view>
@@ -96,13 +99,21 @@ export default {
 			type: String,
 			default: () => '#fff',
 		},
+		maskClose: {
+			type: Boolean,
+			default: () => true, // 是否允许点击遮罩关闭选项框，默认允许关闭
+		},
 		optionsWidth: {
 			type: [Number, String],
-			default: () => 'auto', // 选项框宽度，用于控制选项框的宽度和高度等属性，多选模式下生效（仅单列时生效）
+			default: () => 'auto', // 选项框宽度，用于控制选项框的宽度
 		},
 		placeholder: {
 			type: String,
 			default: () => '请选择',
+		},
+		connector: {
+			type: String,
+			default: () => ',', // 多选、多列内容连接符
 		},
 		labelKey: {
 			type: String,
@@ -115,10 +126,6 @@ export default {
 		multiple: {
 			type: Boolean,
 			default: () => false, // 默认单选模式，多选模式下multiple为true（仅单列时生效）
-		},
-		clear: {
-			type: Boolean,
-			default: () => true, // 是否显示清除按钮
 		},
 		filterable: {
 			type: Boolean,
@@ -176,6 +183,23 @@ export default {
 			const value = getNowDate(this.selected, this.mode);
 			return this.cmpList.map((item, i) => (item.includes(value[i]) ? item.indexOf(value[i]) : 0));
 		},
+		cmpViewValue() {
+			if (this.cmpShowDate) {
+				const v = formatDate(this.confirmValue, this.mode);
+				return v ? v.format(getFormatStr(this.mode)) : '';
+			}
+			let view = [];
+			this.confirmValue.forEach((value, index) => {
+				if (this.multiple && this.cmpList.length === 1) {
+					const item = this.cmpList[0].find((item) => item[this.valueKey] === value);
+					view.push(item?.[this.labelKey] || '');
+				} else {
+					const item = this.cmpList[index].find((item) => item[this.valueKey] === value);
+					view.push(item?.[this.labelKey] || '');
+				}
+			});
+			return view.join(this.connector);
+		},
 		cmpOptionsStyle() {
 			return {
 				display: !this.cmpShowDate && this.cmpList?.length ? 'grid' : 'block',
@@ -186,21 +210,22 @@ export default {
 	watch: {
 		value: {
 			handler(v) {
-				if (!Array.isArray(v)) {
+				if (Array.isArray(v)) {
+					this.selected = v;
+				} else {
 					if (!this.cmpNotArrValue) {
 						console.error('ste-select: value必须为数组（单列单选模式value可以为string或number类型）');
 					}
 					this.selected = v || v === 0 ? [v] : [];
-				} else {
-					this.selected = v || [];
 				}
-				this.confirmValue = this.selected;
+				this.confirmValue = [...this.selected];
 			},
 			immediate: true, // 立即执行一次，确保初始化时正确赋值。
 		},
 	},
 	mounted() {},
 	methods: {
+		stop: () => {},
 		async openOptions() {
 			if (this.showOptions) {
 				this.showOptions = false; // 关闭选项列表
@@ -213,25 +238,24 @@ export default {
 				const el = await utils.querySelector('.ste-select-root', this);
 				const { width, height, top, left, bottom, right } = el;
 				this.contentStyle = {
-					position: 'fixed',
+					position: 'absolute',
 					left: `${left}px`,
 					top: `${top}px`,
 					width: `${width}px`,
 					height: `${height}px`,
-					'box-shadow': '0 0 0 250vh rgba(0,0,0,.5)',
 				};
 
 				const boundary = utils.System.getElementBoundary(el);
 				let y = 'bottom',
 					x = 'start';
 				if (boundary.top - boundary.bottom > 0) {
-					t = 'top';
+					y = 'top';
 				}
 				if (boundary.right - boundary.left > 0) {
 					x = 'end';
 				}
 				const style = {
-					position: 'fixed',
+					position: 'absolute',
 					display: 'block',
 					width: this.optionsWidth === 'auto' ? `${width}px` : this.optionsWidth,
 				};
@@ -256,17 +280,33 @@ export default {
 				this.showOptions = true; // 打开选项列表
 			}
 		},
-		cancel() {
+		clickMask() {
+			if (!this.maskClose) return;
+			this.clickCancel(); // 关闭选项列表。
+		},
+		clickCancel() {
+			this.onCancel();
+			this.$emit('cancel'); // 触发cancel事件。
+		},
+		clickConfirm() {
+			const value = this.onConfirm();
+			this.$emit('confirm', value);
+			this.$nextTick(() => this.onCancel());
+		},
+		onCancel() {
 			this.showOptions = false; // 关闭选项列表
 			this.contentStyle = {};
 			this.optionsStyle = {};
 		},
-		confirm() {
-			this.confirmValue = this.selected;
-			this.$emit('input', this.selected);
-			this.$emit('confirm', this.selected); // 触发confirm事件，传递selected值。
-			this.$emit('change', this.selected);
-			this.$nextTick(() => this.cancel());
+		onConfirm() {
+			this.confirmValue = [...this.selected];
+			let value = this.confirmValue;
+			if (this.cmpNotArrValue && !Array.isArray(this.value)) {
+				value = this.confirmValue[0];
+			}
+			this.$emit('input', value);
+			this.$emit('change', value);
+			return value;
 		},
 		onSelect(col, item) {
 			if (this.multiple && this.cmpList.length === 1) {
@@ -274,12 +314,13 @@ export default {
 				const index = this.selected.findIndex((value) => value === item[this.valueKey]);
 				if (index > -1) this.selected.splice(index, 1);
 				else this.selected.push(item[this.valueKey]);
-				return;
+			} else {
+				const selected = [...this.selected];
+				selected[col] = item[this.valueKey];
+				this.selected = selected;
 			}
-			const selected = [...this.selected];
-			selected[col] = item[this.valueKey];
-			this.selected = selected;
-			if (this.cmpList.length === 1 && !this.multiple) this.confirm();
+			this.onConfirm();
+			if (this.cmpList.length === 1 && !this.multiple) this.$nextTick(() => this.onCancel());
 		},
 		active(index, item) {
 			if (this.cmpList.length > 1) {
@@ -288,30 +329,8 @@ export default {
 				return this.selected.includes(item[this.valueKey]);
 			}
 		},
-		getViewData() {
-			if (this.cmpShowDate) {
-				return this.getDateByValue();
-			} else {
-				return this.getLabelByValue();
-			}
-		},
-		getLabelByValue() {
-			let view = '';
-			this.confirmValue.forEach((value, index) => {
-				if (this.multiple && this.cmpList.length === 1) {
-					const item = this.cmpList[0].find((item) => item[this.valueKey] === value);
-					view += item?.[this.labelKey] || '';
-				} else {
-					const item = this.cmpList[index].find((item) => item[this.valueKey] === value);
-					view += item?.[this.labelKey] || '';
-				}
-			});
-			return view;
-		},
-		getDateByValue() {
-			const v = formatDate(this.confirmValue, this.mode);
-			return v ? v.format(getFormatStr(this.mode)) : '';
-		},
+		getLabelByValue() {},
+		getDateByValue() {},
 		onDateChange({ detail: { value } }) {
 			const result = [];
 			value.forEach((i, index) => {
@@ -328,19 +347,33 @@ export default {
 	width: var(--ste-select-width);
 	height: var(--ste-select-height);
 	position: relative;
-	background-color: var(--ste-select-background);
+
 	&.open {
-		.select-content {
-			.open-icon-event > .open-icon {
-				transform: rotate(180deg);
+		.select-mask {
+			position: fixed;
+			width: 100vw;
+			height: 100vh;
+			top: 0;
+			left: 0;
+			background-color: rgba(0, 0, 0, 0.5);
+			z-index: 996;
+			.select-content {
+				.open-icon-event > .open-icon {
+					transform: rotate(180deg);
+				}
 			}
 		}
+	}
+	.select-mask {
+		width: var(--ste-select-width);
+		height: var(--ste-select-height);
 	}
 	.select-content {
 		width: var(--ste-select-width);
 		height: var(--ste-select-height);
+		background-color: var(--ste-select-background);
 		position: relative;
-		z-index: 997;
+		z-index: 1;
 		display: flex;
 		align-items: center;
 		justify-content: space-between;
@@ -373,7 +406,7 @@ export default {
 	.options-content {
 		display: none;
 		position: absolute;
-		z-index: 998;
+		z-index: 2;
 		border-radius: 8rpx;
 		background-color: #fff;
 		overflow: hidden;

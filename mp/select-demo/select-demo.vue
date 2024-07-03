@@ -4,6 +4,26 @@
 		<view class="content">
 			<view class="demo-item">
 				<view class="title">基础用法</view>
+				<view class="title">基础用法</view>
+				<view class="title">基础用法</view>
+				<view class="title">基础用法</view>
+				<view class="title">基础用法</view>
+				<view class="title">基础用法</view>
+				<view class="title">基础用法</view>
+				<view class="title">基础用法</view>
+				<view class="title">基础用法</view>
+				<view class="title">基础用法</view>
+				<view class="title">基础用法</view>
+				<view class="title">基础用法</view>
+				<view class="title">基础用法</view>
+				<view class="title">基础用法</view>
+				<view class="title">基础用法</view>
+				<view class="title">基础用法</view>
+				<view class="title">基础用法</view>
+				<view class="title">基础用法</view>
+				<view class="title">基础用法</view>
+				<view class="title">基础用法</view>
+				<view class="title">基础用法</view>
 				<ste-select :list="list" mode="date" :value="value" @change="onChange"></ste-select>
 			</view>
 		</view>
@@ -13,7 +33,7 @@
 export default {
 	data() {
 		return {
-			value: [2021, 7, 13],
+			value: [],
 			list: [
 				{ label: '选项1-1', value: '11' },
 				{ label: '选项1-2', value: '12' },
