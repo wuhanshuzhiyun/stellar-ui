@@ -50,7 +50,7 @@
 							style="height: 600rpx"
 							indicator-style="height: 43px"
 							:value="cmpMultiseriateValue"
-							@change="onDateChange"
+							@change="onMultiseriateChange"
 						>
 							<picker-view-column v-for="(col, index) in viewOptions" :key="index">
 								<view class="time-item" v-for="(item, i) in col" :key="item">
@@ -108,6 +108,7 @@ export default {
 		placeholder: { type: String, default: () => '请选择' },
 		labelKey: { type: String, default: () => 'label' },
 		valueKey: { type: String, default: () => 'value' },
+		childrenKey: { type: String, default: () => 'children' },
 		multiple: { type: Boolean, default: () => false },
 		allowCreate: { type: Boolean, default: () => false },
 	},
@@ -166,7 +167,10 @@ export default {
 				return this.dataOptions.map((item, i) => (item.includes(value[i]) ? item.indexOf(value[i]) : 0));
 			}
 			const value = [...this.selected];
-			return this.dataOptions.map((item, i) => item.findIndex((v) => v[this.valueKey] === value[i]));
+			return this.dataOptions.map((item, i) => {
+				const index = item.findIndex((v) => v[this.valueKey] === value[i]);
+				return index !== -1 ? index : 0;
+			});
 		},
 		cmpViewValue() {
 			if (this.cmpShowDate) {
@@ -175,15 +179,18 @@ export default {
 				const v = formatDate(values, this.mode);
 				return v ? v.format(getFormatStr(this.mode)) : '';
 			}
+
 			let view = [];
 			this.confirmValue.forEach((value, index) => {
-				if (this.multiple && this.dataOptions.length === 1) {
-					const item = this.dataOptions[0].find((item) => item[this.valueKey] === value);
-					view.push(item?.[this.labelKey] || '');
+				let item = null;
+				if (this.mode === 'tree') {
+					item = utils.findTreeNode(this.list, value, this.valueKey, this.childrenKey);
+				} else if (this.multiple && this.dataOptions.length === 1) {
+					item = this.dataOptions[0]?.find((item) => item[this.valueKey] === value);
 				} else {
-					const item = this.dataOptions[index]?.find((item) => item[this.valueKey] === value);
-					view.push(item?.[this.labelKey] || '');
+					item = this.dataOptions[index]?.find((item) => item[this.valueKey] === value);
 				}
+				view.push(item?.[this.labelKey] || '');
 			});
 			return !this.cmpMultiple && view[0] ? view[0] : view;
 		},
@@ -199,14 +206,14 @@ export default {
 		value: {
 			handler(v) {
 				if (Array.isArray(v)) {
-					this.selected = v;
+					this.confirmValue = v;
 				} else {
 					if (this.dataOptions.length > 1 || this.multiple) {
 						console.error('ste-select: value必须为数组（单列单选模式value可以为string或number类型）');
 					}
-					this.selected = v || v === 0 ? [v] : [];
+					this.confirmValue = v || v === 0 ? [v] : [];
 				}
-				this.confirmValue = [...this.selected];
+				this.selected = [...this.confirmValue];
 			},
 			immediate: true, // 立即执行一次，确保初始化时正确赋值。
 		},
@@ -232,14 +239,21 @@ export default {
 				this.dataOptions = getDateList(this.selected, this.mode, this.minDate, this.maxDate);
 				return;
 			}
+			if (this.mode === 'tree') {
+				return this.initTreeOptions();
+			}
+
 			let list = this.list;
-			if (!list || !list.length)
-				// 处理list数据
-				list = [];
-			if (!Array.isArray(list[0])) {
+			if (!list || !list.length) list = [];
+			if (list[0] && !Array.isArray(list[0])) {
 				list = [list];
 			}
 			this.dataOptions = list;
+			this.getViewOptions();
+		},
+		initTreeOptions() {
+			const options = utils.treeToTable(this.list, this.selected, this.valueKey, this.childrenKey);
+			this.dataOptions = options;
 			this.getViewOptions();
 		},
 		getViewOptions() {
@@ -385,13 +399,23 @@ export default {
 				return this.selected.includes(item[this.valueKey]);
 			}
 		},
-		onDateChange({ detail: { value } }) {
+		onMultiseriateChange({ detail: { value } }) {
 			const result = [];
 			value.forEach((i, index) => {
 				const value = this.dataOptions[index][i];
 				result.push(this.cmpShowDate ? value : value[this.valueKey]);
 			});
 			this.selected = result;
+
+			if (this.mode === 'tree') {
+				this.initTreeOptions();
+				this.$nextTick(() => {
+					this.selected = this.cmpMultiseriateValue.map((i, index) => {
+						const item = this.dataOptions[index][i];
+						return item ? item[this.valueKey] : null;
+					});
+				});
+			}
 		},
 		onUserFilterable({ detail: { value } }) {
 			clearTimeout(this.filterableTime);
@@ -463,6 +487,7 @@ export default {
 					border-radius: 6rpx;
 					border: 1px solid #eee;
 					margin-right: 8px;
+					font-size: 24rpx; // 设置字体大小
 					text-overflow: ellipsis;
 					white-space: nowrap; // 文本不换行，防止文字溢出
 					overflow: hidden; // 隐藏溢出内容，并显示省略号

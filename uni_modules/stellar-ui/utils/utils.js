@@ -143,7 +143,8 @@ let utils = {
 			try {
 				uni
 					.createSelectorQuery()
-					.in(component)[selectFn](selectors)
+					.in(component)
+					[selectFn](selectors)
 					.boundingClientRect((data) => {
 						resolve(data);
 					})
@@ -390,7 +391,8 @@ let utils = {
 				if (typeof otherAttributes === 'function') {
 					_otherAttributes = _otherAttributes(item);
 				}
-				return Object.assign({
+				return Object.assign(
+					{
 						parentNode,
 						depth,
 					},
@@ -494,6 +496,25 @@ let utils = {
 		};
 		return _flatten(tree);
 	},
+
+	/**
+	 * 将树形结构转换为多列二维数组
+	 */
+	treeToTable(tree, values = [], valueKey = 'value', childrenKey = 'children') {
+		const _flatten = (tree, depth = 0) => {
+			const result = [];
+			result.push(tree);
+			const value = values[depth];
+			let item = tree.find((item) => item[valueKey] === value);
+			item = item || tree[0];
+			if (item && item[childrenKey]) {
+				result.push(..._flatten(item[childrenKey], depth + 1));
+			}
+			return result;
+		};
+		return _flatten(tree);
+	},
+
 	isEmpty(value) {
 		return value === null || value === undefined || value === '';
 	},
@@ -504,7 +525,7 @@ let utils = {
 	 * @param {ignoreKeys} 忽略比较的key
 	 */
 	deepEqual(obj1, obj2, ignoreKeys = []) {
-		if ((obj1 === obj2) || (this.isEmpty(obj1) && thi.isEmpty(obj2))) {
+		if (obj1 === obj2 || (this.isEmpty(obj1) && thi.isEmpty(obj2))) {
 			return true; // 简单类型相等或引用相等
 		}
 
