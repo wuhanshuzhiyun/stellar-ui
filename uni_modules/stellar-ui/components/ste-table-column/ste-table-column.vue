@@ -120,13 +120,13 @@ export default {
 			return false;
 		},
 		cmpDisableCheck() {
-			if (this.parent.selectable) {
+			if (this.parent.selectable && this.type) {
 				return !this.parent.selectable(this.row, this.row.rowIndex);
 			}
 			return false;
 		},
 		cmpReadonlyCheck() {
-			if (this.parent.readable) {
+			if (this.parent.readable && this.type) {
 				return this.parent.readable(this.row, this.row.rowIndex);
 			}
 			return false;
