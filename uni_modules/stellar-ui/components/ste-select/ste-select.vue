@@ -4,7 +4,23 @@
 			<view class="select-content" :style="[contentStyle]" @click.stop="stop">
 				<slot>
 					<scroll-view scroll-x class="content-text" :class="{ multiple: cmpMultiple }">
-						<block v-if="cmpFilterable"></block>
+						<block v-if="cmpFilterable">
+							<block v-if="cmpMultiple">
+								<block v-for="(v, i) in cmpViewValue">
+									<view class="view-item" :key="v" v-if="v">
+										{{ v }}
+									</view>
+								</block>
+							</block>
+							<input
+								v-model="inputView"
+								class="filterable-input"
+								:class="{ content: cmpMultiple && cmpViewValue.length }"
+								:placeholder="confirmValue && confirmValue.length ? '' : placeholder"
+								@click="openOptions"
+								@input="onUserFilterable"
+							/>
+						</block>
 						<block v-else>
 							<block v-if="confirmValue && confirmValue.length">
 								<block v-if="cmpMultiple">
@@ -20,7 +36,7 @@
 						</block>
 					</scroll-view>
 				</slot>
-				<view class="open-icon-event" @click="openOptions">
+				<view class="open-icon-event" @click="clickOpenIcon">
 					<view class="open-icon">
 						<ste-icon code="&#xe676;" size="20" display="block" />
 					</view>
@@ -29,26 +45,29 @@
 
 			<view class="options-content" :style="[optionsStyle]" @click.stop="stop">
 				<view class="select-options">
-					<block v-if="cmpList.length > 1">
+					<block v-if="dataOptions.length > 1">
 						<picker-view
 							style="height: 600rpx"
 							indicator-style="height: 43px"
 							:value="cmpMultiseriateValue"
 							@change="onDateChange"
 						>
-							<picker-view-column v-for="(col, index) in cmpList" :key="index">
+							<picker-view-column v-for="(col, index) in viewOptions" :key="index">
 								<view class="time-item" v-for="(item, i) in col" :key="item">
 									<text>
 										{{ cmpShowDate ? item : item[labelKey] }}
 									</text>
-									<text v-if="dateUnit">{{ cmpDateUnits[index] }}</text>
+									<text v-if="cmpShowDate && dateUnit">{{ cmpDateUnits[index] }}</text>
 								</view>
 							</picker-view-column>
 						</picker-view>
 					</block>
 
 					<block v-else>
-						<scroll-view scroll-y class="options-col" v-for="(col, index) in cmpList" :key="index">
+						<scroll-view scroll-y class="options-col" v-for="(col, index) in viewOptions" :key="index">
+							<view class="options-item" v-if="dataAllowCreate" @click="onSelect(index, dataAllowCreate, true)">
+								{{ dataAllowCreate[labelKey] }}
+							</view>
 							<view
 								class="options-item"
 								v-for="(item, i) in col"
@@ -61,7 +80,7 @@
 						</scroll-view>
 					</block>
 				</view>
-				<view class="options-btns" v-if="cmpList.length > 1">
+				<view class="options-btns" v-if="dataOptions.length > 1">
 					<view class="options-cancel" @click="clickCancel">取消</view>
 					<view class="options-confirm" @click="clickConfirm">确定</view>
 				</view>
@@ -94,12 +113,17 @@ export default {
 	},
 	data() {
 		return {
-			dataFilterable: '', // 输入框搜索值
+			inputView: '', // 输入框显示的内容
+			userFilterable: '', // 用户输入的筛选内容（仅筛选模式下生效）
+			filterableTime: null, // 防抖定时器
+			dataAllowCreate: null,
 			selected: [], // 当前选中的值
 			confirmValue: [], // 确定按钮的值，用于多选模式下保存选中的值，用于单选模式下保存选中的值（仅单列时生效）
 			showOptions: false, // 是否显示下拉选项
 			contentStyle: {},
 			optionsStyle: {}, // 选项框样式，用于控制选项框的宽度和高度等属性
+			dataOptions: [], // 数据列表，用于存储用户传入的列表数据（仅筛选模式下生效）
+			viewOptions: [],
 		};
 	},
 	computed: {
@@ -109,34 +133,26 @@ export default {
 		},
 		// 是否是筛选模式（包括筛选、筛选多列）
 		cmpFilterable() {
-			return this.mode === 'filterable';
+			return this.mode === 'filterable' && this.dataOptions.length <= 1;
 		},
 		// 是否是多选模式（多列或者单列多选）
 		cmpMultiple() {
-			return !this.cmpShowDate && (this.cmpList.length > 1 || this.multiple);
+			return !this.cmpShowDate && (this.dataOptions.length > 1 || this.multiple);
+		},
+		cmpAllowCreate() {
+			return this.allowCreate && this.cmpFilterable;
 		},
 		cmpRootStyle() {
 			return {
 				'--ste-select-width': utils.formatPx(this.width),
 				'--ste-select-height': utils.formatPx(this.height),
 				'--ste-select-line-height': utils.formatPx(this.height, 'num') - 2 + 'px',
+				'--ste-select-multiple-placeholder-height': utils.formatPx(this.height, 'num') - 6 + 'px',
 				'--ste-select-multiple-line-height': utils.formatPx(this.height, 'num') - 8 + 'px',
 				'--ste-select-background': this.background,
 			};
 		},
 
-		cmpList() {
-			if (this.cmpShowDate) {
-				return getDateList(this.selected, this.mode, this.minDate, this.maxDate);
-			}
-			if (!this.list || !this.list.length)
-				// 处理list数据
-				return [];
-			if (Array.isArray(this.list[0])) {
-				return this.list;
-			}
-			return [this.list];
-		},
 		cmpDateUnits() {
 			if (['date', 'datetime', 'month'].includes(this.mode)) {
 				return ['年', '月', '日', '时', '分', '秒'];
@@ -147,25 +163,25 @@ export default {
 		cmpMultiseriateValue() {
 			if (this.cmpShowDate) {
 				const value = getNowDate(this.selected, this.mode);
-				return this.cmpList.map((item, i) => (item.includes(value[i]) ? item.indexOf(value[i]) : 0));
+				return this.dataOptions.map((item, i) => (item.includes(value[i]) ? item.indexOf(value[i]) : 0));
 			}
 			const value = [...this.selected];
-			return this.cmpList.map((item, i) => item.findIndex((v) => v[this.valueKey] === value[i]));
+			return this.dataOptions.map((item, i) => item.findIndex((v) => v[this.valueKey] === value[i]));
 		},
 		cmpViewValue() {
 			if (this.cmpShowDate) {
 				let values = this.confirmValue;
-				if (values.length < this.cmpList.length) values = this.initDate(values);
+				if (values.length < this.dataOptions.length) values = this.initDate(values);
 				const v = formatDate(values, this.mode);
 				return v ? v.format(getFormatStr(this.mode)) : '';
 			}
 			let view = [];
 			this.confirmValue.forEach((value, index) => {
-				if (this.multiple && this.cmpList.length === 1) {
-					const item = this.cmpList[0].find((item) => item[this.valueKey] === value);
+				if (this.multiple && this.dataOptions.length === 1) {
+					const item = this.dataOptions[0].find((item) => item[this.valueKey] === value);
 					view.push(item?.[this.labelKey] || '');
 				} else {
-					const item = this.cmpList[index]?.find((item) => item[this.valueKey] === value);
+					const item = this.dataOptions[index]?.find((item) => item[this.valueKey] === value);
 					view.push(item?.[this.labelKey] || '');
 				}
 			});
@@ -173,12 +189,19 @@ export default {
 		},
 	},
 	watch: {
+		list: {
+			handler(v) {
+				// 监听list变化，重新初始化数据。
+				this.initOptions();
+			},
+			immediate: true,
+		},
 		value: {
 			handler(v) {
 				if (Array.isArray(v)) {
 					this.selected = v;
 				} else {
-					if (this.cmpList.length > 1 || this.multiple) {
+					if (this.dataOptions.length > 1 || this.multiple) {
 						console.error('ste-select: value必须为数组（单列单选模式value可以为string或number类型）');
 					}
 					this.selected = v || v === 0 ? [v] : [];
@@ -187,86 +210,126 @@ export default {
 			},
 			immediate: true, // 立即执行一次，确保初始化时正确赋值。
 		},
+		userFilterable() {
+			this.getViewOptions();
+		},
+		confirmValue(v) {
+			if (!this.cmpFilterable) return;
+			// 单选时将confirmValue赋值给输入框。
+			if (!this.cmpMultiple && (v[0] || v[0] === 0)) {
+				let value = this.dataOptions[0]?.find((item) => item[this.valueKey] === v[0]);
+				this.$nextTick(() => {
+					this.inputView = value && value[this.labelKey] ? value[this.labelKey] : '';
+				});
+			}
+		},
 	},
-	mounted() {},
+	created() {},
 	methods: {
 		stop: () => {},
+		initOptions() {
+			if (this.cmpShowDate) {
+				this.dataOptions = getDateList(this.selected, this.mode, this.minDate, this.maxDate);
+				return;
+			}
+			let list = this.list;
+			if (!list || !list.length)
+				// 处理list数据
+				list = [];
+			if (!Array.isArray(list[0])) {
+				list = [list];
+			}
+			this.dataOptions = list;
+			this.getViewOptions();
+		},
+		getViewOptions() {
+			this.$nextTick(() => {
+				let list = this.dataOptions;
+				if (this.cmpFilterable && this.userFilterable) {
+					// 处理筛选数据
+					list = list.map((item) => item.filter((value) => value[this.labelKey].includes(this.userFilterable)));
+				}
+				this.viewOptions = list;
+			});
+		},
 		initDate(values) {
 			const result = [];
-			const now = getNowDate(null, this.mode).slice(0, this.cmpList.length);
-			this.cmpList.forEach((item, i) => {
+			const now = getNowDate(null, this.mode).slice(0, this.dataOptions.length);
+			this.dataOptions.forEach((item, i) => {
 				const v = values[i] || values[i] === 0 ? values[i] : now[i]; // 默认选中当前时间。
 				result.push(v);
 			});
 			return result;
 		},
-		initOptions(values) {
+		initSelected(values) {
 			const result = [];
-			this.cmpList.forEach((item, i) => {
-				const v = values[i] || values[i] === 0 ? values[i] : item[0][this.valueKey]; // 默认选中当前时间。
+			this.dataOptions.forEach((item, i) => {
+				const v = values[i] || values[i] === 0 ? values[i] : item[0][this.valueKey];
 				result.push(v);
 			});
 			return result;
 		},
-		async openOptions() {
+
+		clickOpenIcon() {
 			if (this.showOptions) {
-				this.showOptions = false; // 关闭选项列表
-				this.contentStyle = {};
-				this.optionsStyle = {};
+				this.onCancel();
 			} else {
-				if (this.selected.length < this.cmpList.length) {
-					let selected = [];
-					if (this.cmpShowDate) {
-						selected = this.initDate(this.selected);
-					} else if (this.cmpList.length > 1) {
-						selected = this.initOptions(this.selected);
-					}
-					this.selected = selected;
-				}
-				const el = await utils.querySelector('.ste-select-root', this);
-				const { width, height, top, left, bottom, right } = el;
-				this.contentStyle = {
-					position: 'absolute',
-					left: `${left}px`,
-					top: `${top}px`,
-					width: `${width}px`,
-					height: `${height}px`,
-				};
-
-				const boundary = utils.System.getElementBoundary(el);
-				let y = 'bottom',
-					x = 'start';
-				if (boundary.top - boundary.bottom > 0) {
-					y = 'top';
-				}
-				if (boundary.right - boundary.left > 0) {
-					x = 'end';
-				}
-				const style = {
-					position: 'absolute',
-					display: 'block',
-					width: this.optionsWidth === 'auto' ? `${width}px` : this.optionsWidth,
-				};
-				switch (y) {
-					case 'top':
-						style.bottom = `${boundary.bottom + height + 8}px`;
-						break;
-					case 'bottom':
-						style.top = `${bottom + 8}px`;
-						break;
-				}
-
-				switch (x) {
-					case 'start':
-						style.left = `${left}px`;
-						break;
-					case 'end':
-						style.right = `${boundary.right}px`;
-						break;
-				}
-				this.optionsStyle = style;
-				this.showOptions = true; // 打开选项列表
+				this.openOptions();
 			}
+		},
+		async openOptions() {
+			if (this.selected.length < this.dataOptions.length) {
+				let selected = [];
+				if (this.cmpShowDate) {
+					selected = this.initDate(this.selected);
+				} else if (this.dataOptions.length > 1) {
+					selected = this.initSelected(this.selected);
+				}
+				this.selected = selected;
+			}
+			const el = await utils.querySelector('.ste-select-root', this);
+			const { width, height, top, left, bottom, right } = el;
+			this.contentStyle = {
+				position: 'absolute',
+				left: `${left}px`,
+				top: `${top}px`,
+				width: `${width}px`,
+				height: `${height}px`,
+			};
+
+			const boundary = utils.System.getElementBoundary(el);
+			let y = 'bottom',
+				x = 'start';
+			if (boundary.top - boundary.bottom > 0) {
+				y = 'top';
+			}
+			if (boundary.right - boundary.left > 0) {
+				x = 'end';
+			}
+			const style = {
+				position: 'absolute',
+				display: 'block',
+				width: this.optionsWidth === 'auto' ? `${width}px` : this.optionsWidth,
+			};
+			switch (y) {
+				case 'top':
+					style.bottom = `${boundary.bottom + height + 8}px`;
+					break;
+				case 'bottom':
+					style.top = `${bottom + 8}px`;
+					break;
+			}
+
+			switch (x) {
+				case 'start':
+					style.left = `${left}px`;
+					break;
+				case 'end':
+					style.right = `${boundary.right}px`;
+					break;
+			}
+			this.optionsStyle = style;
+			this.showOptions = true; // 打开选项列表
 		},
 		clickMask() {
 			if (!this.maskClose) return;
@@ -296,8 +359,8 @@ export default {
 			this.$emit('change', value);
 			return value;
 		},
-		onSelect(col, item) {
-			if (this.multiple && this.cmpList.length === 1) {
+		onSelect(col, item, isAllowCreate) {
+			if (this.multiple && this.dataOptions.length === 1) {
 				// 只有一列选项的时候，多选
 				const index = this.selected.findIndex((value) => value === item[this.valueKey]);
 				if (index > -1) this.selected.splice(index, 1);
@@ -307,11 +370,16 @@ export default {
 				selected[col] = item[this.valueKey];
 				this.selected = selected;
 			}
+			if (this.cmpAllowCreate && isAllowCreate) {
+				this.dataOptions[0].unshift(this.dataAllowCreate);
+				this.dataAllowCreate = null;
+				this.getViewOptions();
+			}
 			this.onConfirm();
 			if (!this.multiple) this.$nextTick(() => this.onCancel());
 		},
 		active(index, item) {
-			if (this.cmpList.length > 1) {
+			if (this.dataOptions.length > 1) {
 				return this.selected[index] === item[this.valueKey];
 			} else {
 				return this.selected.includes(item[this.valueKey]);
@@ -320,10 +388,24 @@ export default {
 		onDateChange({ detail: { value } }) {
 			const result = [];
 			value.forEach((i, index) => {
-				const value = this.cmpList[index][i];
+				const value = this.dataOptions[index][i];
 				result.push(this.cmpShowDate ? value : value[this.valueKey]);
 			});
 			this.selected = result;
+		},
+		onUserFilterable({ detail: { value } }) {
+			clearTimeout(this.filterableTime);
+			this.filterableTime = setTimeout(() => {
+				this.userFilterable = value;
+				if (this.cmpAllowCreate && value) {
+					this.dataAllowCreate = {
+						[this.valueKey]: value,
+						[this.labelKey]: value,
+					};
+				} else {
+					this.dataAllowCreate = null;
+				}
+			}, 500);
 		},
 	},
 };
@@ -363,7 +445,8 @@ export default {
 		border: 1px solid #ebebeb;
 		position: relative;
 		z-index: 1;
-		padding: 0 20rpx; // 调整内边距，以适应不同的选项高度。
+		padding-left: 20rpx; // 调整内边距，以适应不同的选项高度。
+		padding-right: var(--ste-select-multiple-line-height);
 		border-radius: 8rpx;
 		overflow: hidden;
 		.content-text {
@@ -384,12 +467,21 @@ export default {
 					white-space: nowrap; // 文本不换行，防止文字溢出
 					overflow: hidden; // 隐藏溢出内容，并显示省略号
 				}
+				.filterable-input {
+					height: var(--ste-select-multiple-placeholder-height);
+					display: inline-block;
+					&.content {
+						width: 50%;
+					}
+				}
 				.placeholder-text {
-					line-height: var(--ste-select-multiple-line-height);
-					border-top: 1px solid transparent;
-					border-bottom: 1px solid transparent;
+					line-height: var(--ste-select-multiple-placeholder-height);
 				}
 			}
+		}
+		.filterable-input {
+			width: 100%;
+			height: 100%;
 		}
 		.placeholder-text {
 			color: #999999;
@@ -399,6 +491,7 @@ export default {
 			height: var(--ste-select-multiple-line-height);
 			position: absolute;
 			display: flex;
+			z-index: 100;
 			align-items: center;
 			justify-content: center;
 			right: 0;
