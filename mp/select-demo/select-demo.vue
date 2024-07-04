@@ -16,7 +16,35 @@
 			</view>
 			<view class="demo-item">
 				<view class="title">树形选择</view>
-				<ste-select mode="tree" :list="list4" v-model="value4" @change="onChange"></ste-select>
+				<ste-select mode="tree" :list="list4" @change="onChange"></ste-select>
+			</view>
+			<view class="demo-item">
+				<view class="title">日期选择</view>
+				<ste-select mode="date" @change="onChange"></ste-select>
+			</view>
+			<view class="demo-item">
+				<view class="title">时间选择</view>
+				<ste-select mode="time" @change="onChange"></ste-select>
+			</view>
+			<view class="demo-item">
+				<view class="title">年月选择</view>
+				<ste-select mode="month" @change="onChange"></ste-select>
+			</view>
+			<view class="demo-item">
+				<view class="title">时分选择</view>
+				<ste-select mode="minute" @change="onChange"></ste-select>
+			</view>
+			<view class="demo-item">
+				<view class="title">日期时间选择</view>
+				<ste-select mode="datetime" @change="onChange"></ste-select>
+			</view>
+			<view class="demo-item">
+				<view class="title">搜索</view>
+				<ste-select :list="list1" mode="filterable" @change="onChange"></ste-select>
+			</view>
+			<view class="demo-item">
+				<view class="title">创建条目</view>
+				<ste-select :list="list1" mode="filterable" allowCreate @change="onChange"></ste-select>
 			</view>
 		</view>
 	</view>
@@ -68,6 +96,7 @@ export default {
 					],
 				},
 			],
+			value5: [],
 		};
 	},
 

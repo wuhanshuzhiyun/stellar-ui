@@ -93,9 +93,9 @@
 import utils from '../../utils/utils';
 import { formatDate, getDateList, getFormatStr, getNowDate } from './defaultDate';
 /**
- * ste-signature 签名
- * @description 签名组件
- * @tutorial https://stellar-ui.intecloud.com.cn/pc/index/index?name=ste-signature
+ * ste-select 下拉选
+ * @description 下拉选组件
+ * @tutorial https://stellar-ui.intecloud.com.cn/pc/index/index?name=ste-select
  * @property {String} value 绑定的值,支持v-model双向绑定
  * @property {Array} list 数据列表，支持一维数组，二维数组，树形结构
  * @property {String} mode 选择模式
@@ -127,6 +127,9 @@ import { formatDate, getDateList, getFormatStr, getNowDate } from './defaultDate
  * @example <ste-select :list="list" v-model="value" @change="change" />
  */
 export default {
+	group: '表单组件',
+	title: 'Select 下拉选',
+	name: 'ste-select',
 	props: {
 		value: { type: [Array, String, Number], default: () => [] },
 		list: { type: Array, default: () => [] },
@@ -271,10 +274,12 @@ export default {
 		initOptions() {
 			if (this.cmpShowDate) {
 				this.dataOptions = getDateList(this.selected, this.mode, this.minDate, this.maxDate);
+				this.viewOptions = this.dataOptions;
 				return;
 			}
 			if (this.mode === 'tree') {
-				return this.initTreeOptions();
+				this.initTreeOptions();
+				return;
 			}
 
 			let list = this.list;
