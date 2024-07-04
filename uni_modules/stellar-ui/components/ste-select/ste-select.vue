@@ -92,6 +92,40 @@
 <script>
 import utils from '../../utils/utils';
 import { formatDate, getDateList, getFormatStr, getNowDate } from './defaultDate';
+/**
+ * ste-signature 签名
+ * @description 签名组件
+ * @tutorial https://stellar-ui.intecloud.com.cn/pc/index/index?name=ste-signature
+ * @property {String} value 绑定的值,支持v-model双向绑定
+ * @property {Array} list 数据列表，支持一维数组，二维数组，树形结构
+ * @property {String} mode 选择模式
+ * @value default 默认
+ * @value filterable 可搜索(仅单列模式下生效)
+ * @value tree 当list为树形结构时生效
+ * @value date 时间选择器模式：日期选择（该模式下list属性不生效）
+ * @value time 时间选择器模式：时间选择（该模式下list属性不生效）
+ * @value datetime 时间选择器模式：日期时间选择（该模式下list属性不生效）
+ * @value month 时间选择器模式：年月选择器（该模式下list属性不生效）
+ * @value minute 时间选择器模式：时分选择器（该模式下list属性不生效）
+ * @property {String} minDate 最小日期（仅在时间选择器模式下生效）
+ * @property {String} maxDate 最大日期（仅在时间选择器模式下生效）
+ * @property {Boolean} dateUnit 是否显示中文单位（仅在时间选择器模式下生效）
+ * @property {String|Number} width 宽度，默认100%
+ * @property {String|Number} height 高度（不可使用相对值例如百分比等）单位RPX，默认64
+ * @property {String} background 背景颜色，默认#fff
+ * @property {Boolean} maskClose 点击遮罩层是否关闭，默认true
+ * @property {String|Number} optionsWidth 选项框宽度，默认auto同width
+ * @property {String} placeholder 占位符
+ * @property {String} labelKey 数据列表中显示的键名，默认label
+ * @property {String} valueKey 数据列表中存储的键名，默认value
+ * @property {String} childrenKey 数据列表中子列表的键名，默认children（mode为tree时生效）
+ * @property {Boolean} multiple 是否多选，默认false
+ * @property {Boolean} allowCreate 是否允许创建，默认false
+ * @event {Function} change 选中值变化时触发
+ * @event {Function} cancel 取消选择时触发
+ * @event {Function} confirm 确定选择时触发
+ * @example <ste-select :list="list" v-model="value" @change="change" />
+ */
 export default {
 	props: {
 		value: { type: [Array, String, Number], default: () => [] },
