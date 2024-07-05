@@ -4,197 +4,204 @@
 {{compatibility}}
 
 ## 使用示例
-- 以下示例中，但凡使用到`options`属性的，都使用以下数据
-```json
-[
-	{
-		title: '标题1',
-		value: '1',
-		children: [
-			{
-				title: '标题1-1',
-				value: '1-1',
-				children: [
-					{ title: '标题-1-1', value: '1-1-1' },
-					{ title: '标题1-1-2', value: '1-1-2' },
-				],
-			},
-			{
-				title: '标题1-2',
-				value: '1-2',
-				children: [
-					{ title: '标题1-2-1', value: '1-2-1' },
-					{
-						title: '标题1-2-2',
-						value: '1-2-2',
-						children: [{ title: '标题1-2-2-1', value: '1-2-2-1' }],
-					},
-				],
-			},
-		],
-	},
-	{
-		title: '标题2',
-		value: '2',
-		children: [{ title: '标题2-1', value: '2-1' }],
-	},
-]
-		
-```
-
 
 ### 基础用法
-- 属性`options`用于设置折叠面板的选项，类型为树形结构
-	- 对象属性
-		- `title`：标题展示文本，(可通过`titleKey`指定)
-		- `value`：唯一标识，(可通过`valueKey`指定)
-		- `children`：子节点数组，(可通过`childrenKey`指定)
-		- `hasChildren`：是否有`children`，懒加载没有`children`属性时，需要将该属性设置为`true`
-
-- 事件`open`用于监听打开节点
-- 事件`close`用于监听关闭节点
+- 属性`list`接收一个数组，数组中的每一项为一个对象，对象中包含`label`和`value`两个属性，分别表示节点的显示文本和节点的值
+	- 若`lable`和`value`属性字段名不同，可通过`labelKey`和`valueKey`属性进行设置
+- 属性`value`接收一个值，表示当前选中的节点值,支持v-model双向绑定
+	- 除了单选之外的其他用法，`value`属性必须是一个数组，数组中的每一项表示一个选中的节点值
+- 事件`change`在节点值改变时触发，返回当前选中的节点对象
 ```html
 <template>
-	<ste-tree :options="options" @open="onOpen" @close="onClose"></ste-tree>
+	<ste-select :list="list" v-model="value" @change="onChange"></ste-select>
 </template>
 <script>
 export default {
-	methods: {
-		onOpen(node) {
-			uni.showToast({ title: `打开节点：${node.title}`, icon: 'none' });
-		},
-		onClose(node) {
-			uni.showToast({ title: `关闭节点：${node.title}`, icon: 'none' });
-		},
-	},
-};
-</script>
-```
-### 默认展开节点，打开/关闭指定节点
-
-- 属性`openNodes`用于设置默认展开的节点，默认展开的节点数组（数组内容为节点value值，请在组件加载前设置，加载后若要展开请调用open方法）
-- 方法`open`用于打开指定节点
-- 方法`close`用于关闭指定节点
-```html
-<template>
-	<ste-tree ref="accordion" :options="options" :openNodes="['1-2-2']"></ste-tree>
-	<ste-button @click="openNode" mode="100">打开标题2</ste-button>
-	<ste-button @click="closeNode" mode="100">关闭标题2</ste-button>
-</template>
-<script>
-export default {
-	methods: {
-		openNode() {
-			this.$refs.accordion.open('2');
-		},
-		closeNode() {
-			this.$refs.accordion.close('2');
-		},
-	},
-};
-</script>
-```
-### 节点搜索
-
-- 属性`searchTitle`用于搜索节点
-- 也可以使用方法`search(keyword)`进行搜索
-
-```html
-<template>
-	<ste-input placeholder="请输入标题内容" v-model="searchTitle"></ste-input>
-	<ste-tree :options="options" :searchTitle="searchTitle"></ste-tree>
-</template>
-<script>
-export default {
-	data(){
+	data() {
 		return {
-			searchTitle: '',
-		}
-	}
-};
-</script>
-```
-### 非手风琴模式(展开时不关闭兄弟节点)
-
-- 属性`accordion`用于设置是否为手风琴模式，默认为`true`
-
-```html
-<template>
-	<ste-tree :options="options" :accordion="false"></ste-tree>
-</template>
-```
-
-### 懒加载
-
-- `options`中对象没有子集`children`时，将属性`hasChildren`设置为`true`可展示`open`按钮
-- 事件`beforeOpen`用于监听用户点击`open`时，打开指定节点前触发
-	- 参数一：当前`node`对象
-	- 参数二：`suspend`函数，用于等待后续操作
-	- 参数三：`next`函数，继续执行后续代码，可接收一个对象数组，该数组会替换当前节点的`children`
-	- 参数四：`stop`函数，阻止后续代码执行
-
-```html
-<template>
-	<ste-tree :options="lazyLoadOptions" @beforeOpen="beforeOpen"></ste-tree>
-</template>
-<script>
-export default {
-	data(){
-		return{
-			lazyLoadOptions: [
-				{ title: '标题1', value: '1', hasChildren: true },
-				{ title: '标题2', value: '2', hasChildren: true },
+			value: null,
+			list: [
+				{ label: '选项2011', value: 2011 },
+				{ label: '选项2012', value: 2012 },
+				{ label: '选项2013', value: 2013 },
+				{ label: '选项2014', value: 2014 },
+				{ label: '选项2015', value: 2015 },
+				{ label: '选项2016', value: 2016 },
+				{ label: '选项2017', value: 2017 },
+				{ label: '选项2018', value: 2018 },
+				{ label: '选项2019', value: 2019 },
 			],
 		}
 	},
 	methods: {
-		beforeOpen(node, suspend, next, stop) {
-			// 开启等待
-			suspend();
-			setTimeout(() => {
-				// 继续后续操作，并将结果传递给next
-				next([
-					{ title: `${node.title}-1`, value: `${node.value}-1` },
-					{ title: `${node.title}-2`, value: `${node.value}-2`, hasChildren: true },
-				]);
-			}, 2000);
-		},
+		onChange(v) {
+			console.log(v)
+		}
 	}
-}
+};
+</script>
+```
+### 多选
+- 属性`multiple`设置为`true`时，可进行多选
+- 属性`value`接收一个数组，数组中的每一项表示一个选中的节点值
+```html
+<template>
+	<ste-select :list="list" v-model="value" multiple></ste-select>
+</template>
+<script>
+export default {
+	data() {
+		return {
+			value:[],
+			list: [
+				{ label: '选项2011', value: 2011 },
+				{ label: '选项2012', value: 2012 },
+				{ label: '选项2013', value: 2013 },
+				{ label: '选项2014', value: 2014 },
+				{ label: '选项2015', value: 2015 },
+				{ label: '选项2016', value: 2016 },
+				{ label: '选项2017', value: 2017 },
+				{ label: '选项2018', value: 2018 },
+				{ label: '选项2019', value: 2019 },
+			],
+		}
+	},
+};
 </script>
 ```
 
-### 自定义内容
-
-- 插槽`default`用于自定义节点标题
-- 插槽`open`用于自定义节点展开按钮图标，大小不得超过30rpx
-- 插槽`loading`用于自定义懒加载动画
+### 多列选择
+- 属性`list`可接收一个二维数组，数组中的每一项为一个对象，对象结构同上
+- 属性`value`接收一个数组，数组中的每一项表示一个选中的节点值
 ```html
 <template>
-	<ste-tree :options="options">
-		<template v-slot="{ node, depth }">
-			<view class="item-title">
-				<image
-					v-if="depth === 0"
-					class="title-image"
-					src="https://image.whzb.com/chain/StellarUI/component-icons/ste-tree.png"
-				></image>
-				<image
-					v-if="depth === 1"
-					class="title-image"
-					src="https://image.whzb.com/chain/StellarUI/component-icons/ste-tree-children.png"
-				></image>
-				<view class="item-text">{{ node.title }}</view>
-			</view>
-		</template>
-		<template v-slot:open="{ open }">
-			<view class="slef-open-icon">
-				{{ open ? '-' : '+' }}
-			</view>
-		</template>
-	</ste-tree>
+	<ste-select :list="list" v-model="value"></ste-select>
 </template>
 <script>
+export default {
+	data() {
+		return {
+			value: [],
+			list: [
+				[
+					{ label: '选项1-1', value: 11 },
+					{ label: '选项1-2', value: 22 },
+				],
+				[
+					{ label: '选项2-1', value: 21 },
+					{ label: '选项2-2', value: 22 },
+				],
+			],
+		}
+	},
+};
+</script>
+```
+### 树形选择
+- 属性`list`可接收一个树形结构数组，数组中的每一项为一个对象，对象结构同上，`children`属性表示子节点
+	- 若`children`属性字段名不同，可通过`childrenKey`属性进行设置
+- 属性`mode`设置为`tree`时，可进行树形选择
+- 属性`value`接收一个数组，数组中的每一项表示一个选中的节点值
+```html
+<template>
+	<ste-select mode="tree" :list="list" v-model="value"></ste-select>
+</template>
+<script>
+export default {
+	data() {
+		return {
+			value:[],
+			list: [
+				{
+					label: '湖北',
+					value: 1,
+					children: [
+						{ label: '武汉', value: 11 },
+						{ label: '荆州', value: 12 },
+					],
+				},
+				{
+					label: '湖南',
+					value: 2,
+					children: [
+						{ label: '长沙', value: 21 },
+						{ label: '株洲', value: 22 },
+					],
+				},
+			],
+		}
+	},
+};
+</script>
+```
+### 日期时间选择器
+- 属性`mode`设置为`date`时，可进行日期选择
+	- 设置为`time`时，可进行时间选择
+	- 设置为`datetime`时，可进行日期和时间选择
+	- 设置为`month`时，可进行月份选择
+	- 设置为`minute`时，可进行年份选择
+- 当`mode`设置为时间日期选择器时，属性`list`不生效
+- 若要设置默认值，属性`value`接收一个数组，分别对应当前选项的每一列
+- 例如
+	- `mode`为`date`时，`value`为`[2011, 1, 1]`时，表示当前选中的日期为2011年1月1日
+	- `mode`为`time`时，`value`为`[12, 0, 0]`时，表示当前选中的时间为12:00:00
+```html
+<template>
+	<ste-select mode="date"></ste-select>
+</template>
+```
+### 搜索
+- 属性`mode`设置为`filterable`时，可进行搜索（仅`list`为一维数组时有效）
+```html
+<template>
+	<ste-select mode="filterable" :list="list"></ste-select>
+</template>
+<script>
+export default {
+	data() {
+		return {
+			list: [
+				{ label: '选项2011', value: 2011 },
+				{ label: '选项2012', value: 2012 },
+				{ label: '选项2013', value: 2013 },
+				{ label: '选项2014', value: 2014 },
+				{ label: '选项2015', value: 2015 },
+				{ label: '选项2016', value: 2016 },
+				{ label: '选项2017', value: 2017 },
+				{ label: '选项2018', value: 2018 },
+				{ label: '选项2019', value: 2019 },
+			],
+		}
+	},
+}
+</script>
+```
+### 创建条目
+- 属性`allowCreate`设置为`true`时，可进行创建条目（仅在`mode`属性为`filterable`时并且`list`为一维数组时生效）
+
+```html
+<template>
+	<ste-select mode="filterable" allowCreate :list="list"></ste-select>
+</template>
+<script>
+export default {
+	data() {
+		return {
+			list: [
+				{ label: '选项2011', value: 2011 },
+				{ label: '选项2012', value: 2012 },
+				{ label: '选项2013', value: 2013 },
+				{ label: '选项2014', value: 2014 },
+				{ label: '选项2015', value: 2015 },
+				{ label: '选项2016', value: 2016 },
+				{ label: '选项2017', value: 2017 },
+				{ label: '选项2018', value: 2018 },
+				{ label: '选项2019', value: 2019 },
+			],
+		}
+	},
+}
+</script>
 ```
 
 
@@ -203,36 +210,47 @@ export default {
 ### API
 #### Props
 背景之外的颜色属性只支持`16进制`、`RGB`、`RGBA`格式
-| 属性名						| 说明																																									| 类型										| 默认值				| 可选值	| 支持版本	|
-| -----							| -----																																								| -----									| -----				| -----	| -----		|
-| `options`					| 树形结构数组（`Node`结构见基础用法详情	），若组件渲染完成后修此属性，请手动调用`init`方法	| `Array<Node>`					| `[]`				|	-			| -				|
-| `valueKey`				| 节点的值字段名																																				| `String`							| `"value"`		|	-			| -				|
-| `titleKey`				| 节点的标题字段名																																			| `String`							| `"title"`		|	-			| -				|
-| `childrenKey`			| 节点的子节点字段名																																		| `String`							| `"children"`|	-			| -				|
-| `accordion`				| 是否手风琴模式																																				| `Boolean`							| `true`			|	-			| -				|
-| `childrenPadding`	| 子节点缩进,单位rpx																																		| `Number`,`String`			| `40`				|	-			| -				|
-| `openNodes`				| 默认展开的节点数组																																		| `Array<String/Number>`| `[]`				|	-			| -				|
+| 属性名				| 说明																						| 类型														| 默认值			| 可选值					| 支持版本	|
+| -----					| -----																					| -----													| -----			| -----					| -----		|
+| `value`				| 绑定的值，支持v-model双向绑定										| `Number`,`String`,`Array`			|	-					|	-							|	-				|
+| `list`				| 选项数据																				| `Object[]`,`Object[][]`,`Tree`|	`[]`			|	-							|	-				|
+| `mode`				| 选择模式																				| `String`											|	`default`	|	见下方信息说明	|	-				|
+| `minDate`			| 最小日期,`mode`为日期时间选择器时生效						| `String`											|	-					|	-							|	-				|
+| `maxDate`			| 最大日期,`mode`为日期时间选择器时生效						| `String`											|	-					|	-							|	-				|
+| `dateUnit`		| 选项是否显示时间单位,`mode`为日期时间选择器时生效	| `String`											|	-					|	-							|	-				|
+| `width`				| 宽度，单位rpx																	| `String`,`Number`							|	`100%`		|	-							|	-				|
+| `height`			| 高度，单位rpx																	| `String`,`Number`							|	`100%`		|	-							|	-				|
+| `background`	| 背景																						| `String`											|	`#fff`		|	-							|	-				|
+| `maskClose`		| 点击遮罩层是否关闭															| `Boolean`											|	`true`		|	-							|	-				|
+| `optionsWidth`| 选项框宽度，默认跟随`width`											| `String`,`Number`							|	`auto`		|	-							|	-				|
+| `placeholder`	| 占位符																					| `String`											|	`请选择`		|	-							|	-				|
+| `labelKey`		| 数据列表中显示的键名														| `String`											|	`label`		|	-							|	-				|
+| `valueKey`		| 数据列表中显示的键名														| `String`											|	`value`		|	-							|	-				|
+| `childrenKey`	| 数据列表中显示的键名（`mode`为`tree`时生效）			| `String`											|	`children`|	-							|	-				|
+| `multiple`		| 是否多选（`list`为一维数组时生效）								| `Boolean`											|	`false`		|	-							|	-				|
+| `allowCreate`	| 是否允许创建（`mode`为`filterable`时生效）				| `Boolean`											|	`false`		|	-							|	-				|
 
-
-#### Method
-
-| 方法名	| 说明																													| 方法参数	| 支持版本	|
-| ---			| ---																													| ---			| ---			|
-| `init`	| 初始化方法，若`options`改变时页面没有更新，可调用此方法重现渲染	| -				| -				|
-| `open`	| 打开指定节点																									| `value`	| -				|
-| `close`	| 关闭指定节点																									| `value`	| -				|
-| `search`| 节点搜索																											| `title`	| -				|
+##### Mode可选值
+| 值					| 说明																											| 支持版本	|
+| -----				| -----																										| -----		|
+| `default`		| 默认选择器																								| -				|
+| `filterable`| 可搜索选择器																							| -				|
+| `tree`			| 树形选择器																								| -				|
+| `date`			| 日期时间选择器模式：日期选择器（该模式下`list`属性无效）			| -				|
+| `datetime`	| 日期时间选择器模式：日期时间选择器（该模式下`list`属性无效）	| -				|
+| `time`			| 日期时间选择器模式：时间选择器（该模式下`list`属性无效）			| -				|
+| `month`			| 日期时间选择器模式：年月选择器（该模式下`list`属性无效）			| -				|
+| `minute`		| 日期时间选择器模式：时分选择器（该模式下`list`属性无效）			| -				|
 
 
 
 #### Events
 
-| 事件名			| 说明						| 事件参数						| 支持版本	|
-| ---					| ---						| ---								| ---			|
-| `click`			| 点击节点时触发	| `node`						| -				|
-| `open`			| 打开节点时触发	| `node`						| -				|
-| `close`			| 关闭节点时触发	| `node`						| -				|
-| `beforeOpen`| 打开节点前触发	| 见`懒加载`示例详细说明	| -				|
+| 事件名		| 说明						| 事件参数						| 支持版本	|
+| ---				| ---						| ---								| ---			|
+| `change`	| 选择时触发			| `value`/`value[]`	| -				|
+| `cancel`	| 取消选择时触发	| -									| -				|
+| `confirm`	| 确定选择时触发	| `value`/`value[]`	| -				|
 
 
 

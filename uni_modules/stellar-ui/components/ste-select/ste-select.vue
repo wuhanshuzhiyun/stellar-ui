@@ -119,7 +119,7 @@ import { formatDate, getDateList, getFormatStr, getNowDate } from './defaultDate
  * @property {String} labelKey 数据列表中显示的键名，默认label
  * @property {String} valueKey 数据列表中存储的键名，默认value
  * @property {String} childrenKey 数据列表中子列表的键名，默认children（mode为tree时生效）
- * @property {Boolean} multiple 是否多选，默认false
+ * @property {Boolean} multiple 是否多选，默认false，一维数组时生效
  * @property {Boolean} allowCreate 是否允许创建，默认false
  * @event {Function} change 选中值变化时触发
  * @event {Function} cancel 取消选择时触发
