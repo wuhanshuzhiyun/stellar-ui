@@ -70,6 +70,22 @@ export default {
 <ste-rate v-model="value4" :count="1" :score="5"></ste-rate>
 ```
 
+#### 自定义分值图标
+- 需要传入图标code对应的数组, 此时`inactiveColor`和`activeColor`将失效
+- 会根据当前评分数对应的图标数量来取`iconData`中的值为当前图标的`code`
+```
+<ste-rate v-model="value5" :iconData="iconData"></ste-rate>
+<script>
+export default {
+	data() {
+		return {
+			iconData: ['&#xe686;', '', '&#xe671;', '&#xe66a;', '&#xe66b;']
+		}
+	}
+}
+</script>
+```
+
 ### API
 #### 组件属性(Props)
 
@@ -86,6 +102,7 @@ export default {
 | `inactiveCode`	| 未选中的图标`code`				| `String`			| `&#xe681;`| -		| -			|
 | `activeCode`		| 选中的图标`code`				| `String`			| `&#xe684;`| -		| -			|
 | `gutter`			| 每个图标之间的距离，单位`rpx`	| `Number/String`	| `10`		| -		| -			|
+| `iconData`		| 每个分值对应的图标code			| `Array`			| -			| -		| -			|
 
 
 #### Events

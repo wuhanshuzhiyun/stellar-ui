@@ -3,10 +3,10 @@
 		<view class="list" :style="[cmpListStyle]">
 			<view v-for="index in cmpCount" class="item">
 				<view class="icon-box inactive" @click="onSelect(index)">
-					<ste-icon :code="inactiveCode" :color="inactiveColor" :size="size"></ste-icon>
+					<ste-icon :code="cmpInactiveCode" :color="inactiveColor" :size="size"></ste-icon>
 				</view>
 				<view class="icon-box active" @click="onSelect(index)" :style="{ width: getWidth(index) }">
-					<ste-icon :code="activeCode" :color="disabled ? '#C8C9CC' : activeColor" :size="size"></ste-icon>
+					<ste-icon :code="cmpActiveCode" :color="disabled ? '#C8C9CC' : activeColor" :size="size"></ste-icon>
 				</view>
 			</view>
 		</view>
@@ -30,6 +30,7 @@ import utils from '../../utils/utils.js';
  * @property {String} inactiveCode 未选中的图标code 默认 &#xe681;
  * @property {String} activeCode 选中的图标code 默认 &#xe684;
  * @property {Number|String} gutter 每个图标之间的距离，单位rpx 默认 10
+ * @property {Array} iconData 每个分值对应的图标code
  * @event {Function} change 当前分值变化时触发的事件
  */
 
@@ -59,28 +60,32 @@ export default {
 			default: false,
 		},
 		size: {
-			ttype: [String, Number],
+			type: [String, Number],
 			default: 44,
 		},
 		inactiveColor: {
-			ttype: String,
+			type: String,
 			default: '#dddddd',
 		},
 		activeColor: {
-			ttype: String,
+			type: String,
 			default: '#fa5014',
 		},
 		inactiveCode: {
-			ttype: String,
+			type: String,
 			default: '&#xe681;',
 		},
 		activeCode: {
-			ttype: String,
+			type: String,
 			default: '&#xe684;',
 		},
 		gutter: {
-			ttype: [String, Number],
+			type: [String, Number],
 			default: 10,
+		},
+		iconData: {
+			type: Array,
+			default: () => [],
 		},
 	},
 	model: {
@@ -107,6 +112,16 @@ export default {
 		cmpCount() {
 			// 兼容浏览器和微信 对数字循环的处理不同
 			return Array.from({ length: this.count }, (_, index) => index);
+		},
+		cmpActiveCode() {
+			let code = this.getIconCode();
+			if (code) return code;
+			return this.activeCode;
+		},
+		cmpInactiveCode() {
+			let code = this.getIconCode();
+			if (code) return code;
+			return this.inactiveCode;
 		},
 	},
 	methods: {
@@ -136,6 +151,23 @@ export default {
 			// 未占据
 			else {
 				return 0;
+			}
+		},
+		// 根据iconData来算出每个分值对应的iconCode
+		getIconCode() {
+			if (!this.iconData || this.iconData.length === 0) return;
+
+			let curScroeIndex = Math.ceil(this.value / this.score) - 1;
+			// 如果索引在数组范围内且对应的值不为空，直接返回该值
+			if (curScroeIndex < this.iconData.length && this.iconData[curScroeIndex] !== '') {
+				return this.iconData[curScroeIndex];
+			}
+
+			// 否则，从索引位置向左搜索最近的非空值
+			for (let i = curScroeIndex; i >= 0; i--) {
+				if (this.iconData[i] !== '') {
+					return this.iconData[i];
+				}
 			}
 		},
 	},

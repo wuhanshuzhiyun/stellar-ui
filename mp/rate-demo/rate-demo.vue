@@ -55,6 +55,14 @@
 					</div>
 				</view>
 			</view>
+			<view class="demo-item">
+				<view class="title">自定义分值图标</view>
+				<view class="item-block">
+					<div class="item-rate">
+						<ste-rate v-model="value5" :iconData="iconData"></ste-rate>
+					</div>
+				</view>
+			</view>
 		</view>
 	</view>
 </template>
@@ -68,6 +76,8 @@ export default {
 			value2: 3,
 			value3: 2.6,
 			value4: 2.5,
+			value5: 2,
+			iconData: ['&#xe686;', '', '&#xe671;', '&#xe66a;', '&#xe66b;'],
 		};
 	},
 	created() {},
