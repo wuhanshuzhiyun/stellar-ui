@@ -1,5 +1,5 @@
 # Select 下拉选
-- 树形控件
+- 当选项过多时，使用下拉菜单展示并选择内容。
 
 {{compatibility}}
 
@@ -224,8 +224,8 @@ export default {
 | `maskClose`		| 点击遮罩层是否关闭															| `Boolean`											|	`true`		|	-							|	-				|
 | `optionsWidth`| 选项框宽度，默认跟随`width`											| `String`,`Number`							|	`auto`		|	-							|	-				|
 | `placeholder`	| 占位符																					| `String`											|	`请选择`		|	-							|	-				|
-| `labelKey`		| 数据列表中显示的键名														| `String`											|	`label`		|	-							|	-				|
-| `valueKey`		| 数据列表中显示的键名														| `String`											|	`value`		|	-							|	-				|
+| `labelKey`		| 选项的标签														| `String`											|	`label`		|	-							|	-				|
+| `valueKey`		| 选项的值		 												| `String`											|	`value`		|	-							|	-				|
 | `childrenKey`	| 数据列表中显示的键名（`mode`为`tree`时生效）			| `String`											|	`children`|	-							|	-				|
 | `multiple`		| 是否多选（`list`为一维数组时生效）								| `Boolean`											|	`false`		|	-							|	-				|
 | `allowCreate`	| 是否允许创建（`mode`为`filterable`时生效）				| `Boolean`											|	`false`		|	-							|	-				|
