@@ -92,6 +92,9 @@
 <script>
 import utils from '../../utils/utils';
 import { formatDate, getDateList, getFormatStr, getNowDate } from './defaultDate';
+const isData = (d) => {
+	return d || d === 0 || d === '';
+};
 /**
  * ste-select 下拉选
  * @description 下拉选组件
@@ -248,7 +251,7 @@ export default {
 					if (this.dataOptions.length > 1 || this.multiple) {
 						console.error('ste-select: value必须为数组（单列单选模式value可以为string或number类型）');
 					}
-					this.confirmValue = v || v === 0 ? [v] : [];
+					this.confirmValue = isData(v) ? [v] : [];
 				}
 				this.selected = [...this.confirmValue];
 			},
@@ -260,7 +263,7 @@ export default {
 		confirmValue(v) {
 			if (!this.cmpFilterable) return;
 			// 单选时将confirmValue赋值给输入框。
-			if (!this.cmpMultiple && (v[0] || v[0] === 0)) {
+			if (!this.cmpMultiple && isData(v[0])) {
 				let value = this.dataOptions[0]?.find((item) => item[this.valueKey] === v[0]);
 				this.$nextTick(() => {
 					this.inputView = value && value[this.labelKey] ? value[this.labelKey] : '';
@@ -309,7 +312,7 @@ export default {
 			const result = [];
 			const now = getNowDate(null, this.mode).slice(0, this.dataOptions.length);
 			this.dataOptions.forEach((item, i) => {
-				const v = values[i] || values[i] === 0 ? values[i] : now[i]; // 默认选中当前时间。
+				const v = isData(values[i]) ? values[i] : now[i]; // 默认选中当前时间。
 				result.push(v);
 			});
 			return result;
@@ -317,7 +320,7 @@ export default {
 		initSelected(values) {
 			const result = [];
 			this.dataOptions.forEach((item, i) => {
-				const v = values[i] || values[i] === 0 ? values[i] : item[0][this.valueKey];
+				const v = isData(values[i]) ? values[i] : item[0][this.valueKey];
 				result.push(v);
 			});
 			return result;
