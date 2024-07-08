@@ -247,6 +247,10 @@ export default {
 			handler(v) {
 				if (Array.isArray(v)) {
 					this.confirmValue = v;
+				} else if (this.cmpShowDate) {
+					const str = ['date', 'datetime', 'month'].includes(this.mode) ? 'YYYY MM DD HH mm ss' : 'HH mm ss';
+					const value = utils.dayjs(v).format('YYYY MM DD HH mm ss').split(' ');
+					this.confirmValue = value.map((item) => Number(item));
 				} else {
 					if (this.dataOptions.length > 1 || this.multiple) {
 						console.error('ste-select: value必须为数组（单列单选模式value可以为string或number类型）');
@@ -408,7 +412,9 @@ export default {
 		onConfirm() {
 			this.confirmValue = [...this.selected];
 			let value = this.confirmValue;
-			if (!this.cmpMultiple && !Array.isArray(this.value)) {
+			if (this.cmpShowDate && !Array.isArray(this.value)) {
+				value = formatDate(this.confirmValue, this.mode).format(getFormatStr(this.mode));
+			} else if (!this.cmpMultiple && !Array.isArray(this.value)) {
 				value = this.confirmValue[0];
 			}
 			this.$emit('input', value);
