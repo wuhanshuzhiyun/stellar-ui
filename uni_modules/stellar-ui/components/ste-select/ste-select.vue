@@ -525,6 +525,7 @@ export default {
 			width: 100%;
 			height: 100%;
 			white-space: nowrap;
+			font-size: 28rpx;
 			&.multiple {
 				padding: 2px 0;
 				.view-item {
