@@ -369,7 +369,7 @@ export default {
 			if (boundary.top - boundary.bottom > 0) {
 				y = 'top';
 			}
-			if (boundary.right - boundary.left > 0) {
+			if (boundary.right - boundary.left < 0) {
 				x = 'end';
 			}
 			const style = {
