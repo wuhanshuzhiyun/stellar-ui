@@ -16,9 +16,11 @@
 								v-model="inputView"
 								class="filterable-input"
 								:class="{ content: cmpMultiple && cmpViewValue.length }"
-								:placeholder="confirmValue && confirmValue.length ? '' : placeholder"
+								:placeholder="inputPlaceholder"
 								@click="openOptions"
 								@input="onUserFilterable"
+								@focus="onFocus"
+								@blur="onBlur"
 							/>
 						</block>
 						<block v-else>
@@ -65,11 +67,7 @@
 
 					<block v-else>
 						<scroll-view scroll-y class="options-col" v-for="(col, index) in viewOptions" :key="index">
-							<view
-								class="options-item"
-								v-if="dataAllowCreate"
-								@click="onSelect(index, dataAllowCreate, true)"
-							>
+							<view class="options-item" v-if="dataAllowCreate" @click="onSelect(index, dataAllowCreate, true)">
 								{{ dataAllowCreate[labelKey] }}
 							</view>
 							<view
@@ -81,6 +79,9 @@
 							>
 								{{ item[labelKey] }}
 							</view>
+							<block v-if="!dataAllowCreate && !col.length">
+								<view class="options-empty">暂无数据</view>
+							</block>
 						</scroll-view>
 					</block>
 				</view>
@@ -160,6 +161,7 @@ export default {
 		return {
 			inputView: '', // 输入框显示的内容
 			userFilterable: '', // 用户输入的筛选内容（仅筛选模式下生效）
+			inputPlaceholder: '',
 			filterableTime: null, // 防抖定时器
 			dataAllowCreate: null,
 			selected: [], // 当前选中的值
@@ -172,6 +174,9 @@ export default {
 		};
 	},
 	computed: {
+		cmpInputPlaceholder() {
+			return this.confirmValue.length ? '' : this.placeholder;
+		},
 		// 是否是日期模式（包括日期、时间、日期时间、月份）
 		cmpShowDate() {
 			return ['date', 'datetime', 'time', 'month', 'minute'].includes(this.mode);
@@ -263,20 +268,16 @@ export default {
 				}
 				this.selected = [...this.confirmValue];
 			},
-			immediate: true, // 立即执行一次，确保初始化时正确赋值。
+			immediate: true,
 		},
 		userFilterable() {
 			this.getViewOptions();
 		},
-		confirmValue(v) {
-			if (!this.cmpFilterable) return;
-			// 单选时将confirmValue赋值给输入框。
-			if (!this.cmpMultiple && isData(v[0])) {
-				let value = this.dataOptions[0]?.find((item) => item[this.valueKey] === v[0]);
-				this.$nextTick(() => {
-					this.inputView = value && value[this.labelKey] ? value[this.labelKey] : '';
-				});
-			}
+		confirmValue: {
+			handler(v) {
+				this.onBlur();
+			},
+			immediate: true,
 		},
 	},
 	created() {},
@@ -311,9 +312,7 @@ export default {
 				let list = this.dataOptions;
 				if (this.cmpFilterable && this.userFilterable) {
 					// 处理筛选数据
-					list = list.map((item) =>
-						item.filter((value) => value[this.labelKey].includes(this.userFilterable))
-					);
+					list = list.map((item) => item.filter((value) => value[this.labelKey].includes(this.userFilterable)));
 				}
 				this.viewOptions = list;
 			});
@@ -485,6 +484,28 @@ export default {
 				}
 			}, 500);
 		},
+		onFocus() {
+			if (!this.cmpFilterable) return;
+			this.$nextTick(() => {
+				this.inputView = '';
+				const v = this.confirmValue;
+				let value = this.dataOptions[0]?.find((item) => item[this.valueKey] === v[0]);
+				this.inputPlaceholder = value && value[this.labelKey] ? value[this.labelKey] : this.cmpInputPlaceholder;
+				console.log(this.inputPlaceholder)
+			});
+		},
+		onBlur() {
+			this.inputPlaceholder = this.cmpInputPlaceholder;
+			if (!this.cmpFilterable) return;
+			this.$nextTick(() => {
+				const v = this.confirmValue;
+				// 单选时将confirmValue赋值给输入框。
+				if (!this.cmpMultiple && isData(v[0])) {
+					let value = this.dataOptions[0]?.find((item) => item[this.valueKey] === v[0]);
+					this.inputView = value && value[this.labelKey] ? value[this.labelKey] : '';
+				}
+			});
+		},
 	},
 };
 </script>
@@ -619,6 +640,13 @@ export default {
 					& + .options-item {
 						border-top: 1px solid #f5f5f5;
 					}
+				}
+				.options-empty {
+					width: 100%;
+					height: 82rpx;
+					line-height: 82rpx;
+					text-align: center;
+					color: #999999;
 				}
 			}
 			.time-item {
