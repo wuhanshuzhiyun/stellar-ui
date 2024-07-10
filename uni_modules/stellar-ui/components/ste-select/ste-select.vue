@@ -470,7 +470,8 @@ export default {
 				});
 			}
 		},
-		onUserFilterable({ detail: { value } }) {
+		onUserFilterable() {
+			const value = this.inputView
 			clearTimeout(this.filterableTime);
 			this.filterableTime = setTimeout(() => {
 				this.userFilterable = value;
@@ -487,11 +488,11 @@ export default {
 		onFocus() {
 			if (!this.cmpFilterable) return;
 			this.$nextTick(() => {
-				this.inputView = '';
+				this.inputView = '';				
 				const v = this.confirmValue;
 				let value = this.dataOptions[0]?.find((item) => item[this.valueKey] === v[0]);
 				this.inputPlaceholder = value && value[this.labelKey] ? value[this.labelKey] : this.cmpInputPlaceholder;
-				console.log(this.inputPlaceholder)
+				this.onUserFilterable()
 			});
 		},
 		onBlur() {
@@ -503,6 +504,7 @@ export default {
 				if (!this.cmpMultiple && isData(v[0])) {
 					let value = this.dataOptions[0]?.find((item) => item[this.valueKey] === v[0]);
 					this.inputView = value && value[this.labelKey] ? value[this.labelKey] : '';
+					this.onUserFilterable()
 				}
 			});
 		},
