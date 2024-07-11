@@ -1,8 +1,8 @@
 <template>
-	<view class="ste-table-root" :class="[cmpRootClass]" :style="[{ '--offset-top': offsetTop }]">
+	<view class="ste-table-root" :class="[cmpRootClass]" :style="[cmpRootStyle]">
 		<view class="ste-table-content">
 			<!-- <ste-sticky :offsetTop="offsetTop" :disabled="!sticky"> -->
-			<view class="fixed-placeholder" v-if="fixed" />
+			<view class="fixed-placeholder" v-if="fixed || height || height > 0" />
 			<view class="ste-table-header">
 				<view
 					class="ste-table-cell"
@@ -38,32 +38,64 @@
 				</view>
 			</view>
 			<!-- </ste-sticky> -->
-			<view class="ste-table-body">
-				<view
-					class="ste-table-row"
-					:class="'row-' + index"
-					v-for="(row, index) in data"
-					:key="index"
-					@click="rowClick(row, $event)"
-				>
-					<slot :row="row"></slot>
-				</view>
-				<view class="ste-table-row sum" v-if="showSummary">
+			<template v-if="height || height > 0">
+				<scroll-view scroll-y class="ste-table-scroll" @scrolltolower="handleScrollToLower">
+					<view class="ste-table-body">
+						<view
+							class="ste-table-row"
+							:class="'row-' + index"
+							v-for="(row, index) in data"
+							:key="index"
+							@click="rowClick(row, $event)"
+						>
+							<slot :row="row"></slot>
+						</view>
+						<view class="ste-table-row sum" v-if="showSummary">
+							<view
+								class="ste-table-cell"
+								v-for="(column, index) in columns"
+								:key="index"
+								:class="[headerClass(column)]"
+							>
+								<view class="cell-box">
+									<view v-if="index === 0" class="sum-header">{{ sumText }}</view>
+									<view v-else>
+										{{ sumData[index] || '-' }}
+									</view>
+								</view>
+							</view>
+						</view>
+					</view>
+				</scroll-view>
+			</template>
+			<template v-else>
+				<view class="ste-table-body">
 					<view
-						class="ste-table-cell"
-						v-for="(column, index) in columns"
+						class="ste-table-row"
+						:class="'row-' + index"
+						v-for="(row, index) in data"
 						:key="index"
-						:class="[headerClass(column)]"
+						@click="rowClick(row, $event)"
 					>
-						<view class="cell-box">
-							<view v-if="index === 0" class="sum-header">{{ sumText }}</view>
-							<view v-else>
-								{{ sumData[index] || '-' }}
+						<slot :row="row"></slot>
+					</view>
+					<view class="ste-table-row sum" v-if="showSummary">
+						<view
+							class="ste-table-cell"
+							v-for="(column, index) in columns"
+							:key="index"
+							:class="[headerClass(column)]"
+						>
+							<view class="cell-box">
+								<view v-if="index === 0" class="sum-header">{{ sumText }}</view>
+								<view v-else>
+									{{ sumData[index] || '-' }}
+								</view>
 							</view>
 						</view>
 					</view>
 				</view>
-			</view>
+			</template>
 		</view>
 	</view>
 </template>
@@ -152,6 +184,10 @@ export default {
 			type: [Function, null],
 			default: null,
 		},
+		height: {
+			type: [Number, String],
+			default: '',
+		},
 	},
 	data() {
 		return {
@@ -167,7 +203,13 @@ export default {
 		};
 	},
 	computed: {
-		cmpRootStyle() {},
+		cmpRootStyle() {
+			let style = {
+				'--offset-top': this.offsetTop,
+				'--table-height': utils.addUnit(this.height),
+			};
+			return style;
+		},
 		cmpRootClass() {
 			let classArr = [];
 			if (this.fixed) {
@@ -179,10 +221,18 @@ export default {
 			if (this.stripe) {
 				classArr.push('stripe');
 			}
+			if (this.height || this.height > 0) {
+				classArr.push('scroll-table');
+			}
 			return classArr.join(' ');
 		},
 	},
 	created() {},
+	mounted() {
+		// utils.querySelector('.ste-table-root .ste-table-header', this).then((el) => {
+		// 	console.log('header el', el);
+		// });
+	},
 	watch: {
 		children: {
 			handler(val) {
@@ -320,6 +370,9 @@ export default {
 		headerClick(column, event) {
 			this.$emit('headerClick', column, event);
 		},
+		handleScrollToLower() {
+			this.$emit('scrollToLower');
+		},
 		// Table Methods 方法
 		clearSelection() {
 			this.checkStatesSet.clear();
@@ -353,12 +406,22 @@ $default-border: 2rpx solid #ebebeb;
 .ste-table-root {
 	width: 100%;
 
+	&.scroll-table {
+		position: relative;
+
+		.ste-table-content {
+			.ste-table-header {
+				position: absolute;
+				top: 0;
+			}
+			.ste-table-scroll {
+				height: calc(var(--table-height) - 80rpx);
+			}
+		}
+	}
+
 	&.fixed {
 		.ste-table-content {
-			.fixed-placeholder {
-				width: 100%;
-				height: 80rpx;
-			}
 			.ste-table-header {
 				position: fixed;
 				top: var(--offset-top);
@@ -389,10 +452,14 @@ $default-border: 2rpx solid #ebebeb;
 		display: table;
 		// border-collapse: collapse;
 		// table-layout: fixed;
-
+		.fixed-placeholder {
+			width: 100%;
+			height: 80rpx;
+		}
 		.ste-table-header {
 			width: 100%;
 			display: table-row;
+
 			.ste-table-cell {
 				background-color: #e8f7ff;
 				font-weight: bold;

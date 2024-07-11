@@ -482,15 +482,17 @@ export default {
 | `selectable`		| 仅对 type=selection 的列有效，类型为 Function，Function 的返回值用来决定这一行的 CheckBox 是否可以勾选	| `Function(row, index)`		| `null`	| -		| -			|
 | `readable`		| 仅对 type=selection 的列有效，类型为 Function，Function 的返回值用来决定这一行的 CheckBox 是否只读		| `Function(row, index)`		| `null`	| -		| -			|
 | `formatter`		| 格式化方法，需要配合`TableColumn`中的`customKey`属性													| `Function(row, key)`			| `null`	| -		| `v1.17.3`	|
+| `height`			| 表格高度，设置该值可以让表格体开启滚动																	| `Number/String`				| -			| -		| `v1.18.9`	|
 
 #### Table Events
-|事件名			|说明											|事件参数																|支持版本	|
-| ---			| ---											| ---																	| ---		|
-| `select`		| 当用户手动勾选数据行的 Checkbox 时触发的事件	| `selection`：当前已选中的数据<br/>`row`：当前行的数据					| -			|
-| `selectAll`	| 当用户手动勾选全选 Checkbox 时触发的事件		| `selection`：当前已选中的数据											| -			|
-| `cellClick`	| 当某个单元格被点击时会触发该事件				| `row`：当前行的数据<br/>`column`：当前列的数据<br/>`event`：Event对象	| -			|
-| `rowClick`	| 当某一行被点击时会触发该事件					| `row`：当前行的数据<br/>`event`：Event对象								| -			|
-| `headerClick`	| 当某一列的表头被点击时会触发该事件				| `column`：当前列的数据<br/>`event`：Event对象							| -			|
+|事件名				|说明											|事件参数																|支持版本	|
+| ---				| ---											| ---																	| ---		|
+| `select`			| 当用户手动勾选数据行的 Checkbox 时触发的事件	| `selection`：当前已选中的数据<br/>`row`：当前行的数据					| -			|
+| `selectAll`		| 当用户手动勾选全选 Checkbox 时触发的事件		| `selection`：当前已选中的数据											| -			|
+| `cellClick`		| 当某个单元格被点击时会触发该事件				| `row`：当前行的数据<br/>`column`：当前列的数据<br/>`event`：Event对象	| -			|
+| `rowClick`		| 当某一行被点击时会触发该事件					| `row`：当前行的数据<br/>`event`：Event对象								| -			|
+| `headerClick`		| 当某一列的表头被点击时会触发该事件				| `column`：当前列的数据<br/>`event`：Event对象							| -			|
+| `scrollToLower`	| 表格体滚动到底事件								| -																		| `v1.18.9`	|
 
 #### Table Method
 |方法名					|说明								|方法参数					|支持版本	|
