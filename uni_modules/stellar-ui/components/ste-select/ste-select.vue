@@ -129,6 +129,20 @@ const isData = (d) => {
  * @property {String} childrenKey 数据列表中子列表的键名，默认children（mode为tree时生效）
  * @property {Boolean} multiple 是否多选，默认false，一维数组时生效
  * @property {Boolean} allowCreate 是否允许创建，默认false
+ * @property {String} borderColor 边框颜色，若不要边框可设置为透明色
+ * @property {Number|String} borderRadius 圆角大小，单位RPX，默认8
+ * @property {String} optionsPosition 选项框位置
+ * @value auto 自动展示位置，默认
+ * @value bottom 在下方展示，左右自适应
+ * @value bottom-auto 在下方展示，左右自适应
+ * @value top 在上方展示，左右自适应
+ * @value top-auto 在上方展示，左右自适应
+ * @value auto-start 上下自适应，左侧对其
+ * @value auto-end 上下自适应，右侧对其
+ * @value bottom-start 下方展示，左侧对其
+ * @value top-start 上方展示，左侧对其
+ * @value bottom-end 下方展示，右侧对其
+ * @value top-end 上方展示，右侧对其
  * @event {Function} change 选中值变化时触发
  * @event {Function} cancel 取消选择时触发
  * @event {Function} confirm 确定选择时触发
@@ -156,6 +170,9 @@ export default {
 		childrenKey: { type: String, default: () => 'children' },
 		multiple: { type: Boolean, default: () => false },
 		allowCreate: { type: Boolean, default: () => false },
+		borderColor: { type: String, default: () => '#ebebeb' },
+		borderRadius: { type: [Number, String], default: () => 8 },
+		optionsPosition: { type: String, default: () => 'auto' },
 	},
 	data() {
 		return {
@@ -200,6 +217,8 @@ export default {
 				'--ste-select-multiple-placeholder-height': utils.formatPx(this.height, 'num') - 6 + 'px',
 				'--ste-select-multiple-line-height': utils.formatPx(this.height, 'num') - 8 + 'px',
 				'--ste-select-background': this.background,
+				'--ste-select-border': `1px solid ${this.borderColor}`,
+				'--ste-select-border-radius': utils.formatPx(this.borderRadius),
 			};
 		},
 
@@ -363,14 +382,22 @@ export default {
 			};
 
 			const boundary = utils.System.getElementBoundary(el);
-			let y = 'bottom',
+			let [y = 'auto', x = 'auto'] = this.optionsPosition === 'auto' ? [] : this.optionsPosition.split('-');
+
+			if (y === 'auto') {
+				y = 'bottom';
+				if (boundary.top - boundary.bottom > 0) {
+					y = 'top';
+				}
+			}
+
+			if (x === 'auto') {
 				x = 'start';
-			if (boundary.top - boundary.bottom > 0) {
-				y = 'top';
+				if (boundary.right - boundary.left < 0) {
+					x = 'end';
+				}
 			}
-			if (boundary.right - boundary.left < 0) {
-				x = 'end';
-			}
+
 			const style = {
 				position: 'absolute',
 				display: 'block',
@@ -417,13 +444,25 @@ export default {
 		onConfirm() {
 			this.confirmValue = [...this.selected];
 			let value = this.confirmValue;
+
+			let objs = [];
+			if (this.dataOptions.length === 1) {
+				objs = this.dataOptions[0].filter((value) => this.confirmValue.includes(value[this.valueKey]));
+			} else {
+				objs = this.dataOptions.map((item, index) => {
+					return item.find((value) => value[this.valueKey] === this.confirmValue[index]);
+				});
+			}
+
 			if (this.cmpShowDate && !Array.isArray(this.value)) {
 				value = formatDate(this.confirmValue, this.mode).format(getFormatStr(this.mode));
 			} else if (!this.cmpMultiple && !Array.isArray(this.value)) {
 				value = this.confirmValue[0];
+				objs = objs[0];
 			}
+
 			this.$emit('input', value);
-			this.$emit('change', value);
+			this.$emit('change', value, objs);
 			return value;
 		},
 		onSelect(col, item, isAllowCreate) {
@@ -471,7 +510,7 @@ export default {
 			}
 		},
 		onUserFilterable() {
-			const value = this.inputView
+			const value = this.inputView;
 			clearTimeout(this.filterableTime);
 			this.filterableTime = setTimeout(() => {
 				this.userFilterable = value;
@@ -488,11 +527,11 @@ export default {
 		onFocus() {
 			if (!this.cmpFilterable) return;
 			this.$nextTick(() => {
-				this.inputView = '';				
+				this.inputView = '';
 				const v = this.confirmValue;
 				let value = this.dataOptions[0]?.find((item) => item[this.valueKey] === v[0]);
 				this.inputPlaceholder = value && value[this.labelKey] ? value[this.labelKey] : this.cmpInputPlaceholder;
-				this.onUserFilterable()
+				this.onUserFilterable();
 			});
 		},
 		onBlur() {
@@ -504,7 +543,7 @@ export default {
 				if (!this.cmpMultiple && isData(v[0])) {
 					let value = this.dataOptions[0]?.find((item) => item[this.valueKey] === v[0]);
 					this.inputView = value && value[this.labelKey] ? value[this.labelKey] : '';
-					this.onUserFilterable()
+					this.onUserFilterable();
 				}
 			});
 		},
@@ -543,12 +582,12 @@ export default {
 		height: var(--ste-select-height);
 		line-height: var(--ste-select-line-height);
 		background-color: var(--ste-select-background);
-		border: 1px solid #ebebeb;
+		border: var(--ste-select-border);
+		border-radius: var(--ste-select-border-radius);
+		padding-right: var(--ste-select-multiple-line-height);
 		position: relative;
 		z-index: 1;
 		padding-left: 20rpx; // 调整内边距，以适应不同的选项高度。
-		padding-right: var(--ste-select-multiple-line-height);
-		border-radius: 8rpx;
 		overflow: hidden;
 		.content-text {
 			width: 100%;

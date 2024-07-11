@@ -101,8 +101,8 @@ export default {
 	},
 
 	methods: {
-		onChange(v) {
-			console.log('onChange', v);
+		onChange(v, items) {
+			console.log('onChange', v, items);
 		},
 	},
 };
