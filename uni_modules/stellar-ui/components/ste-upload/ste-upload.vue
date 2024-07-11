@@ -17,7 +17,7 @@
 						<view class="icon"><ste-icon code="&#xe6a0;" size="48" color="#fff" /></view>
 						<view class="text">上传失败</view>
 					</view>
-					<view class="delete" v-if="deletable && item.status !== 'uploading'" @click.stop="deleteItem(index)">
+					<view class="delete" v-if="cmpDeletable && item.status !== 'uploading'" @click.stop="deleteItem(index)">
 						<view class="icon">
 							<ste-icon code="&#xe67b;" size="20" color="#fff" />
 						</view>
@@ -233,8 +233,11 @@ export default {
 			return style;
 		},
 		cmpShowUpload() {
-			let bool = this.showUpload && (this.maxCount == 0 || this.dataValue.length < this.maxCount);
+			let bool = !this.disabled && this.showUpload && (this.maxCount == 0 || this.dataValue.length < this.maxCount);
 			return bool;
+		},
+		cmpDeletable(){
+			return !this.disabled && this.deletable
 		},
 		cmpPreviewList() {
 			return this.dataValue
@@ -242,7 +245,7 @@ export default {
 				.map((item) => item.thumbPath || item.url || item.path);
 		},
 		cmpPreviewFullImage() {
-			return this.previewFullImage && (this.maxCount !== 1 || this.deletable);
+			return this.previewFullImage && (this.maxCount !== 1 || this.cmpDeletable);
 		},
 	},
 	watch: {
@@ -259,7 +262,7 @@ export default {
 	},
 	methods: {
 		toSelectFile() {
-			if (this.maxCount !== 1 || this.deletable) return;
+			if (this.maxCount !== 1 || this.cmpDeletable) return;
 			this.selectFile(() => {
 				this.deleteItem(0);
 			});
@@ -376,7 +379,6 @@ export default {
 			this.$emit('delete', index, this.dataValue);
 		},
 		previewItem(index, item) {
-			if (this.disabled) return;
 			if (!this.cmpPreviewFullImage) return;
 			if (['video', 'image'].indexOf(item.type) === -1) return;
 			this.previewIndex = index;
