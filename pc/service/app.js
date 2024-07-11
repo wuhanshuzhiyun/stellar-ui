@@ -13,8 +13,11 @@ app.use(cors({ credentials: true, origin: origins }));
 
 app.use('/api', router);
 
+app.use("/plus",require("./webs/index"))
+
 // 静态资源
 app.use('/static', express.static(path.join(process.cwd(), '/static')));
+
 
 app.use((err, req, res, next) => {
 	console.log('app.err', err);
