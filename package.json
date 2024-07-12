@@ -1,6 +1,6 @@
 {
 	"name": "stellarui",
-	"version": "1.18.10",
+	"version": "1.19.0",
 	"description": "",
 	"main": "main.js",
 	"scripts": {
