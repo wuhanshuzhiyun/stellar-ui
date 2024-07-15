@@ -46,7 +46,7 @@
 				<view class="select-options">
 					<block v-if="dataOptions.length > 1">
 						<picker-view
-							style="height: 600rpx"
+							style="height: 450rpx"
 							indicator-style="height: 43px"
 							:value="cmpMultiseriateValue"
 							@change="onMultiseriateChange"
@@ -657,11 +657,11 @@ export default {
 		overflow: hidden;
 		.select-options {
 			width: 100%;
-			max-height: 696rpx;
+			max-height: 546rpx;
 			.options-col {
 				padding: 0 16rpx;
 				height: 100%;
-				max-height: 696rpx;
+				max-height: 450rpx;
 				.options-item {
 					width: 100%;
 					height: 82rpx;
