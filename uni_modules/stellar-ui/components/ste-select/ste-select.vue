@@ -19,8 +19,6 @@
 								:placeholder="inputPlaceholder"
 								@click="openOptions"
 								@input="onUserFilterable"
-								@focus="onFocus"
-								@blur="onBlur"
 							/>
 						</block>
 						<block v-else>
@@ -421,6 +419,7 @@ export default {
 					break;
 			}
 			this.optionsStyle = style;
+			this.onFocus();
 			this.showOptions = true; // 打开选项列表
 		},
 		clickMask() {
@@ -440,6 +439,7 @@ export default {
 			this.showOptions = false; // 关闭选项列表
 			this.contentStyle = {};
 			this.optionsStyle = {};
+			this.onBlur();
 		},
 		onConfirm() {
 			this.confirmValue = [...this.selected];
@@ -522,17 +522,15 @@ export default {
 				} else {
 					this.dataAllowCreate = null;
 				}
-			}, 500);
+			});
 		},
 		onFocus() {
 			if (!this.cmpFilterable) return;
-			this.$nextTick(() => {
-				this.inputView = '';
-				const v = this.confirmValue;
-				let value = this.dataOptions[0]?.find((item) => item[this.valueKey] === v[0]);
-				this.inputPlaceholder = value && value[this.labelKey] ? value[this.labelKey] : this.cmpInputPlaceholder;
-				this.onUserFilterable();
-			});
+			this.inputView = '';
+			const v = this.confirmValue;
+			let value = this.dataOptions[0]?.find((item) => item[this.valueKey] === v[0]);
+			this.inputPlaceholder = value && value[this.labelKey] ? value[this.labelKey] : this.cmpInputPlaceholder;
+			this.onUserFilterable();
 		},
 		onBlur() {
 			this.inputPlaceholder = this.cmpInputPlaceholder;
