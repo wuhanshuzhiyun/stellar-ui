@@ -1,16 +1,16 @@
 <template>
 	<picker-view
-		style="height: 600rpx; width: 100%"
+		style="height: 450rpx; width: 100%"
 		indicator-style="height: 43px"
+		immediate-change
 		:value="selectedIndex"
 		@change="onChange"
 	>
-		<picker-view-column v-for="(col, index) in cmpOptions" :key="index">
-			<view class="time-item" v-for="(item, i) in col" :key="item">
+		<picker-view-column v-for="(col, index) in dataOptions" :key="index">
+			<view class="time-item" v-for="(item, i) in col" :key="item.title">
 				<text>
-					{{ item }}
+					{{ dateUnit ? item.title : item.value }}
 				</text>
-				<text v-if="dateUnit">{{ cmpDateUnits[index] }}</text>
 			</view>
 		</picker-view-column>
 	</picker-view>
@@ -29,14 +29,12 @@ export default {
 	},
 	data() {
 		return {
+			dataOptions: [],
 			selectedValue: [],
 			selectedIndex: [],
 		};
 	},
 	computed: {
-		cmpOptions() {
-			return getDateOptions(this.selectedValue, this.mode, this.minDate, this.maxDate);
-		},
 		cmpDateUnits() {
 			if (['date', 'datetime', 'month'].includes(this.mode)) {
 				return ['年', '月', '日', '时', '分', '秒'];
@@ -60,33 +58,38 @@ export default {
 			},
 			immediate: true,
 		},
-		cmpOptions: {
-			handler(v) {
-				// this.initSelectIndex();
-			},
-			immediate: true,
-		},
 	},
 	created() {
-		console.log(this.cmpOptions);
+		this.initOptions();
+		this.initSelectIndex();
 	},
 	methods: {
-		initSelectIndex() {
-			const indexs = [];
-			this.cmpOptions.forEach((item, index) => {
-				let i = item.indexOf(this.selectedValue[index]);
-				if (i === -1) {
-					i = 0;
-				}
-				indexs.push(i);
-			});
-			this.selectedIndex = indexs;
+		initOptions(values = this.selectedValue) {
+			const { options, value } = getDateOptions(values, this.mode, this.minDate, this.maxDate);
+			this.dataOptions = options;
+			console.log('options', options);
 		},
-		onChange({ detail: { value } }) {
-			const newValues = value.map((i, index) => {
-				this.cmpOptions[index][i];
+		initSelectIndex(values = this.selectedValue) {
+			this.$nextTick(() => {
+				const indexs = [];
+				const _values = getNowDate(values, this.mode);
+				this.dataOptions.forEach((item, index) => {
+					let i = item.map(({ value }) => value).indexOf(_values[index]);
+					if (i === -1) {
+						i = _values[index] > item[item.length - 1].value ? item.length - 1 : 0;
+					}
+					indexs.push(i);
+				});
+				this.selectedIndex = indexs;
+				this.selectedValue = indexs.map((i, index) => this.dataOptions[index][i].value);
+				console.log(this.selectedValue);
 			});
-			this.selectedValue = newValues;
+		},
+		onChange(e) {
+			const indexs = e.detail.value;
+			const newValues = indexs.map((i, index) => this.dataOptions[index][i].value);
+			this.initOptions(newValues);
+			this.initSelectIndex(newValues);
 		},
 	},
 };

@@ -44,7 +44,8 @@
 
 			<view class="options-content" :style="[optionsStyle]" @click.stop="stop">
 				<view class="select-options">
-					<block v-if="dataOptions.length > 1">
+					<DateTime v-if="cmpShowDate" />
+					<block v-else-if="dataOptions.length > 1">
 						<picker-view
 							style="height: 450rpx"
 							indicator-style="height: 43px"
@@ -82,7 +83,7 @@
 						</scroll-view>
 					</block>
 				</view>
-				<view class="options-btns" v-if="dataOptions.length > 1">
+				<view class="options-btns" v-if="cmpShowDate || dataOptions.length > 1">
 					<view class="options-cancel" @click="clickCancel">取消</view>
 					<view class="options-confirm" @click="clickConfirm">确定</view>
 				</view>
@@ -93,7 +94,9 @@
 
 <script>
 import utils from '../../utils/utils';
-import { formatDate, getDateList, getFormatStr, getNowDate } from './defaultDate';
+import { formatDate, getFormatStr, getNowDate } from './defaultDate';
+import DateTime from './datetime.vue';
+
 const isData = (d) => {
 	return d || d === 0 || d === '';
 };
@@ -149,6 +152,7 @@ export default {
 	group: '表单组件',
 	title: 'Select 下拉选',
 	name: 'ste-select',
+	components: { DateTime },
 	props: {
 		value: { type: [Array, String, Number], default: () => [] },
 		list: { type: Array, default: () => [] },
@@ -301,8 +305,6 @@ export default {
 		stop: () => {},
 		initOptions() {
 			if (this.cmpShowDate) {
-				this.dataOptions = getDateList(this.selected, this.mode, this.minDate, this.maxDate);
-				this.viewOptions = this.dataOptions;
 				return;
 			}
 			if (this.mode === 'tree') {
