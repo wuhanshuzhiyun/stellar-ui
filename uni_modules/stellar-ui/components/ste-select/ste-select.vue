@@ -1,7 +1,7 @@
 <template>
 	<view class="ste-select-root" :class="{ open: showOptions }" :style="[cmpRootStyle]">
 		<view class="select-mask" @click="clickMask">
-			<view class="select-content" :style="[contentStyle]" @click.stop="stop">
+			<view class="select-content" :style="[contentStyle]" @click.stop="stop" @click="openOptions">
 				<slot>
 					<scroll-view scroll-x class="content-text" :class="{ multiple: cmpMultiple }">
 						<block v-if="cmpFilterable">
@@ -17,7 +17,6 @@
 								class="filterable-input"
 								:class="{ content: cmpMultiple && cmpViewValue.length }"
 								:placeholder="inputPlaceholder"
-								@click="openOptions"
 								@input="onUserFilterable"
 							/>
 						</block>
@@ -36,7 +35,7 @@
 						</block>
 					</scroll-view>
 				</slot>
-				<view class="open-icon-event" @click="clickOpenIcon">
+				<view class="open-icon-event" @click.stop="clickOpenIcon">
 					<view class="open-icon">
 						<ste-icon code="&#xe676;" size="20" display="block" />
 					</view>
