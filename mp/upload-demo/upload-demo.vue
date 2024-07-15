@@ -56,7 +56,7 @@ export default {
 		return {
 			fileList: [],
 			fileList1: [],
-			fileList2: [{ url: 'https://image.whzb.com/chain/StellarUI/bg1.jpg', type: 'image' }],
+			fileList2: [{ url: 'https://image.whzb.com/chain/StellarUI/bg1.jpg' }],
 			fileList3: [],
 			fileList4: [],
 			fileList5: [{ url: 'https://image.whzb.com/chain/StellarUI/bg1.jpg', type: 'image', size: 1234 }],
