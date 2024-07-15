@@ -236,8 +236,8 @@ export default {
 			let bool = !this.disabled && this.showUpload && (this.maxCount == 0 || this.dataValue.length < this.maxCount);
 			return bool;
 		},
-		cmpDeletable(){
-			return !this.disabled && this.deletable
+		cmpDeletable() {
+			return !this.disabled && this.deletable;
 		},
 		cmpPreviewList() {
 			return this.dataValue
@@ -251,11 +251,17 @@ export default {
 	watch: {
 		value: {
 			handler(val) {
+				let list = [...val];
 				if (this.maxCount > 0 && val.length > this.maxCount) {
-					this.dataValue = [...val].splice(this.maxCount);
-				} else {
-					this.dataValue = [...val];
+					list = list.splice(this.maxCount);
 				}
+				this.dataValue = list.map((item) => {
+					if (!item?.type) {
+						const url = item.thumbPath || item.url || item.path;
+						item.type = utils.getMediaFileType(url);
+					}
+					return { ...item };
+				});
 			},
 			immediate: true,
 		},
