@@ -1,6 +1,11 @@
 <template>
-	<picker-view style="height: 600rpx" indicator-style="height: 43px" :value="selectedIndex" @change="onChange">
-		<picker-view-column v-for="(col, index) in options" :key="index">
+	<picker-view
+		style="height: 600rpx; width: 100%"
+		indicator-style="height: 43px"
+		:value="selectedIndex"
+		@change="onChange"
+	>
+		<picker-view-column v-for="(col, index) in cmpOptions" :key="index">
 			<view class="time-item" v-for="(item, i) in col" :key="item">
 				<text>
 					{{ item }}
@@ -14,7 +19,7 @@
 <script>
 import { formatDate, getDateOptions, getFormatStr, getNowDate } from './defaultDate';
 export default {
-	name: 'datetime',
+	name: 'date-time',
 	props: {
 		value: { type: [String, Number, Array], default: () => [] },
 		mode: { type: String, default: () => 'date' },
@@ -29,8 +34,15 @@ export default {
 		};
 	},
 	computed: {
-		options() {
+		cmpOptions() {
 			return getDateOptions(this.selectedValue, this.mode, this.minDate, this.maxDate);
+		},
+		cmpDateUnits() {
+			if (['date', 'datetime', 'month'].includes(this.mode)) {
+				return ['年', '月', '日', '时', '分', '秒'];
+			} else {
+				return ['时', '分', '秒'];
+			}
 		},
 	},
 	watch: {
@@ -48,29 +60,31 @@ export default {
 			},
 			immediate: true,
 		},
-		options: {
+		cmpOptions: {
 			handler(v) {
-				this.initSelectIndex();
+				// this.initSelectIndex();
 			},
 			immediate: true,
 		},
 	},
+	created() {
+		console.log(this.cmpOptions);
+	},
 	methods: {
 		initSelectIndex() {
 			const indexs = [];
-			this.options.forEach((item, index) => {
+			this.cmpOptions.forEach((item, index) => {
 				let i = item.indexOf(this.selectedValue[index]);
 				if (i === -1) {
 					i = 0;
 				}
-
 				indexs.push(i);
 			});
 			this.selectedIndex = indexs;
 		},
 		onChange({ detail: { value } }) {
 			const newValues = value.map((i, index) => {
-				this.options[index][i];
+				this.cmpOptions[index][i];
 			});
 			this.selectedValue = newValues;
 		},
