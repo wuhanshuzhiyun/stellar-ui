@@ -96,7 +96,7 @@ export function getDays(date, min, max) {
  * @param {string} maxDate - 最大值
  * @returns {Object[][]} 默认数据对象
  */
-export function getDateList(value, mode = 'date', minDate = null, maxDate = null) {
+export function getDateOptions(value, mode = 'date', minDate = null, maxDate = null) {
 	let _v = formatDate(value, mode);
 	const date = utils.dayjs();
 	const _value = _v ? _v : date;

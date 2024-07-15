@@ -20,7 +20,7 @@
 			</view>
 			<view class="demo-item">
 				<view class="title">日期选择</view>
-				<ste-select mode="date" @change="onChange"></ste-select>
+				<ste-select mode="date" @change="onChange" :minDate="minDate"></ste-select>
 			</view>
 			<view class="demo-item">
 				<view class="title">时间选择</view>
@@ -53,6 +53,7 @@
 export default {
 	data() {
 		return {
+			minDate:"1991-07-12",
 			value1: null,
 			list1: [
 				{ label: '选项2011', value: 2011 },
@@ -99,7 +100,9 @@ export default {
 			value5: [],
 		};
 	},
-
+	mounted() {
+		
+	},
 	methods: {
 		onChange(v, items) {
 			console.log('onChange', v, items);
