@@ -17,7 +17,7 @@
 </template>
 
 <script>
-import { formatDate, getDateOptions, getFormatStr, getNowDate } from './defaultDate';
+import { getDateOptions, getFormatStr, getNowDate } from './defaultDate';
 export default {
 	name: 'date-time',
 	props: {
@@ -58,6 +58,14 @@ export default {
 			},
 			immediate: true,
 		},
+		minDate() {
+			this.initOptions();
+			this.initSelectIndex();
+		},
+		maxDate() {
+			this.initOptions();
+			this.initSelectIndex();
+		},
 	},
 	created() {
 		this.initOptions();
@@ -73,6 +81,7 @@ export default {
 			this.$nextTick(() => {
 				const indexs = [];
 				const _values = getNowDate(values, this.mode);
+				console.log(_values);
 				this.dataOptions.forEach((item, index) => {
 					let i = item.map(({ value }) => value).indexOf(_values[index]);
 					if (i === -1) {
@@ -82,12 +91,15 @@ export default {
 				});
 				this.selectedIndex = indexs;
 				this.selectedValue = indexs.map((i, index) => this.dataOptions[index][i].value);
-				console.log(this.selectedValue);
+				console.log(indexs, this.selectedValue);
+				this.$emit('change', this.selectedValue);
+				this.$emit('input', this.selectedValue);
 			});
 		},
 		onChange(e) {
 			const indexs = e.detail.value;
 			const newValues = indexs.map((i, index) => this.dataOptions[index][i].value);
+			console.log('???????', newValues);
 			this.initOptions(newValues);
 			this.initSelectIndex(newValues);
 		},

@@ -29,7 +29,7 @@ export function getFormatStr(mode, unit) {
  * @param {"date"|"datetime"|"time"|"month"|"minute"} mode 模式
  */
 export function getNowDate(defaultDate, mode) {
-	let date = formatDate(defaultDate);
+	let date = formatDate(defaultDate, mode);
 	if (!date) date = utils.dayjs();
 	let y = date.year(),
 		m = date.month() + 1,
