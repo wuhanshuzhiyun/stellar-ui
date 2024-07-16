@@ -44,7 +44,15 @@
 
 			<view class="options-content" :style="[optionsStyle]" @click.stop="stop">
 				<view class="select-options">
-					<block v-if="dataOptions.length > 1">
+					<DateTime
+						v-if="cmpShowDate"
+						v-model="selected"
+						:mode="mode"
+						:minDate="minDate"
+						:maxDate="maxDate"
+						:dateUnit="dateUnit"
+					/>
+					<block v-else-if="dataOptions.length > 1">
 						<picker-view
 							style="height: 450rpx"
 							indicator-style="height: 43px"
@@ -53,10 +61,7 @@
 						>
 							<picker-view-column v-for="(col, index) in viewOptions" :key="index">
 								<view class="time-item" v-for="(item, i) in col" :key="item">
-									<text>
-										{{ cmpShowDate ? item : item[labelKey] }}
-									</text>
-									<text v-if="cmpShowDate && dateUnit">{{ cmpDateUnits[index] }}</text>
+									{{ item[labelKey] }}
 								</view>
 							</picker-view-column>
 						</picker-view>
@@ -82,7 +87,7 @@
 						</scroll-view>
 					</block>
 				</view>
-				<view class="options-btns" v-if="dataOptions.length > 1">
+				<view class="options-btns" v-if="cmpShowDate || dataOptions.length > 1">
 					<view class="options-cancel" @click="clickCancel">取消</view>
 					<view class="options-confirm" @click="clickConfirm">确定</view>
 				</view>
@@ -93,7 +98,9 @@
 
 <script>
 import utils from '../../utils/utils';
-import { formatDate, getDateList, getFormatStr, getNowDate } from './defaultDate';
+import { formatDate, getFormatStr } from './defaultDate';
+import DateTime from './datetime.vue';
+
 const isData = (d) => {
 	return d || d === 0 || d === '';
 };
@@ -149,6 +156,7 @@ export default {
 	group: '表单组件',
 	title: 'Select 下拉选',
 	name: 'ste-select',
+	components: { DateTime },
 	props: {
 		value: { type: [Array, String, Number], default: () => [] },
 		list: { type: Array, default: () => [] },
@@ -228,8 +236,7 @@ export default {
 		},
 		cmpMultiseriateValue() {
 			if (this.cmpShowDate) {
-				const value = getNowDate(this.selected, this.mode);
-				return this.dataOptions.map((item, i) => (item.includes(value[i]) ? item.indexOf(value[i]) : 0));
+				return [];
 			}
 			const value = [...this.selected];
 			return this.dataOptions.map((item, i) => {
@@ -240,7 +247,6 @@ export default {
 		cmpViewValue() {
 			if (this.cmpShowDate) {
 				let values = this.confirmValue;
-				if (values.length < this.dataOptions.length) values = this.initDate(values);
 				const v = formatDate(values, this.mode);
 				return v ? v.format(getFormatStr(this.mode)) : '';
 			}
@@ -301,8 +307,6 @@ export default {
 		stop: () => {},
 		initOptions() {
 			if (this.cmpShowDate) {
-				this.dataOptions = getDateList(this.selected, this.mode, this.minDate, this.maxDate);
-				this.viewOptions = this.dataOptions;
 				return;
 			}
 			if (this.mode === 'tree') {
@@ -333,15 +337,6 @@ export default {
 				this.viewOptions = list;
 			});
 		},
-		initDate(values) {
-			const result = [];
-			const now = getNowDate(null, this.mode).slice(0, this.dataOptions.length);
-			this.dataOptions.forEach((item, i) => {
-				const v = isData(values[i]) ? values[i] : now[i]; // 默认选中当前时间。
-				result.push(v);
-			});
-			return result;
-		},
 		initSelected(values) {
 			const result = [];
 			this.dataOptions.forEach((item, i) => {
@@ -361,9 +356,7 @@ export default {
 		async openOptions() {
 			if (this.selected.length < this.dataOptions.length) {
 				let selected = [];
-				if (this.cmpShowDate) {
-					selected = this.initDate(this.selected);
-				} else if (this.dataOptions.length > 1) {
+				if (this.dataOptions.length > 1) {
 					selected = this.initSelected(this.selected);
 				}
 				this.selected = selected;
@@ -494,7 +487,7 @@ export default {
 			const result = [];
 			value.forEach((i, index) => {
 				const value = this.dataOptions[index][i];
-				result.push(this.cmpShowDate ? value : value[this.valueKey]);
+				result.push(value[this.valueKey]);
 			});
 			this.selected = result;
 

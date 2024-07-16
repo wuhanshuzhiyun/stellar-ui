@@ -29,7 +29,7 @@ export function getFormatStr(mode, unit) {
  * @param {"date"|"datetime"|"time"|"month"|"minute"} mode 模式
  */
 export function getNowDate(defaultDate, mode) {
-	let date = formatDate(defaultDate);
+	let date = formatDate(defaultDate, mode);
 	if (!date) date = utils.dayjs();
 	let y = date.year(),
 		m = date.month() + 1,
@@ -59,6 +59,12 @@ export function formatDate(value, mode = 'date') {
 			_v = null;
 		} else if (['date', 'datetime', 'month'].includes(mode)) {
 			const date = _v.slice(0, 3);
+			const [y, m, d] = date;
+			const maxD = getMonthDays(y, m);
+			if (d > maxD) {
+				date[2] = maxD;
+			}
+
 			const time = _v.slice(3);
 			_v = `${date.join('-')}`;
 			_v += time.length ? ` ${time.join(':')}` : '';
@@ -70,22 +76,27 @@ export function formatDate(value, mode = 'date') {
 }
 
 export function getYears(min, max) {
-	const minYear = min ? min.year() : utils.dayjs().year() - 10;
-	const maxYear = max ? max.year() : utils.dayjs().year() + 10;
+	const minYear = min.year();
+	const maxYear = max.year();
 	return Array.from({ length: maxYear - minYear + 1 }, (_, i) => minYear + i);
 }
 
 export function getMonths(date, min, max) {
-	const minMonth = min && min.year() === date.year() ? min.month() + 1 : 1;
-	const maxMonth = max && max.year() === date.year() ? max.month() + 1 : 12;
+	const minMonth = min.year() >= date.year() ? min.month() + 1 : 1;
+	const maxMonth = max.year() <= date.year() ? max.month() + 1 : 12;
 	return Array.from({ length: maxMonth - minMonth + 1 }, (_, i) => minMonth + i);
 }
 
 export function getDays(date, min, max) {
-	const minDay = min && min.format('YYYY-MM') === date.format('YYYY-MM') ? min.date() : 1;
-	const maxDay =
-		max && max.format('YYYY-MM') === date.format('YYYY-MM') ? max.date() : getMonthDays(date.year(), date.month());
+	const minDay = min.format('YYYY-MM') >= date.format('YYYY-MM') ? min.date() : 1;
+	const maxDay = max.format('YYYY-MM') <= date.format('YYYY-MM') ? max.date() : getMonthDays(date.year(), date.month());
 	return Array.from({ length: maxDay - minDay + 1 }, (_, i) => minDay + i);
+}
+
+export function getTimes(date, min, max, formatStr, maxNum) {
+	const minHour = min.format(formatStr) >= date.format(formatStr) ? min.hour() : 0;
+	const maxHour = max.format(formatStr) <= date.format(formatStr) ? max.date() : maxNum;
+	return Array.from({ length: maxHour - minHour + 1 }, (_, i) => minHour + i);
 }
 
 /**
@@ -96,37 +107,36 @@ export function getDays(date, min, max) {
  * @param {string} maxDate - 最大值
  * @returns {Object[][]} 默认数据对象
  */
-export function getDateList(value, mode = 'date', minDate = null, maxDate = null) {
+export function getDateOptions(value, mode = 'date', minDate = null, maxDate = null) {
 	let _v = formatDate(value, mode);
 	const date = utils.dayjs();
 	const _value = _v ? _v : date;
-	const min = minDate ? utils.dayjs(minDate) : null;
-	const max = maxDate ? utils.dayjs(maxDate) : null;
+	const min = minDate ? utils.dayjs(minDate) : utils.dayjs(`${date.year() - 10}-${date.format('MM-DD HH:mm:ss')}`);
+	const max = maxDate ? utils.dayjs(maxDate) : utils.dayjs(`${date.year() + 10}-${date.format('MM-DD HH:mm:ss')}`);
 
-	const years = getYears(min, max);
-	const months = getMonths(_value, min, max);
-	const days = getDays(_value, min, max);
-	const hours = Array.from({ length: 24 }, (_, i) => i);
-	const minutes = Array.from({ length: 60 }, (_, i) => i);
-	const seconds = Array.from({ length: 60 }, (_, i) => i);
+	const years = getYears(min, max).map((e) => ({ value: e, title: `${e}年` }));
+	const months = getMonths(_value, min, max).map((e) => ({ value: e, title: `${e}月` }));
+	const days = getDays(_value, min, max).map((e) => ({ value: e, title: `${e}日` }));
+	const hours = getTimes(_value, min, max, 'YYYY-MM-DD', 23).map((e) => ({ value: e, title: `${e}时` }));
+	const minutes = getTimes(_value, min, max, 'YYYY-MM-DD HH', 60).map((e) => ({ value: e, title: `${e}分` }));
+	const seconds = getTimes(_value, min, max, 'YYYY-MM-DD HH:mm', 60).map((e) => ({ value: e, title: `${e}秒` }));
 
-	const defaultData = []; // 默认数据数组，用于存储所有数据（包括年、月、日、时、分、秒）
-	// 根据模式，将对应的数据添加到defaultData数组中，并返回该数组作为默认数据。
+	const options = [];
 	switch (mode) {
-		case 'datetime': // 日期时间模式，包括年、月、日、时、分、秒。
-			defaultData.push(years, months, days, hours, minutes, seconds); // 添加年、月、日、时、分、秒数据到defaultData数组中。
+		case 'datetime':
+			options.push(years, months, days, hours, minutes, seconds);
 			break;
 		case 'time':
-			defaultData.push(hours, minutes, seconds); // 添加时、分、秒数据到defaultData数组中。
+			options.push(hours, minutes, seconds);
 			break;
-		case 'month': // 月份模式，包括年、月。
-			defaultData.push(years, months); // 添加年、月数据到defaultData数组中。
+		case 'month':
+			options.push(years, months);
 			break;
-		case 'minute': // 分钟模式，包括时、分。
-			defaultData.push(hours, minutes); // 添加时、分数据到defaultData数组中。
+		case 'minute':
+			options.push(hours, minutes);
 			break;
-		default: // 默认情况下，包括年、月、日。
-			defaultData.push(years, months, days); // 添加年、月、日数据到defaultData数组中。
+		default:
+			options.push(years, months, days);
 	}
-	return defaultData;
+	return { options, value: _value };
 }

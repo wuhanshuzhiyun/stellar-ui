@@ -99,7 +99,7 @@ export default {
 			value5: [],
 		};
 	},
-
+	mounted() {},
 	methods: {
 		onChange(v, items) {
 			console.log('onChange', v, items);
