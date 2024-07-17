@@ -1,5 +1,5 @@
 <template>
-	<view class="ste-select-root" :class="{ open: showOptions }" :style="[cmpRootStyle]">
+	<view class="ste-select-root" :class="{ open: showOptions, disabled }" :style="[cmpRootStyle]">
 		<view class="select-mask" @click="clickMask">
 			<view class="select-content" :style="[contentStyle]" @click.stop="stop" @click="openOptions">
 				<slot>
@@ -16,6 +16,7 @@
 								v-model="inputView"
 								class="filterable-input"
 								:class="{ content: cmpMultiple && cmpViewValue.length }"
+								:disabled="disabled"
 								:placeholder="inputPlaceholder"
 								@input="onUserFilterable"
 							/>
@@ -147,6 +148,7 @@ const isData = (d) => {
  * @value top-start 上方展示，左侧对其
  * @value bottom-end 下方展示，右侧对其
  * @value top-end 上方展示，右侧对其
+ * @property {Boolean} disabled 禁用
  * @event {Function} change 选中值变化时触发
  * @event {Function} cancel 取消选择时触发
  * @event {Function} confirm 确定选择时触发
@@ -178,6 +180,7 @@ export default {
 		borderColor: { type: String, default: () => '#ebebeb' },
 		borderRadius: { type: [Number, String], default: () => 8 },
 		optionsPosition: { type: String, default: () => 'auto' },
+		disabled: { type: Boolean, default: () => false },
 	},
 	data() {
 		return {
@@ -354,6 +357,7 @@ export default {
 			}
 		},
 		async openOptions() {
+			if (this.disabled) return;
 			if (this.selected.length < this.dataOptions.length) {
 				let selected = [];
 				if (this.dataOptions.length > 1) {
@@ -546,7 +550,9 @@ export default {
 	width: var(--ste-select-width);
 	height: var(--ste-select-height);
 	position: relative;
-
+	&.disabled .select-content {
+		background-color: #eee;
+	}
 	&.open {
 		.select-mask {
 			position: fixed;
