@@ -1,82 +1,88 @@
 <template>
 	<view class="pc-page-body">
-		<view class="pc-nav">
-			<view class="group" v-for="group in datas" :key="group.key">
-				<view class="name">
-					{{ group.title }}
-					<ste-icon v-if="group.lock && !cmpLock" code="&#xe691;" size="16px" />
-				</view>
-				<view class="nav-children" v-if="group.children">
-					<view
-						class="nav-item"
-						v-for="nav in group.children"
-						:key="nav.key"
-						:class="activeName === nav.key ? 'active' : ''"
-						@click="toView(nav.key, group.lock)"
-					>
-						<view class="name">
-							{{ nav.title || nav.name }}
-						</view>
-					</view>
-				</view>
-			</view>
+		<view class="pc-page-header">
+			您正在浏览基于 Vue 2.x 的文档;
+			<a href="https://stellar-ui.intecloud.com.cn/plus" target="_blank">点击查看Vue 3.x版本。</a>
 		</view>
-		<view class="pc-content">
-			<view v-html="content" class="markdown-view"></view>
-			<view v-show="isComment && isComponent && loadingMd" class="comment-view">
-				<view class="comment-title">意见反馈</view>
-				<input class="user-input" placeholder="姓名" v-model="commentParams.user" maxlength="8" />
-
-				<textarea
-					class="comment-input"
-					v-model="commentParams.content"
-					rows="10"
-					placeholder="反馈意见"
-					maxlength="500"
-				/>
-				<view class="button-box">
-					<view class="code-message">
-						查看验证码
-						<view class="code-img">
-							<view class="img-box">
-								<img :src="cmpImage" />
+		<view class="pc-page-content">
+			<view class="pc-nav">
+				<view class="group" v-for="group in datas" :key="group.key">
+					<view class="name">
+						{{ group.title }}
+						<ste-icon v-if="group.lock && !cmpLock" code="&#xe691;" size="16px" />
+					</view>
+					<view class="nav-children" v-if="group.children">
+						<view
+							class="nav-item"
+							v-for="nav in group.children"
+							:key="nav.key"
+							:class="activeName === nav.key ? 'active' : ''"
+							@click="toView(nav.key, group.lock)"
+						>
+							<view class="name">
+								{{ nav.title || nav.name }}
 							</view>
-							<view class="code-uuid">UUID:{{ commentParams.uuid }}</view>
-						</view>
-					</view>
-					<input
-						class="code-input"
-						placeholder="验证码"
-						v-model="commentParams.code"
-						maxlength="6"
-						style="width: 120px"
-					/>
-					<button type="primary" style="width: 120px; height: 32px; line-height: 32px" @click="setComment">
-						提交
-					</button>
-				</view>
-				<view class="comment-list" v-show="commentList.length">
-					<view class="comment-item" v-for="item in commentList" :key="item.id">
-						<view class="comment-head">
-							<text class="head-user" v-if="item.user">{{ item.user }}</text>
-							<text class="head-time">{{ item.time }}</text>
-						</view>
-						<view class="comment-content">
-							{{ item.conents }}
 						</view>
 					</view>
 				</view>
 			</view>
-		</view>
-		<view class="pc-view">
-			<iframe class="view-iframe" :src="cmpIframeUrl" frameborder="0" />
-		</view>
-		<view class="popup-view" v-if="showPopup">
-			<view class="popup-content">
-				<input type="password" placeholder="请输入管理员密码" v-model="popupPwd" />
-				<view class="popup-btn">
-					<button size="mini" type="warn" @click="showPopup = false">取消</button>
-					<button size="mini" type="primary" @click="setAdminPwd">确定</button>
+			<view class="pc-content">
+				<view v-html="content" class="markdown-view"></view>
+				<view v-show="isComment && isComponent && loadingMd" class="comment-view">
+					<view class="comment-title">意见反馈</view>
+					<input class="user-input" placeholder="姓名" v-model="commentParams.user" maxlength="8" />
+
+					<textarea
+						class="comment-input"
+						v-model="commentParams.content"
+						rows="10"
+						placeholder="反馈意见"
+						maxlength="500"
+					/>
+					<view class="button-box">
+						<view class="code-message">
+							查看验证码
+							<view class="code-img">
+								<view class="img-box">
+									<img :src="cmpImage" />
+								</view>
+								<view class="code-uuid">UUID:{{ commentParams.uuid }}</view>
+							</view>
+						</view>
+						<input
+							class="code-input"
+							placeholder="验证码"
+							v-model="commentParams.code"
+							maxlength="6"
+							style="width: 120px"
+						/>
+						<button type="primary" style="width: 120px; height: 32px; line-height: 32px" @click="setComment">
+							提交
+						</button>
+					</view>
+					<view class="comment-list" v-show="commentList.length">
+						<view class="comment-item" v-for="item in commentList" :key="item.id">
+							<view class="comment-head">
+								<text class="head-user" v-if="item.user">{{ item.user }}</text>
+								<text class="head-time">{{ item.time }}</text>
+							</view>
+							<view class="comment-content">
+								{{ item.conents }}
+							</view>
+						</view>
+					</view>
+				</view>
+			</view>
+			<view class="pc-view">
+				<iframe class="view-iframe" :src="cmpIframeUrl" frameborder="0" />
+			</view>
+			<view class="popup-view" v-if="showPopup">
+				<view class="popup-content">
+					<input type="password" placeholder="请输入管理员密码" v-model="popupPwd" />
+					<view class="popup-btn">
+						<button size="mini" type="warn" @click="showPopup = false">取消</button>
+						<button size="mini" type="primary" @click="setAdminPwd">确定</button>
+					</view>
 				</view>
 			</view>
 		</view>
@@ -299,228 +305,244 @@ export default {
 .pc-page-body {
 	width: 100vw;
 	height: 100vh;
-	display: flex;
-	flex-direction: row;
-	background-color: #fff;
-	position: relative;
-
-	.pc-nav {
+	.pc-page-header{
+    height: 30px;
+    line-height: 30px;
+    text-align: center;
+    color: #eee;
+    width: 100%;
+    background-color: #409eff;
+    a{
+      color: #fff;
+      font-weight: bold;
+    }
+	}
+	.pc-page-content {
+		width: 100%;
 		height: 100%;
-		border-right: 1px solid #ddd;
-		padding: 8px 0;
-		overflow-y: auto;
-		min-width: var(--pc-nav-width);
-		max-width: var(--pc-nav-width);
-		position: absolute;
-		left: 0;
-		bottom: 0;
-		z-index: 1;
-		background-color: #ffffff;
+		display: flex;
+		flex-direction: row;
+		background-color: #fff;
+		position: relative;
+		.pc-nav {
+			height: 100%;
+			border-right: 1px solid #ddd;
+			padding: 8px 0;
+			overflow-y: auto;
+			min-width: var(--pc-nav-width);
+			max-width: var(--pc-nav-width);
+			position: absolute;
+			left: 0;
+			bottom: 0;
+			z-index: 1;
+			background-color: #ffffff;
 
-		.group {
-			.name {
-				font-weight: bold;
-				font-size: 16px;
-				padding: 24px 0 0 24px;
-				line-height: 28px;
-			}
-		}
-
-		.nav-item {
-			cursor: pointer;
-
-			.name {
-				font-weight: 400;
-				padding: 6px 0 6px 24px;
-				margin: 4px 0;
-				font-size: 14px;
-				line-height: 20px;
-			}
-
-			&:hover,
-			&.active {
-				color: #1989fa;
-			}
-
-			&.active {
+			.group {
 				.name {
 					font-weight: bold;
+					font-size: 16px;
+					padding: 24px 0 0 24px;
+					line-height: 28px;
 				}
 			}
-		}
-	}
 
-	.pc-content {
-		width: 100%;
-		padding-left: var(--pc-nav-width);
-		padding-right: calc(var(--pc-view-width) + var(--pc-padding) + 20px);
-		overflow: auto;
+			.nav-item {
+				cursor: pointer;
 
-		.markdown-view,
-		.comment-view {
-			padding: 12px var(--pc-padding);
-		}
-		.comment-view {
-			border-top: 1px solid #ddd;
-			.comment-title {
-				font-size: 20px;
-				font-weight: 600;
-				border-left: 4px solid #1989fa;
-				padding-left: 5px;
-			}
-			.comment-input,
-			.user-input {
-				margin-top: 12px;
-				border: 1px solid #ddd;
-				padding: 5px;
-				border-radius: 4px;
-			}
-			.user-input {
-				height: 32px;
-			}
-			.comment-input {
-				width: 100%;
-			}
-			.button-box {
-				margin-top: 12px;
-				width: 100%;
-				display: flex;
-				align-items: center;
-				justify-content: flex-end;
+				.name {
+					font-weight: 400;
+					padding: 6px 0 6px 24px;
+					margin: 4px 0;
+					font-size: 14px;
+					line-height: 20px;
+				}
 
-				.code-message {
-					height: 32px;
-					border-radius: 4px;
-					display: flex;
-					align-items: center;
-					font-size: 12px;
+				&:hover,
+				&.active {
 					color: #1989fa;
-					cursor: pointer;
-					position: relative;
+				}
 
-					.code-img {
-						// 阴影
-						box-shadow: 0 0 10px #ddd;
-						display: none;
-						position: absolute;
-						z-index: 10;
-						left: 0;
-						bottom: 32px;
-						width: 200px;
-						height: 200px;
-						background: #fff;
-						text-align: center;
-						border-radius: 4px;
-						padding: 15px 30px 0 30px;
-
-						.img-box {
-							width: 100%;
-							img {
-								width: 100%;
-							}
-						}
-						.code-uuid {
-							margin-top: 5px;
-						}
-					}
-					&:hover {
-						.code-img {
-							display: block;
-						}
+				&.active {
+					.name {
+						font-weight: bold;
 					}
 				}
-				.code-input {
+			}
+		}
+
+		.pc-content {
+			width: 100%;
+			padding-left: var(--pc-nav-width);
+			padding-right: calc(var(--pc-view-width) + var(--pc-padding) + 20px);
+			overflow: auto;
+
+			.markdown-view,
+			.comment-view {
+				padding: 12px var(--pc-padding);
+			}
+			.comment-view {
+				border-top: 1px solid #ddd;
+				.comment-title {
+					font-size: 20px;
+					font-weight: 600;
+					border-left: 4px solid #1989fa;
+					padding-left: 5px;
+				}
+				.comment-input,
+				.user-input {
+					margin-top: 12px;
 					border: 1px solid #ddd;
 					padding: 5px;
 					border-radius: 4px;
+				}
+				.user-input {
 					height: 32px;
-					margin: 0 12rpx;
+				}
+				.comment-input {
+					width: 100%;
+				}
+				.button-box {
+					margin-top: 12px;
+					width: 100%;
+					display: flex;
+					align-items: center;
+					justify-content: flex-end;
+
+					.code-message {
+						height: 32px;
+						border-radius: 4px;
+						display: flex;
+						align-items: center;
+						font-size: 12px;
+						color: #1989fa;
+						cursor: pointer;
+						position: relative;
+
+						.code-img {
+							// 阴影
+							box-shadow: 0 0 10px #ddd;
+							display: none;
+							position: absolute;
+							z-index: 10;
+							left: 0;
+							bottom: 32px;
+							width: 200px;
+							height: 200px;
+							background: #fff;
+							text-align: center;
+							border-radius: 4px;
+							padding: 15px 30px 0 30px;
+
+							.img-box {
+								width: 100%;
+								img {
+									width: 100%;
+								}
+							}
+							.code-uuid {
+								margin-top: 5px;
+							}
+						}
+						&:hover {
+							.code-img {
+								display: block;
+							}
+						}
+					}
+					.code-input {
+						border: 1px solid #ddd;
+						padding: 5px;
+						border-radius: 4px;
+						height: 32px;
+						margin: 0 12rpx;
+					}
+				}
+				.comment-list {
+					border: 1px solid #ddd;
+					padding: 12px;
+					margin-top: 12px;
+					.comment-item {
+						& + .comment-item {
+							border-top: 1px solid #ddd;
+							margin-top: 12px;
+							padding-top: 12px;
+						}
+						.comment-head {
+							.head-user {
+								font-zise: 18px;
+								padding-right: 5px;
+							}
+							.head-time {
+								font-size: 12px;
+								color: #aaa;
+							}
+						}
+						.comment-content {
+							margin-top: 5px;
+							font-size: 14px;
+							color: #666;
+						}
+					}
 				}
 			}
-			.comment-list {
-				border: 1px solid #ddd;
-				padding: 12px;
-				margin-top: 12px;
-				.comment-item {
-					& + .comment-item {
-						border-top: 1px solid #ddd;
-						margin-top: 12px;
-						padding-top: 12px;
-					}
-					.comment-head {
-						.head-user {
-							font-zise: 18px;
-							padding-right: 5px;
-						}
-						.head-time {
-							font-size: 12px;
-							color: #aaa;
-						}
-					}
-					.comment-content {
-						margin-top: 5px;
-						font-size: 14px;
-						color: #666;
-					}
-				}
+		}
+		@media (max-width: 1100px) {
+			.pc-content {
+				padding-right: calc(-8px + var(--pc-view-width));
 			}
 		}
-	}
-	@media (max-width: 1100px) {
-		.pc-content {
-			padding-right: calc(-8px + var(--pc-view-width));
-		}
-	}
 
-	.pc-view {
-		position: fixed;
-		z-index: 10;
-		top: 20px;
-		right: var(--pc-padding);
-		width: calc(var(--pc-view-width) + 28px);
-		min-width: calc(var(--pc-view-width) + 28px);
-		height: calc(var(--pc-view-height));
-		padding: 50px 14px 30px;
-		overflow: hidden;
-		border-radius: 16px;
-		background-image: url(./iPhone13.png);
-		background-repeat: no-repeat;
-		background-size: 100% 100%;
+		.pc-view {
+			position: fixed;
+			z-index: 10;
+			top: 50%;
+			transform: translateY(-50%);
+			right: var(--pc-padding);
+			width: calc(var(--pc-view-width) + 28px);
+			min-width: calc(var(--pc-view-width) + 28px);
+			height: calc(var(--pc-view-height));
+			padding: 50px 14px 30px;
+			overflow: hidden;
+			border-radius: 16px;
+			background-image: url(./iPhone13.png);
+			background-repeat: no-repeat;
+			background-size: 100% 100%;
 
-		.view-iframe {
-			width: 100%;
-			height: 100%;
-			border-radius: 0 0 20px 20px;
-		}
-	}
-
-	.popup-view {
-		position: fixed;
-		top: 0;
-		left: 0;
-		right: 0;
-		bottom: 0;
-		background-color: rgba(0, 0, 0, 0.5);
-		z-index: 99;
-		display: flex;
-		align-items: center;
-		justify-content: center;
-		.popup-content {
-			padding: 20px 30px;
-			background-color: #fff;
-			border-radius: 4px;
-			input {
-				height: 40px;
-				padding: 0 10px;
-				line-height: 40px;
-				border: 1px solid #ddd;
-			}
-			.popup-btn {
-				margin-top: 20px;
+			.view-iframe {
 				width: 100%;
-				text-align: right;
-				button + button {
-					margin-left: 10px;
+				height: 100%;
+				border-radius: 0 0 20px 20px;
+			}
+		}
+
+		.popup-view {
+			position: fixed;
+			top: 0;
+			left: 0;
+			right: 0;
+			bottom: 0;
+			background-color: rgba(0, 0, 0, 0.5);
+			z-index: 99;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			.popup-content {
+				padding: 20px 30px;
+				background-color: #fff;
+				border-radius: 4px;
+				input {
+					height: 40px;
+					padding: 0 10px;
+					line-height: 40px;
+					border: 1px solid #ddd;
+				}
+				.popup-btn {
+					margin-top: 20px;
+					width: 100%;
+					text-align: right;
+					button + button {
+						margin-left: 10px;
+					}
 				}
 			}
 		}
