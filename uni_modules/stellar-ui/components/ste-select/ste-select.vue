@@ -280,7 +280,7 @@ export default {
 					this.confirmValue = v;
 				} else if (this.cmpShowDate) {
 					const str = ['date', 'datetime', 'month'].includes(this.mode) ? 'YYYY MM DD HH mm ss' : 'HH mm ss';
-					const value = utils.dayjs(v).format('YYYY MM DD HH mm ss').split(' ');
+					const value = v ? utils.dayjs(v).format('YYYY MM DD HH mm ss').split(' ') : [];
 					this.confirmValue = value.map((item) => Number(item));
 				} else {
 					if (this.dataOptions.length > 1 || this.multiple) {
