@@ -75,13 +75,11 @@ export default {
 		initOptions(values = this.selectedValue) {
 			const { options, value } = getDateOptions(values, this.mode, this.minDate, this.maxDate);
 			this.dataOptions = options;
-			console.log('options', options);
 		},
 		initSelectIndex(values = this.selectedValue) {
 			this.$nextTick(() => {
 				const indexs = [];
 				const _values = getNowDate(values, this.mode);
-				console.log(_values);
 				this.dataOptions.forEach((item, index) => {
 					let i = item.map(({ value }) => value).indexOf(_values[index]);
 					if (i === -1) {
@@ -91,7 +89,6 @@ export default {
 				});
 				this.selectedIndex = indexs;
 				this.selectedValue = indexs.map((i, index) => this.dataOptions[index][i].value);
-				console.log(indexs, this.selectedValue);
 				this.$emit('change', this.selectedValue);
 				this.$emit('input', this.selectedValue);
 			});
@@ -99,7 +96,6 @@ export default {
 		onChange(e) {
 			const indexs = e.detail.value;
 			const newValues = indexs.map((i, index) => this.dataOptions[index][i].value);
-			console.log('???????', newValues);
 			this.initOptions(newValues);
 			this.initSelectIndex(newValues);
 		},
