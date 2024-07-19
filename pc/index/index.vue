@@ -56,7 +56,11 @@
 							maxlength="6"
 							style="width: 120px"
 						/>
-						<button type="primary" style="width: 120px; height: 32px; line-height: 32px" @click="setComment">
+						<button
+							type="primary"
+							style="width: 120px; height: 32px; line-height: 32px"
+							@click="setComment"
+						>
 							提交
 						</button>
 					</view>
@@ -305,21 +309,21 @@ export default {
 .pc-page-body {
 	width: 100vw;
 	height: 100vh;
-	.pc-page-header{
-    height: 30px;
-    line-height: 30px;
-    text-align: center;
-    color: #eee;
-    width: 100%;
-    background-color: #409eff;
-    a{
-      color: #fff;
-      font-weight: bold;
-    }
+	.pc-page-header {
+		height: 30px;
+		line-height: 30px;
+		text-align: center;
+		color: #eee;
+		width: 100%;
+		background-color: #409eff;
+		a {
+			color: #fff;
+			font-weight: bold;
+		}
 	}
 	.pc-page-content {
 		width: 100%;
-		height: 100%;
+		height: calc(100% - 30px);
 		display: flex;
 		flex-direction: row;
 		background-color: #fff;
