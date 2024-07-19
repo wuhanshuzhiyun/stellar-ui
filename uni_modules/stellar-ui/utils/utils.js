@@ -17,7 +17,7 @@ let utils = {
 		let format = value ? value : 0;
 		if (format && isNaN(format)) {
 			if (/^\d+px$/i.test(format)) {
-				return restype ? Number(format.slice(0, -2)) : format;
+				return restype === 'num' ? Number(format.slice(0, -2)) : format;
 			} else if (/^\d+rpx/i.test(format)) {
 				format = Number(format.slice(0, -3));
 			} else {
