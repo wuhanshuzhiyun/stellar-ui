@@ -13,9 +13,9 @@
 				<ste-media-preview :show.sync="show" :urls="urls"></ste-media-preview>
 			</view>
 			<view class="demo-item">
-				<view class="title">画笔颜色和线宽</view>
+				<view class="title">背景、画笔颜色和线宽</view>
 				<view class="signature-box">
-					<ste-signature strokeColor="#f0f" lineWidth="1" />
+					<ste-signature strokeColor="#f0f" lineWidth="1" background="#0f0" />
 				</view>
 			</view>
 		</view>

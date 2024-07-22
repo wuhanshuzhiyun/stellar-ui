@@ -60,11 +60,12 @@ export default {
 </style>
 ```
 
-#### 画笔颜色和线宽
+#### 背景、画笔颜色和线宽
+- 属性`background`可以自定义图片背景颜色，默认`#f8f8f8`(黑色)
 - 属性`strokeColor`可以自定义画笔颜色，默认`#000000`(黑色)
 - 属性`lineWidth`可以自定义画笔线宽，默认`3`
 ```html
-<ste-signature strokeColor="#f0f" lineWidth="1" />
+<ste-signature background="#0f0" strokeColor="#f0f" lineWidth="1" />
 ```
 
 
@@ -75,7 +76,8 @@ export default {
 | ---						| ---					| ---								| ---				| ---		| ---			|
 | `customClass`	| 自定义 class	| `String`					| -					| -			| -				|
 | `lineWidth`		| 线条的宽度		| `Number`					| `3`				| -			| -				|
-| `strokeColor`	| 线条的颜色		| `Number`					| `#000000`	| -			| -				|
+| `background`	| 线条的颜色		| `String`					| `#f8f8f8`	| -			| -				|
+| `strokeColor`	| 线条的颜色		| `String`					| `#000000`	| -			| -				|
 | `type`				| 保存图片类型	| `String`					| `png`			| `jpg`	| -				|
 | `width`				| 宽度,单位rpx	| `String`,`Number`	| `100%`		| -			| -				|
 | `height`			| 高度,单位rpx	| `String`,`Number`	| `100%`		| -			| -				|
