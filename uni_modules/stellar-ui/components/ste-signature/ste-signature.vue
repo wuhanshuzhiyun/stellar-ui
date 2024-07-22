@@ -30,6 +30,7 @@ import utils from '../../utils/utils';
  * @property {String} customClass 自定义 class
  * @property {Number} lineWidth 线条的宽度
  * @property {String} strokeColor 线条颜色，支持 rgb，rgba，hex，hsl，hsla，颜色名称等格式
+ * @property {String} background 图片背景色
  * @property {String} type 保存图片类型
  * @value png 默认
  * @value jpg
