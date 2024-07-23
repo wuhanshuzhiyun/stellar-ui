@@ -178,6 +178,20 @@
 				</view>
 			</view>
 			<view class="demo-item">
+				<view class="title">表格滚动</view>
+				<view class="item-block">
+					<view style="width: 100%">
+						<ste-table :data="rows3" height="500" @scrollToLower="scrollToLower">
+							<template v-slot="{ row }">
+								<ste-table-column label="姓名" prop="name" width="200"></ste-table-column>
+								<ste-table-column label="生日" prop="birth" width="200"></ste-table-column>
+								<ste-table-column label="性别" prop="sex" width="300"></ste-table-column>
+							</template>
+						</ste-table>
+					</view>
+				</view>
+			</view>
+			<view class="demo-item">
 				<view class="title">自定义列</view>
 				<view class="item-block">
 					<view style="width: 100%">
@@ -199,6 +213,20 @@
 								<ste-table-column label="操作2">
 									<ste-button :mode="100" @click="handleEdit">编辑</ste-button>
 								</ste-table-column>
+							</template>
+						</ste-table>
+					</view>
+				</view>
+			</view>
+			<view class="demo-item">
+				<view class="title">动态设置表头</view>
+				<view class="item-block">
+					<view style="width: 100%">
+						<ste-table :data="rows" :header="headerFun">
+							<template v-slot="{ row }">
+								<ste-table-column customKey="name" prop="name"></ste-table-column>
+								<ste-table-column label="生日" prop="birth"></ste-table-column>
+								<ste-table-column label="性别" prop="sex"></ste-table-column>
 							</template>
 						</ste-table>
 					</view>
@@ -316,10 +344,27 @@ export default {
 				{ name: '', birth: '', sex: '女', state: 2 },
 				{ name: '王七', birth: '2024.01.01', sex: '', state: 1 },
 			],
+			rows3: [
+				{ name: '张三', birth: '2023.12.31', sex: '男', state: 1 },
+				{ name: '李四', birth: '2024.01.01', sex: '女', state: 2 },
+				{ name: '王五', birth: '2024.11.01', sex: '女', state: 1 },
+				{ name: '赵六', birth: '2024.11.01', sex: '女', state: 2 },
+				{ name: '王七', birth: '2024.01.01', sex: '男', state: 1 },
+				{ name: '张三', birth: '2023.12.31', sex: '男', state: 1 },
+				{ name: '李四', birth: '2024.01.01', sex: '女', state: 2 },
+				{ name: '王五', birth: '2024.11.01', sex: '女', state: 1 },
+				{ name: '赵六', birth: '2024.11.01', sex: '女', state: 2 },
+				{ name: '王七', birth: '2024.01.01', sex: '男', state: 1 },
+			],
 		};
 	},
 	mounted() {},
 	methods: {
+		scrollToLower() {
+			this.showToast({
+				title: '到底了',
+			});
+		},
 		indexFun(index) {
 			return index + 2;
 		},
@@ -351,6 +396,11 @@ export default {
 				}
 			});
 			return res;
+		},
+		headerFun(e1, tableData) {
+			if (e1.customKey == 'name') {
+				return tableData[0].name;
+			}
 		},
 		select(selection, row) {
 			console.log('select', selection, row);

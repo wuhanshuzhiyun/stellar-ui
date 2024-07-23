@@ -32,8 +32,8 @@
 							<ste-icon code="&#xe6af;" color="#BBBBBB" size="32" v-else @click="changeCheckAll" />
 						</template>
 					</view>
-					<view class="cell-box" v-else>
-						{{ column.label }}
+					<view class="cell-box" :class="column.label ? '' : 'no-value'" v-else>
+						{{ column.label || '-' }}
 					</view>
 				</view>
 			</view>
@@ -44,7 +44,7 @@
 						<view
 							class="ste-table-row"
 							:class="'row-' + index"
-							v-for="(row, index) in data"
+							v-for="(row, index) in tableData"
 							:key="index"
 							@click="rowClick(row, $event)"
 						>
@@ -73,7 +73,7 @@
 					<view
 						class="ste-table-row"
 						:class="'row-' + index"
-						v-for="(row, index) in data"
+						v-for="(row, index) in tableData"
 						:key="index"
 						@click="rowClick(row, $event)"
 					>
@@ -119,6 +119,8 @@ const DEFAULT_SUM_TEXT = '合计';
  * @property {Function} summaryMethod 自定义的合计计算方法，默认 null
  * @property {Function} selectable 仅对 type=selection 的列有效，类型为 Function，Function 的返回值用来决定这一行的 CheckBox 是否可以勾选，默认 null
  * @property {Function} readable 仅对 type=selection 的列有效，类型为 Function，Function 的返回值用来决定这一行的 CheckBox 是否可以勾选，默认 null
+ * @property {Function} formatter 格式化单元格方法，需要配合TableColumn中的customKey属性
+ * @property {Function} header 格式化表头内容的方法，同formatter属性，需要定义customKey属性
  * @event {Function} select 当用户手动勾选数据行的 Checkbox 时触发的事件
  * @event {Function} selectAll 当用户手动勾选全选 Checkbox 时触发的事件
  * @event {Function} cellClick 当某个单元格被点击时会触发该事件
@@ -182,6 +184,10 @@ export default {
 		},
 		formatter: {
 			type: [Function, null],
+			default: null,
+		},
+		header: {
+			type: [Function, null, String],
 			default: null,
 		},
 		height: {
@@ -285,7 +291,13 @@ export default {
 			for (let i = 0; i < partSize; i++) {
 				result.push(all[i]);
 			}
-			this.columns = result;
+
+			this.columns = result.map((e) => {
+				if (!e.label && this.header && typeof this.header === 'function') {
+					e.label = this.header(e, this.tableData);
+				}
+				return e;
+			});
 			this.calcSum();
 			this.loadSelectType();
 			this.loadCanCheckArr();
@@ -465,6 +477,10 @@ $default-border: 2rpx solid #ebebeb;
 				font-weight: bold;
 				font-size: 28rpx;
 				border-top: $default-border;
+
+				.cell-box.no-value {
+					color: transparent;
+				}
 			}
 		}
 
