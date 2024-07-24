@@ -295,6 +295,45 @@ export default {
 <script>
 ```
 
+#### 表格滚动
+此时需要给表格设置高度`height`，并保证表体高度是大于此高度，此时表格可以滚动，且滚动到底部时触发`scrollToLower`事件
+```html
+<ste-table :data="rows3" height="500" @scrollToLower="scrollToLower">
+	<template v-slot="{ row }">
+		<ste-table-column label="姓名" prop="name" width="200"></ste-table-column>
+		<ste-table-column label="生日" prop="birth" width="200"></ste-table-column>
+		<ste-table-column label="性别" prop="sex" width="300"></ste-table-column>
+	</template>
+</ste-table>
+<script>
+export default {
+	data() {
+		return {
+			rows: [
+				{ name: '张三', birth: '2023.12.31', sex: '男' },
+				{ name: '李四', birth: '2024.01.01', sex: '女' },
+				{ name: '王五', birth: '2024.11.01', sex: '女' },
+				{ name: '赵六', birth: '2024.11.01', sex: '女' },
+				{ name: '王七', birth: '2024.01.01', sex: '男' },
+				{ name: '张三', birth: '2023.12.31', sex: '男' },
+				{ name: '李四', birth: '2024.01.01', sex: '女' },
+				{ name: '王五', birth: '2024.11.01', sex: '女' },
+				{ name: '赵六', birth: '2024.11.01', sex: '女' },
+				{ name: '王七', birth: '2024.01.01', sex: '男' },
+			],
+		}
+	},
+	methods: {
+		scrollToLower() {
+			this.showToast({
+				title: '到底了',
+			});
+		},
+	}
+}
+</script>
+```
+
 #### 自定义列
 当需要格式化某列时，可以不设置列的`prop`，但需要设置`customKey`值，然后给表格传入一个`formatter`方法，
 方法中第一个参数是每一行的数据，第二个参数是列的`customKey`，示例如下
@@ -319,7 +358,7 @@ export default {
 		</ste-table-column>
 	</template>
 </ste-table>
-<script />
+<script>
 export default {
 	data() {
 		return {
@@ -346,7 +385,42 @@ export default {
 		}
 	}
 }
+</script>
+```
+
+#### 动态设置表头
+当需要动态设置表头，可以不设置列的`label`，但需要设置`customKey`值，然后给表格传入一个`header`方法，
+方法中第一个参数是列的数据，第二个参数是表格的数据`data`，示例如下
+```html
+<ste-table :data="rows" :header="headerFun">
+	<template v-slot="{ row }">
+		<ste-table-column prop="name" customKey="name" width="200"></ste-table-column>
+		<ste-table-column label="生日" prop="birth" width="200"></ste-table-column>
+		<ste-table-column label="性别" prop="sex" width="300"></ste-table-column>
+	</template>
+</ste-table>
 <script>
+export default {
+	data() {
+		return {
+			rows: [
+				{ name: '张三', birth: '2023.12.31', sex: '男', state: 1 },
+				{ name: '李四', birth: '2024.01.01', sex: '女', state: 2 },
+				{ name: '王五', birth: '2024.11.01', sex: '女', state: 1 },
+				{ name: '赵六', birth: '2024.11.01', sex: '女', state: 2 },
+				{ name: '王七', birth: '2024.01.01', sex: '男', state: 1 },
+			]
+		}
+	},
+	methods: {
+		headerFun(e1, tableData) {
+			if (e1.customKey == 'name') {
+				return tableData[0].name;
+			} 
+		},
+	}
+}
+</script>
 ```
 
 #### 自定义边框样式
@@ -483,6 +557,7 @@ export default {
 | `readable`		| 仅对 type=selection 的列有效，类型为 Function，Function 的返回值用来决定这一行的 CheckBox 是否只读		| `Function(row, index)`		| `null`	| -		| -			|
 | `formatter`		| 格式化方法，需要配合`TableColumn`中的`customKey`属性													| `Function(row, key)`			| `null`	| -		| `v1.17.3`	|
 | `height`			| 表格高度，设置该值可以让表格体开启滚动																	| `Number/String`				| -			| -		| `v1.18.9`	|
+| `header`			| 格式化表头内容的方法，同formatter属性，需要定义customKey属性												| `Function(column, tableData)`	| -			| -		| `v1.20.2`	|
 
 #### Table Events
 |事件名				|说明											|事件参数																|支持版本	|
