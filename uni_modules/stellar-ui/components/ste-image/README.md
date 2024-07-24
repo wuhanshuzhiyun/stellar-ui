@@ -113,7 +113,7 @@ export default {
 | `height`							| 高度：`Number`单位`rpx`，`String`同原生																																						| `Number/String`	| `"100%"`				| -										|-									|
 | `radius`							| 圆角：`Number`单位`rpx`，`String`同原生																																						| `Number/String`	| `0`							| -										|-									|
 | `hiddenLoading`				| 是否展示图片未加载的占位内容																																												| `Boolean`				| `false`					| -										|-									|
-| `hiddenError`					| 是否加载失败的内容																																																	| `Boolean`				| `true`					| -										|-									|
+| `hiddenError`					| 是否加载失败的内容																																																	| `Boolean`				| `false`					| -										|-									|
 | `showMenuByLongpress`	| 长按图片显示发送给朋友、收藏、保存图片、搜一搜、打开名片/前往群聊/打开小程序（若图片中包含对应二维码或小程序码）的菜单	| `Boolean`				| `false`					| -										|微信小程序`2.13.0`	|
 | `lazyLoad`						| 图片懒加载，在即将进入一定范围（上下三屏）时才开始加载																																| `Boolean`				| `false`					| -										|-									|
 | `display`							| 盒子模型																																																						| `String`				| `inline-flex`		|	可选属性同css同名属性值	|-									|
