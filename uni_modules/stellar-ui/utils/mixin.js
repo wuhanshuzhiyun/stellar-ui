@@ -32,7 +32,7 @@ export function childMixin(parentName) {
 				parent: {},
 			};
 		},
-		mounted() {
+		created() {
 			this.parent = this[parentName]?.getParent();
 			this.getParentData();
 		},
