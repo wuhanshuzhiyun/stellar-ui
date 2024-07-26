@@ -59,7 +59,7 @@ export default {
 		},
 		background: {
 			type: String,
-			default: () => '#f8f8f8',
+			default: () => 'none',
 		},
 		type: {
 			type: String,
@@ -140,8 +140,10 @@ export default {
 		},
 		drawStrokes(ctx = this.ctx) {
 			ctx.clearRect(0, 0, 1920, 1080);
-			ctx.setFillStyle(this.background);
-			ctx.fillRect(0, 0, 1920, 1080);
+			if (this.background !== 'none') {
+				ctx.setFillStyle(this.background);
+				ctx.fillRect(0, 0, 1920, 1080);
+			}
 			ctx.draw();
 			if (!this.strokes?.length) {
 				ctx.stroke();
