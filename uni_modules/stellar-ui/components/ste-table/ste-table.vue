@@ -234,21 +234,11 @@ export default {
 		},
 	},
 	created() {},
-	mounted() {
-		// utils.querySelector('.ste-table-root .ste-table-header', this).then((el) => {
-		// 	console.log('header el', el);
-		// });
-	},
+	mounted() {},
 	watch: {
 		children: {
 			handler(val) {
-				const rows = this.tableData.length;
-				const cnum = val.length / rows;
-				val.forEach((child, index) => {
-					const c = Math.floor(index / cnum);
-					const row = this.tableData[c];
-					child.row = { ...row, rowIndex: c };
-				});
+				this.initRowData();
 				this.initColumns(val);
 			},
 			immediate: true,
@@ -256,6 +246,7 @@ export default {
 		data: {
 			handler(val) {
 				this.tableData = val;
+				this.initRowData();
 				this.calcSum();
 			},
 			immediate: true,
@@ -280,6 +271,16 @@ export default {
 				style.minWidth = utils.addUnit(column.minWidth);
 			}
 			return style;
+		},
+		// 给子组件的row中赋值
+		initRowData() {
+			const rows = this.tableData.length;
+			const cnum = this.children.length / rows;
+			this.children.forEach((child, index) => {
+				const c = Math.floor(index / cnum);
+				const row = this.tableData[c];
+				child.row = { ...row, rowIndex: c };
+			});
 		},
 		initColumns(childs) {
 			if (!childs || childs.length <= 0) return;
