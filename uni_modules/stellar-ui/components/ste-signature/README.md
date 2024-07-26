@@ -76,7 +76,7 @@ export default {
 | ---						| ---					| ---								| ---				| ---		| ---			|
 | `customClass`	| 自定义 class	| `String`					| -					| -			| -				|
 | `lineWidth`		| 线条的宽度		| `Number`					| `3`				| -			| -				|
-| `background`	| 线条的颜色		| `String`					| `#f8f8f8`	| -			| -				|
+| `background`	| 背景颜色			| `String`					| `none`		| -			| -				|
 | `strokeColor`	| 线条的颜色		| `String`					| `#000000`	| -			| -				|
 | `type`				| 保存图片类型	| `String`					| `png`			| `jpg`	| -				|
 | `width`				| 宽度,单位rpx	| `String`,`Number`	| `100%`		| -			| -				|
