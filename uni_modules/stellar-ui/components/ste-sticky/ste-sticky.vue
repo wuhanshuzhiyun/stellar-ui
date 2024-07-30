@@ -52,10 +52,7 @@ export default {
 	},
 	data() {
 		return {
-			cssSticky: false, // 是否使用css的sticky实现
 			elId: utils.guid(),
-			width: 'auto',
-			height: 'auto',
 		};
 	},
 	computed: {
