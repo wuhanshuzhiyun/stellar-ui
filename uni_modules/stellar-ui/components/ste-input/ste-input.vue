@@ -31,7 +31,7 @@
 						}"
 						v-if="showWordLimit && maxlength > 0"
 					>
-						{{ dataValue.length }}/{{ maxlength }}
+						{{ tmpDataValue.length }}/{{ maxlength }}
 					</text>
 					<!-- #endif -->
 				</template>
@@ -219,6 +219,7 @@ export default {
 	data() {
 		return {
 			dataValue: '',
+			tmpDataValue: '', // 用于记录输入值，type="textarea"时显示字数长度（直接使用dataValue时某些情况可能出现输入延迟）
 			focused: this.focus,
 		};
 	},
@@ -279,6 +280,7 @@ export default {
 	methods: {
 		onInput(e) {
 			if (!this.disabled && !this.readonly) {
+				this.tmpDataValue = e.detail.value;
 				this.$emit('input', e.detail.value);
 			}
 		},
@@ -383,8 +385,7 @@ export default {
 				// letter-spacing: 10rpx;
 
 				&.textarea {
-					min-height: 160rpx;
-					height: 100%;
+					height: 160rpx;
 				}
 			}
 
