@@ -247,6 +247,7 @@ export default {
 			handler(val) {
 				this.tableData = val;
 				this.initRowData();
+				this.clearSelection();
 				this.calcSum();
 			},
 			immediate: true,
