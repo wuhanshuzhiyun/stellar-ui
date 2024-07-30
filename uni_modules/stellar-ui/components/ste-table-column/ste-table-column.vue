@@ -1,10 +1,10 @@
 <template>
 	<view class="ste-table-cell" :class="[cmpRootClass]" :style="[cmpRootStyle]" @click="cellClick">
 		<template v-if="type">
-			<view class="cell-box" v-if="type == 'checkbox'" @click="changeCheck">
+			<view class="cell-box" v-if="type == 'checkbox'" @click.stop="changeCheck">
 				<check-box-icon :disabled="cmpDisableCheck" :readonly="cmpReadonlyCheck" :checked="cmpShowCheck" />
 			</view>
-			<view class="cell-box" v-if="type == 'radio'" @click="changeCheck">
+			<view class="cell-box" v-if="type == 'radio'" @click.stop="changeCheck">
 				<radio-icon :disabled="cmpDisableCheck" :checked="cmpShowCheck" />
 			</view>
 			<view class="cell-box" v-if="type == 'index'">
@@ -155,6 +155,10 @@ export default {
 		},
 		cellClick(event) {
 			this.parent.cellClick(this.row, this.props, event);
+			// 扩大选中热区
+			if (this.type == 'checkbox' || this.type == 'radio') {
+				this.changeCheck();
+			}
 		},
 	},
 };
@@ -169,10 +173,12 @@ $default-border: 2rpx solid #ebebeb;
 	min-height: 80rpx;
 	font-size: 24rpx;
 	vertical-align: middle;
+	background-color: #e1e;
 
 	.cell-box {
 		display: flex;
 		align-items: center;
+		background-color: #ffeb0e;
 	}
 
 	&.border {
