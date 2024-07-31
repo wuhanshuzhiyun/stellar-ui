@@ -213,7 +213,7 @@ export default {
 				if (this.mode === 'range' && this.dataList.length >= 2) {
 					this.startDate = this.dataList[0];
 					this.endDate = this.dataList[this.dataList.length - 1];
-					this.this.rangeDates();
+					this.rangeDates();
 				}
 			},
 			immediate: true,
