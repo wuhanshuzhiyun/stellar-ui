@@ -6,8 +6,6 @@
 		@touchmove.stop.prevent="touchMove"
 		@touchend="touchEnd"
 		@mousedown="mouseDown"
-		@mousemove="mouseMove"
-		@mouseup="mouseUp"
 		:style="{
 			translate: translate.x + 'px ' + translate.y + 'px',
 			transition: attractTransition ? 'all ease 0.3s' : 'none',
@@ -32,6 +30,8 @@ const DEFAULT_BOUNDARY = { top: 0, left: 0, right: 0, bottom: 0 };
  * @value x 横向拖拽 {String}
  * @value y 竖向多拽 {String}
  * @property {Object} boundary 拖拽元素的拖拽边界 默认屏幕为边界
+ * @event {Function} start 开始拖动时触发
+ * @event {Function} end 结束拖动时触发
  **/
 export default {
 	group: '基础组件',
@@ -65,7 +65,7 @@ export default {
 			initLeft: 0,
 			elWidth: 0,
 			elHeight: 0,
-			canMove: false,
+			isMove: false,
 			boundaryData: this.boundary,
 		};
 	},
@@ -101,14 +101,14 @@ export default {
 			window.addEventListener('mousemove', this.touchMove);
 			window.addEventListener('mouseup', this.touchEnd);
 		},
-		mouseMove() {},
-		mouseUp() {},
 		removeListenner() {
 			window.removeEventListener('mousemove', this.touchMove);
 			window.removeEventListener('mouseup', this.touchEnd);
 		},
 		// #endif
 		touchStart(e) {
+			this.isMove = true;
+			this.$emit('start');
 			const touch = this.getMoveObj(e);
 			this.start = { x: touch.pageX, y: touch.pageY };
 			this.preTranslate = this.translate;
@@ -145,6 +145,10 @@ export default {
 		},
 		touchEnd(e) {
 			this.removeListenner && this.removeListenner();
+			if (this.isMove) {
+				this.$emit('end');
+				this.isMove = false;
+			}
 			// 是否执行贴边
 			if (!this.attract) {
 				return;
