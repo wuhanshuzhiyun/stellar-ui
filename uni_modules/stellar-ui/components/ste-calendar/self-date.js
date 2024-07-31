@@ -91,5 +91,5 @@ export function getCalendarData(minDate, maxDate, formatter = 'YYYY-MM-DD') {
  * @returns {String}
  */
 export function formatDate(date, formatter = 'YYYY-MM-DD') {
-	return dayjs(date).format('YYYY-MM-DD');
+	return utils.dayjs(date).format(formatter);
 }
