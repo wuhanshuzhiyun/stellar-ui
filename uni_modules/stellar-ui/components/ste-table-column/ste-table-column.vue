@@ -173,12 +173,10 @@ $default-border: 2rpx solid #ebebeb;
 	min-height: 80rpx;
 	font-size: 24rpx;
 	vertical-align: middle;
-	background-color: #e1e;
 
 	.cell-box {
 		display: flex;
 		align-items: center;
-		background-color: #ffeb0e;
 	}
 
 	&.border {
