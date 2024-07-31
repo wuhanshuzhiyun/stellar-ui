@@ -78,6 +78,7 @@
 			"treeShaking": {
 				"enable": false
 			}
-		}
+		},
+		"template": "template.h5.html"
 	}
 }
