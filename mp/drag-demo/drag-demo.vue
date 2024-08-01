@@ -6,7 +6,7 @@
 				<view class="title">基础内容</view>
 				<view class="item-block">
 					<view>
-						<ste-drag>
+						<ste-drag @start="handleStart" @end="handleEnd">
 							<ste-button>拖拽按钮</ste-button>
 						</ste-drag>
 					</view>
@@ -31,7 +31,7 @@
 				<view class="title">贴边</view>
 				<view class="item-block">
 					<view>
-						<ste-drag attract>
+						<ste-drag attract @start="handleStart" @end="handleEnd">
 							<ste-button>贴边</ste-button>
 						</ste-drag>
 					</view>
@@ -65,7 +65,14 @@ export default {
 		boundary.bottom = systemInfo.windowHeight - 354 - 150;
 		this.boundary = boundary;
 	},
-	methods: {},
+	methods: {
+		handleStart() {
+			console.log('start');
+		},
+		handleEnd() {
+			console.log('end');
+		},
+	},
 };
 </script>
 
