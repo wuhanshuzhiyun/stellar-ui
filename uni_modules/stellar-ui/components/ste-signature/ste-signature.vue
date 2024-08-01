@@ -132,13 +132,13 @@ export default {
 		},
 		async initCanvas() {
 			this.ctx = uni.createCanvasContext(this.canvasId, this);
+			this.drawStrokes();
+		},
+		drawStrokes(ctx = this.ctx) {
 			// 设置线条圆角
 			this.ctx.setLineCap('round');
 			this.ctx.setStrokeStyle(this.strokeColor); // 设置线颜色为黑色
 			this.ctx.setLineWidth(this.lineWidth); // 设置线宽
-			this.drawStrokes();
-		},
-		drawStrokes(ctx = this.ctx) {
 			ctx.clearRect(0, 0, 1920, 1080);
 			if (this.background !== 'none') {
 				ctx.setFillStyle(this.background);
