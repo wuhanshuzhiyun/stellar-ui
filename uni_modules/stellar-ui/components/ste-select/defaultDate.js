@@ -60,7 +60,7 @@ export function formatDate(value, mode = 'date') {
 		} else if (['date', 'datetime', 'month'].includes(mode)) {
 			const date = _v.slice(0, 3);
 			const [y, m, d] = date;
-			const maxD = getMonthDays(y, m);
+			const maxD = getMonthDays(y, m - 1);
 			if (d > maxD) {
 				date[2] = maxD;
 			}
