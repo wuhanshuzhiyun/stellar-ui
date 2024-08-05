@@ -575,6 +575,7 @@ export default {
 | `clearSelection`		| 用于多选表格，清空用户的选择		| -							| -			|
 | `toggleRowSelection`	| 用于多选表格，切换某一行的选中状态	| `row`：需要选中行的数据	| -			|
 | `toggleAllSelection`	| 用于多选表格，切换所有行的选中状态	| -							| -			|
+| `getSelection`		| 获取当前表格的选中状态的数据		| -							| `v1.22.1`	|
 
 
 

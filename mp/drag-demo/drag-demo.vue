@@ -1,6 +1,6 @@
 <template>
 	<view class="page">
-		<page-nav :autoBack="true" backColor="#000" titleAlignment="2" title="文本"></page-nav>
+		<page-nav :autoBack="true" backColor="#000" titleAlignment="2" title="拖拽"></page-nav>
 		<view class="content">
 			<view class="demo-item">
 				<view class="title">基础内容</view>

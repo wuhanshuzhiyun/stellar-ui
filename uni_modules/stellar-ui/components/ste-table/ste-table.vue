@@ -247,8 +247,8 @@ export default {
 			handler(val) {
 				this.tableData = val;
 				this.initRowData();
-				this.clearSelection();
 				this.calcSum();
+				this.initSelection();
 			},
 			immediate: true,
 		},
@@ -304,6 +304,13 @@ export default {
 			this.loadSelectType();
 			this.loadCanCheckArr();
 		},
+		// 重新计算选择项
+		initSelection() {
+			this.loadCanCheckArr();
+
+			this.checkStates = this.checkStates.filter((e) => this.canCheckStates.indexOf(e) > -1);
+			this.calcAllState();
+		},
 		// 获取当前表格选中类型(单选或多选)
 		loadSelectType() {
 			this.columns.forEach((e) => {
@@ -353,12 +360,12 @@ export default {
 				}
 			}
 			this.checkStates = Array.from(this.checkStatesSet);
-			this.$emit(
-				'select',
-				this.checkStates.map((e) => this.tableData[e]),
-				row
-			);
 
+			this.$emit('select', this.getSelection(), row);
+
+			this.calcAllState();
+		},
+		calcAllState() {
 			// 处理当前全选框的状态
 			if (this.checkStates.length > 0) {
 				if (this.canCheckStates.length === this.checkStates.length) {
@@ -388,17 +395,26 @@ export default {
 			this.$emit('scrollToLower');
 		},
 		// Table Methods 方法
+		// 获取当前选择的数据
+		getSelection() {
+			return this.checkStates.map((e) => this.tableData[e]);
+		},
+		// 清空选择项
 		clearSelection() {
 			this.checkStatesSet.clear();
 			this.checkStates = Array.from(this.checkStatesSet);
 			this.checkAllState = 'none';
 		},
+		// 切换某行的选中状态
 		toggleRowSelection(row, selected) {
-			let index = this.tableData.findIndex((e) => utils.deepEqual(row, e, ['rowIndex']));
-			if (this.canCheckStates.indexOf(index) <= -1) return;
-			row.rowIndex = index;
-			this.handleCheck(row);
+			this.$nextTick(() => {
+				let index = this.tableData.findIndex((e) => utils.deepEqual(row, e, ['rowIndex']));
+				if (this.canCheckStates.indexOf(index) <= -1) return;
+				row.rowIndex = index;
+				this.handleCheck(row);
+			});
 		},
+		// 切换全选的状态
 		toggleAllSelection() {
 			if (this.checkAllState === 'all') {
 				this.clearSelection();
