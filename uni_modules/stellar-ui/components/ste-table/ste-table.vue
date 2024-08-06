@@ -307,8 +307,8 @@ export default {
 		// 重新计算选择项
 		initSelection() {
 			this.loadCanCheckArr();
-
 			this.checkStates = this.checkStates.filter((e) => this.canCheckStates.indexOf(e) > -1);
+			console.log('this.canCheckStates ', this.canCheckStates);
 			this.calcAllState();
 		},
 		// 获取当前表格选中类型(单选或多选)
@@ -346,7 +346,7 @@ export default {
 			this.toggleAllSelection();
 		},
 		// column组件更改Check状态
-		handleCheck(row) {
+		handleCheck(row, isEmit = true) {
 			let rowIndex = row.rowIndex;
 			let state = !this.checkStatesSet.has(rowIndex);
 			if (this.selectType === 'radio') {
@@ -361,7 +361,7 @@ export default {
 			}
 			this.checkStates = Array.from(this.checkStatesSet);
 
-			this.$emit('select', this.getSelection(), row);
+			isEmit && this.$emit('select', this.getSelection(), row);
 
 			this.calcAllState();
 		},
@@ -406,12 +406,12 @@ export default {
 			this.checkAllState = 'none';
 		},
 		// 切换某行的选中状态
-		toggleRowSelection(row, selected) {
+		toggleRowSelection(row, isTriggerSelectEvent = true) {
 			this.$nextTick(() => {
 				let index = this.tableData.findIndex((e) => utils.deepEqual(row, e, ['rowIndex']));
 				if (this.canCheckStates.indexOf(index) <= -1) return;
 				row.rowIndex = index;
-				this.handleCheck(row);
+				this.handleCheck(row, isTriggerSelectEvent);
 			});
 		},
 		// 切换全选的状态

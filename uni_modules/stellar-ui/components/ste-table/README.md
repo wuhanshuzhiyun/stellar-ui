@@ -570,12 +570,14 @@ export default {
 | `scrollToLower`	| 表格体滚动到底事件								| -																		| `v1.18.9`	|
 
 #### Table Method
-|方法名					|说明								|方法参数					|支持版本	|
-| ---					| ---								| ---						| ---		|
-| `clearSelection`		| 用于多选表格，清空用户的选择		| -							| -			|
-| `toggleRowSelection`	| 用于多选表格，切换某一行的选中状态	| `row`：需要选中行的数据	| -			|
-| `toggleAllSelection`	| 用于多选表格，切换所有行的选中状态	| -							| -			|
-| `getSelection`		| 获取当前表格的选中状态的数据		| -							| `v1.22.1`	|
+> `toggleRowSelection`方法的`isTriggerSelectEvent`参数在`v1.22.2`版本后才支持
+
+|方法名					|说明								|方法参数																		|支持版本	|
+| ---					| ---								| ---																			| ---		|
+| `clearSelection`		| 用于多选表格，清空用户的选择		| -																				| -			|
+| `toggleRowSelection`	| 用于多选表格，切换某一行的选中状态	| `row`：需要选中行的数据<br/>`isTriggerSelectEvent`: 是否会触发表格的`select`事件	| -			|
+| `toggleAllSelection`	| 用于多选表格，切换所有行的选中状态	| -																				| -			|
+| `getSelection`		| 获取当前表格的选中状态的数据		| -																				| `v1.22.1`	|
 
 
 

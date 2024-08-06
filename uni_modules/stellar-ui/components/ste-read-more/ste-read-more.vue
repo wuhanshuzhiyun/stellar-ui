@@ -96,6 +96,11 @@ export default {
 			});
 		},
 		handleToggleStatus() {
+			if (!this.open) {
+				this.$emit('open');
+			} else {
+				this.$emit('close');
+			}
 			this.open = !this.open;
 		},
 	},
