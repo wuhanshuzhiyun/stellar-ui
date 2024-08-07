@@ -308,7 +308,6 @@ export default {
 		initSelection() {
 			this.loadCanCheckArr();
 			this.checkStates = this.checkStates.filter((e) => this.canCheckStates.indexOf(e) > -1);
-			console.log('this.canCheckStates ', this.canCheckStates);
 			this.calcAllState();
 		},
 		// 获取当前表格选中类型(单选或多选)
