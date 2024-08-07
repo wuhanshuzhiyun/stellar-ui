@@ -174,23 +174,23 @@ export default {
 			ctx.stroke();
 			ctx.draw(true);
 		},
-		onTouchStart(e) {
+		async onTouchStart(e) {
 			// #ifdef MP
 			this.strokeing = [{ x: e.changedTouches[0].x, y: e.changedTouches[0].y }];
 			// #endif
 			// #ifdef H5
-			this.strokeing = [this.getH5MousePosition(e)];
+			this.strokeing = [await this.getH5MousePosition(e)];
 			// #endif
 			this.drawStrokeing();
 			this.$emit('start');
 		},
-		onTouchMove(e) {
+		async onTouchMove(e) {
 			if (!this.strokeing?.length) return;
 			// #ifdef MP
 			this.strokeing.push({ x: e.changedTouches[0].x, y: e.changedTouches[0].y });
 			// #endif
 			// #ifdef H5
-			this.strokeing.push(this.getH5MousePosition(e));
+			this.strokeing.push(await this.getH5MousePosition(e));
 			// #endif
 			this.drawStrokeing();
 			this.$emit('signing');
@@ -202,10 +202,11 @@ export default {
 		},
 
 		// #ifdef H5
-		getH5MousePosition(e) {
+		async getH5MousePosition(e) {
+			const canvas = await utils.querySelector(`#${this.canvasId}`, this);
 			return {
-				x: e.clientX - e.target.offsetLeft,
-				y: e.clientY - e.target.offsetTop,
+				x: e.clientX - canvas.left,
+				y: e.clientY - canvas.top,
 			};
 		},
 		// #endif

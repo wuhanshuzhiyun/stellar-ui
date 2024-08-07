@@ -97,6 +97,6 @@ export default class TouchScaleing {
 			this.startParam.x2 = null;
 			this.startParam.y2 = null;
 		}
-		return !this.identifiers.lenth;
+		return !this.identifiers.length;
 	}
 }
