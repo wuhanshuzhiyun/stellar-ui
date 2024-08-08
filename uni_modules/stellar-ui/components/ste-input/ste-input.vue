@@ -116,6 +116,7 @@ import utils from '../../utils/utils.js';
  * @property {String} background 输入框背景色
  * @property {String} rootClass 自定义输入框类名
  * @property {Number} cursorSpacing 指定光标与键盘的距离
+ * @property {Boolean} allowSpace 是否允许输入空格
  * @event {Function} blur 输入框失去焦点时触发
  * @event {Function} focus 遮罩点击事件
  * @event {Function} confirm 遮罩点击事件
@@ -215,6 +216,10 @@ export default {
 			type: Number,
 			default: 20,
 		},
+		allowSpace: {
+			type: Boolean,
+			default: true,
+		},
 	},
 	data() {
 		return {
@@ -280,7 +285,11 @@ export default {
 	methods: {
 		onInput(e) {
 			if (!this.disabled && !this.readonly) {
+				if (!this.allowSpace) {
+					e.detail.value = e.detail.value.replace(/\s*/g, '');
+				}
 				this.tmpDataValue = e.detail.value;
+				this.dataValue = e.detail.value;
 				this.$emit('input', e.detail.value);
 			}
 		},
