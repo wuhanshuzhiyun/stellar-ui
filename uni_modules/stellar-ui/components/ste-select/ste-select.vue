@@ -1,6 +1,6 @@
 <template>
 	<view class="ste-select-root" :class="{ open: showOptions, disabled }" :style="[cmpRootStyle]">
-		<view class="select-mask" @click="clickMask">
+		<view class="select-mask" @click="clickMask" @touchmove.stop="stop">
 			<view class="select-content" :style="[contentStyle]" @click.stop="stop" @click="openOptions">
 				<slot>
 					<scroll-view scroll-x class="content-text" :class="{ multiple: cmpMultiple }">
@@ -61,7 +61,7 @@
 							@change="onMultiseriateChange"
 						>
 							<picker-view-column v-for="(col, index) in viewOptions" :key="index">
-								<view class="time-item" v-for="(item, i) in col" :key="item">
+								<view class="time-item" style="height: 43px;" v-for="(item, i) in col" :key="item">
 									{{ item[labelKey] }}
 								</view>
 							</picker-view-column>
@@ -318,7 +318,7 @@ export default {
 			}
 
 			let list = this.list;
-			if (!list || !list.length) list = [];
+			if (!list || !list.length) list = [[]];
 			if (list[0] && !Array.isArray(list[0])) {
 				list = [list];
 			}
