@@ -245,7 +245,7 @@ export default {
 				.map((item) => item.thumbPath || item.url || item.path);
 		},
 		cmpPreviewFullImage() {
-			return this.previewFullImage && (this.maxCount !== 1 || this.cmpDeletable);
+			return this.previewFullImage && (this.maxCount !== 1 || this.deletable);
 		},
 	},
 	watch: {
