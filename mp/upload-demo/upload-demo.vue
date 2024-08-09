@@ -9,7 +9,7 @@
 
 			<view class="demo-item">
 				<view class="title">文件类型、多选</view>
-				<ste-upload v-model="fileList1" @read="onRead1" accept="media" multiple />
+				<ste-upload v-model="fileList1" accept="media" multiple />
 			</view>
 			<view class="demo-item">
 				<view class="title">上传单张图片，隐藏删除按钮和全屏预览</view>
@@ -51,6 +51,13 @@
 </template>
 
 <script>
+function onUpload(v) {
+	setTimeout(() => {
+		v.forEach((item) => {
+			item.status = 'success';
+		});
+	}, 1000);
+}
 export default {
 	data() {
 		return {
@@ -65,47 +72,26 @@ export default {
 		};
 	},
 	watch: {
+		fileList1(v) {
+			onUpload(v);
+		},
 		fileList2(v) {
-			setTimeout(() => {
-				v.forEach((item) => {
-					item.status = 'success';
-				});
-			}, 1000);
+			onUpload(v);
 		},
 		fileList3(v) {
-			setTimeout(() => {
-				v.forEach((item) => {
-					item.status = 'success';
-				});
-			}, 1000);
+			onUpload(v);
 		},
 		fileList4(v) {
-			setTimeout(() => {
-				v.forEach((item) => {
-					item.status = 'success';
-				});
-			}, 1000);
+			onUpload(v);
 		},
 		fileList5(v) {
-			setTimeout(() => {
-				v.forEach((item) => {
-					item.status = 'success';
-				});
-			}, 1000);
+			onUpload(v);
 		},
 		fileList6(v) {
-			setTimeout(() => {
-				v.forEach((item) => {
-					item.status = 'success';
-				});
-			}, 1000);
+			onUpload(v);
 		},
 		fileList7(v) {
-			setTimeout(() => {
-				v.forEach((item) => {
-					item.status = 'success';
-				});
-			}, 1000);
+			onUpload(v);
 		},
 	},
 	methods: {
@@ -119,19 +105,6 @@ export default {
 					}
 				});
 			}, 10000);
-		},
-		onDelete(i) {
-			this.fileList.splice(i, 1);
-		},
-		onRead1(fileList) {
-			setTimeout(() => {
-				fileList.forEach((item) => {
-					item.status = 'success';
-				});
-			}, 1000);
-		},
-		onDelete1(i) {
-			this.fileList1.splice(i, 1);
 		},
 		beforeRead(fileList, suspend, next, stop) {
 			suspend();
