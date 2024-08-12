@@ -61,7 +61,7 @@
 							@change="onMultiseriateChange"
 						>
 							<picker-view-column v-for="(col, index) in viewOptions" :key="index">
-								<view class="time-item" style="height: 43px;" v-for="(item, i) in col" :key="item">
+								<view class="time-item" style="height: 43px" v-for="(item, i) in col" :key="item">
 									{{ item[labelKey] }}
 								</view>
 							</picker-view-column>
@@ -69,23 +69,25 @@
 					</block>
 
 					<block v-else>
-						<scroll-view scroll-y class="options-col" v-for="(col, index) in viewOptions" :key="index">
-							<view class="options-item" v-if="dataAllowCreate" @click="onSelect(index, dataAllowCreate, true)">
-								{{ dataAllowCreate[labelKey] }}
-							</view>
-							<view
-								class="options-item"
-								v-for="(item, i) in col"
-								:key="item[valueKey]"
-								:class="{ active: active(index, item) }"
-								@click="onSelect(index, item)"
-							>
-								{{ item[labelKey] }}
-							</view>
-							<block v-if="!dataAllowCreate && !col.length">
-								<view class="options-empty">暂无数据</view>
-							</block>
-						</scroll-view>
+						<view class="one-col-options">
+							<scroll-view scroll-y class="options-col" v-for="(col, index) in viewOptions" :key="index">
+								<view class="options-item" v-if="dataAllowCreate" @click="onSelect(index, dataAllowCreate, true)">
+									{{ dataAllowCreate[labelKey] }}
+								</view>
+								<view
+									class="options-item"
+									v-for="(item, i) in col"
+									:key="item[valueKey]"
+									:class="{ active: active(index, item) }"
+									@click="onSelect(index, item)"
+								>
+									{{ item[labelKey] }}
+								</view>
+								<block v-if="!dataAllowCreate && !col.length">
+									<view class="options-empty">暂无数据</view>
+								</block>
+							</scroll-view>
+						</view>
 					</block>
 				</view>
 				<view class="options-btns" v-if="cmpShowDate || dataOptions.length > 1">
@@ -657,6 +659,9 @@ export default {
 		.select-options {
 			width: 100%;
 			max-height: 546rpx;
+			.one-col-options {
+				padding: 30rpx 0;
+			}
 			.options-col {
 				padding: 0 16rpx;
 				height: 100%;

@@ -150,6 +150,15 @@
 					<ste-image :src="joinSrc('组件图标/r-arrow.png')" :width="32" :height="32" />
 				</view>
 			</view>
+			<view class="com-box" @click="nav('select')">
+				<view class="com-title">
+					<ste-image :src="joinSrc('组件图标/progress.png')" :width="36" :height="36" />
+					<text>Select 下拉选</text>
+				</view>
+				<view class="com-arrow">
+					<ste-image :src="joinSrc('组件图标/r-arrow.png')" :width="32" :height="32" />
+				</view>
+			</view>
 			<view class="com-box" @click="nav('rate')">
 				<view class="com-title">
 					<ste-image :src="joinSrc('组件图标/rate.png')" :width="36" :height="36" />
