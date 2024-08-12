@@ -17,7 +17,11 @@
 						<view class="icon"><ste-icon code="&#xe6a0;" size="48" color="#fff" /></view>
 						<view class="text">上传失败</view>
 					</view>
-					<view class="delete" v-if="cmpDeletable && item.status !== 'uploading'" @click.stop="deleteItem(index)">
+					<view
+						class="delete"
+						v-if="cmpDeletable && item.status !== 'uploading'"
+						@click.stop="deleteItem(index)"
+					>
 						<view class="icon">
 							<ste-icon code="&#xe67b;" size="20" color="#fff" />
 						</view>
@@ -38,7 +42,11 @@
 						<view class="delete" v-if="accept === 'media'" @click.stop="setMediaType">
 							<view class="icon">
 								<view :class="{ video: mediaType === 'video' }">
-									<ste-icon :code="mediaType === 'video' ? '&#xe6a1;' : '&#xe69b;'" size="20" color="#fff" />
+									<ste-icon
+										:code="mediaType === 'video' ? '&#xe6a1;' : '&#xe69b;'"
+										size="20"
+										color="#fff"
+									/>
 								</view>
 							</view>
 						</view>
@@ -62,7 +70,7 @@ import { readMediaFile, readFile } from './ReadFile.js';
 /**
  * ste-upload 文件上传
  * @description 文件上传组件
- * @tutorial https://stellar-ui.intecloud.com.cn/pc/index/index?name=ste-ste-upload
+ * @tutorial https://stellar-ui.intecloud.com.cn/pc/index/index?name=ste-upload
  * @property {Array} 	value  已经上传的文件列表 {url:string;type:string;name?:string;status?:"uploading"|"error"|"success";path?:string;thumbPath?:string}[]
  * @property {String} accept 文件类型, 可选值为all media image file video
  * @value image 图片类型（默认）
@@ -233,7 +241,8 @@ export default {
 			return style;
 		},
 		cmpShowUpload() {
-			let bool = !this.disabled && this.showUpload && (this.maxCount == 0 || this.dataValue.length < this.maxCount);
+			let bool =
+				!this.disabled && this.showUpload && (this.maxCount == 0 || this.dataValue.length < this.maxCount);
 			return bool;
 		},
 		cmpDeletable() {
