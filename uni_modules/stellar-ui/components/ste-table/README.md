@@ -539,25 +539,118 @@ export default {
 </style>
 ```
 
+#### 自定义行或单元格样式
+```html
+<ste-table
+	:data="rows"
+	:header-row-class-name="headerRowClassName"
+	:header-row-style="headerRowStyle"
+	:header-cell-class-name="headerCellClassName"
+	:header-cell-style="headerCellStyle"
+	:row-class-name="rowClassName"
+	:row-style="rowStyle"
+>
+	<template v-slot="{ row }">
+		<ste-table-column label="姓名" prop="name"></ste-table-column>
+		<ste-table-column label="生日" prop="birth"></ste-table-column>
+		<ste-table-column label="性别" prop="sex"></ste-table-column>
+	</template>
+</ste-table>
+<script>
+export default {
+	data() {
+		return {
+			rows: [
+				{ name: '张三', birth: '2023.12.31', sex: '男' },
+				{ name: '李四', birth: '2024.01.01', sex: '女' },
+				{ name: '王五', birth: '2024.11.01', sex: '女' },
+				{ name: '赵六', birth: '2024.11.01', sex: '女' },
+				{ name: '王七', birth: '2024.01.01', sex: '男' },
+			],
+		}
+	},
+	methods: {
+		headerRowClassName() {
+			return 'header-row';
+		},
+		headerRowStyle(e) {
+			return { fontSize: '36rpx' };
+		},
+		headerCellClassName({ column, columnIndex }) {
+			return 'header-row-cell';
+		},
+		headerCellStyle() {
+			return { color: 'pink' };
+		},
+		rowClassName({ row, rowIndex }) {
+			if (rowIndex % 2 == 0) {
+				return 'nice-row';
+			} else {
+				return 'bad-row';
+			}
+		},
+		rowStyle({ row, rowIndex }) {
+			if (rowIndex % 2 == 0) {
+				return { color: 'green' };
+			} else {
+				return { color: 'red' };
+			}
+		},
+	}
+}
+</script>
+
+```
+
+#### 高亮行
+`highlight-current-row`为`true`点击某一行时会高亮显示
+`hightlight-selection-row`为`true`时，列类型为`checkbox`时，勾选后会高亮
+```html
+<ste-table :data="rows" highlight-current-row highlight-selection-row>
+	<template v-slot="{ row }">
+		<ste-table-column
+			label="选择"
+			type="checkbox"
+			align="center"
+			customKey="checkbox"
+		></ste-table-column>
+		<ste-table-column label="姓名" prop="name"></ste-table-column>
+		<ste-table-column label="生日" prop="birth"></ste-table-column>
+		<ste-table-column label="性别" prop="sex"></ste-table-column>
+	</template>
+</ste-table>
+
+```
+
 ### API
 #### Table Props
 
-| 属性名			| 说明																									| 类型							| 默认值		| 可选值	| 支持版本	|
-| -----				| -----																									| -----							| -----		| -----	| -----		|
-| `data`			| 表格数据																								| `Array`						| -			| -		| -			|
-| `fixed`			| 表头是否定位为fixed																					| `Boolean`						| `false`	| -		| -			|
-| `offsetTop`		| 定位fixed时top的距离																					| `Number/String`				| -			| -		| -			|
-| `border`			| 是否带有纵向边框																						| `Boolean`						| `false`	| -		| -			|
-| `stripe`			| 是否斑马纹																								| `Boolean`						| `true`	| -		| -			|
-| `emptyText`		| 空数据时显示的文本内容，也可以通过 slot="empty" 设置													| `String`						| `暂无数据`	| -		| -			|
-| `showSummary`		| 是否在表尾显示合计行																					| `Boolean`						| `false`	| -		| -			|
-| `sumText`			| 合计行第一列的文本																						| `String`						| `合计`		| -		|
-| `summaryMethod`	| 自定义的合计计算方法																					| `Function({ columns, data })`	| `null`	| -		| -			|
-| `selectable`		| 仅对 type=selection 的列有效，类型为 Function，Function 的返回值用来决定这一行的 CheckBox 是否可以勾选	| `Function(row, index)`		| `null`	| -		| -			|
-| `readable`		| 仅对 type=selection 的列有效，类型为 Function，Function 的返回值用来决定这一行的 CheckBox 是否只读		| `Function(row, index)`		| `null`	| -		| -			|
-| `formatter`		| 格式化方法，需要配合`TableColumn`中的`customKey`属性													| `Function(row, key)`			| `null`	| -		| `v1.17.3`	|
-| `height`			| 表格高度，设置该值可以让表格体开启滚动																	| `Number/String`				| -			| -		| `v1.18.9`	|
-| `header`			| 格式化表头内容的方法，同formatter属性，需要定义customKey属性												| `Function(column, tableData)`	| -			| -		| `v1.20.2`	|
+| 属性名					| 说明																									| 类型										| 默认值		| 可选值	| 支持版本	|
+| -----						| -----																									| -----										| -----		| -----	| -----		|
+| `data`					| 表格数据																								| `Array`									| -			| -		| -			|
+| `fixed`					| 表头是否定位为fixed																					| `Boolean`									| `false`	| -		| -			|
+| `offsetTop`				| 定位fixed时top的距离																					| `Number/String`							| -			| -		| -			|
+| `border`					| 是否带有纵向边框																						| `Boolean`									| `false`	| -		| -			|
+| `stripe`					| 是否斑马纹																								| `Boolean`									| `true`	| -		| -			|
+| `emptyText`				| 空数据时显示的文本内容，也可以通过 slot="empty" 设置													| `String`									| `暂无数据`	| -		| -			|
+| `showSummary`				| 是否在表尾显示合计行																					| `Boolean`									| `false`	| -		| -			|
+| `sumText`					| 合计行第一列的文本																						| `String`									| `合计`		| -		|
+| `summaryMethod`			| 自定义的合计计算方法																					| `Function({ columns, data })`				| `null`	| -		| -			|
+| `selectable`				| 仅对 type=checkbox 的列有效，类型为 Function，Function 的返回值用来决定这一行的 CheckBox 是否可以勾选	| `Function(row, index)`					| `null`	| -		| -			|
+| `readable`				| 仅对 type=checkbox 的列有效，类型为 Function，Function 的返回值用来决定这一行的 CheckBox 是否只读		| `Function(row, index)`					| `null`	| -		| -			|
+| `formatter`				| 格式化方法，需要配合`TableColumn`中的`customKey`属性													| `Function(row, key)`						| `null`	| -		| `v1.17.3`	|
+| `height`					| 表格高度，设置该值可以让表格体开启滚动																	| `Number/String`							| -			| -		| `v1.18.9`	|
+| `header`					| 格式化表头内容的方法，同formatter属性，需要定义customKey属性												| `Function(column, tableData)`				| -			| -		| `v1.20.2`	|
+| `headerRowClassName`		| 表头行的 className 的回调方法，也可以使用字符串为所有表头行设置一个固定的 className						| `Function()/String`						| -			| -		| `v1.23.5`	|
+| `headerRowStyle`			| 表头行的 style 的回调方法，也可以使用一个固定的 Object 为所有表头行设置一样的 Style						| `Function()/Object`						| -			| -		| `v1.23.5`	|
+| `headerCellClassName`		| 表头单元格的 className 的回调方法，也可以使用字符串为所有表头单元格设置一个固定的 className				| `Function({ column, columnIndex })/String`| -			| -		| `v1.23.5`	|
+| `headerCellStyle`			| 表头单元格的 style 的回调方法，也可以使用一个固定的 Object 为所有表头单元格设置一样的 Style				| `Function({ column, columnIndex })/Object`| -			| -		| `v1.23.5`	|
+| `rowClassName`			| 行的 className 的回调方法，也可以使用字符串为所有行设置一个固定的 className								| `Function({ row, rowIndex })/String`		| -			| -		| `v1.23.5`	|
+| `rowStyle`				| 行的 style 的回调方法，也可以使用一个固定的 Object 为所有行设置一样的 Style								| `Function({ row, rowIndex })/Object`		| -			| -		| `v1.23.5`	|
+| `highlightCurrentRow`		| 是否要高亮当前行																						| `Boolean`									| `false`	| -		| `v1.23.5`	|
+| `highlightSelectionRow`	| 是否要高亮复选框选中行（仅针对开启 checkbox 有效）														| `Boolean`									| `false`	| -		| `v1.23.5`	|
+| `showHeader`				| 是否显示表头																							| `Boolean`									| `true`	| -		| `v1.23.5`	|
+| `maxHeight`				| 表格最大高度																							| `Number/String`							| -			| -		| `v1.23.5`	|
 
 #### Table Events
 |事件名				|说明											|事件参数																|支持版本	|
