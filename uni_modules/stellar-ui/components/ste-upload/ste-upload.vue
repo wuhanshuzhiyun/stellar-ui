@@ -17,11 +17,7 @@
 						<view class="icon"><ste-icon code="&#xe6a0;" size="48" color="#fff" /></view>
 						<view class="text">上传失败</view>
 					</view>
-					<view
-						class="delete"
-						v-if="cmpDeletable && item.status !== 'uploading'"
-						@click.stop="deleteItem(index)"
-					>
+					<view class="delete" v-if="cmpDeletable && item.status !== 'uploading'" @click.stop="deleteItem(index)">
 						<view class="icon">
 							<ste-icon code="&#xe67b;" size="20" color="#fff" />
 						</view>
@@ -42,11 +38,7 @@
 						<view class="delete" v-if="accept === 'media'" @click.stop="setMediaType">
 							<view class="icon">
 								<view :class="{ video: mediaType === 'video' }">
-									<ste-icon
-										:code="mediaType === 'video' ? '&#xe6a1;' : '&#xe69b;'"
-										size="20"
-										color="#fff"
-									/>
+									<ste-icon :code="mediaType === 'video' ? '&#xe6a1;' : '&#xe69b;'" size="20" color="#fff" />
 								</view>
 							</view>
 						</view>
@@ -241,8 +233,7 @@ export default {
 			return style;
 		},
 		cmpShowUpload() {
-			let bool =
-				!this.disabled && this.showUpload && (this.maxCount == 0 || this.dataValue.length < this.maxCount);
+			let bool = !this.disabled && this.showUpload && (this.maxCount == 0 || this.dataValue.length < this.maxCount);
 			return bool;
 		},
 		cmpDeletable() {
@@ -273,6 +264,13 @@ export default {
 				});
 			},
 			immediate: true,
+		},
+		previewIndex(v) {
+			if (v === null) {
+				this.$emit('close-preview');
+			} else {
+				this.$emit('open-preview');
+			}
 		},
 	},
 	methods: {

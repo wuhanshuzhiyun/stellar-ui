@@ -260,13 +260,15 @@ export default{
 
 ### Event
 
-| 事件名				| 说明									| 事件参数																							|
-| --------			| ------------				| -------------																				|
-| `beforeRead`	| 文件读取前触发				| 上方详细说明																					|
-| `read`				| 文件读完成触发				| `fileList`:选择的文件列表														|
-| `oversize`		| 文件大小超出限制触发	| `file`:超出限制的第一个文件,`fileList`:选择的文件列表	|
-| `beforeDelete`| 文件删除前触发				| 上方详细说明																					|
-| `delete`			| 文件删除后触发				| `index`:删除的文件下标,`fileList`:剩余文件列表				|
+| 事件名					| 说明									| 事件参数																							|
+| --------				| ------------				| -------------																				|
+| `beforeRead`		| 文件读取前触发				| 上方详细说明																					|
+| `read`					| 文件读完成触发				| `fileList`:选择的文件列表														|
+| `oversize`			| 文件大小超出限制触发	| `file`:超出限制的第一个文件,`fileList`:选择的文件列表	|
+| `beforeDelete`	| 文件删除前触发				| 上方详细说明																					|
+| `delete`				| 文件删除后触发				| `index`:删除的文件下标,`fileList`:剩余文件列表				|
+| `open-preview`	| 打开预览时触发				| -																										|
+| `close-preview`	| 关闭预览时触发				| -																										|
 
 
 {{xuyajun}}

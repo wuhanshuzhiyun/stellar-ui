@@ -17,7 +17,13 @@
 			</view>
 			<view class="demo-item">
 				<view class="title">自定义上传图标，限制上传数量2</view>
-				<ste-upload v-model="fileList2" uploadIcon="&#xe67e;" :maxCount="2" />
+				<ste-upload
+					v-model="fileList2"
+					uploadIcon="&#xe67e;"
+					:maxCount="2"
+					@open-preview="openPreview"
+					@close-preview="closePreview"
+				/>
 			</view>
 			<view class="demo-item">
 				<view class="title">限制文件大小2M</view>
@@ -125,6 +131,12 @@ export default {
 		},
 		onSuccessDelete(index, fileList) {
 			this.showToast({ title: 'success-delete', icon: 'none' });
+		},
+		openPreview() {
+			console.log('openPreview');
+		},
+		closePreview() {
+			console.log('closePreview');
 		},
 	},
 };
