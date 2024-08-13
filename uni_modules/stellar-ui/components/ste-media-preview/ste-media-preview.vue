@@ -231,7 +231,7 @@ export default {
 	height: 100vh;
 	background-color: #000;
 	color: #fff;
-	z-index: 998;
+	z-index: 9999999;
 	.media-preview-content {
 		width: 100%;
 		height: calc(100% - 120rpx);
