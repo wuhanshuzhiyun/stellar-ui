@@ -2,13 +2,18 @@
 	<view class="ste-table-root" :class="[cmpRootClass]" :style="[cmpRootStyle]">
 		<view class="ste-table-content">
 			<!-- <ste-sticky :offsetTop="offsetTop" :disabled="!sticky"> -->
-			<view class="fixed-placeholder" v-if="fixed || height || height > 0" />
-			<view class="ste-table-header">
+			<view class="fixed-placeholder" v-if="fixed || height || height > 0 || maxHeight || maxHeight > 0" />
+			<view
+				class="ste-table-header"
+				:class="[getHeaderRowClass()]"
+				:style="[getHeaderRowStyle()]"
+				v-if="showHeader"
+			>
 				<view
 					class="ste-table-cell"
-					:class="[headerClass(column)]"
-					:style="[headerStyle(column)]"
-					v-for="column in columns"
+					:class="[getHeaderCellClass(column, columnIndex)]"
+					:style="[getHeaderCellStyle(column, columnIndex), getHeaderCellStyle(column, columnIndex, true)]"
+					v-for="(column, columnIndex) in columns"
 					:key="column.prop"
 					@click="headerClick(column, $event)"
 				>
@@ -43,9 +48,10 @@
 					<view class="ste-table-body">
 						<view
 							class="ste-table-row"
-							:class="'row-' + index"
-							v-for="(row, index) in tableData"
-							:key="index"
+							:class="[getRowClass(row, rowIndex)]"
+							:style="[getRowStyle(row, rowIndex)]"
+							v-for="(row, rowIndex) in tableData"
+							:key="rowIndex"
 							@click="rowClick(row, $event)"
 						>
 							<slot :row="row"></slot>
@@ -72,9 +78,10 @@
 				<view class="ste-table-body">
 					<view
 						class="ste-table-row"
-						:class="'row-' + index"
-						v-for="(row, index) in tableData"
-						:key="index"
+						:class="[getRowClass(row, rowIndex)]"
+						:style="[getRowStyle(row, rowIndex)]"
+						v-for="(row, rowIndex) in tableData"
+						:key="rowIndex"
 						@click="rowClick(row, $event)"
 					>
 						<slot :row="row"></slot>
@@ -103,6 +110,7 @@
 <script>
 import utils from '../../utils/utils.js';
 import { parentMixin } from '../../utils/mixin.js';
+import { getStyleOrClass } from './utils';
 const DEFAULT_SUM_TEXT = '合计';
 /**
  * ste-table 表格
@@ -110,17 +118,28 @@ const DEFAULT_SUM_TEXT = '合计';
  * @tutorial https://stellar-ui.intecloud.com.cn/pc/index/index?name=ste-table
  * @property {Array} data 表格数据，默认 []
  * @property {Boolean} fixed 表头是否定位为fixed	，默认 false
- * @property {Number|String	} offsetTop 定位fixed时top的距离	 默认 0
+ * @property {Number|String} offsetTop 定位fixed时top的距离	 默认 0
  * @property {Boolean} border 是否带有纵向边框，默认 false
  * @property {Boolean} stripe 是否斑马纹	，默认 true
  * @property {String} emptyText 空数据时显示的文本内容，也可以通过 slot="empty" 设置	  默认 '暂无数据'
- * @property {Boolean} showSummary，是否在表尾显示合计行	，默认 false
+ * @property {Boolean} showSummary 是否在表尾显示合计行	，默认 false
  * @property {String} sumText，合计行第一列的文本，默认 '合计'
  * @property {Function} summaryMethod 自定义的合计计算方法，默认 null
- * @property {Function} selectable 仅对 type=selection 的列有效，类型为 Function，Function 的返回值用来决定这一行的 CheckBox 是否可以勾选，默认 null
- * @property {Function} readable 仅对 type=selection 的列有效，类型为 Function，Function 的返回值用来决定这一行的 CheckBox 是否可以勾选，默认 null
+ * @property {Function} selectable 仅对 type=checkbox 的列有效，类型为 Function，Function 的返回值用来决定这一行的 CheckBox 是否可以勾选，默认 null
+ * @property {Function} readable 仅对 type=checkbox 的列有效，类型为 Function，Function 的返回值用来决定这一行的 CheckBox 是否可以勾选，默认 null
  * @property {Function} formatter 格式化单元格方法，需要配合TableColumn中的customKey属性
  * @property {Function} header 格式化表头内容的方法，同formatter属性，需要定义customKey属性
+ * @property {Function|String} headerRowClassName 表头行的 className 的回调方法，也可以使用字符串为所有表头行设置一个固定的 className
+ * @property {Function|String} headerRowStyle 表头行的 style 的回调方法，也可以使用一个固定的 Object 为所有表头行设置一样的 Style
+ * @property {Function|String} headerCellClassName 表头单元格的 className 的回调方法，也可以使用字符串为所有表头单元格设置一个固定的 className
+ * @property {Function|String} headerCellStyle 表头单元格的 style 的回调方法，也可以使用一个固定的 Object 为所有表头单元格设置一样的 Style
+ * @property {Function|String} rowClassName 行的 className 的回调方法，也可以使用字符串为所有行设置一个固定的 className
+ * @property {Function|String} rowStyle 行的 style 的回调方法，也可以使用一个固定的 Object 为所有行设置一样的 Style
+ * @property {Boolean} highlightCurrentRow 是否要高亮当前行
+ * @property {Boolean} highlightSelectionRow 是否要高亮复选框选中行（仅针对开启 checkbox 有效）
+ * @property {Boolean} showHeader 是否显示表头
+ * @property {Number|String} height 表格高度
+ * @property {Number|String} maxHeight 表格最大高度
  * @event {Function} select 当用户手动勾选数据行的 Checkbox 时触发的事件
  * @event {Function} selectAll 当用户手动勾选全选 Checkbox 时触发的事件
  * @event {Function} cellClick 当某个单元格被点击时会触发该事件
@@ -137,31 +156,19 @@ export default {
 			type: Array,
 			default: () => [],
 		},
-		sticky: {
-			type: Boolean,
-			default: false,
-		},
+		sticky: Boolean,
 		offsetTop: {
 			type: [Number, String],
 			default: 0,
 		},
-		border: {
-			type: Boolean,
-			default: false,
-		},
+		border: Boolean,
 		stripe: {
 			type: Boolean,
 			default: true,
 		},
-		emptyText: {
-			type: String,
-			default: '',
-		},
+		emptyText: String,
 		// 表尾显示合计行
-		showSummary: {
-			type: Boolean,
-			default: false,
-		},
+		showSummary: Boolean,
 		sumText: {
 			type: String,
 			default: DEFAULT_SUM_TEXT,
@@ -178,10 +185,7 @@ export default {
 			type: [Function, null],
 			default: null,
 		},
-		fixed: {
-			type: Boolean,
-			default: false,
-		},
+		fixed: Boolean,
 		formatter: {
 			type: [Function, null],
 			default: null,
@@ -190,16 +194,27 @@ export default {
 			type: [Function, null, String],
 			default: null,
 		},
-		height: {
-			type: [Number, String],
-			default: '',
+		height: [Number, String],
+		headerRowClassName: [String, Function],
+		headerRowStyle: [Object, Function],
+		headerCellClassName: [String, Function],
+		headerCellStyle: [Object, Function],
+		rowClassName: [String, Function],
+		rowStyle: [Object, Function],
+		highlightCurrentRow: Boolean,
+		highlightSelectionRow: Boolean,
+		showHeader: {
+			type: Boolean,
+			default: true,
 		},
+		maxHeight: [Number, String],
 	},
 	data() {
 		return {
 			tableData: [],
 			columns: [],
 			sumData: [],
+			currentRow: null,
 			// column组件中的选中状态
 			checkStatesSet: new Set(),
 			checkStates: [],
@@ -213,6 +228,7 @@ export default {
 			let style = {
 				'--offset-top': this.offsetTop,
 				'--table-height': utils.addUnit(this.height),
+				'--table-max-height': utils.addUnit(this.maxHeight),
 			};
 			return style;
 		},
@@ -254,25 +270,6 @@ export default {
 		},
 	},
 	methods: {
-		headerClass(column) {
-			let classArr = [];
-			if (column.headerAlign && column.headerAlign !== 'left') {
-				classArr.push('align-' + column.headerAlign);
-			} else if (column.align && column.align !== 'left') {
-				classArr.push('align-' + column.align);
-			}
-			return classArr.join(' ');
-		},
-		headerStyle(column) {
-			let style = {};
-			if (column.width) {
-				style.width = utils.addUnit(column.width);
-			}
-			if (column.minWidth) {
-				style.minWidth = utils.addUnit(column.minWidth);
-			}
-			return style;
-		},
 		// 给子组件的row中赋值
 		initRowData() {
 			const rows = this.tableData.length;
@@ -361,8 +358,10 @@ export default {
 			this.checkStates = Array.from(this.checkStatesSet);
 
 			isEmit && this.$emit('select', this.getSelection(), row);
+			// this.currentRow = row;
 
 			this.calcAllState();
+			this.$forceUpdate();
 		},
 		calcAllState() {
 			// 处理当前全选框的状态
@@ -385,6 +384,8 @@ export default {
 			this.$emit('cellClick', row, column, event);
 		},
 		rowClick(row, event) {
+			console.log(' row click ***');
+			this.currentRow = row;
 			this.$emit('rowClick', row, event);
 		},
 		headerClick(column, event) {
@@ -393,7 +394,55 @@ export default {
 		handleScrollToLower() {
 			this.$emit('scrollToLower');
 		},
-		// Table Methods 方法
+		// ***自定义class和style相关***
+		getHeaderRowClass() {
+			const classes = [getStyleOrClass(this.headerRowClassName, null, false)];
+			return classes.join(' ');
+		},
+		getHeaderRowStyle() {
+			return getStyleOrClass(this.headerRowStyle);
+		},
+		getHeaderCellClass(column, columnIndex) {
+			let classArr = [];
+			if (column.headerAlign && column.headerAlign !== 'left') {
+				classArr.push('align-' + column.headerAlign);
+			} else if (column.align && column.align !== 'left') {
+				classArr.push('align-' + column.align);
+			}
+
+			classArr.push(getStyleOrClass(this.headerCellClassName, { columnIndex, column }, false));
+			return classArr.join(' ');
+		},
+		getHeaderCellStyle(column, columnIndex, isProp = false) {
+			if (!isProp) {
+				let style = {};
+				if (column.width) {
+					style.width = utils.addUnit(column.width);
+				}
+				if (column.minWidth) {
+					style.minWidth = utils.addUnit(column.minWidth);
+				}
+				return style;
+			} else {
+				return getStyleOrClass(this.headerCellStyle, { columnIndex, column });
+			}
+		},
+		getRowClass(row, rowIndex) {
+			const classArr = [`row-${rowIndex}`];
+			if (this.highlightCurrentRow && utils.deepEqual(row, this.currentRow, ['rowIndex'])) {
+				classArr.push('current-row');
+			}
+			if (this.highlightSelectionRow && this.checkStatesSet.has(rowIndex)) {
+				classArr.push('selection-row');
+			}
+
+			classArr.push(getStyleOrClass(this.rowClassName, { row, rowIndex }, false));
+			return classArr.join(' ');
+		},
+		getRowStyle(row, rowIndex) {
+			return getStyleOrClass(this.rowStyle, { row, rowIndex });
+		},
+		// ***Table Methods 方法***
 		// 获取当前选择的数据
 		getSelection() {
 			return this.checkStates.map((e) => this.tableData[e]);
@@ -445,6 +494,7 @@ $default-border: 2rpx solid #ebebeb;
 			}
 			.ste-table-scroll {
 				height: calc(var(--table-height) - 80rpx);
+				max-height: calc(var(--table-max-height) - 80rpx);
 			}
 		}
 	}
@@ -535,6 +585,12 @@ $default-border: 2rpx solid #ebebeb;
 			width: 100%;
 			.ste-table-row {
 				display: table-row;
+				&.current-row {
+					background-color: #ecf5ff;
+				}
+				&.selection-row {
+					background-color: #ecf5ff;
+				}
 			}
 		}
 	}

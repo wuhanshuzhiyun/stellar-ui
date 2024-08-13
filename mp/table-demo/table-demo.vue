@@ -273,6 +273,48 @@
 					</view>
 				</view>
 			</view>
+			<view class="demo-item">
+				<view class="title">自定义行或单元格样式</view>
+				<view class="item-block">
+					<view style="width: 100%">
+						<ste-table
+							:data="rows"
+							:header-row-class-name="headerRowClassName"
+							:header-row-style="headerRowStyle"
+							:header-cell-class-name="headerCellClassName"
+							:header-cell-style="headerCellStyle"
+							:row-class-name="rowClassName"
+							:row-style="rowStyle"
+						>
+							<template v-slot="{ row }">
+								<ste-table-column label="姓名" prop="name"></ste-table-column>
+								<ste-table-column label="生日" prop="birth"></ste-table-column>
+								<ste-table-column label="性别" prop="sex"></ste-table-column>
+							</template>
+						</ste-table>
+					</view>
+				</view>
+			</view>
+			<view class="demo-item">
+				<view class="title">高亮行</view>
+				<view class="item-block">
+					<view style="width: 100%">
+						<ste-table :data="rows" highlight-current-row highlight-selection-row>
+							<template v-slot="{ row }">
+								<ste-table-column
+									label="选择"
+									type="checkbox"
+									align="center"
+									customKey="checkbox"
+								></ste-table-column>
+								<ste-table-column label="姓名" prop="name"></ste-table-column>
+								<ste-table-column label="生日" prop="birth"></ste-table-column>
+								<ste-table-column label="性别" prop="sex"></ste-table-column>
+							</template>
+						</ste-table>
+					</view>
+				</view>
+			</view>
 
 			<!-- 			<view class="demo-item">
 				<view class="title">测试用例</view>
@@ -425,6 +467,33 @@ export default {
 		},
 		toggleRowSelection(i) {
 			this.$refs.steTable.toggleRowSelection(this.rows[i]);
+		},
+
+		headerRowClassName() {
+			return 'header-row';
+		},
+		headerRowStyle(e) {
+			return { fontSize: '36rpx' };
+		},
+		headerCellClassName({ column, columnIndex }) {
+			return 'header-row-cell';
+		},
+		headerCellStyle() {
+			return { color: 'pink' };
+		},
+		rowClassName({ row, rowIndex }) {
+			if (rowIndex % 2 == 0) {
+				return 'nice-row';
+			} else {
+				return 'bad-row';
+			}
+		},
+		rowStyle({ row, rowIndex }) {
+			if (rowIndex % 2 == 0) {
+				return { color: 'green' };
+			} else {
+				return { color: 'red' };
+			}
 		},
 	},
 };

@@ -67,7 +67,7 @@ export default {
 			default: '',
 		},
 		width: {
-			type: String,
+			type: [String, Number],
 			default: '',
 		},
 		minWidth: {
