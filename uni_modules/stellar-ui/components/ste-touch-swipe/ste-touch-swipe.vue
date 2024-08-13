@@ -302,11 +302,6 @@ export default {
 				return;
 			}
 			this.dataIndex = nextIndex;
-			if (this.direction === 'horizontal') {
-				this.translateX = -this.cmpItemLefts[this.dataIndex];
-			} else if (this.direction === 'vertical') {
-				this.translateY = -this.cmpItemTops[this.dataIndex];
-			}
 			this.$emit('update:index', nextIndex);
 			this.$emit('change', nextIndex);
 		},
