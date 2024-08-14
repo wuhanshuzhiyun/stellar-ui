@@ -660,7 +660,7 @@ export default {
 			width: 100%;
 			max-height: 546rpx;
 			.one-col-options {
-				padding: 30rpx 0;
+				padding: 20rpx 0;
 			}
 			.options-col {
 				padding: 0 16rpx;
@@ -668,8 +668,9 @@ export default {
 				max-height: 450rpx;
 				.options-item {
 					width: 100%;
-					height: 82rpx;
-					line-height: 82rpx;
+					line-height: 42rpx;
+					padding: 20rpx 0;
+					font-size: 28rpx;
 					// 文本溢出省略号
 					text-overflow: ellipsis;
 					white-space: nowrap; // 文本不换行，防止文字溢出
@@ -681,6 +682,13 @@ export default {
 
 					& + .options-item {
 						border-top: 1px solid #f5f5f5;
+					}
+
+					&:nth-child(1) {
+						padding-top: 0;
+					}
+					&:nth-last-child(1){
+						padding-bottom: 0;
 					}
 				}
 				.options-empty {
