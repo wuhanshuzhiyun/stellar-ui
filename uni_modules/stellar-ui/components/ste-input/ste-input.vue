@@ -288,6 +288,9 @@ export default {
 				if (!this.allowSpace) {
 					e.detail.value = e.detail.value.replace(/\s*/g, '');
 				}
+				if (this.maxlength > 0) {
+					e.detail.value = e.detail.value.substring(0, this.maxlength);
+				}
 				this.tmpDataValue = e.detail.value;
 				this.dataValue = e.detail.value;
 				this.$emit('input', e.detail.value);
@@ -324,6 +327,7 @@ export default {
 		value: {
 			handler(val) {
 				this.dataValue = val;
+				this.tmpDataValue = val;
 			},
 			immediate: true,
 		},
