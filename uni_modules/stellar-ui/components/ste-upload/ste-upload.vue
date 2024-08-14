@@ -233,7 +233,10 @@ export default {
 			return style;
 		},
 		cmpShowUpload() {
-			let bool = !this.disabled && this.showUpload && (this.maxCount == 0 || this.dataValue.length < this.maxCount);
+			let bool =
+				(!this.disabled || !this.dataValue.length) &&
+				this.showUpload &&
+				(this.maxCount == 0 || this.dataValue.length < this.maxCount);
 			return bool;
 		},
 		cmpDeletable() {
