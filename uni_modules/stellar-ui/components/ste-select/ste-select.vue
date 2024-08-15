@@ -38,7 +38,9 @@
 				</slot>
 				<view class="open-icon-event" @click.stop="clickOpenIcon">
 					<view class="open-icon">
-						<ste-icon code="&#xe676;" size="20" display="block" />
+						<view class="open-icon-transform">
+							<ste-icon code="&#xe676;" size="20" />
+						</view>
 					</view>
 				</view>
 			</view>
@@ -71,7 +73,11 @@
 					<block v-else>
 						<view class="one-col-options">
 							<scroll-view scroll-y class="options-col" v-for="(col, index) in viewOptions" :key="index">
-								<view class="options-item" v-if="dataAllowCreate" @click="onSelect(index, dataAllowCreate, true)">
+								<view
+									class="options-item"
+									v-if="dataAllowCreate"
+									@click="onSelect(index, dataAllowCreate, true)"
+								>
 									{{ dataAllowCreate[labelKey] }}
 								</view>
 								<view
@@ -127,6 +133,7 @@ const isData = (d) => {
  * @property {Boolean} dateUnit 是否显示中文单位（仅在时间选择器模式下生效）
  * @property {String|Number} width 宽度，默认100%
  * @property {String|Number} height 高度（不可使用相对值例如百分比等）单位RPX，默认64
+ * @property {String|Number} fontSize 字体大小，单位RPX，默认28
  * @property {String} background 背景颜色，默认#fff
  * @property {Boolean} maskClose 点击遮罩层是否关闭，默认true
  * @property {String|Number} optionsWidth 选项框宽度，默认auto同width
@@ -170,6 +177,7 @@ export default {
 		dateUnit: { type: Boolean, default: () => true },
 		width: { type: [Number, String], default: () => '100%' },
 		height: { type: [Number, String], default: () => 64 },
+		fontSize: { type: [Number, String], default: () => 28 },
 		background: { type: String, default: () => '#fff' },
 		maskClose: { type: Boolean, default: () => true },
 		optionsWidth: { type: [Number, String], default: () => 'auto' },
@@ -221,6 +229,7 @@ export default {
 		},
 		cmpRootStyle() {
 			return {
+				'--ste-select-font-size': utils.formatPx(this.fontSize),
 				'--ste-select-width': utils.formatPx(this.width),
 				'--ste-select-height': utils.formatPx(this.height),
 				'--ste-select-line-height': utils.formatPx(this.height, 'num') - 2 + 'px',
@@ -337,7 +346,9 @@ export default {
 				let list = this.dataOptions;
 				if (this.cmpFilterable && this.userFilterable) {
 					// 处理筛选数据
-					list = list.map((item) => item.filter((value) => value[this.labelKey].includes(this.userFilterable)));
+					list = list.map((item) =>
+						item.filter((value) => value[this.labelKey].includes(this.userFilterable))
+					);
 				}
 				this.viewOptions = list;
 			});
@@ -591,7 +602,7 @@ export default {
 			width: 100%;
 			height: 100%;
 			white-space: nowrap;
-			font-size: 28rpx;
+			font-size: var(--ste-select-font-size);
 			&.multiple {
 				padding: 2px 0;
 				.view-item {
@@ -646,6 +657,14 @@ export default {
 				align-items: center;
 				justify-content: center;
 				transition: 300ms;
+				.open-icon-transform {
+					width: 100%;
+					height: 100%;
+					display: flex;
+					align-items: center;
+					justify-content: center;
+					transform: translateY(2rpx);
+				}
 			}
 		}
 	}
@@ -670,7 +689,7 @@ export default {
 					width: 100%;
 					line-height: 42rpx;
 					padding: 20rpx 0;
-					font-size: 28rpx;
+					font-size: var(--ste-select-font-size);
 					// 文本溢出省略号
 					text-overflow: ellipsis;
 					white-space: nowrap; // 文本不换行，防止文字溢出
@@ -687,7 +706,7 @@ export default {
 					&:nth-child(1) {
 						padding-top: 0;
 					}
-					&:nth-last-child(1){
+					&:nth-last-child(1) {
 						padding-bottom: 0;
 					}
 				}
@@ -705,6 +724,7 @@ export default {
 				display: flex;
 				align-items: center;
 				justify-content: center;
+				font-size: var(--ste-select-font-size);
 			}
 		}
 		.options-btns {
@@ -714,7 +734,7 @@ export default {
 			display: flex;
 			align-items: center;
 			justify-content: space-between;
-			font-size: 28rpx;
+			font-size: var(--ste-select-font-size);
 			.options-cancel {
 				color: #999999;
 				padding: 0 40rpx;
