@@ -4,9 +4,13 @@ let steToast = useSteToast();
 let steMsgBox = useSteMsgBox();
 export default {
 	methods: {
-		showToast: steToast.showToast,
+		showToast(params) {
+			// 是否开启提示跨页面功能配置
+			params.enableCrossPagePrompt = false;
+			steToast.showToast(params);
+		},
 		hideToast: steToast.hideToast,
 		showMsgBox: steMsgBox.showMsgBox,
-		hideMsgBox: steMsgBox.hideMsgBox
+		hideMsgBox: steMsgBox.hideMsgBox,
 	},
 };

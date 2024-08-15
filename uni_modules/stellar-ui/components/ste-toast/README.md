@@ -44,7 +44,11 @@ import useSteToast from '@/node_modules/stellar-ui/components/ste-toast/ste-toas
 let steToast = useSteToast();
 export default {
 	methods: {
-		showToast: steToast.showToast,
+		showToast(params) {
+			// 是否开启提示跨页面功能配置 true为开启 false为关闭
+			params.enableCrossPagePrompt = false;
+			steToast.showToast(params);
+		},
 		hideToast: steToast.hideToast,
 	},
 };
