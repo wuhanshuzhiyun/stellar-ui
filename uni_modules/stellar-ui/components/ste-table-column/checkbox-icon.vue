@@ -1,10 +1,10 @@
 <template>
 	<view class="ste-table-checkbox-icon">
-		<ste-icon code="&#xe6ae;" color="#E6E6E6" size="32" v-if="disabled" />
-		<ste-icon code="&#xe6ac;" color="rgba(52, 145, 250, 0.4)" size="32" v-else-if="readonly" />
+		<ste-icon code="&#xe6ae;" color="#E6E6E6" :size="checkIconSize" v-if="disabled" />
+		<ste-icon code="&#xe6ac;" color="rgba(52, 145, 250, 0.4)" :size="checkIconSize" v-else-if="readonly" />
 		<template v-else>
-			<ste-icon code="&#xe6ac;" color="#3491FA" size="32" v-if="checked" />
-			<ste-icon code="&#xe6af;" color="#BBBBBB" size="32" v-else />
+			<ste-icon code="&#xe6ac;" color="#3491FA" :size="checkIconSize" v-if="checked" />
+			<ste-icon code="&#xe6af;" color="#BBBBBB" :size="checkIconSize" v-else />
 		</template>
 	</view>
 </template>
@@ -26,7 +26,9 @@ export default {
 		},
 	},
 	data() {
-		return {};
+		return {
+			checkIconSize: 36,
+		};
 	},
 };
 </script>

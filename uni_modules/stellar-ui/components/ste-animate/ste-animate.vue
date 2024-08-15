@@ -69,7 +69,6 @@ export default {
 	},
 	methods: {
 		handleClick() {
-			console.log('*********1');
 			if (this.action === 'click') {
 				this.animated();
 			}

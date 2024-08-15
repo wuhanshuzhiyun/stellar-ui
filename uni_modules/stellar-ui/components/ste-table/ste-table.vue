@@ -18,23 +18,34 @@
 					@click="headerClick(column, $event)"
 				>
 					<view class="cell-box" v-if="column.type == 'checkbox'">
-						<ste-icon code="&#xe6ae;" color="#E6E6E6" size="32" v-if="canCheckStates.length === 0" />
+						<ste-icon
+							code="&#xe6ae;"
+							color="#E6E6E6"
+							:size="checkIconSize"
+							v-if="canCheckStates.length === 0"
+						/>
 						<template v-else>
 							<ste-icon
 								code="&#xe6ac;"
 								color="#3491FA"
-								size="32"
+								:size="checkIconSize"
 								v-if="checkAllState == 'all'"
 								@click="changeCheckAll"
 							/>
 							<ste-icon
 								code="&#xe6ad;"
 								color="#3491FA"
-								size="32"
+								:size="checkIconSize"
 								v-else-if="checkAllState == 'indeterminate'"
 								@click="changeCheckAll"
 							/>
-							<ste-icon code="&#xe6af;" color="#BBBBBB" size="32" v-else @click="changeCheckAll" />
+							<ste-icon
+								code="&#xe6af;"
+								color="#BBBBBB"
+								:size="checkIconSize"
+								v-else
+								@click="changeCheckAll"
+							/>
 						</template>
 					</view>
 					<view class="cell-box" :class="column.label ? '' : 'no-value'" v-else>
@@ -61,7 +72,7 @@
 								class="ste-table-cell"
 								v-for="(column, index) in columns"
 								:key="index"
-								:class="[headerClass(column)]"
+								:class="[getHeaderCellClass(column)]"
 							>
 								<view class="cell-box">
 									<view v-if="index === 0" class="sum-header">{{ sumText }}</view>
@@ -91,7 +102,7 @@
 							class="ste-table-cell"
 							v-for="(column, index) in columns"
 							:key="index"
-							:class="[headerClass(column)]"
+							:class="[getHeaderCellClass(column)]"
 						>
 							<view class="cell-box">
 								<view v-if="index === 0" class="sum-header">{{ sumText }}</view>
@@ -221,6 +232,7 @@ export default {
 			canCheckStates: [],
 			checkAllState: 'none', // none 未选中、indeterminate 半选中、all 全选中
 			selectType: '', // 表格选中的类型 checkbox(多选) 或 radio(单选)
+			checkIconSize: 36,
 		};
 	},
 	computed: {
@@ -384,7 +396,6 @@ export default {
 			this.$emit('cellClick', row, column, event);
 		},
 		rowClick(row, event) {
-			console.log(' row click ***');
 			this.currentRow = row;
 			this.$emit('rowClick', row, event);
 		},
