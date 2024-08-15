@@ -1,15 +1,36 @@
 <template>
 	<view class="ste-table-checkbox-icon">
-		<ste-icon code="&#xe6ae;" color="#E6E6E6" :size="checkIconSize" v-if="disabled" />
-		<ste-icon code="&#xe6ac;" color="rgba(52, 145, 250, 0.4)" :size="checkIconSize" v-else-if="readonly" />
+		<ste-icon
+			code="&#xe6ae;"
+			:color="iconColorConfig.disabled || selectionColor.disabled"
+			:size="checkIconSize"
+			v-if="disabled"
+		/>
+		<ste-icon
+			code="&#xe6ac;"
+			:color="iconColorConfig.readonly || selectionColor.readonly"
+			:size="checkIconSize"
+			v-else-if="readonly"
+		/>
 		<template v-else>
-			<ste-icon code="&#xe6ac;" color="#3491FA" :size="checkIconSize" v-if="checked" />
-			<ste-icon code="&#xe6af;" color="#BBBBBB" :size="checkIconSize" v-else />
+			<ste-icon
+				code="&#xe6ac;"
+				:color="iconColorConfig.main || selectionColor.main"
+				:size="checkIconSize"
+				v-if="checked"
+			/>
+			<ste-icon
+				code="&#xe6af;"
+				:color="iconColorConfig.unSelected || selectionColor.unSelected"
+				:size="checkIconSize"
+				v-else
+			/>
 		</template>
 	</view>
 </template>
 
 <script>
+import { selectionColorConfig } from '../ste-table/common';
 export default {
 	props: {
 		checked: {
@@ -24,10 +45,15 @@ export default {
 			type: Boolean,
 			default: false,
 		},
+		iconColorConfig: {
+			type: Object,
+			default: () => selectionColorConfig,
+		},
 	},
 	data() {
 		return {
 			checkIconSize: 36,
+			selectionColor: selectionColorConfig,
 		};
 	},
 };

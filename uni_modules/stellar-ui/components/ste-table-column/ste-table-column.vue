@@ -2,10 +2,20 @@
 	<view class="ste-table-cell" :class="[cmpRootClass]" :style="[cmpRootStyle]" @click="cellClick">
 		<template v-if="type">
 			<view class="cell-box" v-if="type == 'checkbox'" @click.stop="changeCheck">
-				<check-box-icon :disabled="cmpDisableCheck" :readonly="cmpReadonlyCheck" :checked="cmpShowCheck" />
+				<check-box-icon
+					:disabled="cmpDisableCheck"
+					:readonly="cmpReadonlyCheck"
+					:checked="cmpShowCheck"
+					:iconColorConfig="parent.selectionIconColor"
+				/>
 			</view>
 			<view class="cell-box" v-if="type == 'radio'" @click.stop="changeCheck">
-				<radio-icon :disabled="cmpDisableCheck" :checked="cmpShowCheck" />
+				<radio-icon
+					:disabled="cmpDisableCheck"
+					:readonly="cmpReadonlyCheck"
+					:checked="cmpShowCheck"
+					:iconColorConfig="parent.selectionIconColor"
+				/>
 			</view>
 			<view class="cell-box" v-if="type == 'index'">
 				{{ row.rowIndex + 1 }}
@@ -39,7 +49,9 @@ import { childMixin } from '../../utils/mixin.js';
  * @property {String} width 对应列的宽度
  * @property {String} minWidth 对应列的最小宽度
  * @property {String} align 对齐方式
+ * @property {String} textAlign 文字对齐方式，对应到css的text-align属性
  * @property {String} headerAlign，表头对齐方式，若不设置该项，则使用表格的对齐方式
+ * @property {String} headerTextAlign，表头对齐方式，若不设置该项，则使用表格的对齐方式，对应到css的text-align属性
  */
 export default {
 	name: 'ste-table-column',
@@ -78,7 +90,15 @@ export default {
 			type: String,
 			default: 'left',
 		},
+		textAlign: {
+			type: String,
+			default: 'left',
+		},
 		headerAlign: {
+			type: String,
+			default: 'left',
+		},
+		headerTextAlign: {
 			type: String,
 			default: 'left',
 		},
@@ -88,6 +108,7 @@ export default {
 			row: {},
 		};
 	},
+	created() {},
 	computed: {
 		cmpRootStyle() {
 			let style = {};
@@ -106,6 +127,11 @@ export default {
 			if (this.align && this.align !== 'left') {
 				classArr.push('align-' + this.align);
 			}
+
+			if (this.textAlign && this.textAlign !== 'left') {
+				classArr.push('align-text-' + this.align);
+			}
+
 			if (this.parent.border) {
 				classArr.push('border');
 			}
@@ -160,6 +186,8 @@ export default {
 				this.changeCheck();
 			}
 		},
+		getCellClassName() {},
+		getCellStyle() {},
 	},
 };
 </script>
@@ -184,6 +212,18 @@ $default-border: 2rpx solid #ebebeb;
 	}
 
 	&.selection {
+	}
+
+	&.align-text-center {
+		.cell-box {
+			text-align: center;
+		}
+	}
+
+	&.align-text-right {
+		.cell-box {
+			text-align: right;
+		}
 	}
 
 	&.align-center {

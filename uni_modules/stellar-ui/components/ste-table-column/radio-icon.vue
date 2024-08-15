@@ -1,10 +1,12 @@
 <template>
-	<view class="radio-icon-root" :class="[cmpRootClass]">
+	<view class="radio-icon-root" :class="[cmpRootClass]" :style="[comRootStyle]">
 		<view class="icon-1"></view>
 	</view>
 </template>
 
 <script>
+import utils from '../../utils/utils.js';
+import { selectionColorConfig } from '../ste-table/common';
 export default {
 	props: {
 		checked: {
@@ -15,9 +17,19 @@ export default {
 			type: Boolean,
 			default: false,
 		},
+		readonly: {
+			type: Boolean,
+			default: false,
+		},
+		iconColorConfig: {
+			type: Object,
+			default: () => selectionColorConfig,
+		},
 	},
 	data() {
-		return {};
+		return {
+			selectionColor: selectionColorConfig,
+		};
 	},
 	computed: {
 		cmpRootClass() {
@@ -28,33 +40,60 @@ export default {
 			if (this.disabled) {
 				classArr.push('disabled');
 			}
+			if (this.readonly) {
+				classArr.push('readonly');
+			}
 
 			return classArr.join(' ');
+		},
+		comRootStyle() {
+			return {
+				'--main-color': this.iconColorConfig.main || selectionColorConfig.main,
+				'--main-outer-color': utils.Color.formatColor(
+					this.iconColorConfig.main || selectionColorConfig.main,
+					0.2
+				),
+				'--disabled-color': this.iconColorConfig.disabled || selectionColorConfig.disabled,
+				'--un-selected-color': this.iconColorConfig.unSelected || selectionColorConfig.unSelected,
+				'--readonly-color': this.iconColorConfig.readonly || selectionColorConfig.readonly,
+				'--readonly-outer-color': utils.Color.formatColor(
+					this.iconColorConfig.readonly || selectionColorConfig.readonly,
+					0.2
+				),
+			};
 		},
 	},
 };
 </script>
 
 <style lang="scss" scoped>
-$default-color: #3491fa;
 .radio-icon-root {
 	width: 32rpx;
 	height: 32rpx;
 
 	border-radius: 50%;
-	border: 2rpx solid #dddddd;
+	border: 2rpx solid var(--un-selected-color);
 	position: relative;
 
 	&.checked {
 		border: none;
-		background-color: rgba(52, 145, 250, 0.2);
+		background-color: var(--main-outer-color);
 		.icon-1 {
-			background-color: rgba(52, 145, 250, 1);
+			background-color: var(--main-color);
 		}
 	}
+
+	&.readonly {
+		border: none;
+		background-color: var(--readonly-outer-color);
+		.icon-1 {
+			background-color: var(--readonly-color);
+		}
+	}
+
 	&.disabled {
 		border: none;
-		background-color: #e6e6e6;
+		background-color: var(--disabled-color);
 	}
 	.icon-1 {
 		width: 16rpx;

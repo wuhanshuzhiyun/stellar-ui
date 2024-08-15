@@ -622,6 +622,17 @@ export default {
 
 ```
 
+#### 配置选择项图标色
+需要指定属性`selectionIconColor`，数据结构如下
+```js
+{
+	main: '#3491FA', // 主色，选中时的颜色
+	unSelected: '#BBBBBB', // 未选中的线框颜色
+	disabled: '#E6E6E6', // 禁用时背景色
+	readonly: 'rgba(52, 145, 250, 0.4)' // 只读时背景色
+}
+```
+
 ### API
 #### Table Props
 

@@ -1,7 +1,6 @@
 <template>
 	<view class="ste-table-root" :class="[cmpRootClass]" :style="[cmpRootStyle]">
 		<view class="ste-table-content">
-			<!-- <ste-sticky :offsetTop="offsetTop" :disabled="!sticky"> -->
 			<view class="fixed-placeholder" v-if="fixed || height || height > 0 || maxHeight || maxHeight > 0" />
 			<view
 				class="ste-table-header"
@@ -20,28 +19,28 @@
 					<view class="cell-box" v-if="column.type == 'checkbox'">
 						<ste-icon
 							code="&#xe6ae;"
-							color="#E6E6E6"
+							:color="selectionIconColor.disabled || selectionColor.disabled"
 							:size="checkIconSize"
 							v-if="canCheckStates.length === 0"
 						/>
 						<template v-else>
 							<ste-icon
 								code="&#xe6ac;"
-								color="#3491FA"
+								:color="selectionIconColor.main || selectionColor.main"
 								:size="checkIconSize"
 								v-if="checkAllState == 'all'"
 								@click="changeCheckAll"
 							/>
 							<ste-icon
 								code="&#xe6ad;"
-								color="#3491FA"
+								:color="selectionIconColor.main || selectionColor.main"
 								:size="checkIconSize"
 								v-else-if="checkAllState == 'indeterminate'"
 								@click="changeCheckAll"
 							/>
 							<ste-icon
 								code="&#xe6af;"
-								color="#BBBBBB"
+								:color="selectionIconColor.unSelected || selectionColor.unSelected"
 								:size="checkIconSize"
 								v-else
 								@click="changeCheckAll"
@@ -53,7 +52,6 @@
 					</view>
 				</view>
 			</view>
-			<!-- </ste-sticky> -->
 			<template v-if="height || height > 0">
 				<scroll-view scroll-y class="ste-table-scroll" @scrolltolower="handleScrollToLower">
 					<view class="ste-table-body">
@@ -122,7 +120,7 @@
 import utils from '../../utils/utils.js';
 import { parentMixin } from '../../utils/mixin.js';
 import { getStyleOrClass } from './utils';
-const DEFAULT_SUM_TEXT = '合计';
+import { DEFAULT_SUM_TEXT, selectionColorConfig } from './common';
 /**
  * ste-table 表格
  * @description 表格。
@@ -146,11 +144,14 @@ const DEFAULT_SUM_TEXT = '合计';
  * @property {Function|String} headerCellStyle 表头单元格的 style 的回调方法，也可以使用一个固定的 Object 为所有表头单元格设置一样的 Style
  * @property {Function|String} rowClassName 行的 className 的回调方法，也可以使用字符串为所有行设置一个固定的 className
  * @property {Function|String} rowStyle 行的 style 的回调方法，也可以使用一个固定的 Object 为所有行设置一样的 Style
+ * @property {Function|String} cellClassName 单元格的 className 的回调方法，也可以使用字符串为所有行设置一个固定的 className
+ * @property {Function|String} cellStyle 单元格的 style 的回调方法，也可以使用一个固定的 Object 为所有行设置一样的 Style
  * @property {Boolean} highlightCurrentRow 是否要高亮当前行
  * @property {Boolean} highlightSelectionRow 是否要高亮复选框选中行（仅针对开启 checkbox 有效）
  * @property {Boolean} showHeader 是否显示表头
  * @property {Number|String} height 表格高度
  * @property {Number|String} maxHeight 表格最大高度
+ * @property {Object} selectionIconColor 配置选择项图标色
  * @event {Function} select 当用户手动勾选数据行的 Checkbox 时触发的事件
  * @event {Function} selectAll 当用户手动勾选全选 Checkbox 时触发的事件
  * @event {Function} cellClick 当某个单元格被点击时会触发该事件
@@ -212,6 +213,8 @@ export default {
 		headerCellStyle: [Object, Function],
 		rowClassName: [String, Function],
 		rowStyle: [Object, Function],
+		cellClassName: [String, Function],
+		cellStyle: [Object, Function],
 		highlightCurrentRow: Boolean,
 		highlightSelectionRow: Boolean,
 		showHeader: {
@@ -219,6 +222,10 @@ export default {
 			default: true,
 		},
 		maxHeight: [Number, String],
+		selectionIconColor: {
+			type: Object,
+			default: () => selectionColorConfig,
+		},
 	},
 	data() {
 		return {
@@ -233,6 +240,7 @@ export default {
 			checkAllState: 'none', // none 未选中、indeterminate 半选中、all 全选中
 			selectType: '', // 表格选中的类型 checkbox(多选) 或 radio(单选)
 			checkIconSize: 36,
+			selectionColor: selectionColorConfig,
 		};
 	},
 	computed: {
@@ -296,7 +304,11 @@ export default {
 			if (!childs || childs.length <= 0) return;
 			let all = childs
 				.filter((node) => node.$options && node.$options.name === 'ste-table-column')
-				.map((node) => node.$options.propsData);
+				.map((node) => {
+					let obj = node.$options.propsData;
+					obj._uid = node._uid;
+					return obj;
+				});
 			const result = [];
 			const partSize = Math.ceil(all.length / this.tableData.length);
 			for (let i = 0; i < partSize; i++) {
@@ -309,6 +321,7 @@ export default {
 				}
 				return e;
 			});
+
 			this.calcSum();
 			this.loadSelectType();
 			this.loadCanCheckArr();
