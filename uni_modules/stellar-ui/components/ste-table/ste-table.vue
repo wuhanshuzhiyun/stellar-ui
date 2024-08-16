@@ -564,6 +564,7 @@ $default-border: 2rpx solid #ebebeb;
 		.ste-table-header {
 			width: 100%;
 			display: table-row;
+			background-color: #e8f7ff;
 
 			.ste-table-cell {
 				background-color: #e8f7ff;
