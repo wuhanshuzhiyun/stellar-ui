@@ -12,6 +12,7 @@ let $state = new Vuex.Store({
 		fail: null,
 		complete: null,
 		close: null,
+		enableCrossPagePrompt: false,
 	},
 }).state;
 
@@ -34,6 +35,7 @@ function useSteToast() {
 				$state.fail = params.fail ?? function () {};
 				$state.complete = params.complete ?? function () {};
 				$state.close = params.close ?? function () {};
+				$state.enableCrossPagePrompt = params.enableCrossPagePrompt ?? false;
 			});
 		},
 		/*关闭弹窗*/

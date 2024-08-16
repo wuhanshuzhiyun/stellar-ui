@@ -70,8 +70,10 @@ export default {
 		});
 	},
 	onPageHide() {
-		this.pageShow = false;
-		steToast.hideToast();
+		if (!this.enableCrossPagePrompt) {
+			this.pageShow = false;
+			steToast.hideToast();
+		}
 	},
 	computed: {
 		cmpIcon() {
@@ -83,6 +85,9 @@ export default {
 		},
 		openBegin() {
 			return $state.openBegin;
+		},
+		enableCrossPagePrompt() {
+			return $state.enableCrossPagePrompt;
 		},
 	},
 	watch: {
