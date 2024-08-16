@@ -292,12 +292,14 @@ export default {
 	methods: {
 		// 给子组件的row中赋值
 		initRowData() {
-			const rows = this.tableData.length;
-			const cnum = this.children.length / rows;
+			const rowNums = this.tableData.length; // 有多少行
+			const colNums = this.children.length / rowNums; // 有多少列
+
 			this.children.forEach((child, index) => {
-				const c = Math.floor(index / cnum);
-				const row = this.tableData[c];
-				child.row = { ...row, rowIndex: c };
+				const rowIndex = Math.floor(index / colNums); // 计算出当前元素属于哪一行
+				const colIndex = index % colNums; // 计算出当前元素属于哪一列
+				const row = this.tableData[rowIndex];
+				child.row = { ...row, rowIndex, colIndex };
 			});
 		},
 		initColumns(childs) {
@@ -453,7 +455,7 @@ export default {
 		},
 		getRowClass(row, rowIndex) {
 			const classArr = [`row-${rowIndex}`];
-			if (this.highlightCurrentRow && utils.deepEqual(row, this.currentRow, ['rowIndex'])) {
+			if (this.highlightCurrentRow && utils.deepEqual(row, this.currentRow, ['rowIndex', 'colIndex'])) {
 				classArr.push('current-row');
 			}
 			if (this.highlightSelectionRow && this.checkStatesSet.has(rowIndex)) {
@@ -480,7 +482,7 @@ export default {
 		// 切换某行的选中状态
 		toggleRowSelection(row, isTriggerSelectEvent = true) {
 			this.$nextTick(() => {
-				let index = this.tableData.findIndex((e) => utils.deepEqual(row, e, ['rowIndex']));
+				let index = this.tableData.findIndex((e) => utils.deepEqual(row, e, ['rowIndex', 'colIndex']));
 				if (this.canCheckStates.indexOf(index) <= -1) return;
 				row.rowIndex = index;
 				this.handleCheck(row, isTriggerSelectEvent);

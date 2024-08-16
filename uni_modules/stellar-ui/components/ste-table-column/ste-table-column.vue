@@ -1,5 +1,5 @@
 <template>
-	<view class="ste-table-cell" :class="[cmpRootClass]" :style="[cmpRootStyle]" @click="cellClick">
+	<view class="ste-table-cell" :class="[cmpRootClass]" :style="[cmpRootStyle, cmpCellStyle]" @click="cellClick">
 		<template v-if="type">
 			<view class="cell-box" v-if="type == 'checkbox'" @click.stop="changeCheck">
 				<check-box-icon
@@ -38,6 +38,7 @@
 import RadioIcon from './radio-icon.vue';
 import CheckBoxIcon from './checkbox-icon.vue';
 import utils from '../../utils/utils.js';
+import { getStyleOrClass } from '../ste-table/utils';
 import { childMixin } from '../../utils/mixin.js';
 /**
  * ste-table-column 表格列
@@ -106,9 +107,15 @@ export default {
 	data() {
 		return {
 			row: {},
+			rowIndex: 0,
+			colIndex: 0,
 		};
 	},
-	created() {},
+	created() {
+		// setTimeout(() => {
+		// 	console.log(' row is ', this.row);
+		// }, 1500);
+	},
 	computed: {
 		cmpRootStyle() {
 			let style = {};
@@ -119,6 +126,18 @@ export default {
 				style.minWidth = utils.addUnit(this.minWidth);
 			}
 			return style;
+		},
+		cmpCellStyle() {
+			const cellClassParam = {
+				column: this.props,
+				columnIndex: this.row.colIndex,
+				row: this.row,
+				rowIndex: this.row.rowIndex,
+			};
+			// let style = getStyleOrClass(this.parent.cellStyle, cellClassParam);
+			// console.log(' style is ', style);
+			// return style;
+			return getStyleOrClass(this.parent.cellStyle, cellClassParam);
 		},
 		cmpRootClass() {
 			let classArr = [];
@@ -135,8 +154,44 @@ export default {
 			if (this.parent.border) {
 				classArr.push('border');
 			}
+
+			const cellClassParam = {
+				column: this.props,
+				columnIndex: this.row.colIndex,
+				row: this.row,
+				rowIndex: this.row.rowIndex,
+			};
+			classArr.push(getStyleOrClass(this.parent.cellClassName, cellClassParam, false));
+
 			return classArr.join(' ');
 		},
+
+		getHeaderCellClass(column, columnIndex) {
+			let classArr = [];
+			if (column.headerAlign && column.headerAlign !== 'left') {
+				classArr.push('align-' + column.headerAlign);
+			} else if (column.align && column.align !== 'left') {
+				classArr.push('align-' + column.align);
+			}
+
+			classArr.push(getStyleOrClass(this.headerCellClassName, { columnIndex, column }, false));
+			return classArr.join(' ');
+		},
+		getHeaderCellStyle(column, columnIndex, isProp = false) {
+			if (!isProp) {
+				let style = {};
+				if (column.width) {
+					style.width = utils.addUnit(column.width);
+				}
+				if (column.minWidth) {
+					style.minWidth = utils.addUnit(column.minWidth);
+				}
+				return style;
+			} else {
+				return getStyleOrClass(this.headerCellStyle, { columnIndex, column });
+			}
+		},
+
 		cmpShowCheck() {
 			if (!this.parent.checkStates || this.parent.checkStates.length == 0) return false;
 			let item = this.parent.checkStates.find((e) => e == this.row.rowIndex);
