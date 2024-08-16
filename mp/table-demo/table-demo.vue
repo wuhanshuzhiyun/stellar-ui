@@ -285,6 +285,8 @@
 							:header-cell-style="headerCellStyle"
 							:row-class-name="rowClassName"
 							:row-style="rowStyle"
+							:cell-style="cellStyle"
+							:cell-class-name="cellClassName"
 						>
 							<template v-slot="{ row }">
 								<ste-table-column label="姓名" prop="name"></ste-table-column>
