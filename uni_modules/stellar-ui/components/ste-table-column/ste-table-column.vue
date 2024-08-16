@@ -6,7 +6,7 @@
 					:disabled="cmpDisableCheck"
 					:readonly="cmpReadonlyCheck"
 					:checked="cmpShowCheck"
-					:iconColorConfig="parent.selectionIconColor"
+					:iconColorConfig="cmpSelectionIconColor"
 				/>
 			</view>
 			<view class="cell-box" v-if="type == 'radio'" @click.stop="changeCheck">
@@ -14,7 +14,7 @@
 					:disabled="cmpDisableCheck"
 					:readonly="cmpReadonlyCheck"
 					:checked="cmpShowCheck"
-					:iconColorConfig="parent.selectionIconColor"
+					:iconColorConfig="cmpSelectionIconColor"
 				/>
 			</view>
 			<view class="cell-box" v-if="type == 'index'">
@@ -111,12 +111,11 @@ export default {
 			colIndex: 0,
 		};
 	},
-	created() {
-		// setTimeout(() => {
-		// 	console.log(' row is ', this.row);
-		// }, 1500);
-	},
+	created() {},
 	computed: {
+		cmpSelectionIconColor() {
+			return this.parent.selectionIconColor;
+		},
 		cmpRootStyle() {
 			let style = {};
 			if (this.width) {

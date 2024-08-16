@@ -56,6 +56,9 @@ export default {
 			selectionColor: selectionColorConfig,
 		};
 	},
+	mounted() {
+		console.log(' is ', this.iconColorConfig);
+	},
 };
 </script>
 
