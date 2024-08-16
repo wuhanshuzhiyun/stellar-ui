@@ -495,6 +495,16 @@ export default {
 				return { color: 'red' };
 			}
 		},
+		cellClassName({ column, columnIndex, row, rowIndex }) {
+			if (columnIndex === 1 && rowIndex % 2 == 0) {
+				return 'custom-cell';
+			}
+		},
+		cellStyle({ column, columnIndex, row, rowIndex }) {
+			if (columnIndex === 1) {
+				return { color: 'blue' };
+			}
+		},
 	},
 };
 </script>
