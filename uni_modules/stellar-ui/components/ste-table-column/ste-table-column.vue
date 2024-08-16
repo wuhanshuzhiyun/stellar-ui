@@ -165,33 +165,6 @@ export default {
 
 			return classArr.join(' ');
 		},
-
-		getHeaderCellClass(column, columnIndex) {
-			let classArr = [];
-			if (column.headerAlign && column.headerAlign !== 'left') {
-				classArr.push('align-' + column.headerAlign);
-			} else if (column.align && column.align !== 'left') {
-				classArr.push('align-' + column.align);
-			}
-
-			classArr.push(getStyleOrClass(this.headerCellClassName, { columnIndex, column }, false));
-			return classArr.join(' ');
-		},
-		getHeaderCellStyle(column, columnIndex, isProp = false) {
-			if (!isProp) {
-				let style = {};
-				if (column.width) {
-					style.width = utils.addUnit(column.width);
-				}
-				if (column.minWidth) {
-					style.minWidth = utils.addUnit(column.minWidth);
-				}
-				return style;
-			} else {
-				return getStyleOrClass(this.headerCellStyle, { columnIndex, column });
-			}
-		},
-
 		cmpShowCheck() {
 			if (!this.parent.checkStates || this.parent.checkStates.length == 0) return false;
 			let item = this.parent.checkStates.find((e) => e == this.row.rowIndex);
@@ -241,8 +214,6 @@ export default {
 				this.changeCheck();
 			}
 		},
-		getCellClassName() {},
-		getCellStyle() {},
 	},
 };
 </script>
