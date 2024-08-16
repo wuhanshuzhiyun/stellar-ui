@@ -37,7 +37,7 @@ Vue.mixin(mixin);
 ```
 5. 在混淆文件`app-mixin.js`里引入组件的`js`文件,将`showToast`和`hideToast`方法混入全局，每个页面通过 `this.` 来使用对应的方法
 ```
-import useSteMsgBox from '@/uni_modules/stellar-ui/components/ste-message-box/ste-message-box.js';
+import useSteMsgBox from '@/node_modules/stellar-ui/components/ste-message-box/ste-message-box.js';
 let steMsgBox = useSteMsgBox();
 export default {
 	methods: {
@@ -49,7 +49,7 @@ export default {
 ```
 6. js文件中使用
 ```
-import useSteMsgBox from '@/uni_modules/stellar-ui/components/ste-message-box/ste-message-box.js';
+import useSteMsgBox from '@/node_modules/stellar-ui/components/ste-message-box/ste-message-box.js';
 let steMsgBox = useSteMsgBox();
 steMsgBox.showMsgBox();
 ```
@@ -139,7 +139,7 @@ msgBoxInput() {
 	</view>
 </ste-message-box>
 <script>
-import useSteMsgBox from '@/uni_modules/stellar-ui/components/ste-message-box/ste-message-box.js';
+import useSteMsgBox from '@/node_modules/stellar-ui/components/ste-message-box/ste-message-box.js';
 const msgBox = useSteMsgBox('myMsgBox');
 export default {
 	data() {
