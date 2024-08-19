@@ -52,7 +52,7 @@
 					<view>
 						<ste-button @click="customClick">插槽</ste-button>
 						<ste-message-box selector="myMsgBox">
-							<view style="display: flex; justify-content: center; padding-bottom: 20rpx; width: 504rpx">
+							<view style="display: flex; justify-content: center; padding-bottom: 48rpx; width: 570rpx">
 								<ste-rate v-model="rate"></ste-rate>
 							</view>
 						</ste-message-box>
@@ -94,8 +94,8 @@ export default {
 		},
 		msgBox() {
 			this.showMsgBox({
-				title: '提示123',
-				content: '确认删除订单吗？123',
+				title: '确认删除订单吗？',
+				// content: '确认删除订单吗？123',
 			});
 		},
 		msgBoxIcon1() {

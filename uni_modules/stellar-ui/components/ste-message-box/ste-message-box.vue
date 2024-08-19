@@ -128,8 +128,12 @@ export default {
 			if (this.icon) {
 				classArr.push('icon-type');
 			}
-			if (!this.content) {
+			if (!this.content && !this.$slots) {
 				classArr.push('no-content');
+			}
+
+			if (this.$slots) {
+				classArr.push('slot-type');
 			}
 			return classArr.join(' ');
 		},
@@ -231,6 +235,16 @@ export default {
 	background-color: rgba(0, 0, 0, 0.6);
 	z-index: 99999;
 
+	&.slot-type {
+		.ste-message-title {
+			padding-bottom: 24rpx !important;
+		}
+
+		.msg {
+			padding: 0 !important;
+		}
+	}
+
 	&.icon-type {
 		.ste-message-title {
 			padding: 24rpx 0 34rpx 0 !important;
@@ -239,7 +253,7 @@ export default {
 
 	&.no-content {
 		.ste-message-title {
-			padding-bottom: 32rpx !important;
+			padding-bottom: 48rpx !important;
 		}
 		.msg {
 			padding: 0 !important;
@@ -250,8 +264,8 @@ export default {
 		background: #ffffff;
 		border-radius: 16rpx;
 		// border: 2rpx solid #eeeeee;
-		min-width: 400rpx;
-		max-width: 504rpx;
+		min-width: 570rpx;
+		max-width: 610rpx;
 		display: inline-flex;
 		flex-direction: column;
 		transform: scale(0);
@@ -270,15 +284,15 @@ export default {
 			}
 			.ste-message-title {
 				width: 100%;
-				padding-top: 32rpx;
-				padding-bottom: 16rpx;
+				padding-top: 48rpx;
+				padding-bottom: 24rpx;
 				font-weight: bold;
 				font-size: 32rpx;
 				text-align: center;
 			}
 
 			.msg {
-				padding: 0 32rpx 34rpx 32rpx;
+				padding: 0 32rpx 48rpx 32rpx;
 				text-align: center;
 				.text {
 					width: 100%;
@@ -288,7 +302,7 @@ export default {
 
 				.ste-message-box-input {
 					height: 80rpx;
-					width: 440rpx;
+					width: 548rpx;
 					background: #f5f5f5;
 					border-radius: 8px 8px 8px 8px;
 					text-align: center;
@@ -299,7 +313,7 @@ export default {
 		}
 		.footer {
 			display: flex;
-			height: 72rpx;
+			height: 96rpx;
 			> view {
 				height: 100%;
 				border-top: 2rpx solid #eeeeee;
@@ -310,7 +324,7 @@ export default {
 				align-items: center;
 				justify-content: center;
 				font-weight: bold;
-				font-size: 28rpx;
+				font-size: 32rpx;
 
 				/* #ifdef H5 || WEB */
 				cursor: pointer;
