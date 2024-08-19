@@ -128,11 +128,11 @@ export default {
 			if (this.icon) {
 				classArr.push('icon-type');
 			}
-			if (!this.content && !this.$slots) {
+			if (!this.content && !this.$slots.default) {
 				classArr.push('no-content');
 			}
 
-			if (this.$slots) {
+			if (this.$slots && this.$slots.default) {
 				classArr.push('slot-type');
 			}
 			return classArr.join(' ');
