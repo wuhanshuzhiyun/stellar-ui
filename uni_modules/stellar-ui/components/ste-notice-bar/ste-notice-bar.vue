@@ -130,6 +130,7 @@ export default {
 			cardMsgClass: '',
 			h5flag: false,
 			closeShow: true,
+			first: true,
 		};
 	},
 	async mounted() {},
@@ -189,7 +190,7 @@ export default {
 			if (this.direction == 'across') {
 				// 获取滚动消息的长度来计算动画的执行时间
 				let dom = await utils.querySelector('#' + this.id, this);
-				this.acrossDuration = (dom.width / Number(this.acrossSpeed)) * 1000;
+				this.acrossDuration = ((dom.width + this.textTranslate) / Number(this.acrossSpeed)) * 1000;
 				this.cardMsgClass = 'across-play-infinite';
 			} else {
 				this.cardMsgClass = 'vertical-play-infinite';
