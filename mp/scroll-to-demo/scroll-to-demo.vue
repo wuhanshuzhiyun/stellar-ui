@@ -27,8 +27,6 @@ export default {
 			imgs: [
 				'https://image.whzb.com/chain/StellarUI/image/banner1.png',
 				'https://image.whzb.com/chain/StellarUI/image/banner2.png',
-				'https://image.whzb.com/chain/StellarUI/image/img3.jpg',
-				'https://image.whzb.com/chain/StellarUI/image/img4.jpg',
 				'https://image.whzb.com/chain/StellarUI/image/img1.jpg',
 				'https://image.whzb.com/chain/StellarUI/image/img2.jfif',
 				'https://image.whzb.com/chain/StellarUI/image/img3.jpg',

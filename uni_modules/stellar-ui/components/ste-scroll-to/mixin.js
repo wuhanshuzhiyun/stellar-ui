@@ -22,6 +22,8 @@ export default {
 			scrollType: 'init',
 			scrollTop: 0,
 			_scrollTop: 0,
+			initEnd: false,
+			contentHeight: 0,
 			_scrollTypeTimeout: null,
 			_childrenTimeout: null,
 			_setActiveTimeout: null,
@@ -38,6 +40,7 @@ export default {
 		active: {
 			handler(v) {
 				if (this.dataActive !== v) this.dataActive = v;
+				this.initChildren()
 			},
 			immediate: true,
 		},
@@ -59,16 +62,28 @@ export default {
 	},
 	computed: {
 		cmpRootStyle() {
-			const style = { '--scroll-to-height': utils.formatPx(this.height) };
+			const style = {
+				'--scroll-to-height': utils.formatPx(this.height)
+			};
 			return style;
 		},
 	},
 	methods: {
 		init() {
+			this.initChildren(true);
+		},
+		initChildren(init) {
 			clearTimeout(this._childrenTimeout);
+			if (init) this.initEnd = false;
+			if (this.initEnd) return
 			this._childrenTimeout = setTimeout(async () => {
 				const view = await utils.querySelector('.ste-scroll-to-root', this);
 				const box = await utils.querySelector('.ste-scroll-to-content', this);
+				if (this.contentHeight === box.height) {
+					this.initEnd = true;
+				} else {
+					this.contentHeight = box.height;
+				}
 				let max = box.height - view.height;
 				if (max < 0) max = 0;
 				const childrenTops = [];
@@ -143,11 +158,16 @@ export default {
 				}
 			}, 20);
 		},
-		onScroll({ detail: { scrollTop } }) {
+		onScroll({
+			detail: {
+				scrollTop
+			}
+		}) {
 			this._scrollTop = scrollTop;
 			if (this.scrollType === 'active') return;
 			this.setScrollType('scroll');
 			this.setActiveByTop(scrollTop);
+			this.initChildren()
 		},
 	},
 };
