@@ -81,11 +81,7 @@ export default {
 		};
 	},
 	created() {},
-	methods: {
-		change(value) {
-			console.log('value', value);
-		},
-	},
+	methods: {},
 };
 </script>
 
