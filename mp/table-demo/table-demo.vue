@@ -317,6 +317,21 @@
 					</view>
 				</view>
 			</view>
+			<view class="demo-item">
+				<view class="title">合并单元格</view>
+				<view class="item-block">
+					<view style="width: 100%">
+						<ste-table :data="rows4" border>
+							<template v-slot="{ row }">
+								<ste-table-column label="评价项目" prop="project"></ste-table-column>
+								<ste-table-column label="评价标准" prop="desc"></ste-table-column>
+								<ste-table-column label="分值" prop="score" width="150"></ste-table-column>
+								<ste-table-column label="得分" prop="sum" width="150"></ste-table-column>
+							</template>
+						</ste-table>
+					</view>
+				</view>
+			</view>
 
 			<!-- 			<view class="demo-item">
 				<view class="title">测试用例</view>
@@ -399,6 +414,27 @@ export default {
 				{ name: '王五', birth: '2024.11.01', sex: '女', state: 1 },
 				{ name: '赵六', birth: '2024.11.01', sex: '女', state: 2 },
 				{ name: '王七', birth: '2024.01.01', sex: '男', state: 1 },
+			],
+			rows4: [
+				{
+					project: '入店时的寒暄语',
+					desc: [
+						'打招呼的声音很小，听不到，没有看着顾客一方等。',
+						'店员看着顾客一方，可以听到响亮且有朝气的问候声。',
+						'「感觉普通」店员看着顾客一方有问候，但是声音不响亮无朝气。但是声音不响亮无朝气但是声音不响亮无朝气',
+					],
+					score: [5, 11, 1],
+					sum: 0,
+				},
+				{
+					project: '收银机前的引导',
+					desc: [
+						'・POS收银机前排队等待的顾客≦3人(不含正在结账的顾客)。',
+						'其他店员没有注意到有3位以上的顾客在排队，或收银的店员不向',
+					],
+					score: [5, 1],
+					sum: 0,
+				},
 			],
 		};
 	},

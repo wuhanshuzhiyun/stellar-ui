@@ -32,6 +32,9 @@
 <script>
 import { selectionColorConfig } from '../ste-table/common';
 export default {
+	options: {
+		virtualHost: true,
+	},
 	props: {
 		checked: {
 			type: Boolean,

@@ -645,6 +645,46 @@ export default {
 }
 ```
 
+#### 合并单元格
+在需要合并行时，需要该列的数据类型为数组且只能为字符串数组
+```html
+<ste-table :data="rows4" border>
+	<template v-slot="{ row }">
+		<ste-table-column label="评价项目" prop="project"></ste-table-column>
+		<ste-table-column label="评价标准" prop="desc"></ste-table-column>
+		<ste-table-column label="分值" prop="score" width="150"></ste-table-column>
+		<ste-table-column label="得分" prop="sum" width="150"></ste-table-column>
+	</template>
+</ste-table>
+export default {
+	data() {
+		return {
+			rows4: [
+				{
+					project: '入店时的寒暄语',
+					desc: [
+						'打招呼的声音很小，听不到，没有看着顾客一方等。',
+						'店员看着顾客一方，可以听到响亮且有朝气的问候声。',
+						'「感觉普通」店员看着顾客一方有问候，但是声音不响亮无朝气。但是声音不响亮无朝气但是声音不响亮无朝气',
+					],
+					score: [5, 11, 1],
+					sum: 0,
+				},
+				{
+					project: '收银机前的引导',
+					desc: [
+						'・POS收银机前排队等待的顾客≦3人(不含正在结账的顾客)。',
+						'其他店员没有注意到有3位以上的顾客在排队，或收银的店员不向',
+					],
+					score: [5, 1],
+					sum: 0,
+				},
+			]
+		}
+	}
+}
+```
+
 ### API
 #### Table Props
 

@@ -23,7 +23,8 @@
 		</template>
 		<template v-else>
 			<slot v-if="row[prop] || !$slots.empty">
-				<view class="cell-box">
+				<sub-table :rows="row[prop]" v-if="rowSpan" :border="cmpBorder" />
+				<view class="cell-box" v-else>
 					{{ cellText() }}
 				</view>
 			</slot>
@@ -37,6 +38,7 @@
 <script>
 import RadioIcon from './radio-icon.vue';
 import CheckBoxIcon from './checkbox-icon.vue';
+import SubTable from './sub-table.vue';
 import utils from '../../utils/utils.js';
 import { getStyleOrClass } from '../ste-table/utils';
 import { childMixin } from '../../utils/mixin.js';
@@ -57,7 +59,7 @@ import { childMixin } from '../../utils/mixin.js';
 export default {
 	name: 'ste-table-column',
 	mixins: [childMixin('ste-table')],
-	components: { RadioIcon, CheckBoxIcon },
+	components: { RadioIcon, CheckBoxIcon, SubTable },
 	options: {
 		virtualHost: true,
 	},
@@ -109,9 +111,20 @@ export default {
 			row: {},
 			rowIndex: 0,
 			colIndex: 0,
+			rowSpan: false,
 		};
 	},
 	created() {},
+	watch: {
+		row: {
+			handler(val) {
+				if (Array.isArray(val[this.prop])) {
+					this.rowSpan = true;
+				}
+			},
+			immediate: true,
+		},
+	},
 	computed: {
 		cmpSelectionIconColor() {
 			return this.parent.selectionIconColor;
@@ -119,7 +132,9 @@ export default {
 		cmpRootStyle() {
 			let style = {};
 			if (this.width) {
-				style.width = utils.addUnit(this.width);
+				// style.width = utils.addUnit(this.width);
+				style.flexBasis = utils.addUnit(this.width);
+				style.flexGrow = 0;
 			}
 			if (this.minWidth) {
 				style.minWidth = utils.addUnit(this.minWidth);
@@ -154,6 +169,10 @@ export default {
 				classArr.push('border');
 			}
 
+			if (this.rowSpan) {
+				classArr.push('row-span');
+			}
+
 			const cellClassParam = {
 				column: this.props,
 				columnIndex: this.row.colIndex,
@@ -183,6 +202,9 @@ export default {
 				return this.parent.readable(this.row, this.row.rowIndex);
 			}
 			return false;
+		},
+		cmpBorder() {
+			return this.parent.border;
 		},
 	},
 	methods: {
@@ -217,50 +239,14 @@ export default {
 };
 </script>
 <style lang="scss" scoped>
-$default-border: 2rpx solid #ebebeb;
 .ste-table-cell {
-	display: table-cell;
-	padding: 24rpx 32rpx;
-	border-bottom: $default-border;
-	text-align: left;
-	min-height: 80rpx;
-	font-size: 24rpx;
-	vertical-align: middle;
+	@import './var.scss';
+	@import './common.scss';
+	@include cell;
 
-	.cell-box {
-		display: flex;
-		align-items: center;
-	}
-
-	&.border {
-		border-right: $default-border;
-	}
-
-	&.selection {
-	}
-
-	&.align-text-center {
-		.cell-box {
-			text-align: center;
-		}
-	}
-
-	&.align-text-right {
-		.cell-box {
-			text-align: right;
-		}
-	}
-
-	&.align-center {
-		.cell-box {
-			justify-content: center;
-		}
-	}
-
-	&.align-right {
-		.cell-box {
-			justify-content: flex-end;
-		}
+	&.row-span {
+		padding-top: 0;
+		padding-bottom: 0;
 	}
 }
 </style>

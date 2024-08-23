@@ -290,6 +290,29 @@ export default {
 		},
 	},
 	methods: {
+		initSpanNum() {
+			const rows = this.tableData.length;
+			const cols = this.columnChilds.length / rows;
+			this.columnChilds.forEach((e, i) => {
+				let rowSpan = 1;
+				let colSpan = 1;
+				const rowIndex = Math.floor(i / cols);
+				const colIndex = i % cols;
+				const fn = this.spanMethod;
+				if (typeof fn === 'function') {
+					const result = fn(null, null, rowIndex, colIndex);
+					if (Array.isArray(result)) {
+						rowSpan = result[0];
+						colSpan = result[1];
+					} else if (typeof result === 'object') {
+						rowSpan = result.rowSpan;
+						colSpan = result.colSpan;
+					}
+				}
+				e.rowSpan = rowSpan;
+				e.colSpan = colSpan;
+			});
+		},
 		// 给子组件的row中赋值
 		initRowData() {
 			const rowNums = this.tableData.length; // 有多少行
@@ -443,7 +466,9 @@ export default {
 			if (!isProp) {
 				let style = {};
 				if (column.width) {
-					style.width = utils.addUnit(column.width);
+					// style.width = utils.addUnit(column.width);
+					style.flexBasis = utils.addUnit(column.width);
+					style.flexGrow = 0;
 				}
 				if (column.minWidth) {
 					style.minWidth = utils.addUnit(column.minWidth);
@@ -554,7 +579,7 @@ $default-border: 2rpx solid #ebebeb;
 
 	.ste-table-content {
 		width: 100%;
-		display: table;
+		// display: table;
 		// border-collapse: collapse;
 		// table-layout: fixed;
 		.fixed-placeholder {
@@ -563,7 +588,9 @@ $default-border: 2rpx solid #ebebeb;
 		}
 		.ste-table-header {
 			width: 100%;
-			display: table-row;
+			// display: table-row;
+			display: flex;
+			justify-content: space-between;
 			background-color: #e8f7ff;
 
 			.ste-table-cell {
@@ -571,6 +598,8 @@ $default-border: 2rpx solid #ebebeb;
 				font-weight: bold;
 				font-size: 28rpx;
 				border-top: $default-border;
+				// flex: 1;
+				// box-sizing: border-box;
 
 				.cell-box.no-value {
 					color: transparent;
@@ -579,8 +608,9 @@ $default-border: 2rpx solid #ebebeb;
 		}
 
 		.ste-table-cell {
-			display: table-cell;
-
+			// display: table-cell;
+			flex: 1;
+			// box-sizing: border-box;
 			border-bottom: $default-border;
 
 			padding: 0 32rpx;
@@ -608,10 +638,12 @@ $default-border: 2rpx solid #ebebeb;
 		}
 
 		.ste-table-body {
-			display: table-row-group;
+			// display: table-row-group;
 			width: 100%;
 			.ste-table-row {
-				display: table-row;
+				// display: table-row;
+				display: flex;
+				justify-content: space-between;
 				&.current-row {
 					background-color: #ecf5ff;
 				}

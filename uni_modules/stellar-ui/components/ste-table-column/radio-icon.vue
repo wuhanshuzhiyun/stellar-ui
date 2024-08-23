@@ -8,6 +8,9 @@
 import utils from '../../utils/utils.js';
 import { selectionColorConfig } from '../ste-table/common';
 export default {
+	options: {
+		virtualHost: true,
+	},
 	props: {
 		checked: {
 			type: Boolean,
@@ -47,19 +50,17 @@ export default {
 			return classArr.join(' ');
 		},
 		comRootStyle() {
+			let tmpCorloConfig = selectionColorConfig;
+			if (this.iconColorConfig) {
+				tmpCorloConfig = this.iconColorConfig;
+			}
 			return {
-				'--main-color': this.iconColorConfig.main || selectionColorConfig.main,
-				'--main-outer-color': utils.Color.formatColor(
-					this.iconColorConfig.main || selectionColorConfig.main,
-					0.2
-				),
-				'--disabled-color': this.iconColorConfig.disabled || selectionColorConfig.disabled,
-				'--un-selected-color': this.iconColorConfig.unSelected || selectionColorConfig.unSelected,
-				'--readonly-color': this.iconColorConfig.readonly || selectionColorConfig.readonly,
-				'--readonly-outer-color': utils.Color.formatColor(
-					this.iconColorConfig.readonly || selectionColorConfig.readonly,
-					0.2
-				),
+				'--main-color': tmpCorloConfig.main,
+				'--main-outer-color': utils.Color.formatColor(tmpCorloConfig.main, 0.2),
+				'--disabled-color': tmpCorloConfig.disabled,
+				'--un-selected-color': tmpCorloConfig.unSelected,
+				'--readonly-color': tmpCorloConfig.readonly,
+				'--readonly-outer-color': utils.Color.formatColor(tmpCorloConfig.readonly, 0.2),
 			};
 		},
 	},
