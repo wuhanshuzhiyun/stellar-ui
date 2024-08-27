@@ -63,6 +63,5 @@ export default {
 <style lang="scss" scoped>
 .rich-text {
 	word-break: break-all;
-	white-space: pre-line;
 }
 </style>
