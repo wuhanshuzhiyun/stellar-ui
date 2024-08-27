@@ -254,7 +254,6 @@ export default {
 		setNodeOpen(nodeValue, open) {
 			// 修改渲染状态
 			const node = this.findNode(this.viewOptions, nodeValue);
-			node.open = open;
 			if (open && this.accordion) {
 				this.closeSibling(node);
 			}
@@ -263,6 +262,7 @@ export default {
 				const _node = this.findNode(this.dataOptions, nodeValue);
 				_node.open = open;
 			}
+			node.open = open;
 			return node;
 		},
 	},
