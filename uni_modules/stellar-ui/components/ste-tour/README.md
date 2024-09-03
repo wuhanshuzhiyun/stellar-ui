@@ -82,7 +82,7 @@ export default {
 		"
 		@click="show6 = true"
 	>
-		异形
+		插槽
 	</view>
 	<ste-tour :show.sync="show6" :steps="steps6" :offset="[-20, -30]" messageBg="transparent" radius="60">
 		<image
@@ -116,6 +116,7 @@ export default {
 		<view id="step-3" class="button-box">步骤3</view>
 	</view>
 	<ste-tour showTitleBar :show.sync="show3" :steps="steps3"></ste-tour>
+</template>
 <script>
 export default {
 	data(){
@@ -140,43 +141,13 @@ export default {
 		<ste-button @click="show4 = true">不显示背景蒙层</ste-button>
 	</view>
 	<ste-tour :show.sync="show4" :steps="steps4" :mask="false"></ste-tour>
+</template>
 <script>
 export default {
 	data(){
 		return{
 			show4: false,
 			steps4: [{ message: '点这里', target: 'button-4' }],
-		}
-	},
-};
-</script>
-```
-### 插槽自定义样式
-- 默认插槽可以自定义描述内容，插槽参数`item`为当前步骤信息
-
-```html
-<template>
-	<view id="button-5" class="button-box">
-		<ste-button @click="show5 = true">插槽自定义内容</ste-button>
-	</view>
-	<ste-tour :show.sync="show5" :steps="steps5">
-		<template v-slot="{ item }">
-			<view style="padding: 24rpx">
-				<image
-					src="https://image.whzb.com/chain/StellarUI/image/banner1.png"
-					mode="widthFix"
-					style="width: 300rpx"
-				></image>
-				<text style="color: red">{{ item.message }}</text>
-			</view>
-		</template>
-	</ste-tour>
-<script>
-export default {
-	data(){
-		return{
-			show5: false,
-			steps5: [{ message: '看我看我', target: 'button-5' }],
 		}
 	},
 };
@@ -214,6 +185,7 @@ export default {
 | 事件名	| 说明						| 事件参数		| 支持版本	|
 | ---			| ---						| ---				| ---			|
 | `change`| 步骤切换时触发	| `current`	| -				|
+| `close`	| 关闭指引时触发	| -					| -				|
 
 
 
