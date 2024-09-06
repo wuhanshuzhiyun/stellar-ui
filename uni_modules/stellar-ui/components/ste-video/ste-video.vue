@@ -161,6 +161,10 @@
 					</view>
 				</view>
 			</view>
+			<!-- 操作提示 -->
+			<view class="tip-toast" :class="[{ show: showTip }]">
+				<view class="tip-text">{{ msg }}</view>
+			</view>
 			<!-- </view> -->
 		</video>
 		<!-- #endif -->
@@ -198,6 +202,8 @@ export default {
 			speedIndex: 2,
 			resolutionIndex: 0,
 			speedConfigArr: [0.5, 0.8, 1.0, 1.25, 1.5],
+			showTip: false,
+			msg: '你好',
 		};
 	},
 	created() {
@@ -317,10 +323,12 @@ export default {
 			this.isClickControl = true;
 		},
 		handleChooseItem(e, index) {
+			let msg = '';
 			if (this.popupState == 1) {
 				if (this.speedIndex == index) return;
 				this.speedIndex = index;
 				this.video.playbackRate(this.speedConfigArr[this.speedIndex]);
+				msg = e + 'X';
 			} else {
 				if (this.resolutionIndex == index) return;
 				this.resolutionIndex = index;
@@ -330,10 +338,12 @@ export default {
 					this.video.seek(this.videoCurrent);
 					this.handlePlay(true);
 				}, 200);
+				msg = `切换${e.text}成功`;
 			}
 
 			setTimeout(() => {
 				this.showPopup = false;
+				this.tip(msg);
 			}, 20);
 		},
 		// 监听video事件
@@ -404,6 +414,14 @@ export default {
 			} else {
 				return formattedMinutes + ':' + formattedSeconds;
 			}
+		},
+		tip(msg) {
+			if (!msg) return;
+			this.msg = msg;
+			this.showTip = true;
+			setTimeout(() => {
+				this.showTip = false;
+			}, 1500);
 		},
 	},
 };
@@ -572,6 +590,30 @@ export default {
 				right: var(--check-icon-left);
 				top: -1px;
 			}
+		}
+	}
+
+	.tip-toast {
+		background-color: rgba(0, 0, 0, 0.7);
+		border-radius: 8px;
+		padding: 10px;
+
+		position: absolute;
+		left: 50%;
+		top: 50%;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		transform: translate(-50%, -50%);
+		transition: all 0.2s;
+		visibility: hidden;
+		&.show {
+			visibility: visible;
+		}
+		.tip-text {
+			color: #ffffff;
+			font-size: 14px;
+			line-height: 1;
 		}
 	}
 }
