@@ -118,11 +118,11 @@ import utils from '../../utils/utils.js';
  * @property {Number} cursorSpacing 指定光标与键盘的距离
  * @property {Boolean} allowSpace 是否允许输入空格
  * @event {Function} blur 输入框失去焦点时触发
- * @event {Function} focus 遮罩点击事件
- * @event {Function} confirm 遮罩点击事件
- * @event {Function} change 遮罩点击事件
- * @event {Function} clear 遮罩点击事件
- * @event {Function} input 输入事件
+ * @event {Function} focus 输入框聚焦时触发
+ * @event {Function} confirm 输入键盘点击右下角触发
+ * @event {Function} change 输入框值改变触发
+ * @event {Function} clear 输入框清空触发
+ * @event {Function} input 输入框输入事件
  */
 export default {
 	group: '表单组件',
