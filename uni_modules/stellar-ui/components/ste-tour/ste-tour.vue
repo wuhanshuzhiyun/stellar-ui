@@ -17,7 +17,7 @@
 					</view>
 				</view>
 				<view class="message-content-text">
-					<slot :item="cmpStep">
+					<slot>
 						<view class="message-text" @click.stop="true">
 							{{ cmpStep.message }}
 						</view>
