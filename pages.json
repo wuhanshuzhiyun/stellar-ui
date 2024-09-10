@@ -9,6 +9,47 @@
 		"rootEle": "view"
 	},
 	"pages": [ //pages数组中第一项表示应用启动页，参考：https://uniapp.dcloud.io/collocation/pages
+		// #ifdef MP-WEIXIN
+		{
+			"path": "mp/index/index",
+			"style": {
+				"navigationStyle": "custom",
+				"mp-alipay": {
+					"transparentTitle": "always",
+					"titlePenetrate": "YES",
+					"allowsBounceVertical": "NO",
+					"navigationBarTitleText": ""
+				}
+			}
+		},
+		{
+			"path": "pages/login/login",
+			"name": "login",
+			"style": {
+				"navigationStyle": "custom",
+				"mp-alipay": {
+					"transparentTitle": "always",
+					"titlePenetrate": "YES",
+					"allowsBounceVertical": "NO",
+					"navigationBarTitleText": ""
+				}
+			}
+		},
+		{
+			"path": "pages/user/user",
+			"name": "user",
+			"style": {
+				"navigationStyle": "custom",
+				"mp-alipay": {
+					"transparentTitle": "always",
+					"titlePenetrate": "YES",
+					"allowsBounceVertical": "NO",
+					"navigationBarTitleText": ""
+				}
+			}
+		},
+		// #endif
+		// #ifndef MP-WEIXIN
 		{
 			"path": "pages/index/index",
 			"name": "home",
@@ -22,7 +63,29 @@
 				}
 			}
 		},
+		{
+			"path": "mp/index/index",
+			"style": {
+				"navigationStyle": "custom",
+				"mp-alipay": {
+					"transparentTitle": "always",
+					"titlePenetrate": "YES",
+					"allowsBounceVertical": "NO",
+					"navigationBarTitleText": ""
+				}
+			}
+		},
+		// #endif
 		// #ifdef H5
+		{
+			"path": "pc/index/index",
+			"style": {
+				"navigationBarTitleText": "Stellar UI",
+				"h5": {
+					"titleNView": false
+				}
+			}
+		},
 		{
 			"path": "pages/404/404",
 			"name": "404",
@@ -50,7 +113,7 @@
 			}
 		},
 		{
-			"path": "pc/index/index",
+			"path": "pc/index/login",
 			"style": {
 				"navigationBarTitleText": "Stellar UI",
 				"h5": {
@@ -59,33 +122,7 @@
 			}
 		},
 		// #endif
-		// #ifdef MP-WEIXIN
-		{
-			"path": "pages/code/code",
-			"name": "code",
-			"style": {
-				"navigationStyle": "custom",
-				"mp-alipay": {
-					"transparentTitle": "always",
-					"titlePenetrate": "YES",
-					"allowsBounceVertical": "NO",
-					"navigationBarTitleText": ""
-				}
-			}
-		},
-		// #endif
-		{
-			"path": "mp/index/index",
-			"style": {
-				"navigationStyle": "custom",
-				"mp-alipay": {
-					"transparentTitle": "always",
-					"titlePenetrate": "YES",
-					"allowsBounceVertical": "NO",
-					"navigationBarTitleText": ""
-				}
-			}
-		},
+
 		{
 			"path": "mp/icon-demo/icon-demo",
 			"style": {
@@ -708,10 +745,30 @@
 		"backgroundColor": "#F8F8F8"
 	},
 	"uniIdRouter": {},
+	// #ifdef MP-WEIXIN
+	"tabBar": {
+		"color": "#000",
+		"selectedColor": "#0090ff",
+		"list": [{
+				"iconPath": "static/tabbars/home.png",
+				"selectedIconPath": "static/tabbars/home_fill.png",
+				"pagePath": "mp/index/index",
+				"text": "首页"
+			},
+			{
+				"iconPath": "static/tabbars/people.png",
+				"selectedIconPath": "static/tabbars/people_fill.png",
+				"pagePath": "pages/user/user",
+				"text": "我的"
+			}
+		]
+	},
+	// #endif
 	"easycom": {
 		"autoscan": true,
 		"custom": {
 			"ste-(.*)": "@/uni_modules/stellar-ui/components/ste-$1/ste-$1.vue"
 		}
 	}
+
 }

@@ -1,15 +1,18 @@
 <script>
 import request from '@/common/request.js';
+import { getToken, setToken } from './common/token';
+import { getInfo, login } from '@/common/account.js';
 export default {
 	onLaunch: async function () {
 		// #ifdef MP-WEIXIN
 		const { code } = await wx.login();
-		const token = await request(`/api/login?code=${code}`);
-		uni.setStorageSync('token', token);
+		const openid = await request('/api/account/openid', { code });
+		console.log('open-id:', openid);
 		// #endif
 	},
 	onShow: function () {},
 	onHide: function () {},
+	methods: {},
 };
 </script>
 

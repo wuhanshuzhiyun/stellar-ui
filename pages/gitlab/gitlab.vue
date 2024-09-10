@@ -21,7 +21,12 @@ export default {
 				url: '/pc/index/index',
 			});
 			// #endif
-			// #ifdef MP
+			// #ifdef MP-WEIXIN
+			uni.switchTab({
+				url: '/mp/index/index',
+			});
+			// #endif
+			// #ifndef MP-WEIXIN
 			uni.redirectTo({
 				url: '/mp/index/index',
 			});

@@ -148,9 +148,16 @@ export default {
 				if (pages.length > 2) {
 					uni.navigateBack();
 				} else {
+					// #ifdef MP-WEIXIN
+					uni.switchTab({
+						url: '/mp/index/index',
+					});
+					// #endif
+					// #ifndef MP-WEIXIN
 					uni.redirectTo({
 						url: '/mp/index/index',
 					});
+					// #endif
 				}
 			}
 			this.$emit('navBack');
