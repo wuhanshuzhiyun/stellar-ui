@@ -2,7 +2,7 @@ import config from '@/common/config';
 
 class SSE {
 	sse;
-	constructor(url = `/api/pclogin`) {
+	constructor(url = `/sse/pclogin`) {
 		let uuid = uni.getStorageSync('uuid');
 		this.sse = new EventSource(`${config.SSE_URL}${url}?uuid=${uuid}`);
 	}
