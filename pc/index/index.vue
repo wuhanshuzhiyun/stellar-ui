@@ -4,6 +4,7 @@
 			您正在浏览基于 Vue 2.x 的文档;
 			<a href="https://stellar-ui.intecloud.com.cn/plus" target="_blank">点击查看Vue 3.x版本。</a>
 		</view>
+
 		<view class="pc-page-content">
 			<view class="pc-nav">
 				<view class="group" v-for="group in datas" :key="group.key">
@@ -28,54 +29,7 @@
 			</view>
 			<view class="pc-content">
 				<view v-html="content" class="markdown-view"></view>
-				<view v-show="isComment && isComponent && loadingMd" class="comment-view">
-					<view class="comment-title">意见反馈</view>
-					<input class="user-input" placeholder="姓名" v-model="commentParams.user" maxlength="8" />
-
-					<textarea
-						class="comment-input"
-						v-model="commentParams.content"
-						rows="10"
-						placeholder="反馈意见"
-						maxlength="500"
-					/>
-					<view class="button-box">
-						<view class="code-message">
-							查看验证码
-							<view class="code-img">
-								<view class="img-box">
-									<img :src="cmpImage" />
-								</view>
-								<view class="code-uuid">UUID:{{ commentParams.uuid }}</view>
-							</view>
-						</view>
-						<input
-							class="code-input"
-							placeholder="验证码"
-							v-model="commentParams.code"
-							maxlength="6"
-							style="width: 120px"
-						/>
-						<button
-							type="primary"
-							style="width: 120px; height: 32px; line-height: 32px"
-							@click="setComment"
-						>
-							提交
-						</button>
-					</view>
-					<view class="comment-list" v-show="commentList.length">
-						<view class="comment-item" v-for="item in commentList" :key="item.id">
-							<view class="comment-head">
-								<text class="head-user" v-if="item.user">{{ item.user }}</text>
-								<text class="head-time">{{ item.time }}</text>
-							</view>
-							<view class="comment-content">
-								{{ item.conents }}
-							</view>
-						</view>
-					</view>
-				</view>
+				<commentVue v-if="isComponent && loadingMd" :activeName="activeName" :isComponent="isComponent" />
 			</view>
 			<view class="pc-view">
 				<iframe class="view-iframe" :src="cmpIframeUrl" frameborder="0" />
@@ -98,25 +52,26 @@ import { mdMap, vueMap, datas } from '../markdown/index.js';
 import md2html from './md2html.js';
 import config from '@/common/config.js';
 import request from '@/common/request.js';
+import commentVue from './components/comment.vue';
+import { getInfo } from '@/common/account.js';
 import './mdStyle.scss';
 
 let timeout = 0;
 
 export default {
+	components: { commentVue },
 	data() {
 		return {
 			content: '',
 			activeName: 'handbook-介绍',
 			datas,
-			isComment: false,
 			commentList: [],
 			isComponent: false,
 			loadingMd: false,
 			commentParams: {
-				uuid: '',
-				code: '',
-				user: '',
+				title: '',
 				content: '',
+				versions: 2,
 			},
 			iframeUrl: '/mp/index/index',
 			adminLock: uni.getStorageSync('admin-lock'),
@@ -128,10 +83,6 @@ export default {
 	computed: {
 		cmpIframeUrl() {
 			return `${this.iframeUrl}?t=${Date.now()}`;
-		},
-		cmpImage() {
-			if (!this.commentParams.uuid) return '';
-			return `${config.BASE_URL}/api/wxcode?uuid=${this.commentParams.uuid}`;
 		},
 		cmpLock() {
 			return this.adminLock === 'true';
@@ -153,7 +104,6 @@ export default {
 						// 如果是组件，获取组件预览地址
 						const name = v.slice(4);
 						src = `/mp/${name}-demo/${name}-demo`;
-						this.getComment(v);
 					} else {
 						src = '/mp/index/index';
 					}
@@ -173,7 +123,7 @@ export default {
 			this.activeName = name;
 		}
 	},
-	onShow() {
+	async onShow() {
 		const uuid = this.initUUID();
 		this.commentParams.uuid = uuid;
 	},
@@ -225,7 +175,7 @@ export default {
 				history.replaceState({}, '', `/pc/index/index?name=${this.key}`);
 				return;
 			}
-			this.showToast({
+			uni.showToast({
 				title: '密码不正确',
 				icon: 'none',
 			});
@@ -258,48 +208,6 @@ export default {
 				console.error('无法复制文本: ', err);
 			}
 			// #endif
-		},
-		getComment(name) {
-			uni.request({
-				url: `${config.BASE_URL}/api/list?name=${name}`,
-				success: ({ data }) => {
-					if (data.code === 0) {
-						this.commentList = data.data.reverse();
-						this.commentParams.content = '';
-						this.commentParams.user = '';
-						this.commentParams.code = '';
-						this.isComment = true;
-					}
-				},
-			});
-		},
-		setComment() {
-			if (!this.commentParams.content) {
-				this.showToast({ title: '请输入反馈意见', icon: 'none' });
-				return;
-			}
-			if (!this.commentParams.code) {
-				this.showToast({ title: '请输入验证码', icon: 'none' });
-				return;
-			}
-			uni.request({
-				url: `${config.BASE_URL}/api/create`,
-				data: Object.assign({ name: this.activeName }, this.commentParams),
-				method: 'POST',
-				success: ({ data }) => {
-					if (data.code === 0) {
-						this.getComment(this.activeName);
-						this.showToast({
-							title: '提交完成',
-						});
-						return;
-					} else if (data.code === 401) {
-						this.showToast({ title: `内容涉及${data.message}信息，请修改后重新评论`, icon: 'none' });
-					} else {
-						this.showToast({ title: data.message, icon: 'none' });
-					}
-				},
-			});
 		},
 	},
 };
@@ -380,114 +288,8 @@ export default {
 			padding-right: calc(var(--pc-view-width) + var(--pc-padding) + 20px);
 			overflow: auto;
 
-			.markdown-view,
-			.comment-view {
+			.markdown-view {
 				padding: 12px var(--pc-padding);
-			}
-			.comment-view {
-				border-top: 1px solid #ddd;
-				.comment-title {
-					font-size: 20px;
-					font-weight: 600;
-					border-left: 4px solid #1989fa;
-					padding-left: 5px;
-				}
-				.comment-input,
-				.user-input {
-					margin-top: 12px;
-					border: 1px solid #ddd;
-					padding: 5px;
-					border-radius: 4px;
-				}
-				.user-input {
-					height: 32px;
-				}
-				.comment-input {
-					width: 100%;
-				}
-				.button-box {
-					margin-top: 12px;
-					width: 100%;
-					display: flex;
-					align-items: center;
-					justify-content: flex-end;
-
-					.code-message {
-						height: 32px;
-						border-radius: 4px;
-						display: flex;
-						align-items: center;
-						font-size: 12px;
-						color: #1989fa;
-						cursor: pointer;
-						position: relative;
-
-						.code-img {
-							// 阴影
-							box-shadow: 0 0 10px #ddd;
-							display: none;
-							position: absolute;
-							z-index: 10;
-							left: 0;
-							bottom: 32px;
-							width: 200px;
-							height: 200px;
-							background: #fff;
-							text-align: center;
-							border-radius: 4px;
-							padding: 15px 30px 0 30px;
-
-							.img-box {
-								width: 100%;
-								img {
-									width: 100%;
-								}
-							}
-							.code-uuid {
-								margin-top: 5px;
-							}
-						}
-						&:hover {
-							.code-img {
-								display: block;
-							}
-						}
-					}
-					.code-input {
-						border: 1px solid #ddd;
-						padding: 5px;
-						border-radius: 4px;
-						height: 32px;
-						margin: 0 12rpx;
-					}
-				}
-				.comment-list {
-					border: 1px solid #ddd;
-					padding: 12px;
-					margin-top: 12px;
-					.comment-item {
-						& + .comment-item {
-							border-top: 1px solid #ddd;
-							margin-top: 12px;
-							padding-top: 12px;
-						}
-						.comment-head {
-							.head-user {
-								font-zise: 18px;
-								padding-right: 5px;
-							}
-							.head-time {
-								font-size: 12px;
-								color: #aaa;
-							}
-						}
-						.comment-content {
-							margin-top: 5px;
-							font-size: 14px;
-							color: #666;
-						}
-					}
-				}
 			}
 		}
 		@media (max-width: 1100px) {
