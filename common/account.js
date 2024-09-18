@@ -18,7 +18,7 @@ export const isLogin = async () => {
 	}
 }
 
-export const getInfo = async (pull) => {
+export const getInfo = async (pull = false) => {
 	try {
 		let info = pull ? null : uni.getStorageSync("user-info")
 		if (info) return JSON.parse(info)

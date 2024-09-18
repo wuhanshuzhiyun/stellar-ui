@@ -1,9 +1,16 @@
 <template>
 	<view class="user-body">
 		<view class="user-info" v-if="userInfo">
-			<image class="user-avatar" :src="userInfo.avatar_url" mode="widthFix"></image>
-			<view class="user-account">{{ userInfo.account.toLocaleUpperCase() }}</view>
-			<view class="user-name">{{ userInfo.nickname }}</view>
+			<ste-upload
+				v-model="fileList"
+				maxCount="1"
+				:deletable="false"
+				preview-width="240"
+				preview-height="240"
+			></ste-upload>
+			<view class="user-account">{{ userInfo.account }}</view>
+			<input class="user-name" type="text" v-model="userInfo.nickname" placeholder="请输入昵称" />
+			<view class="button update" @click="save">保存信息</view>
 			<view class="button" @click="outlogin">退出登录</view>
 		</view>
 		<view class="not-info" v-else>
@@ -14,31 +21,59 @@
 
 <script>
 import { removeToken } from '../../common/token';
+import uploadFile from '../../common/uploadFile';
 import { getInfo, login, logout } from '@/common/account.js';
+import request from '@/common/request.js';
 export default {
 	data() {
 		return {
 			isAjax: false,
 			userInfo: null,
+			fileList: [],
 		};
+	},
+	watch: {
+		fileList(val) {
+			if (val && val[0] && val[0].status === 'uploading') {
+				this.uploadFile(val[0]);
+			}
+		},
 	},
 	onLoad() {
 		this.getInfo();
 	},
 	methods: {
-		async getInfo() {
-			const info = await getInfo();
-			if (info) {
-				this.userInfo = info;
-			}
+		async getInfo(pull = false) {
+			const info = await getInfo(pull);
+			if (info) this.setUserInfo(info);
 		},
 		async login() {
 			try {
 				this.isAjax = true;
 				await login();
-				this.userInfo = await this.getInfo();
+				const info = await this.getInfo();
+				if (info) this.setUserInfo(info);
 			} catch (e) {}
 			this.isAjax = false;
+		},
+		setUserInfo(info) {
+			this.userInfo = Object.assign({}, info, { account: info.account.toLocaleUpperCase() });
+			this.fileList = [{ url: info.avatar_url }];
+		},
+		uploadFile(file) {
+			uploadFile(file.path).then((url) => {
+				const newInfo = { ...this.userInfo, avatar_url: url };
+				this.setUserInfo(newInfo);
+			});
+		},
+		save() {
+			request('/api/account/update', this.userInfo, 'POST').then(() => {
+				uni.showToast({
+					title: '保存成功',
+					icon: 'none',
+				});
+				this.getInfo(true);
+			});
 		},
 		// 退出登录
 		outlogin() {
@@ -62,17 +97,10 @@ export default {
 	width: 100vw;
 	height: 100vh;
 	.user-info {
-		margin-top: 240rpx;
+		padding-top: 240rpx;
 		display: flex;
 		flex-direction: column;
 		align-items: center;
-		.user-avatar {
-			width: 240rpx;
-			height: 240rpx;
-			border-radius: 50%;
-			margin: 0 auto;
-			margin-top: 100rpx;
-		}
 		.user-account {
 			width: 100%;
 			height: 60rpx;
@@ -88,6 +116,10 @@ export default {
 		}
 		.button {
 			background-color: red;
+			&.update {
+				background-color: green;
+				bottom: 220rpx;
+			}
 		}
 	}
 	.not-info {
