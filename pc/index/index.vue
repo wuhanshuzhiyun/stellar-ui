@@ -217,6 +217,7 @@ export default {
 .pc-page-body {
 	width: 100vw;
 	height: 100vh;
+	min-width: 1200px;
 	.pc-page-header {
 		height: 30px;
 		line-height: 30px;

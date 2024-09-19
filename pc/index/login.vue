@@ -48,6 +48,9 @@ export default {
 		this.uuid = uuid;
 		this.initSSE();
 	},
+	onHide() {
+		this.sse && this.sse.close();
+	},
 	methods: {
 		initUUID() {
 			let uuid = uni.getStorageSync('uuid');
@@ -60,19 +63,17 @@ export default {
 			return uuid;
 		},
 		initSSE() {
-			const sse = new SSE();
-			sse.onmessage((data) => {
+			this.sse = new SSE();
+			this.sse.onmessage((data) => {
 				if (data === 'open-login') {
 					// 微信已扫码
 					this.status = 1;
 				} else if (data && typeof data === 'string') {
 					// 微信已确认登录
 					setToken(data);
-					sse.close();
+					this.sse.close();
 					this.$nextTick(() => {
-						uni.redirectTo({
-							url: '/pages/index/index',
-						});
+						uni.navigateBack();
 					});
 				}
 			});
@@ -85,8 +86,11 @@ export default {
 .pc-login-body {
 	width: 100vw;
 	height: 100vh;
+	min-width: 1200px;
 	overflow: hidden;
-	background: url(https://image.whzb.com/chain/StellarUI/image/pc-bg.png);
+	background-image: url(https://image.whzb.com/chain/StellarUI/image/pc-bg.png);
+	background-size: 100% 100%;
+	background-repeat: no-repeat;
 
 	.login-form {
 		width: 420px;

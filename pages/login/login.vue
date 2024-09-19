@@ -61,7 +61,7 @@ export default {
 					await login();
 				}
 				await request('/api/wechatLogin', { uuid: this.uuid }, 'POST');
-				uni.switchTab({ url: '/mp/index/index' });
+				uni.switchTab({ url: '/pages/user/user' });
 			} catch (e) {
 				//TODO handle the exception
 			}
@@ -69,7 +69,7 @@ export default {
 			// #endif
 		},
 		cancel() {
-			uni.switchTab({ url: '/mp/index/index' });
+			uni.switchTab({ url: '/pages/user/user' });
 		},
 	},
 };

@@ -92,7 +92,7 @@ export default {
 	methods: {
 		toLogin() {
 			uni.navigateTo({
-				url: '/pc/index/login',
+				url: `/pc/index/login?back=${this.activeName}`,
 			});
 		},
 		getComment(document_name) {
