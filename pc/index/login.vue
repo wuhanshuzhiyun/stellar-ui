@@ -1,7 +1,7 @@
 <template>
 	<view class="pc-login-body">
 		<view class="login-form">
-			<view class="title">扫码登录</view>
+			<view class="title"><span>扫码登录</span></view>
 			<view class="qr-image">
 				<image :src="qrImage" mode=""></image>
 				<div class="status-message" v-if="status === 1">
@@ -86,30 +86,33 @@ export default {
 	width: 100vw;
 	height: 100vh;
 	overflow: hidden;
-	background: linear-gradient(45deg, #3f3f3f, #1990ff, #3f3f3f);
+	background: url(https://image.whzb.com/chain/StellarUI/image/pc-bg.png);
 
 	.login-form {
-		width: 300px;
-		height: 360px;
+		width: 420px;
+		height: 530px;
 		background-color: #fff;
 		position: absolute;
 		top: 50%;
-		left: 50%;
-		transform: translate(-50%, -50%);
+		transform: translateY(-50%);
+		right: 350px;
 		border-radius: 12px;
-		box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.3);
+		box-shadow: 10px 10px 10px 1px rgba(0, 0, 0, 0.1);
+		border-radius: 16px 16px 16px 16px;
+		overflow: hidden;
+
 		.title {
-			height: 60px;
-			line-height: 60px;
-			font-size: 20px;
+			height: 110px;
+			line-height: 110px;
+			font-size: 36px;
 			font-weight: bold;
 			text-align: center;
-			color: #1990ff;
+			color: #0090ff;
 		}
 		.qr-image {
 			width: 100%;
-			height: calc(100% - 60px);
-			border-top: 1px solid #1990ff80;
+			height: calc(100% - 110px);
+			border-top: 1px solid #0090ff80;
 			padding: 30px;
 			position: relative;
 			image {
@@ -123,7 +126,6 @@ export default {
 				top: 0;
 				left: 0;
 				background: rgba(0, 0, 0, 0.7);
-				border-radius: 4px;
 				display: flex;
 				flex-direction: column;
 				justify-content: center;

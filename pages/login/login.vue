@@ -1,10 +1,14 @@
 <template>
 	<view class="code-page">
 		<!-- #ifdef MP-WEIXIN -->
-		<page-nav :autoBack="false" backColor="#000" titleAlignment="2" title="扫码登录"></page-nav>
-		<view class="code-message">授权后，将在电脑端登录，若非本人操作，请忽略申请</view>
-		<view class="button-box">
-			<view class="button" :class="{ loading }" @click="login">
+		<view class="content">
+			<view class="logo"></view>
+			<view class="code-message">
+				授权后，将在电脑端登录，若非本人操作，
+				<br />
+				请忽略申请
+			</view>
+			<view class="submit-button" :class="{ loading }" @click="login">
 				{{ loading ? '登录中...' : '授权登录' }}
 			</view>
 			<view class="cancel-button" @click="cancel">取消</view>
@@ -74,41 +78,49 @@ export default {
 <style lang="scss" scoped>
 .code-page {
 	text-align: center;
-	background-image: url(https://image.whzb.com/chain/StellarUI/验证码背景.png);
+	background-image: url(https://image.whzb.com/chain/StellarUI/image/mp-pc-login-bg.png);
 	background-size: 100% auto;
+	background-repeat: no-repeat;
 	width: 100vw;
 	height: 100vh;
 	background-color: #f6f9ff;
 	position: relative;
-	.code-message {
-		width: 600rpx;
-		text-align: center;
-		font-family: PingFang SC, PingFang SC;
-		font-weight: 400;
-		font-size: 28rpx;
-		color: #666666;
+	.content {
 		position: absolute;
-		bottom: 480rpx;
-		left: 75rpx;
-	}
-	.button-box {
-		width: 100%;
-		position: absolute;
-		bottom: 240rpx;
+		top: 50%;
+		left: 50%;
+		transform: translate(-50%, -50%);
 		display: flex;
 		flex-direction: column;
 		align-items: center;
-		.button {
-			width: 600rpx;
-			height: 90rpx;
-			line-height: 90rpx;
-			background-color: #0090ff;
-			border-radius: 12rpx;
+		.logo {
+			width: 160rpx;
+			height: 160rpx;
+			background-image: url(https://image.whzb.com/chain/StellarUI/mp-logo.png);
+			background-size: 100% 100%;
+		}
+		.code-message {
+			margin-top: 54rpx;
+			width: 608rpx;
+			text-align: center;
+			font-family: PingFang SC, PingFang SC;
+			font-weight: 400;
+			font-size: 32rpx;
+			color: #666666;
+		}
+
+		.submit-button {
+			margin-top: 64rpx;
+			width: 438rpx;
+			height: 80rpx;
+			background: #0090ff;
+			box-shadow: 0rpx 12rpx 40rpx 2rpx rgba(0, 144, 255, 0.1);
+			border-radius: 48rpx;
 			font-family: PingFang SC, PingFang SC;
 			font-weight: bold;
-			font-size: 30rpx;
+			font-size: 32rpx;
 			color: #ffffff;
-			margin: 0 auto;
+			line-height: 80rpx;
 			&.loading {
 				background-color: #66bbff;
 			}
@@ -121,9 +133,10 @@ export default {
 			color: #0090ff;
 		}
 	}
+
 	.uuid-text {
 		position: absolute;
-		bottom: 156rpx;
+		bottom: 180rpx;
 		width: 100%;
 		text-align: center;
 		font-family: PingFang SC, PingFang SC;
