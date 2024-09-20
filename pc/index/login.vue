@@ -29,7 +29,7 @@ export default {
 	computed: {
 		qrImage() {
 			if (!this.uuid) return '';
-			return `${config.BASE_URL}/api/wxcode?uuid=${this.uuid}`;
+			return `${config.BASE_URL}/wxcode?uuid=${this.uuid}`;
 		},
 	},
 	async onShow() {
@@ -39,7 +39,7 @@ export default {
 			// 跳转到首页
 			this.$nextTick(() => {
 				uni.redirectTo({
-					url: '/pages/index/index',
+					url: '/pc/index/index',
 				});
 			});
 			return;
@@ -73,7 +73,9 @@ export default {
 					setToken(data);
 					this.sse.close();
 					this.$nextTick(() => {
-						uni.navigateBack();
+						uni.redirectTo({
+							url: `/pc/index/index?name=${this.$route.query.back}`,
+						});
 					});
 				}
 			});

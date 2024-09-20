@@ -6,7 +6,7 @@ export default {
 	onLaunch: async function () {
 		// #ifdef MP-WEIXIN
 		const { code } = await wx.login();
-		const openid = await request('/api/account/openid', { code });
+		const openid = await request('/account/openid', { code });
 		console.log('open-id:', openid);
 		// #endif
 	},

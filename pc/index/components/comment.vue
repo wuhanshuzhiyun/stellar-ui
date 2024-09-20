@@ -96,7 +96,7 @@ export default {
 			});
 		},
 		getComment(document_name) {
-			request('/api/comments/list', { document_name, versions: this.commentParams.versions }).then((data) => {
+			request('/comments/list', { document_name, versions: this.commentParams.versions }).then((data) => {
 				this.isComment = true;
 				this.commentList = data.map((item) =>
 					Object.assign(item, { time: dayjs(item.create_at).format('YYYY-MM-DD HH:mm:ss') })
@@ -114,7 +114,7 @@ export default {
 			}
 			if (this.isAjax) return;
 			this.isAjax = true;
-			request('/api/comments/append', Object.assign(this.commentParams, { document_name: this.activeName }), 'POST')
+			request('/comments/append', Object.assign(this.commentParams, { document_name: this.activeName }), 'POST')
 				.then((data) => {
 					this.isAjax = false;
 					uni.showToast({

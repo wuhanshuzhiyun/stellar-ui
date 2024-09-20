@@ -24,7 +24,7 @@ export const getInfo = async (pull = false) => {
 		if (info) return JSON.parse(info)
 		const token = getToken()
 		if (!token) return null
-		info = await request('/api/account/info');
+		info = await request('/account/info');
 		uni.setStorageSync("user-info", JSON.stringify(info))
 		return info
 	} catch (e) {
@@ -39,7 +39,7 @@ export const login = async () => {
 		const {
 			code
 		} = await wx.login();
-		const token = await request('/api/account/login', {
+		const token = await request('/account/login', {
 			code
 		}, 'POST');
 		setToken(token);
@@ -51,7 +51,7 @@ export const login = async () => {
 
 export const logout = async () => {
 	try {
-		await request("/api/account/logout")
+		await request("/account/logout")
 		removeToken()
 	} catch (e) {
 		//TODO handle the exception

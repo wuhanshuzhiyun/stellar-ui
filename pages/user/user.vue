@@ -92,7 +92,7 @@ export default {
 			});
 		},
 		save() {
-			request('/api/account/update', this.userInfo, 'POST').then(() => {
+			request('/account/update', this.userInfo, 'POST').then(() => {
 				uni.showToast({
 					title: '保存成功',
 					icon: 'none',

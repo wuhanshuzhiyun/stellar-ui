@@ -44,7 +44,7 @@ export default {
 		async open(uuid) {
 			try {
 				const { code } = await wx.login();
-				await request('/api/openLogin', { uuid, code });
+				await request('/openLogin', { uuid, code });
 			} catch (e) {
 				//TODO handle the exception
 				console.error(e);
@@ -60,7 +60,7 @@ export default {
 				if (!token) {
 					await login();
 				}
-				await request('/api/wechatLogin', { uuid: this.uuid }, 'POST');
+				await request('/wechatLogin', { uuid: this.uuid }, 'POST');
 				uni.switchTab({ url: '/pages/user/user' });
 			} catch (e) {
 				//TODO handle the exception
