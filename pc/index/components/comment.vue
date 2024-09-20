@@ -2,14 +2,21 @@
 	<view class="comment-body">
 		<view class="comment-title">意见反馈</view>
 		<block v-if="userInfo">
-			<input class="user-input" placeholder="标题" v-model="commentParams.title" maxlength="8" />
+			<view class="back-commit" v-if="backComment">
+				<view class="back-commit-text">
+					回复
+					<text>{{ backComment.Account.nickname }}：{{ backComment.title }}</text>
+				</view>
+				<text class="close-back" @click="backComment = null">×</text>
+			</view>
+			<input class="user-input" placeholder="标题" v-model="commentParams.title" maxlength="20" />
 
 			<textarea
 				class="comment-input"
 				v-model="commentParams.content"
 				rows="10"
 				placeholder="反馈意见"
-				maxlength="500"
+				maxlength="240"
 			/>
 			<view class="button-box">
 				<view>
@@ -33,17 +40,36 @@
 		</view>
 		<view class="comment-list" v-if="commentList.length">
 			<view class="comment-item" v-for="item in commentList" :key="item.id">
-				<view class="comment-head-title">
-					<text class="head-user">{{ item.title }}</text>
-					<text class="head-time">{{ item.time }}</text>
+				<view class="item-title">
+					<text>{{ item.title }}</text>
+					<text class="item-back" @click="backComment = item">回复</text>
 				</view>
-				<view class="comment-head-user">
+				<view class="item-user">
 					<image class="avatar" :src="item.Account.avatar_url" mode="widthFix" />
-					<text class="head-user">{{ item.Account.nickname }}</text>
+					<text class="nickname">{{ item.Account.nickname }}</text>
+					<text class="time-text">{{ item.time }}</text>
 				</view>
 
-				<view class="comment-content">
+				<view class="item-content">
 					{{ item.content }}
+				</view>
+
+				<view class="item-children">
+					<view class="comment-item" v-for="m in item.children" :key="m.id">
+						<view class="item-title">
+							<text>{{ m.title }}</text>
+							<text class="item-back" @click="backComment = m">回复</text>
+						</view>
+						<view class="item-user">
+							<image class="avatar" :src="m.Account.avatar_url" mode="widthFix" />
+							<text class="nickname">{{ m.Account.nickname }}</text>
+							<text class="time-text">{{ m.time }}</text>
+						</view>
+
+						<view class="item-content">
+							{{ m.content }}
+						</view>
+					</view>
 				</view>
 			</view>
 		</view>
@@ -68,13 +94,16 @@ export default {
 	data() {
 		return {
 			commentList: [],
+			// 评论信息
 			commentParams: {
+				parent_id: 0,
 				title: '',
 				content: '',
 				versions: 2,
 			},
 			userInfo: null,
 			isAjax: false,
+			backComment: null,
 		};
 	},
 	watch: {
@@ -98,9 +127,15 @@ export default {
 		getComment(document_name) {
 			request('/comments/list', { document_name, versions: this.commentParams.versions }).then((data) => {
 				this.isComment = true;
-				this.commentList = data.map((item) =>
-					Object.assign(item, { time: dayjs(item.create_at).format('YYYY-MM-DD HH:mm:ss') })
-				);
+				this.commentList = data.map((item) => {
+					if (item.children) {
+						item.children = item.children.map((m) => {
+							return Object.assign(m, { time: dayjs(m.created_at).format('YYYY-MM-DD HH:mm:ss') });
+						});
+					}
+					return Object.assign(item, { time: dayjs(item.created_at).format('YYYY-MM-DD HH:mm:ss') });
+				});
+				console.log(this.commentList);
 			});
 		},
 		setComment() {
@@ -114,7 +149,11 @@ export default {
 			}
 			if (this.isAjax) return;
 			this.isAjax = true;
-			request('/comments/append', Object.assign(this.commentParams, { document_name: this.activeName }), 'POST')
+			const form = { ...this.commentParams };
+			if (this.backComment) {
+				form.parent_id = this.backComment.parent_id ? this.backComment.parent_id : this.backComment.id;
+			}
+			request('/comments/append', Object.assign(form, { document_name: this.activeName }), 'POST')
 				.then((data) => {
 					this.isAjax = false;
 					uni.showToast({
@@ -124,6 +163,7 @@ export default {
 					this.getComment(this.activeName);
 					this.commentParams.title = '';
 					this.commentParams.content = '';
+					this.backComment = null;
 				})
 				.catch(() => {
 					this.isAjax = false;
@@ -142,7 +182,7 @@ export default {
 	.comment-title {
 		font-size: 20px;
 		font-weight: 600;
-		border-left: 4px solid #1989fa;
+		border-left: 4px solid #0090ff;
 		padding-left: 5px;
 	}
 	.not-login {
@@ -156,17 +196,40 @@ export default {
 			line-height: 60rpx;
 			cursor: pointer;
 			.btn {
-				color: #1989fa;
+				color: #0090ff;
 			}
+		}
+	}
+	.back-commit {
+		margin-top: 20px;
+		font-size: 12px;
+		color: #999;
+		display: flex;
+		align-items: center;
+		.back-commit-text {
+			max-width: calc(100% - 20px);
+			white-space: nowrap;
+			text-overflow: ellipsis;
+			overflow: hidden;
+			text {
+				margin-left: 10px;
+			}
+		}
+		.close-back {
+			font-size: 20px;
+			width: 20px;
+			color: #0090ff;
+			cursor: pointer;
 		}
 	}
 	.comment-input,
 	.user-input {
-		margin-top: 12px;
+		margin-top: 10px;
 		border: 1px solid #ddd;
 		padding: 5px;
 		border-radius: 4px;
 	}
+
 	.user-input {
 		height: 32px;
 	}
@@ -190,37 +253,76 @@ export default {
 		.comment-item {
 			& + .comment-item {
 				border-top: 1px solid #ddd;
-				margin-top: 12px;
-				padding-top: 12px;
+				margin-top: 20px;
+				padding-top: 20px;
 			}
-			.comment-head-title {
-				display: flex;
-				align-items: flex-end;
-				.head-time {
-					font-size: 12px;
-					color: #aaa;
-					margin-left: 10px;
-				}
-			}
-			.comment-head-user {
+			.item-title {
+				font-size: 18px;
+				line-height: 1;
 				display: flex;
 				align-items: center;
-				height: 40px;
+				justify-content: space-between;
+				.item-back {
+					font-size: 14px;
+					color: #0090ff;
+					cursor: pointer;
+				}
+			}
+
+			.item-user {
+				display: flex;
+				align-items: center;
+				margin-top: 5px;
 				.avatar {
 					width: 24px;
 					height: 24px;
 					margin-right: 5px;
 				}
-				.head-user {
-					font-zise: 18px;
+				.nickname {
+					font-size: 14px;
 					padding-right: 6px;
 					color: #666;
 				}
+				.time-text {
+					margin-left: 10px;
+					font-size: 12px;
+					color: #aaa;
+				}
 			}
-			.comment-content {
+			.item-content {
 				margin-top: 5px;
 				font-size: 14px;
 				color: #666;
+			}
+
+			.item-children {
+				margin-top: 10px;
+				padding-left: 30px;
+				.comment-item {
+					padding-top: 10px;
+					border-top: 1px solid #ddd;
+
+					& + .comment-item {
+						margin-top: 10px;
+					}
+					.item-title {
+						font-size: 16px;
+					}
+					.item-time {
+						.item-back {
+							font-size: 12px;
+						}
+					}
+					.item-head-user {
+						.avatar {
+							width: 20px;
+							height: 20px;
+						}
+						.head-user {
+							font-size: 12px;
+						}
+					}
+				}
 			}
 		}
 	}

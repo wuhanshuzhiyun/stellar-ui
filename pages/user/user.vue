@@ -30,7 +30,13 @@
 					<view class="info-item">
 						<view class="item-label">昵称</view>
 						<view class="item-data">
-							<input class="user-name" type="text" v-model="userInfo.nickname" placeholder="请输入昵称" />
+							<input
+								class="user-name"
+								type="text"
+								v-model="userInfo.nickname"
+								maxlength="20"
+								placeholder="请输入昵称"
+							/>
 						</view>
 					</view>
 				</view>
