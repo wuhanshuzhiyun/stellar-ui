@@ -56,6 +56,12 @@
 
 				<view class="item-children">
 					<view class="comment-item" v-for="m in item.children" :key="m.id">
+						<view class="back-commit">
+							<view class="back-commit-text">
+								<text class="at-user">@{{ m.reply.Account.nickname }}</text>
+								：{{ m.reply.title }}
+							</view>
+						</view>
 						<view class="item-title">
 							<text>{{ m.title }}</text>
 							<text class="item-back" @click="backComment = m">回复</text>
@@ -129,9 +135,11 @@ export default {
 				this.isComment = true;
 				this.commentList = data.map((item) => {
 					if (item.children) {
-						item.children = item.children.map((m) => {
-							return Object.assign(m, { time: dayjs(m.created_at).format('YYYY-MM-DD HH:mm:ss') });
-						});
+						item.children = item.children
+							.map((m) => {
+								return Object.assign(m, { time: dayjs(m.created_at).format('YYYY-MM-DD HH:mm:ss') });
+							})
+							.sort((a, b) => a.id - b.id);
 					}
 					return Object.assign(item, { time: dayjs(item.created_at).format('YYYY-MM-DD HH:mm:ss') });
 				});
@@ -152,6 +160,7 @@ export default {
 			const form = { ...this.commentParams };
 			if (this.backComment) {
 				form.parent_id = this.backComment.parent_id ? this.backComment.parent_id : this.backComment.id;
+				form.reply_id = this.backComment.id;
 			}
 			request('/comments/append', Object.assign(form, { document_name: this.activeName }), 'POST')
 				.then((data) => {
@@ -305,7 +314,15 @@ export default {
 					& + .comment-item {
 						margin-top: 10px;
 					}
+					.back-commit {
+						margin-top: 0px;
+						.at-user {
+							margin-left: 0;
+							color: #0090ff;
+						}
+					}
 					.item-title {
+						margin-top: 5px;
 						font-size: 16px;
 					}
 					.item-time {
