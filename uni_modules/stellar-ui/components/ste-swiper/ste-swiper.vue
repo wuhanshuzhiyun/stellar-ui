@@ -357,6 +357,7 @@ export default {
 		},
 		setBoundary(moveX = 0, moveY = 0) {
 			if (!this.circular) return;
+			if (this.children?.length < 2) return;
 			const startComponent = this.cmpStartComponent;
 			const endComponent = this.cmpEndComponent;
 			const length = this.children.length;
