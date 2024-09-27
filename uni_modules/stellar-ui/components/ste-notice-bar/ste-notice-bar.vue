@@ -54,7 +54,7 @@ import utils from '../../utils/utils.js';
  * @property {String} color 文字颜色，默认 #000000
  * @property {String} background 背景，默认 #ffffff
  * @property {Number|String} width 宽度  默认 100%
- * @value 100% 小 {String}
+ * @value 100% 填满 {String}
  * @value  {{Number}} 自定义宽度，单位rpx {Number}
  * @property {Number} acrossSpeed，滚动速率 (px/s)，默认 50
  * @property {Number} verticalSpeed，滚动的速度（ms），默认 500
@@ -92,15 +92,11 @@ export default {
 		},
 		background: {
 			type: String,
-			default: '#fffffff',
+			default: '#ffffff',
 		},
 		width: {
 			type: [Number, String],
 			default: '100%',
-		},
-		speed: {
-			type: Number,
-			default: 500,
 		},
 		acrossSpeed: {
 			type: Number,
@@ -129,14 +125,12 @@ export default {
 			index: 0,
 			touch: false,
 			firstDone: false,
-			animationData: null,
 			copyList: [],
 			acrossDuration: 0,
 			textTranslate: 0,
 			cardMsgClass: '',
 			h5flag: false,
 			closeShow: true,
-			first: true,
 		};
 	},
 	async mounted() {},

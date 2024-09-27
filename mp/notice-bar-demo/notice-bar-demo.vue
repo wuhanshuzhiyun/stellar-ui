@@ -53,7 +53,7 @@
 				</view>
 			</view>
 			<view class="demo-item">
-				<view class="title">取消按钮</view>
+				<view class="title">关闭按钮</view>
 				<view class="item-block">
 					<ste-notice-bar :list="list" closeMode></ste-notice-bar>
 				</view>
