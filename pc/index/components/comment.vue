@@ -58,8 +58,8 @@
 					<view class="comment-item" v-for="m in item.children" :key="m.id">
 						<view class="back-commit">
 							<view class="back-commit-text">
-								<text class="at-user">@{{ m.reply.Account.nickname }}</text>
-								：{{ m.reply.title }}
+								<text class="at-user">@{{ m.parent.Account.nickname }}</text>
+								：{{ m.parent.title }}
 							</view>
 						</view>
 						<view class="item-title">
@@ -102,7 +102,7 @@ export default {
 			commentList: [],
 			// 评论信息
 			commentParams: {
-				parent_id: 0,
+				root_id: 0,
 				title: '',
 				content: '',
 				versions: 2,
@@ -159,8 +159,8 @@ export default {
 			this.isAjax = true;
 			const form = { ...this.commentParams };
 			if (this.backComment) {
-				form.parent_id = this.backComment.parent_id ? this.backComment.parent_id : this.backComment.id;
-				form.reply_id = this.backComment.id;
+				form.root_id = this.backComment.root_id ? this.backComment.root_id : this.backComment.id;
+				form.parent_id = this.backComment.id;
 			}
 			request('/comments/append', Object.assign(form, { document_name: this.activeName }), 'POST')
 				.then((data) => {
