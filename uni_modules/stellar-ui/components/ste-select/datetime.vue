@@ -34,15 +34,6 @@ export default {
 			selectedIndex: [],
 		};
 	},
-	computed: {
-		cmpDateUnits() {
-			if (['date', 'datetime', 'month'].includes(this.mode)) {
-				return ['年', '月', '日', '时', '分', '秒'];
-			} else {
-				return ['时', '分', '秒'];
-			}
-		},
-	},
 	watch: {
 		value: {
 			handler(v) {

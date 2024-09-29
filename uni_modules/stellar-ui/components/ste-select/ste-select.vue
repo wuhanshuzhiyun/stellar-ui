@@ -73,11 +73,7 @@
 					<block v-else>
 						<view class="one-col-options">
 							<scroll-view scroll-y class="options-col" v-for="(col, index) in viewOptions" :key="index">
-								<view
-									class="options-item"
-									v-if="dataAllowCreate"
-									@click="onSelect(index, dataAllowCreate, true)"
-								>
+								<view class="options-item" v-if="dataAllowCreate" @click="onSelect(index, dataAllowCreate, true)">
 									{{ dataAllowCreate[labelKey] }}
 								</view>
 								<view
@@ -241,13 +237,6 @@ export default {
 			};
 		},
 
-		cmpDateUnits() {
-			if (['date', 'datetime', 'month'].includes(this.mode)) {
-				return ['年', '月', '日', '时', '分', '秒'];
-			} else {
-				return ['时', '分', '秒'];
-			}
-		},
 		cmpMultiseriateValue() {
 			if (this.cmpShowDate) {
 				return [];
@@ -346,9 +335,7 @@ export default {
 				let list = this.dataOptions;
 				if (this.cmpFilterable && this.userFilterable) {
 					// 处理筛选数据
-					list = list.map((item) =>
-						item.filter((value) => value[this.labelKey].includes(this.userFilterable))
-					);
+					list = list.map((item) => item.filter((value) => value[this.labelKey].includes(this.userFilterable)));
 				}
 				this.viewOptions = list;
 			});
