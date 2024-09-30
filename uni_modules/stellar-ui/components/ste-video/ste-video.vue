@@ -10,7 +10,7 @@
 			:poster="poster"
 			:autoplay="autoplay"
 			:loop="loop"
-			:muted="muted"
+			:muted="isMuted"
 			:initialTime="initialTime"
 			:duration="duration"
 			:enable-play-gesture="enablePlayGesture"
@@ -85,6 +85,17 @@
 						@click="handlePlay(true)"
 					></ste-icon>
 					<ste-icon code="&#xe6ab;" size="36" color="#ffffff" v-else @click="handlePlay(false)"></ste-icon>
+				</view>
+				<!-- 静音按钮 -->
+				<view class="muted-box">
+					<ste-icon
+						code="&#xe6c3;"
+						size="38"
+						color="#ffffff"
+						v-if="!isMuted"
+						@click="triggerMuted"
+					></ste-icon>
+					<ste-icon code="&#xe6c2;" size="38" color="#ffffff" v-else @click="triggerMuted"></ste-icon>
 				</view>
 				<!-- 时间进度 -->
 				<view class="time-box" v-if="isFull">
@@ -204,6 +215,7 @@ export default {
 			speedConfigArr: [0.5, 0.8, 1.0, 1.25, 1.5],
 			showTip: false,
 			msg: '你好',
+			isMuted: this.muted,
 		};
 	},
 	created() {
@@ -215,6 +227,14 @@ export default {
 	},
 	mounted() {
 		this.video = uni.createVideoContext(this.id, this);
+	},
+	watch: {
+		muted: {
+			handler(val) {
+				this.isMuted = val;
+			},
+			immediate: true,
+		},
 	},
 	computed: {
 		cmpRootClass() {
@@ -423,6 +443,11 @@ export default {
 				this.showTip = false;
 			}, 1500);
 		},
+		triggerMuted() {
+			console.log('触发了');
+			// this.$emit('update:muted', !this.muted);
+			this.isMuted = !this.isMuted;
+		},
 	},
 };
 </script>
@@ -522,6 +547,10 @@ export default {
 
 			display: flex;
 			justify-content: space-between;
+
+			.muted-box {
+				padding-left: var(--rpx-to-px-16);
+			}
 
 			.progress-box {
 				flex: 1;
