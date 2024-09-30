@@ -86,31 +86,31 @@ export default {
 			default: undefined,
 		},
 		inactiveColor: {
-			default: String,
+			type: String,
 			default: '#000000',
 		},
 		activeColor: {
-			default: String,
+			type: String,
 			default: '#0090FF',
 		},
 		direction: {
-			default: String,
+			type: String,
 			default: 'down',
 		},
 		duration: {
-			default: Number,
+			type: Number,
 			default: 0.2,
 		},
 		showMask: {
-			default: Boolean,
+			type: Boolean,
 			default: true,
 		},
 		isMaskClick: {
-			default: Boolean,
+			type: Boolean,
 			default: true,
 		},
 		zIndex: {
-			default: Number,
+			type: Number,
 			default: 1000,
 		},
 		type: {
@@ -118,7 +118,7 @@ export default {
 			default: 'block',
 		},
 		max: {
-			defualt: Number,
+			type: Number,
 			default: 1,
 		},
 	},
@@ -200,6 +200,7 @@ export default {
 	watch: {
 		value: {
 			handler(val) {
+				console.log('执行watch ', val);
 				if (Array.isArray(val)) {
 					this.chooseItems = val;
 				} else {
@@ -263,6 +264,7 @@ export default {
 			}, this.cmpDuration * 1000);
 		},
 		choose(item) {
+			console.log('执行choose');
 			let temp = this.chooseItems;
 			let index = temp.findIndex((e) => e == item.value);
 			let max = this.max < 1 ? 1 : this.max;
