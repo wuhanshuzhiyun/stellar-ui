@@ -61,6 +61,16 @@ let steToast = useSteToast();
 steToast.showToast()
 ```
 
+7. 提示跨页面功能配置  
+在混淆方法中将参数`enableCrossPagePrompt`置为`true`为开启 `false`为关闭
+```
+showToast(params) {
+	// 是否开启提示跨页面功能配置 true为开启 false为关闭
+	params.enableCrossPagePrompt = false;
+	steToast.showToast(params);
+},
+```
+
 ### 代码演示
 
 #### 文字提示
@@ -148,6 +158,25 @@ click10() {
 },
 ```
 
+### 提示队列
+`order`为提示队列属性，`同一时间执行`的提示开启函数带有该属性的，将会把这个提示加入队列，队列中的提示按照执行顺序一直执行
+```
+this.showToast({
+	title: '队列1',
+	order: true,
+});
+this.showToast({
+	title: '队列2',
+	duration: 4000,
+	order: true,
+});
+this.showToast({
+	title: '队列3',
+	order: true,
+});
+```
+
+
 ### 回调事件
 - `success`：提示打开成功的回调函数
 - `fail`：提示打开失败的回调函数
@@ -203,6 +232,7 @@ click13() {
 | `image`	| 自定义图标的路径，image 的优先级高于 icon												| `String`	| -			| -																									| -			|
 | `duration`| 提示的延迟时间，单位`ms` 值为 `0` 时，`toast` 不会自动消失（`loading` 类型默认为 `0`）	| `Number`	| `1500`	| -																									| -			|
 | `mask`	| 是否显示透明蒙层，防止触摸穿透														| `Boolean`	| `false`	| -																									| -			|
+| `order`	| 是否是队列提示																		| `Boolean`	| `false`	| -																									| `v1.29.1`	|
 | `success`	| 提示打开成功的回调函数																| `Function`| -			| -																									| -			|
 | `fail`	| 提示打开失败的回调函数																| `Function`| -			| -																									| -			|
 | `complete`| 提示结束的回调函数（提示打开、失败都会执行）											| `Function`| -			| -																									| -			|

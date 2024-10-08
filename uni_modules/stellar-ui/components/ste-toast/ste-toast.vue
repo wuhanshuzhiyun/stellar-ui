@@ -67,12 +67,60 @@ export default {
 	onPageShow() {
 		this.$nextTick(() => {
 			this.pageShow = true;
+			if (!this.enableCrossPagePrompt) {
+				// 每次进入页面 则清空队列时间
+				uni.removeStorageSync('toastLastParams');
+				// 每次进入新页面 清除所有定时器
+				$state.timer.forEach((value) => {
+					clearTimeout(value);
+				});
+				// 清除定时器数据
+				$state.timer = [];
+			}
 		});
 	},
 	onPageHide() {
 		if (!this.enableCrossPagePrompt) {
 			this.pageShow = false;
 			steToast.hideToast();
+			// 每次离开页面 则清空队列时间
+			uni.removeStorageSync('toastLastParams');
+			// 每次离开页面 清除所有定时器
+			$state.timer.forEach((value) => {
+				clearTimeout(value);
+			});
+			// 清除定时器数据
+			$state.timer = [];
+		}
+	},
+	// 可能页面存在缓存
+	created() {
+		this.$nextTick(() => {
+			this.pageShow = true;
+			if (!this.enableCrossPagePrompt) {
+				// 每次进入页面 则清空队列时间
+				uni.removeStorageSync('toastLastParams');
+				// 每次进入新页面 清除所有定时器
+				$state.timer.forEach((value) => {
+					clearTimeout(value);
+				});
+				// 清除定时器数据
+				$state.timer = [];
+			}
+		});
+	},
+	destroyed() {
+		if (!this.enableCrossPagePrompt) {
+			this.pageShow = false;
+			steToast.hideToast();
+			// 每次离开页面 则清空队列时间
+			uni.removeStorageSync('toastLastParams');
+			// 每次离开页面 清除所有定时器
+			$state.timer.forEach((value) => {
+				clearTimeout(value);
+			});
+			// 清除定时器数据
+			$state.timer = [];
 		}
 	},
 	computed: {
@@ -129,6 +177,8 @@ export default {
 			handler(newVal) {
 				if (!newVal) {
 					this.close();
+					// 关闭弹窗 则清空队列时间
+					uni.removeStorageSync('toastLastParams');
 				}
 			},
 		},
