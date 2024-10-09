@@ -102,6 +102,7 @@ export default {
 			commentList: [],
 			// 评论信息
 			commentParams: {
+				parent_id: 0,
 				root_id: 0,
 				title: '',
 				content: '',
@@ -132,7 +133,6 @@ export default {
 		},
 		getComment(document_name) {
 			request('/comments/list', { document_name, versions: this.commentParams.versions }).then((data) => {
-				this.isComment = true;
 				this.commentList = data.map((item) => {
 					if (item.children) {
 						item.children = item.children
