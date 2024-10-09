@@ -338,9 +338,11 @@ export default {
 		},
 		setAutoplay() {
 			clearInterval(this.autoplayTimeout);
-			if (!this.autoplay) return;
-			if (this.children?.length < 2) return;
 			this.autoplayTimeout = setInterval(() => {
+				if (!this.autoplay || this.children?.length < 2) {
+					clearInterval(this.autoplayTimeout);
+					return;
+				}
 				let next = this.dataIndex + 1 <= this.children.length - 1 ? this.dataIndex + 1 : 0;
 				if (this.circular) {
 					next = this.dataIndex + 1;
