@@ -118,6 +118,7 @@ export default {
 	computed: {
 		cmpRootStyle() {
 			let style = {
+				opacity: 0,
 				'--cancel-color': this.cancelColor,
 				'--confirm-color': this.confirmColor,
 			};
