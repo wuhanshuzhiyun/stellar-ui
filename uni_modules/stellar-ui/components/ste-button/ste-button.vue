@@ -204,18 +204,14 @@ export default {
 			style = { ...style, ...utils.bg2style(this.background) };
 			style.color = this.color;
 
-			// 禁用 disabled
-			if (this.disabled) {
-				if (this.background == '#0091FF') {
-					style.backgroundColor = '#666666';
-				}
-				style.color = '#ffffff';
+			// 禁用 disabled | 加载 loading
+			// #ifdef H5
+			if (this.disabled || this.loading) {
 				style.cursor = 'not-allowed';
 			}
-
-			// 加载 loading
-			if (this.loading) {
-				style.cursor = 'not-allowed';
+			// #endif
+			if (this.disabled) {
+				style.opacity = 0.5;
 			}
 			return utils.deepMerge(style, this.rootStyle);
 		},
