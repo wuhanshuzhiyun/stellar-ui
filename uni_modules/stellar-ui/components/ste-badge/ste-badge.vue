@@ -106,10 +106,6 @@ export default {
 			default: () => ({}),
 		},
 	},
-	data() {
-		return {};
-	},
-	created() {},
 	computed: {
 		cmpContentStyle() {
 			let style = {};
@@ -153,13 +149,6 @@ export default {
 				return `${this.max}+`;
 			} else {
 				return String(this.content);
-			}
-		},
-	},
-	methods: {
-		handleClick(e) {
-			if (!this.disabled && !this.loading) {
-				this.$emit('click');
 			}
 		},
 	},
