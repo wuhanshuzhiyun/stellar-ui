@@ -1,23 +1,23 @@
+import utils from './utils.js';
 export default class System {
 	/**
 	 * 获取屏幕宽度
 	 */
 	static getWindowWidth() {
-
-		return uni.getSystemInfoSync().windowWidth;
+		return utils.getSystemInfoSync().windowWidth;
 	}
 	/**
 	 * 获取屏幕高度
 	 */
 	static getWindowHeight() {
-		return uni.getSystemInfoSync().windowHeight;
+		return utils.getSystemInfoSync().windowHeight;
 	}
 
 	/**
 	 * 获取手机顶部安全区域距离顶部的距离（状态栏高度）
 	 */
 	static getStatusBarHeight() {
-		return uni.getSystemInfoSync().statusBarHeight;
+		return utils.getSystemInfoSync().statusBarHeight;
 	}
 
 	/**
@@ -35,7 +35,7 @@ export default class System {
 			top: el.top,
 			left: el.left,
 			bottom: vh - el.bottom,
-			right: vw - el.right
+			right: vw - el.right,
 		};
 	}
 }

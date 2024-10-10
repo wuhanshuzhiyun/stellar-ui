@@ -165,7 +165,7 @@ export default {
 				if (this.direction == 'down') {
 					style.height = addPx(this.menuRootQuery.top + this.menuRootQuery.height);
 				} else {
-					let windowHeight = uni.getSystemInfoSync().windowHeight;
+					let windowHeight = utils.getSystemInfoSync().windowHeight;
 					style.height = addPx(windowHeight - this.menuRootQuery.bottom + this.menuRootQuery.height);
 				}
 			}
@@ -235,7 +235,7 @@ export default {
 			e.stopPropagation();
 		},
 		async getContentHeight() {
-			let windowHeight = uni.getSystemInfoSync().windowHeight;
+			let windowHeight = utils.getSystemInfoSync().windowHeight;
 			const res = await utils.querySelector('.ste-dropdown-menu-root', this);
 			this.menuRootQuery = res;
 			this.contentHeight =

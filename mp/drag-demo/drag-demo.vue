@@ -51,6 +51,7 @@
 	</view>
 </template>
 <script>
+import utils from '@/common/utils.js';
 export default {
 	data() {
 		return {
@@ -60,7 +61,7 @@ export default {
 	created() {},
 	mounted() {
 		const boundary = { left: 22, top: 354 };
-		const systemInfo = uni.getSystemInfoSync();
+		const systemInfo = utils.getSystemInfoSync();
 		boundary.right = systemInfo.windowWidth - 22 - 300;
 		boundary.bottom = systemInfo.windowHeight - 354 - 150;
 		this.boundary = boundary;

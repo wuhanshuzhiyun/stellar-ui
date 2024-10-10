@@ -3,7 +3,7 @@ import System from './System.js';
 import dayjs from './dayjs.min.js';
 let throLast = 0; // 节流方法用变量
 let throTimer = null; // 节流方法用的变量
-
+let systemInfoSync = null;
 let utils = {
 	Color,
 	System,
@@ -141,8 +141,7 @@ let utils = {
 		const selectFn = all ? 'selectAll' : 'select';
 		return new Promise((resolve, reject) => {
 			try {
-				uni
-					.createSelectorQuery()
+				uni.createSelectorQuery()
 					.in(component)
 					[selectFn](selectors)
 					.boundingClientRect((data) => {
@@ -551,6 +550,29 @@ let utils = {
 		}
 
 		return true;
+	},
+	/** 用来替换uni.SystemInfoSync，解决控制台报警问题*/
+	getSystemInfoSync() {
+		if (systemInfoSync == null) {
+			// #ifdef MP-WEIXIN
+			let systemSetting = wx.getSystemSetting();
+			let appAuthorizeSetting = wx.getAppAuthorizeSetting();
+			let deviceInfo = wx.getDeviceInfo();
+			let windowInfo = wx.getWindowInfo();
+			let appBaseInfo = wx.getAppBaseInfo();
+			// #endif
+			systemInfoSync = {
+				...systemSetting,
+				...appAuthorizeSetting,
+				...deviceInfo,
+				...windowInfo,
+				...appBaseInfo,
+			};
+			// #ifndef MP-WEIXIN
+			systemInfoSync = uni.getSystemInfoSync();
+			// #endif
+		}
+		return systemInfoSync;
 	},
 };
 

@@ -25,7 +25,7 @@ let backgroundControlledHeight = 40; //背景图片可控距离 单位40rpx,背�
 let designedMenuBottonBottom = 159.6153846153846;
 let backgroundPositionY = -1; // 背景图片精确适配胶囊按钮后的 background-position ypos的值，单位rpx
 
-let systemInfo = uni.getSystemInfoSync();
+let systemInfo = utils.getSystemInfoSync();
 // 手机可使用区域的高度 单位rpx
 let windowHeight = utils.px2rpx(systemInfo.windowHeight);
 // 手机可使用区域的高度 单位px
