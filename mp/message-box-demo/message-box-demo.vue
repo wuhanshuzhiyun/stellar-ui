@@ -95,7 +95,6 @@ export default {
 		msgBox() {
 			this.showMsgBox({
 				title: '确认删除订单吗？',
-				// content: '确认删除订单吗？123',
 			});
 		},
 		msgBoxIcon1() {

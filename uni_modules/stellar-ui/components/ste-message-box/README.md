@@ -59,8 +59,7 @@ steMsgBox.showMsgBox();
 可在标题(`title`)和内容(`content`)中使用`\n`来实现换行
 ```
 this.showMsgBox({
-	title: '提示',
-	content: '确认删除订单吗？',
+	title: '确认删除订单吗？',
 });
 ```
 
