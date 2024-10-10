@@ -241,7 +241,6 @@ export default {
 			if (!height || !show) return (this.initing = false);
 			this.contentScrollTop = 0;
 			setTimeout(() => {
-				console.log('contentScrollTop-->', height);
 				this.contentScrollTop = height;
 				this.initing = false;
 			}, 25);

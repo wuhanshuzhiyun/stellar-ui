@@ -247,11 +247,13 @@ export default {
 		},
 		itemClick(stop, next, reject) {
 			stop();
-			uni.showLoading({
-				title: '加载...',
+			this.showToast({
+				title: '加载中...',
+				icon: 'loading',
+				duration: 600,
 			});
 			setTimeout(() => {
-				uni.hideLoading();
+				this.hideToast();
 				next();
 			}, 500);
 		},

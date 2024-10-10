@@ -46,7 +46,13 @@
 						<ste-button @click="show5 = true">自定义文案</ste-button>
 						<ste-popup :show.sync="show5" height="60vh" position="bottom">
 							<div style="padding-bottom: 20px; height: 100%">
-								<ste-calendar mode="range" title="酒店预约" startText="住店" endText="离店" @confirm="handleConfirm" />
+								<ste-calendar
+									mode="range"
+									title="酒店预约"
+									startText="住店"
+									endText="离店"
+									@confirm="handleConfirm"
+								/>
 							</div>
 						</ste-popup>
 					</view>
@@ -54,7 +60,12 @@
 						<ste-button @click="show6 = true">日期最大范围</ste-button>
 						<ste-popup :show.sync="show6" height="60vh" position="bottom">
 							<div style="padding-bottom: 20px; height: 100%">
-								<ste-calendar mode="range" minDate="2024-05-10" maxDate="2024-05-20" @confirm="handleConfirm" />
+								<ste-calendar
+									mode="range"
+									minDate="2024-05-10"
+									maxDate="2024-05-20"
+									@confirm="handleConfirm"
+								/>
 							</div>
 						</ste-popup>
 					</view>
@@ -86,7 +97,12 @@
 						<ste-button @click="show10 = true">默认展示月份</ste-button>
 						<ste-popup :show.sync="show10" position="bottom" height="60vh" @open-after="setViewMonth">
 							<div style="padding-bottom: 20px; height: 100%">
-								<ste-calendar ref="defaultMonth" minDate="2024-05-20" maxDate="2024-08-01" @confirm="handleConfirm" />
+								<ste-calendar
+									ref="defaultMonth"
+									minDate="2024-05-20"
+									maxDate="2024-08-01"
+									@confirm="handleConfirm"
+								/>
 							</div>
 						</ste-popup>
 					</view>
@@ -94,7 +110,12 @@
 						<ste-button @click="show11 = true">隐藏确定按钮</ste-button>
 						<ste-popup :show.sync="show11" position="bottom" height="60vh">
 							<div style="padding-bottom: 20px; height: 100%">
-								<ste-calendar minDate="2024-05-20" maxDate="2024-08-01" @select="handleConfirm" :showConfirm="false" />
+								<ste-calendar
+									minDate="2024-05-20"
+									maxDate="2024-08-01"
+									@select="handleConfirm"
+									:showConfirm="false"
+								/>
 							</div>
 						</ste-popup>
 					</view>
@@ -102,7 +123,12 @@
 						<ste-button @click="show12 = true">只读</ste-button>
 						<ste-popup :show.sync="show12" position="bottom" height="60vh">
 							<div style="padding-bottom: 20px; height: 100%">
-								<ste-calendar minDate="2024-05-20" maxDate="2024-06-10" readonly :list="['2024-05-21']" />
+								<ste-calendar
+									minDate="2024-05-20"
+									maxDate="2024-06-10"
+									readonly
+									:list="['2024-05-21']"
+								/>
 							</div>
 						</ste-popup>
 					</view>

@@ -155,11 +155,13 @@ export default {
 		click2() {},
 		syncClose(allowStop, resolve) {
 			allowStop();
-			uni.showLoading({
+			this.showToast({
 				title: '加载中...',
+				icon: 'loading',
+				duration: 2500,
 			});
 			setTimeout(() => {
-				uni.hideLoading();
+				this.hideToast();
 				resolve();
 			}, 2000);
 		},
