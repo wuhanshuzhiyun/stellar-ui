@@ -1,23 +1,44 @@
-import utils from './utils.js';
 export default class System {
+	static getSystemInfoSync() {
+		if (systemInfoSync == null) {
+			// #ifdef MP-WEIXIN
+			let systemSetting = wx.getSystemSetting();
+			let appAuthorizeSetting = wx.getAppAuthorizeSetting();
+			let deviceInfo = wx.getDeviceInfo();
+			let windowInfo = wx.getWindowInfo();
+			let appBaseInfo = wx.getAppBaseInfo();
+			// #endif
+			systemInfoSync = {
+				...systemSetting,
+				...appAuthorizeSetting,
+				...deviceInfo,
+				...windowInfo,
+				...appBaseInfo,
+			};
+			// #ifndef MP-WEIXIN
+			systemInfoSync = uni.getSystemInfoSync();
+			// #endif
+		}
+		return systemInfoSync;
+	}
 	/**
 	 * 获取屏幕宽度
 	 */
 	static getWindowWidth() {
-		return utils.getSystemInfoSync().windowWidth;
+		return System.getSystemInfoSync().windowWidth;
 	}
 	/**
 	 * 获取屏幕高度
 	 */
 	static getWindowHeight() {
-		return utils.getSystemInfoSync().windowHeight;
+		return System.getSystemInfoSync().windowHeight;
 	}
 
 	/**
 	 * 获取手机顶部安全区域距离顶部的距离（状态栏高度）
 	 */
 	static getStatusBarHeight() {
-		return utils.getSystemInfoSync().statusBarHeight;
+		return System.getSystemInfoSync().statusBarHeight;
 	}
 
 	/**

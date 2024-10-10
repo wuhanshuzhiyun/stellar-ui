@@ -142,8 +142,7 @@ let utils = {
 		return new Promise((resolve, reject) => {
 			try {
 				uni.createSelectorQuery()
-					.in(component)
-					[selectFn](selectors)
+					.in(component)[selectFn](selectors)
 					.boundingClientRect((data) => {
 						resolve(data);
 					})
@@ -390,8 +389,7 @@ let utils = {
 				if (typeof otherAttributes === 'function') {
 					_otherAttributes = _otherAttributes(item);
 				}
-				return Object.assign(
-					{
+				return Object.assign({
 						parentNode,
 						depth,
 					},
@@ -552,28 +550,7 @@ let utils = {
 		return true;
 	},
 	/** 用来替换uni.SystemInfoSync，解决控制台报警问题*/
-	getSystemInfoSync() {
-		if (systemInfoSync == null) {
-			// #ifdef MP-WEIXIN
-			let systemSetting = wx.getSystemSetting();
-			let appAuthorizeSetting = wx.getAppAuthorizeSetting();
-			let deviceInfo = wx.getDeviceInfo();
-			let windowInfo = wx.getWindowInfo();
-			let appBaseInfo = wx.getAppBaseInfo();
-			// #endif
-			systemInfoSync = {
-				...systemSetting,
-				...appAuthorizeSetting,
-				...deviceInfo,
-				...windowInfo,
-				...appBaseInfo,
-			};
-			// #ifndef MP-WEIXIN
-			systemInfoSync = uni.getSystemInfoSync();
-			// #endif
-		}
-		return systemInfoSync;
-	},
+	getSystemInfoSync: System.getSystemInfoSync
 };
 
 export default utils;
