@@ -3,12 +3,11 @@ import config from './config.js';
 let throLast = 0; // 节流方法用变量
 let throTimer = null; // 节流方法用的变量
 let windowWidth = null;
-let systemInfoSync = null;
 let utils = {
 	/**px转rpx*/
 	px2rpx(px) {
 		if (windowWidth == null) {
-			windowWidth = this.getSystemInfoSync().windowWidth;
+			windowWidth = this.getWindowInfo().windowWidth;
 		}
 		let rpx = (px * 750) / windowWidth;
 		return rpx;
@@ -17,7 +16,7 @@ let utils = {
 	rpx2px(rpx) {
 		if (!rpx) return '0px';
 		if (windowWidth == null) {
-			windowWidth = this.getSystemInfoSync().windowWidth;
+			windowWidth = this.getWindowInfo().windowWidth;
 		}
 		let px = (parseInt(rpx) * windowWidth) / 750;
 		return `${px}px`;
@@ -217,28 +216,68 @@ let utils = {
 		// 返回替换后的HTML文本
 		return html;
 	},
-	/** 用来替换uni.SystemInfoSync，解决控制台报警问题*/
-	getSystemInfoSync() {
-		if (systemInfoSync == null) {
-			// #ifdef MP-WEIXIN
-			let systemSetting = wx.getSystemSetting();
-			let appAuthorizeSetting = wx.getAppAuthorizeSetting();
-			let deviceInfo = wx.getDeviceInfo();
-			let windowInfo = wx.getWindowInfo();
-			let appBaseInfo = wx.getAppBaseInfo();
-			// #endif
-			systemInfoSync = {
-				...systemSetting,
-				...appAuthorizeSetting,
-				...deviceInfo,
-				...windowInfo,
-				...appBaseInfo,
-			};
-			// #ifndef MP-WEIXIN
-			systemInfoSync = uni.getSystemInfoSync();
-			// #endif
-		}
-		return systemInfoSync;
+	/**
+	 * 获取设备设置
+	 */
+	getSystemSetting() {
+		// #ifdef MP-WEIXIN
+		return wx.getSystemSetting();
+		// #endif
+
+		// #ifndef MP-WEIXIN
+		return uni.getSystemInfoSync();
+		// #endif
+	},
+	/**
+	 * 获取微信APP授权设置
+	 */
+	getAppAuthorizeSetting() {
+		// #ifdef MP-WEIXIN
+		return wx.getAppAuthorizeSetting();
+		// #endif
+
+		// #ifndef MP-WEIXIN
+		return uni.getSystemInfoSync();
+		// #endif
+	},
+
+	/**
+	 * 获取设备基础信息
+	 */
+	getDeviceInfo() {
+		// #ifdef MP-WEIXIN
+		return wx.getDeviceInfo();
+		// #endif
+
+		// #ifndef MP-WEIXIN
+		return uni.getSystemInfoSync();
+		// #endif
+	},
+
+	/**
+	 * 获取窗口信息
+	 */
+	getWindowInfo() {
+		// #ifdef MP-WEIXIN
+		return wx.getWindowInfo();
+		// #endif
+
+		// #ifndef MP-WEIXIN
+		return uni.getSystemInfoSync();
+		// #endif
+	},
+
+	/**
+	 * 获取微信APP基础信息
+	 */
+	getAppBaseInfo() {
+		// #ifdef MP-WEIXIN
+		return wx.getAppBaseInfo();
+		// #endif
+
+		// #ifndef MP-WEIXIN
+		return uni.getSystemInfoSync();
+		// #endif
 	},
 };
 

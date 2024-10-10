@@ -142,7 +142,8 @@ let utils = {
 		return new Promise((resolve, reject) => {
 			try {
 				uni.createSelectorQuery()
-					.in(component)[selectFn](selectors)
+					.in(component)
+					[selectFn](selectors)
 					.boundingClientRect((data) => {
 						resolve(data);
 					})
@@ -389,7 +390,8 @@ let utils = {
 				if (typeof otherAttributes === 'function') {
 					_otherAttributes = _otherAttributes(item);
 				}
-				return Object.assign({
+				return Object.assign(
+					{
 						parentNode,
 						depth,
 					},
@@ -549,8 +551,6 @@ let utils = {
 
 		return true;
 	},
-	/** 用来替换uni.SystemInfoSync，解决控制台报警问题*/
-	getSystemInfoSync: System.getSystemInfoSync
 };
 
 export default utils;

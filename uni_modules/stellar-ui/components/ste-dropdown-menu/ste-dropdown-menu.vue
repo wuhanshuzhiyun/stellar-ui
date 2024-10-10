@@ -35,6 +35,7 @@
 
 <script>
 import utils from '../../utils/utils.js';
+import System from '../../utils/System.js';
 const DEFAULT_ROOT_QUERY = { height: 0, left: 0, top: 0, bottom: 0 };
 const DEFAULT_DURATION = 0.2;
 const MIN_DURATION = 0;
@@ -165,7 +166,7 @@ export default {
 				if (this.direction == 'down') {
 					style.height = addPx(this.menuRootQuery.top + this.menuRootQuery.height);
 				} else {
-					let windowHeight = utils.getSystemInfoSync().windowHeight;
+					let windowHeight = System.getWindowInfo().windowHeight;
 					style.height = addPx(windowHeight - this.menuRootQuery.bottom + this.menuRootQuery.height);
 				}
 			}
@@ -235,7 +236,7 @@ export default {
 			e.stopPropagation();
 		},
 		async getContentHeight() {
-			let windowHeight = utils.getSystemInfoSync().windowHeight;
+			let windowHeight = System.getWindowInfo().windowHeight;
 			const res = await utils.querySelector('.ste-dropdown-menu-root', this);
 			this.menuRootQuery = res;
 			this.contentHeight =

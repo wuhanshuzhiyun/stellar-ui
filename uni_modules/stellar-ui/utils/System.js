@@ -1,18 +1,10 @@
 export default class System {
-	static getSystemInfoSync() {
+	/**
+	 * 获取设备设置
+	 */
+	static getSystemSetting() {
 		// #ifdef MP-WEIXIN
-		let systemSetting = wx.getSystemSetting();
-		let appAuthorizeSetting = wx.getAppAuthorizeSetting();
-		let deviceInfo = wx.getDeviceInfo();
-		let windowInfo = wx.getWindowInfo();
-		let appBaseInfo = wx.getAppBaseInfo();
-		return {
-			...systemSetting,
-			...appAuthorizeSetting,
-			...deviceInfo,
-			...windowInfo,
-			...appBaseInfo,
-		};
+		return wx.getSystemSetting();
 		// #endif
 
 		// #ifndef MP-WEIXIN
@@ -20,23 +12,76 @@ export default class System {
 		// #endif
 	}
 	/**
+	 * 获取微信APP授权设置
+	 */
+	static getAppAuthorizeSetting() {
+		// #ifdef MP-WEIXIN
+		return wx.getAppAuthorizeSetting();
+		// #endif
+
+		// #ifndef MP-WEIXIN
+		return uni.getSystemInfoSync();
+		// #endif
+	}
+
+	/**
+	 * 获取设备基础信息
+	 */
+	static getDeviceInfo() {
+		// #ifdef MP-WEIXIN
+		return wx.getDeviceInfo();
+		// #endif
+
+		// #ifndef MP-WEIXIN
+		return uni.getSystemInfoSync();
+		// #endif
+	}
+
+	/**
+	 * 获取窗口信息
+	 */
+	static getWindowInfo() {
+		// #ifdef MP-WEIXIN
+		return wx.getWindowInfo();
+		// #endif
+
+		// #ifndef MP-WEIXIN
+		return uni.getSystemInfoSync();
+		// #endif
+	}
+
+	/**
+	 * 获取微信APP基础信息
+	 */
+	static getAppBaseInfo() {
+		// #ifdef MP-WEIXIN
+		return wx.getAppBaseInfo();
+		// #endif
+
+		// #ifndef MP-WEIXIN
+		return uni.getSystemInfoSync();
+		// #endif
+	}
+
+	/**
 	 * 获取屏幕宽度
 	 */
 	static getWindowWidth() {
-		return System.getSystemInfoSync().windowWidth;
+		return System.getWindowInfo().windowWidth;
 	}
+
 	/**
 	 * 获取屏幕高度
 	 */
 	static getWindowHeight() {
-		return System.getSystemInfoSync().windowHeight;
+		return System.getWindowInfo().windowHeight;
 	}
 
 	/**
 	 * 获取手机顶部安全区域距离顶部的距离（状态栏高度）
 	 */
 	static getStatusBarHeight() {
-		return System.getSystemInfoSync().statusBarHeight;
+		return System.getWindowInfo().statusBarHeight;
 	}
 
 	/**

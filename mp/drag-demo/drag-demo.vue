@@ -61,7 +61,7 @@ export default {
 	created() {},
 	mounted() {
 		const boundary = { left: 22, top: 354 };
-		const systemInfo = utils.getSystemInfoSync();
+		const systemInfo = utils.getWindowInfo();
 		boundary.right = systemInfo.windowWidth - 22 - 300;
 		boundary.bottom = systemInfo.windowHeight - 354 - 150;
 		this.boundary = boundary;
