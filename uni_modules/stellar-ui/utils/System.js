@@ -1,25 +1,23 @@
 export default class System {
 	static getSystemInfoSync() {
-		if (systemInfoSync == null) {
-			// #ifdef MP-WEIXIN
-			let systemSetting = wx.getSystemSetting();
-			let appAuthorizeSetting = wx.getAppAuthorizeSetting();
-			let deviceInfo = wx.getDeviceInfo();
-			let windowInfo = wx.getWindowInfo();
-			let appBaseInfo = wx.getAppBaseInfo();
-			// #endif
-			systemInfoSync = {
-				...systemSetting,
-				...appAuthorizeSetting,
-				...deviceInfo,
-				...windowInfo,
-				...appBaseInfo,
-			};
-			// #ifndef MP-WEIXIN
-			systemInfoSync = uni.getSystemInfoSync();
-			// #endif
-		}
-		return systemInfoSync;
+		// #ifdef MP-WEIXIN
+		let systemSetting = wx.getSystemSetting();
+		let appAuthorizeSetting = wx.getAppAuthorizeSetting();
+		let deviceInfo = wx.getDeviceInfo();
+		let windowInfo = wx.getWindowInfo();
+		let appBaseInfo = wx.getAppBaseInfo();
+		return {
+			...systemSetting,
+			...appAuthorizeSetting,
+			...deviceInfo,
+			...windowInfo,
+			...appBaseInfo,
+		};
+		// #endif
+
+		// #ifndef MP-WEIXIN
+		return uni.getSystemInfoSync();
+		// #endif
 	}
 	/**
 	 * 获取屏幕宽度

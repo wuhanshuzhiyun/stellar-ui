@@ -3,7 +3,7 @@ import System from './System.js';
 import dayjs from './dayjs.min.js';
 let throLast = 0; // 节流方法用变量
 let throTimer = null; // 节流方法用的变量
-let systemInfoSync = null;
+
 let utils = {
 	Color,
 	System,
