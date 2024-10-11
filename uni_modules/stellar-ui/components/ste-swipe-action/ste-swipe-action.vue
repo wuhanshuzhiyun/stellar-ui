@@ -62,27 +62,27 @@ export default {
 	mixins: [childMixin('ste-swipe-action-group')],
 	props: {
 		mode: {
-			type: String,
+			type: [String, null],
 			default: () => null,
 		},
 		disabled: {
-			type: Boolean,
+			type: [Boolean, null],
 			default: () => null,
 		},
 		swipeThreshold: {
-			type: [Number, String],
+			type: [Number, String, null],
 			default: () => null,
 		},
 		duration: {
-			type: [Number, String],
+			type: [Number, String, null],
 			default: () => null,
 		},
 		leftIcon: {
-			type: Boolean,
+			type: [Boolean, null],
 			default: () => null,
 		},
 		rightIcon: {
-			type: Boolean,
+			type: [Boolean, null],
 			default: () => null,
 		},
 	},

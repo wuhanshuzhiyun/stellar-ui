@@ -46,31 +46,31 @@ export default {
 	name: 'ste-signature',
 	props: {
 		customClass: {
-			type: String,
+			type: [String, null],
 			default: () => '',
 		},
 		lineWidth: {
-			type: [Number, String],
+			type: [Number, String, null],
 			default: () => 3,
 		},
 		strokeColor: {
-			type: String,
+			type: [String, null],
 			default: () => 'black',
 		},
 		background: {
-			type: String,
+			type: [String, null],
 			default: () => 'none',
 		},
 		type: {
-			type: String,
+			type: [String, null],
 			default: () => 'png',
 		},
 		width: {
-			type: [Number, String],
+			type: [Number, String, null],
 			default: () => '100%',
 		},
 		height: {
-			type: [Number, String],
+			type: [Number, String, null],
 			default: () => '100%',
 		},
 	},

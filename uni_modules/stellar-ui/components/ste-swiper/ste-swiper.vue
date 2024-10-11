@@ -67,64 +67,64 @@ export default {
 	props: {
 		// 当前所在滑块的 index
 		current: {
-			type: Number,
+			type: [Number, null],
 			default: () => 0,
 		},
 		// 滑动方向  "horizontal" | "vertical"
 		direction: {
-			type: String,
+			type: [String, null],
 			default: () => 'horizontal',
 		},
 		disabled: {
-			type: Boolean,
+			type: [Boolean, null],
 			default: () => false,
 		},
 		width: {
-			type: [Number, String],
+			type: [Number, String, null],
 			default: () => null,
 		},
 		height: {
-			type: [Number, String],
+			type: [Number, String, null],
 			default: () => null,
 		},
 		duration: {
-			type: Number,
+			type: [Number, null],
 			default: () => 300,
 		},
 		swipeThreshold: {
-			type: Number,
+			type: [Number, null],
 			default: () => 0.35,
 		},
 		indicatorDots: {
-			type: Boolean,
+			type: [Boolean, null],
 			default: () => false,
 		},
 		indicatorColor: {
-			type: String,
+			type: [String, null],
 			default: () => '#fff',
 		},
 		indicatorActiveColor: {
-			type: String,
+			type: [String, null],
 			default: () => '#fff',
 		},
 		autoplay: {
-			type: Boolean,
+			type: [Boolean, null],
 			default: () => false,
 		},
 		interval: {
-			type: Number,
+			type: [Number, null],
 			default: () => 3000,
 		},
 		circular: {
-			type: Boolean,
+			type: [Boolean, null],
 			default: () => false,
 		},
 		previousMargin: {
-			type: [Number, String],
+			type: [Number, String, null],
 			default: () => 0,
 		},
 		nextMargin: {
-			type: [Number, String],
+			type: [Number, String, null],
 			default: () => 0,
 		},
 	},

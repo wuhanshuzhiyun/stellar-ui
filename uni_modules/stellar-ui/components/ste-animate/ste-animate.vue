@@ -14,23 +14,23 @@ export default {
 	},
 	props: {
 		show: {
-			type: Boolean,
+			type: [Boolean, null],
 			default: false,
 		},
 		type: {
-			type: String,
+			type: [String, null],
 			default: '',
 		},
 		loop: {
-			type: Boolean,
+			type: [Boolean, null],
 			default: false,
 		},
 		duration: {
-			type: Number,
+			type: [Number, null],
 			default: 300,
 		},
 		action: {
-			type: String,
+			type: [String, null],
 			default: '',
 		},
 	},

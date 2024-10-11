@@ -13,19 +13,19 @@ export default {
 	},
 	props: {
 		checked: {
-			type: Boolean,
+			type: [Boolean, null],
 			default: false,
 		},
 		disabled: {
-			type: Boolean,
+			type: [Boolean, null],
 			default: false,
 		},
 		readonly: {
-			type: Boolean,
+			type: [Boolean, null],
 			default: false,
 		},
 		iconColorConfig: {
-			type: Object,
+			type: [Object, null],
 			default: () => selectionColorConfig,
 		},
 	},

@@ -67,61 +67,61 @@ export default {
 	name: 'ste-code-input',
 	props: {
 		value: {
-			type: [String, Number],
+			type: [String, Number, null],
 			default: '',
 		},
 		// 显示模式，box-盒子模式，line-底部横线模式
 		mode: {
-			type: String,
+			type: [String, null],
 			default: 'box',
 		},
 		// 最大输入长度
 		maxlength: {
-			type: [String, Number],
+			type: [String, Number, null],
 			default: 6,
 		},
 		// 字符间的距离
 		space: {
-			type: [String, Number],
+			type: [String, Number, null],
 			default: 16,
 		},
 		// 字体颜色
 		fontColor: {
-			type: String,
+			type: [String, null],
 			default: '#000000',
 		},
 		// 边框和线条颜色
 		borderColor: {
-			type: String,
+			type: [String, null],
 			default: '#DDDDDD',
 		},
 		// 字体大小
 		fontSize: {
-			type: [String, Number],
+			type: [String, Number, null],
 			default: 28,
 		},
 		// 输入框的大小，宽等于高
 		size: {
-			type: [String, Number],
+			type: [String, Number, null],
 			default: 64,
 		},
 		// 替换输入值
 		formatter: {
-			type: [String, Number],
+			type: [String, Number, null],
 			default: '',
 		},
 		// 是否自动获取焦点
 		focus: {
-			type: Boolean,
+			type: [Boolean, null],
 			default: false,
 		},
 		// 是否禁止输入"."符号
 		disabledDot: {
-			type: Boolean,
+			type: [Boolean, null],
 			default: true,
 		},
 		readOnly: {
-			type: Boolean,
+			type: [Boolean, null],
 			default: false,
 		},
 	},

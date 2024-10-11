@@ -10,7 +10,9 @@
 		</slot>
 		<slot>
 			<view class="index-item-text-list">
-				<view class="index-item-text" v-for="(text, i) in list" :key="i" @click="onClickItem(text)">{{ text }}</view>
+				<view class="index-item-text" v-for="(text, i) in list" :key="i" @click="onClickItem(text)">
+					{{ text }}
+				</view>
 			</view>
 		</slot>
 	</view>
@@ -31,11 +33,11 @@ export default {
 	mixins: [childMixin('ste-index-list')],
 	props: {
 		title: {
-			type: String,
+			type: [String, null],
 			required: true,
 		},
 		list: {
-			type: Array,
+			type: [Array, null],
 			default: () => [],
 		},
 	},

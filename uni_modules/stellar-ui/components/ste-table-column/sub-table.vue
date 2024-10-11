@@ -31,11 +31,11 @@ export default {
 	},
 	props: {
 		rows: {
-			type: Array,
+			type: [Array, null],
 			default: () => [],
 		},
 		border: {
-			type: Boolean,
+			type: [Boolean, null],
 			default: false,
 		},
 	},

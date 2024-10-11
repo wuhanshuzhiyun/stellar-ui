@@ -28,31 +28,31 @@ export default {
 	mixins: [parentMixin('ste-swipe-action-group')],
 	props: {
 		mode: {
-			type: String,
+			type: [String, null],
 			default: () => 'right',
 		},
 		autoClose: {
-			type: Boolean,
+			type: [Boolean, null],
 			default: () => true,
 		},
 		disabled: {
-			type: Boolean,
+			type: [Boolean, null],
 			default: () => false,
 		},
 		swipeThreshold: {
-			type: [Number, String],
+			type: [Number, String, null],
 			default: () => 0.35,
 		},
 		duration: {
-			type: [Number, String],
+			type: [Number, String, null],
 			default: () => 300,
 		},
 		leftIcon: {
-			type: Boolean,
+			type: [Boolean, null],
 			default: () => false,
 		},
 		rightIcon: {
-			type: Boolean,
+			type: [Boolean, null],
 			default: () => false,
 		},
 	},

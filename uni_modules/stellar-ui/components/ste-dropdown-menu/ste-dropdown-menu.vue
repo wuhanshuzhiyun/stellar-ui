@@ -79,47 +79,47 @@ export default {
 	},
 	props: {
 		title: {
-			type: String,
+			type: [String, null],
 			default: '',
 		},
 		value: {
-			type: [String, Number, Array],
+			type: [String, Number, Array, null],
 			default: undefined,
 		},
 		inactiveColor: {
-			type: String,
+			type: [String, null],
 			default: '#000000',
 		},
 		activeColor: {
-			type: String,
+			type: [String, null],
 			default: '#0090FF',
 		},
 		direction: {
-			type: String,
+			type: [String, null],
 			default: 'down',
 		},
 		duration: {
-			type: Number,
+			type: [Number, null],
 			default: 0.2,
 		},
 		showMask: {
-			type: Boolean,
+			type: [Boolean, null],
 			default: true,
 		},
 		isMaskClick: {
-			type: Boolean,
+			type: [Boolean, null],
 			default: true,
 		},
 		zIndex: {
-			type: Number,
+			type: [Number, null],
 			default: 1000,
 		},
 		type: {
-			default: String,
+			default: [String, null],
 			default: 'block',
 		},
 		max: {
-			type: Number,
+			type: [Number, null],
 			default: 1,
 		},
 	},

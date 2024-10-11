@@ -39,27 +39,27 @@ export default {
 	name: 'ste-loading',
 	props: {
 		color: {
-			type: String,
+			type: [String, null],
 			default: () => '#999999',
 		},
 		textColor: {
-			type: String,
+			type: [String, null],
 			default: () => '',
 		},
 		textSize: {
-			type: Number,
+			type: [Number, null],
 			default: () => 28,
 		},
 		type: {
-			type: Number,
+			type: [Number, null],
 			default: () => 1,
 		},
 		size: {
-			type: Number,
+			type: [Number, null],
 			default: () => 60,
 		},
 		vertical: {
-			type: Boolean,
+			type: [Boolean, null],
 			default: () => false,
 		},
 	},

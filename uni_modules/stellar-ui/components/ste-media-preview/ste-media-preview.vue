@@ -74,19 +74,19 @@ export default {
 	name: 'ste-media-preview',
 	props: {
 		show: {
-			type: Boolean,
+			type: [Boolean, null],
 			default: () => false,
 		},
 		urls: {
-			type: Array,
+			type: [Array, null],
 			default: () => [],
 		},
 		autoplay: {
-			type: Number,
+			type: [Number, null],
 			default: () => 0,
 		},
 		loop: {
-			type: Boolean,
+			type: [Boolean, null],
 			default: () => false,
 		},
 		index: {
@@ -94,15 +94,15 @@ export default {
 			default: () => null,
 		},
 		showIndex: {
-			type: Boolean,
+			type: [Boolean, null],
 			default: () => true,
 		},
 		scale: {
-			type: Boolean,
+			type: [Boolean, null],
 			default: () => false,
 		},
 		showmenu: {
-			type: Boolean,
+			type: [Boolean, null],
 			default: () => true,
 		},
 	},

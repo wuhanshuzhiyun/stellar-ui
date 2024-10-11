@@ -13,7 +13,7 @@
 			</view>
 			<view class="demo-item">
 				<view class="title">上传单张图片，隐藏删除按钮和全屏预览</view>
-				<ste-upload v-model="fileList7" maxCount="1" :deletable="false"></ste-upload>
+				<ste-upload v-model="fileList7" :maxCount="1" :deletable="false"></ste-upload>
 			</view>
 			<view class="demo-item">
 				<view class="title">自定义上传图标，限制上传数量2</view>

@@ -39,15 +39,15 @@ export default {
 	name: 'ste-drag',
 	props: {
 		attract: {
-			type: Boolean,
+			type: [Boolean, null],
 			default: false,
 		},
 		direction: {
-			type: String,
+			type: [String, null],
 			default: 'all',
 		},
 		boundary: {
-			type: Object,
+			type: [Object, null],
 			default: () => DEFAULT_BOUNDARY,
 		},
 	},

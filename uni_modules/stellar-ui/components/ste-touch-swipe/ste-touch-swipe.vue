@@ -51,45 +51,45 @@ export default {
 	props: {
 		// 当前展示的面板索引
 		index: {
-			type: Number,
+			type: [Number, null],
 			default: () => 0,
 		},
 		// 滑动方向  "horizontal" | "vertical"(水平方向时宽度必须固定，垂直方向时高度必须固定)
 		direction: {
-			type: String,
+			type: [String, null],
 			default: () => 'horizontal',
 		},
 		width: {
-			type: [String, Number],
+			type: [String, Number, null],
 			default: () => '100%',
 		},
 		height: {
-			type: [String, Number],
+			type: [String, Number, null],
 			default: () => '100%',
 		},
 		// 动画时长
 		duration: {
-			type: Number,
+			type: [Number, null],
 			default: () => 0.3,
 		},
 		// 灵敏度（0-1之间的数值，数值越小越灵敏）
 		swipeThreshold: {
-			type: Number,
+			type: [Number, null],
 			default: () => 0.35,
 		},
 		// 是否禁用
 		disabled: {
-			type: Boolean,
+			type: [Boolean, null],
 			default: () => false,
 		},
 		// 面板数量（使用touch-swipe-item作为子元素时不需要传递，不使用touch-swipe-item作为子元素盒子时必传）
 		childrenLength: {
-			type: Number,
+			type: [Number, null],
 			default: () => 0,
 		},
 		// 禁用的面板索引（使用touch-swipe-item作为子元素时直接在touch-swipe-item上定义某个标签禁用即可，不使用touch-swipe-item作为子元素盒子时可传）
 		disabledIndexs: {
-			type: Array,
+			type: [Array, null],
 			default: () => [],
 		},
 	},

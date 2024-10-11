@@ -7,7 +7,12 @@
 		</scroll-view>
 		<view class="ste-index-list">
 			<block v-for="(m, index) in cmpTitles" :key="index">
-				<view v-if="m" class="ste-index-item" :class="{ active: index === dataActive }" @click="setActive(index)">
+				<view
+					v-if="m"
+					class="ste-index-item"
+					:class="{ active: index === dataActive }"
+					@click="setActive(index)"
+				>
 					{{ m }}
 				</view>
 			</block>
@@ -38,15 +43,15 @@ export default {
 	mixins: [parentMixin('ste-index-list'), mixin],
 	props: {
 		sticky: {
-			type: Boolean,
+			type: [Boolean, null],
 			default: () => true,
 		},
 		inactiveColor: {
-			type: String,
+			type: [String, null],
 			default: () => '#666',
 		},
 		activeColor: {
-			type: String,
+			type: [String, null],
 			default: () => '#FF1A00',
 		},
 	},

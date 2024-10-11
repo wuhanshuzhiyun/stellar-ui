@@ -26,27 +26,27 @@ export default {
 	props: {
 		// 吸顶容器到顶部某个距离的时候，进行吸顶
 		offsetTop: {
-			type: [String, Number],
+			type: [String, Number, null],
 			default: 0,
 		},
 		// 导航栏的高度(如果没有导航栏请设置为0)
 		customNavHeight: {
-			type: [String, Number],
+			type: [String, Number, null],
 			default: () => null,
 		},
 		// 是否禁用吸顶功能
 		disabled: {
-			type: Boolean,
+			type: [Boolean, null],
 			default: () => false,
 		},
 		// 吸顶区域的背景
 		background: {
-			type: String,
+			type: [String, null],
 			default: () => '#fff',
 		},
 		// z-index值
 		zIndex: {
-			type: [String, Number],
+			type: [String, Number, null],
 			default: () => 98,
 		},
 	},

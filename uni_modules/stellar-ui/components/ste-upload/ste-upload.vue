@@ -17,7 +17,11 @@
 						<view class="icon"><ste-icon code="&#xe6a0;" size="48" color="#fff" /></view>
 						<view class="text">上传失败</view>
 					</view>
-					<view class="delete" v-if="cmpDeletable && item.status !== 'uploading'" @click.stop="deleteItem(index)">
+					<view
+						class="delete"
+						v-if="cmpDeletable && item.status !== 'uploading'"
+						@click.stop="deleteItem(index)"
+					>
 						<view class="icon">
 							<ste-icon code="&#xe67b;" size="20" color="#fff" />
 						</view>
@@ -38,7 +42,11 @@
 						<view class="delete" v-if="accept === 'media'" @click.stop="setMediaType">
 							<view class="icon">
 								<view :class="{ video: mediaType === 'video' }">
-									<ste-icon :code="mediaType === 'video' ? '&#xe6a1;' : '&#xe69b;'" size="20" color="#fff" />
+									<ste-icon
+										:code="mediaType === 'video' ? '&#xe6a1;' : '&#xe69b;'"
+										size="20"
+										color="#fff"
+									/>
 								</view>
 							</view>
 						</view>
@@ -108,104 +116,104 @@ export default {
 		 * @type {{url:string;name?:string;type?:string;status?:"uploading"|"error"|"success";path?:string}[]}
 		 */
 		value: {
-			type: Array,
+			type: [Array, null],
 			default: () => [],
 		},
 		// 接受的文件类型, 可选值为all media image file video
 		accept: {
-			type: String,
+			type: [String, null],
 			default: () => 'image',
 		},
 		// 图片或者视频选取模式，当accept为image | media 类型时设置capture可选值为camera可以直接调起摄像头
 		capture: {
-			type: Array,
+			type: [Array, null],
 			default: () => ['album', 'camera'],
 		},
 		// 相机类型 当 accept 为 image | video | media 时生效，可选值为 back-后置 front-前置
 		camera: {
-			type: String,
+			type: [String, null],
 			default: () => 'back',
 		},
 		// 当 accept 为 image | video | media 时生效，是否压缩视频、图片默认为true
 		compressed: {
-			type: Boolean,
+			type: [Boolean, null],
 			default: () => true,
 		},
 		// 当 accept 为 video | media 时生效，拍摄视频最长拍摄时间，单位秒
 		maxDuration: {
-			type: Number,
+			type: [Number, null],
 			default: () => 60,
 		},
 		// 预览图和上传区域的宽度，默认单位为rpx
 		previewWidth: {
-			type: [String, Number],
+			type: [String, Number, null],
 			default: () => 200,
 		},
 		// 预览图和上传区域的高度，默认单位为rpx
 		previewHeight: {
-			type: [String, Number],
+			type: [String, Number, null],
 			default: () => 200,
 		},
 		// 是否在上传完成后展示预览图
 		previewImage: {
-			type: Boolean,
+			type: [Boolean, null],
 			default: () => true,
 		},
 		// 是否在点击预览图后展示全屏图片预览
 		previewFullImage: {
-			type: Boolean,
+			type: [Boolean, null],
 			default: () => true,
 		},
 		// 是否开启图片多选，部分安卓机型不支持
 		multiple: {
-			type: Boolean,
+			type: [Boolean, null],
 			default: () => false,
 		},
 		// 是否禁用文件上传
 		disabled: {
-			type: Boolean,
+			type: [Boolean, null],
 			default: () => false,
 		},
 		// 是否展示文件上传按钮
 		showUpload: {
-			type: Boolean,
+			type: [Boolean, null],
 			default: () => true,
 		},
 		// 是否展示删除按钮
 		deletable: {
-			type: Boolean,
+			type: [Boolean, null],
 			default: () => true,
 		},
 
 		// 文件大小限制，单位为kb，0为不限制
 		maxSize: {
-			type: Number,
+			type: [Number, null],
 			default: () => 0,
 		},
 		// 文件上传数量限制,0为不限制
 		maxCount: {
-			type: Number,
+			type: [Number, null],
 			default: () => 9,
 		},
 
 		// 上传区域图标，可选值见 Icon 组件
 		uploadIcon: {
-			type: String,
+			type: [String, null],
 			default: () => '&#xe69b;',
 		},
 		// 上传区域文字提示
 		uploadText: {
-			type: String,
+			type: [String, null],
 			default: () => '点击上传',
 		},
 		// 圆角弧度
 		radius: {
-			type: [String, Number],
+			type: [String, Number, null],
 			default: () => 9,
 		},
 		// 子元素是否换行
 		flexWrap: {
-			type: String,
+			type: [String, null],
 			default: () => 'wrap',
 		},
 	},

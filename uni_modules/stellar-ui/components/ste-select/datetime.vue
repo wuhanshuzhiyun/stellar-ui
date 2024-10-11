@@ -21,11 +21,11 @@ import { getDateOptions, getFormatStr, getNowDate } from './defaultDate';
 export default {
 	name: 'date-time',
 	props: {
-		value: { type: [String, Number, Array], default: () => [] },
-		mode: { type: String, default: () => 'date' },
-		minDate: { type: [Number, String, Date], default: () => null },
-		maxDate: { type: [Number, String, Date], default: () => null },
-		dateUnit: { type: Boolean, default: () => true },
+		value: { type: [String, Number, Array, null], default: () => [] },
+		mode: { type: [String, null], default: () => 'date' },
+		minDate: { type: [Number, String, Date, null], default: () => null },
+		maxDate: { type: [Number, String, Date, null], default: () => null },
+		dateUnit: { type: [Boolean, null], default: () => true },
 	},
 	data() {
 		return {

@@ -31,19 +31,19 @@ export default {
 	name: 'ste-text',
 	props: {
 		selectable: {
-			type: Boolean,
+			type: [Boolean, null],
 			default: false,
 		},
 		space: {
-			type: String,
+			type: [String, null],
 			default: '',
 		},
 		decode: {
-			type: Boolean,
+			type: [Boolean, null],
 			default: false,
 		},
 		lines: {
-			type: Number,
+			type: [Number, null],
 			default: undefined,
 		},
 	},

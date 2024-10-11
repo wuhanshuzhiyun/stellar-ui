@@ -26,44 +26,44 @@ export default {
 	props: {
 		// 标题
 		title: {
-			type: String,
+			type: [String, null],
 			default: () => '',
 		},
 		// 副标题
 		subTitle: {
-			type: String,
+			type: [String, null],
 			default: () => '',
 		},
 		// 图片
 		image: {
-			type: String,
+			type: [String, null],
 			default: () => '',
 		},
 		// 标签名称，作为匹配的标识符
 		name: {
-			type: String,
+			type: [String, null],
 			default: () => '',
 		},
 		// 标签下标
 		index: {
-			type: Number,
+			type: [Number, null],
 			default: () => null,
 		},
 		// 禁用
 		disabled: {
-			type: Boolean,
+			type: [Boolean, null],
 			default: () => false,
 		},
 		showDot: {
-			type: Boolean,
+			type: [Boolean, null],
 			default: () => false,
 		},
 		badge: {
-			type: [String, Number],
+			type: [String, Number, null],
 			default: () => 0,
 		},
 		showZeroBadge: {
-			type: Boolean,
+			type: [Boolean, null],
 			default: () => false,
 		},
 	},

@@ -54,11 +54,11 @@ export default {
 	name: 'ste-radio',
 	props: {
 		value: {
-			type: String,
+			type: [String, null],
 			default: '',
 		},
 		name: {
-			type: [Number, String],
+			type: [Number, String, null],
 			default: '',
 		},
 		disabled: {

@@ -36,51 +36,51 @@ export default {
 	name: 'ste-radio-group',
 	props: {
 		value: {
-			type: String,
+			type: [String, null],
 			default: '',
 		},
 		direction: {
-			type: String,
+			type: [String, null],
 			default: 'column',
 		},
 		disabled: {
-			type: Boolean,
+			type: [Boolean, null],
 			default: false,
 		},
 		readonly: {
-			type: Boolean,
+			type: [Boolean, null],
 			default: false,
 		},
 		shape: {
-			type: String,
+			type: [String, null],
 			default: 'circle',
 		},
 		iconSize: {
-			type: [Number, String],
+			type: [Number, String, null],
 			default: 36,
 		},
 		checkedColor: {
-			type: String,
+			type: [String, null],
 			default: '#0090FF',
 		},
 		textPosition: {
-			type: String,
+			type: [String, null],
 			default: 'right',
 		},
 		textSize: {
-			type: [Number, String],
+			type: [Number, String, null],
 			default: 28,
 		},
 		textInactiveColor: {
-			type: String,
+			type: [String, null],
 			default: '#000000',
 		},
 		textActiveColor: {
-			type: String,
+			type: [String, null],
 			default: '#000000',
 		},
 		textDisabled: {
-			type: Boolean,
+			type: [Boolean, null],
 			default: false,
 		},
 		marginLeft: {

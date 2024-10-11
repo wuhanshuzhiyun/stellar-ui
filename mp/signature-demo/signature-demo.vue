@@ -27,7 +27,7 @@ export default {
 	data() {
 		return {
 			show: false,
-			urls: '',
+			urls: [],
 		};
 	},
 	methods: {

@@ -40,51 +40,51 @@ export default {
 	name: 'ste-rate',
 	props: {
 		value: {
-			type: Number,
+			type: [Number, null],
 			default: 0,
 		},
 		count: {
-			type: Number,
+			type: [Number, null],
 			default: 5,
 		},
 		score: {
-			type: Number,
+			type: [Number, null],
 			default: 1,
 		},
 		disabled: {
-			type: Boolean,
+			type: [Boolean, null],
 			default: false,
 		},
 		readonly: {
-			type: Boolean,
+			type: [Boolean, null],
 			default: false,
 		},
 		size: {
-			type: [String, Number],
+			type: [String, Number, null],
 			default: 44,
 		},
 		inactiveColor: {
-			type: String,
+			type: [String, null],
 			default: '#dddddd',
 		},
 		activeColor: {
-			type: String,
+			type: [String, null],
 			default: '#fa5014',
 		},
 		inactiveCode: {
-			type: String,
+			type: [String, null],
 			default: '&#xe681;',
 		},
 		activeCode: {
-			type: String,
+			type: [String, null],
 			default: '&#xe684;',
 		},
 		gutter: {
-			type: [String, Number],
+			type: [String, Number, null],
 			default: 10,
 		},
 		iconData: {
-			type: Array,
+			type: [Array, null],
 			default: () => [],
 		},
 	},

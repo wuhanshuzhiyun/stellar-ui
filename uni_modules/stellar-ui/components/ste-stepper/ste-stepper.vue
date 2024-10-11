@@ -101,23 +101,23 @@ export default {
 	name: 'ste-stepper',
 	props: {
 		value: {
-			type: Number,
+			type: [Number, null],
 			default: 1,
 		},
 		min: {
-			type: Number,
+			type: [Number, null],
 			default: 0,
 		},
 		max: {
-			type: Number,
+			type: [Number, null],
 			default: Infinity,
 		},
 		step: {
-			type: Number,
+			type: [Number, null],
 			default: 1,
 		},
 		inputWidth: {
-			type: [Number, String],
+			type: [Number, String, null],
 			default: 64,
 		},
 		btnSize: {
@@ -125,59 +125,59 @@ export default {
 			default: null,
 		},
 		precision: {
-			type: Number,
+			type: [Number, null],
 			default: 0,
 		},
 		theme: {
-			type: String,
+			type: [String, null],
 			default: 'card',
 		},
 		mainColor: {
-			type: String,
+			type: [String, null],
 			default: '#0090FF',
 		},
 		disabled: {
-			type: Boolean,
+			type: [Boolean, null],
 			default: false,
 		},
 		disablePlus: {
-			type: Boolean,
+			type: [Boolean, null],
 			default: false,
 		},
 		disableMinus: {
-			type: Boolean,
+			type: [Boolean, null],
 			default: false,
 		},
 		disableInput: {
-			type: Boolean,
+			type: [Boolean, null],
 			default: false,
 		},
 		background: {
-			type: String,
+			type: [String, null],
 			default: '#ee0a24',
 		},
 		showDot: {
-			type: Boolean,
+			type: [Boolean, null],
 			default: false,
 		},
 		offsetX: {
-			type: [String, Number],
+			type: [String, Number, null],
 			default: 'auto',
 		},
 		offsetY: {
-			type: [String, Number],
+			type: [String, Number, null],
 			default: 'auto',
 		},
 		showZero: {
-			type: Boolean,
+			type: [Boolean, null],
 			default: false,
 		},
 		position: {
-			type: String,
+			type: [String, null],
 			default: 'topRight',
 		},
 		badgeMax: {
-			type: Number,
+			type: [Number, null],
 			default: 99,
 		},
 	},

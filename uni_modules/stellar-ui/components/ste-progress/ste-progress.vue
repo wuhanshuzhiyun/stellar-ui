@@ -35,51 +35,51 @@ export default {
 	name: 'ste-progress',
 	props: {
 		activeBg: {
-			type: String,
+			type: [String, null],
 			default: '#0090ff',
 		},
 		inactiveBg: {
-			type: String,
+			type: [String, null],
 			default: '#eeeeee',
 		},
 		percentage: {
-			type: Number,
+			type: [Number, null],
 			default: 0,
 		},
 		strokeWidth: {
-			type: [String, Number],
+			type: [String, Number, null],
 			default: 24,
 		},
 		disabled: {
-			type: Boolean,
+			type: [Boolean, null],
 			default: false,
 		},
 		width: {
-			type: [String, Number],
+			type: [String, Number, null],
 			default: '100%',
 		},
 		duration: {
-			type: Number,
+			type: [Number, null],
 			default: 0.3,
 		},
 		pivotText: {
-			type: String,
+			type: [String, null],
 			default: '',
 		},
 		textColor: {
-			type: String,
+			type: [String, null],
 			default: '#ffffff',
 		},
 		textAlign: {
-			type: String,
+			type: [String, null],
 			default: 'right',
 		},
 		textSize: {
-			type: [String, Number],
+			type: [String, Number, null],
 			default: 16,
 		},
 		displayTextThreshold: {
-			type: Number,
+			type: [Number, null],
 			default: 0,
 		},
 	},

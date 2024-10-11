@@ -81,59 +81,59 @@ export default {
 	},
 	props: {
 		value: {
-			type: [Number, String, Array],
+			type: [Number, String, Array, null],
 			default: 0,
 		},
 		min: {
-			type: [Number, String],
+			type: [Number, String, null],
 			default: 0,
 		},
 		max: {
-			type: [Number, String],
+			type: [Number, String, null],
 			default: 100,
 		},
 		step: {
-			type: [Number, String],
+			type: [Number, String, null],
 			default: 1,
 		},
 		barHeight: {
-			type: [String, Number],
+			type: [String, Number, null],
 			default: 8,
 		},
 		buttonSize: {
-			type: [String, Number],
+			type: [String, Number, null],
 			default: 40,
 		},
 		activeColor: {
-			type: String,
+			type: [String, null],
 			default: '#0090ff',
 		},
 		inactiveColor: {
-			type: String,
+			type: [String, null],
 			default: '#eeeeee',
 		},
 		range: {
-			type: Boolean,
+			type: [Boolean, null],
 			default: false,
 		},
 		vertical: {
-			type: Boolean,
+			type: [Boolean, null],
 			default: false,
 		},
 		disabled: {
-			type: Boolean,
+			type: [Boolean, null],
 			default: false,
 		},
 		readonly: {
-			type: Boolean,
+			type: [Boolean, null],
 			default: false,
 		},
 		showStops: {
-			type: Boolean,
+			type: [Boolean, null],
 			default: false,
 		},
 		marks: {
-			type: Object,
+			type: [Object, null],
 			default: () => {},
 		},
 	},

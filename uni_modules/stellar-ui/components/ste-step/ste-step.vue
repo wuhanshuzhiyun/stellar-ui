@@ -56,15 +56,15 @@ export default {
 	},
 	props: {
 		title: {
-			type: String,
+			type: [String, null],
 			default: '',
 		},
 		description: {
-			type: String,
+			type: [String, null],
 			default: '',
 		},
 		icon: {
-			type: String,
+			type: [String, null],
 			default: '',
 		},
 		status: {

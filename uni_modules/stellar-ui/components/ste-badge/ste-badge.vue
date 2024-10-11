@@ -54,55 +54,55 @@ export default {
 	},
 	props: {
 		content: {
-			type: [String, Number],
+			type: [String, Number, Boolean, null],
 			default: '',
 		},
 		background: {
-			type: String,
+			type: [String, null],
 			default: '#ee0a24',
 		},
 		showDot: {
-			type: Boolean,
+			type: [Boolean, null],
 			default: false,
 		},
 		offsetX: {
-			type: [String, Number],
+			type: [String, Number, null],
 			default: 'auto',
 		},
 		offsetY: {
-			type: [String, Number],
+			type: [String, Number, null],
 			default: 'auto',
 		},
 		showZero: {
-			type: Boolean,
+			type: [Boolean, null],
 			default: false,
 		},
 		position: {
-			type: String,
+			type: [String, null],
 			default: 'topRight',
 		},
 		max: {
-			type: Number,
+			type: [Number, null],
 			default: 99,
 		},
 		showBorder: {
-			type: Boolean,
+			type: [Boolean, null],
 			default: false,
 		},
 		borderColor: {
-			type: String,
+			type: [String, null],
 			default: '#fff',
 		},
 		zIndex: {
-			type: Number,
+			type: [Number, null],
 			default: 2,
 		},
 		isInline: {
-			type: Boolean,
+			type: [Boolean, null],
 			default: false,
 		},
 		rootStyle: {
-			type: Object,
+			type: [Object, null],
 			default: () => ({}),
 		},
 	},

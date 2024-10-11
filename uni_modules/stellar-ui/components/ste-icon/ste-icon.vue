@@ -32,59 +32,59 @@ export default {
 	props: {
 		// iconfont unicode
 		code: {
-			type: String,
+			type: [String, null],
 			required: true,
 		},
 		// 字体大小
 		size: {
-			type: [Number, String],
+			type: [Number, String, null],
 			default: 28,
 		},
 		scale: {
-			type: Number,
+			type: [Number, null],
 			default: 1,
 		},
 		// 颜色
 		color: {
-			type: String,
+			type: [String, null],
 			default: '',
 		},
 		// 图标是否粗体
 		bold: {
-			type: Boolean,
+			type: [Boolean, null],
 			default: false,
 		},
 		// 左外边距
 		marginLeft: {
-			type: [Number, String],
+			type: [Number, String, null],
 			default: 0,
 		},
 		// 右外边距
 		marginRight: {
-			type: [Number, String],
+			type: [Number, String, null],
 			default: 0,
 		},
 		// 上外边距
 		marginTop: {
-			type: [Number, String],
+			type: [Number, String, null],
 			default: 0,
 		},
 		// 下外边距
 		marginBottom: {
-			type: [Number, String],
+			type: [Number, String, null],
 			default: 0,
 		},
 		fontFamily: {
-			type: String,
+			type: [String, null],
 			default: '',
 		},
 		showBorder: {
-			type: Boolean,
+			type: [Boolean, null],
 			default: false,
 		},
 		// 容器对齐方式 true inline-block false inline-flex
 		inlineBlock: {
-			type: Boolean,
+			type: [Boolean, null],
 			default: true,
 		},
 	},

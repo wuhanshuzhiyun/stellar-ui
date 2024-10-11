@@ -54,11 +54,11 @@ export default {
 	name: 'ste-checkbox',
 	props: {
 		value: {
-			type: Boolean,
+			type: [Boolean, null],
 			default: false,
 		},
 		name: {
-			type: [Number, String],
+			type: [Number, String, null],
 			default: '',
 		},
 		disabled: {

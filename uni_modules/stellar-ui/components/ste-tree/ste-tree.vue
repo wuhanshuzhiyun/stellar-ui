@@ -57,14 +57,14 @@ export default {
 	title: 'Tree 树形控件',
 	name: 'ste-tree',
 	props: {
-		options: { type: Array, default: () => [] },
-		valueKey: { type: String, default: () => 'value' },
-		titleKey: { type: String, default: () => 'title' },
-		childrenKey: { type: String, default: () => 'children' },
-		accordion: { type: Boolean, default: () => true },
-		childrenPadding: { type: [Number, String], default: () => 40 },
-		openNodes: { type: Array, default: () => [] },
-		searchTitle: { type: String, default: () => '' },
+		options: { type: [Array, null], default: () => [] },
+		valueKey: { type: [String, null], default: () => 'value' },
+		titleKey: { type: [String, null], default: () => 'title' },
+		childrenKey: { type: [String, null], default: () => 'children' },
+		accordion: { type: [Boolean, null], default: () => true },
+		childrenPadding: { type: [Number, String, null], default: () => 40 },
+		openNodes: { type: [Array, null], default: () => [] },
+		searchTitle: { type: [String, null], default: () => '' },
 	},
 	data() {
 		return {

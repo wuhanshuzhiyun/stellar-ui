@@ -91,88 +91,88 @@ export default {
 	name: 'ste-calendar',
 	props: {
 		title: {
-			type: String,
+			type: [String, null],
 			default: () => '日期选择',
 		},
 		showTitle: {
-			type: Boolean,
+			type: [Boolean, null],
 			default: () => true,
 		},
 		list: {
-			type: Array,
+			type: [Array, null],
 			default: () => [],
 		},
 		// 选择模式：single-选择单个日期，multiple-可以选择多个日期，range-选择日期范围
 		mode: {
-			type: String,
+			type: [String, null],
 			default: () => 'single',
 		},
 		startText: {
-			type: String,
+			type: [String, null],
 			default: () => '开始',
 		},
 		endText: {
-			type: String,
+			type: [String, null],
 			default: () => '结束',
 		},
 		color: {
-			type: String,
+			type: [String, null],
 			default: () => '#FF1A00',
 		},
 		minDate: {
-			type: [String, Number, Date],
+			type: [String, Number, Date, null],
 			default: () => 0,
 		},
 		maxDate: {
-			type: [String, Number, Date],
+			type: [String, Number, Date, null],
 			default: () => 0,
 		},
 		defaultMonth: {
-			type: [Number, String, Date],
+			type: [Number, String, Date, null],
 			default: () => 0,
 		},
 		maxCount: {
-			type: [Number, String],
+			type: [Number, String, null],
 			default: () => 0,
 		},
 		formatter: {
-			type: String,
+			type: [String, null],
 			default: () => 'YYYY-MM-DD',
 		},
 		showMark: {
-			type: Boolean,
+			type: [Boolean, null],
 			default: () => true,
 		},
 		readonly: {
-			type: Boolean,
+			type: [Boolean, null],
 			default: () => false,
 		},
 		maxRange: {
-			type: Number,
+			type: [Number, null],
 			default: () => null,
 		},
 		rangePrompt: {
-			type: String,
+			type: [String, null],
 			default: () => null,
 		},
 		showRangePrompt: {
-			type: Boolean,
+			type: [Boolean, null],
 			default: () => true,
 		},
 		allowSameDay: {
-			type: Boolean,
+			type: [Boolean, null],
 			default: () => false,
 		},
 		showConfirm: {
-			type: Boolean,
+			type: [Boolean, null],
 			default: () => true,
 		},
 		width: {
-			type: [Number, String],
+			type: [Number, String, null],
 			default: () => '100%',
 		},
 		height: {
-			type: [Number, String],
+			type: [Number, String, null],
 			default: () => '100%',
 		},
 	},

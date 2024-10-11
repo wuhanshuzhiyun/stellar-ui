@@ -133,91 +133,91 @@ export default {
 	},
 	props: {
 		value: {
-			type: [String, Number],
+			type: [String, Number, null],
 			default: '',
 		},
 		type: {
-			type: String,
+			type: [String, null],
 			default: 'text',
 		},
 		placeholder: {
-			type: String,
+			type: [String, null],
 			default: '',
 		},
 		placeholderStyle: {
-			type: [String, Object],
+			type: [String, Object, null],
 			default: 'color: #BBBBBB',
 		},
 		placeholderClass: {
-			type: String,
+			type: [String, null],
 			default: 'ste-input-placeholder',
 		},
 		disabled: {
-			type: Boolean,
+			type: [Boolean, null],
 			default: false,
 		},
 		clearable: {
-			type: Boolean,
+			type: [Boolean, null],
 			default: true,
 		},
 		maxlength: {
-			type: Number,
+			type: [Number, null],
 			default: -1,
 		},
 		showWordLimit: {
-			type: Boolean,
+			type: [Boolean, null],
 			default: false,
 		},
 		confirmType: {
-			type: String,
+			type: [String, null],
 			default: 'done',
 		},
 		focus: {
-			type: Boolean,
+			type: [Boolean, null],
 			default: false,
 		},
 		inputAlign: {
-			type: String,
+			type: [String, null],
 			default: 'left',
 		},
 		fontSize: {
-			type: [String, Number],
+			type: [String, Number, null],
 			default: 24,
 		},
 		fontColor: {
-			type: String,
+			type: [String, null],
 			default: '#000000',
 		},
 		readonly: {
-			type: Boolean,
+			type: [Boolean, null],
 			default: false,
 		},
 		shape: {
-			type: String,
+			type: [String, null],
 			default: 'square',
 		},
 		border: {
-			type: Boolean,
+			type: [Boolean, null],
 			default: false,
 		},
 		borderColor: {
-			type: String,
+			type: [String, null],
 			default: '',
 		},
 		background: {
-			type: String,
+			type: [String, null],
 			default: '',
 		},
 		rootClass: {
-			type: String,
+			type: [String, null],
 			default: '',
 		},
 		cursorSpacing: {
-			type: Number,
+			type: [Number, null],
 			default: 20,
 		},
 		allowSpace: {
-			type: Boolean,
+			type: [Boolean, null],
 			default: true,
 		},
 	},

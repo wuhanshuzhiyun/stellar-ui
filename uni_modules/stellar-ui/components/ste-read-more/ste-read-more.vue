@@ -20,28 +20,28 @@ export default {
 	name: 'ste-read-more',
 	props: {
 		showHeight: {
-			type: [String, Number],
+			type: [String, Number, null],
 			default: 400,
 		},
 		// 展开后是否显示收起按钮
 		toggle: {
-			type: Boolean,
+			type: [Boolean, null],
 			default: false,
 		},
 		closeText: {
-			type: String,
+			type: [String, null],
 			default: '展开阅读全文',
 		},
 		openText: {
-			type: String,
+			type: [String, null],
 			default: '收起',
 		},
 		fontSize: {
-			type: [String, Number],
+			type: [String, Number, null],
 			default: 28,
 		},
 		color: {
-			type: String,
+			type: [String, null],
 			default: '#666666',
 		},
 	},

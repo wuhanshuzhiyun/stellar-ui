@@ -96,116 +96,116 @@ export default {
 	props: {
 		// 组件类型,"default"：正常搜索，"nav":导航栏
 		type: {
-			type: String,
+			type: [String, null],
 			default: () => 'default',
 		},
 		// 当前值（支持v-model双向绑定）
 		value: {
-			type: String,
+			type: [String, null],
 			default: () => '',
 		},
 		// 占位提示符
 		placeholder: {
-			type: String,
+			type: [String, null],
 			default: () => '',
 		},
 		// 热词列表
 		hotWords: {
-			type: Array,
+			type: [Array, null],
 			default: () => [],
 		},
 		// 热词列表自动切换时间间隔`
 		interval: {
-			type: Number,
+			type: [Number, null],
 			default: () => 3000,
 		},
 		// 热词列表是否自动切换
 		autoplay: {
-			type: Boolean,
+			type: [Boolean, null],
 			default: () => true,
 		},
 		// 是否禁用状态
 		disabled: {
-			type: Boolean,
+			type: [Boolean, null],
 			default: () => false,
 		},
 		// 是否隐藏分割线
 		hiddenLine: {
-			type: Boolean,
+			type: [Boolean, null],
 			default: () => false,
 		},
 		// 是否隐藏搜索按钮
 		hiddenBtn: {
-			type: Boolean,
+			type: [Boolean, null],
 			default: () => false,
 		},
 		// 搜索按钮文字
 		btnText: {
-			type: String,
+			type: [String, null],
 			default: () => '搜索',
 		},
 		// 是否隐藏输入框
 		hiddenInput: {
-			type: Boolean,
+			type: [Boolean, null],
 			default: () => false,
 		},
 		// 是否可清空
 		clearable: {
-			type: Boolean,
+			type: [Boolean, null],
 			default: () => true,
 		},
 		// 边框颜色
 		borderColor: {
-			type: String,
+			type: [String, null],
 			default: () => '#dddddd',
 		},
 		// 背景
 		background: {
-			type: String,
+			type: [String, null],
 			default: () => '#ffffff',
 		},
 		// 前置图标颜色
 		prefixIconColor: {
-			type: String,
+			type: [String, null],
 			default: () => '#bbbbbb',
 		},
 		// 占位符字体颜色
 		placeholderColor: {
-			type: String,
+			type: [String, null],
 			default: () => '#bbbbbb',
 		},
 		// 输入框文字颜色
 		inputTextColor: {
-			type: String,
+			type: [String, null],
 			default: () => '#000000',
 		},
 		// 清除图标颜色
 		clearIconColor: {
-			type: String,
+			type: [String, null],
 			default: () => '#bbbbbb',
 		},
 		// 搜索按钮背景
 		btnBackground: {
-			type: String,
+			type: [String, null],
 		},
 		// 搜索按钮文字颜色
 		btnTextColor: {
-			type: String,
+			type: [String, null],
 			default: () => '#0090FF',
 		},
 		// 高度
 		height: {
-			type: Number,
+			type: [Number, null],
 			default: () => 64,
 		},
 		// 圆角弧度
 		radius: {
-			type: Number,
+			type: [Number, null],
 			default: () => 32,
 		},
 		// 聚焦
 		focus: {
-			type: Boolean,
+			type: [Boolean, null],
 			default: () => false,
 		},
 	},

@@ -72,7 +72,7 @@ export default {
 	name: 'ste-message-box',
 	props: {
 		selector: {
-			type: String,
+			type: [String, null],
 			default: DEFAULT_KEY,
 		},
 	},

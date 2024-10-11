@@ -26,23 +26,23 @@ export default {
 	inject: ['_menuComponent'],
 	props: {
 		value: {
-			type: String,
+			type: [String, null],
 			default: '',
 		},
 		title: {
-			type: String,
+			type: [String, null],
 			default: '',
 		},
 		disabled: {
-			type: Boolean,
+			type: [Boolean, null],
 			default: false,
 		},
 		readonly: {
-			type: Boolean,
+			type: [Boolean, null],
 			default: false,
 		},
 		max: {
-			type: Number,
+			type: [Number, null],
 			default: 1,
 		},
 	},

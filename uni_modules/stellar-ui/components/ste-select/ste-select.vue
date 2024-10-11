@@ -73,7 +73,11 @@
 					<block v-else>
 						<view class="one-col-options">
 							<scroll-view scroll-y class="options-col" v-for="(col, index) in viewOptions" :key="index">
-								<view class="options-item" v-if="dataAllowCreate" @click="onSelect(index, dataAllowCreate, true)">
+								<view
+									class="options-item"
+									v-if="dataAllowCreate"
+									@click="onSelect(index, dataAllowCreate, true)"
+								>
 									{{ dataAllowCreate[labelKey] }}
 								</view>
 								<view
@@ -165,28 +169,28 @@ export default {
 	name: 'ste-select',
 	components: { DateTime },
 	props: {
-		value: { type: [Array, String, Number], default: () => [] },
-		list: { type: Array, default: () => [] },
-		mode: { type: String, default: () => 'default' },
-		minDate: { type: [Number, String, Date], default: () => null },
-		maxDate: { type: [Number, String, Date], default: () => null },
-		dateUnit: { type: Boolean, default: () => true },
-		width: { type: [Number, String], default: () => '100%' },
-		height: { type: [Number, String], default: () => 64 },
-		fontSize: { type: [Number, String], default: () => 28 },
-		background: { type: String, default: () => '#fff' },
-		maskClose: { type: Boolean, default: () => true },
-		optionsWidth: { type: [Number, String], default: () => 'auto' },
-		placeholder: { type: String, default: () => '请选择' },
-		labelKey: { type: String, default: () => 'label' },
-		valueKey: { type: String, default: () => 'value' },
-		childrenKey: { type: String, default: () => 'children' },
-		multiple: { type: Boolean, default: () => false },
-		allowCreate: { type: Boolean, default: () => false },
-		borderColor: { type: String, default: () => '#ebebeb' },
-		borderRadius: { type: [Number, String], default: () => 8 },
-		optionsPosition: { type: String, default: () => 'auto' },
-		disabled: { type: Boolean, default: () => false },
+		value: { type: [Array, String, Number, null], default: () => [] },
+		list: { type: [Array, null], default: () => [] },
+		mode: { type: [String, null], default: () => 'default' },
+		minDate: { type: [Number, String, Date, null], default: () => null },
+		maxDate: { type: [Number, String, Date, null], default: () => null },
+		dateUnit: { type: [Boolean, null], default: () => true },
+		width: { type: [Number, String, null], default: () => '100%' },
+		height: { type: [Number, String, null], default: () => 64 },
+		fontSize: { type: [Number, String, null], default: () => 28 },
+		background: { type: [String, null], default: () => '#fff' },
+		maskClose: { type: [Boolean, null], default: () => true },
+		optionsWidth: { type: [Number, String, null], default: () => 'auto' },
+		placeholder: { type: [String, null], default: () => '请选择' },
+		labelKey: { type: [String, null], default: () => 'label' },
+		valueKey: { type: [String, null], default: () => 'value' },
+		childrenKey: { type: [String, null], default: () => 'children' },
+		multiple: { type: [Boolean, null], default: () => false },
+		allowCreate: { type: [Boolean, null], default: () => false },
+		borderColor: { type: [String, null], default: () => '#ebebeb' },
+		borderRadius: { type: [Number, String, null], default: () => 8 },
+		optionsPosition: { type: [String, null], default: () => 'auto' },
+		disabled: { type: [Boolean, null], default: () => false },
 	},
 	data() {
 		return {
@@ -335,7 +339,9 @@ export default {
 				let list = this.dataOptions;
 				if (this.cmpFilterable && this.userFilterable) {
 					// 处理筛选数据
-					list = list.map((item) => item.filter((value) => value[this.labelKey].includes(this.userFilterable)));
+					list = list.map((item) =>
+						item.filter((value) => value[this.labelKey].includes(this.userFilterable))
+					);
 				}
 				this.viewOptions = list;
 			});

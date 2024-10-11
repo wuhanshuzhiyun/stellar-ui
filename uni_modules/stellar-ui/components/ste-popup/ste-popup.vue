@@ -59,67 +59,67 @@ export default {
 	props: {
 		// 打开或者关闭弹窗，必须使用.sync进行双向绑定
 		show: {
-			type: Boolean,
+			type: [Boolean, null],
 			default: false,
 		},
 		backgroundColor: {
-			type: String,
+			type: [String, null],
 			default: '#ffffff',
 		},
 		// 是否显示遮罩
 		showMask: {
-			type: Boolean,
+			type: [Boolean, null],
 			default: true,
 		},
 		// 蒙版点击是否关闭弹窗
 		isMaskClick: {
-			type: Boolean,
+			type: [Boolean, null],
 			default: true,
 		},
 		// 弹窗内容层宽度
 		width: {
-			type: [Number, String],
+			type: [Number, String, null],
 			default: '100vw',
 		},
 		// 弹窗内容层高度
 		height: {
-			type: [Number, String],
+			type: [Number, String, null],
 			default: 'auto',
 		},
 		// 位置 center top bottom left right
 		position: {
-			type: String,
+			type: [String, null],
 			default: 'center',
 		},
 		round: {
-			type: Boolean,
+			type: [Boolean, null],
 			default: false,
 		},
 		showClose: {
-			type: Boolean,
+			type: [Boolean, null],
 			default: true,
 		},
 		offsetX: {
-			type: [Number, String],
+			type: [Number, String, null],
 			default: 0,
 		},
 		offsetY: {
-			type: [Number, String],
+			type: [Number, String, null],
 			default: 0,
 		},
 		// 动画持续时间
 		duration: {
-			type: Number,
+			type: [Number, null, null],
 			default: 200,
 		},
 		// 弹窗z-index
 		zIndex: {
-			type: [Number, String],
+			type: [Number, String, null],
 			default: 998,
 		},
 		// 是否在动画完成后渲染或销毁内容元素
 		keepContent: {
-			type: Boolean,
+			type: [Boolean, null],
 			default: true,
 		},
 	},

@@ -29,15 +29,15 @@ export default {
 	name: 'ste-rich-text',
 	props: {
 		text: {
-			type: String,
+			type: [String, null],
 			default: '',
 		},
 		space: {
-			type: String,
+			type: [String, null],
 			default: 'nbsp',
 		},
 		userSelect: {
-			type: Boolean,
+			type: [Boolean, null],
 			default: false,
 		},
 	},

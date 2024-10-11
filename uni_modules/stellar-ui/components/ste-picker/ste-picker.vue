@@ -47,47 +47,47 @@ import utils from '../../utils/utils.js';
 export default {
 	props: {
 		columns: {
-			type: Array,
+			type: [Array, null],
 			default: () => [],
 		},
 		itemHeight: {
-			type: [String, Number],
+			type: [String, Number, null],
 			default: 44,
 		},
 		visibleItemCount: {
-			type: Number,
+			type: [Number, null],
 			default: 5,
 		},
 		showToolbar: {
-			type: Boolean,
+			type: [Boolean, null],
 			default: true,
 		},
 		title: {
-			type: String,
+			type: [String, null],
 			default: '',
 		},
 		cancelText: {
-			type: String,
+			type: [String, null],
 			default: '取消',
 		},
 		cancelColor: {
-			type: String,
+			type: [String, null],
 			default: '#969799',
 		},
 		confirmText: {
-			type: String,
+			type: [String, null],
 			default: '确认',
 		},
 		confirmColor: {
-			type: String,
+			type: [String, null],
 			default: '#0091ff',
 		},
 		defaultIndex: {
-			type: Array,
+			type: [Array, null],
 			default: () => [],
 		},
 		rootClass: {
-			type: String,
+			type: [String, null],
 			default: '',
 		},
 	},

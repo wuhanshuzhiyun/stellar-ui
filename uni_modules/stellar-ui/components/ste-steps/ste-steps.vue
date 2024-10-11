@@ -27,15 +27,15 @@ export default {
 	},
 	props: {
 		active: {
-			type: Number,
+			type: [Number, null],
 			default: 0,
 		},
 		direction: {
-			type: String,
+			type: [String, null],
 			default: 'row',
 		},
 		dot: {
-			type: Boolean,
+			type: [Boolean, null],
 			default: false,
 		},
 	},

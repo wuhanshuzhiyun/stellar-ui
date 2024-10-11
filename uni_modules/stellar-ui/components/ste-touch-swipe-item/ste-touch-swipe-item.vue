@@ -17,7 +17,7 @@ export default {
 	mixins: [childMixin('ste-touch-swipe')],
 	props: {
 		disabled: {
-			type: Boolean,
+			type: [Boolean, null],
 			default: () => false,
 		},
 	},

@@ -47,84 +47,84 @@ export default {
 	props: {
 		// 金额
 		value: {
-			type: [Number, String],
+			type: [Number, String, null],
 			default: 0,
 		},
 		// 金额单位，fen | yuan，当为fen（分）时，值除以100
 		valueUnit: {
-			type: String,
+			type: [String, null],
 			default: 'fen',
 		},
 		// 精度 -1 不使用精度 0 保留0位小数 1 保留1位小数 2保留2位小数
 		digits: {
-			type: Number,
+			type: [Number, null],
 			default: -1,
 		},
 		// 是否显示单位符号
 		showUnit: {
-			type: Boolean,
+			type: [Boolean, null],
 			default: true,
 		},
 		// 单位符号
 		unitSymbol: {
-			type: String,
+			type: [String, null],
 			default: '¥',
 		},
 		// 金额文字尺寸
 		fontSize: {
-			type: [Number, String],
+			type: [Number, String, null],
 			default: 30,
 		},
 		// 金额文字颜
 		color: {
-			type: String,
+			type: [String, null, null],
 			default: '#FF1E19',
 		},
 		// 划线价颜色
 		linePriceColor: {
-			type: String,
+			type: [String, null, null],
 			default: '#999999',
 		},
 		// 行高，默认值为-1，当为-1是，line-height:1
 		lineHeight: {
-			type: [Number, String],
+			type: [Number, String, null],
 			default: -1,
 		},
 		// 是否是划线价
 		isSuggestPrice: {
-			type: Boolean,
+			type: [Boolean, null],
 			default: false,
 		},
 		// 左margin
 		marginLeft: {
-			type: [Number, String],
+			type: [Number, String, null],
 			default: 0,
 		}, // 右margin
 		marginRight: {
-			type: [Number, String],
+			type: [Number, String, null],
 			default: 0,
 		},
 		// 上margin
 		marginTop: {
-			type: [Number, String],
+			type: [Number, String, null],
 			default: 0,
 		}, // 下margin
 		marginBottom: {
-			type: [Number, String],
+			type: [Number, String, null],
 			default: 0,
 		},
 		// 金额样式 1 元和角分大小相等（特殊价格） 2 角分小于元（常规价格）3 价格符号和角，分相等
 		styleType: {
-			type: Number,
+			type: [Number, null],
 			default: 2,
 		},
 		bold: {
-			type: Boolean,
+			type: [Boolean, null],
 			default: false,
 		},
 		// 过滤器
 		formatter: {
-			type: Function,
+			type: [Function, null],
 			default: undefined,
 		},
 	},

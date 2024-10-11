@@ -74,35 +74,35 @@ export default {
 	props: {
 		// 是否展示顶部的操作栏
 		showToolbar: {
-			type: Boolean,
+			type: [Boolean, null],
 			default: true,
 		},
 		// 绑定值
 		value: {
-			type: [String, Number],
+			type: [String, Number, null],
 			default: '',
 		},
 		// 顶部标题
 		title: {
-			type: String,
+			type: [String, null],
 			default: '',
 		},
 		/**
 		 * 年月日时分秒(all)，年月日时分(datetime)，年月日(date)，年月(year-month)，月日(month-day)，时分秒(time)，时分(hour-minute)，分秒(minute-second)，
 		 */
 		mode: {
-			type: String,
+			type: [String, null],
 			default: 'all',
 		},
 		// 可选的最大时间
 		maxDate: {
-			type: [Number, String],
+			type: [Number, String, null],
 			// 最大默认值为后10年
 			default: new Date(new Date().getFullYear() + 10, 11, 31, 23, 59, 59).getTime(),
 		},
 		// 可选的最小时间
 		minDate: {
-			type: [Number, String, Object],
+			type: [Number, String, Object, null],
 			// 最小默认值为前10年
 			default: new Date(new Date().getFullYear() - 10, 0, 1).getTime(),
 		},
@@ -118,32 +118,32 @@ export default {
 		},
 		// 各列中，单个选项的高度
 		itemHeight: {
-			type: [String, Number],
+			type: [String, Number, null],
 			default: 43,
 		},
 		// 取消按钮的文字
 		cancelText: {
-			type: String,
+			type: [String, null],
 			default: '取消',
 		},
 		// 确认按钮的文字
 		confirmText: {
-			type: String,
+			type: [String, null],
 			default: '确认',
 		},
 		// 取消按钮的颜色
 		cancelColor: {
-			type: String,
+			type: [String, null],
 			default: '#969799',
 		},
 		// 确认按钮的颜色
 		confirmColor: {
-			type: String,
+			type: [String, null],
 			default: '#0091ff',
 		},
 		// 每列中可见选项的数量
 		visibleItemCount: {
-			type: [String, Number],
+			type: [String, Number, null],
 			default: 5,
 		},
 	},

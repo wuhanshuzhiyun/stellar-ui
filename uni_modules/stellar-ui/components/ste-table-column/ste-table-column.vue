@@ -66,43 +66,43 @@ export default {
 	props: {
 		// 列类型：checkbox 可多选、radio 单选、index 从1开始展示索引
 		type: {
-			type: String,
+			type: [String, null],
 			default: '',
 		},
 		customKey: {
-			type: String,
+			type: [String, null],
 			default: '',
 		},
 		label: {
-			type: String,
+			type: [String, null],
 			default: '',
 		},
 		prop: {
-			type: String,
+			type: [String, null],
 			default: '',
 		},
 		width: {
-			type: [String, Number],
+			type: [String, Number, null],
 			default: '',
 		},
 		minWidth: {
-			type: String,
+			type: [String, null],
 			default: '',
 		},
 		align: {
-			type: String,
+			type: [String, null],
 			default: 'left',
 		},
 		textAlign: {
-			type: String,
+			type: [String, null],
 			default: 'left',
 		},
 		headerAlign: {
-			type: String,
+			type: [String, null],
 			default: 'left',
 		},
 		headerTextAlign: {
-			type: String,
+			type: [String, null],
 			default: 'left',
 		},
 	},

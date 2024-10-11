@@ -35,31 +35,31 @@ export default {
 	name: 'ste-switch',
 	props: {
 		value: {
-			type: Boolean,
+			type: [Boolean, null],
 			default: false,
 		},
 		disabled: {
-			type: Boolean,
+			type: [Boolean, null],
 			default: false,
 		},
 		readonly: {
-			type: Boolean,
+			type: [Boolean, null],
 			default: false,
 		},
 		size: {
-			type: [String, Number],
+			type: [String, Number, null],
 			default: 52,
 		},
 		activeColor: {
-			type: String,
+			type: [String, null],
 			default: '#0090FF',
 		},
 		inactiveColor: {
-			type: String,
+			type: [String, null],
 			default: '#bbbbbb',
 		},
 		loading: {
-			type: Boolean,
+			type: [Boolean, null],
 			default: false,
 		},
 	},

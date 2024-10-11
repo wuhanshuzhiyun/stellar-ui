@@ -101,51 +101,51 @@ export default {
 	name: 'ste-button',
 	props: {
 		mode: {
-			type: [Number, String],
+			type: [Number, String, null],
 			default: 200,
 		},
 		color: {
-			type: String,
+			type: [String, null],
 			default: '#ffffff',
 		},
 		background: {
-			type: String,
+			type: [String, null],
 			default: '#0091FF',
 		},
 		borderColor: {
-			type: String,
+			type: [String, null],
 			default: '',
 		},
 		width: {
-			type: [String, Number],
+			type: [String, Number, null],
 			default: 'auto',
 		},
 		round: {
-			type: Boolean,
+			type: [Boolean, null],
 			default: true,
 		},
 		disabled: {
-			type: Boolean,
+			type: [Boolean, null],
 			default: false,
 		},
 		loading: {
-			type: Boolean,
+			type: [Boolean, null],
 			default: false,
 		},
 		openType: {
-			type: String,
+			type: [String, null],
 			default: '',
 		},
 		scope: {
-			type: String,
+			type: [String, null],
 			default: '',
 		},
 		rootStyle: {
-			type: Object,
+			type: [Object, null],
 			default: () => {},
 		},
 		stopPropagation: {
-			type: Boolean,
+			type: [Boolean, null],
 			default: true,
 		},
 	},

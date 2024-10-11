@@ -64,43 +64,43 @@ export default {
 	name: 'ste-image',
 	props: {
 		src: {
-			type: String,
+			type: [String, null],
 			default: () => '',
 		},
 		mode: {
-			type: String,
+			type: [String, null],
 			default: () => 'scaleToFill',
 		},
 		width: {
-			type: [Number, String],
+			type: [Number, String, null],
 			default: () => '100%',
 		},
 		height: {
-			type: [Number, String],
+			type: [Number, String, null],
 			default: () => '100%',
 		},
 		radius: {
-			type: [Number, String],
+			type: [Number, String, null],
 			default: () => 0,
 		},
 		hiddenLoading: {
-			type: Boolean,
+			type: [Boolean, null],
 			default: () => false,
 		},
 		hiddenError: {
-			type: Boolean,
+			type: [Boolean, null],
 			default: () => false,
 		},
 		showMenuByLongpress: {
-			type: Boolean,
+			type: [Boolean, null],
 			default: () => false,
 		},
 		lazyLoad: {
-			type: Boolean,
+			type: [Boolean, null],
 			default: () => false,
 		},
 		display: {
-			type: String,
+			type: [String, null],
 			default: () => 'inline-flex',
 		},
 	},

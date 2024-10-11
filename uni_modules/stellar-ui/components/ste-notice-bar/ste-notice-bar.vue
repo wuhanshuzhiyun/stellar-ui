@@ -75,47 +75,47 @@ export default {
 	},
 	props: {
 		list: {
-			type: Array,
+			type: [Array, null],
 			default: () => [],
 		},
 		direction: {
-			type: String,
+			type: [String, null],
 			default: 'across',
 		},
 		closeMode: {
-			type: Boolean,
+			type: [Boolean, null],
 			default: false,
 		},
 		color: {
-			type: String,
+			type: [String, null],
 			default: '#000000',
 		},
 		background: {
-			type: String,
+			type: [String, null],
 			default: '#ffffff',
 		},
 		width: {
-			type: [Number, String],
+			type: [Number, String, null],
 			default: '100%',
 		},
 		acrossSpeed: {
-			type: Number,
+			type: [Number, null],
 			default: 50,
 		},
 		verticalSpeed: {
-			type: Number,
+			type: [Number, null],
 			default: 500,
 		},
 		delay: {
-			type: Number,
+			type: [Number, null],
 			default: 1000,
 		},
 		standTime: {
-			type: Number,
+			type: [Number, null],
 			default: 1000,
 		},
 		scrollable: {
-			type: Boolean,
+			type: [Boolean, null],
 			default: true,
 		},
 	},
