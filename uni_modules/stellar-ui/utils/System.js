@@ -95,11 +95,14 @@ export default class System {
 	static getElementBoundary(el) {
 		const vw = System.getWindowWidth(); // 计算vw单位
 		const vh = System.getWindowHeight(); // 计算vh单位
+		const {
+			top = 0, left = 0, bottom = 0, right = 0
+		} = el;
 		return {
-			top: el.top,
-			left: el.left,
-			bottom: vh - el.bottom,
-			right: vw - el.right,
+			top: top,
+			left: left,
+			bottom: vh - bottom,
+			right: vw - right,
 		};
 	}
 }
