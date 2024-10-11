@@ -206,7 +206,7 @@ export default {
 	line-height: 1;
 	vertical-align: top;
 	position: relative;
-	& > image {
+	& > .content {
 		width: var(--image-root-width);
 		height: var(--image-root-height);
 	}

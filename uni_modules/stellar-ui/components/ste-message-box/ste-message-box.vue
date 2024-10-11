@@ -315,7 +315,7 @@ export default {
 		.footer {
 			display: flex;
 			height: 96rpx;
-			> view {
+			> .text {
 				height: 100%;
 				border-top: 2rpx solid #eeeeee;
 				border-right: 2rpx solid #eeeeee;
