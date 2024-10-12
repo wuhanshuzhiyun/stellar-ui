@@ -333,7 +333,9 @@ export default {
 		},
 		focus: {
 			handler(val) {
-				this.focused = val;
+				setTimeout(() => {
+					this.focused = val;
+				}, 50);
 			},
 		},
 	},
