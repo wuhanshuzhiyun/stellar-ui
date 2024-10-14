@@ -5,6 +5,7 @@
 				<i
 					v-for="item in cmpCount"
 					class="i"
+					:key="item"
 					:style="{ transform: `rotate(${item * 40 + 80}deg)`, opacity: item == 0 ? 1 : (item + 1) / 10 }"
 				></i>
 			</block>
