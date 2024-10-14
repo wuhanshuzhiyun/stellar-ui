@@ -188,7 +188,7 @@ export default {
 					this.show = true;
 				},
 				fail(err) {
-					console.log('err', err);
+					console.error('err', err);
 					this.showToast({ title: '加载字体失败', icon: 'none' });
 				},
 			});

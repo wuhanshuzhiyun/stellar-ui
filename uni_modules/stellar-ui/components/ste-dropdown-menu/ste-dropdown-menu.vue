@@ -201,7 +201,6 @@ export default {
 	watch: {
 		value: {
 			handler(val) {
-				console.log('执行watch ', val);
 				if (Array.isArray(val)) {
 					this.chooseItems = val;
 				} else {
@@ -265,7 +264,6 @@ export default {
 			}, this.cmpDuration * 1000);
 		},
 		choose(item) {
-			console.log('执行choose');
 			let temp = this.chooseItems;
 			let index = temp.findIndex((e) => e == item.value);
 			let max = this.max < 1 ? 1 : this.max;
