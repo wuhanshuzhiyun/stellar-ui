@@ -15,12 +15,16 @@
 				<view class="msg" v-if="!icon">
 					<slot>
 						<view class="text" v-if="!editable">{{ content }}</view>
-						<view v-else>
+						<view v-else class="input-box">
+							<text class="placeholder-text" v-show="showInputPlaceholder">
+								{{ placeholderText }}
+							</text>
 							<input
 								:value="inputValue"
 								class="ste-message-box-input"
-								:placeholder="placeholderText"
 								@input="handleInput"
+								@focus="handleInputFocus"
+								@blur="handleInputBlur"
 							/>
 						</view>
 					</slot>
@@ -105,6 +109,7 @@ export default {
 			},
 			open: false,
 			tmpMsg: null,
+			showInputPlaceholder: true,
 		};
 	},
 	beforeCreate() {},
@@ -199,6 +204,7 @@ export default {
 			this.maskAnimationData = maskAnimation.export();
 			setTimeout(() => {
 				this.show = false;
+				this.showInputPlaceholder = true;
 			}, DURATION);
 		},
 		handleInput(e) {
@@ -215,6 +221,15 @@ export default {
 		handleComplete() {
 			this.complete(this.inputValue);
 			this.tmpMsg.hideMsgBox();
+		},
+		// 用input自带占位符时，由于动画原因导致最终显示会有一个下降的效果
+		handleInputFocus() {
+			this.showInputPlaceholder = false;
+		},
+		handleInputBlur() {
+			if (!this.inputValue) {
+				this.showInputPlaceholder = true;
+			}
 		},
 	},
 };
@@ -299,6 +314,18 @@ export default {
 					width: 100%;
 					font-size: 28rpx;
 					text-align: center;
+				}
+
+				.input-box {
+					position: relative;
+				}
+
+				.placeholder-text {
+					position: absolute;
+					left: 50%;
+					top: 50%;
+					transform: translate(-50%, -50%);
+					color: #999999;
 				}
 
 				.ste-message-box-input {

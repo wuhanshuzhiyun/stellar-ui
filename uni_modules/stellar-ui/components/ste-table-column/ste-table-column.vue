@@ -148,9 +148,6 @@ export default {
 				row: this.row,
 				rowIndex: this.row.rowIndex,
 			};
-			// let style = getStyleOrClass(this.parent.cellStyle, cellClassParam);
-			// console.log(' style is ', style);
-			// return style;
 			return getStyleOrClass(this.parent.cellStyle, cellClassParam);
 		},
 		cmpRootClass() {

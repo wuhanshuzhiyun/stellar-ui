@@ -259,7 +259,11 @@ let utils = {
 	 */
 	getWindowInfo() {
 		// #ifdef MP-WEIXIN
-		return wx.getWindowInfo();
+		let windowInfo = wx.getWindowInfo();
+		windowInfo.safeAreaInsets = {
+			bottom: windowInfo.screenHeight - windowInfo.safeArea.bottom,
+		};
+		return windowInfo;
 		// #endif
 
 		// #ifndef MP-WEIXIN

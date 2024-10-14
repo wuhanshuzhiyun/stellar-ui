@@ -98,9 +98,7 @@ export default {
 	},
 	created() {},
 	methods: {
-		change(e) {
-			// console.log('datetime change', e)
-		},
+		change(e) {},
 		formatter(type, value) {
 			if (type === 'year') {
 				return `${value}年`;

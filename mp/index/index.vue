@@ -231,62 +231,6 @@
 					<ste-image :src="joinSrc('组件图标/r-arrow.png')" :width="32" :height="32" />
 				</view>
 			</view>
-			<!-- ***导航组件*** -->
-			<view class="group-title">导航组件</view>
-			<view class="com-box" @click="nav('dropdown-menu')">
-				<view class="com-title">
-					<ste-image :src="joinSrc('组件图标/dropdown.png')" :width="36" :height="36" />
-					<text>DropdownMenu 下拉菜单</text>
-				</view>
-				<view class="com-arrow">
-					<ste-image :src="joinSrc('组件图标/r-arrow.png')" :width="32" :height="32" />
-				</view>
-			</view>
-			<view class="com-box" @click="nav('index-list')">
-				<view class="com-title">
-					<ste-image :src="joinSrc('组件图标/indexList.png')" :width="36" :height="36" />
-					<text>IndexList 索引列表</text>
-				</view>
-				<view class="com-arrow">
-					<ste-image :src="joinSrc('组件图标/r-arrow.png')" :width="32" :height="32" />
-				</view>
-			</view>
-			<view class="com-box" @click="nav('scroll-to')">
-				<view class="com-title">
-					<ste-image :src="joinSrc('组件图标/tabbar.png')" :width="36" :height="36" />
-					<text>ScrollTo 滚动锚点</text>
-				</view>
-				<view class="com-arrow">
-					<ste-image :src="joinSrc('组件图标/r-arrow.png')" :width="32" :height="32" />
-				</view>
-			</view>
-			<view class="com-box" @click="nav('swiper')">
-				<view class="com-title">
-					<ste-image :src="joinSrc('组件图标/countTo.png')" :width="36" :height="36" />
-					<text>Swipe 轮播组件</text>
-				</view>
-				<view class="com-arrow">
-					<ste-image :src="joinSrc('组件图标/r-arrow.png')" :width="32" :height="32" />
-				</view>
-			</view>
-			<view class="com-box" @click="nav('tabs')">
-				<view class="com-title">
-					<ste-image :src="joinSrc('组件图标/tabs.png')" :width="36" :height="36" />
-					<text>Tabs 标签页</text>
-				</view>
-				<view class="com-arrow">
-					<ste-image :src="joinSrc('组件图标/r-arrow.png')" :width="32" :height="32" />
-				</view>
-			</view>
-			<view class="com-box" @click="nav('touch-swipe')">
-				<view class="com-title">
-					<ste-image :src="joinSrc('组件图标/countTo.png')" :width="36" :height="36" />
-					<text>TouchSwipe 手势切屏</text>
-				</view>
-				<view class="com-arrow">
-					<ste-image :src="joinSrc('组件图标/r-arrow.png')" :width="32" :height="32" />
-				</view>
-			</view>
 			<!-- ***展示组件*** -->
 			<view class="group-title">展示组件</view>
 			<view class="com-box" @click="nav('animate')">
@@ -416,6 +360,62 @@
 					<ste-image :src="joinSrc('组件图标/r-arrow.png')" :width="32" :height="32" />
 				</view>
 			</view>
+			<!-- ***导航组件*** -->
+			<view class="group-title">导航组件</view>
+			<view class="com-box" @click="nav('dropdown-menu')">
+				<view class="com-title">
+					<ste-image :src="joinSrc('组件图标/dropdown.png')" :width="36" :height="36" />
+					<text>DropdownMenu 下拉菜单</text>
+				</view>
+				<view class="com-arrow">
+					<ste-image :src="joinSrc('组件图标/r-arrow.png')" :width="32" :height="32" />
+				</view>
+			</view>
+			<view class="com-box" @click="nav('index-list')">
+				<view class="com-title">
+					<ste-image :src="joinSrc('组件图标/indexList.png')" :width="36" :height="36" />
+					<text>IndexList 索引列表</text>
+				</view>
+				<view class="com-arrow">
+					<ste-image :src="joinSrc('组件图标/r-arrow.png')" :width="32" :height="32" />
+				</view>
+			</view>
+			<view class="com-box" @click="nav('scroll-to')">
+				<view class="com-title">
+					<ste-image :src="joinSrc('组件图标/tabbar.png')" :width="36" :height="36" />
+					<text>ScrollTo 滚动锚点</text>
+				</view>
+				<view class="com-arrow">
+					<ste-image :src="joinSrc('组件图标/r-arrow.png')" :width="32" :height="32" />
+				</view>
+			</view>
+			<view class="com-box" @click="nav('swiper')">
+				<view class="com-title">
+					<ste-image :src="joinSrc('组件图标/countTo.png')" :width="36" :height="36" />
+					<text>Swipe 轮播组件</text>
+				</view>
+				<view class="com-arrow">
+					<ste-image :src="joinSrc('组件图标/r-arrow.png')" :width="32" :height="32" />
+				</view>
+			</view>
+			<view class="com-box" @click="nav('tabs')">
+				<view class="com-title">
+					<ste-image :src="joinSrc('组件图标/tabs.png')" :width="36" :height="36" />
+					<text>Tabs 标签页</text>
+				</view>
+				<view class="com-arrow">
+					<ste-image :src="joinSrc('组件图标/r-arrow.png')" :width="32" :height="32" />
+				</view>
+			</view>
+			<view class="com-box" @click="nav('touch-swipe')">
+				<view class="com-title">
+					<ste-image :src="joinSrc('组件图标/countTo.png')" :width="36" :height="36" />
+					<text>TouchSwipe 手势切屏</text>
+				</view>
+				<view class="com-arrow">
+					<ste-image :src="joinSrc('组件图标/r-arrow.png')" :width="32" :height="32" />
+				</view>
+			</view>
 			<!-- ***电商组件*** -->
 			<view class="group-title">电商组件</view>
 			<view class="com-box" @click="nav('price')">
@@ -507,9 +507,6 @@ export default {
 	padding-bottom: 28rpx;
 	.top-1 {
 		display: flex;
-		image {
-			margin-right: 28rpx;
-		}
 
 		.title {
 			display: flex;
@@ -550,11 +547,6 @@ export default {
 		font-size: 28rpx;
 		display: flex;
 		align-items: center;
-		image {
-			margin-right: 12rpx;
-			width: 18px;
-			height: 18px;
-		}
 		line-height: 100%;
 		column-gap: 10rpx;
 	}

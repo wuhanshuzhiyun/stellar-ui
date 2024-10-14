@@ -444,8 +444,6 @@ export default {
 			}, 1500);
 		},
 		triggerMuted() {
-			console.log('触发了');
-			// this.$emit('update:muted', !this.muted);
 			this.isMuted = !this.isMuted;
 		},
 	},

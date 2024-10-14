@@ -63,6 +63,7 @@
 										<view class="left">
 											<view
 												v-for="(m, i) in customMenuData"
+												:key="i"
 												:class="i == m1 ? 'active' : ''"
 												@click="choose('1', i)"
 											>
@@ -72,6 +73,7 @@
 										<view class="right">
 											<view
 												v-for="(m, i) in customMenuData[m1].child"
+												:key="i"
 												:class="i == m2 ? 'active' : ''"
 												@click="choose('2', i)"
 											>

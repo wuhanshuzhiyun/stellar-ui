@@ -42,7 +42,11 @@ export default class System {
 	 */
 	static getWindowInfo() {
 		// #ifdef MP-WEIXIN
-		return wx.getWindowInfo();
+		let windowInfo = wx.getWindowInfo();
+		windowInfo.safeAreaInsets = {
+			bottom: windowInfo.screenHeight - windowInfo.safeArea.bottom,
+		};
+		return windowInfo;
 		// #endif
 
 		// #ifndef MP-WEIXIN
@@ -95,9 +99,7 @@ export default class System {
 	static getElementBoundary(el) {
 		const vw = System.getWindowWidth(); // 计算vw单位
 		const vh = System.getWindowHeight(); // 计算vh单位
-		const {
-			top = 0, left = 0, bottom = 0, right = 0
-		} = el;
+		const { top = 0, left = 0, bottom = 0, right = 0 } = el;
 		return {
 			top: top,
 			left: left,

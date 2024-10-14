@@ -2,7 +2,6 @@ import Vue from 'vue';
 import Vuex from 'vuex';
 
 Vue.use(Vuex);
-console.log('*********** ste-message-box.js ***********');
 const DEFAULT_KEY = '$steMsgBoxKey';
 const DEFAULT_CONFIG = {
 	title: '',
@@ -29,19 +28,15 @@ const store = new Vuex.Store({
 					selector: key,
 					openBegin: false,
 					...DEFAULT_CONFIG,
-
 				});
 			}
 		},
-		setState(state, {
-			key,
-			params
-		}) {
+		setState(state, { key, params }) {
 			Object.assign(state[key], params);
 		},
 		resetState(state, key) {
 			Object.assign(state[key], {
-				openBegin: false
+				openBegin: false,
 			});
 		},
 	},
@@ -58,11 +53,11 @@ function useSteMsgBox(key) {
 				params: {
 					...DEFAULT_CONFIG,
 					...params,
-					confirm: params.confirm ?? function() {},
-					cancel: params.cancel ?? function() {},
-					complete: params.complete ?? function() {},
-					openBegin: true
-				}
+					confirm: params.confirm ?? function () {},
+					cancel: params.cancel ?? function () {},
+					complete: params.complete ?? function () {},
+					openBegin: true,
+				},
 			});
 		},
 		hideMsgBox() {
@@ -74,6 +69,4 @@ function useSteMsgBox(key) {
 }
 
 export default useSteMsgBox;
-export {
-	DEFAULT_KEY,
-}
+export { DEFAULT_KEY };

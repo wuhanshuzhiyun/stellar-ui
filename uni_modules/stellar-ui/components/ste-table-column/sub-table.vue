@@ -68,7 +68,6 @@ export default {
 					style.flexBasis = maxHeight + 'px';
 					style.flexGrow = 0;
 				}
-				console.log('style is ', style);
 			}
 			return style;
 		},

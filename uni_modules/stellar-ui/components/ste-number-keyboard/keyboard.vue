@@ -39,7 +39,7 @@ export default {
 		virtualHost: true,
 	},
 	props: {
-		list: { type: Array },
+		list: { type: [Array, null] },
 		confirmText: { type: String },
 		disabled: { type: Boolean },
 		showClear: { type: Boolean },

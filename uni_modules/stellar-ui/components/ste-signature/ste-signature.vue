@@ -124,7 +124,7 @@ export default {
 						if (callback) callback(res.tempFilePath);
 					},
 					fail: (err) => {
-						console.log(err, 'err');
+						console.error(err, 'err');
 					},
 				},
 				this
