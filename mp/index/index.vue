@@ -507,9 +507,6 @@ export default {
 	padding-bottom: 28rpx;
 	.top-1 {
 		display: flex;
-		image {
-			margin-right: 28rpx;
-		}
 
 		.title {
 			display: flex;
@@ -550,11 +547,6 @@ export default {
 		font-size: 28rpx;
 		display: flex;
 		align-items: center;
-		image {
-			margin-right: 12rpx;
-			width: 18px;
-			height: 18px;
-		}
 		line-height: 100%;
 		column-gap: 10rpx;
 	}
