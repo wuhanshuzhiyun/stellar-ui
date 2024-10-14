@@ -1,5 +1,5 @@
 <template>
-	<view class="ste-animate-root" :class="[cmpRootClass]" :style="[cmpRootStyle]" @click="handleClick">
+	<view class="ste-animate-root ste-animate" :class="[cmpRootClass]" :style="[cmpRootStyle]" @click="handleClick">
 		<slot></slot>
 	</view>
 </template>
@@ -88,7 +88,7 @@ export default {
 .ste-animate-root {
 	display: inline-block;
 
-	&[class*='ste-animate-'] {
+	&.ste-animate {
 		animation-duration: 0.5s;
 		animation-timing-function: ease-out;
 		animation-fill-mode: both;
