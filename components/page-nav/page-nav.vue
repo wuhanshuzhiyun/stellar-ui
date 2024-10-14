@@ -189,7 +189,6 @@ export default {
 	display: flex;
 	align-items: center;
 	padding-left: 8rpx;
-	// padding-right: 10rpx;
 	overflow: hidden;
 	.back-box {
 		padding-right: 10rpx;
@@ -211,7 +210,6 @@ export default {
 			z-index: 2;
 			width: 90rpx;
 			height: 90rpx;
-			// background-color: rgba(255, 0, 0, 0.1);
 			transform: translateX(-30rpx);
 		}
 	}
