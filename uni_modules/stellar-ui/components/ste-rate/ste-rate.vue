@@ -1,7 +1,7 @@
 <template>
 	<view class="ste-rate-root">
 		<view class="list" :style="[cmpListStyle]">
-			<view v-for="index in cmpCount" class="item">
+			<view v-for="index in cmpCount" class="item" :key="index">
 				<view class="icon-box inactive" @click="onSelect(index)">
 					<ste-icon :code="cmpInactiveCode" :color="inactiveColor" :size="size"></ste-icon>
 				</view>
