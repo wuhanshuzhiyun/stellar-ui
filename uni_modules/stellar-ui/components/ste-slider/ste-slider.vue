@@ -40,10 +40,9 @@
 				<view class="slider-bar"></view>
 			</slot>
 		</view>
-
 		<template v-if="showStops">
 			<template v-for="(e, i) in markList">
-				<view class="mark-box" :style="{ left: e.left, top: e.top }">
+				<view :key="i" class="mark-box" :style="{ left: e.left, top: e.top }">
 					<view class="dot" />
 					<view class="marks-label" :style="e.style">{{ e.label }}</view>
 				</view>
