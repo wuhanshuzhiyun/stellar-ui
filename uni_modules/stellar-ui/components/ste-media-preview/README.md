@@ -59,7 +59,7 @@ export default{
 - `loop`属性可开启前后衔接循环播放
 ```html
 <template>
-	<ste-button @click="show2 = true">自动轮播</ste-button>
+	<ste-button @click="show2 = true">前后衔接循环播放</ste-button>
 	<view style="width: 100%">
 		<ste-media-preview :urls="medias" :show.sync="show2" loop />
 	</view>
@@ -79,7 +79,7 @@ export default{
 - `index`属性可控制从第几页开始展示
 ```html
 <template>
-	<ste-button @click="show3 = true">自动轮播</ste-button>
+	<ste-button @click="show3 = true">默认展示下标为2的媒体资源</ste-button>
 	<view style="width: 100%">
 		<ste-media-preview :urls="medias" :show.sync="show3" :index="2" />
 	</view>
@@ -99,7 +99,7 @@ export default{
 - `showIndex`属性可控制左下角页签显示
 ```html
 <template>
-	<ste-button @click="show4 = true">自动轮播</ste-button>
+	<ste-button @click="show4 = true">隐藏左下角索引标签</ste-button>
 	<view style="width: 100%">
 		<ste-media-preview :urls="medias" :show.sync="show4" :showIndex="false" />
 	</view>
@@ -119,7 +119,7 @@ export default{
 - `scale`属性可开启双指缩放功能
 ```html
 <template>
-	<ste-button @click="show5 = true">自动轮播</ste-button>
+	<ste-button @click="show5 = true">双指缩放</ste-button>
 	<view style="width: 100%">
 		<ste-media-preview :urls="medias" :show.sync="show5" scale />
 	</view>
@@ -139,7 +139,7 @@ export default{
 - 事件`longpress`在用户长按时触发
 ```html
 <template>
-	<ste-button @click="show6 = true">自动轮播</ste-button>
+	<ste-button @click="show6 = true">长按触发事件</ste-button>
 	<view style="width: 100%">
 		<ste-media-preview :urls="medias" :show.sync="show6" @longpress="onLongpress" />
 	</view>
@@ -168,7 +168,7 @@ export default{
 - 事件`close`在关闭后被触发
 ```html
 <template>
-	<ste-button @click="show7 = true">自动轮播</ste-button>
+	<ste-button @click="show7 = true">关闭前/后事件</ste-button>
 	<view style="width: 100%">
 		<ste-media-preview :urls="medias" :show.sync="show7" @beforeClose="onBeforeClose" @close="onClose" />
 	</view>
