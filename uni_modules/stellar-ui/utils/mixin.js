@@ -6,7 +6,9 @@ export function parentMixin(name) {
 	return {
 		provide() {
 			return {
-				[name]: { getParent: () => this },
+				[name]: {
+					getParent: () => this
+				},
 			};
 		},
 		data() {
@@ -26,7 +28,12 @@ export function childMixin(parentName) {
 		options: {
 			virtualHost: true,
 		},
-		inject: [parentName],
+		inject: {
+			[parentName]: {
+				value: parentName,
+				default: null
+			}
+		},
 		data() {
 			return {
 				parent: {},
