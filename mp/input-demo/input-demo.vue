@@ -27,6 +27,14 @@
 				</view>
 			</view>
 			<view class="demo-item">
+				<view class="title">带搜索建议</view>
+				<view class="item-block">
+					<view style="width: 100%">
+						<ste-input :suggestion-list="suggestionList" @input="suggestionInput" />
+					</view>
+				</view>
+			</view>
+			<view class="demo-item">
 				<view class="title">占位符</view>
 				<view class="item-block">
 					<view style="width: 100%">
@@ -170,6 +178,19 @@ export default {
 			inputFocus: false,
 			count: 0,
 			codeTimer: null,
+			suggestionList: [],
+			data: [
+				{ label: '三全鲜食（北新泾店）', value: '三全鲜食（北新泾店）' },
+				{ label: 'Hot honey 首尔炸鸡（仙霞路）', value: 'Hot honey 首尔炸鸡（仙霞路）' },
+				{ label: '贡茶', value: '贡茶' },
+				{ label: '浮生若茶（凌空soho店）', value: '浮生若茶' },
+				{ label: '枪会山', value: '枪会山' },
+				{ label: '爱茜茜里(西郊百联)', value: '爱茜茜里' },
+				{ label: '港式小铺', value: '港式小铺' },
+				{ label: '蜀香源麻辣香锅', value: '蜀香源麻辣香锅' },
+				{ label: '饭典*新简餐', value: '饭典*新简餐' },
+				{ label: '浏阳蒸菜', value: '浏阳蒸菜' },
+			],
 		};
 	},
 	created() {},
@@ -188,6 +209,15 @@ export default {
 				}
 				this.count--;
 			}, 1000);
+		},
+		suggestionInput(v) {
+			if (v) {
+				setTimeout(() => {
+					this.suggestionList = this.data.filter((e) => e.label.indexOf(v) > -1);
+				}, 450);
+			} else {
+				this.suggestionList = [];
+			}
 		},
 	},
 };
