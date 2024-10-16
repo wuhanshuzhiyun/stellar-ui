@@ -20,45 +20,6 @@
 <ste-input type="number" />
 ``` 
 
-#### 带搜索建议
-- 给`suggestionsList`属性赋值时，会在输入框下方显示，数据结构见下方示例
-```html 
-<ste-input :suggestion-list="suggestionList" @input="suggestionInput" />
-<script>
-export default {
-	data() {
-		return {
-			suggestionList: [],
-			// 本地模拟数据搜索
-			data: [
-				{ label: '三全鲜食（北新泾店）', value: '三全鲜食（北新泾店）' },
-				{ label: 'Hot honey 首尔炸鸡（仙霞路）', value: 'Hot honey 首尔炸鸡（仙霞路）' },
-				{ label: '贡茶', value: '贡茶' },
-				{ label: '浮生若茶（凌空soho店）', value: '浮生若茶' },
-				{ label: '枪会山', value: '枪会山' },
-				{ label: '爱茜茜里(西郊百联)', value: '爱茜茜里' },
-				{ label: '港式小铺', value: '港式小铺' },
-				{ label: '蜀香源麻辣香锅', value: '蜀香源麻辣香锅' },
-				{ label: '饭典*新简餐', value: '饭典*新简餐' },
-				{ label: '浏阳蒸菜', value: '浏阳蒸菜' },
-			],
-		}
-	},
-	methods: {
-		suggestionInput(v) {
-			if (v) {
-				setTimeout(() => {
-					this.suggestionList = this.data.filter((e) => e.label.indexOf(v) > -1);
-				}, 450);
-			} else {
-				this.suggestionList = [];
-			}
-		}
-	}
-}
-</script>
-```
-
 #### 占位符
 - 支持`placeholderStyle`给占位符指定样式
 - 支持`placeholderClass`给占位符指定类名
@@ -161,7 +122,6 @@ export default {
 | `rootClass`		| 自定义输入框类名												| `String`			| -					| -																																																																| -			|
 | `cursorSpacing`	| 指定光标与键盘的距离											| `Number`			| 0					| -																																																																| -			|
 | `allowSpace`		| 是否允许输入空格（为`false`时输入事件的返回值会去掉所有的空格）	| `Boolean`			| `true`			|-																																																																| -			|
-| `suggestionList`	| 搜索建议对应的数据											| `Array`			| -					|																																																																| `v1.30.1`	|
 
 #### 组件事件(Events)
 
