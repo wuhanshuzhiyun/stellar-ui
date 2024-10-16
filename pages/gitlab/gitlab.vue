@@ -9,17 +9,23 @@ export default {
 	data() {
 		return {
 			imgUrl: '',
+			type: 'vue2',
 		};
 	},
 	mounted() {
 		this.imgUrl = `https://image.whzb.com/chain/StellarUI/gialab/${this?.$Route?.query?.name ?? ''}.png`;
+		this.type = this?.$Route?.query?.type ?? 'vue2';
 	},
 	methods: {
 		goToHome() {
 			// #ifdef H5
-			uni.redirectTo({
-				url: '/pc/index/index',
-			});
+			if (this.type == 'vue3') {
+				window.location.href = 'https://stellar-ui.intecloud.com.cn/plus/#/';
+			} else {
+				uni.redirectTo({
+					url: '/pc/index/index',
+				});
+			}
 			// #endif
 			// #ifdef MP-WEIXIN
 			uni.switchTab({
