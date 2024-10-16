@@ -26,11 +26,6 @@ export default {
 				url: '/mp/index/index',
 			});
 			// #endif
-			// #ifndef MP-WEIXIN
-			uni.redirectTo({
-				url: '/mp/index/index',
-			});
-			// #endif
 		},
 	},
 };
