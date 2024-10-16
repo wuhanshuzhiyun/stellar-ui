@@ -53,6 +53,52 @@ export default {
 <ste-search disabled />
 ```
 
+#### 搜索建议
+- 给`suggestionsList`属性赋值时，会在输入框下方显示，数据结构见下方示例
+- 点击某条建议后会触发搜索的`selectSuggestion`事件，参数为搜索建议对象
+```html 
+<ste-input :suggestion-list="suggestionList" @input="suggestionInput" @selectSuggestion="selectSuggestion"/>
+<script>
+export default {
+	data() {
+		return {
+			suggestionList: [],
+			// 本地模拟数据搜索
+			data: [
+				{ label: '三全鲜食（北新泾店）', value: '1全' },
+				{ label: 'Hot honey 首尔炸鸡（仙霞路）', value: '2全' },
+				{ label: '三贡茶', value: '3全' },
+				{ label: '三浮生若茶（凌空soho店', value: '4全' },
+				{ label: '三枪会山', value: '5全' },
+				{ label: '三爱茜茜里(西郊百联)', value: '6全' },
+				{ label: '三港式小铺', value: '7全' },
+				{ label: '三蜀香源麻辣香锅', value: '8全' },
+				{ label: '饭典*新简餐', value: '9全' },
+				{ label: '浏阳蒸菜', value: '10全' },
+			],
+		}
+	},
+	methods: {
+		suggestionInput(v) {
+			if (v) {
+				setTimeout(() => {
+					this.suggestionList = this.data.filter((e) => e.label.indexOf(v) > -1);
+				}, 450);
+			} else {
+				this.suggestionList = [];
+			}
+		},
+		selectSuggestion(v) {
+			this.showToast({
+				icon: 'none',
+				title: `选了：${v.label}`,
+			});
+		}
+	}
+}
+</script>
+```
+
 #### 热词列表
 - 可以通过`hotWords`属性传入热词列表
 - 可以通过`interval`属性设置热词切换间隔，单位为毫秒
@@ -169,44 +215,45 @@ export default {
 
 ### API
 #### Props
-| 属性名						| 说明																			| 类型				| 默认值					| 可选值																	|支持版本	|
-| -----							|-----																		|-----			|-----					|-----																	|-----		|
-| `type`						| 组件类型																	| `String`	| `"default"`		| `"default"`正常搜索<br/>`"nav"`导航栏	|-				|
-| `value`						| 输入框默认值，支持`v-model`双向绑定				| `String`	| `""`					| -																			|-				|
-| `placeholder`			| 占位提示符																| `String`	| `""`					| -																			|-				|
-| `hotWords`				| 热词列表																	| `String[]`| `[]`					| -																			|-				|
-| `interval`				| 热词列表自动切换时间间隔，单位`ms`				| `Number`	| `3000`				| -																			|-				|
-| `disabled`				| 是否禁用状态															| `Boolean`	| `false`				| -																			|-				|
-| `hiddenLine`			| 是否隐藏分割线														| `Boolean`	| `false`				| -																			|-				|
-| `hiddenBtn`				| 是否隐藏按钮，同时也会隐藏分割线					| `Boolean`	| `false`				| -																			|-				|
-| `btnText`					| 按钮文本内容															| `String`	| `"搜索"`				| -																			|-				|
-| `hiddenInput`			| 是否隐藏输入框														| `Boolean`	| `false`				| -																			|-				|
-| `clearable`				| 是否可清空内容														| `Boolean`	| `true`				| -																			|-				|
-| `height`					| 搜索框高度，单位`rpx`										| `Number`	| `64`					| -																			|-				|
-| `radius`					| 圆角弧度，单位`rpx`											| `Number`	| `32`					| -																			|-				|
-| `borderColor`			| 边框颜色																	| `String`	| `"#EEEEEE66"`	| -																			|-				|
-| `background`			| 背景，可直接传颜色值或者图片							| `String`	| `"#FFFFFF"`		| -																			|-				|
-| `placeholderColor`| 占位符文本颜色														| `String`	| `"#BBBBBB"`		| -																			|-				|
-| `prefixIconColor`	| 前缀图标颜色															| `String`	| `"#BBBBBB"`		| -																			|-				|
-| `inputTextColor`	| 输入框文本颜色														| `String`	| `"#000000"`		| -																			|-				|
-| `clearIconColor`	| 清除图标颜色															| `String`	| `"#BBBBBB"`		| -																			|-				|
-| `btnTextColor`		| 搜索按钮文本颜色，分割线会跟随文本颜色变化	| `String`	| `"#0090FF"`		| -																			|-				|
-| `btnBackground`		| 搜索按钮背景，可直接传颜色值或者图片			| `String`	| -							| -																			|-				|
-| `focus`						| 是否聚焦(双向绑定)												| `Boolean`	| `false`				| -																			|`1.1.5`	|
-| `autoplay`				| 热词列表自动切换													| `Boolean`	| `true`				| -																			|`1.11.1`	|
-
+| 属性名			| 说明									| 类型		| 默认值			| 可选值									|支持版本		|
+| -----				|-----									|-----		|-----			|-----									|-----		|
+| `type`			| 组件类型								| `String`	| `"default"`	| `"default"`正常搜索<br/>`"nav"`导航栏	| -			|
+| `value`			| 输入框默认值，支持`v-model`双向绑定		| `String`	| `""`			| -										| -			|
+| `placeholder`		| 占位提示符								| `String`	| `""`			| -										| -			|
+| `hotWords`		| 热词列表								| `String[]`| `[]`			| -										| -			|
+| `interval`		| 热词列表自动切换时间间隔，单位`ms`			| `Number`	| `3000`		| -										| -			|
+| `disabled`		| 是否禁用状态							| `Boolean`	| `false`		| -										| -			|
+| `hiddenLine`		| 是否隐藏分割线							| `Boolean`	| `false`		| -										| -			|
+| `hiddenBtn`		| 是否隐藏按钮，同时也会隐藏分割线			| `Boolean`	| `false`		| -										| -			|
+| `btnText`			| 按钮文本内容							| `String`	| `"搜索"`		| -										| -			|
+| `hiddenInput`		| 是否隐藏输入框							| `Boolean`	| `false`		| -										| -			|
+| `clearable`		| 是否可清空内容							| `Boolean`	| `true`		| -										| -			|
+| `height`			| 搜索框高度，单位`rpx`					| `Number`	| `64`			| -										| -			|
+| `radius`			| 圆角弧度，单位`rpx`						| `Number`	| `32`			| -										| -			|
+| `borderColor`		| 边框颜色								| `String`	| `"#EEEEEE66"`	| -										| -			|
+| `background`		| 背景，可直接传颜色值或者图片				| `String`	| `"#FFFFFF"`	| -										| -			|
+| `placeholderColor`| 占位符文本颜色							| `String`	| `"#BBBBBB"`	| -										| -			|
+| `prefixIconColor`	| 前缀图标颜色							| `String`	| `"#BBBBBB"`	| -										| -			|
+| `inputTextColor`	| 输入框文本颜色							| `String`	| `"#000000"`	| -										| -			|
+| `clearIconColor`	| 清除图标颜色							| `String`	| `"#BBBBBB"`	| -										| -			|
+| `btnTextColor`	| 搜索按钮文本颜色，分割线会跟随文本颜色变化	| `String`	| `"#0090FF"`	| -										| -			|
+| `btnBackground`	| 搜索按钮背景，可直接传颜色值或者图片		| `String`	| -				| -										| -			|
+| `focus`			| 是否聚焦(双向绑定)						| `Boolean`	| `false`		| -										| `1.1.5`	|
+| `autoplay`		| 热词列表自动切换							| `Boolean`	| `true`		| -										| `1.11.1`	|
+| `suggestionList`	| 搜索建议对应的数据						| `Array`	| -				|										| `1.30.1`	|
 
 #### Events
 您可以通过监听`input`事件，事件参数为用户输入的`value`值，您可以监听该事件获取用户输入的内容。<br/>
 但如"基本使用"中的说明一样，您可以直接使用双向绑定，而无需再次监听`input`事件。
-|事件名		|说明															|事件参数			|支持版本	|
-|---		|---															|---				|---		|
-| `input`	| 监听用户输入事件												| `value`: 输入框的值	| -			|
-| `search`	| 用户确定搜索时触发，用户按回车键，或者手机键盘右下角的"搜索"键时触发	| `value`: 输入框的值	| -			|
-| `focus`	| 输入框获取焦点时触发												| `value`: 输入框的值	| -			|
-| `blur`	| 输入框失去焦点时触发												| `value`: 输入框的值	| -			|
-| `clear`	| 配置了`clearabled`后，清空内容时会发出此事件						| -					| -			|
-| `click`	| 点击任意区域触发												| `value`: 输入框的值	| -			|
+|事件名				|说明															|事件参数					|支持版本	|
+|---				|---															|---					|---	|
+| `input`			| 监听用户输入事件													| `value`: 输入框的值		| -		|
+| `search`			| 用户确定搜索时触发，用户按回车键，或者手机键盘右下角的"搜索"键时触发	| `value`: 输入框的值		| -		|
+| `focus`			| 输入框获取焦点时触发												| `value`: 输入框的值		| -		|
+| `blur`			| 输入框失去焦点时触发												| `value`: 输入框的值		| -		|
+| `clear`			| 配置了`clearabled`后，清空内容时会发出此事件						| -						| -		|
+| `click`			| 点击任意区域触发													| `value`: 输入框的值		| -		|
+| `selectSuggestion`| 点击搜索建议触发													| `value`: 对应的建议对象	| -		|
 
 {{xuyajun}}
 
