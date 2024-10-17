@@ -46,6 +46,9 @@ export default {
 	},
 	methods: {
 		replaceVerticalAlign(text) {
+			if (!text) {
+				return;
+			}
 			let html = text;
 			html = utils.richTextTagAddStyle(html, 'p', ['margin', 'margin-top'], ';margin-top:0');
 			html = utils.richTextTagAddStyle(html, 'p', ['margin', 'margin-bottom'], ';margin-bottom:0');
