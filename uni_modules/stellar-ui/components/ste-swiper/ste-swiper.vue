@@ -1,5 +1,9 @@
 <template>
-	<view class="ste-swiper-root" :style="[cmpRootStyle, { opacity: initializing ? 0 : 1 }]">
+	<view
+		class="ste-swiper-root"
+		:style="[cmpRootStyle, { opacity: initializing ? 0 : 1 }]"
+		:class="{ disabled: disabled }"
+	>
 		<view
 			class="swipe-content"
 			@mousedown="onTouchstart"
@@ -427,6 +431,12 @@ export default {
 	overflow: hidden;
 	padding: var(--swiper-root-padding);
 	position: relative;
+
+	&.disabled {
+		user-select: none;
+		pointer-events: none;
+	}
+
 	.swipe-content {
 		width: var(--swiper-width);
 		height: var(--swiper-height);
