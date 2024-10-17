@@ -20,6 +20,7 @@
 					:clearable="clearable"
 					:fontColor="inputTextColor"
 					background="transparent"
+					:cursor="cursorNumber"
 				/>
 				<swiper
 					v-if="cmpShowSwitch"
@@ -48,6 +49,23 @@
 			</view>
 		</view>
 		<view class="nav-box" v-if="type === 'nav'" />
+		<!-- 输入建议 -->
+		<view
+			v-if="suggestionList.length > 0"
+			class="suggestions-box"
+			:class="showSuggestionsBox == null ? '' : showSuggestionsBox ? 'show' : 'hide'"
+		>
+			<scroll-view scroll-y class="scroll-box">
+				<view
+					class="item"
+					@click="handleSuggestionClick(item)"
+					v-for="(item, key) in suggestionList"
+					:key="key"
+				>
+					{{ item.label }}
+				</view>
+			</scroll-view>
+		</view>
 	</view>
 </template>
 
@@ -208,6 +226,10 @@ export default {
 			type: [Boolean, null],
 			default: () => false,
 		},
+		suggestionList: {
+			type: [Array, null],
+			default: () => [],
+		},
 	},
 	model: {
 		prop: 'value',
@@ -217,6 +239,9 @@ export default {
 		return {
 			dataValue: '',
 			switchIndex: 0,
+			showSuggestionsBox: null,
+			cursorNumber: 0,
+			curSuggestion: '',
 		};
 	},
 	computed: {
@@ -271,6 +296,8 @@ export default {
 		onFocus() {
 			if (this.disabled) return;
 			this.$emit('focus', this.dataValue);
+
+			this.showSuggestionsBox = true;
 		},
 		onBlur() {
 			this.$emit('update:focus', false);
@@ -300,6 +327,16 @@ export default {
 			this.dataValue = '';
 			this.$emit('input', this.dataValue);
 			this.$emit('clear');
+		},
+		handleSuggestionClick(item) {
+			this.dataValue = item.label;
+			this.$emit('input', item.label);
+			this.$emit('selectSuggestion', item);
+			this.showSuggestionsBox = false;
+
+			setTimeout(() => {
+				this.cursorNumber = item.label.length;
+			}, 50);
 		},
 	},
 };
@@ -435,6 +472,76 @@ export default {
 		top: 0;
 		left: 0;
 		z-index: 2;
+	}
+
+	.suggestions-box {
+		z-index: 999;
+		position: absolute;
+		left: 0;
+		top: 100%;
+		overflow-y: hidden;
+		opacity: 0;
+		max-height: 0;
+
+		margin: 20rpx 0;
+		width: 100%;
+
+		background-color: #ffffff;
+		box-shadow: 0 4rpx 24rpx 0 rgba(0, 0, 0, 0.1);
+		border-radius: 8rpx;
+		padding: 16rpx 0;
+
+		.scroll-box {
+			width: 100%;
+			max-height: calc(400rpx - 32rpx);
+		}
+
+		.item {
+			padding-left: 16rpx;
+			width: 100%;
+			height: 60rpx;
+			display: flex;
+			align-items: center;
+			font-size: 28rpx;
+			color: #bbbbbb;
+
+			&:focus {
+				background-color: red;
+			}
+		}
+
+		&.show {
+			opacity: 1;
+			max-height: 400rpx;
+			animation: suggestions-show 0.2s ease-out;
+		}
+
+		&.hide {
+			animation: suggestions-hide 0.2s ease-out;
+		}
+	}
+
+	@keyframes suggestions-show {
+		0% {
+			opacity: 0;
+			max-height: 0;
+		}
+
+		100% {
+			opacity: 1;
+			max-height: 400rpx;
+		}
+	}
+	@keyframes suggestions-hide {
+		0% {
+			opacity: 1;
+			max-height: 400rpx;
+		}
+
+		100% {
+			opacity: 0;
+			max-height: 0;
+		}
 	}
 }
 </style>

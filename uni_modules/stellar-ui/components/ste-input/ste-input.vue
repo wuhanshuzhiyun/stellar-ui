@@ -65,23 +65,6 @@
 			</view>
 		</view>
 		<view class="line" v-if="shape == 'line'" />
-		<!-- 输入建议 -->
-		<view
-			v-if="suggestionList.length > 0"
-			class="suggestions-box"
-			:class="showSuggestionsBox == null ? '' : showSuggestionsBox ? 'show' : 'hide'"
-		>
-			<scroll-view scroll-y class="scroll-box">
-				<view
-					class="item"
-					@click="handleSuggestionClick(item)"
-					v-for="(item, key) in suggestionList"
-					:key="key"
-				>
-					{{ item.label }}
-				</view>
-			</scroll-view>
-		</view>
 	</view>
 </template>
 
@@ -238,9 +221,9 @@ export default {
 			type: [Boolean, null],
 			default: true,
 		},
-		suggestionList: {
-			type: [Array, null],
-			default: () => [],
+		cursor: {
+			type: [Number, null],
+			default: 0,
 		},
 	},
 	data() {
@@ -248,7 +231,6 @@ export default {
 			dataValue: '',
 			tmpDataValue: '', // 用于记录输入值，type="textarea"时显示字数长度（直接使用dataValue时某些情况可能出现输入延迟）
 			focused: this.focus,
-			showSuggestionsBox: null,
 			cursorNumber: 0,
 		};
 	},
@@ -332,7 +314,6 @@ export default {
 			this.focused = true;
 			this.$emit('update:focus', true);
 			this.$emit('focus', this.dataValue);
-			this.showSuggestionsBox = true;
 		},
 		onBlur() {
 			setTimeout(() => {
@@ -340,21 +321,12 @@ export default {
 				this.focused = false;
 				this.$emit('blur', this.dataValue);
 			}, 200);
-
-			this.showSuggestionsBox = false;
 		},
 		onConfirm() {
 			this.$emit('confirm', this.dataValue);
 		},
 		inputClick() {
 			this.onFocus();
-		},
-		handleSuggestionClick(item) {
-			this.dataValue = item.label;
-			this.$emit('input', item.label);
-
-			this.showSuggestionsBox = false;
-			this.cursorNumber = item.label.length;
 		},
 	},
 	watch: {
@@ -371,6 +343,12 @@ export default {
 					this.focused = val;
 				}, 50);
 			},
+		},
+		cursor: {
+			handler(val) {
+				this.cursorNumber = val;
+			},
+			immediate: true,
 		},
 	},
 };
@@ -447,76 +425,6 @@ export default {
 				font-size: 24rpx;
 				color: #bbbbbb;
 			}
-		}
-	}
-
-	.suggestions-box {
-		z-index: 999;
-		position: absolute;
-		left: 0;
-		top: 100%;
-		overflow-y: hidden;
-		opacity: 0;
-		max-height: 0;
-
-		margin: 20rpx 0;
-		width: 100%;
-
-		background-color: #ffffff;
-		box-shadow: 0 4rpx 24rpx 0 rgba(0, 0, 0, 0.1);
-		border-radius: 8rpx;
-		padding: 16rpx 0;
-
-		.scroll-box {
-			width: 100%;
-			max-height: calc(400rpx - 32rpx);
-		}
-
-		.item {
-			padding-left: 16rpx;
-			width: 100%;
-			height: 60rpx;
-			display: flex;
-			align-items: center;
-			font-size: var(--input-font-size);
-			color: #bbbbbb;
-
-			&:focus {
-				background-color: red;
-			}
-		}
-
-		&.show {
-			opacity: 1;
-			max-height: 400rpx;
-			animation: suggestions-show 0.2s ease-out;
-		}
-
-		&.hide {
-			animation: suggestions-hide 0.2s ease-out;
-		}
-	}
-
-	@keyframes suggestions-show {
-		0% {
-			opacity: 0;
-			max-height: 0;
-		}
-
-		100% {
-			opacity: 1;
-			max-height: 400rpx;
-		}
-	}
-	@keyframes suggestions-hide {
-		0% {
-			opacity: 1;
-			max-height: 400rpx;
-		}
-
-		100% {
-			opacity: 0;
-			max-height: 0;
 		}
 	}
 
