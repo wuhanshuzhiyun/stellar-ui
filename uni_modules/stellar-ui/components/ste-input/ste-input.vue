@@ -73,7 +73,7 @@ import utils from '../../utils/utils.js';
 /**
  * ste-input 输入框
  * @description 输入框组件
- * @tutorial https://stellar-ui.intecloud.com.cn//pc/index/index?name=ste-input
+ * @tutorial https://stellar-ui.intecloud.com.cn/pc/index/index?name=ste-input
  * @property {Number|String} value 初始内容，支持双向绑定
  * @property {String} type 输入框类型
  * @value text 纯文本输入 {String}

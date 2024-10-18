@@ -50,7 +50,7 @@ const addPx = (val) => {
 /**
  * ste-dropdown-menu 下拉菜单
  * @description 下拉菜单
- * @tutorial https://stellar-ui.intecloud.com.cn//pc/index/index?name=ste-dropdown-menu
+ * @tutorial https://stellar-ui.intecloud.com.cn/pc/index/index?name=ste-dropdown-menu
  * @property {String} title 菜单标题，未设置时会显示选中项的值
  * @property {String|Array} value 下拉菜单选中的值
  * @property {String} inactiveColor 未选中颜色 #000000

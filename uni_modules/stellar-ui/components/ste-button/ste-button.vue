@@ -62,7 +62,7 @@ import utils from '../../utils/utils.js';
 /**
  * ste-button 按钮
  * @description 按钮组件
- * @tutorial https://stellar-ui.intecloud.com.cn//pc/index/index?name=ste-button
+ * @tutorial https://stellar-ui.intecloud.com.cn/pc/index/index?name=ste-button
  * @property {Number} mode 尺寸 默认值 200
  * @value 100 小 {Number}
  * @value 200 中 {Number}
