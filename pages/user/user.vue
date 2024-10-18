@@ -12,7 +12,7 @@
 				<view class="user-avatar">
 					<ste-upload
 						v-model="fileList"
-						maxCount="1"
+						:maxCount="1"
 						:deletable="false"
 						preview-width="164"
 						preview-height="164"
