@@ -36,7 +36,7 @@ export default {
 	name: 'ste-radio-group',
 	props: {
 		value: {
-			type: [String, null],
+			type: [Number, String, null],
 			default: '',
 		},
 		direction: {

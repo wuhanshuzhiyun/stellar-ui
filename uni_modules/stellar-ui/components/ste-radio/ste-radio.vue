@@ -54,7 +54,7 @@ export default {
 	name: 'ste-radio',
 	props: {
 		value: {
-			type: [String, null],
+			type: [Number, String, null],
 			default: '',
 		},
 		name: {
