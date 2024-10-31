@@ -13,7 +13,7 @@
 		<view v-if="theme != 'add'" class="input" :style="[cmpInputStyle]">
 			<input
 				:type="precision ? 'digit' : 'number'"
-				:value="Number(Number(value).toFixed(precision))"
+				:value="value"
 				@blur="blur"
 				@focus="focus"
 				:disabled="disabled || disableInput"
