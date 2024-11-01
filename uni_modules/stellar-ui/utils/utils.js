@@ -140,25 +140,32 @@ let utils = {
 	/**
 	 * 防抖
 	 */
-	debounce(fn, delay) {
+	debounce(fn, ...args) {
+		let delay = 500;
+		let lastArgs = null;
+		if (args.length > 0) {
+			lastArgs = args[args.length - 1];
+			if (lastArgs?.delay != null) {
+				delay = lastArgs.delay;
+				args.pop();
+			}
+		}
 		let timer = null;
-		return function() {
-			let context = this;
-			let args = arguments;
+		return function () {
 			clearTimeout(timer);
-			timer = setTimeout(function() {
-				fn.apply(context, args);
+			timer = setTimeout(() => {
+				fn.call(this, ...args);
 			}, delay);
 		};
 	},
-
 
 	querySelector(selectors, component, all = false) {
 		const selectFn = all ? 'selectAll' : 'select';
 		return new Promise((resolve, reject) => {
 			try {
 				uni.createSelectorQuery()
-					.in(component)[selectFn](selectors)
+					.in(component)
+					[selectFn](selectors)
 					.boundingClientRect((data) => {
 						resolve(data);
 					})
@@ -405,7 +412,8 @@ let utils = {
 				if (typeof otherAttributes === 'function') {
 					_otherAttributes = _otherAttributes(item);
 				}
-				return Object.assign({
+				return Object.assign(
+					{
 						parentNode,
 						depth,
 					},
