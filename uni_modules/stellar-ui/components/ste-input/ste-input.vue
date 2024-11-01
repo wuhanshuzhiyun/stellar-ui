@@ -10,9 +10,8 @@
 						class="ste-input-input textarea"
 						:type="type"
 						:focus="focus"
-						:value="dataValue"
+						v-model="dataValue"
 						:disabled="disabled || readonly"
-						:maxlength="maxlength"
 						:placeholder="placeholder"
 						:placeholder-style="placeholderStyle"
 						:placeholder-class="placeholderClass"
@@ -40,9 +39,8 @@
 						class="ste-input-input"
 						:type="type"
 						:focus="focused"
-						:value="dataValue"
+						v-model="dataValue"
 						:disabled="disabled || readonly"
-						:maxlength="maxlength"
 						:placeholder="placeholder"
 						:placeholder-style="placeholderStyle"
 						:placeholder-class="placeholderClass"
@@ -121,7 +119,6 @@ import utils from '../../utils/utils.js';
  * @event {Function} blur 输入框失去焦点时触发
  * @event {Function} focus 输入框聚焦时触发
  * @event {Function} confirm 输入键盘点击右下角触发
- * @event {Function} change 输入框值改变触发
  * @event {Function} clear 输入框清空触发
  * @event {Function} input 输入框输入事件
  */
@@ -294,12 +291,13 @@ export default {
 				if (!this.allowSpace) {
 					e.detail.value = e.detail.value.replace(/\s*/g, '');
 				}
-				if (this.maxlength > 0) {
-					e.detail.value = e.detail.value.substring(0, this.maxlength);
-				}
-				this.tmpDataValue = e.detail.value;
-				this.dataValue = e.detail.value;
-				this.$emit('input', e.detail.value);
+				this.$nextTick(() => {
+					if (this.maxlength > 0) {
+						this.dataValue = e.detail.value.substring(0, this.maxlength);
+					}
+					this.tmpDataValue = this.dataValue;
+					this.$emit('input', this.dataValue);
+				});
 			}
 		},
 		onClear() {
