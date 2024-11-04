@@ -1,12 +1,6 @@
 <template>
 	<view v-if="closeShow" class="ste-notice-bar-root" :style="[cmpStyle]">
-		<view
-			class="msg-box-content"
-			@touchstart.stop="doPause"
-			@touchend.stop="doRun"
-			@mousedown.stop="doPause"
-			@mouseup.stop="doRun"
-		>
+		<view class="msg-box-content" @touchstart="doPause" @touchend="doRun" @mousedown="doPause" @mouseup="doRun">
 			<view class="left">
 				<slot name="leftIcon">
 					<ste-image width="36" height="36" src="https://image.whzb.com/chain/StellarUI/notice-bar/tip.png" />
