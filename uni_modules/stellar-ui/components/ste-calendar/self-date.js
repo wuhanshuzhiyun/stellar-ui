@@ -3,8 +3,9 @@ import utils from '../../utils/utils.js';
 /**
  * 获取从当前月份开始的12个月
  */
-function getMonthList(minDate, maxDate) {
-	const start = minDate ? utils.dayjs(minDate) : utils.dayjs();
+function getMonthList(minDate, maxDate, defaultDate, monthCount) {
+	if (maxDate) monthCount = 12;
+	const start = minDate ? utils.dayjs(minDate) : utils.dayjs(defaultDate);
 	const sY = Number(start.format('YYYY'));
 	const sM = Number(start.format('MM'));
 	const end = maxDate ? utils.dayjs(maxDate) : null;
@@ -13,8 +14,8 @@ function getMonthList(minDate, maxDate) {
 		eY = Number(end.format('YYYY'));
 		eM = Number(end.format('MM'));
 	} else {
-		eY = sM + 11 > 12 ? sY + 1 : sY;
-		eM = sM + 11 > 12 ? sM + 11 - 12 : sM + 11;
+		eY = sM + monthCount - 1 > 12 ? sY + 1 : sY;
+		eM = sM + monthCount - 1 > 12 ? sM + monthCount - 1 - 12 : sM + monthCount - 1;
 	}
 	const months = [];
 	for (let y = sY; y <= eY; y++) {
@@ -38,11 +39,23 @@ export function getMonthDays(year, month) {
 
 /**
  * 获取日历数据
+ * @param {Date} minDate 最小日期
+ * @param {Date} maxDate 最大日期
+ * @param {Date} defaultDate 默认日期
+ * @param {number} monthCount 渲染月数
+ * @param {String} formatter 格式化
+ * @param {{"2024-11-13":[{content:"XXXXXXXX",style:{},className:string}]} signs 日期标记
  */
-export function getCalendarData(minDate, maxDate, formatter = 'YYYY-MM-DD') {
+export function getCalendarData(minDate, maxDate, defaultDate, monthCount = 12, formatter = 'YYYY-MM-DD',
+	signs = {}, ) {
 	const monthDatas = [];
-	const months = getMonthList(minDate, maxDate);
+	const months = getMonthList(minDate, maxDate, defaultDate, monthCount);
+	const defaultY = utils.dayjs(defaultDate).year();
+	const defaultM = utils.dayjs(defaultDate).month();
+	const defaultD = utils.dayjs(defaultDate).date();
+	const today = utils.dayjs().format('YYYY-MM-DD');
 	months.forEach((date) => {
+
 		const daysCount = getMonthDays(date.year(), date.month());
 		// 一号的星期
 		const firstDay = date.startOf('month').day();
@@ -70,18 +83,26 @@ export function getCalendarData(minDate, maxDate, formatter = 'YYYY-MM-DD') {
 				if (_day) {
 					disabled = (minDate && key < minDate) || (maxDate && key > maxDate);
 				}
+				const daySigns = _day && signs && signs[key] ? signs[key] : null;
 				week.push({
 					dayText: _day,
 					key,
 					disabled,
 					weekend: d === 0 || d === 6,
+					// 是否是今天
+					today: _day && today === key,
+					date: _day ? key : null,
+					signs: daySigns,
 				});
 			}
 			monthData.weeks.push(week);
 		}
 		monthDatas.push(monthData);
 	});
-	return { monthDatas, weekTexts: '日一二三四五六'.split('') };
+	return {
+		monthDatas,
+		weekTexts: '日一二三四五六'.split('')
+	};
 }
 
 /**

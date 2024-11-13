@@ -18,6 +18,7 @@
 			:class="{ 'show-confirm': cmpShowConfirm, 'show-title': showTitle }"
 			scroll-y
 			:scroll-top="contentScrollTop"
+			@scroll="onScroll"
 		>
 			<view class="month-item" v-for="m in cmpDates.monthDatas" :key="m.key" :id="`month-${m.key}`">
 				<view class="month-bg" v-if="showMark">
@@ -33,17 +34,30 @@
 						:class="{
 							weekend: d.weekend,
 							range: mode === 'range',
+							signs: cmpShowSigns,
 							active: dataList.indexOf(d.key) >= 0,
 							start: startDate === d.key,
 							end: endDate === d.key,
 							disabled: d.disabled,
 							not: !d.dayText,
+							today: d.today,
 						}"
 					>
 						<block v-if="d.dayText">
-							<view class="day-head"></view>
+							<view class="day-range-head" v-if="mode === 'range'"></view>
 							<view class="day-content">{{ d.dayText }}</view>
-							<view class="day-foot"></view>
+							<view class="day-range-foot" v-if="mode === 'range'"></view>
+							<view class="day-signs" v-if="cmpShowSigns">
+								<view
+									class="day-sign"
+									v-for="(sign, i) in d.signs"
+									:key="i"
+									:style="[sign.style]"
+									:class="sign.className"
+								>
+									{{ sign.content }}
+								</view>
+							</view>
 						</block>
 					</view>
 				</view>
@@ -72,7 +86,7 @@ import utils from '../../utils/utils.js';
  * @property {String} color 主题颜色（选中日期背景、周末文日期颜色和确定按钮）
  * @property {String | Number | Date} minDate 最小可选日期
  * @property {String | Number | Date} maxDate 最大可选日期
- * @property {String | Number | Date} defaultMonth 默认展示的月份
+ * @property {String | Number | Date} defaultDate 默认展示的月份
  * @property {String | Number} maxCount mode=multiple时，最多可选多少个日期
  * @property {String} formatter 日期格式化(默认'YYYY-MM-DD')
  * @property {Boolean} showMark 是否显示月份背景色
@@ -90,91 +104,32 @@ export default {
 	title: 'Calendar 日历',
 	name: 'ste-calendar',
 	props: {
-		title: {
-			type: [String, null],
-			default: () => '日期选择',
-		},
-		showTitle: {
-			type: [Boolean, null],
-			default: () => true,
-		},
-		list: {
-			type: [Array, null],
-			default: () => [],
-		},
+		title: { type: [String, null], default: () => '日期选择' },
+		showTitle: { type: [Boolean, null], default: () => true },
+		list: { type: [Array, null], default: () => [] },
 		// 选择模式：single-选择单个日期，multiple-可以选择多个日期，range-选择日期范围
-		mode: {
-			type: [String, null],
-			default: () => 'single',
-		},
-		startText: {
-			type: [String, null],
-			default: () => '开始',
-		},
-		endText: {
-			type: [String, null],
-			default: () => '结束',
-		},
-		color: {
-			type: [String, null],
-			default: () => '#FF1A00',
-		},
-		minDate: {
-			type: [String, Number, Date, null],
-			default: () => 0,
-		},
-		maxDate: {
-			type: [String, Number, Date, null],
-			default: () => 0,
-		},
-		defaultMonth: {
-			type: [Number, String, Date, null],
-			default: () => 0,
-		},
-		maxCount: {
-			type: [Number, String, null],
-			default: () => 0,
-		},
-		formatter: {
-			type: [String, null],
-			default: () => 'YYYY-MM-DD',
-		},
-		showMark: {
-			type: [Boolean, null],
-			default: () => true,
-		},
-		readonly: {
-			type: [Boolean, null],
-			default: () => false,
-		},
-		maxRange: {
-			type: [Number, null],
-			default: () => null,
-		},
-		rangePrompt: {
-			type: [String, null],
-			default: () => null,
-		},
-		showRangePrompt: {
-			type: [Boolean, null],
-			default: () => true,
-		},
-		allowSameDay: {
-			type: [Boolean, null],
-			default: () => false,
-		},
-		showConfirm: {
-			type: [Boolean, null],
-			default: () => true,
-		},
-		width: {
-			type: [Number, String, null],
-			default: () => '100%',
-		},
-		height: {
-			type: [Number, String, null],
-			default: () => '100%',
-		},
+		mode: { type: [String, null], default: () => 'single' },
+		startText: { type: [String, null], default: () => '开始' },
+		endText: { type: [String, null], default: () => '结束' },
+		color: { type: [String, null], default: () => '#FF1A00' },
+		weekendColor: { type: [String, null], default: () => '#FF1A00' },
+		minDate: { type: [String, Number, Date, null], default: () => 0 },
+		maxDate: { type: [String, Number, Date, null], default: () => 0 },
+		defaultDate: { type: [Number, String, Date, null], default: () => 0 },
+		monthCount: { type: [Number, null], default: () => 12 },
+		maxCount: { type: [Number, String, null], default: () => 0 },
+		formatter: { type: [String, null], default: () => 'YYYY-MM-DD' },
+		showMark: { type: [Boolean, null], default: () => true },
+		readonly: { type: [Boolean, null], default: () => false },
+		maxRange: { type: [Number, null], default: () => null },
+		rangePrompt: { type: [String, null], default: () => null },
+		showRangePrompt: { type: [Boolean, null], default: () => true },
+		allowSameDay: { type: [Boolean, null], default: () => false },
+		showConfirm: { type: [Boolean, null], default: () => true },
+		width: { type: [Number, String, null], default: () => '100%' },
+		height: { type: [Number, String, null], default: () => '100%' },
+		footer: { type: Function, default: null },
+		signs: { type: Object, default: () => ({}) },
 	},
 	data() {
 		return {
@@ -183,27 +138,38 @@ export default {
 			endDate: null,
 			dataList: [],
 			contentScrollTop: 0,
+			scrollTop: 0,
+			viewDate: utils.dayjs(),
+			viewTimer: null,
 		};
 	},
 	computed: {
 		cmpRootStyle() {
+			const rowHeight = this.cmpShowSigns ? utils.formatPx(180, 'num') : utils.formatPx(126, 'num');
 			const style = {
 				'--calendar-width': utils.formatPx(this.width),
 				'--calendar-height': utils.formatPx(this.height),
 				'--calendar-color': this.color,
+				'--calendar-weekend-color': this.weekendColor,
 				'--calendar-bg-color': utils.Color.formatColor(this.color, 0.1),
 				'--calendar-range-color': utils.Color.formatColor(this.color, 0.2),
 				'--calendar-disabled-color': utils.Color.formatColor(this.color, 0.3),
+				'--calendar-sign-color': utils.Color.formatColor(this.color, 0.7),
 				'--calendar-start-text': `"${this.startText}"`,
 				'--calendar-end-text': `"${this.endText}"`,
+				'--calendar-line-height': `${rowHeight}px`,
+				rowHeight,
 			};
 			return style;
 		},
 		cmpDates() {
-			return getCalendarData(this.minDate, this.maxDate, this.formatter);
+			return getCalendarData(this.minDate, this.maxDate, this.viewDate, this.monthCount, this.formatter, this.signs);
 		},
 		cmpShowConfirm() {
 			return this.showConfirm && !this.readonly;
+		},
+		cmpShowSigns() {
+			return Object.keys(this.signs).length > 0;
 		},
 	},
 	watch: {
@@ -218,32 +184,52 @@ export default {
 			},
 			immediate: true,
 		},
+		defaultDate: {
+			handler(v) {
+				this.viewDate = utils.dayjs(v);
+				this.showMonth();
+			},
+			immediate: true,
+		},
 	},
 	mounted() {
 		this.showMonth();
 	},
 	methods: {
-		showMonth(date = this.defaultMonth) {
-			const showDate = date ? utils.dayjs(date).format('YYYY-MM') : null;
-			if (!showDate) return (this.initing = false);
-			if (!this.cmpDates.monthDatas?.length) return (this.initing = false);
-			let height = 0;
-			let show = false;
-			for (let i = 0; i < this.cmpDates.monthDatas.length; i++) {
-				const month = this.cmpDates.monthDatas[i];
-				if (month.key === showDate) {
-					show = true;
-					break;
-				}
-				height += utils.formatPx(80, 'num');
-				height += utils.formatPx(126, 'num') * month.weeks.length;
+		showMonth(date) {
+			const newDate = date ? utils.dayjs(date) : this.viewDate;
+			if (newDate.format('YYYY-MM-DD') !== this.viewDate.format('YYYY-MM-DD')) {
+				this.viewDate = newDate;
 			}
-			if (!height || !show) return (this.initing = false);
-			this.contentScrollTop = 0;
-			setTimeout(() => {
-				this.contentScrollTop = height;
-				this.initing = false;
-			}, 25);
+			clearTimeout(this.viewTimer);
+			this.viewTimer = setTimeout(() => {
+				const showDate = this.viewDate.format('YYYY-MM');
+				let height = 0;
+				let show = false;
+				for (let i = 0; i < this.cmpDates.monthDatas.length; i++) {
+					const month = this.cmpDates.monthDatas[i];
+					if (month.key === showDate) {
+						show = true;
+						break;
+					}
+					height += utils.formatPx(80, 'num');
+					height += this.cmpRootStyle.rowHeight * month.weeks.length;
+				}
+				if (!show || this.scrollTop === height) {
+					this.initing = false;
+					return;
+				}
+				this.contentScrollTop = this.scrollTop;
+				this.$nextTick(() => {
+					this.contentScrollTop = height;
+					this.scrollTop = height;
+					this.initing = false;
+				});
+			}, 10);
+		},
+		onScroll(e) {
+			this.scrollTop = e.detail.scrollTop;
+			console.log(e.detail.scrollTop);
 		},
 		onSelect(day) {
 			if (this.readonly || !day.dayText || day.disabled) return;
@@ -326,7 +312,7 @@ export default {
 		.week-item {
 			text-align: center;
 			&.weekend {
-				color: var(--calendar-color);
+				color: var(--calendar-weekend-color);
 			}
 		}
 		& + .week-row {
@@ -391,72 +377,135 @@ export default {
 				line-height: 44rpx;
 				font-size: 32rpx;
 			}
-			.day-item {
-				position: relative;
-				height: 126rpx;
-				z-index: 2;
-				display: flex;
-				flex-direction: column;
-				justify-content: center;
-				align-items: center;
-				// #ifdef H5
-				cursor: pointer;
-				&.not {
-					cursor: default !important;
-				}
-				// #endif
-
-				&.active,
-				&.start,
-				&.end {
-					background-color: var(--calendar-color);
-					color: #fff;
-				}
-				&.active.range:not(.start):not(.end) {
-					background-color: var(--calendar-range-color);
-					color: var(--calendar-color);
-				}
-
-				&.start {
-					.day-head::before {
-						content: '';
+			.week-row {
+				height: var(--calendar-line-height);
+				.day-item {
+					position: relative;
+					height: 100%;
+					z-index: 2;
+					display: flex;
+					flex-direction: column;
+					justify-content: center;
+					align-items: center;
+					// #ifdef H5
+					cursor: pointer;
+					&.not {
+						cursor: default !important;
 					}
-					.day-foot::before {
-						content: var(--calendar-start-text);
+					// #endif
+					&.active,
+					&.start,
+					&.end {
+						&.range {
+							background-color: var(--calendar-color);
+							color: #fff;
+						}
+						&:not(.signs):not(.range) {
+							background-color: var(--calendar-color);
+							color: #fff;
+						}
+						&.signs {
+							.day-content {
+								background-color: var(--calendar-color);
+								color: #fff;
+								border-radius: 6rpx;
+							}
+						}
 					}
-				}
+					&.start,
+					&.end {
+						.day-range-head,
+						.day-range-foot {
+							display: block;
+						}
+						.day-signs {
+							display: none;
+						}
+					}
+					&.today {
+						font-weight: bold;
+						&:not(.active):not(.start):not(.end) {
+							color: var(--calendar-color);
+						}
+					}
+					&.active.range:not(.start):not(.end) {
+						background-color: var(--calendar-range-color);
+						color: var(--calendar-color);
+						.day-content {
+							background-color: transparent;
+							color: inherit;
+							border-radius: 0;
+						}
+					}
 
-				&.end {
-					.day-head::before {
-						content: '';
-					}
-					.day-foot::before {
-						content: var(--calendar-end-text);
-					}
-				}
-				&.start.end {
-					.day-head::before {
-						content: var(--calendar-start-text);
-					}
-				}
+					&.start {
+						.day-range-head::before {
+							content: '';
+						}
 
-				&.disabled {
-					background-color: initial !important;
-					color: #bbb !important;
-				}
+						.day-range-foot::before {
+							content: var(--calendar-start-text);
+						}
+					}
 
-				.day-head,
-				.day-foot {
-					width: 100%;
-					height: 20rpx;
-					line-height: 20rpx;
-					font-size: 24rpx;
-				}
-				.day-content {
-					width: 100%;
-					height: 48rpx;
-					line-height: 48rpx;
-					font-size: 32rpx;
+					&.end {
+						.day-range-head::before {
+							content: '';
+						}
+						.day-range-foot::before {
+							content: var(--calendar-end-text);
+						}
+					}
+					&.start.end {
+						.day-range-head::before {
+							content: var(--calendar-start-text);
+						}
+					}
+
+					&.disabled {
+						background-color: initial !important;
+						color: #bbb !important;
+					}
+					&.signs {
+						.day-content {
+							height: 72rpx;
+							line-height: 72rpx;
+						}
+					}
+					.day-content {
+						width: 100%;
+						height: 48rpx;
+						line-height: 48rpx;
+						font-size: 32rpx;
+					}
+
+					.day-range-head,
+					.day-range-foot {
+						width: 100%;
+						height: 24rpx;
+						line-height: 24rpx;
+						font-size: 24rpx;
+					}
+					.day-range-head,
+					.day-range-foot {
+						display: none;
+					}
+
+					.day-signs {
+						width: 100%;
+						height: 102rpx;
+						padding: 0 4rpx;
+						display: flex;
+						flex-direction: column;
+						justify-content: space-evenly;
+						.day-sign {
+							width: 100%;
+							height: 24rpx;
+							line-height: 24rpx;
+							font-size: 24rpx;
+							overflow: hidden;
+						}
+					}
 				}
 			}
 		}

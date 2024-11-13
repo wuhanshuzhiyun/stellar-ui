@@ -4,7 +4,7 @@
 		<view class="content">
 			<view class="demo-item">
 				<view class="title">基础用法</view>
-				<ste-calendar height="720" :showTitle="false" @confirm="handleConfirm" />
+				<ste-calendar height="720" :showTitle="false" @confirm="handleConfirm" ref="Calendar" />
 			</view>
 
 			<view class="demo-item">
@@ -18,6 +18,7 @@
 							</div>
 						</ste-popup>
 					</view>
+
 					<view class="demo-code">
 						<ste-button @click="show2 = true">多个日期</ste-button>
 						<ste-popup :show.sync="show2" height="60vh" position="bottom">
@@ -26,6 +27,7 @@
 							</div>
 						</ste-popup>
 					</view>
+
 					<view class="demo-code">
 						<ste-button @click="show3 = true">日期范围</ste-button>
 						<ste-popup :show.sync="show3" height="60vh" position="bottom">
@@ -34,6 +36,7 @@
 							</div>
 						</ste-popup>
 					</view>
+
 					<view class="demo-code">
 						<ste-button @click="show4 = true">自定义主题色</ste-button>
 						<ste-popup :show.sync="show4" height="60vh" position="bottom">
@@ -46,13 +49,7 @@
 						<ste-button @click="show5 = true">自定义文案</ste-button>
 						<ste-popup :show.sync="show5" height="60vh" position="bottom">
 							<div style="padding-bottom: 20px; height: 100%">
-								<ste-calendar
-									mode="range"
-									title="酒店预约"
-									startText="住店"
-									endText="离店"
-									@confirm="handleConfirm"
-								/>
+								<ste-calendar mode="range" title="酒店预约" startText="住店" endText="离店" @confirm="handleConfirm" />
 							</div>
 						</ste-popup>
 					</view>
@@ -60,12 +57,7 @@
 						<ste-button @click="show6 = true">日期最大范围</ste-button>
 						<ste-popup :show.sync="show6" height="60vh" position="bottom">
 							<div style="padding-bottom: 20px; height: 100%">
-								<ste-calendar
-									mode="range"
-									minDate="2024-05-10"
-									maxDate="2024-05-20"
-									@confirm="handleConfirm"
-								/>
+								<ste-calendar mode="range" minDate="2024-05-10" maxDate="2024-05-20" @confirm="handleConfirm" />
 							</div>
 						</ste-popup>
 					</view>
@@ -97,12 +89,7 @@
 						<ste-button @click="show10 = true">默认展示月份</ste-button>
 						<ste-popup :show.sync="show10" position="bottom" height="60vh" @open-after="setViewMonth">
 							<div style="padding-bottom: 20px; height: 100%">
-								<ste-calendar
-									ref="defaultMonth"
-									minDate="2024-05-20"
-									maxDate="2024-08-01"
-									@confirm="handleConfirm"
-								/>
+								<ste-calendar ref="defaultMonth" minDate="2024-05-20" maxDate="2024-08-01" @confirm="handleConfirm" />
 							</div>
 						</ste-popup>
 					</view>
@@ -110,12 +97,7 @@
 						<ste-button @click="show11 = true">隐藏确定按钮</ste-button>
 						<ste-popup :show.sync="show11" position="bottom" height="60vh">
 							<div style="padding-bottom: 20px; height: 100%">
-								<ste-calendar
-									minDate="2024-05-20"
-									maxDate="2024-08-01"
-									@select="handleConfirm"
-									:showConfirm="false"
-								/>
+								<ste-calendar minDate="2024-05-20" maxDate="2024-08-01" @select="handleConfirm" :showConfirm="false" />
 							</div>
 						</ste-popup>
 					</view>
@@ -123,12 +105,7 @@
 						<ste-button @click="show12 = true">只读</ste-button>
 						<ste-popup :show.sync="show12" position="bottom" height="60vh">
 							<div style="padding-bottom: 20px; height: 100%">
-								<ste-calendar
-									minDate="2024-05-20"
-									maxDate="2024-06-10"
-									readonly
-									:list="['2024-05-21']"
-								/>
+								<ste-calendar minDate="2024-05-20" maxDate="2024-06-10" readonly :list="['2024-05-21']" />
 							</div>
 						</ste-popup>
 					</view>
@@ -137,6 +114,27 @@
 						<ste-popup :show.sync="show13" position="bottom" height="60vh">
 							<div style="padding-bottom: 20px; height: 100%">
 								<ste-calendar :showMark="false" @select="handleConfirm" />
+							</div>
+						</ste-popup>
+					</view>
+					<view class="demo-code">
+						<ste-button @click="show14 = true">手动切换、标记</ste-button>
+						<ste-popup :show.sync="show14" position="bottom" height="70vh">
+							<div style="padding-bottom: 20px; height: 100%">
+								<div style="height: calc(100% - 120rpx)">
+									<ste-calendar
+										ref="newCalendar"
+										@select="handleConfirm"
+										:signs="signs"
+										:defaultDate="defaultDate"
+										:monthCount="1"
+									/>
+								</div>
+								<div style="margin-top: 12rpx">
+									<ste-button @click="setView('2023-11')">切换到2023-11</ste-button>
+									<ste-button @click="setView()">切换到当月</ste-button>
+									<ste-button @click="setView('2026-10')">切换到2026-10</ste-button>
+								</div>
 							</div>
 						</ste-popup>
 					</view>
@@ -162,6 +160,20 @@ export default {
 			show11: false,
 			show12: false,
 			show13: false,
+			show14: false,
+			defaultDate: new Date(),
+			signs: {
+				'2024-11-12': [
+					{ content: 'XXXXX', className: 'test-signs' },
+					{ content: 'XXXXX', className: 'test-signs' },
+					{ content: 'XXXXX', className: 'test-signs' },
+				],
+				'2024-11-13': [
+					{ content: 'XXXXX', style: { color: '#666', background: '#f5f5f5' } },
+					{ content: 'XXXXX', style: { color: '#666', background: '#f5f5f5' } },
+					{ content: 'XXXXX', style: { color: '#666', background: '#f5f5f5' } },
+				],
+			},
 		};
 	},
 	created() {},
@@ -175,6 +187,9 @@ export default {
 		},
 		setViewMonth() {
 			this.$refs.defaultMonth.showMonth('2024-07');
+		},
+		setView(d) {
+			this.$refs.newCalendar.showMonth(d ? d : new Date());
 		},
 	},
 };
@@ -197,5 +212,11 @@ export default {
 			}
 		}
 	}
+}
+</style>
+<style>
+.item-content .test-signs {
+	color: #f00;
+	background: #f5f5f5;
 }
 </style>
