@@ -51,8 +51,8 @@
 								<block v-if="d.signs">
 									<view
 										class="day-sign"
-										v-for="(sign, i) in d.signs"
-										:key="i"
+										v-for="sign in d.signs"
+										:key="sign.key"
 										:style="[sign.style]"
 										:class="sign.className"
 									>
@@ -166,7 +166,15 @@ export default {
 			return style;
 		},
 		cmpDates() {
-			return getCalendarData(this.minDate, this.maxDate, this.viewDate, this.monthCount, this.formatter, this.signs);
+			const datas = getCalendarData(
+				this.minDate,
+				this.maxDate,
+				this.viewDate,
+				this.monthCount,
+				this.formatter,
+				this.signs
+			);
+			return datas;
 		},
 		cmpShowConfirm() {
 			return this.showConfirm && !this.readonly;
