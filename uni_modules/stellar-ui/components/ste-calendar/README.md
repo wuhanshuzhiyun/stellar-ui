@@ -193,32 +193,112 @@
 </ste-popup>
 ```
 
+#### 手动切换、标记
+- 属性`monthCount`用于设置渲染的月数
+- 属性`signs`用于设置标记的日期
+- 方法`showMonth`用于手动切换月份
+
+```html
+<ste-button @click="show14 = true">手动切换、标记</ste-button>
+<ste-popup :show.sync="show14" position="bottom" height="70vh">
+	<div style="padding-bottom: 20px; height: 100%">
+		<div style="height: calc(100% - 120rpx)">
+			<ste-calendar
+				@select="handleConfirm"
+				:signs="signs"
+				:defaultDate="defaultDate"
+				:monthCount="1"
+				:showConfirm="false"
+			/>
+		</div>
+		<div style="margin-top: 12rpx">
+			<ste-button @click="setView('2023-11')">2023-11</ste-button>
+			<ste-button @click="setView()">当月</ste-button>
+			<ste-button @click="setView('2026-10')">2026-10</ste-button>
+		</div>
+	</div>
+</ste-popup>
+
+<script>
+export default{
+	data(){
+		return {
+			show14: false,
+			defaultDate: new Date(),
+			signs: {
+				'2024-11-12': [
+					{ content: 'XXXXX', className: 'test-signs' },
+					{ content: 'XXXXX', className: 'test-signs' },
+					{ content: 'XXXXX', className: 'test-signs' },
+				],
+				'2024-11-13': [
+					{ content: 'XXXXX', style: { color: '#666', background: '#f5f5f5' } },
+					{ content: 'XXXXX', style: { color: '#666', background: '#f5f5f5' } },
+					{ content: 'XXXXX', style: { color: '#666', background: '#f5f5f5' } },
+				],
+			},
+		}
+	},
+	methods: {
+		setView(d) {
+			this.defaultDate = d ? d : new Date();
+		},
+	},
+}
+</script>
+<style>
+.test-signs {
+	color: #f00;
+	background: #f5f5f5;
+}
+</style>
+```
+
 
 
 
 ### API
 #### Tabs Props
 背景之外的颜色属性只支持`16进制`、`RGB`、`RGBA`格式
-| 属性名						| 说明																																		| 类型						| 默认值										| 可选值																											| 支持版本	|
-| -----							| -----																																	| -----					| -----										| -----																											| -----		|
-| `mode`						| 选择模式																																| `String`			| `"single"`							| `"single"`单选<br/>`"multiple"`多选<br/>`"range"`范围选择	| -				|
-| `title`						| 标题文本																																| `String`			| `"日期选择"`							| -																													| -				|
-| `showTitle`				| 是否显示标题																														| `Boolean`			| `true`									| -																													| -				|
-| `list`						| 已选中的日期																														| `Array<Date>`	| `[]`										| -																													| -				|
-| `startText`				| 开始日期的提示文字，`mode`=`range`时生效																| `String`			| `[]`										| -																													| -				|
-| `endText`					| 结束日期的提示文字，`mode`=`range`时生效																| `String`			| `[]`										| -																													| -				|
-| `color`						| 主题颜色，选中日期背景、周末文日期颜色和确定按钮													| `String`			| `#FF1A00`								| -																													| -				|
-| `minDate`					| 最小可选日期																														| `Date`				| `0`											| -																													| -				|
-| `maxDate`					| 最大可选日期																														| `Date`				| `0`											| -																													| -				|
-| `defaultDate`			| 默认展示日期(不设置最小和最大日期的情况下，列表展示从本月开始往后12个月)	| `Date`				| `new Date()`						| -																													| -				|
-| `maxCount`				| `mode`=`multiple`时，最多可选多少个日期																	| `Number`			| `0`											| -																													| -				|
-| `formatter`				| 日期格式化																															| `String`			| `"YYYY-MM-DD"`					| -																													| -				|
-| `showMark`				| 是否显示月份背景色																											| `Boolean`			| `true`									| -																													| -				|
-| `readonly`				| 是否为只读状态，只读状态下禁止选择日期																	| `Boolean`			| `false`									| -																													| -				|
-| `maxRange`				| 日期区间最多可选天数，`mode`=`range`时有效															| `Number`			| `0`											| -																													| -				|
-| `rangePrompt`			| 范围选择超过最多可选天数时的提示文案																		| `String`			| `"选择天数不能超过XX天"`	| -																													| -				|
-| `showRangePrompt`	| 范围选择超过最多可选天数时，是否展示提示文案															| `Number`			| `0`											| -																													| -				|
-| `allowSameDay`		| 是否允许日期范围的起止时间为同一天																			| `Boolean`			| `true`									| -																													| -				|
+| 属性名						| 说明																																												| 类型						| 默认值										| 可选值																											| 支持版本	|
+| -----							| -----																																											| -----					| -----										| -----																											| -----		|
+| `mode`						| 选择模式																																										| `String`			| `"single"`							| `"single"`单选<br/>`"multiple"`多选<br/>`"range"`范围选择	| -				|
+| `title`						| 标题文本																																										| `String`			| `"日期选择"`							| -																													| -				|
+| `showTitle`				| 是否显示标题																																								| `Boolean`			| `true`									| -																													| -				|
+| `list`						| 已选中的日期																																								| `Array<Date>`	| `[]`										| -																													| -				|
+| `startText`				| 开始日期的提示文字，`mode`=`range`时生效																										| `String`			| `[]`										| -																													| -				|
+| `endText`					| 结束日期的提示文字，`mode`=`range`时生效																										| `String`			| `[]`										| -																													| -				|
+| `color`						| 主题颜色，选中日期背景、周末文日期颜色和确定按钮																							| `String`			| `#FF1A00`								| -																													| -				|
+| `minDate`					| 开始日期	（没有该属性的情况下，从`defaultDate`开始渲染）																			| `Date`				| `0`											| -																													| -				|
+| `maxDate`					| 结束日期	（没有该属性的情况下，从`minDate`或者`defaultDate`开始往后渲染`maxCount`个月）				| `Date`				| `0`											| -																													| -				|
+| `defaultDate`			| 默认展示日期（不设置`minDate`和`maxDate`的情况下，列表展示从默认月份开始往后`maxCount`个月）	| `Date`				| `new Date()`						| -																													| -				|
+| `monthCount`			| 渲染的月数（如果存在`maxDate`则该属性不生效）																								| `Number`			| `12`										| -																													| -				|
+| `maxCount`				| `mode`=`multiple`时，最多可选多少个日期																											| `Number`			| `0`											| -																													| -				|
+| `formatter`				| 日期格式化																																									| `String`			| `"YYYY-MM-DD"`					| -																													| -				|
+| `showMark`				| 是否显示月份背景色																																					| `Boolean`			| `true`									| -																													| -				|
+| `readonly`				| 是否为只读状态，只读状态下禁止选择日期																											| `Boolean`			| `false`									| -																													| -				|
+| `maxRange`				| 日期区间最多可选天数，`mode`=`range`时有效																									| `Number`			| `0`											| -																													| -				|
+| `rangePrompt`			| 范围选择超过最多可选天数时的提示文案																												| `String`			| `"选择天数不能超过XX天"`	| -																													| -				|
+| `showRangePrompt`	| 范围选择超过最多可选天数时，是否展示提示文案																									| `Number`			| `0`											| -																													| -				|
+| `allowSameDay`		| 是否允许日期范围的起止时间为同一天																													| `Boolean`			| `true`									| -																													| -				|
+| `signs`						| 标签对象																																										| `Signs`			| `true`									| -																													| -				|
+
+##### Signs 示例
+```javascript
+{
+	"2024-11-21":[
+		{content:"标记1",className:"XXX"}
+		{content:"标记1",className:"XXX"}
+		{content:"标记1",className:"XXX"}
+	],
+	"2024-11-22":[
+		{content:"标记1",style:{}}
+		{content:"标记1",style:{}}
+		{content:"标记1",style:{}}
+	]
+}
+```
+
 
 #### Tabs Events
 

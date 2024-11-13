@@ -123,17 +123,17 @@
 							<div style="padding-bottom: 20px; height: 100%">
 								<div style="height: calc(100% - 120rpx)">
 									<ste-calendar
-										ref="newCalendar"
 										@select="handleConfirm"
 										:signs="signs"
 										:defaultDate="defaultDate"
 										:monthCount="1"
+										:showConfirm="false"
 									/>
 								</div>
 								<div style="margin-top: 12rpx">
-									<ste-button @click="setView('2023-11')">切换到2023-11</ste-button>
-									<ste-button @click="setView()">切换到当月</ste-button>
-									<ste-button @click="setView('2026-10')">切换到2026-10</ste-button>
+									<ste-button @click="setView('2023-11')">2023-11</ste-button>
+									<ste-button @click="setView()">当月</ste-button>
+									<ste-button @click="setView('2026-10')">2026-10</ste-button>
 								</div>
 							</div>
 						</ste-popup>
@@ -189,7 +189,7 @@ export default {
 			this.$refs.defaultMonth.showMonth('2024-07');
 		},
 		setView(d) {
-			this.$refs.newCalendar.showMonth(d ? d : new Date());
+			this.defaultDate = d ? d : new Date();
 		},
 	},
 };

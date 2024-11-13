@@ -83,7 +83,7 @@ export function getCalendarData(minDate, maxDate, defaultDate, monthCount = 12, 
 				if (_day) {
 					disabled = (minDate && key < minDate) || (maxDate && key > maxDate);
 				}
-				const daySigns = _day && signs && signs[key] ? signs[key] : null;
+				const daySigns = _day && signs && signs[key] ? signs[key].splice(0, 3) : null;
 				week.push({
 					dayText: _day,
 					key,

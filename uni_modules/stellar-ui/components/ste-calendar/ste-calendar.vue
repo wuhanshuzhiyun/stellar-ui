@@ -48,15 +48,17 @@
 							<view class="day-content">{{ d.dayText }}</view>
 							<view class="day-range-foot" v-if="mode === 'range'"></view>
 							<view class="day-signs" v-if="cmpShowSigns">
-								<view
-									class="day-sign"
-									v-for="(sign, i) in d.signs"
-									:key="i"
-									:style="[sign.style]"
-									:class="sign.className"
-								>
-									{{ sign.content }}
-								</view>
+								<block v-if="d.signs">
+									<view
+										class="day-sign"
+										v-for="(sign, i) in d.signs"
+										:key="i"
+										:style="[sign.style]"
+										:class="sign.className"
+									>
+										{{ sign.content }}
+									</view>
+								</block>
 							</view>
 						</block>
 					</view>
@@ -87,6 +89,7 @@ import utils from '../../utils/utils.js';
  * @property {String | Number | Date} minDate 最小可选日期
  * @property {String | Number | Date} maxDate 最大可选日期
  * @property {String | Number | Date} defaultDate 默认展示的月份
+ * @property {Number} monthCount 渲染的月份数量
  * @property {String | Number} maxCount mode=multiple时，最多可选多少个日期
  * @property {String} formatter 日期格式化(默认'YYYY-MM-DD')
  * @property {Boolean} showMark 是否显示月份背景色
@@ -96,6 +99,7 @@ import utils from '../../utils/utils.js';
  * @property {Boolean} showRangePrompt 范围选择超过最多可选天数时，是否展示提示文案，mode = range时有效
  * @property {Boolean} allowSameDay 是否允许日期范围的起止时间为同一天，mode = range时有效
  * @property {Boolean} showConfirm 是否显示确定按钮
+ * @property {Object} signs 标签数据
  * @event {Function} confirm 日期选择完成后触发，若showConfirm为true，则点击确认按钮后触发
  * @event {Function} select 点击/选择后触发
  */
@@ -128,7 +132,6 @@ export default {
 		showConfirm: { type: [Boolean, null], default: () => true },
 		width: { type: [Number, String, null], default: () => '100%' },
 		height: { type: [Number, String, null], default: () => '100%' },
-		footer: { type: Function, default: null },
 		signs: { type: Object, default: () => ({}) },
 	},
 	data() {
@@ -186,7 +189,7 @@ export default {
 		},
 		defaultDate: {
 			handler(v) {
-				this.viewDate = utils.dayjs(v);
+				this.viewDate = v ? utils.dayjs(v) : utils.dayjs();
 				this.showMonth();
 			},
 			immediate: true,
@@ -229,7 +232,6 @@ export default {
 		},
 		onScroll(e) {
 			this.scrollTop = e.detail.scrollTop;
-			console.log(e.detail.scrollTop);
 		},
 		onSelect(day) {
 			if (this.readonly || !day.dayText || day.disabled) return;
