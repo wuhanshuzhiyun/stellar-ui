@@ -100,7 +100,7 @@ export default {
 | `direction`		| 滚动的方向							| `String`			| `across`	| `across`：水平<br/>`vertical`：垂直					| -			|
 | `closeMode`		| 是否启用关闭模式					| `Boolean`			| `false`	| -													| -			|
 | `color`			| 文字颜色							| `String`			| `#000000`	| -													| -			|
-| `background`		| 背景色								| `String`			| `#ffffff`	| -													| -			|
+| `background`		| 背景								| `String`			| `#ffffff`	| -													| -			|
 | `width`			| 宽度								| `String\Number`	| `100%`	| `"100%"`：填满<br/>`{{Number}}`：自定义宽度 单位rpx	| -			|
 | `acrossSpeed`		| 滚动速率 (px/s)					| `Number`			| `50`		| -													| -			|
 | `verticalSpeed`	| 滚动的速度（ms）					| `Number`			| `500`		| -													| -			|
