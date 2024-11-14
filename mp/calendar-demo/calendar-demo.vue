@@ -183,9 +183,6 @@ export default {
 		setViewMonth() {
 			this.$refs.defaultMonth.showMonth('2024-07');
 		},
-		setView(d) {
-			this.defaultDate = d ? d : new Date();
-		},
 	},
 };
 </script>

@@ -103,6 +103,7 @@ import utils from '../../utils/utils.js';
  * @property {Object} signs 标签数据
  * @event {Function} confirm 日期选择完成后触发，若showConfirm为true，则点击确认按钮后触发
  * @event {Function} select 点击/选择后触发
+ * @event {Function} viewMonth 在视图区域的月份发生改变时触发
  */
 export default {
 	group: '表单组件',
@@ -137,14 +138,15 @@ export default {
 	},
 	data() {
 		return {
-			initing: true,
-			startDate: null,
-			endDate: null,
-			dataList: [],
-			contentScrollTop: 0,
-			scrollTop: 0,
-			viewDate: utils.dayjs(),
-			viewTimer: null,
+			initing: true, // 初始化中
+			startDate: null, // 选中开始时间
+			endDate: null, // 选中结束时间
+			dataList: [], // 选中的日期列表
+			contentScrollTop: 0, // 设置滚动距离
+			scrollTop: 0, // 用户滚动距离
+			viewDate: utils.dayjs(), // 默认日期
+			viewTimer: null, // 渲染定时器
+			viewMonth: null, // 当前展示的月份
 		};
 	},
 	computed: {
@@ -176,6 +178,20 @@ export default {
 				this.signs
 			);
 			return datas;
+		},
+		cmpMonthTops() {
+			const datas = this.cmpDates.monthDatas;
+			const rowHeight = this.cmpRootStyle.rowHeight;
+			const tops = {};
+			let end = 0;
+			for (let i = 0; i < datas.length; i++) {
+				const month = datas[i];
+				tops[month.key] = { top: end };
+				end += utils.formatPx(80, 'num');
+				end += rowHeight * month.weeks.length;
+				tops[month.key].end = end;
+			}
+			return tops;
 		},
 		cmpShowConfirm() {
 			return this.showConfirm && !this.readonly;
@@ -215,32 +231,39 @@ export default {
 			}
 			clearTimeout(this.viewTimer);
 			this.viewTimer = setTimeout(() => {
-				const showDate = this.viewDate.format('YYYY-MM');
-				let height = 0;
-				let show = false;
-				for (let i = 0; i < this.cmpDates.monthDatas.length; i++) {
-					const month = this.cmpDates.monthDatas[i];
-					if (month.key === showDate) {
-						show = true;
-						break;
-					}
-					height += utils.formatPx(80, 'num');
-					height += this.cmpRootStyle.rowHeight * month.weeks.length;
-				}
-				if (!show || this.scrollTop === height) {
+				const viewMonth = this.viewDate.format('YYYY-MM');
+				const tops = this.cmpMonthTops;
+				const top = tops[viewMonth].top;
+				if (top === undefined || this.scrollTop === top) {
 					this.initing = false;
 					return;
 				}
 				this.contentScrollTop = this.scrollTop;
 				this.$nextTick(() => {
-					this.contentScrollTop = height;
-					this.scrollTop = height;
+					this.contentScrollTop = top;
+					this.scrollTop = top;
+					this.viewMonth = viewMonth;
 					this.initing = false;
 				});
 			}, 10);
 		},
+		onShowMonth(scrollTop) {
+			clearTimeout(this.viewTimer);
+			this.viewTimer = setTimeout(() => {
+				for (let month in this.cmpMonthTops) {
+					const { top, end } = this.cmpMonthTops[month];
+					if (scrollTop >= top && scrollTop < end) {
+						if (this.viewMonth === month) return;
+						this.viewMonth = month;
+						this.$emit('view-month', month);
+						return;
+					}
+				}
+			}, 100);
+		},
 		onScroll(e) {
 			this.scrollTop = e.detail.scrollTop;
+			this.onShowMonth(e.detail.scrollTop);
 		},
 		onSelect(day) {
 			if (this.readonly || !day.dayText || day.disabled) return;
