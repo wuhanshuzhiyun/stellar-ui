@@ -233,7 +233,7 @@ export default {
 			this.viewTimer = setTimeout(() => {
 				const viewMonth = this.viewDate.format('YYYY-MM');
 				const tops = this.cmpMonthTops;
-				const top = tops[viewMonth].top;
+				const top = tops[viewMonth]?.top || 0;
 				if (top === undefined || this.scrollTop === top) {
 					this.initing = false;
 					return;
