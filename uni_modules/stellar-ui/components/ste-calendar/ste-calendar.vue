@@ -85,7 +85,8 @@ import utils from '../../utils/utils.js';
  * @value range 可以选择日期范围
  * @property {String} startText 开始日期的提示文字
  * @property {String} endText 结束日期的提示文字
- * @property {String} color 主题颜色（选中日期背景、周末文日期颜色和确定按钮）
+ * @property {String} color 主题颜色（选中日期背景、当天日期颜色和确定按钮）
+ * @property {String} weekendColor 周末日期颜色
  * @property {String | Number | Date} minDate 最小可选日期
  * @property {String | Number | Date} maxDate 最大可选日期
  * @property {String | Number | Date} defaultDate 默认展示的月份

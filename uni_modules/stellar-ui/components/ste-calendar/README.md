@@ -144,14 +144,14 @@
 <ste-button @click="show9 = true">默认展示月份</ste-button>
 <ste-popup :show.sync="show9" position="bottom" height="60vh" @open-after="setViewMonth">
 	<div style="padding-bottom: 20px; height: 100%">
-		<ste-calendar ref="defaultDate" minDate="2024-05-20" maxDate="2024-12-01" @confirm="handleConfirm" />
+		<ste-calendar ref="calendarRef" minDate="2024-05-20" maxDate="2024-12-01" @confirm="handleConfirm" />
 	</div>
 </ste-popup>
 <script>
 	export default{
 		methods: {
 			setViewMonth() {
-				this.$refs.defaultDate.showMonth('2024-07-12');
+				this.$refs.calendarRef.showMonth('2024-07-12');
 			},
 		},
 	}
@@ -194,37 +194,29 @@
 ```
 
 #### 手动切换、标记
+- 属性`weekendColor`用于设置周末日期颜色
 - 属性`monthCount`用于设置渲染的月数
 - 属性`signs`用于设置标记的日期
-- 方法`showMonth`用于手动切换月份
 
 ```html
-<ste-button @click="show14 = true">手动切换、标记</ste-button>
-<ste-popup :show.sync="show14" position="bottom" height="70vh">
-	<div style="padding-bottom: 20px; height: 100%">
-		<div style="height: calc(100% - 120rpx)">
-			<ste-calendar
-				@select="handleConfirm"
-				:signs="signs"
-				:defaultDate="defaultDate"
-				:monthCount="1"
-				:showConfirm="false"
-			/>
-		</div>
-		<div style="margin-top: 12rpx">
-			<ste-button @click="setView('2023-11')">2023-11</ste-button>
-			<ste-button @click="setView()">当月</ste-button>
-			<ste-button @click="setView('2026-10')">2026-10</ste-button>
-		</div>
-	</div>
-</ste-popup>
+<ste-select mode="month" v-model="defaultDate" width="360" />
+
+<ste-calendar
+	@select="handleConfirm"
+	weekendColor="#999"
+	:signs="signs"
+	:defaultDate="defaultDate"
+	:monthCount="1"
+	:showConfirm="false"
+	:showTitle="false"
+/>
 
 <script>
+import utils from 'stellar-ui/utils/utils';
 export default{
 	data(){
 		return {
-			show14: false,
-			defaultDate: new Date(),
+			defaultDate: utils.dayjs().format('YYYY-MM'),
 			signs: {
 				'2024-11-12': [
 					{ content: 'XXXXX', className: 'test-signs' },
@@ -238,11 +230,6 @@ export default{
 				],
 			},
 		}
-	},
-	methods: {
-		setView(d) {
-			this.defaultDate = d ? d : new Date();
-		},
 	},
 }
 </script>
@@ -268,7 +255,8 @@ export default{
 | `list`						| 已选中的日期																																								| `Array<Date>`	| `[]`										| -																													| -				|
 | `startText`				| 开始日期的提示文字，`mode`=`range`时生效																										| `String`			| `[]`										| -																													| -				|
 | `endText`					| 结束日期的提示文字，`mode`=`range`时生效																										| `String`			| `[]`										| -																													| -				|
-| `color`						| 主题颜色，选中日期背景、周末文日期颜色和确定按钮																							| `String`			| `#FF1A00`								| -																													| -				|
+| `color`						| 主题颜色（选中日期背景、月份背景、当天日期颜色和确定按钮颜色）																| `String`			| `#FF1A00`								| -																													| -				|
+| `weekendColor`		| 周末日期颜色																																								| `String`			| `#FF1A00`								| -																													| -				|
 | `minDate`					| 开始日期	（没有该属性的情况下，从`defaultDate`开始渲染）																			| `Date`				| `0`											| -																													| -				|
 | `maxDate`					| 结束日期	（没有该属性的情况下，从`minDate`或者`defaultDate`开始往后渲染`maxCount`个月）				| `Date`				| `0`											| -																													| -				|
 | `defaultDate`			| 默认展示日期（不设置`minDate`和`maxDate`的情况下，列表展示从默认月份开始往后`maxCount`个月）	| `Date`				| `new Date()`						| -																													| -				|
@@ -281,7 +269,7 @@ export default{
 | `rangePrompt`			| 范围选择超过最多可选天数时的提示文案																												| `String`			| `"选择天数不能超过XX天"`	| -																													| -				|
 | `showRangePrompt`	| 范围选择超过最多可选天数时，是否展示提示文案																									| `Number`			| `0`											| -																													| -				|
 | `allowSameDay`		| 是否允许日期范围的起止时间为同一天																													| `Boolean`			| `true`									| -																													| -				|
-| `signs`						| 标签对象																																										| `Signs`			| `true`									| -																													| -				|
+| `signs`						| 标签对象																																										| `Signs`				| `true`									| -																													| -				|
 
 ##### Signs 示例
 ```javascript

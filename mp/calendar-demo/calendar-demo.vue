@@ -117,33 +117,29 @@
 							</div>
 						</ste-popup>
 					</view>
-					<view class="demo-code">
-						<ste-button @click="show14 = true">手动切换、标记</ste-button>
-						<ste-popup :show.sync="show14" position="bottom" height="70vh">
-							<div style="padding-bottom: 20px; height: 100%">
-								<div style="height: calc(100% - 120rpx)">
-									<ste-calendar
-										@select="handleConfirm"
-										:signs="signs"
-										:defaultDate="defaultDate"
-										:monthCount="1"
-										:showConfirm="false"
-									/>
-								</div>
-								<div style="margin-top: 12rpx">
-									<ste-button @click="setView('2023-11')">2023-11</ste-button>
-									<ste-button @click="setView()">当月</ste-button>
-									<ste-button @click="setView('2026-10')">2026-10</ste-button>
-								</div>
-							</div>
-						</ste-popup>
-					</view>
 				</view>
+			</view>
+
+			<view class="demo-item">
+				<view class="title">手动切换、标记</view>
+
+				<ste-select mode="month" v-model="defaultDate" width="360" />
+
+				<ste-calendar
+					@select="handleConfirm"
+					weekendColor="#999"
+					:signs="signs"
+					:defaultDate="defaultDate"
+					:monthCount="1"
+					:showConfirm="false"
+					:showTitle="false"
+				/>
 			</view>
 		</view>
 	</view>
 </template>
 <script>
+import utils from '../../uni_modules/stellar-ui/utils/utils';
 export default {
 	data() {
 		return {
@@ -160,8 +156,7 @@ export default {
 			show11: false,
 			show12: false,
 			show13: false,
-			show14: false,
-			defaultDate: new Date(),
+			defaultDate: utils.dayjs().format('YYYY-MM'),
 			signs: {
 				'2024-11-12': [
 					{ content: 'XXXXX', className: 'test-signs' },
