@@ -537,9 +537,7 @@ export default {
 							line-height: 24rpx;
 							font-size: 24rpx;
 							overflow: hidden;
-							& + .day-sign {
-								margin-top: 12rpx;
-							}
+							margin-top: 6rpx;
 						}
 					}
 				}
