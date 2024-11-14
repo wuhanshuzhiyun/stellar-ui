@@ -166,7 +166,6 @@ export default {
 				'2024-11-13': [
 					{ content: 'XXXXX', style: { color: '#666', background: '#f5f5f5' } },
 					{ content: 'XXXXX', style: { color: '#666', background: '#f5f5f5' } },
-					{ content: 'XXXXX', style: { color: '#666', background: '#f5f5f5' } },
 				],
 			},
 		};
@@ -202,13 +201,11 @@ export default {
 					margin: 0 12rpx 12rpx 0;
 				}
 			}
+			/deep/ .test-signs {
+				color: #fff;
+				background-color: #000;
+			}
 		}
 	}
-}
-</style>
-<style>
-.item-content .test-signs {
-	color: #f00;
-	background: #f5f5f5;
 }
 </style>

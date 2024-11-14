@@ -234,9 +234,9 @@ export default{
 }
 </script>
 <style>
-.test-signs {
-	color: #f00;
-	background: #f5f5f5;
+/deep/ .test-signs {
+	color: #fff;
+	background-color: #000;
 }
 </style>
 ```
@@ -269,7 +269,7 @@ export default{
 | `rangePrompt`			| 范围选择超过最多可选天数时的提示文案																												| `String`			| `"选择天数不能超过XX天"`	| -																													| -				|
 | `showRangePrompt`	| 范围选择超过最多可选天数时，是否展示提示文案																									| `Number`			| `0`											| -																													| -				|
 | `allowSameDay`		| 是否允许日期范围的起止时间为同一天																													| `Boolean`			| `true`									| -																													| -				|
-| `signs`						| 标签对象																																										| `Signs`				| `true`									| -																													| -				|
+| `signs`						| 标签对象（每一天的支持最多三条标签）																																										| `Signs`				| `true`									| -																													| -				|
 
 ##### Signs 示例
 ```javascript

@@ -531,13 +531,15 @@ export default {
 						padding: 0 4rpx;
 						display: flex;
 						flex-direction: column;
-						justify-content: space-evenly;
 						.day-sign {
 							width: 100%;
 							height: 24rpx;
 							line-height: 24rpx;
 							font-size: 24rpx;
 							overflow: hidden;
+							& + .day-sign {
+								margin-top: 12rpx;
+							}
 						}
 					}
 				}
