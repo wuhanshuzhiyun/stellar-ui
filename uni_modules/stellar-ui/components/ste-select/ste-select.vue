@@ -38,9 +38,11 @@
 				</slot>
 				<view class="open-icon-event" @click.stop="clickOpenIcon">
 					<view class="open-icon">
-						<view class="open-icon-transform">
-							<ste-icon code="&#xe676;" size="20" />
-						</view>
+						<slot name="icon">
+							<view class="open-icon-transform">
+								<ste-icon code="&#xe676;" size="20" />
+							</view>
+						</slot>
 					</view>
 				</view>
 			</view>
@@ -73,11 +75,7 @@
 					<block v-else>
 						<view class="one-col-options">
 							<scroll-view scroll-y class="options-col" v-for="(col, index) in viewOptions" :key="index">
-								<view
-									class="options-item"
-									v-if="dataAllowCreate"
-									@click="onSelect(index, dataAllowCreate, true)"
-								>
+								<view class="options-item" v-if="dataAllowCreate" @click="onSelect(index, dataAllowCreate, true)">
 									{{ dataAllowCreate[labelKey] }}
 								</view>
 								<view
@@ -339,9 +337,7 @@ export default {
 				let list = this.dataOptions;
 				if (this.cmpFilterable && this.userFilterable) {
 					// 处理筛选数据
-					list = list.map((item) =>
-						item.filter((value) => value[this.labelKey].includes(this.userFilterable))
-					);
+					list = list.map((item) => item.filter((value) => value[this.labelKey].includes(this.userFilterable)));
 				}
 				this.viewOptions = list;
 			});
@@ -642,8 +638,6 @@ export default {
 			top: 50%;
 			transform: translateY(-50%);
 			.open-icon {
-				background-color: #ebebeb; // 设置一个背景颜色，以便在开发过程中能够看到这个元素。
-				border-radius: 16rpx;
 				width: 32rpx;
 				height: 32rpx;
 				display: flex;
@@ -653,6 +647,8 @@ export default {
 				.open-icon-transform {
 					width: 100%;
 					height: 100%;
+					background-color: #ebebeb; // 设置一个背景颜色，以便在开发过程中能够看到这个元素。
+					border-radius: 16rpx;
 					display: flex;
 					align-items: center;
 					justify-content: center;

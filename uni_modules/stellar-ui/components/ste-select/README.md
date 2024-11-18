@@ -277,6 +277,13 @@ export default {
 | `cancel`	| 取消选择时触发	| -									| -				|
 | `confirm`	| 确定选择时触发	| `value`/`value[]`	| -				|
 
+#### Slots
+
+| 事件名		| 说明					| 支持版本	|
+| ---				| ---					| ---			|
+| `default`	| 展示内容			| -				|
+| `icon`		| 打开下拉图标	| -				|
+
 
 
 

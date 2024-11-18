@@ -46,6 +46,14 @@
 				<view class="title">创建条目</view>
 				<ste-select :list="list1" mode="filterable" allowCreate @change="onChange"></ste-select>
 			</view>
+			<view class="demo-item">
+				<view class="title">自定义图标</view>
+				<ste-select :list="list1">
+					<template v-slot:icon>
+						<ste-icon code="&#xe699;"></ste-icon>
+					</template>
+				</ste-select>
+			</view>
 		</view>
 	</view>
 </template>
