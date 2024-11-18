@@ -199,11 +199,16 @@
 - 属性`signs`用于设置标记的日期
 
 ```html
-<ste-select mode="month" v-model="defaultDate" width="360" />
+<ste-select mode="month" v-model="defaultDate" width="200" options-width="420" border-color="transparency">
+	<template v-slot:icon>
+		<ste-icon code="&#xe699;"></ste-icon>
+	</template>
+</ste-select>
 
 <ste-calendar
 	@select="handleConfirm"
 	weekendColor="#999"
+	color="#09f"
 	:signs="signs"
 	:defaultDate="defaultDate"
 	:monthCount="1"
