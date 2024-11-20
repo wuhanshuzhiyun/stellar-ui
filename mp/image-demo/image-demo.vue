@@ -2,8 +2,15 @@
 	<view class="page">
 		<page-nav :autoBack="true" backColor="#000" titleAlignment="2" title="图片"></page-nav>
 		<view class="content">
+			<view class="description">
+				<view class="cmp-name">Image 图片</view>
+				<view class="cmp-desc">用于展示图片素材。</view>
+			</view>
+			<view class="type-block">
+				<view>01 组件类型</view>
+			</view>
 			<view class="demo-item">
-				<view class="title">基础用法</view>
+				<view class="title">不同填充模式的图片</view>
 				<view class="item-block">
 					<view class="image-box">
 						<ste-image :src="demoUrl" width="200" height="200" />
@@ -27,6 +34,9 @@
 				<view class="item-block">
 					<ste-image :src="demoUrl" radius="50%" width="200" height="200" />
 				</view>
+			</view>
+			<view class="type-block">
+				<view>02 组件状态</view>
 			</view>
 			<view class="demo-item">
 				<view class="title">加载效果</view>
@@ -53,6 +63,9 @@
 						<view class="msg">隐藏加载失败提示</view>
 					</view>
 				</view>
+			</view>
+			<view class="type-block">
+				<view>02 组件自定义</view>
 			</view>
 			<view class="demo-item">
 				<view class="title">具名插槽</view>
@@ -96,6 +109,7 @@ export default {
 <style lang="scss" scoped>
 .page {
 	.content {
+		padding-bottom: 36rpx;
 		.demo-item {
 			.item-block {
 				display: block;

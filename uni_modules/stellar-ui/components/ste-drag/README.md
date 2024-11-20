@@ -5,7 +5,7 @@
 
 
 ### 代码演示
-#### 基础使用
+####  自由拖拽
 ```html
 <ste-drag>
 	<ste-button>拖拽按钮</ste-button>

@@ -2,6 +2,10 @@
 	<view class="page">
 		<page-nav :autoBack="true" backColor="#000" titleAlignment="2" title="手势切屏"></page-nav>
 		<view class="content">
+			<view class="description">
+				<view class="cmp-name">TouchSwipe 手势切屏</view>
+				<view class="cmp-desc">手势切屏组件，支持水平手势切换和垂直手势切换。</view>
+			</view>
 			<view class="demo-item">
 				<view class="title">水平切换-固定宽度</view>
 				<view class="item-block">

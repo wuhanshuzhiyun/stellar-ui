@@ -2,6 +2,15 @@
 	<view class="page">
 		<page-nav :autoBack="true" backColor="#000" titleAlignment="2" title="下拉菜单"></page-nav>
 		<view class="content">
+			<view class="description">
+				<view class="cmp-name">DropdownMenu 下拉菜单</view>
+				<view class="cmp-desc">
+					菜单呈现数个并列的选项类目，用于整个页面的内容筛选，由菜单面板和菜单选项组成。
+				</view>
+			</view>
+			<view class="type-block">
+				<view>01 组件类型</view>
+			</view>
 			<view class="demo-item">
 				<view class="title">基础使用</view>
 				<view class="item-block">
@@ -52,6 +61,9 @@
 					</view>
 				</view>
 			</view>
+			<view class="type-block">
+				<view>02 组件自定义</view>
+			</view>
 			<view class="demo-item">
 				<view class="title">自定义下拉内容</view>
 				<view class="item-block">
@@ -98,6 +110,9 @@
 						</view>
 					</view>
 				</view>
+			</view>
+			<view class="type-block">
+				<view>03 组件样式</view>
 			</view>
 			<view class="demo-item">
 				<view class="title">选中颜色 & 未选中颜色</view>
@@ -278,14 +293,20 @@ export default {
 .page {
 	.content {
 		padding: 0;
+		.description {
+			padding: 0 40rpx;
+		}
+		.type-block {
+			padding: 0 40rpx;
+		}
 		.demo-item {
 			.title {
-				padding-left: 20rpx;
+				padding-left: 40rpx;
 			}
 			.item-block {
 				.menu-item {
 					display: flex;
-					padding: 0 20rpx;
+					padding: 0 40rpx;
 					width: 100%;
 					box-shadow: 0 0 10px #ddd;
 					> view {

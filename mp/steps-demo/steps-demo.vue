@@ -2,6 +2,10 @@
 	<view class="page">
 		<page-nav :autoBack="true" backColor="#000" titleAlignment="2" title="步骤条"></page-nav>
 		<view class="content">
+			<view class="description">
+				<view class="cmp-name">Steps 步骤条</view>
+				<view class="cmp-desc">用于任务步骤展示或任务进度展示。</view>
+			</view>
 			<view style="text-align: center; margin-top: 30rpx; position: sticky; top: 30rpx; z-index: 100">
 				<ste-button @click="goToNext">下一步</ste-button>
 			</view>
@@ -95,5 +99,21 @@ export default {
 
 <style lang="scss" scoped>
 .page {
+	.content {
+		background-color: #f6f6f6;
+		padding: 0;
+		.description {
+			padding: 0 40rpx;
+		}
+		& > .demo-item {
+			.title {
+				padding: 0 40rpx;
+			}
+			.item-block {
+				background-color: #ffffff;
+				padding: 40rpx 0;
+			}
+		}
+	}
 }
 </style>

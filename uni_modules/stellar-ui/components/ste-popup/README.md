@@ -4,10 +4,23 @@
 
 ### 代码演示
 #### 基础使用
-通过属性`show`来控制弹出层的显隐，使用`sync`修饰符来双向绑定
+- 通过属性`show`来控制弹出层的显隐，使用`sync`修饰符来双向绑定
+- 弹出位置支持上(`top`)、下(`bottom`)、左(`left`)、右(`right`)、中(`center`)，默认弹出位置为中(`center`)
 ```
 <ste-popup :show.sync="show" width="300" height="300">
-	<view class="popup-content">正文</view>
+	<view class="popup-content"></view>
+</ste-popup>
+<ste-popup :show.sync="showTop" height="300" width="100vw" position="top">
+	<view class="popup-content">上</view>
+</ste-popup>
+<ste-popup :show.sync="showBottom" height="300" width="100vw" position="bottom">
+	<view class="popup-content">下</view>
+</ste-popup>
+<ste-popup :show.sync="showLeft" width="300" height="100vh" position="left">
+	<view class="popup-content">左</view>
+</ste-popup>
+<ste-popup :show.sync="showRight" width="300" height="100vh" position="right">
+	<view class="popup-content">右</view>
 </ste-popup>
 ```
 
@@ -15,17 +28,6 @@
 ```
 <ste-popup :show.sync="bgShow" width="300" height="300" backgroundColor="#eff3dd">
 	<view class="popup-content">背景色</view>
-</ste-popup>
-```
-
-#### 是否遮罩关闭
-默认可点击遮罩关闭弹窗
-```
-<ste-popup :show.sync="maskShow1" width="300" height="300">
-	<view class="popup-content">遮罩可关闭</view>
-</ste-popup>
-<ste-popup :show.sync="maskShow2" width="300" height="300" :isMaskClick="false">
-	<view class="popup-content">遮罩不可关闭</view>
 </ste-popup>
 ```
 
@@ -41,22 +43,6 @@
 </ste-popup>
 ```
 
-#### 位置
-弹出位置支持上(`top`)、下(`bottom`)、左(`left`)、右(`right`)、中(`center`)，默认弹出位置为中(`center`)
-```
-<ste-popup :show.sync="showTop" height="300" width="100vw" position="top">
-	<view class="popup-content">上</view>
-</ste-popup>
-<ste-popup :show.sync="showBottom" height="300" width="100vw" position="bottom">
-	<view class="popup-content">下</view>
-</ste-popup>
-<ste-popup :show.sync="showLeft" width="300" height="100vh" position="left">
-	<view class="popup-content">左</view>
-</ste-popup>
-<ste-popup :show.sync="showRight" width="300" height="100vh" position="right">
-	<view class="popup-content">右</view>
-</ste-popup>
-```
 
 #### 圆角
 - 若组件圆角不满足需求，可以不设置圆角，在插槽内容中自己设置圆角
@@ -72,6 +58,20 @@
 	<view class="popup-content">偏移</view>
 </ste-popup>
 ```
+
+
+#### 是否遮罩关闭
+默认可点击遮罩关闭弹窗
+```
+<ste-popup :show.sync="maskShow1" width="300" height="300">
+	<view class="popup-content">遮罩可关闭</view>
+</ste-popup>
+<ste-popup :show.sync="maskShow2" width="300" height="300" :isMaskClick="false">
+	<view class="popup-content">遮罩不可关闭</view>
+</ste-popup>
+```
+
+
 
 #### 动画执行时间
 ```

@@ -2,11 +2,33 @@
 	<view class="page">
 		<page-nav :autoBack="true" backColor="#000" titleAlignment="2" title="复选框"></page-nav>
 		<view class="content">
+			<view class="description">
+				<view class="cmp-name">Checkbox 复选框</view>
+				<view class="cmp-desc">用于预设的一组选项中执行多项选择，并呈现选择结果。</view>
+			</view>
+			<view class="type-block">
+				<view>01 组件类型</view>
+			</view>
 			<view class="demo-item">
-				<view class="title">基础用法</view>
-				<view class="item-block">
-					<ste-checkbox v-model="value1">复选框</ste-checkbox>
+				<view class="title">纵向排列</view>
+				<ste-checkbox-group v-model="value20">
+					<ste-checkbox name="a">复选框a</ste-checkbox>
+					<ste-checkbox name="b">复选框b</ste-checkbox>
+					<ste-checkbox name="c">复选框c</ste-checkbox>
+				</ste-checkbox-group>
+			</view>
+			<view class="demo-item">
+				<view class="title">横向排列</view>
+				<view class="item-block checkbox-box">
+					<ste-checkbox-group v-model="value20" direction="row">
+						<ste-checkbox name="a">复选框a</ste-checkbox>
+						<ste-checkbox name="b">复选框b</ste-checkbox>
+						<ste-checkbox name="c">复选框c</ste-checkbox>
+					</ste-checkbox-group>
 				</view>
+			</view>
+			<view class="type-block">
+				<view>02 组件状态</view>
 			</view>
 			<view class="demo-item">
 				<view class="title">禁用</view>
@@ -21,6 +43,9 @@
 					<ste-checkbox v-model="value4" readonly>复选框1</ste-checkbox>
 					<ste-checkbox v-model="value5" readonly>复选框2</ste-checkbox>
 				</view>
+			</view>
+			<view class="type-block">
+				<view>03 组件样式</view>
 			</view>
 			<view class="demo-item">
 				<view class="title">自定义形状</view>
@@ -96,6 +121,9 @@
 					</ste-checkbox-group>
 				</view>
 			</view>
+			<view class="type-block">
+				<view>04 组件自定义</view>
+			</view>
 			<view class="demo-item">
 				<view class="title">左侧文本</view>
 				<view class="item-block checkbox-box">
@@ -143,16 +171,6 @@
 						<ste-checkbox name="a">复选框a</ste-checkbox>
 						<ste-checkbox name="b" disabled>复选框b</ste-checkbox>
 						<ste-checkbox name="c" shape="circle">复选框c</ste-checkbox>
-					</ste-checkbox-group>
-				</view>
-			</view>
-			<view class="demo-item">
-				<view class="title">水平排列</view>
-				<view class="item-block checkbox-box">
-					<ste-checkbox-group v-model="value20" direction="row">
-						<ste-checkbox name="a">复选框a</ste-checkbox>
-						<ste-checkbox name="b">复选框b</ste-checkbox>
-						<ste-checkbox name="c">复选框c</ste-checkbox>
 					</ste-checkbox-group>
 				</view>
 			</view>

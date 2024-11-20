@@ -2,6 +2,13 @@
 	<view class="page">
 		<page-nav :autoBack="true" backColor="#000" titleAlignment="2" title="输入框"></page-nav>
 		<view class="content">
+			<view class="description">
+				<view class="cmp-name">Input 输入框</view>
+				<view class="cmp-desc">用于单行文本信息输入。</view>
+			</view>
+			<view class="type-block">
+				<view>01 组件类型</view>
+			</view>
 			<view class="demo-item">
 				<view class="title">文本输入框</view>
 				<view class="item-block">
@@ -36,6 +43,9 @@
 						<ste-input placeholder="请输入" placeholderStyle="color: #f00" />
 					</view>
 				</view>
+			</view>
+			<view class="type-block">
+				<view>02 组件状态</view>
 			</view>
 			<view class="demo-item">
 				<view class="title">禁用&只读</view>
@@ -76,6 +86,9 @@
 						<ste-button width="100%" style="margin-right: 50rpx" @click="focus">焦点</ste-button>
 					</view>
 				</view>
+			</view>
+			<view class="type-block">
+				<view>03 组件样式</view>
 			</view>
 			<view class="demo-item">
 				<view class="title">对齐方式</view>

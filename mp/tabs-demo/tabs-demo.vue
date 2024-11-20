@@ -2,6 +2,10 @@
 	<view class="page">
 		<page-nav :autoBack="true" backColor="#000" titleAlignment="2" title="标签页"></page-nav>
 		<view class="content">
+			<view class="description">
+				<view class="cmp-name">Tabs 标签页</view>
+				<view class="cmp-desc">用于内容分类后的展示切换。</view>
+			</view>
 			<item-view title="基础用法" open>
 				<view class="sub-item">
 					<view class="sub-title">标签数量小于或等于均分数量时，标签宽度均分</view>
@@ -44,7 +48,13 @@
 				<view class="sub-item">
 					<view class="sub-title">开启标签自动吸顶</view>
 					<ste-tabs showSubtitle sticky>
-						<ste-tab v-for="(item, index) in list1" :key="index" :title="item.title" subTitle="子标题" :index="index">
+						<ste-tab
+							v-for="(item, index) in list1"
+							:key="index"
+							:title="item.title"
+							subTitle="子标题"
+							:index="index"
+						>
 							<view>{{ item.title }}内容</view>
 							<image mode="widthFix" :src="item.content" />
 						</ste-tab>
@@ -55,7 +65,13 @@
 				<view class="sub-item">
 					<view class="sub-title">当显示子标题时，下划线会自动隐藏</view>
 					<ste-tabs showSubtitle>
-						<ste-tab v-for="(item, index) in list1" :key="index" :title="item.title" subTitle="子标题" :index="index">
+						<ste-tab
+							v-for="(item, index) in list1"
+							:key="index"
+							:title="item.title"
+							subTitle="子标题"
+							:index="index"
+						>
 							<view>{{ item.title }}内容</view>
 							<image mode="widthFix" :src="item.content" />
 						</ste-tab>
@@ -80,7 +96,13 @@
 				<view class="sub-item">
 					<view class="sub-title">隐藏主标题，展示图片主标题和子标题，图片边框隐藏</view>
 					<ste-tabs showSubtitle showImage :showTitle="false" imageBorderWidth="0">
-						<ste-tab v-for="(item, index) in list1" :key="index" :image="item.image" subTitle="子标题" :index="index">
+						<ste-tab
+							v-for="(item, index) in list1"
+							:key="index"
+							:image="item.image"
+							subTitle="子标题"
+							:index="index"
+						>
 							<view>{{ item.title }}内容</view>
 							<image mode="widthFix" :src="item.content" />
 						</ste-tab>
@@ -88,8 +110,21 @@
 				</view>
 				<view class="sub-item">
 					<view class="sub-title">图片大小和圆角</view>
-					<ste-tabs showSubtitle showImage :showTitle="false" imageWidth="200" imageHeight="90" imageRadius="18">
-						<ste-tab v-for="(item, index) in list2" :key="index" :image="item.image" subTitle="子标题" :index="index">
+					<ste-tabs
+						showSubtitle
+						showImage
+						:showTitle="false"
+						imageWidth="200"
+						imageHeight="90"
+						imageRadius="18"
+					>
+						<ste-tab
+							v-for="(item, index) in list2"
+							:key="index"
+							:image="item.image"
+							subTitle="子标题"
+							:index="index"
+						>
 							<view>{{ item.title }}内容</view>
 							<image mode="widthFix" :src="item.content" />
 						</ste-tab>
@@ -100,7 +135,13 @@
 				<view class="sub-item">
 					<view class="sub-title">开启下拉选项，当标签数量小于均分数量时不生效</view>
 					<ste-tabs pullDown :showTitle="false" showImage showSubtitle tabWidth="180" tabPadding="12">
-						<ste-tab v-for="(item, index) in list2" :key="index" :image="item.image" subTitle="子标题" :index="index">
+						<ste-tab
+							v-for="(item, index) in list2"
+							:key="index"
+							:image="item.image"
+							subTitle="子标题"
+							:index="index"
+						>
 							<view>{{ item.title }}内容</view>
 							<image mode="widthFix" :src="item.content" />
 						</ste-tab>
@@ -120,7 +161,13 @@
 						maskBottom="120"
 						maskTop="180"
 					>
-						<ste-tab v-for="(item, index) in list2" :key="index" :image="item.image" subTitle="子标题" :index="index">
+						<ste-tab
+							v-for="(item, index) in list2"
+							:key="index"
+							:image="item.image"
+							subTitle="子标题"
+							:index="index"
+						>
 							<view>{{ item.title }}内容</view>
 							<image mode="widthFix" :src="item.content" />
 						</ste-tab>
@@ -130,7 +177,15 @@
 			<item-view title="颜色">
 				<view class="sub-item">
 					<view class="sub-title">主题和背景</view>
-					<ste-tabs pullDown showImage showSubtitle tabWidth="180" tabPadding="12" color="#f00" background="#ffa">
+					<ste-tabs
+						pullDown
+						showImage
+						showSubtitle
+						tabWidth="180"
+						tabPadding="12"
+						color="#f00"
+						background="#ffa"
+					>
 						<ste-tab
 							v-for="(item, index) in list2"
 							:key="index"
@@ -155,8 +210,21 @@
 				</view>
 				<view class="sub-item">
 					<view class="sub-title">子标题字体颜色</view>
-					<ste-tabs pullDown showSubtitle subColor="#09f" activeSubColor="#f90" tabWidth="180" tabPadding="12">
-						<ste-tab v-for="(item, index) in list2" :key="index" :title="item.title" subTitle="子标题" :index="index">
+					<ste-tabs
+						pullDown
+						showSubtitle
+						subColor="#09f"
+						activeSubColor="#f90"
+						tabWidth="180"
+						tabPadding="12"
+					>
+						<ste-tab
+							v-for="(item, index) in list2"
+							:key="index"
+							:title="item.title"
+							subTitle="子标题"
+							:index="index"
+						>
 							<view>{{ item.title }}内容</view>
 							<image mode="widthFix" :src="item.content" />
 						</ste-tab>
@@ -168,7 +236,13 @@
 				<view class="sub-item">
 					<view class="sub-title">开启手势切换</view>
 					<ste-tabs showSubtitle swipeable>
-						<ste-tab v-for="(item, index) in list1" :key="index" :title="item.title" subTitle="子标题" :index="index">
+						<ste-tab
+							v-for="(item, index) in list1"
+							:key="index"
+							:title="item.title"
+							subTitle="子标题"
+							:index="index"
+						>
 							<view>{{ item.title }}内容</view>
 							<image mode="widthFix" :src="item.content" />
 						</ste-tab>
@@ -237,7 +311,13 @@
 				<view class="sub-item">
 					<view class="sub-title">显示子标题样式</view>
 					<ste-tabs swipeable showGapLine showSubtitle>
-						<ste-tab v-for="(item, index) in list1" :key="index" :title="item.title" subTitle="子标题" :index="index">
+						<ste-tab
+							v-for="(item, index) in list1"
+							:key="index"
+							:title="item.title"
+							subTitle="子标题"
+							:index="index"
+						>
 							<view>{{ item.title }}内容</view>
 							<image mode="widthFix" :src="item.content" />
 						</ste-tab>
@@ -257,7 +337,13 @@
 				<view class="sub-item">
 					<view class="sub-title">锁定</view>
 					<ste-tabs swipeable showGapLine showSubtitle lock>
-						<ste-tab v-for="(item, index) in list1" :key="index" :title="item.title" subTitle="子标题" :index="index">
+						<ste-tab
+							v-for="(item, index) in list1"
+							:key="index"
+							:title="item.title"
+							subTitle="子标题"
+							:index="index"
+						>
 							<view>{{ item.title }}内容</view>
 							<image mode="widthFix" :src="item.content" />
 						</ste-tab>
@@ -266,7 +352,13 @@
 				<view class="sub-item">
 					<view class="sub-title">全局禁用</view>
 					<ste-tabs swipeable showGapLine showSubtitle disabled>
-						<ste-tab v-for="(item, index) in list1" :key="index" :title="item.title" subTitle="子标题" :index="index">
+						<ste-tab
+							v-for="(item, index) in list1"
+							:key="index"
+							:title="item.title"
+							subTitle="子标题"
+							:index="index"
+						>
 							<view>{{ item.title }}内容</view>
 							<image mode="widthFix" :src="item.content" />
 						</ste-tab>
@@ -407,6 +499,9 @@ export default {
 .page {
 	.content {
 		padding: 0;
+		.description {
+			padding: 0 40rpx;
+		}
 		.sub-item {
 			padding-bottom: 18rpx;
 			& + .sub-item {

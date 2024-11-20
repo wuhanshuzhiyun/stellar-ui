@@ -2,6 +2,10 @@
 	<view class="page">
 		<page-nav :autoBack="true" backColor="#000" titleAlignment="2" title="搜索"></page-nav>
 		<view class="content">
+			<view class="description">
+				<view class="cmp-name">Search 搜索</view>
+				<view class="cmp-desc">用于用户输入搜索信息，并进行页面内容搜索。</view>
+			</view>
 			<view class="demo-item">
 				<view class="title">基础用法</view>
 				<view class="item-block">

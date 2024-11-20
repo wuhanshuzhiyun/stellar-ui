@@ -2,6 +2,10 @@
 	<view class="page">
 		<page-nav :autoBack="true" backColor="#000" titleAlignment="2" title="进度条"></page-nav>
 		<view class="content">
+			<view class="description">
+				<view class="cmp-name">Progress 进度条</view>
+				<view class="cmp-desc">用于展示任务当前的进度。</view>
+			</view>
 			<view class="demo-item">
 				<view class="title">背景色</view>
 				<view class="item-block">

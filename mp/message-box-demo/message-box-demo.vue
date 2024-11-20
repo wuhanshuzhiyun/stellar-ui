@@ -2,6 +2,10 @@
 	<view class="page">
 		<page-nav :autoBack="true" backColor="#000" titleAlignment="2" title="弹框"></page-nav>
 		<view class="content">
+			<view class="description">
+				<view class="cmp-name">MessageBox 弹窗</view>
+				<view class="cmp-desc">一种打断当前操作的模态视图，用于显示重要提示或请求用户进行重要操作</view>
+			</view>
 			<view class="demo-item">
 				<view class="title">基础使用</view>
 				<view class="item-block">

@@ -2,6 +2,10 @@
 	<view class="page">
 		<page-nav :autoBack="true" backColor="#000" titleAlignment="2" title="视频"></page-nav>
 		<view class="content">
+			<view class="description">
+				<view class="cmp-name">Video 视频</view>
+				<view class="cmp-desc">用于播放视频</view>
+			</view>
 			<view class="demo-item">
 				<view class="title">基础使用</view>
 				<view class="item-block">

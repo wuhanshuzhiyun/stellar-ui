@@ -1,6 +1,6 @@
 # NumberKeyboard 数字键盘
 
-用于页面上显示价格的组件
+虚拟数字键盘，用于输入数字、密码或身份证等场景。
 
 {{compatibility}}
 

@@ -2,6 +2,10 @@
 	<view class="page">
 		<page-nav :autoBack="true" backColor="#000" titleAlignment="2" title="树形控件"></page-nav>
 		<view class="content">
+			<view class="description">
+				<view class="cmp-name">Tree 树形控件</view>
+				<view class="cmp-desc">用于展示多级列表</view>
+			</view>
 			<view class="demo-item">
 				<view class="title">基础使用</view>
 				<ste-tree :options="options" @open="onOpen" @close="onClose"></ste-tree>

@@ -2,6 +2,10 @@
 	<view class="page">
 		<page-nav :autoBack="true" backColor="#000" titleAlignment="2" title="轻提示"></page-nav>
 		<view class="content">
+			<view class="description">
+				<view class="cmp-name">Toast 轻提示</view>
+				<view class="cmp-desc">用于轻量级反馈或提示，不会打断用户操作。</view>
+			</view>
 			<view class="demo-item">
 				<view class="title">文字提示</view>
 				<view class="item-block item-rate">

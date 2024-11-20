@@ -1,6 +1,6 @@
 # MediaPreview 媒体预览
 
-用于页面上显示价格的组件
+用于单独预览图片或者视频
 
 {{compatibility}}
 

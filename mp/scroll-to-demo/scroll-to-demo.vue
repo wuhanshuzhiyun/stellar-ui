@@ -2,6 +2,10 @@
 	<view class="page">
 		<page-nav :autoBack="true" backColor="#000" titleAlignment="2" title="滚动锚点"></page-nav>
 		<view class="content">
+			<view class="description">
+				<view class="cmp-name">ScrollTo 滚动锚点</view>
+				<view class="cmp-desc">滚动锚点，可以滚动到指定锚点。</view>
+			</view>
 			<view class="demo-item">
 				<view class="title">基础用法</view>
 				<view class="item-block">

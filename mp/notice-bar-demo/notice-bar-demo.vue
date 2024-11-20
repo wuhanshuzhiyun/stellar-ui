@@ -2,6 +2,10 @@
 	<view class="page">
 		<page-nav :autoBack="true" backColor="#000" titleAlignment="2" title="公告栏"></page-nav>
 		<view class="content">
+			<view class="description">
+				<view class="cmp-name">NoticeBar 公告栏</view>
+				<view class="cmp-desc">在导航栏下方，用于给用户显示提示消息。</view>
+			</view>
 			<view class="demo-item">
 				<view class="title">基础用法</view>
 				<view class="item-block">
@@ -17,7 +21,7 @@
 			<view class="demo-item">
 				<view class="title">垂直滚动</view>
 				<view class="item-block">
-					<ste-notice-bar :list="list2" direction="vertical"></ste-notice-bar>
+					<ste-notice-bar :list="list2" direction="vertical" @click="click1"></ste-notice-bar>
 				</view>
 			</view>
 			<view class="demo-item">
@@ -84,6 +88,11 @@ export default {
 		};
 	},
 	mounted() {},
+	methods: {
+		click1() {
+			console.log('点击1111');
+		},
+	},
 };
 </script>
 

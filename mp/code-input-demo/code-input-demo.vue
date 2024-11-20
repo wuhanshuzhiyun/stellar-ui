@@ -1,8 +1,15 @@
 <template>
 	<view class="page">
-		<page-nav :autoBack="true" backColor="#000" titleAlignment="2" title="文本"></page-nav>
+		<page-nav :autoBack="true" backColor="#000" titleAlignment="2" title="验证码输入组件"></page-nav>
 		<view class="content">
+			<view class="description">
+				<view class="cmp-name">CodeInput 验证码输入</view>
+				<view class="cmp-desc">用于验证码输入或短密码输入</view>
+			</view>
 			<view class="demo-item">
+				<view class="type-block">
+					<view>01 组件类型</view>
+				</view>
 				<view class="title">基础使用</view>
 				<view class="item-block">
 					<view style="width: 100%">
@@ -36,6 +43,9 @@
 						<ste-code-input mode="box" :space="0" :maxlength="4"></ste-code-input>
 					</view>
 				</view>
+			</view>
+			<view class="type-block">
+				<view>02 组件样式</view>
 			</view>
 			<view class="demo-item">
 				<view class="title">调整颜色</view>

@@ -2,6 +2,10 @@
 	<view class="page">
 		<page-nav :autoBack="true" backColor="#000" titleAlignment="2" title="数字键盘"></page-nav>
 		<view class="content">
+			<view class="description">
+				<view class="cmp-name">NumberKeyboard 数字键盘</view>
+				<view class="cmp-desc">虚拟数字键盘，用于输入数字、密码或身份证等场景。</view>
+			</view>
 			<view class="demo-item">
 				<view class="title">基础用法</view>
 				<view class="test-input" @click="show1 = true">
@@ -56,7 +60,12 @@
 					<text v-if="value6">{{ value6 }}</text>
 					<text v-else class="placeholder">请输入</text>
 				</view>
-				<ste-number-keyboard :customKeys="['返回']" v-model="value6" :show.sync="show6" @beforeinput="beforeinput" />
+				<ste-number-keyboard
+					:customKeys="['返回']"
+					v-model="value6"
+					:show.sync="show6"
+					@beforeinput="beforeinput"
+				/>
 			</view>
 			<view class="demo-item">
 				<view class="title">在文档流中展示</view>

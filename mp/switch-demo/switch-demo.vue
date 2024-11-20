@@ -2,6 +2,10 @@
 	<view class="page">
 		<page-nav :autoBack="true" backColor="#000" titleAlignment="2" title="开关"></page-nav>
 		<view class="content">
+			<view class="description">
+				<view class="cmp-name">Switch 开关</view>
+				<view class="cmp-desc">用于控制某个功能的开启和关闭。</view>
+			</view>
 			<view class="demo-item">
 				<view class="title">基础用法</view>
 				<view class="item-block">

@@ -2,12 +2,35 @@
 	<view class="page">
 		<page-nav :autoBack="true" backColor="#000" titleAlignment="2" title="单选框"></page-nav>
 		<view class="content">
+			<view class="description">
+				<view class="cmp-name">Radio 单选框</view>
+				<view class="cmp-desc">用于在预设的一组选项中执行单项选择，并呈现选择结果。</view>
+			</view>
+			<view class="type-block">
+				<view>01 组件类型</view>
+			</view>
 			<view class="demo-item">
-				<view class="title">基础用法</view>
+				<view class="title">纵向排列</view>
 				<view class="item-block radio-box">
-					<ste-radio v-model="value1" name="a">单选框a</ste-radio>
-					<ste-radio v-model="value1" name="b">单选框b</ste-radio>
+					<ste-radio-group v-model="value15">
+						<ste-radio name="a">单选框a</ste-radio>
+						<ste-radio name="b">单选框b</ste-radio>
+						<ste-radio name="c">单选框c</ste-radio>
+					</ste-radio-group>
 				</view>
+			</view>
+			<view class="demo-item">
+				<view class="title">横向排列</view>
+				<view class="item-block radio-box">
+					<ste-radio-group v-model="value15" direction="row">
+						<ste-radio name="a">单选框a</ste-radio>
+						<ste-radio name="b">单选框b</ste-radio>
+						<ste-radio name="c">单选框c</ste-radio>
+					</ste-radio-group>
+				</view>
+			</view>
+			<view class="type-block">
+				<view>02 组件状态</view>
 			</view>
 			<view class="demo-item">
 				<view class="title">禁用</view>
@@ -22,6 +45,9 @@
 					<ste-radio v-model="value3" name="a" readonly>单选框a</ste-radio>
 					<ste-radio v-model="value3" name="b" readonly>单选框b</ste-radio>
 				</view>
+			</view>
+			<view class="type-block">
+				<view>03 组件样式</view>
 			</view>
 			<view class="demo-item">
 				<view class="title">自定义形状</view>
@@ -97,6 +123,9 @@
 					</ste-radio>
 				</view>
 			</view>
+			<view class="type-block">
+				<view>04 组件自定义</view>
+			</view>
 			<view class="demo-item">
 				<view class="title">左侧文本</view>
 				<view class="item-block radio-box">
@@ -162,16 +191,6 @@
 						<ste-radio name="a">单选框a</ste-radio>
 						<ste-radio name="b" disabled>单选框b</ste-radio>
 						<ste-radio name="c" shape="circle">单选框c</ste-radio>
-					</ste-radio-group>
-				</view>
-			</view>
-			<view class="demo-item">
-				<view class="title">水平排列</view>
-				<view class="item-block radio-box">
-					<ste-radio-group v-model="value15" direction="row">
-						<ste-radio name="a">单选框a</ste-radio>
-						<ste-radio name="b">单选框b</ste-radio>
-						<ste-radio name="c">单选框c</ste-radio>
 					</ste-radio-group>
 				</view>
 			</view>

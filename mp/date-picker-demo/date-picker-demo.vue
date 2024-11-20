@@ -2,6 +2,13 @@
 	<view class="page">
 		<page-nav :autoBack="true" backColor="#000" titleAlignment="2" title="时间选择"></page-nav>
 		<view class="content">
+			<view class="description">
+				<view class="cmp-name">DatePicker 时间选择器</view>
+				<view class="cmp-desc">用于选择一个时间点或者一个时间段</view>
+			</view>
+			<view class="type-block">
+				<view>01 组件状态</view>
+			</view>
 			<view class="demo-item">
 				<view class="title">基础使用</view>
 				<view class="item-block">
@@ -21,6 +28,9 @@
 						<ste-date-picker :showToolbar="false" mode="date"></ste-date-picker>
 					</view>
 				</view>
+			</view>
+			<view class="type-block">
+				<view>02 组件类型</view>
 			</view>
 			<view class="demo-item">
 				<view class="title">时间类型</view>
@@ -71,6 +81,9 @@
 						<ste-date-picker :formatter="formatter" mode="date" title="格式化"></ste-date-picker>
 					</view>
 				</view>
+			</view>
+			<view class="type-block">
+				<view>03 组件样式</view>
 			</view>
 			<view class="demo-item">
 				<view class="title">选项高度</view>

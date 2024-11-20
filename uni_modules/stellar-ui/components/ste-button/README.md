@@ -13,25 +13,6 @@
 <ste-button>中按钮</ste-button>
 <ste-button :mode="100" >小按钮</ste-button>
 ```
-#### 文本颜色
-通过`color`设置字体颜色
-```html
-<ste-button color="#000000">文本颜色按钮</ste-button>
-```
-
-#### 背景
-通过`background`设置背景，支持纯颜色、背景图、渐变色
-```html
-<ste-button background="#ff1e19" >按钮</ste-button>
-<ste-button background="https://image.whzb.com/chain/StellarUI/image/精选会员瓷片.png">背景图</ste-button>
-<ste-button background="linear-gradient(to right, rgb(66, 83, 216), rgb(213, 51, 186))">渐变色</ste-button>
-```
-
-#### 边框颜色
-通过`borderColor`设置边框颜色，默认值是`#ffffff`
-```html
-<ste-button borderColor="#ff1e19">文本颜色按钮</ste-button>
-```
 
 #### 宽度
 通过`width`设置宽度，默认值是`auto`
@@ -54,6 +35,26 @@
 通过`disabled`设置按钮是否禁止，默认值是`false`
 ```html
 <ste-button disabled>禁止按钮</ste-button>
+```
+
+#### 文本颜色
+通过`color`设置字体颜色
+```html
+<ste-button color="#000000">文本颜色按钮</ste-button>
+```
+
+#### 背景
+通过`background`设置背景，支持纯颜色、背景图、渐变色
+```html
+<ste-button background="#ff1e19" >按钮</ste-button>
+<ste-button background="https://image.whzb.com/chain/StellarUI/image/精选会员瓷片.png">背景图</ste-button>
+<ste-button background="linear-gradient(to right, rgb(66, 83, 216), rgb(213, 51, 186))">渐变色</ste-button>
+```
+
+#### 边框颜色
+通过`borderColor`设置边框颜色，默认值是`#ffffff`
+```html
+<ste-button borderColor="#ff1e19">文本颜色按钮</ste-button>
 ```
 
 #### 加载中

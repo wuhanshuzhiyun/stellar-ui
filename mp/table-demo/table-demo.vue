@@ -2,6 +2,10 @@
 	<view class="page">
 		<page-nav :autoBack="true" backColor="#000" titleAlignment="2" title="表格"></page-nav>
 		<view class="content">
+			<view class="description">
+				<view class="cmp-name">Table 表格</view>
+				<view class="cmp-desc">表格常用于展示同类结构下的多种数据，易于组织、对比和分析等。</view>
+			</view>
 			<view class="demo-item">
 				<view class="title">基础使用</view>
 				<view class="item-block">

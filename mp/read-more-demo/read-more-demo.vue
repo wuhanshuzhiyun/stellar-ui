@@ -2,6 +2,10 @@
 	<view class="page">
 		<page-nav :autoBack="true" backColor="#000" titleAlignment="2" title="阅读更多"></page-nav>
 		<view class="content">
+			<view class="description">
+				<view class="cmp-name">ReadMore 阅读更多</view>
+				<view class="cmp-desc">用于多行文本展示需要折叠的场景</view>
+			</view>
 			<view class="demo-item">
 				<view class="title">基础使用</view>
 				<view class="item-block">

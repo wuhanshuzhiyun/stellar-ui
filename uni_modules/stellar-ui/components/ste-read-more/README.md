@@ -1,5 +1,7 @@
 # ReadMore 展开更多
 
+用于多行文本展示需要折叠的场景
+
 {{compatibility}}
 
 ### 代码演示

@@ -2,6 +2,10 @@
 	<view class="page">
 		<page-nav :autoBack="true" backColor="#000" titleAlignment="2" title="滑动单元格"></page-nav>
 		<view class="content">
+			<view class="description">
+				<view class="cmp-name">SwipeAction 滑动单元格</view>
+				<view class="cmp-desc">用来承载列表中的更多操作，通过左右滑动来展示.</view>
+			</view>
 			<view class="demo-item">
 				<view class="title">基础用法</view>
 				<view class="item-block">
@@ -22,7 +26,7 @@
 							<div class="test-btn">删除</div>
 						</template>
 					</ste-swipe-action>
-					<view style="margin-top: 12rpx">
+					<view class="btn-box" style="margin-top: 12rpx">
 						<ste-button mode="200" @click="openSwipe">打开</ste-button>
 						<ste-button mode="200" @click="closeSwipe">关闭</ste-button>
 					</view>
@@ -104,13 +108,17 @@ export default {
 <style lang="scss" scoped>
 .page {
 	.content {
+		background-color: #f5f5f5;
 		.demo-item {
 			.item-block {
 				display: block;
 				.content-view {
+					display: flex;
+					align-items: center;
 					height: 90rpx;
 					border-bottom: 1px solid #fff;
-					background-color: #f5f5f5;
+					background-color: #ffffff;
+					padding-left: 36rpx;
 				}
 				.test-btn {
 					background-color: #dd524d;
@@ -120,6 +128,13 @@ export default {
 					width: 100rpx;
 					height: 100%;
 				}
+
+				// .btn-box {
+				// 	display: flex;
+				// 	align-items: center;
+				// 	justify-content: space-between;
+
+				// }
 			}
 		}
 	}

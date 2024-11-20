@@ -2,6 +2,13 @@
 	<view class="page">
 		<page-nav :autoBack="true" backColor="#000" titleAlignment="2" title="上传"></page-nav>
 		<view class="content">
+			<view class="description">
+				<view class="cmp-name">Upload 上传</view>
+				<view class="cmp-desc">用于相册读取或拉起拍照的图片上传功能。</view>
+			</view>
+			<view class="type-block">
+				<view>01 组件类型</view>
+			</view>
 			<view class="demo-item">
 				<view class="title">基础用法</view>
 				<ste-upload v-model="fileList" @read="onRead" />
@@ -28,6 +35,9 @@
 			<view class="demo-item">
 				<view class="title">限制文件大小2M</view>
 				<ste-upload v-model="fileList3" :maxSize="2048" />
+			</view>
+			<view class="type-block">
+				<view>01 组件状态</view>
 			</view>
 			<view class="demo-item">
 				<view class="title">自定义上传样式</view>

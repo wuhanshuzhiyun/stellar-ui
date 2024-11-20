@@ -2,11 +2,20 @@
 	<view class="page">
 		<page-nav :autoBack="true" backColor="#000" titleAlignment="2" title="索引列表"></page-nav>
 		<view class="content">
+			<view class="description">
+				<view class="cmp-name">IndexList 索引列表</view>
+				<view class="cmp-desc">通过折叠面板收纳内容区域。</view>
+			</view>
 			<view class="demo-item">
 				<view class="title">基础用法</view>
 				<view style="width: 100%; height: 750rpx">
 					<ste-index-list @clickItem="onClickItem">
-						<ste-index-item v-for="(item, index) in data" :key="index" :title="item.title" :list="item.list" />
+						<ste-index-item
+							v-for="(item, index) in data"
+							:key="index"
+							:title="item.title"
+							:list="item.list"
+						/>
 					</ste-index-list>
 				</view>
 			</view>

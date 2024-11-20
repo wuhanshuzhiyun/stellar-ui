@@ -68,6 +68,16 @@ export default {
 <ste-checkbox v-model="value">复选框</ste-checkbox>
 ```
 
+### 横向排列
+将 `direction` 属性设置为 `row` 后，复选框组会变成横向排列。
+```
+<ste-checkbox-group v-model="value20" direction="row">
+	<ste-checkbox name="a">复选框a</ste-checkbox>
+	<ste-checkbox name="b">复选框b</ste-checkbox>
+	<ste-checkbox name="c">复选框c</ste-checkbox>
+</ste-checkbox-group>
+```
+
 #### 禁用  
 通过设置 `disabled` 属性可以禁用复选框， 默认`false`。 
 ```

@@ -2,6 +2,10 @@
 	<view class="page">
 		<page-nav :autoBack="true" backColor="#000" titleAlignment="2" title="媒体预览"></page-nav>
 		<view class="content">
+			<view class="description">
+				<view class="cmp-name">MediaPreview 媒体预览</view>
+				<view class="cmp-desc">用于单独预览图片或者视频</view>
+			</view>
 			<view class="demo-item">
 				<view class="title">基础用法</view>
 				<view class="item-block">
@@ -49,7 +53,12 @@
 				<view class="item-block">
 					<ste-button @click="show7 = true">关闭前/后事件</ste-button>
 					<view style="width: 100%">
-						<ste-media-preview :urls="medias" :show.sync="show7" @beforeClose="onBeforeClose" @close="onClose" />
+						<ste-media-preview
+							:urls="medias"
+							:show.sync="show7"
+							@beforeClose="onBeforeClose"
+							@close="onClose"
+						/>
 					</view>
 				</view>
 			</view>

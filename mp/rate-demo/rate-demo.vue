@@ -2,6 +2,13 @@
 	<view class="page">
 		<page-nav :autoBack="true" backColor="#000" titleAlignment="2" title="评分"></page-nav>
 		<view class="content">
+			<view class="description">
+				<view class="cmp-name">Rate 评分</view>
+				<view class="cmp-desc">用于对某行为/事物进行打分。</view>
+			</view>
+			<view class="type-block">
+				<view>01 组件类型</view>
+			</view>
 			<view class="demo-item">
 				<view class="title">基础用法</view>
 				<view class="item-block">
@@ -33,6 +40,9 @@
 					></ste-rate>
 				</view>
 			</view>
+			<view class="type-block">
+				<view>02 组件状态</view>
+			</view>
 			<view class="demo-item">
 				<view class="title">只读</view>
 				<view class="item-block">
@@ -44,6 +54,9 @@
 				<view class="item-block">
 					<ste-rate v-model="value3" disabled></ste-rate>
 				</view>
+			</view>
+			<view class="type-block">
+				<view>03 组件自定义</view>
 			</view>
 			<view class="demo-item">
 				<view class="title">自定义数量和自定义分值</view>

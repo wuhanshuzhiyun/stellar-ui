@@ -29,6 +29,18 @@
 </ste-badge>
 ```
 
+#### 小红点
+通过`showDot`属性，设置是否显示小红点
+
+```html
+<ste-badge showDot>
+	<view class="avator"></view>
+</ste-badge>
+<ste-badge showDot background="rgb(25, 137, 250)">
+	<view class="avator"></view>
+</ste-badge>
+```
+
 #### 背景
 通过`background`属性，设置徽标内容的背景
 - 支持纯色、渐变色、背景图
@@ -45,17 +57,6 @@
 </ste-badge>
 ```
 
-#### 小红点
-通过`showDot`属性，设置是否显示小红点
-
-```html
-<ste-badge showDot>
-	<view class="avator"></view>
-</ste-badge>
-<ste-badge showDot background="rgb(25, 137, 250)">
-	<view class="avator"></view>
-</ste-badge>
-```
 
 #### 徽标位置
 通过`position`属性，设置徽标的位置

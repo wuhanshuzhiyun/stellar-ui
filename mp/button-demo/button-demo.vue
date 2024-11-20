@@ -2,6 +2,13 @@
 	<view class="page">
 		<page-nav :autoBack="true" backColor="#000" titleAlignment="2" title="按钮"></page-nav>
 		<view class="content">
+			<view class="description">
+				<view class="cmp-name">Button 按钮</view>
+				<view class="cmp-desc">基础按钮组件</view>
+			</view>
+			<view class="type-block">
+				<view>01 组件类型</view>
+			</view>
 			<view class="demo-item">
 				<view class="title">按钮大小</view>
 				<view class="item-block">
@@ -18,6 +25,45 @@
 						<ste-button :mode="100" @click="handleClick('小按钮')">小按钮</ste-button>
 					</view>
 				</view>
+			</view>
+			<view class="demo-item">
+				<view class="title">宽度</view>
+				<view class="item-block">
+					<view style="width: 100%">
+						<ste-button width="100%" @click="handleClick('宽度填满')">宽度填满</ste-button>
+					</view>
+					<view>
+						<ste-button width="500" @click="handleClick('自定义宽度')">自定义宽度-500rpx</ste-button>
+					</view>
+					<view>
+						<ste-button @click="handleClick('自适应宽度')">自适应宽度</ste-button>
+					</view>
+				</view>
+			</view>
+			<view class="demo-item">
+				<view class="title">圆角按钮</view>
+				<view class="item-block">
+					<view>
+						<ste-button @click="handleClick('圆角按钮')">圆角按钮</ste-button>
+					</view>
+					<view>
+						<ste-button :round="false" @click="handleClick('非圆角按钮')">非圆角按钮</ste-button>
+					</view>
+				</view>
+			</view>
+			<view class="type-block">
+				<view>02 组件状态</view>
+			</view>
+			<view class="demo-item">
+				<view class="title">禁止按钮</view>
+				<view class="item-block">
+					<view>
+						<ste-button disabled @click="handleClick('禁止按钮')">禁止按钮</ste-button>
+					</view>
+				</view>
+			</view>
+			<view class="type-block">
+				<view>02 组件样式</view>
 			</view>
 			<view class="demo-item">
 				<view class="title">文本颜色</view>
@@ -51,6 +97,7 @@
 					</view>
 				</view>
 			</view>
+
 			<view class="demo-item">
 				<view class="title">边框颜色</view>
 				<view class="item-block">
@@ -59,38 +106,9 @@
 					</view>
 				</view>
 			</view>
-			<view class="demo-item">
-				<view class="title">宽度</view>
-				<view class="item-block">
-					<view style="width: 100%">
-						<ste-button width="100%" @click="handleClick('宽度填满')">宽度填满</ste-button>
-					</view>
-					<view>
-						<ste-button width="500" @click="handleClick('自定义宽度')">自定义宽度-500rpx</ste-button>
-					</view>
-					<view>
-						<ste-button @click="handleClick('自适应宽度')">自适应宽度</ste-button>
-					</view>
-				</view>
-			</view>
-			<view class="demo-item">
-				<view class="title">圆角按钮</view>
-				<view class="item-block">
-					<view>
-						<ste-button @click="handleClick('圆角按钮')">圆角按钮</ste-button>
-					</view>
-					<view>
-						<ste-button :round="false" @click="handleClick('非圆角按钮')">非圆角按钮</ste-button>
-					</view>
-				</view>
-			</view>
-			<view class="demo-item">
-				<view class="title">禁止按钮</view>
-				<view class="item-block">
-					<view>
-						<ste-button disabled @click="handleClick('禁止按钮')">禁止按钮</ste-button>
-					</view>
-				</view>
+
+			<view class="type-block">
+				<view>04 组件自定义</view>
 			</view>
 			<view class="demo-item">
 				<view class="title">加载中</view>

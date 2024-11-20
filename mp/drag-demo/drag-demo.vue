@@ -2,8 +2,12 @@
 	<view class="page">
 		<page-nav :autoBack="true" backColor="#000" titleAlignment="2" title="拖拽"></page-nav>
 		<view class="content">
+			<view class="description">
+				<view class="cmp-name">Drag 拖拽</view>
+				<view class="cmp-desc">用于拖拽的容器</view>
+			</view>
 			<view class="demo-item">
-				<view class="title">基础内容</view>
+				<view class="title">自由拖拽</view>
 				<view class="item-block">
 					<view>
 						<ste-drag @start="handleStart" @end="handleEnd">
@@ -60,10 +64,10 @@ export default {
 	},
 	created() {},
 	mounted() {
-		const boundary = { left: 22, top: 354 };
+		const boundary = { left: 22, top: 460 };
 		const systemInfo = utils.getWindowInfo();
 		boundary.right = systemInfo.windowWidth - 22 - 300;
-		boundary.bottom = systemInfo.windowHeight - 354 - 150;
+		boundary.bottom = systemInfo.windowHeight - 460 - 150;
 		this.boundary = boundary;
 	},
 	methods: {
@@ -93,7 +97,7 @@ export default {
 
 					position: fixed;
 					left: 22px;
-					top: 354px;
+					top: 460px;
 				}
 			}
 		}
