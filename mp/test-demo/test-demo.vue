@@ -96,7 +96,7 @@
 </template>
 
 <script>
-import { data1 } from './data.js';
+// import { data1 } from './data.js';
 export default {
 	data() {
 		return {
