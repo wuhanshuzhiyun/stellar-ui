@@ -119,7 +119,7 @@ export default {
 				{ label: '三浏阳蒸菜', value: '10全' },
 			],
 			v2: false,
-			topicList: data1.data[0].topicList,
+			topicList: [],
 			v1: '',
 			list: [
 				{ name: '标签1', id: 1 },
