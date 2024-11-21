@@ -49,6 +49,7 @@ export default {
 			.content-view {
 				margin-top: 12rpx;
 				height: 200vh;
+				background-color: #f5f5f5;
 			}
 		}
 	}

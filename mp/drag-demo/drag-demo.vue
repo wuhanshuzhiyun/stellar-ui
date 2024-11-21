@@ -64,11 +64,19 @@ export default {
 	},
 	created() {},
 	mounted() {
-		const boundary = { left: 22, top: 460 };
-		const systemInfo = utils.getWindowInfo();
-		boundary.right = systemInfo.windowWidth - 22 - 300;
-		boundary.bottom = systemInfo.windowHeight - 460 - 150;
-		this.boundary = boundary;
+		const query = uni.createSelectorQuery().in(this);
+		query
+			.select('.boundary-box')
+			.boundingClientRect((data) => {
+				console.log(data);
+
+				const boundary = { left: data.left, top: data.top };
+				const systemInfo = utils.getWindowInfo();
+				boundary.right = systemInfo.windowWidth - data.left - 300;
+				boundary.bottom = systemInfo.windowHeight - data.top - 150;
+				this.boundary = boundary;
+			})
+			.exec();
 	},
 	methods: {
 		handleStart() {
@@ -94,10 +102,6 @@ export default {
 					width: 300px;
 					height: 150px;
 					border: solid 1px red;
-
-					position: fixed;
-					left: 22px;
-					top: 460px;
 				}
 			}
 		}

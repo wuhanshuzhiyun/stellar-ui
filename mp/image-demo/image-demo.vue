@@ -76,7 +76,9 @@
 					</ste-image>
 				</view>
 			</view>
-			<ste-button @click="onloading" width="100%" :mode="300">重新加载</ste-button>
+			<view class="bottom-box">
+				<ste-button @click="onloading" width="100%" :mode="300">重新加载</ste-button>
+			</view>
 		</view>
 	</view>
 </template>
@@ -109,7 +111,7 @@ export default {
 <style lang="scss" scoped>
 .page {
 	.content {
-		padding-bottom: 36rpx;
+		padding-bottom: 86rpx;
 		.demo-item {
 			.item-block {
 				display: block;
@@ -124,6 +126,14 @@ export default {
 					text-align: center;
 				}
 			}
+		}
+
+		.bottom-box {
+			width: calc(100% - 80rpx);
+			position: absolute;
+			z-index: 99999;
+			bottom: 0;
+			padding-bottom: 26rpx;
 		}
 	}
 }

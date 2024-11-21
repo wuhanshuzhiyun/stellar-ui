@@ -13,7 +13,7 @@
 				<view class="title">文本输入框</view>
 				<view class="item-block">
 					<view style="width: 100%">
-						<ste-input value="输入" rootClass="my-input" />
+						<ste-input v-model="v" rootClass="my-input" />
 					</view>
 				</view>
 			</view>

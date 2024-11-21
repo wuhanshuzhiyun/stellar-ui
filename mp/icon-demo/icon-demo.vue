@@ -2,6 +2,10 @@
 	<view class="page">
 		<page-nav :autoBack="true" backColor="#000" titleAlignment="2" title="图标"></page-nav>
 		<view class="content">
+			<view class="description">
+				<view class="cmp-name">Button 按钮</view>
+				<view class="cmp-desc">基础按钮组件</view>
+			</view>
 			<view class="tabs">
 				<view class="tab1-title" :class="{ actived: tabIndex === 0 }" @click="tabIndex = 0">用法示例</view>
 				<view class="tab2-title" :class="{ actived: tabIndex === 1 }" @click="tabIndex = 1">图标库</view>
@@ -121,6 +125,18 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.page {
+	.content {
+		padding: 0;
+		.description {
+			padding: 0 40rpx;
+		}
+
+		.tab1-content {
+			padding: 0 40rpx;
+		}
+	}
+}
 .demo-item {
 	margin-bottom: 16px;
 
