@@ -11,11 +11,13 @@
 			</view>
 			<view class="demo-item">
 				<view class="title">纵向排列</view>
-				<ste-checkbox-group v-model="value20">
-					<ste-checkbox name="a">复选框a</ste-checkbox>
-					<ste-checkbox name="b">复选框b</ste-checkbox>
-					<ste-checkbox name="c">复选框c</ste-checkbox>
-				</ste-checkbox-group>
+				<view class="item-block">
+					<ste-checkbox-group v-model="value20">
+						<ste-checkbox name="a">复选框a</ste-checkbox>
+						<ste-checkbox name="b">复选框b</ste-checkbox>
+						<ste-checkbox name="c">复选框c</ste-checkbox>
+					</ste-checkbox-group>
+				</view>
 			</view>
 			<view class="demo-item">
 				<view class="title">横向排列</view>
@@ -250,6 +252,23 @@ export default {
 		row-gap: 20rpx;
 		align-items: flex-start !important;
 		justify-content: center;
+	}
+	color: #0009;
+	.content {
+		background-color: #f5f5f5;
+		padding: 0;
+		.description,
+		.type-block {
+			padding: 0 40rpx;
+		}
+	}
+	.title {
+		margin: 0;
+		padding: 0 40rpx;
+	}
+	.item-block {
+		background-color: #ffffff;
+		padding: 18rpx 40rpx;
 	}
 }
 </style>

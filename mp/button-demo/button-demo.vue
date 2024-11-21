@@ -172,7 +172,7 @@ export default {
 		.demo-item {
 			.item-block {
 				> view {
-					margin: 0 8px 8px 0;
+					margin: 0 16rpx 16rpx 0;
 
 					.loading-icon-box {
 						.iconfont {

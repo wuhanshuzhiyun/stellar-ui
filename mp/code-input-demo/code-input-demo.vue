@@ -104,7 +104,7 @@ export default {
 		.demo-item {
 			.item-block {
 				> view:not(:last-child) {
-					margin: 0 8px 16px 0;
+					margin: 0 16rpx 32rpx 0;
 				}
 			}
 		}

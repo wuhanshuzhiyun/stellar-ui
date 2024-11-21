@@ -533,7 +533,7 @@ export default {
 			padding-left: var(--title-padding-left);
 
 			.title {
-				margin-left: 8px;
+				margin-left: 16rpx;
 				font-size: var(--rpx-to-px-36);
 			}
 		}
@@ -622,7 +622,7 @@ export default {
 
 	.tip-toast {
 		background-color: rgba(0, 0, 0, 0.7);
-		border-radius: 8px;
+		border-radius: 16rpx;
 		padding: 10px;
 
 		position: absolute;

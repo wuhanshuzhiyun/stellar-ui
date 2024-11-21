@@ -248,14 +248,29 @@ export default {
 
 <style lang="scss" scoped>
 .page {
+	color: #0009;
+	.content {
+		background-color: #f5f5f5;
+		padding: 0;
+		.description,
+		.type-block {
+			padding: 0 40rpx;
+		}
+	}
 	.radio-box {
 		flex-direction: column !important;
 		row-gap: 20rpx;
 		align-items: flex-start !important;
 		justify-content: center;
 	}
+	.title {
+		margin: 0;
+		padding: 0 40rpx;
+	}
 	.item-block {
 		column-gap: 16rpx;
+		background-color: #ffffff;
+		padding: 18rpx 40rpx;
 	}
 }
 </style>

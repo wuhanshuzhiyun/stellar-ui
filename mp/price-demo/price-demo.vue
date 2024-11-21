@@ -136,10 +136,28 @@ export default {
 		.demo-item {
 			.item-block {
 				> view {
-					margin: 0 8px 8px 0;
+					margin: 0 16rpx 0 0;
 				}
 			}
 		}
+	}
+
+	color: #0009;
+	.content {
+		background-color: #f5f5f5;
+		padding: 0;
+		.description,
+		.type-block {
+			padding: 0 40rpx;
+		}
+	}
+	.title {
+		margin: 0;
+		padding: 0 40rpx;
+	}
+	.item-block {
+		background-color: #ffffff;
+		padding: 18rpx 40rpx;
 	}
 }
 </style>

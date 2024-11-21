@@ -26,9 +26,33 @@
 							<div class="test-btn">删除</div>
 						</template>
 					</ste-swipe-action>
-					<view class="btn-box" style="margin-top: 12rpx">
-						<ste-button mode="200" @click="openSwipe">打开</ste-button>
-						<ste-button mode="200" @click="closeSwipe">关闭</ste-button>
+					<view class="btn-box">
+						<view class="btn-item-box">
+							<ste-button
+								mode="200"
+								@click="openSwipe"
+								width="100%"
+								:round="false"
+								background="#ffffff"
+								border-color="#0091FF"
+								color="#0091FF"
+							>
+								打开
+							</ste-button>
+						</view>
+						<view class="btn-item-box">
+							<ste-button
+								mode="200"
+								@click="closeSwipe"
+								width="100%"
+								:round="false"
+								background="#ffffff"
+								border-color="#0091FF"
+								color="#0091FF"
+							>
+								关闭
+							</ste-button>
+						</view>
 					</view>
 				</view>
 			</view>
@@ -48,7 +72,7 @@
 			</view>
 			<view class="demo-item">
 				<view class="title">单元格组</view>
-				<view class="item-block">
+				<view class="item-block group">
 					<ste-swipe-action-group @open="onOpen" @close="onClose" ref="swipeGroup">
 						<ste-swipe-action v-for="(m, i) in datas" :key="m">
 							<view class="content-view">{{ m }}</view>
@@ -57,11 +81,59 @@
 							</template>
 						</ste-swipe-action>
 					</ste-swipe-action-group>
-					<view style="margin-top: 12rpx">
-						<ste-button mode="200" @click="openSwipeGroup(0)">打开第1行</ste-button>
-						<ste-button mode="200" @click="closeSwipeGroup(0)">关闭第1行</ste-button>
-						<ste-button mode="200" @click="openSwipeGroup(1)">打开第2行</ste-button>
-						<ste-button mode="200" @click="closeSwipeGroup(1)">关闭第2行</ste-button>
+					<view class="btn-box">
+						<view class="btn-item-box">
+							<ste-button
+								mode="200"
+								@click="openSwipeGroup(0)"
+								width="100%"
+								:round="false"
+								background="#ffffff"
+								border-color="#0091FF"
+								color="#0091FF"
+							>
+								打开第1行
+							</ste-button>
+						</view>
+						<view class="btn-item-box">
+							<ste-button
+								mode="200"
+								@click="closeSwipeGroup(0)"
+								width="100%"
+								:round="false"
+								background="#ffffff"
+								border-color="#0091FF"
+								color="#0091FF"
+							>
+								关闭第1行
+							</ste-button>
+						</view>
+						<view class="btn-item-box">
+							<ste-button
+								mode="200"
+								@click="openSwipeGroup(1)"
+								width="100%"
+								:round="false"
+								background="#ffffff"
+								border-color="#0091FF"
+								color="#0091FF"
+							>
+								打开第2行
+							</ste-button>
+						</view>
+						<view class="btn-item-box">
+							<ste-button
+								mode="200"
+								@click="closeSwipeGroup(1)"
+								width="100%"
+								:round="false"
+								background="#ffffff"
+								border-color="#0091FF"
+								color="#0091FF"
+							>
+								关闭第2行
+							</ste-button>
+						</view>
 					</view>
 				</view>
 			</view>
@@ -73,7 +145,7 @@
 export default {
 	data() {
 		return {
-			datas: ['1111111111', '22222222222', '3333333333333333', '444444444444444444444'],
+			datas: ['第一行', '第二行', '第三行', '第四行'],
 		};
 	},
 	methods: {
@@ -116,9 +188,14 @@ export default {
 					display: flex;
 					align-items: center;
 					height: 90rpx;
-					border-bottom: 1px solid #fff;
+					border-bottom: 1rpx solid #fff;
 					background-color: #ffffff;
 					padding-left: 36rpx;
+				}
+				&.group {
+					.content-view {
+						border: 1rpx solid #f5f5f5;
+					}
 				}
 				.test-btn {
 					background-color: #dd524d;
@@ -128,13 +205,17 @@ export default {
 					width: 100rpx;
 					height: 100%;
 				}
-
-				// .btn-box {
-				// 	display: flex;
-				// 	align-items: center;
-				// 	justify-content: space-between;
-
-				// }
+				.btn-box {
+					margin-top: 18rpx;
+					// display: flex;
+					// flex-wrap: wrap;
+					display: grid;
+					grid-template-columns: repeat(2, 1fr); /* 两列，每列占用父元素宽度的一半 */
+					gap: 8px; /* 行间距和列间距都为8px */
+				}
+				.btn-item-box {
+					flex-basis: 50%;
+				}
 			}
 		}
 	}

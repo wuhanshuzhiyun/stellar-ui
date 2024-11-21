@@ -143,7 +143,7 @@ export default {
 	.title {
 		font-size: 14px;
 		color: #8f9ca2;
-		margin-bottom: 8px;
+		margin-bottom: 16rpx;
 	}
 
 	.item-block {
