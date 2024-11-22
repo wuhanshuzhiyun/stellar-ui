@@ -1,6 +1,6 @@
 {
 	"name": "stellar-ui",
-	"version": "1.32.1",
+	"version": "1.33.0",
 	"description": "StellarUI组件库",
 	"main": "stellar-ui/index.js",
 	"private": false,
@@ -14,5 +14,9 @@
 	},
 	"keywords": [],
 	"author": "",
-	"license": "ISC"
+	"license": "ISC",
+	"dependencies": {
+		"g": "^2.0.1",
+		"ste-cli": "^1.0.1"
+	}
 }
