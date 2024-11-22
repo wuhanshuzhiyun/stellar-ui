@@ -68,13 +68,15 @@ export default {
 		query
 			.select('.boundary-box')
 			.boundingClientRect((data) => {
-				console.log(data);
+				// console.log(data);
 
 				const boundary = { left: data.left, top: data.top };
 				const systemInfo = utils.getWindowInfo();
-				boundary.right = systemInfo.windowWidth - data.left - 300;
-				boundary.bottom = systemInfo.windowHeight - data.top - 150;
+				// console.log('systemInfo is ', systemInfo);
+				boundary.right = systemInfo.windowWidth - data.left - data.width;
+				boundary.bottom = systemInfo.windowHeight - data.top - data.height;
 				this.boundary = boundary;
+				// console.log('boundary is ', boundary);
 			})
 			.exec();
 	},
