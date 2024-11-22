@@ -3,8 +3,8 @@
 		<page-nav :autoBack="true" backColor="#000" titleAlignment="2" title="图标"></page-nav>
 		<view class="content">
 			<view class="description">
-				<view class="cmp-name">Button 按钮</view>
-				<view class="cmp-desc">基础按钮组件</view>
+				<view class="cmp-name">Icon 图标</view>
+				<view class="cmp-desc">基于字体的图标集，包含了大多数常见场景的图标。</view>
 			</view>
 			<view class="tabs">
 				<view class="tab1-title" :class="{ actived: tabIndex === 0 }" @click="tabIndex = 0">用法示例</view>
