@@ -1,13 +1,5 @@
 <template>
-	<view
-		class="ste-table-cell"
-		:class="[cmpRootClass]"
-		:style="[cmpRootStyle, cmpCellStyle]"
-		@click="cellClick"
-		@touchstart.stop="onTouchStart"
-		@touchend.stop="onTouchEnd"
-		@touchcancel.stop="onTouchEnd"
-	>
+	<view class="ste-table-cell" :class="[cmpRootClass]" :style="[cmpRootStyle, cmpCellStyle]" @click="cellClick">
 		<template v-if="type">
 			<view class="cell-box" v-if="type == 'checkbox'" @click.stop="changeCheck">
 				<check-box-icon
@@ -239,12 +231,6 @@ export default {
 			if (this.type == 'checkbox' || this.type == 'radio') {
 				this.changeCheck();
 			}
-		},
-		onTouchStart(event) {
-			this.parent.cellTouchStart(this.row, this._props, event);
-		},
-		onTouchEnd(event) {
-			this.parent.cellTouchEnd(this.row, this.props, event);
 		},
 	},
 };
