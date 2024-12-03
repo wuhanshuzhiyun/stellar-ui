@@ -433,6 +433,12 @@ export default {
 		cellClick(row, column, event) {
 			this.$emit('cellClick', row, column, event);
 		},
+		cellTouchStart(row, column, event) {
+			this.$emit('cellTouchStart', row, column, event);
+		},
+		cellTouchEnd(row, column, event) {
+			this.$emit('cellTouchEnd', row, column, event);
+		},
 		rowClick(row, event) {
 			this.currentRow = row;
 			this.$emit('rowClick', row, event);
