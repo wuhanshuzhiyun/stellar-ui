@@ -133,8 +133,8 @@ export default {
 			let style = {};
 			if (this.width) {
 				// style.width = utils.addUnit(this.width);
-				style.flexBasis = utils.addUnit(this.width);
-				style.flexGrow = 0;
+				// style.flexBasis = utils.addUnit(this.width);
+				style.flex = `0 1 ${utils.addUnit(this.width)}`;
 			}
 			if (this.minWidth) {
 				style.minWidth = utils.addUnit(this.minWidth);

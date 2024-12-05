@@ -467,8 +467,8 @@ export default {
 				let style = {};
 				if (column.width) {
 					// style.width = utils.addUnit(column.width);
-					style.flexBasis = utils.addUnit(column.width);
-					style.flexGrow = 0;
+					// style.flexBasis = utils.addUnit(column.width);
+					style.flex = `0 1 ${utils.addUnit(column.width)}`;
 				}
 				if (column.minWidth) {
 					style.minWidth = utils.addUnit(column.minWidth);
