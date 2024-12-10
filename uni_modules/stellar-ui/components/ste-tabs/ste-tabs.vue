@@ -29,7 +29,11 @@
 						}"
 						@click="onClickTab(tab, index)"
 					>
-						<view class="tab-image" v-if="showImage" :style="{ backgroundImage: `url(${tab.image})` }"></view>
+						<view
+							class="tab-image"
+							v-if="showImage"
+							:style="{ backgroundImage: `url(${tab.image})` }"
+						></view>
 						<ste-badge
 							v-if="showTitle"
 							:isBlock="type === 'card'"
@@ -76,12 +80,20 @@
 							}"
 							@click="onClickTab(tab, index)"
 						>
-							<view class="tab-image" v-if="showImage" :style="{ backgroundImage: `url(${tab.image})` }"></view>
+							<view
+								class="tab-image"
+								v-if="showImage"
+								:style="{ backgroundImage: `url(${tab.image})` }"
+							></view>
 							<view class="tab-title" v-if="showTitle" :style="[cmpEllipsis]">
 								{{ tab.title && tab.title.length > 4 ? `${tab.title.slice(0, 4)}...` : tab.title }}
 							</view>
 							<view class="tab-sub-title" v-if="showSubtitle" :style="[cmpEllipsis]">
-								{{ tab.subTitle && tab.subTitle.length > 4 ? `${tab.subTitle.slice(0, 4)}...` : tab.subTitle }}
+								{{
+									tab.subTitle && tab.subTitle.length > 4
+										? `${tab.subTitle.slice(0, 4)}...`
+										: tab.subTitle
+								}}
 							</view>
 						</view>
 					</view>
@@ -305,7 +317,7 @@ export default {
 		},
 		// 是否可滑动
 		cmpScrollX() {
-			return this.divideNum > 0 && this.tabPropsList.length > this.divideNum;
+			return this.tabPropsList.length > this.divideNum;
 		},
 		// 是否有下拉
 		cmpPullDown() {
