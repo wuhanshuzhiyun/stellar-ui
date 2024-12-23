@@ -57,6 +57,20 @@
 				<view>02 组件自定义</view>
 			</view>
 			<view class="demo-item">
+				<view class="title">远程搜索</view>
+				<ste-select
+					:list="list6"
+					mode="filterable"
+					:autoFilterable="false"
+					:loading="loading6"
+					@inputFilterable="onInputFilterable"
+				></ste-select>
+			</view>
+			<view class="demo-item">
+				<view class="title">分页</view>
+				<ste-select :list="list7" :loading="loading7" :pageSize="pageSize" @loadMore="loadMore"></ste-select>
+			</view>
+			<view class="demo-item">
 				<view class="title">自定义图标</view>
 				<ste-select :list="list1">
 					<template v-slot:icon>
@@ -68,6 +82,49 @@
 	</view>
 </template>
 <script>
+const listAll = [
+	{ label: '选项211', value: 211 },
+	{ label: '选项212', value: 212 },
+	{ label: '选项213', value: 213 },
+	{ label: '选项214', value: 214 },
+	{ label: '选项215', value: 215 },
+	{ label: '选项216', value: 216 },
+	{ label: '选项217', value: 217 },
+	{ label: '选项218', value: 218 },
+	{ label: '选项219', value: 219 },
+	{ label: '选项220', value: 220 },
+	{ label: '选项221', value: 221 },
+	{ label: '选项222', value: 222 },
+	{ label: '选项223', value: 223 },
+	{ label: '选项224', value: 224 },
+	{ label: '选项225', value: 225 },
+	{ label: '选项226', value: 226 },
+	{ label: '选项227', value: 227 },
+	{ label: '选项228', value: 228 },
+	{ label: '选项229', value: 229 },
+	{ label: '选项230', value: 230 },
+	{ label: '选项231', value: 231 },
+	{ label: '选项232', value: 232 },
+	{ label: '选项233', value: 233 },
+	{ label: '选项234', value: 234 },
+	{ label: '选项235', value: 235 },
+	{ label: '选项236', value: 236 },
+	{ label: '选项237', value: 237 },
+	{ label: '选项238', value: 238 },
+	{ label: '选项239', value: 239 },
+	{ label: '选项240', value: 240 },
+	{ label: '选项241', value: 241 },
+	{ label: '选项242', value: 242 },
+	{ label: '选项243', value: 243 },
+	{ label: '选项244', value: 244 },
+	{ label: '选项245', value: 245 },
+	{ label: '选项246', value: 246 },
+	{ label: '选项247', value: 247 },
+	{ label: '选项248', value: 248 },
+	{ label: '选项249', value: 249 },
+	{ label: '选项250', value: 250 },
+	{ label: '选项251', value: 251 },
+];
 export default {
 	data() {
 		return {
@@ -115,12 +172,61 @@ export default {
 				},
 			],
 			value5: [],
+			
+			loading6: false,
+			time6: null,
+			list6: [],
+
+			pageSize: 10,
+			loading7: false,
+			list7: [],
 		};
 	},
-	mounted() {},
+	mounted() {
+		// 初始化加载数据
+		this.getList7();
+	},
 	methods: {
 		onChange(v, items) {
 			console.log('onChange', v, items);
+		},
+		onInputFilterable(v) {
+			// 防抖
+			clearTimeout(this.time6);
+			this.time6 = setTimeout(() => {
+				console.log('?????????????', v);
+				if (this.loading6) return;
+				this.loading6 = true;
+				// 模拟远程搜索
+				setTimeout(() => {
+					this.loading6 = false;
+					console.log(v);
+					if (v) {
+						this.list6 = listAll.filter((item) => item.label.indexOf(v) !== -1);
+					} else {
+						this.list6 = listAll.map((item) => item);
+					}
+					console.log(this.list6);
+				}, 1000);
+			}, 500);
+		},
+
+		getList7() {
+			if (this.loading7) return;
+			this.loading7 = true;
+			// 模拟远程请求
+			setTimeout(() => {
+				this.loading7 = false;
+				const newData = Array.from({ length: this.pageSize }).map((_, i) => {
+					const value = this.list7.length + i + 1;
+					return { label: `选项${value}`, value };
+				});
+				this.list7.push(...newData);
+			}, 1000);
+		},
+		loadMore() {
+			console.log('触底了');
+			this.getList7();
 		},
 	},
 };

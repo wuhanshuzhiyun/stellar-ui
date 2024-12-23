@@ -74,29 +74,45 @@
 
 					<block v-else>
 						<view class="one-col-options">
-							<scroll-view scroll-y class="options-col" v-for="(col, index) in viewOptions" :key="index">
-								<view class="options-item" v-if="dataAllowCreate" @click="onSelect(index, dataAllowCreate, true)">
-									{{ dataAllowCreate[labelKey] }}
-								</view>
-								<view
-									class="options-item"
-									v-for="(item, i) in col"
-									:key="item[valueKey]"
-									:class="{ active: active(index, item) }"
-									@click="onSelect(index, item)"
-								>
-									{{ item[labelKey] }}
-								</view>
-								<block v-if="!dataAllowCreate && !col.length">
-									<view class="options-empty">暂无数据</view>
-								</block>
-							</scroll-view>
+							<view class="options-col" v-for="(col, index) in viewOptions" :key="index">
+								<DatapagerVue :rootStyle="{ maxHeight: '450rpx' }" @loadMore="loadMore">
+									<view
+										class="options-item"
+										v-if="dataAllowCreate"
+										@click="onSelect(index, dataAllowCreate, true)"
+									>
+										{{ dataAllowCreate[labelKey] }}
+									</view>
+									<view
+										class="options-item"
+										v-for="(item, i) in col"
+										:key="item[valueKey]"
+										:class="{ active: active(index, item) }"
+										@click="onSelect(index, item)"
+									>
+										{{ item[labelKey] }}
+									</view>
+									<block v-if="!dataAllowCreate && !col.length">
+										<view class="options-empty">暂无数据</view>
+									</block>
+								</DatapagerVue>
+							</view>
 						</view>
 					</block>
 				</view>
 				<view class="options-btns" v-if="cmpShowDate || dataOptions.length > 1">
 					<view class="options-cancel" @click="clickCancel">取消</view>
 					<view class="options-confirm" @click="clickConfirm">确定</view>
+				</view>
+
+				<view class="loading-mark" v-if="loading">
+					<view class="loading-icon">
+						<slot name="loading-icon">
+							<view class="loading-icon-transform">
+								<ste-icon code="&#xe6a2;" size="60" color="#555"></ste-icon>
+							</view>
+						</slot>
+					</view>
 				</view>
 			</view>
 		</view>
@@ -107,6 +123,7 @@
 import utils from '../../utils/utils';
 import { formatDate, getFormatStr } from './defaultDate';
 import DateTime from './datetime.vue';
+import DatapagerVue from './datapager.vue';
 
 const isData = (d) => {
 	return d || d === 0 || d === '';
@@ -141,6 +158,9 @@ const isData = (d) => {
  * @property {String} childrenKey 数据列表中子列表的键名，默认children（mode为tree时生效）
  * @property {Boolean} multiple 是否多选，默认false，一维数组时生效
  * @property {Boolean} allowCreate 是否允许创建，默认false
+ * @property {Boolean} autoFilterable 是否自动过滤条目，默认true
+ * @property {Boolean} loading 加载中状态，默认false
+ * @property {Number} pageSize 分页大小,当列表数量小于该值时不会触发下拉触底状态，默认10
  * @property {String} borderColor 边框颜色，若不要边框可设置为透明色
  * @property {Number|String} borderRadius 圆角大小，单位RPX，默认8
  * @property {String} optionsPosition 选项框位置
@@ -159,13 +179,15 @@ const isData = (d) => {
  * @event {Function} change 选中值变化时触发
  * @event {Function} cancel 取消选择时触发
  * @event {Function} confirm 确定选择时触发
+ * @event {Function} inputFilterable 搜索输入内容触发
+ * @event {Function} loadMore 上拉触底触发
  * @example <ste-select :list="list" v-model="value" @change="change" />
  */
 export default {
 	group: '表单组件',
 	title: 'Select 下拉选',
 	name: 'ste-select',
-	components: { DateTime },
+	components: { DateTime, DatapagerVue },
 	props: {
 		value: { type: [Array, String, Number, null], default: () => [] },
 		list: { type: [Array, null], default: () => [] },
@@ -185,10 +207,13 @@ export default {
 		childrenKey: { type: [String, null], default: () => 'children' },
 		multiple: { type: [Boolean, null], default: () => false },
 		allowCreate: { type: [Boolean, null], default: () => false },
+		autoFilterable: { type: [Boolean, null], default: () => true },
+		loading: { type: [Boolean, null], default: () => false },
 		borderColor: { type: [String, null], default: () => '#ebebeb' },
 		borderRadius: { type: [Number, String, null], default: () => 8 },
 		optionsPosition: { type: [String, null], default: () => 'auto' },
 		disabled: { type: [Boolean, null], default: () => false },
+		pageSize: { type: [Number, null], default: () => 10 },
 	},
 	data() {
 		return {
@@ -217,6 +242,9 @@ export default {
 		// 是否是筛选模式（包括筛选、筛选多列）
 		cmpFilterable() {
 			return this.mode === 'filterable' && this.dataOptions.length <= 1;
+		},
+		cmpAutoFilterable() {
+			return this.cmpFilterable && this.autoFilterable;
 		},
 		// 是否是多选模式（多列或者单列多选）
 		cmpMultiple() {
@@ -335,9 +363,11 @@ export default {
 		getViewOptions() {
 			this.$nextTick(() => {
 				let list = this.dataOptions;
-				if (this.cmpFilterable && this.userFilterable) {
+				if (this.cmpAutoFilterable && this.userFilterable) {
 					// 处理筛选数据
-					list = list.map((item) => item.filter((value) => value[this.labelKey].includes(this.userFilterable)));
+					list = list.map((item) =>
+						item.filter((value) => value[this.labelKey].includes(this.userFilterable))
+					);
 				}
 				this.viewOptions = list;
 			});
@@ -507,11 +537,12 @@ export default {
 				});
 			}
 		},
-		onUserFilterable() {
+		onUserFilterable(e) {
 			const value = this.inputView;
 			clearTimeout(this.filterableTime);
 			this.filterableTime = setTimeout(() => {
 				this.userFilterable = value;
+				if (e) this.$emit('inputFilterable', value);
 				if (this.cmpAllowCreate && value) {
 					this.dataAllowCreate = {
 						[this.valueKey]: value,
@@ -523,7 +554,7 @@ export default {
 			});
 		},
 		onFocus() {
-			if (!this.cmpFilterable) return;
+			if (!this.cmpAutoFilterable) return;
 			this.inputView = '';
 			const v = this.confirmValue;
 			let value = this.dataOptions[0]?.find((item) => item[this.valueKey] === v[0]);
@@ -542,6 +573,10 @@ export default {
 					this.onUserFilterable();
 				}
 			});
+		},
+		loadMore() {
+			if (this.viewOptions[0].length < this.pageSize) return;
+			this.$emit('loadMore');
 		},
 	},
 };
@@ -731,6 +766,43 @@ export default {
 			.options-confirm {
 				color: #0090ff;
 				padding: 0 40rpx;
+			}
+		}
+
+		.loading-mark {
+			position: absolute;
+			z-index: 100;
+			width: 100%;
+			height: 100%;
+			top: 0;
+			left: 0;
+			background-color: rgba(255, 255, 255, 0.8);
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			.loading-icon {
+				width: 60rpx;
+				height: 60rpx;
+				display: flex;
+				align-items: center;
+				justify-content: center;
+				.loading-icon-transform {
+					width: 100%;
+					height: 100%;
+					border-radius: 16rpx;
+					display: flex;
+					align-items: center;
+					justify-content: center;
+					animation: loading 1s infinite linear;
+					@keyframes loading {
+						from {
+							transform: rotate(0deg);
+						}
+						to {
+							transform: rotate(360deg);
+						}
+					}
+				}
 			}
 		}
 	}
