@@ -19,7 +19,7 @@ export default {
 		// 距离底部触发分页距离
 		bottomDistance: {
 			type: Number,
-			default: 1,
+			default: 10,
 		},
 		rootStyle: {
 			type: Object,
@@ -33,7 +33,7 @@ export default {
 	created() {},
 	mounted() {
 		uni.createIntersectionObserver(this)
-			.relativeTo('.datapager-root', { bottom: this.bottomDistance ? this.bottomDistance : 1 })
+			.relativeTo('.datapager-root', { bottom: Math.abs(this.bottomDistance) > 2 ? this.bottomDistance : 2 })
 			.observe('.datapager-footer', (res) => {
 				if (res.intersectionRatio) {
 					this.$emit('loadMore');
@@ -54,7 +54,7 @@ export default {
 	}
 	.datapager-footer {
 		width: 100%;
-		height: 0.5px;
+		height: 1px;
 	}
 }
 </style>
