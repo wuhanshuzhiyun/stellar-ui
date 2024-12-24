@@ -32,13 +32,15 @@ export default {
 	computed: {},
 	created() {},
 	mounted() {
-		uni.createIntersectionObserver(this)
-			.relativeTo('.datapager-root', { bottom: Math.abs(this.bottomDistance) > 2 ? this.bottomDistance : 2 })
-			.observe('.datapager-footer', (res) => {
-				if (res.intersectionRatio) {
-					this.$emit('loadMore');
-				}
-			});
+		setTimeout(() => {
+			uni.createIntersectionObserver(this)
+				.relativeTo('.datapager-root', { bottom: Math.abs(this.bottomDistance) > 5 ? this.bottomDistance : 5 })
+				.observe('.datapager-footer', (res) => {
+					if (res.intersectionRatio) {
+						this.$emit('loadMore');
+					}
+				});
+		});
 	},
 	methods: {},
 };
