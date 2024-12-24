@@ -25,7 +25,8 @@
 			<slot v-if="row[prop] || !$slots.empty">
 				<sub-table :rows="row[prop]" v-if="rowSpan" :border="cmpBorder" />
 				<view class="cell-box" v-else>
-					{{ cellText() }}
+					<!-- <text>{{ cellText() }}</text> -->
+					<table-popover :text="cellText()"></table-popover>
 				</view>
 			</slot>
 			<view class="cell-box" v-else>
@@ -38,6 +39,7 @@
 <script>
 import RadioIcon from './radio-icon.vue';
 import CheckBoxIcon from './checkbox-icon.vue';
+import TablePopover from './table-popover.vue';
 import SubTable from './sub-table.vue';
 import utils from '../../utils/utils.js';
 import { getStyleOrClass } from '../ste-table/utils';
@@ -59,7 +61,7 @@ import { childMixin } from '../../utils/mixin.js';
 export default {
 	name: 'ste-table-column',
 	mixins: [childMixin('ste-table')],
-	components: { RadioIcon, CheckBoxIcon, SubTable },
+	components: { RadioIcon, CheckBoxIcon, SubTable, TablePopover },
 	options: {
 		virtualHost: true,
 	},
@@ -164,6 +166,10 @@ export default {
 
 			if (this.parent.border) {
 				classArr.push('border');
+			}
+
+			if (this.parent.isPopover) {
+				classArr.push('popover');
 			}
 
 			if (this.rowSpan) {
