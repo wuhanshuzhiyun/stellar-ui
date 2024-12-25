@@ -152,6 +152,7 @@ import { DEFAULT_SUM_TEXT, selectionColorConfig } from './common';
  * @property {Number|String} height 表格高度
  * @property {Number|String} maxHeight 表格最大高度
  * @property {Object} selectionIconColor 配置选择项图标色
+ * @property {Boolean} isPopover 是否为超出单元格时气泡显示内容
  * @event {Function} select 当用户手动勾选数据行的 Checkbox 时触发的事件
  * @event {Function} selectAll 当用户手动勾选全选 Checkbox 时触发的事件
  * @event {Function} cellClick 当某个单元格被点击时会触发该事件
@@ -226,6 +227,7 @@ export default {
 			type: [Object, null],
 			default: () => selectionColorConfig,
 		},
+		isPopover: [Boolean, null],
 	},
 	data() {
 		return {
@@ -616,7 +618,7 @@ $default-border: 2rpx solid #ebebeb;
 			padding: 0 32rpx;
 			height: 80rpx;
 			font-size: 24rpx;
-
+			overflow-x: hidden;
 			.cell-box {
 				height: 100%;
 				display: flex;

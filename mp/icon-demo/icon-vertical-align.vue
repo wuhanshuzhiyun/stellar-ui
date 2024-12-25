@@ -29,7 +29,7 @@
 			<textarea class="icon-code-text-area" v-model="iconCodeStr" :maxlength="4000" style="height: 200rpx" />
 			<button @click="preview">预览</button>
 			<view v-if="show" class="preview-box">
-				<template v-for="item in iconCodeList">
+				<template v-for="(item, i) in iconCodeList">
 					<view>弹性盒子居中</view>
 					<view>盒子行高1</view>
 					<view>文字、图标32px</view>
@@ -124,8 +124,9 @@
 				</template>
 				<view>
 					<ste-icon
-						v-for="item in iconCodeList"
+						v-for="(item, i) in iconCodeList"
 						:size="48"
+						:key="item.icon_id || i"
 						:fontFamily="fontFamily"
 						:code="item"
 						color="#FF4500"
