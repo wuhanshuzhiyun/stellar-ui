@@ -68,7 +68,7 @@
 			</view>
 			<view class="demo-item">
 				<view class="title">分页</view>
-				<ste-select :list="list7" :loading="loading7" :pageSize="pageSize" @loadMore="loadMore"></ste-select>
+				<ste-select :list="list7" :loading="loading7" :total="total" @loadMore="loadMore"></ste-select>
 			</view>
 			<view class="demo-item">
 				<view class="title">自定义图标</view>
@@ -172,7 +172,7 @@ export default {
 				},
 			],
 			value5: [],
-			
+
 			loading6: false,
 			time6: null,
 			list6: [],
@@ -180,6 +180,7 @@ export default {
 			pageSize: 10,
 			loading7: false,
 			list7: [],
+			total: 0,
 		};
 	},
 	mounted() {
@@ -222,6 +223,7 @@ export default {
 					return { label: `选项${value}`, value };
 				});
 				this.list7.push(...newData);
+				this.total = 88;
 			}, 1000);
 		},
 		loadMore() {

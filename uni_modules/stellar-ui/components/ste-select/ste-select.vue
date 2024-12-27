@@ -160,7 +160,7 @@ const isData = (d) => {
  * @property {Boolean} allowCreate 是否允许创建，默认false
  * @property {Boolean} autoFilterable 是否自动过滤条目，默认true
  * @property {Boolean} loading 加载中状态，默认false
- * @property {Number} pageSize 分页大小,当列表数量小于该值时不会触发下拉触底状态，默认10
+ * @property {Number} total 数据总数
  * @property {String} borderColor 边框颜色，若不要边框可设置为透明色
  * @property {Number|String} borderRadius 圆角大小，单位RPX，默认8
  * @property {String} optionsPosition 选项框位置
@@ -213,7 +213,7 @@ export default {
 		borderRadius: { type: [Number, String, null], default: () => 8 },
 		optionsPosition: { type: [String, null], default: () => 'auto' },
 		disabled: { type: [Boolean, null], default: () => false },
-		pageSize: { type: [Number, null], default: () => 10 },
+		total: { type: [Number, null], default: () => 0 },
 	},
 	data() {
 		return {
@@ -575,7 +575,7 @@ export default {
 			});
 		},
 		loadMore() {
-			if (this.viewOptions[0].length < this.pageSize) return;
+			if (this.total < 1 || this.list.length >= this.total) return;
 			this.$emit('loadMore');
 		},
 	},

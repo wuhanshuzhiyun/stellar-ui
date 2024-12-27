@@ -300,20 +300,21 @@ export default {
 ```
 ### 分页
 - 事件`loadMore`可监听上拉触底（多列渲染无效）
-- 属性`pageSize`控制每页显示条数
-	- `list`选项数量小于`pageSize`值时不触发上拉触底事件
+- 属性`total`控制每页显示条数
+	- `list`选项数量大于或等于`total`值时不触发上拉触底事件
 
 ```html
 <template>
-	<ste-select :list="list" :loading="loading" :pageSize="pageSize" @loadMore="loadMore"></ste-select>
+	<ste-select :list="list" :loading="loading" :total="total" @loadMore="loadMore"></ste-select>
 </template>
 <script>
 export default {
 	data() {
 		return {
-			pageSize: 10,
+			pageSize:10,
 			loading: false,
 			list: [],
+			total:0,
 		}
 	},
 	mounted() {
@@ -332,9 +333,9 @@ export default {
 					return { label: `选项${value}`, value };
 				});
 				this.list7.push(...newData);
+				this.total = 88
 			}, 1000);
 		},
-		// 如果list长度小于pageSize，则不会触发该事件
 		loadMore(){
 			this.getList()
 		}
@@ -348,33 +349,33 @@ export default {
 ### API
 #### Props
 背景之外的颜色属性只支持`16进制`、`RGB`、`RGBA`格式
-| 属性名						| 说明																						| 类型														| 默认值			| 可选值					| 支持版本	|
-| -----							| -----																					| -----													| -----			| -----					| -----		|
-| `value`						| 绑定的值，支持v-model双向绑定										| `Number`,`String`,`Array`			|	-					|	-							|	-				|
-| `list`						| 选项数据																				| `Object[]`,`Object[][]`,`Tree`|	`[]`			|	-							|	-				|
-| `mode`						| 选择模式																				| `String`											|	`default`	|	见下方详细说明	|	-				|
-| `minDate`					| 最小日期,`mode`为日期时间选择器时生效							| `String`											|	-					|	-							|	-				|
-| `maxDate`					| 最大日期,`mode`为日期时间选择器时生效							| `String`											|	-					|	-							|	-				|
-| `dateUnit`				| 选项是否显示时间单位,`mode`为日期时间选择器时生效	| `Boolean`											|	`true`		|	-							|	-				|
-| `width`						| 宽度，单位rpx																		| `String`,`Number`							|	`100%`		|	-							|	-				|
-| `height`					| 高度，单位rpx																		| `String`,`Number`							|	`64`			|	-							|	-				|
-| `fontSize`				| 字体大小，单位rpx																| `String`,`Number`							|	`28`			|	-							|	-				|
-| `background`			| 背景																						| `String`											|	`#fff`		|	-							|	-				|
-| `maskClose`				| 点击遮罩层是否关闭																| `Boolean`											|	`true`		|	-							|	-				|
-| `optionsWidth`		| 选项框宽度，默认跟随`width`											| `String`,`Number`							|	`auto`		|	-							|	-				|
-| `placeholder`			| 占位符																					| `String`											|	`请选择`		|	-							|	-				|
-| `labelKey`				| 选项的标签																			| `String`											|	`label`		|	-							|	-				|
-| `valueKey`				| 选项的值																				| `String`											|	`value`		|	-							|	-				|
-| `childrenKey`			| 数据列表中显示的键名（`mode`为`tree`时生效）			| `String`											|	`children`|	-							|	-				|
-| `multiple`				| 是否多选（`list`为一维数组时生效）								| `Boolean`											|	`false`		|	-							|	-				|
-| `allowCreate`			| 是否允许创建（`mode`为`filterable`时生效）				| `Boolean`											|	`false`		|	-							|	-				|
-| `autoFilterable`	| 是否自动过滤条目（`mode`为`filterable`时生效）		| `Boolean`											|	`true`		|	-							|	`1.34.0`|
-| `borderColor`			| 边框颜色，若不要边框可设置为透明色								| `String`											|	`#ebebeb`	|	-							|	-				|
-| `borderRadius`		| 圆角大小，单位RPX																| `Number`,`String`							|	`8`				|	-							|	-				|
-| `optionsPosition`	| 选项框位置																			| `String`											|	`auto`		|	见下方详细说明	|	-				|
-| `disabled`				| 禁用（所有功能失效）															| `Boolean`											|	`false`		|	-							|	-				|
-| `loading`					| 加载中																					| `Boolean`											|	`false`		|	-							|	`1.34.0`|
-| `pageSize`				| 分页大小(当列表数量小于该值时,不会触发上拉触底事件)	| `Number`											|	`10`			|	-							|	`1.34.0`|
+| 属性名						| 说明																													| 类型														| 默认值			| 可选值					| 支持版本	|
+| -----							| -----																												| -----													| -----			| -----					| -----		|
+| `value`						| 绑定的值，支持v-model双向绑定																	| `Number`,`String`,`Array`			|	-					|	-							|	-				|
+| `list`						| 选项数据																											| `Object[]`,`Object[][]`,`Tree`|	`[]`			|	-							|	-				|
+| `mode`						| 选择模式																											| `String`											|	`default`	|	见下方详细说明	|	-				|
+| `minDate`					| 最小日期,`mode`为日期时间选择器时生效														| `String`											|	-					|	-							|	-				|
+| `maxDate`					| 最大日期,`mode`为日期时间选择器时生效														| `String`											|	-					|	-							|	-				|
+| `dateUnit`				| 选项是否显示时间单位,`mode`为日期时间选择器时生效								| `Boolean`											|	`true`		|	-							|	-				|
+| `width`						| 宽度，单位rpx																									| `String`,`Number`							|	`100%`		|	-							|	-				|
+| `height`					| 高度，单位rpx																									| `String`,`Number`							|	`64`			|	-							|	-				|
+| `fontSize`				| 字体大小，单位rpx																							| `String`,`Number`							|	`28`			|	-							|	-				|
+| `background`			| 背景																													| `String`											|	`#fff`		|	-							|	-				|
+| `maskClose`				| 点击遮罩层是否关闭																							| `Boolean`											|	`true`		|	-							|	-				|
+| `optionsWidth`		| 选项框宽度，默认跟随`width`																		| `String`,`Number`							|	`auto`		|	-							|	-				|
+| `placeholder`			| 占位符																												| `String`											|	`请选择`		|	-							|	-				|
+| `labelKey`				| 选项的标签																										| `String`											|	`label`		|	-							|	-				|
+| `valueKey`				| 选项的值																											| `String`											|	`value`		|	-							|	-				|
+| `childrenKey`			| 数据列表中显示的键名（`mode`为`tree`时生效）										| `String`											|	`children`|	-							|	-				|
+| `multiple`				| 是否多选（`list`为一维数组时生效）															| `Boolean`											|	`false`		|	-							|	-				|
+| `allowCreate`			| 是否允许创建（`mode`为`filterable`时生效）											| `Boolean`											|	`false`		|	-							|	-				|
+| `autoFilterable`	| 是否自动过滤条目（`mode`为`filterable`时生效）									| `Boolean`											|	`true`		|	-							|	`1.34.1`|
+| `borderColor`			| 边框颜色，若不要边框可设置为透明色															| `String`											|	`#ebebeb`	|	-							|	-				|
+| `borderRadius`		| 圆角大小，单位RPX																							| `Number`,`String`							|	`8`				|	-							|	-				|
+| `optionsPosition`	| 选项框位置																										| `String`											|	`auto`		|	见下方详细说明	|	-				|
+| `disabled`				| 禁用（所有功能失效）																						| `Boolean`											|	`false`		|	-							|	-				|
+| `loading`					| 加载中																												| `Boolean`											|	`false`		|	-							|	`1.34.1`|
+| `total`						| 数据总数（`list`选项数量大于或等于`total`值时不触发上拉触底事件）	| `Number`											|	`10`			|	-							|	`1.34.1`|
 
 ##### Mode可选值
 | 值					| 说明																												| 支持版本	|
@@ -413,8 +414,8 @@ export default {
 | `change`					| 选择时触发					| 参数1：`value`/`value[]`,参数2：`item`/`item[]`	| -				|
 | `cancel`					| 取消选择时触发			| -																							| -				|
 | `confirm`					| 确定选择时触发			| `value`/`value[]`															| -				|
-| `inputFilterable`	| 搜索框输入数据时触发	| `str`:输入的内容																| `1.34.0`|
-| `loadMore`				| 上拉触底时触发			| -																							| `1.34.0`|
+| `inputFilterable`	| 搜索框输入数据时触发	| `str`:输入的内容																| `1.34.1`|
+| `loadMore`				| 上拉触底时触发			| -																							| `1.34.1`|
 
 #### Slots
 
@@ -422,7 +423,7 @@ export default {
 | ---						| ---					| ---			|
 | `default`			| 展示内容			| -				|
 | `icon`				| 打开下拉图标	| -				|
-| `loading-icon`| 加载中图标		| `1.34.0`|
+| `loading-icon`| 加载中图标		| `1.34.1`|
 
 
 
