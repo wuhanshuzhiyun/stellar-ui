@@ -35,7 +35,7 @@
 					</view>
 				</view>
 			</view>
-			<view class="pc-content">
+			<view class="pc-content" :markdown="content">
 				<template v-if="cmpIsCompPage">
 					<view v-html="contentViews[0]" class="markdown-view"></view>
 					<comp-nav :mode.sync="compNavActive" @change="handleCompNavChange" />
