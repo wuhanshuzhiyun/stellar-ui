@@ -9,11 +9,55 @@ const SSE_URL = 'https://stellar-ui.intecloud.com.cn/sse';
 
 const AdminPwd = 'ste-admin';
 
+// 顶部导航栏相关配置
+const NAV_KEY_DEV = 'DEV'; // 开发指南
+const NAV_KEY_DEV_GROUP = 'DEV_GROUP'; // 研发组
+const NAV_KEY_COMP = 'COMP'; // 组件
+const NAV_DATA = [{
+        key: NAV_KEY_DEV,
+        title: '开发指南',
+    },
+    {
+        key: NAV_KEY_DEV_GROUP,
+        title: '研发组'
+    },
+    {
+        key: NAV_KEY_COMP,
+        title: '组件'
+    },
+]
+
+// 组件文档页导航相关配置
+const NAV_COMP_KEY_DEMO = 'DEMO'
+const NAV_COMP_KEY_API = 'API'
+const NAV_COMP_KEY_GUIDE = 'GUIDE'
+const NAV_COMP_DATA = [{
+        key: NAV_COMP_KEY_DEMO,
+        title: '示例',
+    },
+    {
+        key: NAV_COMP_KEY_API,
+        title: 'API'
+    },
+    {
+        key: NAV_COMP_KEY_GUIDE,
+        title: '指南'
+    },
+]
+
 export default {
-	/**图片根地址*/
-	IMAGE_BASE_URL,
-	IMAGE_COMMON,
-	BASE_URL,
-	SSE_URL,
-	AdminPwd,
+    /**图片根地址*/
+    IMAGE_BASE_URL,
+    IMAGE_COMMON,
+    BASE_URL,
+    SSE_URL,
+    AdminPwd,
+    NAV_DATA,
+    NAV_KEY_DEV,
+    NAV_KEY_DEV_GROUP,
+    NAV_KEY_COMP,
+    NAV_COMP_DATA,
+    NAV_COMP_KEY_DEMO,
+    NAV_COMP_KEY_API,
+    NAV_COMP_KEY_GUIDE
 };

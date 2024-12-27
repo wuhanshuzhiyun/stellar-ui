@@ -1,0 +1,236 @@
+<template>
+	<view class="version-switcher" @click.stop>
+		<view class="version-selected" @tap="toggleDropdown">
+			<text class="version-text">{{ currentVersion }}</text>
+			<text class="arrow" :class="{ 'arrow-up': isOpen }"></text>
+		</view>
+		<view class="dropdown-menu" v-if="isOpen">
+			<view
+				v-for="version in versions"
+				:key="version.value"
+				class="dropdown-item"
+				:class="{ active: currentVersion === version.label }"
+				@tap="switchVersion(version)"
+				@mouseenter="handleMouseEnter"
+				@mouseleave="handleMouseLeave"
+			>
+				<text class="version-text">{{ version.label }}</text>
+				<text v-if="currentVersion === version.label" class="check-icon">✓</text>
+			</view>
+		</view>
+	</view>
+</template>
+
+<script>
+export default {
+	name: 'VersionSwitcher',
+	data() {
+		return {
+			isOpen: false,
+			currentVersion: 'Vue 2.x',
+			versions: [
+				{
+					label: 'Vue 2.x',
+					value: 'v2',
+					url: '/pc/index/index',
+				},
+				{
+					label: 'Vue 3.x',
+					value: 'v3',
+					url: '/plus',
+				},
+			],
+			hoverIndex: -1,
+		};
+	},
+
+	mounted() {
+		this.bindGlobalClick();
+	},
+
+	beforeDestroy() {
+		this.unbindGlobalClick();
+	},
+
+	methods: {
+		toggleDropdown() {
+			this.isOpen = !this.isOpen;
+		},
+
+		hideDropdown() {
+			this.isOpen = false;
+		},
+
+		switchVersion(version) {
+			if (this.currentVersion === version.label) {
+				this.hideDropdown();
+				return;
+			}
+			// 跳转到对应版本的页面
+			uni.navigateTo({
+				url: version.url,
+			});
+			this.currentVersion = version.label;
+			this.hideDropdown();
+		},
+
+		checkClickOutside(e) {
+			// 获取组件根元素
+			const componentEl = e.target.closest('.version-switcher');
+			// 如果点击的不是组件内部元素，则关闭下拉框
+			if (!componentEl && this.isOpen) {
+				this.hideDropdown();
+			}
+		},
+
+		handleMouseEnter(e) {
+			// #ifdef H5
+			e.target.style.cursor = 'pointer';
+			// #endif
+		},
+
+		handleMouseLeave(e) {
+			// #ifdef H5
+			e.target.style.cursor = 'default';
+			// #endif
+		},
+
+		bindGlobalClick() {
+			// #ifdef H5
+			document.addEventListener('click', this.checkClickOutside);
+			// #endif
+
+			// #ifdef MP || APP-PLUS
+			const query = uni.createSelectorQuery().in(this);
+			query.selectViewport().on('tap', this.checkClickOutside).exec();
+			// #endif
+		},
+
+		unbindGlobalClick() {
+			// #ifdef H5
+			document.removeEventListener('click', this.checkClickOutside);
+			// #endif
+
+			// #ifdef MP || APP-PLUS
+			const query = uni.createSelectorQuery().in(this);
+			query.selectViewport().off('tap', this.checkClickOutside);
+			// #endif
+		},
+	},
+};
+</script>
+
+<style scoped>
+.version-switcher {
+	position: relative;
+	display: inline-block;
+	min-width: 240rpx;
+	user-select: none;
+	-webkit-user-select: none;
+	-moz-user-select: none;
+	-ms-user-select: none;
+}
+
+.version-selected {
+	padding: 16rpx 32rpx;
+	background: #fff;
+	border: 1rpx solid #dcdfe6;
+	border-radius: 8rpx;
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	transition: all 0.3s ease;
+	/* #ifdef H5 */
+	cursor: pointer;
+	&:hover {
+		border-color: var(--pc-main-color);
+		color: var(--pc-main-color);
+	}
+	/* #endif */
+}
+
+.version-text {
+	font-size: 28rpx;
+	color: #606266;
+}
+
+.arrow {
+	display: inline-block;
+	width: 0;
+	height: 0;
+	border-left: 12rpx solid transparent;
+	border-right: 12rpx solid transparent;
+	border-top: 12rpx solid #909399;
+	transition: transform 0.3s;
+	margin-left: 16rpx;
+}
+
+.arrow-up {
+	transform: rotate(180deg);
+}
+
+.dropdown-menu {
+	position: absolute;
+	top: calc(100% + 8rpx);
+	left: 0;
+	right: 0;
+	background: #fff;
+	border: 1rpx solid #dcdfe6;
+	border-radius: 8rpx;
+	box-shadow: 0 4rpx 24rpx 0 rgba(0, 0, 0, 0.1);
+	z-index: 100;
+	overflow: hidden;
+	transition: all 0.3s ease;
+	animation: slideDown 0.2s ease-out;
+}
+
+.dropdown-item {
+	padding: 16rpx 32rpx;
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	transition: all 0.2s ease;
+	cursor: pointer;
+	/* #ifdef H5 */
+	&:hover {
+		background-color: #f5f7fa;
+		color: var(--pc-main-color);
+	}
+	/* #endif */
+}
+
+.active {
+	color: var(--pc-main-color);
+	background-color: #ecf5ff;
+}
+
+.check-icon {
+	font-size: 24rpx;
+	color: var(--pc-main-color);
+}
+
+@keyframes slideDown {
+	from {
+		opacity: 0;
+		transform: translateY(-10rpx);
+	}
+	to {
+		opacity: 1;
+		transform: translateY(0);
+	}
+}
+
+/* 移动端点击反馈效果 */
+.dropdown-item:active {
+	background-color: #f5f7fa;
+}
+
+/* 禁用文本选择 */
+.version-text,
+.check-icon {
+	user-select: none;
+	-webkit-user-select: none;
+	-moz-user-select: none;
+	-ms-user-select: none;
+}
+</style>

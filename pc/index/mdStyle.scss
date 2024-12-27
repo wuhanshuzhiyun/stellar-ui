@@ -5,12 +5,12 @@
 		}
 
 		h1 {
-			margin-bottom: 15px;
-			padding-bottom: 15px;
-			font-size: 30px;
+			margin-bottom: 16px;
+			// padding-bottom: 15px;
+			font-size: 32px;
+			font-weight: bold;
 			cursor: default;
-			font-weight: 400;
-			border-bottom: 1px solid #ddd;
+			// border-bottom: 1px solid #ddd;
 			a {
 				display: none;
 			}
@@ -57,6 +57,7 @@
 		}
 		p {
 			margin-bottom: 16px;
+			color: rgb(115.2, 117.6, 122.4);
 		}
 		table {
 			width: 100%;
@@ -90,6 +91,7 @@
 			padding-left: 40px;
 			li {
 				line-height: 30px;
+				color: rgb(115.2, 117.6, 122.4);
 			}
 		}
 		pre {

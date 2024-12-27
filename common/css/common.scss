@@ -14,17 +14,23 @@ body {
 }
 
 ::-webkit-scrollbar {
-	width: 10px;
+	width: 6px;
 	height: 10px;
+	border-radius: 4px;
+	opacity: 0;
+	transition: opacity 0.3s ease;
 }
 
 ::-webkit-scrollbar-track {
-	background-color: #f1f1f1;
+	background-color: #fff;
 }
 
 ::-webkit-scrollbar-thumb {
-	background-color: #ccc;
-	border-radius: 5px;
+	// background-color: #dddee0;
+	background-color: transparent;
+	border-radius: 4px;
+	height: 10px;
+	opacity: 0;
 }
 
 /*
@@ -89,4 +95,39 @@ body {
 			}
 		}
 	}
+}
+
+/**
+ * 贡献者模块样式
+ */
+
+.con-box {
+	display: flex;
+	flex-wrap: wrap;
+	column-gap: 25px;
+	row-gap: 25px;
+	margin-bottom: 40px;
+}
+.con-item {
+	display: flex;
+	flex-direction: column;
+	row-gap: 10px;
+}
+.con-image {
+	width: 90px !important;
+	height: 90px !important;
+	border-radius: 50%;
+}
+
+.con-box a:link,
+.con-box a:visited,
+.con-box a:hover,
+.con-box a:active {
+	text-decoration: none !important;
+	color: #1989fa !important;
+}
+
+.con-box .name {
+	color: #1989fa !important;
+	text-align: center;
 }

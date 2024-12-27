@@ -1,10 +1,14 @@
 :root,
 :host {
 	// sizes
-	--pc-nav-width: 240px;
+	--pc-nav-width: 338px;
 	--pc-view-width: 375px;
 	--pc-view-height: 812px;
 	--pc-padding: 32px;
+    --pc-header-nav-height: 64px;
+    
+    // color
+    --pc-main-color: #409eff;
 }
 
 // 100%

@@ -1,8 +1,16 @@
 <template>
 	<view class="pc-page-body">
 		<view class="pc-page-header">
-			您正在浏览基于 Vue 2.x 的文档;
-			<a href="https://stellar-ui.intecloud.com.cn/plus" target="_blank">点击查看Vue 3.x版本。</a>
+			<!-- 您正在浏览基于 Vue 2.x 的文档;
+			<a href="https://stellar-ui.intecloud.com.cn/plus" target="_blank">点击查看Vue 3.x版本。</a> -->
+			<view class="left">
+				<image class="logo" src="../../static/favicon.png" mode="widthFix"></image>
+				<text class="logo-text">StellarUI</text>
+			</view>
+			<view class="right">
+				<header-nav @change="handleHeaderNavChange" :mode.sync="navActive" />
+				<version-switcher style="margin-left: 32px"></version-switcher>
+			</view>
 		</view>
 
 		<view class="pc-page-content">
@@ -28,10 +36,15 @@
 				</view>
 			</view>
 			<view class="pc-content">
-				<view v-html="content" class="markdown-view"></view>
+				<template v-if="cmpIsCompPage">
+					<view v-html="contentViews[0]" class="markdown-view"></view>
+					<comp-nav :mode.sync="compNavActive" @change="handleCompNavChange" />
+					<view v-html="compContent" class="markdown-view"></view>
+				</template>
+				<view v-html="content" class="markdown-view" v-else></view>
 				<commentVue v-if="isComponent && loadingMd" :activeName="activeName" :isComponent="isComponent" />
 			</view>
-			<view class="pc-view">
+			<view class="pc-view" v-if="cmpIsCompPage">
 				<iframe class="view-iframe" :src="cmpIframeUrl" frameborder="0" />
 			</view>
 			<view class="popup-view" v-if="showPopup">
@@ -48,23 +61,27 @@
 </template>
 
 <script>
-import { mdMap, vueMap, datas } from '../markdown/index.js';
-import md2html from './md2html.js';
+import { mdMap, vueMap, groupData } from '../markdown/index.js';
+import md2html, { splitCompMarkdown } from './md2html.js';
 import config from '@/common/config.js';
 import request from '@/common/request.js';
 import commentVue from './components/comment.vue';
+import HeaderNav from './components/header-nav.vue';
+import CompNav from './components/comp-nav.vue';
+import VersionSwitcher from './components/version-select.vue';
 import { getInfo } from '@/common/account.js';
 import './mdStyle.scss';
 
 let timeout = 0;
 
 export default {
-	components: { commentVue },
+	components: { commentVue, HeaderNav, CompNav, VersionSwitcher },
 	data() {
 		return {
 			content: '',
+			navActive: config.NAV_KEY_DEV,
 			activeName: 'handbook-介绍',
-			datas,
+			datas: groupData[config.NAV_KEY_DEV],
 			commentList: [],
 			isComponent: false,
 			loadingMd: false,
@@ -78,6 +95,9 @@ export default {
 			showPopup: false,
 			popupPwd: '',
 			key: '',
+			contentViews: [],
+			compNavActive: config.NAV_COMP_KEY_DEMO,
+			compContent: '',
 		};
 	},
 	computed: {
@@ -86,6 +106,9 @@ export default {
 		},
 		cmpLock() {
 			return this.adminLock === 'true';
+		},
+		cmpIsCompPage() {
+			return this.navActive === config.NAV_KEY_COMP;
 		},
 	},
 	watch: {
@@ -121,6 +144,7 @@ export default {
 	onLoad({ name }) {
 		if (name && name !== this.activeName) {
 			this.activeName = name;
+			this.loadNavFromActiveName();
 		}
 	},
 	async onShow() {
@@ -143,16 +167,11 @@ export default {
 			this.loadingMd = false;
 			// 加载文档
 			uni.request({ url }).then(async (res) => {
-				this.content = await md2html(res.data);
-				// 渲染完成后，为所有的代码按钮加载复制功能
-				// #ifdef H5
-				this.$nextTick(() => {
-					this.loadingMd = true;
-					document.querySelectorAll('.code-copy-button').forEach((btn) => {
-						btn.addEventListener('click', () => this.copy(btn));
-					});
-				});
-				// #endif
+				if (this.cmpIsCompPage) {
+					this.getContentViews(res.data);
+				} else {
+					this.content = await md2html(res.data);
+				}
 			});
 		},
 		toView(key, lock) {
@@ -162,6 +181,7 @@ export default {
 				return;
 			}
 			this.activeName = key;
+			this.compNavActive = config.NAV_COMP_KEY_DEMO;
 			// 修改URL地址参数，不刷新当前页面
 			history.replaceState({}, '', `/pc/index/index?name=${key}`);
 		},
@@ -209,6 +229,59 @@ export default {
 			}
 			// #endif
 		},
+		// 组件文档页导航切换
+		handleCompNavChange(item) {
+			if (item.key === config.NAV_COMP_KEY_DEMO) {
+				this.compContent = this.contentViews[1];
+				// #ifdef H5
+				this.$nextTick(() => {
+					this.loadingMd = true;
+					document.querySelectorAll('.code-copy-button').forEach((btn) => {
+						btn.addEventListener('click', () => this.copy(btn));
+					});
+				});
+				// #endif
+			} else if (item.key === config.NAV_COMP_KEY_API) {
+				this.compContent = this.contentViews[2];
+			} else if (item.key === config.NAV_COMP_KEY_GUIDE) {
+				this.compContent = this.contentViews[3];
+			} else {
+				this.compContent = '';
+			}
+		},
+		// 顶部导航切换
+		handleHeaderNavChange(item) {
+			this.datas = groupData[item.key];
+			const first = this.datas[0];
+			this.toView(first.children[0].key, first.lock);
+		},
+		loadNavFromActiveName() {
+			if (this.activeName.indexOf('ste') > -1) {
+				this.navActive = config.NAV_KEY_COMP;
+				this.datas = groupData[config.NAV_KEY_COMP];
+			} else if (this.activeName.indexOf('devGuide') > -1) {
+				this.navActive = config.NAV_KEY_DEV;
+				this.datas = groupData[config.NAV_KEY_DEV];
+			} else if (this.activeName.indexOf('handbook') > -1) {
+				this.navActive = config.NAV_KEY_DOC;
+				this.datas = groupData[config.NAV_KEY_DOC];
+			}
+		},
+		getContentViews(str) {
+			splitCompMarkdown(str).then((res) => {
+				this.contentViews = res;
+				this.compContent = this.contentViews[1];
+				// 添加复制功能
+				// #ifdef H5
+				this.$nextTick(() => {
+					this.loadingMd = true;
+					document.querySelectorAll('.code-copy-button').forEach((btn) => {
+						btn.addEventListener('click', () => this.copy(btn));
+					});
+				});
+				// #endif
+			});
+		},
 	},
 };
 </script>
@@ -218,29 +291,51 @@ export default {
 	width: 100vw;
 	height: 100vh;
 	min-width: 1200px;
+	overflow: hidden;
 	.pc-page-header {
-		height: 30px;
-		line-height: 30px;
-		text-align: center;
-		color: #eee;
+		height: var(--pc-header-nav-height);
+		padding: 0 48px;
+		box-shadow: 0 4px 8px #0000000d, inset 0 -1px 0 #dcdfe6;
+		background-image: radial-gradient(transparent 1px, #fff 1px);
+		position: fixed;
+		top: 0;
+		z-index: 99999;
 		width: 100%;
-		background-color: #409eff;
-		a {
-			color: #fff;
-			font-weight: bold;
+
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		.left {
+			.logo {
+				width: 50px;
+			}
+			.logo-text {
+				font-size: 28px;
+				font-weight: bold;
+			}
+			display: flex;
+			align-items: center;
+		}
+		.right {
+			display: flex;
+			align-items: center;
 		}
 	}
 	.pc-page-content {
+		overflow-y: hidden;
+		margin-top: var(--pc-header-nav-height);
 		width: 100%;
-		height: calc(100% - 30px);
+		height: calc(100% - var(--pc-header-nav-height));
 		display: flex;
 		flex-direction: row;
 		background-color: #fff;
 		position: relative;
+
 		.pc-nav {
+			padding: 48px;
 			height: 100%;
 			border-right: 1px solid #ddd;
-			padding: 8px 0;
+			// padding: 8px 0;
 			overflow-y: auto;
 			min-width: var(--pc-nav-width);
 			max-width: var(--pc-nav-width);
@@ -249,30 +344,49 @@ export default {
 			bottom: 0;
 			z-index: 1;
 			background-color: #ffffff;
+			&:hover {
+				&::-webkit-scrollbar-thumb {
+					background-color: #dddee0;
+				}
+			}
+
+			.group:not(:first-child) {
+				padding-top: 0;
+			}
 
 			.group {
 				.name {
 					font-weight: bold;
 					font-size: 16px;
-					padding: 24px 0 0 24px;
+					padding: 24px 0 0 8px;
 					line-height: 28px;
 				}
 			}
 
 			.nav-item {
 				cursor: pointer;
-
+				border-radius: 8px;
 				.name {
 					font-weight: 400;
-					padding: 6px 0 6px 24px;
+					padding: 10px 16px;
 					margin: 4px 0;
-					font-size: 14px;
+					font-size: 13px;
 					line-height: 20px;
+					color: #606266;
 				}
 
-				&:hover,
+				&:hover {
+					background-color: #f2f4f7;
+					.name {
+						color: var(--pc-main-color);
+					}
+				}
 				&.active {
-					color: #1989fa;
+					background: rgba(64, 158, 255, 0.1);
+					font-weight: bold;
+					.name {
+						color: var(--pc-main-color);
+					}
 				}
 
 				&.active {
@@ -285,12 +399,18 @@ export default {
 
 		.pc-content {
 			width: 100%;
-			padding-left: var(--pc-nav-width);
+			padding-left: calc(var(--pc-nav-width) + 32px);
 			padding-right: calc(var(--pc-view-width) + var(--pc-padding) + 20px);
 			overflow: auto;
-
+			padding-top: 30px;
+			&:hover {
+				&::-webkit-scrollbar-thumb {
+					background-color: #dddee0;
+				}
+			}
 			.markdown-view {
 				padding: 12px var(--pc-padding);
+				padding-bottom: 0;
 			}
 		}
 		@media (max-width: 1100px) {
