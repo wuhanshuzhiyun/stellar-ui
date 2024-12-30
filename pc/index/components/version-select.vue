@@ -10,11 +10,9 @@
 				:key="version.value"
 				class="dropdown-item"
 				:class="{ active: currentVersion === version.label }"
-				@tap="switchVersion(version)"
-				@mouseenter="handleMouseEnter"
-				@mouseleave="handleMouseLeave"
+				@click="switchVersion(version)"
 			>
-				<text class="version-text">{{ version.label }}</text>
+				<a :href="version.url" class="version-text">{{ version.label }}</a>
 				<text v-if="currentVersion === version.label" class="check-icon">✓</text>
 			</view>
 		</view>
@@ -22,6 +20,7 @@
 </template>
 
 <script>
+import config from '@/common/config';
 export default {
 	name: 'VersionSwitcher',
 	data() {
@@ -32,12 +31,12 @@ export default {
 				{
 					label: 'Vue 2.x',
 					value: 'v2',
-					url: '/pc/index/index',
+					url: config.BASE_WEB_URL + '/pc/index/index',
 				},
 				{
 					label: 'Vue 3.x',
 					value: 'v3',
-					url: '/plus',
+					url: config.BASE_WEB_URL + '/plus',
 				},
 			],
 			hoverIndex: -1,
@@ -67,9 +66,9 @@ export default {
 				return;
 			}
 			// 跳转到对应版本的页面
-			uni.navigateTo({
-				url: version.url,
-			});
+			// uni.navigateTo({
+			// 	url: version.url,
+			// });
 			this.currentVersion = version.label;
 			this.hideDropdown();
 		},
@@ -82,38 +81,15 @@ export default {
 				this.hideDropdown();
 			}
 		},
-
-		handleMouseEnter(e) {
-			// #ifdef H5
-			e.target.style.cursor = 'pointer';
-			// #endif
-		},
-
-		handleMouseLeave(e) {
-			// #ifdef H5
-			e.target.style.cursor = 'default';
-			// #endif
-		},
-
 		bindGlobalClick() {
 			// #ifdef H5
 			document.addEventListener('click', this.checkClickOutside);
-			// #endif
-
-			// #ifdef MP || APP-PLUS
-			const query = uni.createSelectorQuery().in(this);
-			query.selectViewport().on('tap', this.checkClickOutside).exec();
 			// #endif
 		},
 
 		unbindGlobalClick() {
 			// #ifdef H5
 			document.removeEventListener('click', this.checkClickOutside);
-			// #endif
-
-			// #ifdef MP || APP-PLUS
-			const query = uni.createSelectorQuery().in(this);
-			query.selectViewport().off('tap', this.checkClickOutside);
 			// #endif
 		},
 	},
@@ -152,6 +128,7 @@ export default {
 .version-text {
 	font-size: 28rpx;
 	color: #606266;
+	text-decoration: none;
 }
 
 .arrow {

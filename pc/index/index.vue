@@ -95,6 +95,8 @@ export default {
 			showPopup: false,
 			popupPwd: '',
 			key: '',
+			groupKey: '',
+			tmpGroupData: [],
 			contentViews: [],
 			compNavActive: config.NAV_COMP_KEY_DEMO,
 			compContent: '',
@@ -191,6 +193,9 @@ export default {
 				this.adminLock = 'true';
 				this.showPopup = false;
 				this.activeName = this.key;
+				console.log('this.groupKey is ', this.groupKey);
+				this.navActive = this.groupKey;
+				this.datas = this.tmpGroupData;
 				// 修改URL地址参数，不刷新当前页面
 				history.replaceState({}, '', `/pc/index/index?name=${this.key}`);
 				return;
@@ -251,8 +256,17 @@ export default {
 		},
 		// 顶部导航切换
 		handleHeaderNavChange(item) {
-			this.datas = groupData[item.key];
-			const first = this.datas[0];
+			const tmpData = groupData[item.key];
+			const first = tmpData[0];
+
+			if (first.lock && !this.cmpLock) {
+				this.showPopup = true;
+				this.key = first.children[0].key;
+				this.groupKey = item.key;
+				this.tmpGroupData = tmpData;
+				return;
+			}
+			this.datas = tmpData;
 			this.toView(first.children[0].key, first.lock);
 		},
 		loadNavFromActiveName() {
@@ -260,11 +274,11 @@ export default {
 				this.navActive = config.NAV_KEY_COMP;
 				this.datas = groupData[config.NAV_KEY_COMP];
 			} else if (this.activeName.indexOf('devGuide') > -1) {
+				this.navActive = config.NAV_KEY_DEV_GROUP;
+				this.datas = groupData[config.NAV_KEY_DEV_GROUP];
+			} else if (this.activeName.indexOf('handbook') > -1) {
 				this.navActive = config.NAV_KEY_DEV;
 				this.datas = groupData[config.NAV_KEY_DEV];
-			} else if (this.activeName.indexOf('handbook') > -1) {
-				this.navActive = config.NAV_KEY_DOC;
-				this.datas = groupData[config.NAV_KEY_DOC];
 			}
 		},
 		getContentViews(str) {
@@ -422,7 +436,7 @@ export default {
 		.pc-view {
 			position: fixed;
 			z-index: 10;
-			top: 50%;
+			top: calc(50% + var(--pc-header-nav-height));
 			transform: translateY(-50%);
 			right: var(--pc-padding);
 			width: calc(var(--pc-view-width) + 28px);

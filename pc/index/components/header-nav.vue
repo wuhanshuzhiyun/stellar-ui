@@ -39,8 +39,10 @@ export default {
 	},
 	methods: {
 		toView(item) {
-			this.$emit('update:mode', item.key);
-			this.active = item.key;
+			if (uni.getStorageSync('admin-lock') === 'true' || item.key !== config.NAV_KEY_DEV_GROUP) {
+				this.$emit('update:mode', item.key);
+				this.active = item.key;
+			}
 			this.$emit('change', item);
 		},
 	},
