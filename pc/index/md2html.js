@@ -8,11 +8,36 @@ import {
 // 创建 MarkdownIt 实例
 const md = new MarkdownIt({
     html: true,
-    xhtmlOut: true,
+    breaks: true,
+    linkify: true,
 });
+
+
 
 // 使用 markdown-it-highlightjs 插件
 md.use(highlight);
+
+// 保存默认的 fence 渲染规则
+const defaultFence = md.renderer.rules.fence || function(tokens, idx, options, env, self) {
+    return self.renderToken(tokens, idx, options);
+};
+md.renderer.rules.fence = function(tokens, idx, options, env, self) {
+    const token = tokens[idx];
+    const code = token.content;
+
+    if (token.info === 'bash') {
+        return `
+          
+          <pre class="markdown-bash" >
+            <code class="hljs language-bash">${code}</code>
+          </pre>
+          
+        `;
+
+    }
+
+    return defaultFence(tokens, idx, options, env, self);
+};
 
 // #ifdef H5
 const parser = new DOMParser();

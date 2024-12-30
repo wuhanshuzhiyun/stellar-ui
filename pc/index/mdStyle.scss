@@ -107,9 +107,11 @@
 			white-space: pre-wrap;
 			word-wrap: break-word;
 			-webkit-font-smoothing: auto;
+
 			div.code-body-box {
 				max-height: 400px;
 				overflow: auto;
+
 				code {
 					tab-size: 4; /* 这可能不起作用，取决于浏览器支持 */
 					-moz-tab-size: 4; /* Firefox */
@@ -120,12 +122,57 @@
 			& > .code-copy-button {
 				position: absolute;
 				top: 10px;
-				right: 10px;
+				right: 15px;
 				background-color: rgba(0, 0, 0, 0);
 				border: 0;
 				outline: 0;
 				cursor: pointer;
-				color: #888;
+				color: #3890ff;
+			}
+
+			&.markdown-bash {
+				width: fit-content;
+				.code-body-box {
+					width: fit-content;
+					.language-bash {
+						width: fit-content;
+						padding-right: 80px;
+					}
+				}
+			}
+		}
+		&.render {
+			a {
+				color: #3890ff;
+			}
+			h1 {
+				line-height: 46px;
+				font-size: 33px;
+				padding-bottom: 11px;
+				border-bottom: 1px solid #ddd;
+			}
+
+			h2 {
+				font-size: 24px;
+			}
+			h4 {
+				font-size: 17px;
+			}
+			ul {
+				padding-left: 20px;
+				color: #000;
+				li {
+					font-weight: bold;
+					color: #000;
+					h4 {
+					}
+				}
+				// margin-bottom: 10px;
+			}
+
+			ol {
+				padding-left: 40px;
+				color: #191919;
 			}
 		}
 	}

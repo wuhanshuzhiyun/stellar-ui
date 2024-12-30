@@ -36,12 +36,15 @@
 				</view>
 			</view>
 			<view class="pc-content" :markdown="content">
+				<!-- 组件预览页面 -->
 				<template v-if="cmpIsCompPage">
 					<view v-html="contentViews[0]" class="markdown-view"></view>
 					<comp-nav :mode.sync="compNavActive" @change="handleCompNavChange" />
 					<view v-html="compContent" class="markdown-view"></view>
 				</template>
-				<view v-html="content" class="markdown-view" v-else></view>
+				<!-- 非组件预览页面（开发指南，研发组等） -->
+				<view v-html="content" class="markdown-view render" v-else></view>
+				<!-- 底部评价 -->
 				<commentVue v-if="isComponent && loadingMd" :activeName="activeName" :isComponent="isComponent" />
 			</view>
 			<view class="pc-view" v-if="cmpIsCompPage">
@@ -173,6 +176,14 @@ export default {
 					this.getContentViews(res.data);
 				} else {
 					this.content = await md2html(res.data);
+					// #ifdef H5
+					this.$nextTick(() => {
+						this.loadingMd = true;
+						document.querySelectorAll('.code-copy-button').forEach((btn) => {
+							btn.addEventListener('click', () => this.copy(btn));
+						});
+					});
+					// #endif
 				}
 			});
 		},
@@ -238,14 +249,6 @@ export default {
 		handleCompNavChange(item) {
 			if (item.key === config.NAV_COMP_KEY_DEMO) {
 				this.compContent = this.contentViews[1];
-				// #ifdef H5
-				this.$nextTick(() => {
-					this.loadingMd = true;
-					document.querySelectorAll('.code-copy-button').forEach((btn) => {
-						btn.addEventListener('click', () => this.copy(btn));
-					});
-				});
-				// #endif
 			} else if (item.key === config.NAV_COMP_KEY_API) {
 				this.compContent = this.contentViews[2];
 			} else if (item.key === config.NAV_COMP_KEY_GUIDE) {
