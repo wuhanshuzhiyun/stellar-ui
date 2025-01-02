@@ -2,7 +2,7 @@
 
 虚拟数字键盘，用于输入数字、密码或身份证等场景。
 
-{{compatibility}}
+---$
 
 ### 代码演示
 - 以下是公用scss代码
@@ -203,6 +203,8 @@ export default{
 }
 </script>
 ```
+
+---$
 ### API
 #### 组件属性(Props)
 
@@ -240,4 +242,5 @@ export default{
 |---			|---					|---			|---			|
 | default	| 弹窗标题插槽	|-				|-				|
 
+---$
 {{xuyajun}}

@@ -2,7 +2,7 @@
 
 在一组备选项中进行多选。
 
-{{compatibility}}
+---$
 
 ### 代码演示
 JavaScript后面的演示代码中涉及到的变量和方法都使用本javasaript代码
@@ -230,6 +230,7 @@ export default {
 </ste-checkbox-group>
 ```
 
+---$
 ### API
 #### Checkbox组件属性(Props)
 
@@ -292,4 +293,5 @@ export default {
 | `default`	| 复选框文本内容	|`{ checked: boolean, disabled: boolean, readonly: boolean }`	| -			|
 | `icon`	| 复选框图标		|`{ checked: boolean, disabled: boolean, readonly: boolean }`	| -			|
 
+---$
 {{qinpengfei}}

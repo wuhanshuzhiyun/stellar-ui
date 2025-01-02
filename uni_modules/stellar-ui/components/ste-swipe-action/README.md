@@ -2,7 +2,7 @@
 - 该组件一般用于左滑唤出操作菜单的场景，用的最多的是左滑删除操作。
 - 如果把该组件通过v-for用于左滑删除的列表，请保证循环的:key是一个唯一值，可以用数据的id或者title替代。 不能是数组循环的index，否则删除的时候，可能会出现数据错乱
 
-{{compatibility}}
+---$
 
 ### 代码演示
 - 演示代码中公用css样式
@@ -143,6 +143,7 @@ export default{
 </script>
 ```
 
+---$
 ### API
 #### SwipeAction Props
 
@@ -192,4 +193,5 @@ export default{
 | `close`	| 关闭滑块时触发	| -																							| -				|
 
 
+---$
 {{xuyajun}}

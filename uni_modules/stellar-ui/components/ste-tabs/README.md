@@ -1,7 +1,7 @@
 # Tabs 标签页
 标签页组件，集成了常见标签页所需功能。
 
-{{compatibility}}
+---$
 
 ### 代码演示
 **JavaScript**后面的演示代码中涉及到的变量和方法都使用本javasaript代码

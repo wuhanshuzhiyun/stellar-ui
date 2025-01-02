@@ -103,65 +103,34 @@ async function insetTemplateMdStr(htmlStr) {
 }
 
 
-/** 
+/**
  * 拆分组件文档md文件，方便分块显示调整样式
  * @param {string} content 组件文档的内容
  */
 export async function splitCompMarkdown(content) {
-    // 定义正则表达式
-    const compatibilityRegex = /\{\{[^}]+\}\}/;
-    const apiMarker = '### API';
+    // 使用 ---$ 分割内容
+    const parts = content.split('---$');
 
-    // 分割内容
-    const parts = [];
-
-    // 查找第一个 {{xxx}} 的位置
-    const firstMatch = content.match(compatibilityRegex);
-    if (!firstMatch) {
-        throw new Error('Cannot find {{xxx}} marker');
+    // 验证分割后的部分数量
+    if (parts.length !== 4) {
+        throw new Error('请按照正确格式，用---$分割 README.md 文件');
     }
-
-    // 第一部分：从开始到第一个标记之前
-    const firstPart = content.slice(0, firstMatch.index);
-    parts.push(firstPart);
-
-    // 查找 API 标记的位置
-    const apiIndex = content.indexOf(apiMarker);
-    if (apiIndex === -1) {
-        throw new Error('Cannot find ### API marker');
-    }
-
-    // 第二部分：从第一个标记后到 API 前
-    const secondPart = content.slice(firstMatch.index + firstMatch[0].length, apiIndex);
-    parts.push(secondPart);
-
-    // 获取 API 后的内容
-    const afterApiContent = content.slice(apiIndex);
-
-    // 在 API 后的内容中找到最后一个 | 符号
-    const afterApiBracketIndex = afterApiContent.lastIndexOf('|');
-
-    // 第三部分：从 API 到最后一个 | 之前
-    const thirdPart = afterApiContent.slice(0, afterApiBracketIndex);
-    parts.push(thirdPart);
-
-    // 第四部分：表格结束后 到 所有内容
-    const fourthPart = afterApiContent.slice(afterApiBracketIndex + 1);
-    parts.push(fourthPart);
-
 
     // 渲染每个部分为HTML
-    console.log('xuanran')
     const htmlParts = [];
-    htmlParts.push(await _md2html(parts[0].trim())); // 组件名称部分
-    htmlParts.push(await _md2html(parts[1].trim())); // 组件示例部分
-    htmlParts.push(await _md2html(parts[2].trim())); // 组件API部分
+    // 组件名称部分
+    htmlParts.push(await _md2html(parts[0].trim()));
+    // 组件示例部分
+    htmlParts.push(await _md2html(parts[1].trim()));
+    // 组件API部分
+    htmlParts.push(await _md2html(parts[2].trim()));
 
     // 兼容性 + 贡献者部分
     let customStr = `{{compatibility}} \n\t\n `;
     customStr += `\n\t\n ### 贡献者 \n\t\n   <div class="con-box"> \n\t\n ${parts[3].trim()} \n\t\n </div>`
     htmlParts.push(await md2html(customStr));
-    return htmlParts
+
+    return htmlParts;
 }
 
 

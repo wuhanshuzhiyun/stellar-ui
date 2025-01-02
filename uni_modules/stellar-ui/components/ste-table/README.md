@@ -1,6 +1,6 @@
 # Table 表格
 
-{{compatibility}}
+---$
 
 ### 代码演示
 #### 基础使用
@@ -711,6 +711,7 @@ export default {
 
 ```
 
+---$
 ### API
 #### Table Props
 
@@ -780,4 +781,5 @@ export default {
 | `headerAlign`	| 表头对齐方式，若不设置该项，则使用表格的对齐方式	| `String`	| `left`| `left`：左对齐<br/>`center`：居中对齐<br/>`right`：右对齐									| -			|
 | `customKey`	| 自定义唯一key值								| `String`	| -		| -																							| `v1.17.3`	|
 
+---$
 {{fuyuwei}}

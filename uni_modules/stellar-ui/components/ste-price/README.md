@@ -2,7 +2,7 @@
 
 用于页面上显示价格的组件
 
-{{compatibility}}
+---$
 
 ### 代码演示
 #### 金额单位
@@ -97,6 +97,7 @@ export default {
 </script>
 ```
 
+---$
 ### API
 #### 组件属性(Props)
 
@@ -120,6 +121,7 @@ export default {
 | `bold`			| 金额是否加粗									| `Boolean`			| `false`		| -																	| `1.1.3`	|
 | `formatter`		| 用来格式化内容									| `Function(value)`	| -				| -																	| -			|
 
+---$
 {{fuyuwei}}
 
 {{xuyajun}}

@@ -2,7 +2,7 @@
 
 在一组备选项中进行单选。
 
-{{compatibility}}
+---$
 
 ### 代码演示
 JavaScript后面的演示代码中涉及到的变量和方法都使用本javasaript代码
@@ -222,6 +222,7 @@ export default {
 </ste-radio-group>
 ```
 
+---$
 ### API
 #### Radio组件属性(Props)
 
@@ -281,4 +282,5 @@ export default {
 | `default`	| 单选框文本内容	|`{ checked: boolean, disabled: boolean, readonly: boolean }`	| -			|
 | `icon`	| 单选框图标		|`{ checked: boolean, disabled: boolean, readonly: boolean }`	| -			|
 
+---$
 {{qinpengfei}}

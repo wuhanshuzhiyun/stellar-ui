@@ -2,7 +2,7 @@
 
 富文本，增加文本换行功能，解决两张图片中间有空隙的问题。
 
-{{compatibility}}
+---$
 
 #### 一张图片
 
@@ -16,6 +16,7 @@
 <ste-rich-text :text="node2"></ste-rich-text>
 ```
 
+---$
 ### API
 
 #### Props
@@ -26,4 +27,5 @@
 | `space`		| 显示连续空格	| `String`	| `"nbsp"`	| `"ensp"`：中文字符空格一半大小 <br/> `"emsp"`：中文字符空格大小<br/>`"nbsp"`：根据字体设置的空格大小	| -			|
 | `userSelect`	| 文本是否可选	| `Boolean`	| `false`	| -																								| -			|
 
+---$
 {{zyy}}

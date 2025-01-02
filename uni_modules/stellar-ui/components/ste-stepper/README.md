@@ -2,7 +2,7 @@
 
 步进器由增加按钮、减少按钮和输入框组成，用于在一定范围内输入、调整数字。
 
-{{compatibility}}
+---$
 
 ### 代码演示
 JavaScript后面的演示代码中涉及到的变量和方法都使用本javasaript代码
@@ -128,6 +128,7 @@ export default {
 <ste-stepper v-model="value15" theme="line" disableMinus></ste-stepper>
 ```
 
+---$
 ### API
 #### 组件属性(Props)
 
@@ -165,4 +166,5 @@ export default {
 | `focus`	|输入框聚焦时触发						| `event`																			| -			|
 | `blur`	|输入框失焦时触发						| `event`																			| -			|
 
+---$
 {{qinpengfei}}

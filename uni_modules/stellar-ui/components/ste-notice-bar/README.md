@@ -2,7 +2,7 @@
 
 用于循环播放展示一组消息通知。
 
-{{compatibility}}
+---$
 
 ### 代码演示
 JavaScript后面的演示代码中涉及到的变量和方法都使用本javasaript代码
@@ -91,6 +91,7 @@ export default {
 ```
 
 
+---$
 ### API
 #### 组件属性(Props)
 
@@ -124,4 +125,5 @@ export default {
 |`rightIcon`|右边图标的插槽	|-			|			|
 
 
+---$
 {{qinpengfei}}

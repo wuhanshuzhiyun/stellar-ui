@@ -372,7 +372,7 @@ export default {
 			}
 
 			.group {
-				.name {
+				> .name {
 					font-weight: bold;
 					font-size: 16px;
 					padding: 24px 0 0 8px;
@@ -384,7 +384,6 @@ export default {
 				cursor: pointer;
 				border-radius: 8px;
 				.name {
-					font-weight: 400;
 					padding: 10px 16px;
 					margin: 4px 0;
 					font-size: 13px;
@@ -405,12 +404,6 @@ export default {
 						color: var(--pc-main-color);
 					}
 				}
-
-				&.active {
-					.name {
-						font-weight: bold;
-					}
-				}
 			}
 		}
 
@@ -426,7 +419,7 @@ export default {
 				}
 			}
 			.markdown-view {
-				padding: 12px var(--pc-padding);
+				padding: 10px var(--pc-padding);
 				padding-bottom: 0;
 			}
 		}
@@ -441,7 +434,7 @@ export default {
 			z-index: 10;
 			top: calc(50% + var(--pc-header-nav-height));
 			transform: translateY(-50%);
-			right: var(--pc-padding);
+			right: 20px;
 			width: calc(var(--pc-view-width) + 28px);
 			min-width: calc(var(--pc-view-width) + 28px);
 			height: calc(var(--pc-view-height));

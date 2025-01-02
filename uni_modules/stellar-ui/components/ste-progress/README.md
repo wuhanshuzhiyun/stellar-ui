@@ -1,7 +1,7 @@
 # Progress 进度条
 进度条组件
 
-{{compatibility}}
+---$
 
 
 ### 代码演示
@@ -59,6 +59,7 @@
 <ste-progress :percentage="35" :displayTextThreshold="15"></ste-progress>
 ```
 
+---$
 ### API
 #### Props
 | 参数					| 说明																												| 类型				| 默认值		| 可选值							| 支持版本	|
@@ -81,5 +82,6 @@
 | ---		| ---		| ---		| ---		|
 | `default`	| 进度条内容	|-			| -			|
 
+---$
 
 {{fuyuwei}}

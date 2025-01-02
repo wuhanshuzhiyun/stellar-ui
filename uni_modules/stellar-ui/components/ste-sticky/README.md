@@ -1,7 +1,7 @@
 # Sticky 吸顶
 - 吸顶组件
 
-{{compatibility}}
+---$
 
 ### 代码演示
 
@@ -29,6 +29,7 @@ export default{
 
 
 
+---$
 ### API
 #### Swiper Props
 
@@ -47,4 +48,5 @@ export default{
 | `unfixed`	| 非吸顶状态时触发	| -				| -				|
 
 
+---$
 {{xuyajun}}

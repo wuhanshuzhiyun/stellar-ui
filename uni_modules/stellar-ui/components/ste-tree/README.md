@@ -1,7 +1,7 @@
 # Tree 树形控件
 - 树形控件
 
-{{compatibility}}
+---$
 
 ## 使用示例
 - 以下示例中，但凡使用到`options`属性的，都使用以下数据
@@ -198,8 +198,7 @@ export default {
 ```
 
 
-
-
+---$
 ### API
 #### Props
 背景之外的颜色属性只支持`16进制`、`RGB`、`RGBA`格式
@@ -237,4 +236,5 @@ export default {
 
 
 
+---$
 {{xuyajun}}

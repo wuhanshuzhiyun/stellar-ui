@@ -2,7 +2,7 @@
 
 给子元素添加动画效果
 
-{{compatibility}}
+---$
 
 ### 代码演示
 #### 基础使用
@@ -81,6 +81,7 @@ export default {
 </script>
 ```
 
+---$
 ### API
 #### 组件属性(Props)
 
@@ -112,4 +113,5 @@ export default {
 | ---		| ---		| ---		|
 | `default`	| 默认插槽	| -			|
 
+---$
 {{fuyuwei}}

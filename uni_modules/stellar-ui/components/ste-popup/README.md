@@ -1,6 +1,6 @@
 # Popup 弹出层
 
-{{compatibility}}
+---$
 
 ### 代码演示
 #### 基础使用
@@ -108,6 +108,7 @@ export default {
 </script>
 ```
 
+---$
 ### API
 #### 组件属性(Props)
 
@@ -143,4 +144,5 @@ export default {
 |---		|---			|---		|---		|
 | default	| 内容部分插槽	|-			|-			|
 
+---$
 {{fuyuwei}}

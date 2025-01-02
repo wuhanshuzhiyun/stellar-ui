@@ -2,7 +2,7 @@
 
 通过折叠面板收纳内容区域。
 
-{{compatibility}}
+---$
 
 
 ### Javascript 示例数据
@@ -106,6 +106,7 @@ methods: {
 ```
 
 
+---$
 ### API
 
 #### IndexList Props
@@ -148,4 +149,5 @@ methods: {
 | `title`		| 自定义标题内容	|-				|			
 
 
+---$
 {{xuyajun}}

@@ -1,7 +1,7 @@
 # DatePicker 时间选择器
 年月日时分秒选择器
 
-{{compatibility}}
+---$
 
 ### 代码演示
 #### 基础使用
@@ -100,6 +100,7 @@ export default {
 <ste-date-picker mode="date" :visibleItemCount="10" ></ste-date-picker>
 ```
 
+---$
 ### API
 #### Props
 | 参数				| 说明																			| 类型				| 默认值		| 可选值																																													| 支持版本	|
@@ -130,4 +131,5 @@ export default {
 
 
 
+---$
 {{fuyuwei}}

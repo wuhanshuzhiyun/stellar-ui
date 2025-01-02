@@ -2,7 +2,7 @@
 
 用于单独预览图片或者视频
 
-{{compatibility}}
+---$
 
 ### 代码演示
 #### 基础用法
@@ -214,6 +214,7 @@ export default{
 
 
 
+---$
 ### API
 #### Props
 
@@ -238,4 +239,5 @@ export default{
 | `longpress`	| 长按时触发	| `index`:当前下标		| -			|
 
 
+---$
 {{xuyajun}}

@@ -2,7 +2,7 @@
 
 步骤条组件,拆分展示某项流程的步骤，引导用户按流程完成任务或向用户展示当前状态。
 
-{{compatibility}}
+---$
 
 ### 代码演示
 JavaScript后面的演示代码中涉及到的变量和方法都使用本javasaript代码
@@ -94,6 +94,7 @@ export default {
 </ste-steps>
 ```
 
+---$
 ### API
 #### Steps组件属性(Props)
 
@@ -127,4 +128,5 @@ export default {
 |`content`	|步骤内容	|-			|-			|
 |`icon`		|步骤图标	|-			|-			|
 
+---$
 {{qinpengfei}}

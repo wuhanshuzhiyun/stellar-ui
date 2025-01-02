@@ -1,7 +1,7 @@
 # Search 搜索
 搜索组件，集成了常见搜索框所需功能。
 
-{{compatibility}}
+---$
 
 ### 代码演示
 **JavaScript**
@@ -213,6 +213,7 @@ export default {
 ```
 
 
+---$
 ### API
 #### Props
 | 属性名			| 说明									| 类型		| 默认值			| 可选值									|支持版本		|
@@ -255,6 +256,7 @@ export default {
 | `click`			| 点击任意区域触发													| `value`: 输入框的值		| -		|
 | `selectSuggestion`| 点击搜索建议触发													| `value`: 对应的建议对象	| -		|
 
+---$
 {{xuyajun}}
 
 {{qinpengfei}}

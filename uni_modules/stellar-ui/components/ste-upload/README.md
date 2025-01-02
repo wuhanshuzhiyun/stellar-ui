@@ -1,7 +1,7 @@
 # Upload 上传
 支持图片上传、视频上传、其他文件上传（仅微信小程序和H5）。
 
-{{compatibility}}
+---$
 
 
 #### 基础用法
@@ -212,6 +212,7 @@ export default{
 ```
 
 
+---$
 ### API
 ### Props
 
@@ -271,4 +272,5 @@ export default{
 | `close-preview`	| 关闭预览时触发				| -																										|
 
 
+---$
 {{xuyajun}}

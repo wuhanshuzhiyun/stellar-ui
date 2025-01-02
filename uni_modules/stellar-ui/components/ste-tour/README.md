@@ -2,7 +2,7 @@
 
 > 用于创建一个带有步骤的指引
 
-{{compatibility}}
+---$
 
 ## 使用示例
 - 示例代码中用到的公共CSS样式
@@ -156,6 +156,7 @@ export default {
 
 
 
+---$
 ### API
 #### Props
 背景之外的颜色属性只支持`16进制`、`RGB`、`RGBA`格式
@@ -189,5 +190,5 @@ export default {
 
 
 
-
+---$
 {{xuyajun}}

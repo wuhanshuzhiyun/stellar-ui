@@ -1,7 +1,7 @@
 # Select 下拉选
 - 当选项过多时，使用下拉菜单展示并选择内容。
 
-{{compatibility}}
+---$
 
 ## 使用示例
 
@@ -346,6 +346,7 @@ export default {
 
 
 
+---$
 ### API
 #### Props
 背景之外的颜色属性只支持`16进制`、`RGB`、`RGBA`格式
@@ -428,4 +429,5 @@ export default {
 
 
 
+---$
 {{xuyajun}}

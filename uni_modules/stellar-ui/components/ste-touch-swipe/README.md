@@ -1,7 +1,7 @@
 # TouchSwipe 手势切屏
 手势切屏组件，支持水平手势切换和垂直手势切换。
 
-{{compatibility}}
+---$
 
 
 #### 水平切换，固定宽度
@@ -65,6 +65,7 @@ export default {
 ```
 
 
+---$
 ### API
 ### touch-swipe Props
 
@@ -99,4 +100,5 @@ export default {
 | `disabled` | 是否禁用当前子元素（禁用后无法滑动到当前子元素） | `Boolean` | `false` | ---    |
 
 
+---$
 {{xuyajun}}

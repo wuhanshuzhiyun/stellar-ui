@@ -41,6 +41,7 @@ export default {
 </script>
 ```
 
+---$
 ### API
 #### 组件属性(Props)
 | 参数			| 说明					| 类型		| 默认值		| 可选值	| 支持版本	|
@@ -55,4 +56,5 @@ export default {
 事件可参考原生[video](https://zh.uniapp.dcloud.io/component/video.html)
 
 
+---$
 {{fuyuwei}}

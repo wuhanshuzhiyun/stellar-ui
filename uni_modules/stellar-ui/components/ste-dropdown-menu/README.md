@@ -1,6 +1,6 @@
 # DropdownMenu 下拉菜单
 
-{{compatibility}}
+---$
 
 ### 代码演示
 #### 基础使用
@@ -299,6 +299,7 @@ export default {
 ```
 
 
+---$
 ### API
 #### Menu Props
 
@@ -352,4 +353,5 @@ export default {
 | `default`	| 内容插槽	| -			| -			|
 
 
+---$
 {{fuyuwei}}

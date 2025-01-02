@@ -2,7 +2,7 @@
 
 表示两种相互对立的状态间的切换，多用于触发「开/关」。
 
-{{compatibility}}
+---$
 
 ### 代码演示
 JavaScript后面的演示代码中涉及到的变量和方法都使用本javasaript代码
@@ -84,6 +84,7 @@ export default {
 <ste-switch v-model="value5" loading></ste-switch>
 ```
 
+---$
 ### API
 #### 组件属性(Props)
 
@@ -105,4 +106,5 @@ export default {
 | `change`	|当绑定值变化时触发的事件					|`value`：改变后的绑定值																| -			|
 
 
+---$
 {{qinpengfei}}

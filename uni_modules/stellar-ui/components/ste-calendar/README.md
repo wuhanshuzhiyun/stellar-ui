@@ -1,7 +1,7 @@
 # Calendar 日历
 日历组件
 
-{{compatibility}}
+---$
 
 ### 基础用法
 - 属性`height`用于设置日历的高度，单位为`rpx`，默认`100%`
@@ -246,9 +246,7 @@ export default{
 </style>
 ```
 
-
-
-
+---$
 ### API
 #### Tabs Props
 背景之外的颜色属性只支持`16进制`、`RGB`、`RGBA`格式
@@ -302,4 +300,5 @@ export default{
 | `viewMonth`	| 监听用户滚动日历时，视图区域展示的月份变化														| `YYYY-MM`						| -				|
 
 
+---$
 {{xuyajun}}

@@ -1,7 +1,7 @@
 # Image 图片
 图片组件，对原生`image`组件进行了扩展。
 
-{{compatibility}}
+---$
 
 ### 代码演示
 
@@ -103,6 +103,7 @@ export default {
 ```
 
 
+---$
 ### API
 #### Props
 |属性名									|说明																																																								| 类型							| 默认值						| 可选值									|支持版本						|
@@ -146,6 +147,7 @@ export default {
 | `error`	| 加载失败内容插槽	|-			| -			|
 
 
+---$
 {{xuyajun}}
 
 {{qinpengfei}}

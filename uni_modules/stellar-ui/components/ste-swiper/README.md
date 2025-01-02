@@ -7,7 +7,7 @@
 		- 禁用等原生组件没有的功能
 -  性能比较原生轮播组件略有不足，<span style="color:red">当原生组件能满足业务需求时不推荐使用此组件</span>
 
-{{compatibility}}
+---$
 
 ### 代码演示
 
@@ -125,6 +125,7 @@ export default{
 
 
 
+---$
 ### API
 #### Swiper Props
 
@@ -168,4 +169,5 @@ export default{
 | `default`	| 默认插槽，在插槽中的内容会展示在标签内容区域	| -				| -				|
 
 
+---$
 {{xuyajun}}

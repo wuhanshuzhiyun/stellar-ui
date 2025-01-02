@@ -2,7 +2,7 @@
 
 模拟系统的消息提示框而实现的一套模态对话框组件，用于消息提示、确认消息和提交内容。
 
-{{compatibility}}
+---$
 ### 使用方法
 1. 安装 `ste-vue-inset-loader` 插件
 ```
@@ -192,6 +192,7 @@ msgBoxCallback3() {
 },
 ```
 
+---$
 ### API
 #### 组件属性(Props)
 
@@ -212,4 +213,5 @@ msgBoxCallback3() {
 | `complete`		| 弹框关闭的回调函数（无论是确认关闭还是取消关闭）	| `Function`| `null`	| -		| -			|
 
 
+---$
 {{fuyuwei}}

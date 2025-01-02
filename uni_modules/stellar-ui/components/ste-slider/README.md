@@ -2,7 +2,7 @@
 
 用于选择横轴或者竖轴上的数值、区间、档位。
 
-{{compatibility}}
+---$
 
 ### 代码演示
 #### 基础使用
@@ -122,6 +122,7 @@ export default {
 </style>
 ```
 
+---$
 ### API
 #### 组件属性(Props)
 
@@ -160,4 +161,5 @@ export default {
 |`button`	|自定义右侧滑块按钮（范围选择下）	|-			|-			|
 
 
+---$
 {{fuyuwei}}

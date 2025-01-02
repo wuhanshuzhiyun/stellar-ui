@@ -1,7 +1,7 @@
 # Drag 拖拽
 用于拖拽的容器
 
-{{compatibility}}
+---$
 
 
 ### 代码演示
@@ -74,6 +74,7 @@ export default {
 
 ```
 
+---$
 ### API
 #### Props
 
@@ -98,4 +99,5 @@ export default {
 | ---		| ---		| ---		| ---		|
 | `default`	| 拖拽内容	|-			| -			|
 
+---$
 {{fuyuwei}}

@@ -2,7 +2,7 @@
 
 签名组件用于在页面上显示签名。
 
-{{compatibility}}
+---$
 
 ### 代码演示
 #### 基础使用
@@ -69,6 +69,7 @@ export default {
 ```
 
 
+---$
 ### API
 #### 组件属性(Props)
 
@@ -100,4 +101,5 @@ export default {
 |`save`	| 保存为图片	|(base64)=>void,(err)=>void	|-				|
 
 
+---$
 {{xuyajun}}
