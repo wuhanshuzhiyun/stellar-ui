@@ -34,6 +34,12 @@
 </style>
 <div class="con-box">
 	<div class="con-item">
+		<a>
+			<image class="con-image" src="https://image.whzb.com/chain/StellarUI/头像/费玉婷.png"></image>
+		</a>
+		<a><div class="name">费玉婷</div></a>
+	</div>
+	<div class="con-item">
 		<a target="_blank" href="/pages/gitlab/gitlab?name=qinpengfei">
 			<image class="con-image" src="https://image.whzb.com/chain/StellarUI/头像/秦鹏飞.png"></image>
 		</a>

@@ -35,7 +35,7 @@
 					</view>
 				</view>
 			</view>
-			<view class="pc-content" :markdown="content">
+			<view class="pc-content" :data-markdown="content">
 				<!-- 组件预览页面 -->
 				<template v-if="cmpIsCompPage">
 					<view v-html="contentViews[0]" class="markdown-view"></view>
