@@ -72,6 +72,8 @@
 <script>
 import { formatDate, getCalendarData } from './self-date.js';
 import utils from '../../utils/utils.js';
+import useColor from '../../config/color.js';
+let color = useColor();
 /**
  * ste-calendar 日历
  * @description 日历组件
@@ -117,8 +119,8 @@ export default {
 		mode: { type: [String, null], default: () => 'single' },
 		startText: { type: [String, null], default: () => '开始' },
 		endText: { type: [String, null], default: () => '结束' },
-		color: { type: [String, null], default: () => '#FF1A00' },
-		weekendColor: { type: [String, null], default: () => '#FF1A00' },
+		color: { type: [String, null], default: () => '' },
+		weekendColor: { type: [String, null], default: () => '' },
 		minDate: { type: [String, Number, Date, null], default: () => 0 },
 		maxDate: { type: [String, Number, Date, null], default: () => 0 },
 		defaultDate: { type: [Number, String, Date, null], default: () => 0 },
@@ -155,12 +157,24 @@ export default {
 			const style = {
 				'--calendar-width': utils.formatPx(this.width),
 				'--calendar-height': utils.formatPx(this.height),
-				'--calendar-color': this.color,
-				'--calendar-weekend-color': this.weekendColor,
-				'--calendar-bg-color': utils.Color.formatColor(this.color, 0.1),
-				'--calendar-range-color': utils.Color.formatColor(this.color, 0.2),
-				'--calendar-disabled-color': utils.Color.formatColor(this.color, 0.3),
-				'--calendar-sign-color': utils.Color.formatColor(this.color, 0.7),
+				'--calendar-color': this.color ? this.color : color.getColor().steThemeColor,
+				'--calendar-weekend-color': this.weekendColor ? this.weekendColor : color.getColor().steThemeColor,
+				'--calendar-bg-color': utils.Color.formatColor(
+					this.color ? this.color : color.getColor().steThemeColor,
+					0.1
+				),
+				'--calendar-range-color': utils.Color.formatColor(
+					this.color ? this.color : color.getColor().steThemeColor,
+					0.2
+				),
+				'--calendar-disabled-color': utils.Color.formatColor(
+					this.color ? this.color : color.getColor().steThemeColor,
+					0.3
+				),
+				'--calendar-sign-color': utils.Color.formatColor(
+					this.color ? this.color : color.getColor().steThemeColor,
+					0.7
+				),
 				'--calendar-start-text': `"${this.startText}"`,
 				'--calendar-end-text': `"${this.endText}"`,
 				'--calendar-line-height': `${rowHeight}px`,

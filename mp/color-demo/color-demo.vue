@@ -16,6 +16,12 @@
 					<ste-button>按钮</ste-button>
 				</view>
 			</view>
+			<view class="demo-item">
+				<view class="title">日历</view>
+				<view class="item-block">
+					<ste-calendar height="720" :showTitle="false" @confirm="handleConfirm" ref="Calendar" />
+				</view>
+			</view>
 		</view>
 	</view>
 </template>

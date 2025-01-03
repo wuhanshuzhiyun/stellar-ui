@@ -157,8 +157,6 @@ export default {
 	created() {},
 	computed: {
 		cmpBtnStyle() {
-			console.log('background', this.background);
-			console.log('steThemeColor', color.getColor().steThemeColor);
 			let style = {};
 			// 为解决支付宝动态类名时不兼容，尽量使用内联样式
 
