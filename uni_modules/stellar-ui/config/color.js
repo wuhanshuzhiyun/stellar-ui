@@ -2,7 +2,8 @@ import store from '../utils/store.js';
 import Vuex from 'vuex';
 let $state = new Vuex.Store({
 	state: {
-		steThemeColor: 'green',
+		steThemeColor: '#0091FF',
+		defaultColor: '#0091FF',
 	},
 }).state;
 

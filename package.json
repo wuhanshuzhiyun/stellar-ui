@@ -19,7 +19,8 @@
 		"markdown-it": "^14.0.0",
 		"markdown-it-highlightjs": "^4.0.1",
 		"uni-read-pages": "^1.0.5",
-		"uni-simple-router": "^2.0.8-beta.4"
+		"uni-simple-router": "^2.0.8-beta.4",
+		"vcolorpicker": "^1.1.0"
 	},
 	"devDependencies": {
 		"file-loader": "^6.2.0",

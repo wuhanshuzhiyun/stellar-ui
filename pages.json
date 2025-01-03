@@ -4,11 +4,12 @@
 			"toast": "<root-portal><ste-toast id='steToast'></ste-toast></root-portal>",
 			"msgBox": "<root-portal><ste-message-box id='steMessageBox'></ste-message-box></root-portal>"
 		},
-		// 全局配置  
+		// 全局配置
 		"label": ["toast", "msgBox"],
 		"rootEle": "view"
 	},
-	"pages": [ //pages数组中第一项表示应用启动页，参考：https://uniapp.dcloud.io/collocation/pages
+	"pages": [
+		//pages数组中第一项表示应用启动页，参考：https://uniapp.dcloud.io/collocation/pages
 		// #ifdef MP-WEIXIN
 		{
 			"path": "mp/index/index",
@@ -251,7 +252,8 @@
 					"navigationBarTitleText": ""
 				}
 			}
-		}, {
+		},
+		{
 			"path": "mp/rate-demo/rate-demo",
 			"style": {
 				"navigationStyle": "custom",
@@ -601,7 +603,6 @@
 					"navigationBarTitleText": ""
 				}
 			}
-
 		},
 		{
 			"path": "mp/tree-demo/tree-demo",
@@ -615,7 +616,6 @@
 					"navigationBarTitleText": ""
 				}
 			}
-
 		},
 		{
 			"path": "mp/tour-demo/tour-demo",
@@ -629,7 +629,6 @@
 					"navigationBarTitleText": ""
 				}
 			}
-
 		},
 		{
 			"path": "mp/select-demo/select-demo",
@@ -643,7 +642,6 @@
 					"navigationBarTitleText": ""
 				}
 			}
-
 		},
 		{
 			"path": "mp/signature-demo/signature-demo",
@@ -657,7 +655,6 @@
 					"navigationBarTitleText": ""
 				}
 			}
-
 		},
 		{
 			"path": "mp/drag-demo/drag-demo",
@@ -736,6 +733,19 @@
 					"navigationBarTitleText": ""
 				}
 			}
+		},
+		{
+			"path": "mp/color-demo/color-demo",
+			"style": {
+				"navigationStyle": "custom",
+				"disableScroll": true,
+				"mp-alipay": {
+					"transparentTitle": "always",
+					"titlePenetrate": "YES",
+					"allowsBounceVertical": "NO",
+					"navigationBarTitleText": ""
+				}
+			}
 		}
 	],
 	"globalStyle": {
@@ -749,7 +759,8 @@
 	"tabBar": {
 		"color": "#000",
 		"selectedColor": "#0090ff",
-		"list": [{
+		"list": [
+			{
 				"iconPath": "static/tabbars/home.png",
 				"selectedIconPath": "static/tabbars/home_fill.png",
 				"pagePath": "mp/index/index",
@@ -770,5 +781,4 @@
 			"ste-(.*)": "@/uni_modules/stellar-ui/components/ste-$1/ste-$1.vue"
 		}
 	}
-
 }

@@ -3,10 +3,13 @@ import Vue from 'vue';
 import './uni.promisify.adaptor';
 import { router, RouterMount } from './router.js';
 import mixin from './common/app-mixin.js';
+import vcolorpicker from 'vcolorpicker';
 Vue.use(router);
 Vue.mixin(mixin);
+Vue.use(vcolorpicker);
 Vue.config.productionTip = false;
 App.mpType = 'app';
+
 const app = new Vue({
 	...App,
 });

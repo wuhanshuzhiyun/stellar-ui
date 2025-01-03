@@ -112,7 +112,7 @@ export default {
 		},
 		background: {
 			type: [String, null],
-			default: color.getColor().steThemeColor,
+			default: '',
 		},
 		borderColor: {
 			type: [String, null],
@@ -157,6 +157,8 @@ export default {
 	created() {},
 	computed: {
 		cmpBtnStyle() {
+			console.log('background', this.background);
+			console.log('steThemeColor', color.getColor().steThemeColor);
 			let style = {};
 			// 为解决支付宝动态类名时不兼容，尽量使用内联样式
 
@@ -203,7 +205,7 @@ export default {
 			}
 
 			// 背景色 & 字体色
-			style = { ...style, ...utils.bg2style(this.background) };
+			style = { ...style, ...utils.bg2style(this.background ? this.background : color.getColor().steThemeColor) };
 			style.color = this.color;
 
 			// 禁用 disabled | 加载 loading

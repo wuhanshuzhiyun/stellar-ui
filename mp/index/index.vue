@@ -20,6 +20,17 @@
 					<text>Stellar UI，全面的组件和便捷的工具会让您信手拈来，如鱼得水。</text>
 				</view>
 			</view>
+			<!-- ***个性化*** -->
+			<view class="group-title">个性化</view>
+			<view class="com-box" @click="nav('color')">
+				<view class="com-title">
+					<ste-image :src="joinSrc('组件图标/color.png')" :width="36" :height="36" />
+					<text>主题色</text>
+				</view>
+				<view class="com-arrow">
+					<ste-image :src="joinSrc('组件图标/r-arrow.png')" :width="32" :height="32" />
+				</view>
+			</view>
 			<!-- ***基础组件*** -->
 			<view class="group-title">基础组件</view>
 			<view class="com-box" @click="nav('badge')">
