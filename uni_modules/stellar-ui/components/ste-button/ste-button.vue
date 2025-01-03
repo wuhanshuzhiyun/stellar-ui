@@ -59,6 +59,8 @@
 
 <script>
 import utils from '../../utils/utils.js';
+import useColor from '../../config/color.js';
+let color = useColor();
 /**
  * ste-button 按钮
  * @description 按钮组件
@@ -110,7 +112,7 @@ export default {
 		},
 		background: {
 			type: [String, null],
-			default: '#0091FF',
+			default: color.getColor().steThemeColor,
 		},
 		borderColor: {
 			type: [String, null],
