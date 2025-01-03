@@ -47,7 +47,7 @@
 				<!-- 底部评价 -->
 				<commentVue v-if="isComponent && loadingMd" :activeName="activeName" :isComponent="isComponent" />
 			</view>
-			<view class="pc-view" v-if="cmpIsCompPage">
+			<view class="pc-view" v-if="cmpShowH5">
 				<iframe class="view-iframe" :src="cmpIframeUrl" frameborder="0" />
 			</view>
 			<view class="popup-view" v-if="showPopup">
@@ -114,6 +114,12 @@ export default {
 		},
 		cmpIsCompPage() {
 			return this.navActive === config.NAV_KEY_COMP;
+		},
+		cmpShowH5() {
+			return (
+				this.navActive === config.NAV_KEY_COMP ||
+				config.SHOW_H5_PAGE.find((item) => this.activeName.indexOf(item) > -1)
+			);
 		},
 	},
 	watch: {
