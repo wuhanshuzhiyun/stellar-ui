@@ -35,7 +35,7 @@
 					</view>
 				</view>
 			</view>
-			<view class="pc-content" :data-markdown="content">
+			<scroll-view scroll-y class="pc-content" :scroll-top="contentScrollTop" @scroll="handleContentScroll">
 				<!-- 组件预览页面 -->
 				<template v-if="cmpIsCompPage">
 					<view v-html="contentViews[0]" class="markdown-view"></view>
@@ -46,7 +46,10 @@
 				<view v-html="content" class="markdown-view render" v-else></view>
 				<!-- 底部评价 -->
 				<commentVue v-if="isComponent && loadingMd" :activeName="activeName" :isComponent="isComponent" />
-			</view>
+			</scroll-view>
+			<!-- <view class="pc-content">
+				
+			</view> -->
 			<view class="pc-view" v-if="cmpShowH5">
 				<iframe class="view-iframe" :src="cmpIframeUrl" frameborder="0" />
 			</view>
@@ -103,6 +106,8 @@ export default {
 			contentViews: [],
 			compNavActive: config.NAV_COMP_KEY_DEMO,
 			compContent: '',
+			contentOldScrollTop: 0,
+			contentScrollTop: 0,
 		};
 	},
 	computed: {
@@ -191,6 +196,7 @@ export default {
 					});
 					// #endif
 				}
+				this.scrollContentToTop();
 			});
 		},
 		toView(key, lock) {
@@ -210,7 +216,7 @@ export default {
 				this.adminLock = 'true';
 				this.showPopup = false;
 				this.activeName = this.key;
-				console.log('this.groupKey is ', this.groupKey);
+
 				this.navActive = this.groupKey;
 				this.datas = this.tmpGroupData;
 				// 修改URL地址参数，不刷新当前页面
@@ -304,6 +310,16 @@ export default {
 				});
 				// #endif
 			});
+		},
+		handleContentScroll(e) {
+			this.contentOldScrollTop = e.detail.scrollTop;
+		},
+		scrollContentToTop() {
+			// 解决view层不同步的问题
+			this.contentScrollTop = this.contentOldScrollTop;
+			setTimeout(() => {
+				this.contentScrollTop = 0;
+			}, 200);
 		},
 	},
 };
