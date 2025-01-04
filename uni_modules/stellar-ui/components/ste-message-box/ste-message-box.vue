@@ -44,6 +44,8 @@
 
 <script>
 import { mapState } from 'vuex';
+import useColor from '../../config/color.js';
+let color = useColor();
 import utils from '../../utils/utils.js';
 import useSteMsgBox, { DEFAULT_KEY } from './ste-message-box.js';
 const DURATION = 200;
@@ -88,7 +90,7 @@ export default {
 			cancelText: '取消',
 			cancelColor: '#333333',
 			confirmText: '确认',
-			confirmColor: '#0090FF',
+			confirmColor: '',
 			showCancel: true,
 			editable: false,
 			placeholderText: '',
@@ -125,7 +127,7 @@ export default {
 			let style = {
 				opacity: 0,
 				'--cancel-color': this.cancelColor,
-				'--confirm-color': this.confirmColor,
+				'--confirm-color': this.confirmColor ? this.confirmColor : color.getColor().steThemeColor,
 			};
 			return style;
 		},
@@ -167,7 +169,11 @@ export default {
 					this.icon = $state.icon;
 					this.cancelText = $state.cancelText || this.cancelText;
 					this.confirmText = $state.confirmText || this.confirmText;
-					this.confirmColor = $state.confirmColor || this.confirmColor;
+					this.confirmColor = $state.confirmColor
+						? $state.confirmColor
+						: this.confirmColor
+						? this.confirmColor
+						: color.getColor().steThemeColor;
 					this.showCancel = $state.showCancel === false ? false : true;
 					this.cancelColor = $state.cancelColor || this.cancelColor;
 					this.editable = $state.editable === false ? false : true;

@@ -60,6 +60,18 @@
 					<ste-stepper v-model="value1"></ste-stepper>
 				</view>
 			</view>
+			<view class="demo-item">
+				<view class="title">开关</view>
+				<view class="item-block">
+					<ste-switch v-model="value2"></ste-switch>
+				</view>
+			</view>
+			<view class="demo-item">
+				<view class="title">弹框</view>
+				<view class="item-block">
+					<ste-button @click="msgBox">打开弹框</ste-button>
+				</view>
+			</view>
 		</view>
 	</view>
 </template>
@@ -90,16 +102,22 @@ export default {
 				{ label: '选项2019', value: 2019 },
 			],
 			value1: 10,
+			value2: true,
 		};
 	},
 	methods: {
 		headleChangeColor() {
-			console.log('color', this.color);
 			color.setColor({ steThemeColor: this.color });
 		},
 		reset() {
 			this.color = color.$state.defaultColor;
 			color.setColor({ steThemeColor: this.color });
+		},
+		msgBox() {
+			this.showMsgBox({
+				title: '提示',
+				icon: 'info',
+			});
 		},
 	},
 	mounted() {

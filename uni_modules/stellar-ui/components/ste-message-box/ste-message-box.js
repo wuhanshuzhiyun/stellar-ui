@@ -11,7 +11,7 @@ const DEFAULT_CONFIG = {
 	cancelText: '取消',
 	cancelColor: '#333333',
 	confirmText: '确认',
-	confirmColor: '#0090FF',
+	confirmColor: '',
 	editable: false,
 	placeholderText: '',
 	success: null,

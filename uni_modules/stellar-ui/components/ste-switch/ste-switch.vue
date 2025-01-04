@@ -13,7 +13,8 @@
 
 <script>
 import utils from '../../utils/utils.js';
-
+import useColor from '../../config/color.js';
+let color = useColor();
 /**
  * ste-switch 开关
  * @description 开关组件,表示两种相互对立的状态间的切换，多用于触发「开/关」。
@@ -52,7 +53,7 @@ export default {
 		},
 		activeColor: {
 			type: [String, null],
-			default: '#0090FF',
+			default: '',
 		},
 		inactiveColor: {
 			type: [String, null],
@@ -80,7 +81,11 @@ export default {
 			style['width'] = utils.formatPx(Number(this.size) * 2 + 4);
 			style['height'] = utils.formatPx(Number(this.size) + 4);
 			style['borderRadius'] = utils.formatPx((Number(this.size) + 4) / 2);
-			style['background'] = this.value ? this.activeColor : this.inactiveColor;
+			style['background'] = this.value
+				? this.activeColor
+					? this.activeColor
+					: color.getColor().steThemeColor
+				: this.inactiveColor;
 			style['opacity'] = this.disabled ? '0.6' : '1';
 			// #ifdef H5
 			style['cursor'] = this.disabled || this.readonly ? 'not-allowed' : 'pointer';
