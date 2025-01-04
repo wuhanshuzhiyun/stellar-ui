@@ -258,8 +258,8 @@ export default{
 | `list`			| 已选中的日期																			| `Array<Date>`	| `[]`					| -															| -			|
 | `startText`		| 开始日期的提示文字，`mode`=`range`时生效													| `String`		| `[]`					| -															| -			|
 | `endText`			| 结束日期的提示文字，`mode`=`range`时生效													| `String`		| `[]`					| -															| -			|
-| `color`			| 主题颜色（选中日期背景、月份背景、当天日期颜色和确定按钮颜色）								| `String`		| `#0091FF`				| -															| -			|
-| `weekendColor`	| 周末日期颜色																			| `String`		| `#0091FF`				| -															| -			|
+| `color`			| 主题颜色（选中日期背景、月份背景、当天日期颜色和确定按钮颜色）								| `String`		| `#0090FF`				| -															| -			|
+| `weekendColor`	| 周末日期颜色																			| `String`		| `#0090FF`				| -															| -			|
 | `minDate`			| 开始日期	（没有该属性的情况下，从`defaultDate`开始渲染）									| `Date`		| `0`					| -															| -			|
 | `maxDate`			| 结束日期	（没有该属性的情况下，从`minDate`或者`defaultDate`开始往后渲染`maxCount`个月）	| `Date`		| `0`					| -															| -			|
 | `defaultDate`		| 默认展示日期（不设置`minDate`和`maxDate`的情况下，列表展示从默认月份开始往后`maxCount`个月）	| `Date`		| `new Date()`			| -															| -			|

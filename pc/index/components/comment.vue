@@ -191,7 +191,7 @@ export default {
 	.comment-title {
 		font-size: 20px;
 		font-weight: 600;
-		border-left: 4px solid #0090ff;
+		border-left: 4px solid #0090FF;
 		padding-left: 5px;
 	}
 	.not-login {
@@ -205,7 +205,7 @@ export default {
 			line-height: 60rpx;
 			cursor: pointer;
 			.btn {
-				color: #0090ff;
+				color: #0090FF;
 			}
 		}
 	}
@@ -227,7 +227,7 @@ export default {
 		.close-back {
 			font-size: 20px;
 			width: 20px;
-			color: #0090ff;
+			color: #0090FF;
 			cursor: pointer;
 		}
 	}
@@ -273,7 +273,7 @@ export default {
 				justify-content: space-between;
 				.item-back {
 					font-size: 14px;
-					color: #0090ff;
+					color: #0090FF;
 					cursor: pointer;
 				}
 			}
@@ -318,7 +318,7 @@ export default {
 						margin-top: 0px;
 						.at-user {
 							margin-left: 0;
-							color: #0090ff;
+							color: #0090FF;
 						}
 					}
 					.item-title {

@@ -758,7 +758,7 @@
 	// #ifdef MP-WEIXIN
 	"tabBar": {
 		"color": "#000",
-		"selectedColor": "#0090ff",
+		"selectedColor": "#0090FF",
 		"list": [
 			{
 				"iconPath": "static/tabbars/home.png",

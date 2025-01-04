@@ -159,7 +159,7 @@ export default {
 
 					&.active {
 						background-color: #fff;
-						color: #0090ff;
+						color: #0090FF;
 					}
 				}
 			}
@@ -179,7 +179,7 @@ export default {
 					}
 
 					&.active {
-						color: #0090ff;
+						color: #0090FF;
 						font-weight: bold;
 					}
 				}

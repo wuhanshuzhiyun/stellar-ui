@@ -764,7 +764,7 @@ export default {
 				padding: 0 40rpx;
 			}
 			.options-confirm {
-				color: #0090ff;
+				color: #0090FF;
 				padding: 0 40rpx;
 			}
 		}

@@ -181,7 +181,7 @@ export default {
 
 				.c-slider-2 {
 					.content {
-						background-color: #0090ff;
+						background-color: #0090FF;
 						border-radius: 50%;
 						height: 40rpx;
 						width: 40rpx;

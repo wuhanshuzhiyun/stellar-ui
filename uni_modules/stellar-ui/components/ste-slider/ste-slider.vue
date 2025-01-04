@@ -105,7 +105,7 @@ export default {
 		},
 		activeColor: {
 			type: [String, null],
-			default: '#0090ff',
+			default: '#0090FF',
 		},
 		inactiveColor: {
 			type: [String, null],

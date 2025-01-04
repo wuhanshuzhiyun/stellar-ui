@@ -113,7 +113,7 @@ export default {
 			margin-top: 64rpx;
 			width: 438rpx;
 			height: 80rpx;
-			background: #0090ff;
+			background: #0090FF;
 			box-shadow: 0rpx 12rpx 40rpx 2rpx rgba(0, 144, 255, 0.1);
 			border-radius: 48rpx;
 			font-family: PingFang SC, PingFang SC;
@@ -130,7 +130,7 @@ export default {
 			width: 240rpx;
 			height: 60rpx;
 			line-height: 60rpx;
-			color: #0090ff;
+			color: #0090FF;
 		}
 	}
 

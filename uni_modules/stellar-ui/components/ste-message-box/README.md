@@ -205,7 +205,7 @@ msgBoxCallback3() {
 | `cancelText`		| 提示的内容										| `String`	| `取消`		| -		| -			|
 | `cancelColor`		| 取消按钮的文字颜色								| `String`	| `#333333`	| -		| -			|
 | `confirmText`		| 确认按钮的文字，最多 4 个字符					| `String`	| `确认`		| -		| -			|
-| `confirmColor`	| 确认按钮的文字颜色								| `String`	| `#0090ff`	| -		| -			|
+| `confirmColor`	| 确认按钮的文字颜色								| `String`	| `#0090FF`	| -		| -			|
 | `editable`		| 是否显示输入框									| `Boolean`	| `false`	| -		| -			|
 | `placeholderText`	| 显示输入框时的提示文本							| `String`	| -			| -		| -			|
 | `confirm`			| 点击确认的回调函数								| `Function`| `null`	| -		| -			|

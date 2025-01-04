@@ -404,9 +404,9 @@
 					<ste-tabs
 						showSubtitle
 						:showTitle="false"
-						background="#0090ff"
+						background="#0090FF"
 						subColor="#fff"
-						activeSubColor="#0090ff"
+						activeSubColor="#0090FF"
 						color="#fff"
 						tabPadding="6"
 						subTitleHeight="66"

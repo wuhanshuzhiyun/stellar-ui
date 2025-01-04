@@ -264,7 +264,7 @@ export default {
 | `readonly`			| 只读 (不置灰)					| `Boolean`			| `false`	| -									| -			|
 | `shape`				| 形状							| `String`			| `circle`	| `circle`：圆形 <br/>`squar`：方形	| -			|
 | `iconSize`			| 图标大小，单位rpx				| `Number/String`	| `36`		| -									| -			|
-| `checkedColor`		| 选中状态的图标颜色				| `String`			| `#0090FF`	| -									| -			|
+| `checkedColor`		| 选中状态的图标颜色				| `String`			| `#0091FF`	| -									| -			|
 | `textPosition`		| 文本的位置						| `String`			| `right`	| `right`：右 <br/>`left`：左		| -			|
 | `textSize`			| 文本字体大小，单位rpx			| `Number/String`	| `25`		| -									| -			|
 | `textlnactiveColor`	| 未选中文本颜色					| `String`			| `#000000`	| -									| -			|

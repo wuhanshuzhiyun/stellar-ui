@@ -113,12 +113,12 @@ export default {
 			font-size: 36px;
 			font-weight: bold;
 			text-align: center;
-			color: #0090ff;
+			color: #0090FF;
 		}
 		.qr-image {
 			width: 100%;
 			height: calc(100% - 110px);
-			border-top: 1px solid #0090ff80;
+			border-top: 1px solid #0090FF80;
 			padding: 30px;
 			position: relative;
 			image {

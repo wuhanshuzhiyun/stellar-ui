@@ -71,7 +71,7 @@ let color = useColor();
  * @value 300 大 {Number}
  * @value 400 超大 {Number}
  * @property {String} color 文本颜色 默认值 #ffffff
- * @property {String} background 背景 默认值 #0091ff
+ * @property {String} background 背景 默认值 #0090FF
  * @property {String} borderColor 边框颜色
  * @property {Number|String} width 宽度 默认值 auto
  * @value auto 自适应宽度 {String}

@@ -19,8 +19,8 @@
 							width="100%"
 							:round="false"
 							background="#ffffff"
-							border-color="#0091FF"
-							color="#0091FF"
+							border-color="#0090FF"
+							color="#0090FF"
 						>
 							顶部弹出
 						</ste-button>
@@ -32,8 +32,8 @@
 							width="100%"
 							:round="false"
 							background="#ffffff"
-							border-color="#0091FF"
-							color="#0091FF"
+							border-color="#0090FF"
+							color="#0090FF"
 						>
 							底部弹出
 						</ste-button>
@@ -45,8 +45,8 @@
 							width="100%"
 							:round="false"
 							background="#ffffff"
-							border-color="#0091FF"
-							color="#0091FF"
+							border-color="#0090FF"
+							color="#0090FF"
 						>
 							中间弹出
 						</ste-button>
@@ -58,8 +58,8 @@
 							width="100%"
 							:round="false"
 							background="#ffffff"
-							border-color="#0091FF"
-							color="#0091FF"
+							border-color="#0090FF"
+							color="#0090FF"
 						>
 							左侧弹出
 						</ste-button>
@@ -71,8 +71,8 @@
 							width="100%"
 							:round="false"
 							background="#ffffff"
-							border-color="#0091FF"
-							color="#0091FF"
+							border-color="#0090FF"
+							color="#0090FF"
 						>
 							右侧弹出
 						</ste-button>
@@ -91,8 +91,8 @@
 						width="100%"
 						:round="false"
 						background="#ffffff"
-						border-color="#0091FF"
-						color="#0091FF"
+						border-color="#0090FF"
+						color="#0090FF"
 					>
 						背景色弹窗
 					</ste-button>
@@ -108,8 +108,8 @@
 							width="100%"
 							:round="false"
 							background="#ffffff"
-							border-color="#0091FF"
-							color="#0091FF"
+							border-color="#0090FF"
+							color="#0090FF"
 						>
 							宽: 300 高：500
 						</ste-button>
@@ -121,8 +121,8 @@
 							width="100%"
 							:round="false"
 							background="#ffffff"
-							border-color="#0091FF"
-							color="#0091FF"
+							border-color="#0090FF"
+							color="#0090FF"
 						>
 							宽: '100vw' 高：300
 						</ste-button>
@@ -138,8 +138,8 @@
 						width="100%"
 						:round="false"
 						background="#ffffff"
-						border-color="#0091FF"
-						color="#0091FF"
+						border-color="#0090FF"
+						color="#0090FF"
 					>
 						圆角弹窗
 					</ste-button>
@@ -154,8 +154,8 @@
 						width="100%"
 						:round="false"
 						background="#ffffff"
-						border-color="#0091FF"
-						color="#0091FF"
+						border-color="#0090FF"
+						color="#0090FF"
 					>
 						偏移
 					</ste-button>
@@ -174,8 +174,8 @@
 							width="100%"
 							:round="false"
 							background="#ffffff"
-							border-color="#0091FF"
-							color="#0091FF"
+							border-color="#0090FF"
+							color="#0090FF"
 						>
 							遮罩可关闭
 						</ste-button>
@@ -187,8 +187,8 @@
 							width="100%"
 							:round="false"
 							background="#ffffff"
-							border-color="#0091FF"
-							color="#0091FF"
+							border-color="#0090FF"
+							color="#0090FF"
 						>
 							遮罩不可关闭
 						</ste-button>
@@ -205,8 +205,8 @@
 						width="100%"
 						:round="false"
 						background="#ffffff"
-						border-color="#0091FF"
-						color="#0091FF"
+						border-color="#0090FF"
+						color="#0090FF"
 					>
 						动画执行时间
 					</ste-button>
@@ -221,8 +221,8 @@
 						width="100%"
 						:round="false"
 						background="#ffffff"
-						border-color="#0091FF"
-						color="#0091FF"
+						border-color="#0090FF"
+						color="#0090FF"
 					>
 						异步关闭
 					</ste-button>

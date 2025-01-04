@@ -88,7 +88,7 @@ export default {
 			cancelText: '取消',
 			cancelColor: '#333333',
 			confirmText: '确认',
-			confirmColor: '#0090ff',
+			confirmColor: '#0090FF',
 			showCancel: true,
 			editable: false,
 			placeholderText: '',

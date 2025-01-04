@@ -152,21 +152,21 @@ export default {
 		border: none;
 		padding: 14rpx 10rpx;
 		border-radius: 48rpx;
-		border: 2rpx solid #0090ff;
+		border: 2rpx solid #0090FF;
 		width: 194rpx;
 		white-space: nowrap;
 
 		.text {
 			width: 100%;
 			text-align: center;
-			color: #0090ff;
+			color: #0090FF;
 			white-space: nowrap;
 			text-overflow: ellipsis;
 			overflow: hidden;
 		}
 
 		&.active {
-			background-color: #0090ff;
+			background-color: #0090FF;
 			.text {
 				color: #fff;
 			}

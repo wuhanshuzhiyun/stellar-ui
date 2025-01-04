@@ -110,7 +110,7 @@ export default {
 }
 .c-slider-2 {
 	.content {
-		background-color: #0090ff;
+		background-color: #0090FF;
 		border-radius: 50%;
 		height: 40rpx;
 		width: 40rpx;
@@ -134,7 +134,7 @@ export default {
 | `step`			| 步长																				| `Number/String/Array`	| `1`		| -		| -			|
 | `barHeight`		| 进度条高度，默认单位为 rpx															| `Number/String/Array`	| `8`		| -		| -			|
 | `buttonSize`		| 滑块按钮大小，默认单位为 rpx														| `Number/String/Array`	| `40`		| -		| -			|
-| `activeColor`		| 进度条激活态颜色																	| `Number/String/Array`	| `#0090ff`	| -		| -			|
+| `activeColor`		| 进度条激活态颜色																	| `Number/String/Array`	| `#0090FF`	| -		| -			|
 | `inactiveColor`	| 进度条非激活态颜色																	| `Number/String/Array`	| `#eeeeee`	| -		| -			|
 | `range`			| 是否为范围选择																		| `Number/String/Array`	| `false`	| -		| -			|
 | `vertical`		| 是否竖向模式																		| `Number/String/Array`	| `false`	| -		| -			|

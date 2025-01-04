@@ -230,7 +230,7 @@ export default {
 				margin: 72rpx auto 0 auto;
 				width: 438rpx;
 				height: 80rpx;
-				background: #0090ff;
+				background: #0090FF;
 				box-shadow: 0rpx 12rpx 40rpx 2rpx rgba(0, 144, 255, 0.1);
 				border-radius: 48rpx;
 				text-align: center;
@@ -244,7 +244,7 @@ export default {
 				font-family: PingFang SC, PingFang SC;
 				font-weight: bold;
 				font-size: 32rpx;
-				color: #0090ff;
+				color: #0090FF;
 				width: 150rpx;
 				height: 60rpx;
 				line-height: 60rpx;
@@ -265,7 +265,7 @@ export default {
 			position: absolute;
 			left: 30rpx;
 			bottom: 100rpx;
-			background-color: #0090ff;
+			background-color: #0090FF;
 			color: #fff;
 			border-radius: 10rpx;
 			font-size: 30rpx;

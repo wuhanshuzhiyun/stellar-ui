@@ -87,7 +87,7 @@
 | ---				| ---																																																										| ---				| ---			| ---																			| ---		|
 | `mode`			| 尺寸																																																										| `Number`			| `200`			| `100`：小<br/>`200`：中<br/>`300`：大<br/>`400`：超大							| -			|
 | `color`			| 文本颜色																																																									| `String`			| `"#ffffff"`	| -																				| -			|
-| `background`		| 背景																																																										| `String`			| `"#0091ff"`	| -																				| -			|
+| `background`		| 背景																																																										| `String`			| `"#0090FF"`	| -																				| -			|
 | `borderColor`		| 边框颜色																																																									| `String`			| -				| -																				| -			|
 | `width`			| 宽度																																																										| `Number/String`	| `"auto"`		| `"auto"`： 自适应宽度<br/>`"100%"`：填满<br/>`{{Number}}`：自定义宽度 单位rpx	| -			|
 | `round`			| 是否圆角按钮，圆角度数(48)																																																					| `Boolean`			| `true`		| -																				| -			|

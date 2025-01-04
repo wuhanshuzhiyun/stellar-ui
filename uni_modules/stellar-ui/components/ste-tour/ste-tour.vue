@@ -29,8 +29,8 @@
 						<ste-button
 							:round="false"
 							background="#fff"
-							borderColor="#0091ff"
-							color="#0091ff"
+							borderColor="#0090FF"
+							color="#0090FF"
 							style="margin-right: 12rpx"
 							mode="100"
 							@click="onUp"

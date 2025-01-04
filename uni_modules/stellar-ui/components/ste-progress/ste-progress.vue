@@ -14,7 +14,7 @@ import utils from '../../utils/utils.js';
  * ste-progress 进度条
  * @description 进度条组件
  * @tutorial https://stellar-ui.intecloud.com.cn/pc/index/index?name=ste-progress
- * @property {String} activeBg 进度条激活部分的背景	 默认值 #0090ff
+ * @property {String} activeBg 进度条激活部分的背景	 默认值 #0090FF
  * @property {String} inactiveBg 进度条未激活部分的背景	 默认值 #eeeeee
  * @property {Number} percentage 进度条百分比	默认值 0
  * @property {Number|String} strokeWidth 进度条的粗细，默认单位rpx	默认值 24
@@ -36,7 +36,7 @@ export default {
 	props: {
 		activeBg: {
 			type: [String, null],
-			default: '#0090ff',
+			default: '#0090FF',
 		},
 		inactiveBg: {
 			type: [String, null],

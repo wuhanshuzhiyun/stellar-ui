@@ -139,7 +139,7 @@ export default {
 		// 确认按钮的颜色
 		confirmColor: {
 			type: [String, null],
-			default: '#0091ff',
+			default: '#0090FF',
 		},
 		// 每列中可见选项的数量
 		visibleItemCount: {

@@ -34,8 +34,8 @@
 								width="100%"
 								:round="false"
 								background="#ffffff"
-								border-color="#0091FF"
-								color="#0091FF"
+								border-color="#0090FF"
+								color="#0090FF"
 							>
 								打开
 							</ste-button>
@@ -47,8 +47,8 @@
 								width="100%"
 								:round="false"
 								background="#ffffff"
-								border-color="#0091FF"
-								color="#0091FF"
+								border-color="#0090FF"
+								color="#0090FF"
 							>
 								关闭
 							</ste-button>
@@ -89,8 +89,8 @@
 								width="100%"
 								:round="false"
 								background="#ffffff"
-								border-color="#0091FF"
-								color="#0091FF"
+								border-color="#0090FF"
+								color="#0090FF"
 							>
 								打开第1行
 							</ste-button>
@@ -102,8 +102,8 @@
 								width="100%"
 								:round="false"
 								background="#ffffff"
-								border-color="#0091FF"
-								color="#0091FF"
+								border-color="#0090FF"
+								color="#0090FF"
 							>
 								关闭第1行
 							</ste-button>
@@ -115,8 +115,8 @@
 								width="100%"
 								:round="false"
 								background="#ffffff"
-								border-color="#0091FF"
-								color="#0091FF"
+								border-color="#0090FF"
+								color="#0090FF"
 							>
 								打开第2行
 							</ste-button>
@@ -128,8 +128,8 @@
 								width="100%"
 								:round="false"
 								background="#ffffff"
-								border-color="#0091FF"
-								color="#0091FF"
+								border-color="#0090FF"
+								color="#0090FF"
 							>
 								关闭第2行
 							</ste-button>

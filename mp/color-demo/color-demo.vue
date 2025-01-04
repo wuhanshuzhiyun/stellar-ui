@@ -22,6 +22,12 @@
 					<ste-calendar height="720" :showTitle="false" @confirm="handleConfirm" ref="Calendar" />
 				</view>
 			</view>
+			<view class="demo-item">
+				<view class="title">复选框</view>
+				<view class="item-block">
+					<ste-checkbox v-model="checkboxValue">复选框</ste-checkbox>
+				</view>
+			</view>
 		</view>
 	</view>
 </template>
@@ -35,6 +41,7 @@ export default {
 		return {
 			color: '',
 			defaultColor: '',
+			checkboxValue: true,
 		};
 	},
 	methods: {

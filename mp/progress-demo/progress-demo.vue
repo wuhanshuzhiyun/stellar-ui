@@ -111,7 +111,7 @@
 								<text>已抢50%</text>
 								<view class="icon-content">
 									<view class="icon-box">
-										<ste-icon color="#0090ff" code="&#xe696;" size="36"></ste-icon>
+										<ste-icon color="#0090FF" code="&#xe696;" size="36"></ste-icon>
 									</view>
 								</view>
 							</view>

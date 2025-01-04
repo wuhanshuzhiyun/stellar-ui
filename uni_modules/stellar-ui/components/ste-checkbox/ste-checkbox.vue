@@ -21,7 +21,8 @@
 
 <script>
 import utils from '../../utils/utils.js';
-
+import useColor from '../../config/color.js';
+let color = useColor();
 /**
  * ste-checkbox 复选框
  * @description 复选框组件,在一组备选项中进行多选。
@@ -34,7 +35,7 @@ import utils from '../../utils/utils.js';
  * @value circle 圆形 默认 {{String}}
  * @value square 方形 {{String}}
  * @property {Number|String} iconSize 图标大小，单位rpx 默认 36
- * @property {String} checkedColor 选中状态的图标颜色 默认 #0090FF0
+ * @property {String} checkedColor 选中状态的图标颜色 默认 ##0091FF
  * @property {String} textPosition 文本的位置 默认 right
  * @value right 右 默认 {{String}}
  * @value left 左 {{String}}
@@ -152,7 +153,7 @@ export default {
 			return this.getDefaultData('iconSize', 36);
 		},
 		cmpCheckedColor() {
-			return this.getDefaultData('checkedColor', '#0090FF');
+			return this.getDefaultData('checkedColor', color.getColor().steThemeColor);
 		},
 		cmpTextPosition() {
 			return this.getDefaultData('textPosition', 'right');

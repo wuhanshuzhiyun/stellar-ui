@@ -80,7 +80,7 @@ export default {
 		},
 		confirmColor: {
 			type: [String, null],
-			default: '#0091ff',
+			default: '#0090FF',
 		},
 		defaultIndex: {
 			type: [Array, null],
