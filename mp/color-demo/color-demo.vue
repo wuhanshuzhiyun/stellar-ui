@@ -72,6 +72,22 @@
 					<ste-button @click="msgBox">打开弹框</ste-button>
 				</view>
 			</view>
+			<view class="demo-item">
+				<view class="title">数字键盘</view>
+				<view class="item-block" style="display: block">
+					<ste-number-keyboard mode="page" v-model="value3" />
+				</view>
+			</view>
+			<view class="demo-item">
+				<view class="title">步骤条</view>
+				<view class="item-block">
+					<ste-steps :active="active">
+						<ste-step></ste-step>
+						<ste-step></ste-step>
+						<ste-step></ste-step>
+					</ste-steps>
+				</view>
+			</view>
 		</view>
 	</view>
 </template>
@@ -103,6 +119,8 @@ export default {
 			],
 			value1: 10,
 			value2: true,
+			value3: '',
+			active: 0,
 		};
 	},
 	methods: {

@@ -40,6 +40,8 @@
 </template>
 <script>
 import utils from '../../utils/utils.js';
+import useColor from '../../config/color.js';
+let color = useColor();
 /**
  * ste-steps 步骤条
  * @description 步骤条组件,拆分展示某项流程的步骤，引导用户按流程完成任务或向用户展示当前状态。。
@@ -114,9 +116,9 @@ export default {
 			} else {
 				status = this.steps.active >= this.cmpIndex ? 'finished' : 'process';
 			}
-			obj.textColor = this.steps.active + 1 >= this.cmpIndex ? '#0090FF' : '#cccccc';
+			obj.textColor = this.steps.active + 1 >= this.cmpIndex ? color.getColor().steThemeColor : '#cccccc';
 			if (status == 'finished') {
-				obj.color = '#0090FF';
+				obj.color = color.getColor().steThemeColor;
 				obj.icon = '&#xe67a;';
 			}
 			if (status == 'process') {
@@ -129,11 +131,11 @@ export default {
 				obj.textColor = '#FF1A00';
 			}
 			obj.icon = this.icon ? this.icon : obj.icon;
-			obj.bgColor = this.steps.active + 1 == this.cmpIndex ? '#0090FF' : '#ffffff';
+			obj.bgColor = this.steps.active + 1 == this.cmpIndex ? color.getColor().steThemeColor : '#ffffff';
 			obj.numColor = this.steps.active + 1 >= this.cmpIndex ? '#ffffff' : '#cccccc';
 			obj.descColor = this.steps.active + 1 >= this.cmpIndex ? '#999999' : '#cccccc';
-			obj.lineColor = this.steps.active >= this.cmpIndex ? '#0090FF' : '#EEEEEE';
-			obj.dotColor = this.steps.active + 1 >= this.cmpIndex ? '#0090FF' : '#DDDDDD';
+			obj.lineColor = this.steps.active >= this.cmpIndex ? color.getColor().steThemeColor : '#EEEEEE';
+			obj.dotColor = this.steps.active + 1 >= this.cmpIndex ? color.getColor().steThemeColor : '#DDDDDD';
 			return obj;
 		},
 		cmpStyle() {

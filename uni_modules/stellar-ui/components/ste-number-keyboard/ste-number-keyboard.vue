@@ -43,7 +43,8 @@
 <script>
 import keyboard from './keyboard.vue';
 import utils from '../../utils/utils.js';
-
+import useColor from '../../config/color.js';
+let color = useColor();
 /**
  * ste-number-keyboard 数字键盘
  * @description 数字键盘
@@ -93,7 +94,7 @@ export default {
 		showClear: { type: [Boolean, null], default: () => true },
 		textColor: { type: [String, null], default: () => '#000' },
 		textSize: { type: [Number, String, null], default: () => 48 },
-		confirmBg: { type: [String, null], default: () => '#0090FF' },
+		confirmBg: { type: [String, null], default: () => '' },
 		confirmColor: { type: [String, null], default: () => '#fff' },
 	},
 	data() {
@@ -137,8 +138,11 @@ export default {
 				'--ste-number-keyboard-text-size': isNaN(fontsize) ? fontsize : `${fontsize}px`,
 				'--ste-number-keyboard-clear-text-size': isNaN(fontsize) ? fontsize : `${fontsize - 8}px`,
 				'--ste-number-keyboard-confirm-text-size': isNaN(fontsize) ? fontsize : `${fontsize - 3}px`,
-				'--ste-number-keyboard-confirm-bg': this.confirmBg,
-				'--ste-number-keyboard-confirm-bg-active': utils.Color.formatColor(this.confirmBg, 0.8),
+				'--ste-number-keyboard-confirm-bg': this.confirmBg ? this.confirmBg : color.getColor().steThemeColor,
+				'--ste-number-keyboard-confirm-bg-active': utils.Color.formatColor(
+					this.confirmBg ? this.confirmBg : color.getColor().steThemeColor,
+					0.8
+				),
 				'--ste-number-keyboard-confirm-color': this.confirmColor,
 			};
 		},
