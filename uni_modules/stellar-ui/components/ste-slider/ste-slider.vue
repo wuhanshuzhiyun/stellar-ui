@@ -53,6 +53,8 @@
 
 <script>
 import utils from '../../utils/utils.js';
+import useColor from '../../config/color.js';
+let color = useColor();
 /**
  * ste-slider 滑块
  * @description 滑块组件
@@ -105,7 +107,7 @@ export default {
 		},
 		activeColor: {
 			type: [String, null],
-			default: '#0090FF',
+			default: '',
 		},
 		inactiveColor: {
 			type: [String, null],
@@ -190,7 +192,7 @@ export default {
 			const style = {
 				'--progress-height': utils.addUnit(this.barHeight),
 				'--bar-size': utils.addUnit(this.buttonSize),
-				'--active-color': this.activeColor,
+				'--active-color': this.activeColor ? this.activeColor : color.getColor().steThemeColor,
 			};
 			return style;
 		},
@@ -205,7 +207,7 @@ export default {
 		cmpActiveStyle() {
 			let style = {};
 			if (!this.disabled) {
-				const bg = utils.bg2style(this.activeColor);
+				const bg = utils.bg2style(this.activeColor ? this.activeColor : color.getColor().steThemeColor);
 				style = { ...style, ...bg };
 			}
 			if (this.vertical) {

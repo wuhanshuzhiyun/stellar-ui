@@ -121,6 +121,8 @@
 
 <script>
 import utils from '../../utils/utils';
+import useColor from '../../config/color.js';
+let color = useColor();
 import { formatDate, getFormatStr } from './defaultDate';
 import DateTime from './datetime.vue';
 import DatapagerVue from './datapager.vue';
@@ -264,6 +266,7 @@ export default {
 				'--ste-select-background': this.background,
 				'--ste-select-border': `1px solid ${this.borderColor}`,
 				'--ste-select-border-radius': utils.formatPx(this.borderRadius),
+				'--ste-theme-color': color.getColor().steThemeColor,
 			};
 		},
 
@@ -720,7 +723,7 @@ export default {
 					overflow: hidden; // 隐藏溢出内容，并显示省略号
 
 					&.active {
-						color: #3491fa;
+						color: var(--ste-theme-color);
 					}
 
 					& + .options-item {
@@ -764,7 +767,7 @@ export default {
 				padding: 0 40rpx;
 			}
 			.options-confirm {
-				color: #0090FF;
+				color: #0090ff;
 				padding: 0 40rpx;
 			}
 		}

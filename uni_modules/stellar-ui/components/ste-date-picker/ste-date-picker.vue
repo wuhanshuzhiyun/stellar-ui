@@ -7,7 +7,7 @@
 			:cancelText="cancelText"
 			:cancelColor="cancelColor"
 			:confirmText="confirmText"
-			:confirmColor="confirmColor"
+			:confirmColor="cmpConfirmColor"
 			:visibleItemCount="visibleItemCount"
 			:defaultIndex="innerDefaultIndex"
 			:itemHeight="itemHeight"
@@ -22,6 +22,8 @@
 <script>
 import utils from '../../utils/utils.js';
 import dayjs from '../../utils/dayjs.min.js';
+import useColor from '../../config/color.js';
+let color = useColor();
 /**
  * ste-date-picker 时间日期选择器
  * @description 此选择器用于时间日期
@@ -139,7 +141,7 @@ export default {
 		// 确认按钮的颜色
 		confirmColor: {
 			type: [String, null],
-			default: '#0090FF',
+			default: '',
 		},
 		// 每列中可见选项的数量
 		visibleItemCount: {
@@ -155,6 +157,11 @@ export default {
 			innerDefaultIndex: [],
 			innerFormatter: (type, value) => value,
 		};
+	},
+	computed: {
+		cmpConfirmColor() {
+			return this.confirmColor ? this.confirmColor : color.getColor().steThemeColor;
+		},
 	},
 	created() {
 		this.init();

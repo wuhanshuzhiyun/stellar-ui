@@ -21,7 +21,8 @@
 
 <script>
 import utils from '../../utils/utils.js';
-
+import useColor from '../../config/color.js';
+let color = useColor();
 /**
  * ste-radio 单选框
  * @description 单选框组件,在一组备选项中进行单选。
@@ -144,7 +145,7 @@ export default {
 			return this.getDefaultData('iconSize', 36);
 		},
 		cmpCheckedColor() {
-			return this.getDefaultData('checkedColor', '#0090FF');
+			return this.getDefaultData('checkedColor', color.getColor().steThemeColor);
 		},
 		cmpTextPosition() {
 			return this.getDefaultData('textPosition', 'right');

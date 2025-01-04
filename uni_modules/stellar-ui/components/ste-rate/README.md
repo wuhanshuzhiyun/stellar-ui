@@ -43,7 +43,7 @@ export default {
 
 #### 自定义样式
 - 通过`inactiveColor`属性，设置未选中的颜色，默认`#dddddd`。  
-- 通过`activeColor`属性，设置选中的颜色，默认`#fa5014`。
+- 通过`activeColor`属性，设置选中的颜色，默认`#0090FF`。
 - 通过`size`属性，设置评分图标的大小，单位`rpx`，默认`44`。
 - 通过`gutter`属性，设置每个图标之间的距离，单位`rpx`，默认`10`。
 
@@ -99,7 +99,7 @@ export default {
 | `readonly `		| 只读（不置灰）					| `Boolean`			| `false`	| -		| -			|
 | `size`			| 评分图标的大小，单位`rpx`		| `Number/String`	| `44`		| -		| -			|
 | `inactiveColor`	| 未选中的颜色					| `String`			| `#dddddd`	| -		| -			|
-| `activeColor`		| 选中的颜色						| `String`			| `#fa5014`	| -		| -			|
+| `activeColor`		| 选中的颜色						| `String`			| `#0090FF`	| -		| -			|
 | `inactiveCode`	| 未选中的图标`code`				| `String`			| `&#xe681;`| -		| -			|
 | `activeCode`		| 选中的图标`code`				| `String`			| `&#xe684;`| -		| -			|
 | `gutter`			| 每个图标之间的距离，单位`rpx`	| `Number/String`	| `10`		| -		| -			|

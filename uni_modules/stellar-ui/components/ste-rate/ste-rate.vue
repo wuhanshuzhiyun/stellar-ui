@@ -6,7 +6,11 @@
 					<ste-icon :code="cmpInactiveCode" :color="inactiveColor" :size="size"></ste-icon>
 				</view>
 				<view class="icon-box active" @click="onSelect(index)" :style="{ width: getWidth(index) }">
-					<ste-icon :code="cmpActiveCode" :color="disabled ? '#C8C9CC' : activeColor" :size="size"></ste-icon>
+					<ste-icon
+						:code="cmpActiveCode"
+						:color="disabled ? '#C8C9CC' : cmpActiveColor"
+						:size="size"
+					></ste-icon>
 				</view>
 			</view>
 		</view>
@@ -15,6 +19,8 @@
 
 <script>
 import utils from '../../utils/utils.js';
+import useColor from '../../config/color.js';
+let color = useColor();
 /**
  * ste-rate 评分
  * @description 评分组件,用于对事物进行评级操作。
@@ -26,7 +32,7 @@ import utils from '../../utils/utils.js';
  * @property {Boolean} readonly 只读（不置灰） 默认 false
  * @property {Number|String} size 评分图标的大小，单位rpx 默认 44
  * @property {String} inactiveColor 未选中的颜色 默认 #dddddd
- * @property {String} activeColor 选中的颜色 默认 #fa5014
+ * @property {String} activeColor 选中的颜色 默认 #0090FF
  * @property {String} inactiveCode 未选中的图标code 默认 &#xe681;
  * @property {String} activeCode 选中的图标code 默认 &#xe684;
  * @property {Number|String} gutter 每个图标之间的距离，单位rpx 默认 10
@@ -69,7 +75,7 @@ export default {
 		},
 		activeColor: {
 			type: [String, null],
-			default: '#fa5014',
+			default: '',
 		},
 		inactiveCode: {
 			type: [String, null],
@@ -122,6 +128,9 @@ export default {
 			let code = this.getIconCode();
 			if (code) return code;
 			return this.inactiveCode;
+		},
+		cmpActiveColor() {
+			return this.activeColor ? this.activeColor : color.getColor().steThemeColor;
 		},
 	},
 	methods: {

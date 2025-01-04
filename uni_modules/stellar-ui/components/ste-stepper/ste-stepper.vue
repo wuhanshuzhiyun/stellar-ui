@@ -56,7 +56,8 @@
 
 <script>
 import utils from '../../utils/utils.js';
-
+import useColor from '../../config/color.js';
+let color = useColor();
 /**
  * ste-stepper 步进器
  * @description 步进器组件,步进器由增加按钮、减少按钮和输入框组成，用于在一定范围内输入、调整数字。
@@ -134,7 +135,7 @@ export default {
 		},
 		mainColor: {
 			type: [String, null],
-			default: '#0090FF',
+			default: '',
 		},
 		disabled: {
 			type: [Boolean, null],
@@ -213,7 +214,11 @@ export default {
 			let style = {};
 			if (this.theme == 'card') {
 				style['border'] = `${utils.formatPx('2')} solid ${
-					(this.cmpDisableMinus ? '#cccccc' : this.mainColor) + '80'
+					(this.cmpDisableMinus
+						? '#cccccc'
+						: this.mainColor
+						? this.mainColor
+						: color.getColor().steThemeColor) + '80'
 				}`;
 			}
 			if (this.theme == 'line') {
@@ -228,8 +233,16 @@ export default {
 		},
 		cmpRightButtonStyle() {
 			let style = {};
-			style['background'] = this.cmpDisablePlus ? '#cccccc' : this.mainColor;
-			style['backgroundColor'] = this.cmpDisablePlus ? '#cccccc' : this.mainColor;
+			style['background'] = this.cmpDisablePlus
+				? '#cccccc'
+				: this.mainColor
+				? this.mainColor
+				: color.getColor().steThemeColor;
+			style['backgroundColor'] = this.cmpDisablePlus
+				? '#cccccc'
+				: this.mainColor
+				? this.mainColor
+				: color.getColor().steThemeColor;
 			if (this.theme == 'line') {
 				style['background'] = '#ffffff';
 				style['backgroundColor'] = '#ffffff';
