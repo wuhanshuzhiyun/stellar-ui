@@ -465,8 +465,7 @@ export default {
 		.pc-view {
 			position: fixed;
 			z-index: 10;
-			top: calc(50% + var(--pc-header-nav-height));
-			transform: translateY(-50%);
+			top: calc(var(--pc-header-nav-height) + 32px);
 			right: 20px;
 			width: calc(var(--pc-view-width) + 28px);
 			min-width: calc(var(--pc-view-width) + 28px);
