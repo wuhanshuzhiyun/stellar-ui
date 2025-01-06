@@ -187,14 +187,7 @@ export default {
 					this.getContentViews(res.data);
 				} else {
 					this.content = await md2html(res.data);
-					// #ifdef H5
-					this.$nextTick(() => {
-						this.loadingMd = true;
-						document.querySelectorAll('.code-copy-button').forEach((btn) => {
-							btn.addEventListener('click', () => this.copy(btn));
-						});
-					});
-					// #endif
+					this.bindMdEvents();
 				}
 				this.scrollContentToTop();
 			});
@@ -228,43 +221,17 @@ export default {
 				icon: 'none',
 			});
 		},
-		async copy(btn) {
-			// #ifdef H5
-			try {
-				const data = btn.getAttribute('content');
-				uni.setClipboardData({
-					data,
-					showToast: false,
-					success: function () {
-						btn.innerText = '复制成功';
-						btn.disabled = true;
-						setTimeout(() => {
-							btn.innerText = '复制';
-							btn.disabled = false;
-						}, 1000);
-					},
-					fail: function () {
-						btn.innerText = '复制失败';
-						btn.disabled = true;
-						setTimeout(() => {
-							btn.innerText = '复制';
-							btn.disabled = false;
-						}, 1000);
-					},
-				});
-			} catch (err) {
-				console.error('无法复制文本: ', err);
-			}
-			// #endif
-		},
 		// 组件文档页导航切换
 		handleCompNavChange(item) {
 			if (item.key === config.NAV_COMP_KEY_DEMO) {
 				this.compContent = this.contentViews[1];
+				this.bindMdEvents();
 			} else if (item.key === config.NAV_COMP_KEY_API) {
 				this.compContent = this.contentViews[2];
+				this.bindMdEvents();
 			} else if (item.key === config.NAV_COMP_KEY_GUIDE) {
 				this.compContent = this.contentViews[3];
+				this.bindMdEvents();
 			} else {
 				this.compContent = '';
 			}
@@ -300,15 +267,8 @@ export default {
 			splitCompMarkdown(str).then((res) => {
 				this.contentViews = res;
 				this.compContent = this.contentViews[1];
-				// 添加复制功能
-				// #ifdef H5
-				this.$nextTick(() => {
-					this.loadingMd = true;
-					document.querySelectorAll('.code-copy-button').forEach((btn) => {
-						btn.addEventListener('click', () => this.copy(btn));
-					});
-				});
-				// #endif
+				// 绑定事件
+				this.bindMdEvents();
 			});
 		},
 		handleContentScroll(e) {
@@ -320,6 +280,57 @@ export default {
 			setTimeout(() => {
 				this.contentScrollTop = 0;
 			}, 200);
+		},
+		async copy(btn) {
+			// #ifdef H5
+			try {
+				const data = btn.getAttribute('content');
+				uni.setClipboardData({
+					data,
+					showToast: false,
+					success: function () {
+						btn.innerText = '复制成功';
+						btn.disabled = true;
+						setTimeout(() => {
+							btn.innerText = '复制';
+							btn.disabled = false;
+						}, 1000);
+					},
+					fail: function () {
+						btn.innerText = '复制失败';
+						btn.disabled = true;
+						setTimeout(() => {
+							btn.innerText = '复制';
+							btn.disabled = false;
+						}, 1000);
+					},
+				});
+			} catch (err) {
+				console.error('无法复制文本: ', err);
+			}
+			// #endif
+		},
+		scrollToView($event, ele) {
+			// #ifdef WEB
+			$event.preventDefault();
+			if (ele) {
+				ele.scrollIntoView({ behavior: 'smooth' });
+			}
+			// #ifdef WEB
+		},
+		bindMdEvents() {
+			// #ifdef H5
+			this.$nextTick(() => {
+				this.loadingMd = true;
+				document.querySelectorAll('.code-copy-button').forEach((btn) => {
+					btn.addEventListener('click', () => this.copy(btn));
+				});
+
+				document.querySelectorAll('.header-anchor').forEach((ele) => {
+					ele.addEventListener('click', (e) => this.scrollToView(e, ele));
+				});
+			});
+			// #endif
 		},
 	},
 };

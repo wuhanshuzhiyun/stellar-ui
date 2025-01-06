@@ -12,32 +12,50 @@ const md = new MarkdownIt({
     linkify: true,
 });
 
+function addAnchorLinks(md) {
+    const originalHeadingOpen = md.renderer.rules.heading_open || function(tokens, idx, options, env, self) {
+        return self.renderToken(tokens, idx, options);
+    };
 
+    md.renderer.rules.heading_open = function(tokens, idx, options, env, self) {
+        // console.log('tokens is ', tokens)
+        const token = tokens[idx];
+
+        // 只处理 h2、h3、h4
+        if (['h2', 'h3', 'h4'].includes(token.tag) && (idx - 1 < 0 || !['li'].includes(tokens[idx - 1].tag))) {
+
+            // 获取标题文本
+            const title = tokens[idx + 1].content;
+            // 添加 id 属性
+            token.attrSet('id', title);
+        }
+
+        return originalHeadingOpen(tokens, idx, options, env, self);
+    };
+
+    // 添加内部链接
+    const originalHeadingClose = md.renderer.rules.heading_close || function(tokens, idx, options, env, self) {
+        return self.renderToken(tokens, idx, options);
+    };
+
+    md.renderer.rules.heading_close = function(tokens, idx, options, env, self) {
+        const token = tokens[idx];
+
+        if (['h2', 'h3', 'h4'].includes(token.tag) && (idx - 3 < 0 || !['li'].includes(tokens[idx - 3].tag))) {
+            // 获取标题文本
+            const title = tokens[idx - 1].content;
+            return ` <a class="header-anchor" href="#${title}">#</a>${originalHeadingClose(tokens, idx, options, env, self)}`;
+
+        }
+
+        return originalHeadingClose(tokens, idx, options, env, self);
+    };
+}
+
+md.use(addAnchorLinks);
 
 // 使用 markdown-it-highlightjs 插件
 md.use(highlight);
-
-// 保存默认的 fence 渲染规则
-const defaultFence = md.renderer.rules.fence || function(tokens, idx, options, env, self) {
-    return self.renderToken(tokens, idx, options);
-};
-md.renderer.rules.fence = function(tokens, idx, options, env, self) {
-    const token = tokens[idx];
-    const code = token.content;
-
-    if (token.info === 'bash') {
-        return `
-          
-          <pre class="markdown-bash" >
-            <code class="hljs language-bash">${code}</code>
-          </pre>
-          
-        `;
-
-    }
-
-    return defaultFence(tokens, idx, options, env, self);
-};
 
 // #ifdef H5
 const parser = new DOMParser();
