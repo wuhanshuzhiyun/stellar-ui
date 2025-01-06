@@ -118,6 +118,8 @@
 
 <script>
 import utils from '../../utils/utils.js';
+import useColor from '../../config/color.js';
+let color = useColor();
 import { parentMixin } from '../../utils/mixin.js';
 import { getStyleOrClass } from './utils';
 import { DEFAULT_SUM_TEXT, selectionColorConfig } from './common';
@@ -251,6 +253,7 @@ export default {
 				'--offset-top': this.offsetTop,
 				'--table-height': utils.addUnit(this.height),
 				'--table-max-height': utils.addUnit(this.maxHeight),
+				'--ste-theme-color': utils.Color.hex2rgba(color.getColor().steThemeColor, 0.05),
 			};
 			return style;
 		},
@@ -593,10 +596,10 @@ $default-border: 2rpx solid #ebebeb;
 			// display: table-row;
 			display: flex;
 			justify-content: space-between;
-			background-color: #e8f7ff;
+			background-color: var(--ste-theme-color);
 
 			.ste-table-cell {
-				background-color: #e8f7ff;
+				background-color: var(--ste-theme-color);
 				font-weight: bold;
 				font-size: 28rpx;
 				border-top: $default-border;

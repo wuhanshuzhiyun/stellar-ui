@@ -23,7 +23,8 @@
 <script>
 import { parentMixin } from '../../utils/mixin.js';
 import mixin from '../ste-scroll-to/mixin.js';
-
+import useColor from '../../config/color.js';
+let color = useColor();
 /**
  * ste-index-list 索引列表
  * @description 索引列表
@@ -52,14 +53,14 @@ export default {
 		},
 		activeColor: {
 			type: [String, null],
-			default: () => '#FF1A00',
+			default: () => '',
 		},
 	},
 	computed: {
 		cmpIndexRootStyle() {
 			return {
 				'--ste-index-list-inactive-color': this.inactiveColor,
-				'--ste-index-list-active-color': this.activeColor,
+				'--ste-index-list-active-color': this.activeColor ? this.activeColor : color.getColor().steThemeColor,
 			};
 		},
 		cmpTitles() {

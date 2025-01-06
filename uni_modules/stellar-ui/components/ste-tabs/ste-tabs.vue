@@ -120,6 +120,8 @@
 import utils from '../../utils/utils.js';
 import props from './props.js';
 import { parentMixin } from '../../utils/mixin.js';
+import useColor from '../../config/color.js';
+let color = useColor();
 /**
  * ste-tabs 标签页
  * @description 标签页组件
@@ -219,19 +221,22 @@ export default {
 		},
 		cmpRootStyle() {
 			let tabCardBg = utils.Color.formatColor(this.titleColor, 0.05);
-			let tabCardBgActive = utils.Color.formatColor(this.color, 0.1);
-			let tabCardSubBg = this.color;
+			let tabCardBgActive = utils.Color.formatColor(
+				this.color ? this.color : color.getColor().steThemeColor,
+				0.1
+			);
+			let tabCardSubBg = this.color ? this.color : color.getColor().steThemeColor;
 			let tabCardSubColor = '#fff';
 			let activeTitleColor = this.activeTitleColor;
 			let borderWidthStart = '0';
 			let borderWidth = '0';
 			if (this.type === 'card') {
-				activeTitleColor = this.color;
+				activeTitleColor = this.color ? this.color : color.getColor().steThemeColor;
 				if (this.border) {
 					tabCardBg = 'none';
-					tabCardBgActive = this.color;
+					tabCardBgActive = this.color ? this.color : color.getColor().steThemeColor;
 					tabCardSubBg = '#fff';
-					tabCardSubColor = this.color;
+					tabCardSubColor = this.color ? this.color : color.getColor().steThemeColor;
 					activeTitleColor = '#fff';
 					borderWidthStart = '1px';
 					borderWidth = '1px 1px 1px 0';
@@ -253,7 +258,7 @@ export default {
 			}
 
 			const style = {
-				'--tabs-color': this.color,
+				'--tabs-color': this.color ? this.color : color.getColor().steThemeColor,
 				'--tabs-radius': utils.formatPx(this.radius),
 				'--tabs-card-background': tabCardBg,
 				'--tabs-card-background-active': tabCardBgActive,
@@ -584,7 +589,6 @@ export default {
 
 				&.active {
 					.tab-image {
-						// border-color: var(--tabs-color);
 						border-width: var(--tabs-image-border-width);
 					}
 					.tab-title {

@@ -35,6 +35,8 @@
 
 <script>
 import utils from '../../utils/utils.js';
+import useColor from '../../config/color.js';
+let color = useColor();
 import System from '../../utils/System.js';
 const DEFAULT_ROOT_QUERY = { height: 0, left: 0, top: 0, bottom: 0 };
 const DEFAULT_DURATION = 0.2;
@@ -92,7 +94,7 @@ export default {
 		},
 		activeColor: {
 			type: [String, null],
-			default: '#0090FF',
+			default: '',
 		},
 		direction: {
 			type: [String, null],
@@ -153,7 +155,7 @@ export default {
 		cmpRootStyle() {
 			let style = {
 				'--duration': this.cmpDuration + 's',
-				'--active-color': this.activeColor,
+				'--active-color': this.activeColor ? this.activeColor : color.getColor().steThemeColor,
 				'--inactive-color': this.inactiveColor,
 				'--menu-z-index': this.zIndex,
 			};

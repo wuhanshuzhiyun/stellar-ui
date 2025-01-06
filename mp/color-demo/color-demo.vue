@@ -88,6 +88,73 @@
 					</ste-steps>
 				</view>
 			</view>
+			<view class="demo-item">
+				<view class="title">表格</view>
+				<view class="item-block">
+					<ste-table :data="rows">
+						<template v-slot="{ row }">
+							<ste-table-column label="姓名" prop="name"></ste-table-column>
+							<ste-table-column label="生日" prop="birth"></ste-table-column>
+							<ste-table-column label="性别" prop="sex"></ste-table-column>
+						</template>
+					</ste-table>
+				</view>
+			</view>
+			<view class="demo-item">
+				<view class="title">下拉菜单</view>
+				<view class="item-block">
+					<view class="menu-item">
+						<view>
+							<ste-dropdown-menu v-model="menu1" direction="up">
+								<ste-dropdown-menu-item value="1" title="全部商品" />
+								<ste-dropdown-menu-item value="2" title="新款商品" />
+								<ste-dropdown-menu-item value="3" title="活动商品" />
+							</ste-dropdown-menu>
+						</view>
+						<view>
+							<ste-dropdown-menu title="选择项" direction="up" type="round" :max="2">
+								<ste-dropdown-menu-item value="1" title="选项1" />
+								<ste-dropdown-menu-item value="2" title="选项2" />
+								<ste-dropdown-menu-item value="3" title="选项3" />
+								<ste-dropdown-menu-item value="4" title="选项4" />
+								<ste-dropdown-menu-item value="5" title="选项5" />
+								<ste-dropdown-menu-item value="6" title="选项6" />
+								<ste-dropdown-menu-item value="7" title="选项7" />
+							</ste-dropdown-menu>
+						</view>
+					</view>
+				</view>
+			</view>
+			<view class="demo-item">
+				<view class="title">索引列表</view>
+				<view class="item-block">
+					<ste-index-list :sticky="false">
+						<ste-index-item
+							v-for="(item, index) in data"
+							:key="index"
+							:title="item.title"
+							:list="item.list"
+						/>
+					</ste-index-list>
+				</view>
+			</view>
+			<view class="demo-item">
+				<view class="title">标签页</view>
+				<view class="item-block">
+					<ste-tabs>
+						<ste-tab v-for="(item, index) in list1" :key="index" :title="item.title" :index="index">
+							<view>{{ item.title }}内容</view>
+							<image style="width: 100%; height: 300px" :src="item.content" />
+						</ste-tab>
+					</ste-tabs>
+				</view>
+			</view>
+			<view class="demo-item">
+				<view class="title">进度条</view>
+				<view class="item-block">
+					<ste-progress :percentage="40"></ste-progress>
+				</view>
+			</view>
 		</view>
 	</view>
 </template>
@@ -121,6 +188,42 @@ export default {
 			value2: true,
 			value3: '',
 			active: 0,
+			rows: [
+				{ name: '张三', birth: '2023.12.31', sex: '男' },
+				{ name: '李四', birth: '2024.01.01', sex: '女' },
+				{ name: '王五', birth: '2024.11.01', sex: '女' },
+				{ name: '赵六', birth: '2024.11.01', sex: '女' },
+				{ name: '王七', birth: '2024.01.01', sex: '男' },
+			],
+			menu1: 1,
+			data: [
+				{
+					title: 'A',
+					list: ['列表A1', '列表A2', '列表A3', '列表A4', '列表A5', '列表A6', '列表A7', '列表A8'],
+				},
+			],
+			list1: [
+				{
+					title: '标签1',
+					image: `https://image.whzb.com/chain/StellarUI/图片.jpg`,
+					content: 'https://image.whzb.com/chain/StellarUI/image/img1.jpg',
+				},
+				{
+					title: '标签2',
+					image: `https://image.whzb.com/chain/StellarUI/图片.jpg`,
+					content: 'https://image.whzb.com/chain/StellarUI/image/img2.jfif',
+				},
+				{
+					title: '标签3标签3标签3标签3',
+					image: `https://image.whzb.com/chain/StellarUI/图片.jpg`,
+					content: 'https://image.whzb.com/chain/StellarUI/image/img3.jpg',
+				},
+				{
+					title: '标签4',
+					image: `https://image.whzb.com/chain/StellarUI/图片.jpg`,
+					content: 'https://image.whzb.com/chain/StellarUI/image/img4.jpg',
+				},
+			],
 		};
 	},
 	methods: {
@@ -152,6 +255,76 @@ export default {
 			.item-block {
 				> view {
 					margin: 0 16rpx 16rpx 0;
+				}
+
+				.menu-item {
+					display: flex;
+					padding: 0 40rpx;
+					width: 100%;
+					box-shadow: 0 0 10px #ddd;
+					> view {
+						flex: 1;
+						display: flex;
+						align-items: center;
+						justify-content: center;
+					}
+
+					.custom-menu-box {
+						background-color: #fff;
+						padding-top: 24rpx;
+						border-top: solid 4rpx #f5f5f5;
+						.menu-box {
+							width: 100%;
+							display: flex;
+							margin-bottom: 56rpx;
+							font-size: 28rpx;
+							.left {
+								width: 236rpx;
+								background-color: #f9f9f9;
+
+								> view {
+									height: 90rpx;
+									display: flex;
+									align-items: center;
+									justify-content: center;
+
+									&.active {
+										background-color: #fff;
+										color: #0090ff;
+									}
+								}
+							}
+
+							.right {
+								flex: 1;
+								margin-left: 26rpx;
+								margin-right: 18rpx;
+								background-color: #fff;
+								> view {
+									height: 90rpx;
+									display: flex;
+									align-items: center;
+
+									&:not(:last-child) {
+										border-bottom: 2rpx solid #f9f9f9;
+									}
+
+									&.active {
+										color: #0090ff;
+										font-weight: bold;
+									}
+								}
+							}
+						}
+
+						.action-box {
+							padding: 0 40rpx;
+							display: flex;
+							justify-content: space-between;
+
+							padding-bottom: 20rpx;
+						}
+					}
 				}
 			}
 		}

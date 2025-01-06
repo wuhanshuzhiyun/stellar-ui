@@ -10,6 +10,8 @@
 
 <script>
 import utils from '../../utils/utils.js';
+import useColor from '../../config/color.js';
+let color = useColor();
 /**
  * ste-progress 进度条
  * @description 进度条组件
@@ -36,7 +38,7 @@ export default {
 	props: {
 		activeBg: {
 			type: [String, null],
-			default: '#0090FF',
+			default: '',
 		},
 		inactiveBg: {
 			type: [String, null],
@@ -127,7 +129,7 @@ export default {
 			if (this.disabled) {
 				style.backgroundColor = '#cccccc';
 			} else {
-				const bg = utils.bg2style(this.activeBg);
+				const bg = utils.bg2style(this.activeBg ? this.activeBg : color.getColor().steThemeColor);
 				style = { ...style, ...bg };
 			}
 			return style;

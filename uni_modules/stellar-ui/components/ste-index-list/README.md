@@ -111,13 +111,13 @@ methods: {
 
 #### IndexList Props
 
-| 属性名					| 说明																						|类型								|默认值			|可选值	| 支持版本	|
-| ---							|---																						| ---								| ---				| ---		| ---			|
-| `active`				| 当前激活的索引下标，支持sync双向绑定，默认值0		| `Number`					| `0`				| -			| -				|
-| `height`				| 高度，默认值100%																| `String`/`Number`	| `"100%"`	| -			| -				|
-| `sticky`				| `title`是否粘性布局，自定义`title`插槽时不生效	| `Boolean`					| `true`		| -			| -				|
-| `inactiveColor`	| 右边锚点状态非激活时的颜色											| `String`					| `#666666`	| -			| -				|
-| `activeColor`		| 右边锚点状态激活时的颜色												| `String`					| `#FF1A00`	| -			| -				|
+| 属性名			| 说明											|类型				|默认值		|可选值	| 支持版本	|
+| ---				|---											| ---				| ---		| ---	| ---		|
+| `active`			| 当前激活的索引下标，支持sync双向绑定，默认值0		| `Number`			| `0`		| -		| -			|
+| `height`			| 高度，默认值100%								| `String`/`Number`	| `"100%"`	| -		| -			|
+| `sticky`			| `title`是否粘性布局，自定义`title`插槽时不生效	| `Boolean`			| `true`	| -		| -			|
+| `inactiveColor`	| 右边锚点状态非激活时的颜色						| `String`			| `#666666`	| -		| -			|
+| `activeColor`		| 右边锚点状态激活时的颜色							| `String`			| `#0090FF`	| -		| -			|
 
 #### IndexList Events
 | 事件名			|说明																		|事件参数																							|支持版本	|

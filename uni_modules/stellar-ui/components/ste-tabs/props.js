@@ -27,7 +27,7 @@ export default {
 	// 主题色（滑块颜色，边框颜色，选中的背景色，激活下拉列表中选项颜色）
 	color: {
 		type: [String, null],
-		default: () => '#0090FF',
+		default: () => '',
 	},
 	// 背景
 	background: {
