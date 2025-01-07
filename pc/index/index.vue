@@ -146,6 +146,10 @@ export default {
 					} else {
 						src = '/mp/index/index';
 					}
+					// 自定义主题打开小程序
+					if (v.includes('自定义主题')) {
+						src = `/mp/color-demo/color-demo`;
+					}
 					if (this.iframeUrl === src) return;
 					// #ifdef H5
 					this.$nextTick(() => {
