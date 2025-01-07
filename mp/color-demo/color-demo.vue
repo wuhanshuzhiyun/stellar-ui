@@ -354,7 +354,7 @@ export default {
 	.color-box {
 		width: 40rpx;
 		height: 40rpx;
-		margin-bottom: 0;
+		margin-bottom: 0 !important;
 	}
 }
 </style>
