@@ -320,7 +320,7 @@ export default {
 			if (ele) {
 				ele.scrollIntoView({ behavior: 'smooth' });
 			}
-			// #ifdef WEB
+			// #endif
 		},
 		bindMdEvents() {
 			// #ifdef H5

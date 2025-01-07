@@ -8,7 +8,7 @@ class SSE {
 	}
 	// 监听数据
 	onmessage(callback) {
-		this.sse.addEventListener('message', function(event) {
+		this.sse.addEventListener('message', function (event) {
 			callback(event.data);
 		});
 	}

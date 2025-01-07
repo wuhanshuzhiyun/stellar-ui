@@ -7,8 +7,15 @@
 					<view class="title">主题色</view>
 					<view class="item-block" style="display: flex; align-items: center; padding-bottom: 20px">
 						<span>{{ color }}：</span>
-						<colorPicker v-model="color" @change="headleChangeColor" :defaultColor="defaultColor" />
-						<ste-button :style="{ marginLeft: '20rpx' }" @click="reset">还原主题色</ste-button>
+						<view
+							class="color-box"
+							@click="selectColor"
+							:style="{
+								'background-color': color,
+								marginRight: '20rpx',
+							}"
+						></view>
+						<ste-button @click="reset">还原主题色</ste-button>
 					</view>
 				</view>
 			</ste-sticky>
@@ -20,7 +27,7 @@
 			</view>
 			<view class="demo-item">
 				<view class="title">日历</view>
-				<view class="item-block">
+				<view class="item-block" style="display: block">
 					<ste-calendar height="720" :showTitle="false" @confirm="handleConfirm" ref="Calendar" />
 				</view>
 			</view>
@@ -156,6 +163,9 @@
 				</view>
 			</view>
 		</view>
+		<root-portal>
+			<t-color-picker ref="colorPicker" :color="defaultColor" @confirm="confirm"></t-color-picker>
+		</root-portal>
 	</view>
 </template>
 
@@ -163,11 +173,12 @@
 import { onMounted } from 'vue';
 import useColor from '@/uni_modules/stellar-ui/config/color.js';
 let color = useColor();
+import utils from '@/uni_modules/stellar-ui/utils/utils.js';
 export default {
 	data() {
 		return {
 			color: '',
-			defaultColor: '',
+			defaultColor: { r: 255, g: 0, b: 0, a: 0.6 },
 			checkboxValue: true,
 			datetime: '',
 			radioValue: 'a',
@@ -240,10 +251,20 @@ export default {
 				icon: 'info',
 			});
 		},
+		selectColor() {
+			this.$refs.colorPicker.open();
+		},
+		confirm(e) {
+			this.color = e.hex;
+			color.setColor({ steThemeColor: this.color });
+		},
 	},
 	mounted() {
 		this.color = color.getColor().steThemeColor;
-		this.defaultColor = color.$state.defaultColor;
+		let colormd = utils.Color.hex2rgba(color.$state.defaultColor);
+		colormd = colormd.replace('rgba(', '').replace(')', '').split(',');
+		colormd = { r: colormd[0], g: colormd[1], b: colormd[2], a: colormd[3] };
+		this.defaultColor = colormd;
 	},
 };
 </script>
@@ -328,6 +349,12 @@ export default {
 				}
 			}
 		}
+	}
+
+	.color-box {
+		width: 40rpx;
+		height: 40rpx;
+		margin-bottom: 0;
 	}
 }
 </style>
