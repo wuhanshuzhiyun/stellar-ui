@@ -237,9 +237,6 @@ export default {
 		};
 	},
 	methods: {
-		headleChangeColor() {
-			color.setColor({ steThemeColor: this.color });
-		},
 		reset() {
 			this.color = color.$state.defaultColor;
 			color.setColor({ steThemeColor: this.color });
