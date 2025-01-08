@@ -15,6 +15,7 @@
 							<input
 								v-model="inputView"
 								class="filterable-input"
+								placeholder-class="placeholder-text"
 								:class="{ content: cmpMultiple && cmpViewValue.length }"
 								:disabled="disabled"
 								:placeholder="inputPlaceholder"
@@ -646,7 +647,7 @@ export default {
 					overflow: hidden; // 隐藏溢出内容，并显示省略号
 				}
 				.filterable-input {
-					height: var(--ste-select-multiple-placeholder-height);
+					height: var(--ste-select-multiple-placeholder-height);					
 					display: inline-block;
 					&.content {
 						width: 50%;
@@ -660,9 +661,11 @@ export default {
 		.filterable-input {
 			width: 100%;
 			height: 100%;
+			font-size: var(--ste-select-font-size);
 		}
 		.placeholder-text {
 			color: #999999;
+			font-size: var(--ste-select-font-size);
 		}
 		.open-icon-event {
 			width: var(--ste-select-multiple-line-height);
