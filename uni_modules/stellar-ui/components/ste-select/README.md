@@ -377,6 +377,7 @@ export default {
 | `disabled`				| 禁用（所有功能失效）																						| `Boolean`											|	`false`		|	-							|	-				|
 | `loading`					| 加载中																												| `Boolean`											|	`false`		|	-							|	`1.34.1`|
 | `total`						| 数据总数（`list`选项数量大于或等于`total`值时不触发上拉触底事件）	| `Number`											|	`10`			|	-							|	`1.34.1`|
+| `clearable`				| 显示一键清除按钮																							| `Boolean`											|	`false`		|	-							|	`1.35.1`|
 
 ##### Mode可选值
 | 值					| 说明																												| 支持版本	|

@@ -46,6 +46,9 @@
 						</slot>
 					</view>
 				</view>
+				<view class="clearable-icon" v-if="cmpShowClearable" @click.stop="clickClearable">
+					<ste-icon code="&#xe694;" color="#bbbbbb" size="34" />
+				</view>
 			</view>
 
 			<view class="options-content" :style="[optionsStyle]" @click.stop="stop">
@@ -179,6 +182,7 @@ const isData = (d) => {
  * @value bottom-end 下方展示，右侧对其
  * @value top-end 上方展示，右侧对其
  * @property {Boolean} disabled 禁用
+ * @property {Boolean} clearable 是否可清空内容
  * @event {Function} change 选中值变化时触发
  * @event {Function} cancel 取消选择时触发
  * @event {Function} confirm 确定选择时触发
@@ -217,6 +221,7 @@ export default {
 		optionsPosition: { type: [String, null], default: () => 'auto' },
 		disabled: { type: [Boolean, null], default: () => false },
 		total: { type: [Number, null], default: () => 0 },
+		clearable: { type: [Boolean, null], default: () => false },
 	},
 	data() {
 		return {
@@ -301,6 +306,9 @@ export default {
 				view.push(item?.[this.labelKey] || '');
 			});
 			return !this.cmpMultiple && view[0] ? view[0] : view;
+		},
+		cmpShowClearable() {
+			return this.clearable && this.confirmValue.length;
 		},
 	},
 	watch: {
@@ -582,6 +590,12 @@ export default {
 			if (this.total < 1 || this.list.length >= this.total) return;
 			this.$emit('loadMore');
 		},
+		clickClearable() {
+			this.confirmValue = [];
+			this.inputView = '';
+			this.selected = [];
+			this.onConfirm();
+		},
 	},
 };
 </script>
@@ -647,7 +661,7 @@ export default {
 					overflow: hidden; // 隐藏溢出内容，并显示省略号
 				}
 				.filterable-input {
-					height: var(--ste-select-multiple-placeholder-height);					
+					height: var(--ste-select-multiple-placeholder-height);
 					display: inline-block;
 					&.content {
 						width: 50%;
@@ -696,6 +710,19 @@ export default {
 					transform: translateY(2rpx);
 				}
 			}
+		}
+
+		.clearable-icon {
+			width: 60rpx;
+			height: 100%;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			position: absolute;
+			right: 48rpx;
+			top: 50%;
+			z-index: 10;
+			transform: translateY(-50%);
 		}
 	}
 	.options-content {
