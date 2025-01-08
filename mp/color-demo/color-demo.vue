@@ -181,7 +181,6 @@ export default {
 			defaultColor: { r: 255, g: 0, b: 0, a: 0.6 },
 			checkboxValue: true,
 			datetime: '',
-			radioValue: 'a',
 			rateValue: 1,
 			selectValue: 2011,
 			list: [
@@ -261,10 +260,10 @@ export default {
 	},
 	mounted() {
 		this.color = color.getColor().steThemeColor;
-		let colormd = utils.Color.hex2rgba(color.$state.defaultColor);
-		colormd = colormd.replace('rgba(', '').replace(')', '').split(',');
-		colormd = { r: colormd[0], g: colormd[1], b: colormd[2], a: colormd[3] };
-		this.defaultColor = colormd;
+		let result = utils.Color.hex2rgba(color.$state.defaultColor);
+		result = result.replace('rgba(', '').replace(')', '').split(',');
+		result = { r: result[0], g: result[1], b: result[2], a: result[3] };
+		this.defaultColor = result;
 	},
 };
 </script>
