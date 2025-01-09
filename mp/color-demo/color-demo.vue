@@ -38,6 +38,12 @@
 				</view>
 			</view>
 			<view class="demo-item">
+				<view class="title">单选框</view>
+				<view class="item-block">
+					<ste-radio v-model="radioValue" name="a">单选框</ste-radio>
+				</view>
+			</view>
+			<view class="demo-item">
 				<view class="title">时间选择器</view>
 				<view class="item-block" style="display: block">
 					<ste-date-picker :value="datetime"></ste-date-picker>
@@ -180,6 +186,7 @@ export default {
 			color: '',
 			defaultColor: { r: 255, g: 0, b: 0, a: 0.6 },
 			checkboxValue: true,
+			radioValue: 'a',
 			datetime: '',
 			rateValue: 1,
 			selectValue: 2011,
