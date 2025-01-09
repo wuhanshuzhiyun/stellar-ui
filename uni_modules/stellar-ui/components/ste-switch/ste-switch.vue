@@ -4,7 +4,7 @@
 			<ste-loading
 				v-if="loading"
 				:type="2"
-				:color="value ? activeColor : inactiveColor"
+				:color="value ? cmpActiveColor : inactiveColor"
 				:size="size / 2"
 			></ste-loading>
 		</view>
@@ -81,11 +81,7 @@ export default {
 			style['width'] = utils.formatPx(Number(this.size) * 2 + 4);
 			style['height'] = utils.formatPx(Number(this.size) + 4);
 			style['borderRadius'] = utils.formatPx((Number(this.size) + 4) / 2);
-			style['background'] = this.value
-				? this.activeColor
-					? this.activeColor
-					: color.getColor().steThemeColor
-				: this.inactiveColor;
+			style['background'] = this.value ? this.cmpActiveColor : this.inactiveColor;
 			style['opacity'] = this.disabled ? '0.6' : '1';
 			// #ifdef H5
 			style['cursor'] = this.disabled || this.readonly ? 'not-allowed' : 'pointer';
@@ -102,6 +98,9 @@ export default {
 				style['marginLeft'] = utils.formatPx(2);
 			}
 			return style;
+		},
+		cmpActiveColor() {
+			return this.activeColor ? this.activeColor : color.getColor().steThemeColor;
 		},
 	},
 	methods: {
