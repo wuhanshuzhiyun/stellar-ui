@@ -1,5 +1,5 @@
 <template>
-	<view class="pc-page-body">
+	<view class="pc-page-body" :class="{ child: isChild }">
 		<view class="pc-page-header">
 			<!-- 您正在浏览基于 Vue 2.x 的文档;
 			<a href="https://stellar-ui.intecloud.com.cn/plus" target="_blank">点击查看Vue 3.x版本。</a> -->
@@ -108,6 +108,7 @@ export default {
 			compContent: '',
 			contentOldScrollTop: 0,
 			contentScrollTop: 0,
+			isChild: false,
 		};
 	},
 	computed: {
@@ -166,6 +167,10 @@ export default {
 			this.activeName = name;
 			this.loadNavFromActiveName();
 		}
+		// #ifdef H5
+		// 判断当前网站是否被iframe嵌入
+		this.isChild = window.self !== window.top;
+		// #endif
 	},
 	async onShow() {
 		const uuid = this.initUUID();
@@ -517,6 +522,24 @@ export default {
 						margin-left: 10px;
 					}
 				}
+			}
+		}
+	}
+
+	&.child {
+		.pc-page-header {
+			display: none;
+		}
+		.pc-page-content {
+			width: 100%;
+			height: 100%;
+			margin-top: 0;
+			.pc-nav {
+				display: none;
+			}
+			.pc-content {
+				padding-left: 0;
+				padding-right: 0;
 			}
 		}
 	}
