@@ -35,7 +35,13 @@
 					</view>
 				</view>
 			</view>
-			<scroll-view scroll-y class="pc-content" :scroll-top="contentScrollTop" @scroll="handleContentScroll">
+			<scroll-view
+				scroll-y
+				:data-markdown="content"
+				class="pc-content"
+				:scroll-top="contentScrollTop"
+				@scroll="handleContentScroll"
+			>
 				<!-- 组件预览页面 -->
 				<template v-if="cmpIsCompPage">
 					<view v-html="contentViews[0]" class="markdown-view"></view>
@@ -47,7 +53,7 @@
 				<!-- 底部评价 -->
 				<commentVue v-if="isComponent && loadingMd" :activeName="activeName" :isComponent="isComponent" />
 			</scroll-view>
-			<!-- <view class="pc-content">
+			<!-- <view class="pc-content" :data-markdown="content">
 				
 			</view> -->
 			<view class="pc-view" v-if="cmpShowH5">
