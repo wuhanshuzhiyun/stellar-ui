@@ -5,7 +5,7 @@
 				<ste-icon
 					code="&#xe67c;"
 					:size="(theme == 'card' ? cmpBtnSize : cmpBtnSize * 0.8) * 0.65"
-					:color="cmpDisableMinus ? '#cccccc' : theme == 'line' ? '#000000' : mainColor"
+					:color="cmpDisableMinus ? '#cccccc' : theme == 'line' ? '#000000' : cmpMainColor"
 					:inlineBlock="false"
 				></ste-icon>
 			</view>
@@ -214,11 +214,7 @@ export default {
 			let style = {};
 			if (this.theme == 'card') {
 				style['border'] = `${utils.formatPx('2')} solid ${
-					(this.cmpDisableMinus
-						? '#cccccc'
-						: this.mainColor
-						? this.mainColor
-						: color.getColor().steThemeColor) + '80'
+					(this.cmpDisableMinus ? '#cccccc' : this.cmpMainColor) + '80'
 				}`;
 			}
 			if (this.theme == 'line') {
@@ -233,16 +229,8 @@ export default {
 		},
 		cmpRightButtonStyle() {
 			let style = {};
-			style['background'] = this.cmpDisablePlus
-				? '#cccccc'
-				: this.mainColor
-				? this.mainColor
-				: color.getColor().steThemeColor;
-			style['backgroundColor'] = this.cmpDisablePlus
-				? '#cccccc'
-				: this.mainColor
-				? this.mainColor
-				: color.getColor().steThemeColor;
+			style['background'] = this.cmpDisablePlus ? '#cccccc' : this.cmpMainColor;
+			style['backgroundColor'] = this.cmpDisablePlus ? '#cccccc' : this.cmpMainColor;
 			if (this.theme == 'line') {
 				style['background'] = '#ffffff';
 				style['backgroundColor'] = '#ffffff';
@@ -293,6 +281,9 @@ export default {
 		},
 		cmpBtnSize() {
 			return this.btnSize ? this.btnSize : this.theme == 'card' ? 48 : 60;
+		},
+		cmpMainColor() {
+			return this.mainColor ? this.mainColor : color.getColor().steThemeColor;
 		},
 	},
 	methods: {
