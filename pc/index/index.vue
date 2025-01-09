@@ -457,7 +457,7 @@ export default {
 			}
 			.markdown-view {
 				padding: 10px var(--pc-padding);
-				padding-bottom: 0;
+				padding-bottom: 1px;
 			}
 		}
 		@media (max-width: 1100px) {
