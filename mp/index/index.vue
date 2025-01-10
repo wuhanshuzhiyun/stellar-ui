@@ -253,6 +253,15 @@
 					<ste-image :src="joinSrc('组件图标/r-arrow.png')" :width="32" :height="32" />
 				</view>
 			</view>
+			<view class="com-box" @click="nav('barcode')">
+				<view class="com-title">
+					<ste-image :src="joinSrc('组件图标/barcode.png')" :width="36" :height="36" />
+					<text>Barcode 条形码</text>
+				</view>
+				<view class="com-arrow">
+					<ste-image :src="joinSrc('组件图标/r-arrow.png')" :width="32" :height="32" />
+				</view>
+			</view>
 			<view class="com-box" @click="nav('loading')">
 				<view class="com-title">
 					<ste-image :src="joinSrc('组件图标/loading.png')" :width="36" :height="36" />
@@ -293,6 +302,15 @@
 				<view class="com-title">
 					<ste-image :src="joinSrc('组件图标/numberKeyboard.png')" :width="36" :height="36" />
 					<text>NumberKeyboard 数字键盘</text>
+				</view>
+				<view class="com-arrow">
+					<ste-image :src="joinSrc('组件图标/r-arrow.png')" :width="32" :height="32" />
+				</view>
+			</view>
+			<view class="com-box" @click="nav('qrcode')">
+				<view class="com-title">
+					<ste-image :src="joinSrc('组件图标/qrcode.png')" :width="36" :height="36" />
+					<text>QRcode 二维码</text>
 				</view>
 				<view class="com-arrow">
 					<ste-image :src="joinSrc('组件图标/r-arrow.png')" :width="32" :height="32" />
