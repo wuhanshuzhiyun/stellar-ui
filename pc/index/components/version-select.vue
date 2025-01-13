@@ -101,10 +101,12 @@ export default {
 	position: relative;
 	display: inline-block;
 	min-width: 120px;
+	/* #ifdef H5 */
 	user-select: none;
 	-webkit-user-select: none;
 	-moz-user-select: none;
 	-ms-user-select: none;
+	/* #endif */
 }
 
 .version-selected {
@@ -205,9 +207,11 @@ export default {
 /* 禁用文本选择 */
 .version-text,
 .check-icon {
+	/* #ifdef H5 */
 	user-select: none;
 	-webkit-user-select: none;
 	-moz-user-select: none;
 	-ms-user-select: none;
+	/* #endif */
 }
 </style>

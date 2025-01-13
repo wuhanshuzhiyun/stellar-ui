@@ -151,7 +151,9 @@ export default {
 	white-space: nowrap;
 	overflow: hidden;
 	text-overflow: ellipsis;
+	// #ifdef H5
 	user-select: none;
+	// #endif
 }
 
 .measure-text {

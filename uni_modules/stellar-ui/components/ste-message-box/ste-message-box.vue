@@ -351,9 +351,7 @@ export default {
 			> .text {
 				height: 100%;
 				border-top: 2rpx solid #eeeeee;
-				border-right: 2rpx solid #eeeeee;
 				flex: 1;
-
 				display: flex;
 				align-items: center;
 				justify-content: center;
@@ -372,8 +370,8 @@ export default {
 					color: var(--confirm-color);
 				}
 
-				&:nth-last-child(1) {
-					border-right: none;
+				& + .text {
+					border-left: 2rpx solid #eeeeee;
 				}
 			}
 		}

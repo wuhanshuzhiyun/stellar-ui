@@ -3,7 +3,7 @@
 	padding: 0;
 	box-sizing: border-box;
 }
-
+// #ifdef H5
 html,
 body {
 	user-select: auto;
@@ -32,7 +32,7 @@ body {
 	height: 10px;
 	opacity: 0;
 }
-
+// #endif
 /*
   demo页通用样式 
 */
@@ -44,6 +44,7 @@ body {
 
 	display: flex;
 	flex-direction: column;
+	// #ifdef H5
 	::-webkit-scrollbar {
 		display: none;
 		width: 0 !important;
@@ -52,6 +53,7 @@ body {
 		background: transparent;
 		color: transparent;
 	}
+	// #endif
 	& > .content {
 		padding: 0 40rpx;
 		flex: 1;
@@ -118,18 +120,17 @@ body {
 	height: 90px !important;
 	border-radius: 50%;
 }
-
+.con-box .name {
+	color: #1989fa !important;
+	text-align: center;
+}
+// #ifdef H5
 .con-box a:link,
 .con-box a:visited,
 .con-box a:hover,
 .con-box a:active {
 	text-decoration: none !important;
 	color: #1989fa !important;
-}
-
-.con-box .name {
-	color: #1989fa !important;
-	text-align: center;
 }
 
 h2,
@@ -158,3 +159,4 @@ h4:hover .header-anchor {
 html {
 	scroll-behavior: smooth;
 }
+// #endif
