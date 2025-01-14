@@ -77,7 +77,7 @@
 				</view>
 			</view>
 			<view class="bottom-box">
-				<ste-button @click="onloading" width="100%" :mode="300">重新加载</ste-button>
+				<ste-button @click="onloading" width="660" :mode="300">重新加载</ste-button>
 			</view>
 		</view>
 	</view>
