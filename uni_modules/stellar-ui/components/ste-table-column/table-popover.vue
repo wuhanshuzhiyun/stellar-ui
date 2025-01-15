@@ -32,7 +32,7 @@ const ANIMATION_PROP = { duration: DURATION, timingFunction: 'ease-out' };
 export default {
 	props: {
 		text: {
-			type: String,
+			type: [String, null],
 			default: '',
 		},
 	},
