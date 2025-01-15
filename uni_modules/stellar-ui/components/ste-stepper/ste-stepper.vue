@@ -12,6 +12,7 @@
 		</ste-button>
 		<view v-if="theme != 'add'" class="input" :style="[cmpInputStyle]">
 			<input
+				class="input-el"
 				:type="precision ? 'digit' : 'number'"
 				:value="value"
 				@blur="blur"
@@ -357,7 +358,7 @@ export default {
 		font-weight: bold;
 		color: #000000;
 		text-align: center;
-		input {
+		.input-el {
 			height: 100%;
 			font-size: 28rpx;
 		}
