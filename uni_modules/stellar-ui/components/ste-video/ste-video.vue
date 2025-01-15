@@ -152,7 +152,7 @@
 						:key="index"
 						@click="handleChooseItem(e, index)"
 					>
-						<text>{{ e + 'X' }}</text>
+						<text class="text">{{ e + 'X' }}</text>
 						<view v-if="speedIndex == index" class="check-icon">
 							<ste-icon code="&#xe67a;" color="#fff" size="36"></ste-icon>
 						</view>
@@ -165,7 +165,7 @@
 						:key="index"
 						@click="handleChooseItem(e, index)"
 					>
-						<text>{{ e.text }}</text>
+						<text class="text">{{ e.text }}</text>
 						<view v-if="resolutionIndex == index" class="check-icon">
 							<ste-icon code="&#xe67a;" color="#fff" size="36"></ste-icon>
 						</view>
@@ -607,7 +607,7 @@ export default {
 			position: relative;
 			width: 100%;
 			text-align: center;
-			> text {
+			.text {
 				font-size: var(--choose-item-font-size);
 			}
 
