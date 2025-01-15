@@ -1,3 +1,4 @@
+// #ifdef H5
 :root,
 :host {
 	// sizes
@@ -46,3 +47,5 @@
 		--pc-padding: 32px;
 	}
 }
+
+// #endif

@@ -166,7 +166,8 @@ export default {
 	width: var(--progress-width);
 	height: var(--progress-height);
 
-	> view {
+	.inactive-box,
+	.active-box {
 		width: var(--progress-width);
 		height: var(--progress-height);
 		border-radius: 24rpx;
