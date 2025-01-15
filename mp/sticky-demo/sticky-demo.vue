@@ -49,7 +49,14 @@ export default {
 			.content-view {
 				margin-top: 12rpx;
 				height: 200vh;
-				background-color: #f5f5f5;
+				background-image: linear-gradient(
+					45deg,
+					#000000 0%,
+					#ffffff 25%,
+					#000000 50%,
+					#ffffff 75%,
+					#000000 100%
+				);
 			}
 		}
 	}

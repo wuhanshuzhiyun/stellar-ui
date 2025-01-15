@@ -355,9 +355,7 @@ export default {
 <style lang="scss" scoped>
 .ste-input-root {
 	position: relative;
-
 	box-sizing: border-box;
-
 	border-width: 1rpx;
 	border-style: solid;
 	border-color: var(--input-border-color);
