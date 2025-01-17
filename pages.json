@@ -1,8 +1,8 @@
 {
     "insetLoader": {
         "config": {
-            "toast": "<root-portal><ste-toast id='steToast'></ste-toast></root-portal>",
-            "msgBox": "<root-portal><ste-message-box id='steMessageBox'></ste-message-box></root-portal>"
+            "toast": "<ste-toast id='steToast'></ste-toast>",
+            "msgBox": "<ste-message-box id='steMessageBox'></ste-message-box>"
         },
         // 全局配置
         "label": ["toast", "msgBox"],

@@ -148,11 +148,11 @@ export default {
 		},
 		setComment() {
 			if (!this.commentParams.title) {
-				uni.showToast({ title: '请输入标题', icon: 'none' });
+				this.$showToast({ title: '请输入标题', icon: 'none' });
 				return;
 			}
 			if (!this.commentParams.content) {
-				uni.showToast({ title: '请输入反馈意见', icon: 'none' });
+				this.$showToast({ title: '请输入反馈意见', icon: 'none' });
 				return;
 			}
 			if (this.isAjax) return;
@@ -165,7 +165,7 @@ export default {
 			request('/comments/append', Object.assign(form, { document_name: this.activeName }), 'POST')
 				.then((data) => {
 					this.isAjax = false;
-					uni.showToast({
+					this.$showToast({
 						title: '评论成功',
 						icon: 'none',
 					});

@@ -222,7 +222,7 @@ export default {
 	created() {},
 	methods: {
 		handleConfirm(v) {
-			this.showToast({
+			this.$showToast({
 				title: '确定选择：' + v.join(' '),
 				icon: 'none',
 				duration: 1500,

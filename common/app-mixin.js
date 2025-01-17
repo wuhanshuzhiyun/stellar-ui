@@ -9,7 +9,8 @@ export default {
 		};
 	},
 	methods: {
-		showToast(params) {
+		// 前面加个$，防止和uni全局方法冲突导致警告
+		$showToast(params) {
 			// 是否开启提示跨页面功能配置
 			params.enableCrossPagePrompt = false;
 			steToast.showToast(params);

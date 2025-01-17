@@ -99,7 +99,7 @@ export default {
 		},
 		save() {
 			request('/account/update', this.userInfo, 'POST').then(() => {
-				uni.showToast({
+				this.$showToast({
 					title: '保存成功',
 					icon: 'none',
 				});
@@ -108,7 +108,7 @@ export default {
 		},
 		// 退出登录
 		outlogin() {
-			uni.showModal({
+			this.showModal({
 				title: '提示',
 				content: '确定退出登录吗？',
 				success: async (res) => {

@@ -77,7 +77,7 @@ export default {
 	},
 	methods: {
 		onClickItem(title, text) {
-			this.showToast({
+			this.$showToast({
 				title: `【${title}】-【${text}】`,
 				icon: 'none',
 			});

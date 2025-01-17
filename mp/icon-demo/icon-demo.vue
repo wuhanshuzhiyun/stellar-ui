@@ -113,7 +113,7 @@ export default {
 				data,
 				showToast: false,
 				success: function () {
-					this.showToast({
+					this.$showToast({
 						icon: 'none',
 						title: `code：${data} 已复制到剪切板`,
 					});

@@ -231,7 +231,7 @@ export default {
 				history.replaceState({}, '', `/pc/index/index?name=${this.key}`);
 				return;
 			}
-			uni.showToast({
+			this.$showToast({
 				title: '密码不正确',
 				icon: 'none',
 			});

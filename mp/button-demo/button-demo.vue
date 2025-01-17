@@ -156,7 +156,7 @@ export default {
 	created() {},
 	methods: {
 		handleClick(v) {
-			this.showToast({
+			this.$showToast({
 				title: '点击按钮' + ' ' + v,
 				icon: 'none',
 				duration: 1500,

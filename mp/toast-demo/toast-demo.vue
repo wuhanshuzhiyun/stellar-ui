@@ -63,33 +63,33 @@ export default {
 	mounted() {},
 	methods: {
 		click1() {
-			this.showToast({
+			this.$showToast({
 				title: '提示内容',
 			});
 		},
 		click2() {
-			this.showToast({
+			this.$showToast({
 				title: '多行内容，多行内容，多行内容，多行内容，多行内容，多行内容，多行内容，多行内容，多行内容，',
 			});
 		},
 		click3() {
-			this.showToast({
+			this.$showToast({
 				title: '换行\n内容',
 			});
 		},
 		click4() {
-			this.showToast({
+			this.$showToast({
 				title: '提示内容',
 			});
 		},
 		click5() {
-			this.showToast({
+			this.$showToast({
 				title: '提示内容',
 				icon: 'error',
 			});
 		},
 		click6() {
-			this.showToast({
+			this.$showToast({
 				title: '提示内容',
 				icon: 'loading',
 			});
@@ -98,36 +98,36 @@ export default {
 			}, 4000);
 		},
 		click7() {
-			this.showToast({
+			this.$showToast({
 				title: '提示内容',
 				icon: 'none',
 			});
 		},
 		click8() {
-			this.showToast({
+			this.$showToast({
 				title: '提示内容',
 				image: 'https://image.whzb.com/chain/StellarUI/组件图标/loading.png',
 			});
 		},
 		click9() {
-			this.showToast({
+			this.$showToast({
 				title: '提示内容',
 				mask: true,
 				duration: 5000,
 			});
 		},
 		click10() {
-			this.showToast({
+			this.$showToast({
 				title: '提示内容',
 				duration: 5000,
 			});
 		},
 		click11() {
-			this.showToast({
+			this.$showToast({
 				title: '提示内容',
 				success() {
 					setTimeout(() => {
-						this.showToast({
+						this.$showToast({
 							title: '成功',
 							icon: 'none',
 						});
@@ -136,11 +136,11 @@ export default {
 			});
 		},
 		click12() {
-			this.showToast({
+			this.$showToast({
 				title: '提示内容',
 				complete() {
 					setTimeout(() => {
-						this.showToast({
+						this.$showToast({
 							title: '结束',
 							icon: 'none',
 						});
@@ -149,10 +149,10 @@ export default {
 			});
 		},
 		click13() {
-			this.showToast({
+			this.$showToast({
 				title: '提示内容',
 				close() {
-					this.showToast({
+					this.$showToast({
 						title: '关闭',
 						icon: 'none',
 					});
@@ -160,16 +160,16 @@ export default {
 			});
 		},
 		click14() {
-			this.showToast({
+			this.$showToast({
 				title: '队列1',
 				order: true,
 			});
-			this.showToast({
+			this.$showToast({
 				title: '队列2',
 				duration: 4000,
 				order: true,
 			});
-			this.showToast({
+			this.$showToast({
 				title: '队列3',
 				order: true,
 			});

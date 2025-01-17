@@ -71,13 +71,13 @@ export default {
 	},
 	methods: {
 		click1(value) {
-			this.showToast({
+			this.$showToast({
 				icon: 'none',
 				title: `点击：${value} 开关的值`,
 			});
 		},
 		click2(value, allowStop, resolve) {
-			this.showToast({
+			this.$showToast({
 				icon: 'none',
 				title: `点击：${value} 开关的值`,
 			});
@@ -86,7 +86,7 @@ export default {
 		},
 		change(value) {
 			setTimeout(() => {
-				this.showToast({
+				this.$showToast({
 					icon: 'none',
 					title: `改变：${value} 开关的值`,
 				});

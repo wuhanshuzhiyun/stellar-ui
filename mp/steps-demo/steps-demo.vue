@@ -89,7 +89,7 @@ export default {
 			this.active++;
 		},
 		toToast(index) {
-			this.showToast({
+			this.$showToast({
 				title: `进度：${index}`,
 			});
 		},
