@@ -1,6 +1,6 @@
 {
 	"name": "stellarui",
-	"version": "1.35.1",
+	"version": "1.35.3",
 	"description": "",
 	"main": "main.js",
 	"scripts": {
@@ -8,7 +8,7 @@
 	},
 	"repository": {
 		"type": "git",
-		"url": "http://172.16.108.253:8001/Mall/StellarUI.git"
+		"url": "https://github.com/wuhanshuzhiyun/StellarUI.git"
 	},
 	"keywords": [],
 	"author": "",
