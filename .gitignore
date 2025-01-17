@@ -7,4 +7,4 @@ deploy.sh
 /unpackage
 /package-lock.json
 yarn.lock
-.github/workflows
+/.github/
