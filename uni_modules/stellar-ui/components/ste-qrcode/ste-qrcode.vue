@@ -11,6 +11,19 @@
 </template>
 
 <script>
+/**
+ * ste-qrcode 二维码
+ * @description 二维码组件
+ * @tutorial https://stellar-ui.intecloud.com.cn/pc/index/index?name=ste-qrcode
+ * @property {String} content 二维码内容
+ * @property {Number} size 二维码尺寸，单位`px`
+ * @property {String} background 背景色
+ * @property {String} foreground 前景色(条形码画笔颜色)
+ * @property {String} foregroundImageSrc 二维码中间logo图
+ * @property {String} foregroundImageWidth logo图宽度, 默认二维码尺寸的四分之一
+ * @property {String} foregroundImageHeight logo图高度, 默认二维码尺寸的四分之一
+ * @event {Function} loadImage 加载完成后返回条形码对应的图片数据
+ */
 import UQRCode from './uqrcode';
 import utils from '../../utils/utils';
 

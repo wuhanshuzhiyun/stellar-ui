@@ -21,6 +21,17 @@
 </template>
 
 <script>
+/**
+ * ste-barcode 条形码
+ * @description 条形码组件
+ * @tutorial https://stellar-ui.intecloud.com.cn/pc/index/index?name=ste-barcode
+ * @property {String} content 条形码内容(仅支持数字和字母)
+ * @property {Number} width 条形码宽度，单位`px`
+ * @property {Number} height 条形码高度，单位`px`
+ * @property {String} background 背景色
+ * @property {String} foreground 前景色(条形码画笔颜色)
+ * @event {Function} loadImage 加载完成后返回条形码对应的图片数据
+ */
 import utils from '../../utils/utils';
 import { PATTERNS, stringToCode128 } from './encode2';
 
@@ -74,6 +85,7 @@ export default {
 	methods: {
 		initCanvas() {
 			const canvas = utils.getCanvasContext(this.canvasId, this).then((res) => {
+				console.log('*** barcode , ', res);
 				// #ifndef H5
 				const context = res.getContext('2d');
 				const dpr = utils.System.getWindowInfo().pixelRatio;
