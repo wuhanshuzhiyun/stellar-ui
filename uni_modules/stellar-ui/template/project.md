@@ -14,6 +14,9 @@
 			<p align="justify">抱抱生活是数智云公司自建的本地综合生活服务线上平台。集商业服务、生活服务、政务综合服务于一体的15分钟便民生活圈服务平台。&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;</p>
 		</td>
 	</tr>
+</table>
+
+<table boder="0">
 	<tr>
 		<td>
 			<img width="250" src="https://image.whzb.com/chain/StellarUI/头像/中百百货.png" />
