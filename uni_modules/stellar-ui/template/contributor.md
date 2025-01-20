@@ -5,12 +5,12 @@
 <tr>
 	<td>
 		<p>
-			<a>
+			<div>
 				<img  width="90" height="90" style="border-radius:50%" src="https://image.whzb.com/chain/StellarUI/头像/费玉婷.png" />
-			</a>
+			</div>
 		</p>
 		<p align="center">
-			<a>费玉婷</a>
+			<div>费玉婷</div>
 		</p>
 	</td>
 	<td>
@@ -55,22 +55,22 @@
 	</td>
 	<td>
 		<p>
-			<a>
+			<div>
 				<img  width="90" height="90" style="border-radius:50%" src="https://image.whzb.com/chain/StellarUI/头像/鲍思睿.png" />
-			</a>
+			</div>
 		</p>
 		<p align="center">
-			<a>鲍思睿</a>
+			<div>鲍思睿</div>
 		</p>
 	</td>
 	<td>
 		<p>
-			<a>
+			<div>
 				<img  width="90" height="90" style="border-radius:50%" src="https://image.whzb.com/chain/StellarUI/头像/齐巍.png" />
-			</a>
+			</div>
 		</p>
 		<p align="center">
-			<a>齐巍</a>
+			<div>齐巍</div>
 		</p>
 	</td>
 </tr>
