@@ -75,3 +75,11 @@
 	</td>
 </tr>
 </table>
+
+### 贡献者们
+
+感谢以下小伙伴们为 `StellarUI` 发展做出的贡献：
+
+<a href="https://github.com/wuhanshuzhiyun/StellarUI/graphs/contributors">
+  <img src="https://contrib.rocks/image?repo=wuhanshuzhiyun/StellarUI" alt="contributors">
+</a>

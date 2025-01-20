@@ -24,6 +24,12 @@
 <img src="https://image.whzb.com/chain/StellarUI/%E6%94%AF%E4%BB%98%E5%AE%9D.png" width="200" height="200" />
 </p>
 
+## 平台支持
+
+|App|H5应用	|微信小程序	|支付宝小程序	|百度小程序	|字节小程序	|QQ小程序	|
+|:-:|:-:	|:-:		|:-:		|:-:		|:-:		|:-:		|
+|x	|√		|√			|√			|×			|×			|×			|
+
 ## 快速上手
 
 详细说明见 [快速上手](https://stellar-ui.intecloud.com.cn/pc/index/index?name=handbook-%E5%BF%AB%E9%80%9F%E4%B8%8A%E6%89%8B)。
@@ -70,7 +76,8 @@
 |[ste-helper](https://marketplace.visualstudio.com/items?itemName=StellarUI.ste-helper)	|旨在帮助开发者更加有效率的使用 StellarPlus来开发项目的vscode插件	|
 
 
-## 贡献者们
+## 核心团队
+以下是`StellarUI`的核心贡献者们：
 
 <table  border="0">
 <tr>
@@ -146,6 +153,14 @@
 	</td>
 </tr>
 </table>
+
+### 贡献者们
+
+感谢以下小伙伴们为 `StellarUI` 发展做出的贡献：
+
+<a href="https://github.com/wuhanshuzhiyun/StellarUI/graphs/contributors">
+  <img src="https://contrib.rocks/image?repo=wuhanshuzhiyun/StellarUI" alt="contributors">
+</a>
 
 ## 鸣谢
 - [uni-helper](https://github.com/uni-helper) - 感谢 uni-helper 团队提供的 uni-app 工具库，让 StellarUI 能够更方便地使用。
