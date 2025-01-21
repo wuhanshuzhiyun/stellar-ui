@@ -6,7 +6,7 @@
 <p align="center">📱 一个基于vue2构建，打造的uni-app组件库</p>
 
 <p align="center">
-  🚀 <a href="https://StellarUI.cn">文档网站</a>&nbsp;
+  🚀 <a href="https://stellar-ui.intecloud.com.cn/pc/index/index">文档网站</a>&nbsp;
 
 ## ✨ 特性
 
