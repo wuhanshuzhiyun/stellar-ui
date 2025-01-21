@@ -43,7 +43,7 @@ npm i stellar-ui-v2 -S
   
 ## 优秀案例
 
-我们非常欢迎大家一起贡献优秀的 Demo 与案例，欢迎在此 [issue](https://github.com/wuhanshuzhiyun/StellarUI/issues/1) 提交案例。
+我们非常欢迎大家一起贡献优秀的 Demo 与案例，欢迎在此 [issue](https://github.com/wuhanshuzhiyun/stellar-ui/issues/1) 提交案例。
 
 <table boder="0">
 	<tr>
@@ -164,8 +164,8 @@ npm i stellar-ui-v2 -S
 
 感谢以下小伙伴们为 `StellarUI` 发展做出的贡献：
 
-<a href="https://github.com/wuhanshuzhiyun/StellarUI/graphs/contributors">
-  <img src="https://contrib.rocks/image?repo=wuhanshuzhiyun/StellarUI" alt="contributors">
+<a href="https://github.com/wuhanshuzhiyun/stellar-ui/graphs/contributors">
+  <img src="https://contrib.rocks/image?repo=wuhanshuzhiyun/stellar-ui" alt="contributors">
 </a>
 
 ## 鸣谢
