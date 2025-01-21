@@ -30,6 +30,12 @@
 |:-:|:-:	|:-:		|:-:		|:-:		|:-:		|:-:		|
 |x	|√		|√			|√			|×			|×			|×			|
 
+## 安装
+
+```bash [npm]
+npm i stellar-ui-v2 -S
+```
+
 ## 快速上手
 
 详细说明见 [快速上手](https://stellar-ui.intecloud.com.cn/pc/index/index?name=handbook-%E5%BF%AB%E9%80%9F%E4%B8%8A%E6%89%8B)。
