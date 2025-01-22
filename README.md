@@ -3,19 +3,19 @@
 </p>
 <h1 align="center">StellarUI</h1>
 
-<p align="center">?? 一个基于vue2构建，打造的uni-app组件库</p>
+<p align="center">📱 一个基于vue2构建，打造的uni-app组件库</p>
 
 <p align="center">
-  ?? <a href="https://stellar-ui.intecloud.com.cn/pc/index/index">文档网站</a>&nbsp;
+  🚀 <a href="https://stellar-ui.intecloud.com.cn/pc/index/index">文档网站</a>&nbsp;
 
 ## ✨ 特性
 
-- ?? 多平台覆盖，支持 微信小程序、支付宝小程序、H5.
-- ?? 40+ 个高质量组件，覆盖移动端主流场景.
-- ?? 提供丰富的文档和组件示例.
-- ?? 支持修改 CSS 变量实现主题定制.
+- 🎯 多平台覆盖，支持 微信小程序、支付宝小程序、H5.
+- 🚀 40+ 个高质量组件，覆盖移动端主流场景.
+- 📖 提供丰富的文档和组件示例.
+- 🎨 支持修改 CSS 变量实现主题定制.
 
-## ?? 预览
+## 📱 预览
 
 扫描二维码访问演示，注意：因微信审核机制限制，当前的微信小程序示例可能不是最新版本，可以 clone 代码到本地预览。
 
@@ -75,11 +75,11 @@ npm i stellar-ui-v2 -S
 
 ## 周边生态
 
-| 项目																					| 描述														|
-| ---																					| ---														|
-|[StellarUI-Plus](https://stellar-ui.intecloud.com.cn/plus/#/)								| 一个基于vue3构建，打造的uni-app组件库							|
-|[ste-vue-inset-loader](https://github.com/wuhanshuzhiyun/ste-vue-inset-loader)			|常用于小程序需要全局引入组件的场景的包							|
-|[ste-helper](https://marketplace.visualstudio.com/items?itemName=StellarUI.ste-helper)	|旨在帮助开发者更加有效率的使用 StellarUI-Plus来开发项目的vscode插件	|
+| 项目																							| 描述															|
+| ---																							| ---															|
+|[StellarUI-Plus](https://github.com/wuhanshuzhiyun/stellar-ui-plus)							| 一个基于vue3构建，打造的uni-app组件库								|
+|[ste-vue-inset-loader](https://github.com/wuhanshuzhiyun/ste-vue-inset-loader)					|常用于小程序需要全局引入组件的场景的包								|
+|[ste-helper](https://github.com/wuhanshuzhiyun/stellar-ui-plus/tree/main/plugins/ste-helper)	|旨在帮助开发者更加有效率的使用 StellarUI-Plus来开发项目的vscode插件	|
 
 
 ## 核心团队
