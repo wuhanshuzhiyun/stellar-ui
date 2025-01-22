@@ -80,7 +80,7 @@ npm i stellar-ui-v2 -S
 |[StellarUI-Plus](https://github.com/wuhanshuzhiyun/stellar-ui-plus)							| 一个基于vue3构建，打造的uni-app组件库								|
 |[ste-vue-inset-loader](https://github.com/wuhanshuzhiyun/ste-vue-inset-loader)					|常用于小程序需要全局引入组件的场景的包								|
 |[ste-helper](https://github.com/wuhanshuzhiyun/stellar-ui-plus/tree/main/plugins/ste-helper)	|旨在帮助开发者更加有效率的使用 StellarUI-Plus来开发项目的vscode插件	|
-
+|[ste-cli](https://github.com/wuhanshuzhiyun/ste-cli)											|stellar配套的脚手架												|
 
 ## 核心团队
 以下是`StellarUI`的核心贡献者们：
