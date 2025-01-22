@@ -94,35 +94,73 @@ export default {
 	watch: {
 		content: {
 			handler() {
-				this.$nextTick(() => {
-					this.initCanvas();
-				});
+				this.initCanvas();
 			},
 			immediate: true,
 		},
 	},
 	methods: {
 		initCanvas() {
-			const canvas = utils.getCanvasContext(this.canvasId, this).then((res) => {
-				let context = res;
-				// #ifndef H5
-				context = res.getContext('2d');
-				const dpr = utils.System.getWindowInfo().pixelRatio;
-				res.width = this.size * dpr;
-				res.height = this.size * dpr;
-				context.scale(dpr, dpr);
-				// #endif
+			if (!this.content) return;
+			this.$nextTick(() => {
+				const canvas = utils.getCanvasContext(this.canvasId, this).then((res) => {
+					let context = res;
+					// #ifndef H5
+					context = res.getContext('2d');
+					const dpr = utils.System.getWindowInfo().pixelRatio;
+					res.width = this.size * dpr;
+					res.height = this.size * dpr;
+					context.scale(dpr, dpr);
+					// #endif
 
-				this.draw(context, res);
+					this.draw(context, res);
+				});
 			});
 		},
 		draw(ctx, canvas) {
 			const qr = new UQRCode();
 			// qr.useDynamicSize = true;
 
+			// #ifdef MP-WEIXIN || MP-ALIPAY
+			qr.loadImage = (src) => {
+				// 需要返回Promise对象，小程序下获取网络图片信息需先配置download域名白名单才能生效
+				return new Promise((resolve, reject) => {
+					var img = canvas.createImage();
+					img.src = src;
+					img.onload = () => {
+						// resolve返回img
+						resolve(img);
+					};
+					img.onerror = (err) => {
+						// reject返回错误信息
+						reject(err);
+					};
+				});
+			};
+			// #endif
+
+			// #ifdef H5
+			qr.loadImage = (src) => {
+				// 需要返回Promise对象
+				return new Promise((resolve, reject) => {
+					uni.getImageInfo({
+						src,
+						success: (res) => {
+							resolve(res.path);
+						},
+						fail: (err) => {
+							// reject返回错误信息
+							reject(err);
+						},
+					});
+				});
+			};
+
+			// #endif
+
 			qr.backgroundColor = this.background;
 			qr.foregroundColor = this.foreground;
-			qr.foregroundImageSrc = this.foregroundImageSrc;
+			qr.foregroundImageSrc = this.foregroundImageSrc ? `${this.foregroundImageSrc}?${new Date().getTime()}` : '';
 			this.foregroundImageWidth ? (qr.foregroundImageWidth = this.foregroundImageWidth) : '';
 			this.foregroundImageHeight ? (qr.foregroundImageHeight = this.foregroundImageHeight) : '';
 			// 设置二维码内容
@@ -135,19 +173,21 @@ export default {
 			// 设置uQRCode实例的canvas上下文
 			qr.canvasContext = ctx;
 			// 调用绘制方法将二维码图案绘制到canvas上
-			qr.drawCanvas();
-			qr.loadImage().then(() => {
-				uni.canvasToTempFilePath({
-					canvas: canvas,
-					canvasId: this.canvasId,
-					complete: (res) => {
-						if (!res || !res.tempFilePath) {
-							console.error('图片生成失败');
-						} else {
-							this.$emit('loadImage', res.tempFilePath);
-						}
-					},
-				});
+			qr.drawCanvas().then(() => {
+				setTimeout(() => {
+					uni.canvasToTempFilePath({
+						canvas: canvas,
+						canvasId: this.canvasId,
+
+						complete: (res) => {
+							if (!res || !res.tempFilePath) {
+								console.error('图片生成失败');
+							} else {
+								this.$emit('loadImage', res.tempFilePath);
+							}
+						},
+					});
+				}, 1500);
 			});
 		},
 	},
