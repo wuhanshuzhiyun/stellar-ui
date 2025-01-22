@@ -45,7 +45,7 @@ npm i stellar-ui-v2 -S
 
 我们非常欢迎大家一起贡献优秀的 Demo 与案例，欢迎在此 [issue](https://github.com/wuhanshuzhiyun/StellarUI/issues/1) 提交案例。
 
-<table boder="0">
+<table border="0">
 	<tr>
 		<td>
 			<img width="250" src="https://image.whzb.com/chain/StellarUI/头像/邻里购.png" />

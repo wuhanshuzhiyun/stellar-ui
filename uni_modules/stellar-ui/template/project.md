@@ -1,7 +1,7 @@
 ### 已使用项目
 `StellarUI` 帮助客户快速开发，标准，一致，美观的前端界面，提供各种组件，实现复杂功能，大大提高了开发效率，减少团队成员学习成本和bug产生率。
 
-<table boder="0">
+<table border="0">
 	<tr>
 		<td>
 			<img width="250" src="https://image.whzb.com/chain/StellarUI/头像/邻里购.png" />
