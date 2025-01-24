@@ -1,19 +1,18 @@
 {
-	"name": "stellar-ui",
-	"version": "1.35.3",
+	"name": "stellar-ui-v2",
+	"version": "1.36.2",
 	"description": "StellarUI组件库",
 	"main": "stellar-ui/index.js",
 	"private": false,
 	"scripts": {},
 	"repository": {
 		"type": "git",
-		"url": "https://github.com/wuhanshuzhiyun/StellarUI.git"
+		"url": "https://github.com/wuhanshuzhiyun/stellar-ui.git"
 	},
 	"keywords": [],
 	"author": "",
-	"license": "ISC",
+	"license": "MIT",
 	"dependencies": {
-		"g": "^2.0.1",
-		"ste-cli": "^1.0.1"
+		"g": "^2.0.1"
 	}
 }

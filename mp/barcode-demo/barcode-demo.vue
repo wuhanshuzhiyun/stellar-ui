@@ -10,7 +10,7 @@
 				<view class="title">基础使用</view>
 				<view class="item-block">
 					<view>
-						<ste-barcode content="123987456abc" />
+						<ste-barcode :content="content1" />
 					</view>
 				</view>
 			</view>
@@ -18,7 +18,7 @@
 				<view class="title">自定义颜色</view>
 				<view class="item-block">
 					<view>
-						<ste-barcode content="123456abc123" foreground="#c11" background="#dad" />
+						<ste-barcode :content="content2" foreground="#c11" background="#dad" />
 					</view>
 				</view>
 			</view>
@@ -28,9 +28,18 @@
 <script>
 export default {
 	data() {
-		return {};
+		return {
+			content1: '',
+			content2: '',
+		};
 	},
 	created() {},
+	onReady() {
+		setTimeout(() => {
+			this.content1 = '123987456abc';
+			this.content2 = '123456abc123';
+		}, 500);
+	},
 	methods: {},
 };
 </script>

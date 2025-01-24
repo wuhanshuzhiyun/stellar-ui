@@ -85,7 +85,6 @@ export default {
 	methods: {
 		initCanvas() {
 			const canvas = utils.getCanvasContext(this.canvasId, this).then((res) => {
-				console.log('*** barcode , ', res);
 				// #ifndef H5
 				const context = res.getContext('2d');
 				const dpr = utils.System.getWindowInfo().pixelRatio;

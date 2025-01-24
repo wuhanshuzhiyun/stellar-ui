@@ -9,3 +9,4 @@ deploy.sh
 yarn.lock
 minium-script/.idea/
 *.pyc
+/.github/

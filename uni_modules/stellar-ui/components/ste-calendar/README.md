@@ -217,7 +217,7 @@
 />
 
 <script>
-import utils from 'stellar-ui/utils/utils';
+import utils from 'stellar-ui-v2/utils/utils';
 export default{
 	data(){
 		return {

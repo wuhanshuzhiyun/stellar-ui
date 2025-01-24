@@ -88,14 +88,16 @@
 				</view>
 				<!-- 静音按钮 -->
 				<view class="muted-box">
+					<!-- 非静音 -->
 					<ste-icon
-						code="&#xe6c3;"
+						code="&#xe6c2;"
 						size="38"
 						color="#ffffff"
 						v-if="!isMuted"
 						@click="triggerMuted"
 					></ste-icon>
-					<ste-icon code="&#xe6c2;" size="38" color="#ffffff" v-else @click="triggerMuted"></ste-icon>
+					<!-- 静音 -->
+					<ste-icon code="&#xe6c3;" size="38" color="#ffffff" v-else @click="triggerMuted"></ste-icon>
 				</view>
 				<!-- 时间进度 -->
 				<view class="time-box" v-if="isFull">
@@ -214,7 +216,7 @@ export default {
 			resolutionIndex: 0,
 			speedConfigArr: [0.5, 0.8, 1.0, 1.25, 1.5],
 			showTip: false,
-			msg: '你好',
+			msg: '',
 			isMuted: this.muted,
 		};
 	},

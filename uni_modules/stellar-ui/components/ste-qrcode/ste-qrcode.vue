@@ -1,12 +1,14 @@
 <template>
-	<view class="ste-qrcode-root">
-		<!-- #ifdef H5 -->
-		<canvas :style="[compCanvasStyle]" :canvas-id="canvasId" :id="canvasId" class="h5-canvas"></canvas>
-		<!-- #endif -->
+	<view class="ste-qrcode-root" :style="{ width: `${size}px`, height: `${size}px` }">
+		<view class="canvas-wrapper">
+			<!-- #ifdef H5 -->
+			<canvas :style="[compCanvasStyle]" :canvas-id="canvasId" :id="canvasId" class="h5-canvas"></canvas>
+			<!-- #endif -->
 
-		<!-- #ifdef MP-WEIXIN || MP-ALIPAY -->
-		<canvas type="2d" :id="canvasId" :style="[compCanvasStyle]" class="mp-canvas"></canvas>
-		<!-- #endif -->
+			<!-- #ifdef MP-WEIXIN || MP-ALIPAY -->
+			<canvas type="2d" :id="canvasId" :style="[compCanvasStyle]" class="mp-canvas"></canvas>
+			<!-- #endif -->
+		</view>
 	</view>
 </template>
 
@@ -88,41 +90,39 @@ export default {
 			return {
 				width: this.canvasWidth + 'px',
 				height: this.canvasHeight + 'px',
+				transform: `scale(${this.size / this.canvasWidth}, ${this.size / this.canvasHeight})`,
 			};
 		},
 	},
 	watch: {
 		content: {
 			handler() {
-				this.$nextTick(() => {
-					this.initCanvas();
-				});
+				this.initCanvas();
 			},
 			immediate: true,
 		},
 	},
 	methods: {
 		initCanvas() {
-			const canvas = utils.getCanvasContext(this.canvasId, this).then((res) => {
-				let context = res;
-				// #ifndef H5
-				context = res.getContext('2d');
-				const dpr = utils.System.getWindowInfo().pixelRatio;
-				res.width = this.size * dpr;
-				res.height = this.size * dpr;
-				context.scale(dpr, dpr);
-				// #endif
+			if (!this.content) return;
+			this.$nextTick(() => {
+				const canvas = utils.getCanvasContext(this.canvasId, this).then((res) => {
+					let context = res;
+					// #ifndef H5
+					context = res.getContext('2d');
+					// #endif
 
-				this.draw(context, res);
+					this.draw(context, res);
+				});
 			});
 		},
 		draw(ctx, canvas) {
 			const qr = new UQRCode();
-			// qr.useDynamicSize = true;
+			qr.useDynamicSize = true;
 
 			qr.backgroundColor = this.background;
 			qr.foregroundColor = this.foreground;
-			qr.foregroundImageSrc = this.foregroundImageSrc;
+			qr.foregroundImageSrc = this.foregroundImageSrc ? `${this.foregroundImageSrc}?${new Date().getTime()}` : '';
 			this.foregroundImageWidth ? (qr.foregroundImageWidth = this.foregroundImageWidth) : '';
 			this.foregroundImageHeight ? (qr.foregroundImageHeight = this.foregroundImageHeight) : '';
 			// 设置二维码内容
@@ -132,33 +132,87 @@ export default {
 			// 调用制作二维码方法
 			qr.make();
 
+			// #ifdef MP-WEIXIN || MP-ALIPAY
+
+			const dpr = utils.System.getWindowInfo().pixelRatio;
+			canvas.width = qr.dynamicSize * dpr;
+			canvas.height = qr.dynamicSize * dpr;
+			ctx.scale(dpr, dpr);
+
+			qr.loadImage = (src) => {
+				// 需要返回Promise对象，小程序下获取网络图片信息需先配置download域名白名单才能生效
+				return new Promise((resolve, reject) => {
+					var img = canvas.createImage();
+					img.src = src;
+					img.onload = () => {
+						// resolve返回img
+						resolve(img);
+					};
+					img.onerror = (err) => {
+						// reject返回错误信息
+						reject(err);
+					};
+				});
+			};
+			// #endif
+
+			// #ifdef H5
+			this.canvasWidth = qr.dynamicSize;
+			this.canvasHeight = qr.dynamicSize;
+
+			qr.loadImage = (src) => {
+				// 需要返回Promise对象
+				return new Promise((resolve, reject) => {
+					uni.getImageInfo({
+						src,
+						success: (res) => {
+							resolve(res.path);
+						},
+						fail: (err) => {
+							// reject返回错误信息
+							reject(err);
+						},
+					});
+				});
+			};
+
+			// #endif
+
 			// 设置uQRCode实例的canvas上下文
 			qr.canvasContext = ctx;
 			// 调用绘制方法将二维码图案绘制到canvas上
-			qr.drawCanvas();
-			qr.loadImage().then(() => {
-				uni.canvasToTempFilePath({
-					canvas: canvas,
-					canvasId: this.canvasId,
-					complete: (res) => {
-						if (!res || !res.tempFilePath) {
-							console.error('图片生成失败');
-						} else {
-							this.$emit('loadImage', res.tempFilePath);
-						}
-					},
+			setTimeout(() => {
+				qr.drawCanvas().then(() => {
+					setTimeout(() => {
+						uni.canvasToTempFilePath({
+							canvas: canvas,
+							canvasId: this.canvasId,
+
+							complete: (res) => {
+								if (!res || !res.tempFilePath) {
+									console.error('图片生成失败');
+								} else {
+									this.$emit('loadImage', res.tempFilePath);
+								}
+							},
+						});
+					}, 1500);
 				});
-			});
+			}, 300);
 		},
 	},
 };
 </script>
 
-<style>
+<style lang="scss" scoped>
 .ste-qrcode-root {
-	width: fit-content;
-	display: flex;
-	justify-content: center;
-	align-items: center;
+	// width: fit-content;
+	// display: flex;
+	// justify-content: center;
+	// align-items: center;
+	position: relative;
+	.h5-canvas {
+		transform-origin: top left;
+	}
 }
 </style>

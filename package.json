@@ -1,6 +1,6 @@
 {
-	"name": "stellarui",
-	"version": "1.35.3",
+	"name": "stellar-ui-v2",
+	"version": "1.36.2",
 	"description": "",
 	"main": "main.js",
 	"scripts": {
@@ -8,11 +8,11 @@
 	},
 	"repository": {
 		"type": "git",
-		"url": "https://github.com/wuhanshuzhiyun/StellarUI.git"
+		"url": "https://github.com/wuhanshuzhiyun/stellar-ui.git"
 	},
 	"keywords": [],
 	"author": "",
-	"license": "ISC",
+	"license": "MIT",
 	"dependencies": {
 		"dayjs": "^1.11.13",
 		"highlight.js": "^11.9.0",
