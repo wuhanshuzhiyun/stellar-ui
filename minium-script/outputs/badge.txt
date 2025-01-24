@@ -1,19 +1,9 @@
-2025-01-24 11:42:40 test start
-2025-01-24 11:42:40 to path: /mp/badge-demo/badge-demo
-2025-01-24 11:42:45 component-1:start
-2025-01-24 11:42:45 component-1:success
-2025-01-24 11:42:45 component-2:start
-2025-01-24 11:42:45 component-2:success
-2025-01-24 11:42:45 component-3:start
-2025-01-24 11:42:45 component-3:success
-2025-01-24 11:42:45 component-4:start
-2025-01-24 11:42:45 component-4:success
-2025-01-24 11:42:45 component-5:start
-2025-01-24 11:42:45 component-5:success
-2025-01-24 11:42:45 component-6:start
-2025-01-24 11:42:45 component-6:success
-2025-01-24 11:42:45 component-7:start
-2025-01-24 11:42:45 component-7:success
-2025-01-24 11:42:45 component-8:start
-2025-01-24 11:42:45 component-8:success
-2025-01-24 11:42:45 test success
+2025-01-24 16:31:03 test start
+2025-01-24 16:31:03 to path: /mp/badge-demo/badge-demo
+2025-01-24 16:31:08 component-1:start
+2025-01-24 16:31:08 '14px' != '15px'
+- 14px
+?  ^
++ 15px
+?  ^
+ : 组件样式width不正确

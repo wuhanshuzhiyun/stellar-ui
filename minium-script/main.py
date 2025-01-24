@@ -1,5 +1,5 @@
 import minium
-from utils import get_config
+from utils import get_config, clear_logs
 from script import run
 
 
@@ -12,6 +12,7 @@ mini = minium.Minium({
 })
 
 if __name__=='__main__':
+	clear_logs()  # 清除历史日志
 	# 获取设备信息
 	info = mini.get_system_info()
 	if info.windowWidth==375:
