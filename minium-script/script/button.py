@@ -2,25 +2,24 @@ from utils import push_log
 
 from minium import WXMinium, Page, MiniTest
 
-PATH_NAME = "/mp/badge-demo/badge-demo"
-
+PATH_NAME = "/mp/button-demo/button-demo"
 LOG_FILE = f"{__name__.split(".")[-1]}.txt"
-
 STYLES = [
-	{"width": 14, "height": 14, "background-color": "rgb(238, 10, 36)", "text": "1"},
-	{"height": 14, "background-color": "rgb(238, 10, 36)", "text": "99+"},
-	{"height": 14, "background-color": "rgb(238, 10, 36)", "text": "HOT"},
-	{"width": 6, "height": 6, "background-color": "rgb(238, 10, 36)"},
-	{"width": 6, "height": 6, "background-color": "rgb(19, 183, 22)"},
-	{"width": 14, "height": 14, "background-color": "rgb(19, 183, 22)", "text": "1"},
-	{"height": 14, "background-image": "linear-gradient(to right, rgb(66, 83, 216), rgb(213, 51, 186))",
-	 "text": "99+"},
-	{"height": 14, "background-image": 'url("https://image.whzb.com/chain/StellarUI/image/fire.png")',
-	 "text": "true"},
+	{"width": 144, "height": 48, "background-color": "rgb(0, 144, 255)", "text": "超大按钮"},
+	{"width": 120, "height": 40, "background-color": "rgb(0, 144, 255)", "text": "大按钮"},
+	{"width": 82, "height": 34, "background-color": "rgb(0, 144, 255)", "text": "中按钮"},
+	{"width": 66, "height": 24, "background-color": "rgb(0, 144, 255)", "text": "小按钮"},
+
+	{"width": 327, "height": 34, "background-color": "rgb(0, 144, 255)", "text": "宽度填满"},
+	{"width": 250, "height": 34, "background-color": "rgb(0, 144, 255)", "text": "自定义宽度-500rpx"},
+	{"width": 110, "height": 34, "background-color": "rgb(0, 144, 255)", "text": "自适应宽度"},
+
+	{"width": 96, "height": 34, "background-color": "rgb(0, 144, 255)", "text": "圆角按钮", "border-radius": 24},
+	{"width": 110, "height": 34, "background-color": "rgb(0, 144, 255)", "text": "非圆角按钮", "border-radius": 5},
 ]
 
 
-class BadgeTest(MiniTest):
+class ButtonTest(MiniTest):
 	mini: WXMinium
 	_page: Page
 
@@ -31,9 +30,9 @@ class BadgeTest(MiniTest):
 
 	def _test_path(self):
 		title = self._page.get_element("view.title-center")
-		self.assertEqual(title.text, "徽标", "页面标题不正确")
-		components = self._page.get_elements("view.ste-badge-root .ste-badge-content")
-		self.assertEqual(len(components), 21, "组件数量不正确")
+		self.assertEqual(title.text, "按钮", "页面标题不正确")
+		components = self._page.get_elements("button.ste-button--root")
+		self.assertEqual(len(components), 19, "组件数量不正确")
 		for i in range(len(STYLES)):
 			push_log(f"component-{i + 1}:start", LOG_FILE)
 			style = STYLES[i]
@@ -47,9 +46,9 @@ class BadgeTest(MiniTest):
 			if style.get("background-color"):
 				self.assertEqual(component.styles("background-color")[
 					0], style.get("background-color"), "组件样式background-color不正确")
-			if style.get("background-image"):
-				self.assertEqual(component.styles("background-image")[
-					0], style.get("background-image"), "组件样式background-image不正确")
+			if style.get("border-radius"):
+				self.assertEqual(component.styles("border-radius")[
+					0], str(style.get("border-radius")) + "px", "组件样式border-radius不正确")
 			push_log(f"component-{i + 1}:success", LOG_FILE)
 
 

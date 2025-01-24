@@ -1,6 +1,6 @@
 import minium
 from utils import get_config
-from script import main
+from script import run
 
 
 config = get_config()
@@ -10,8 +10,12 @@ mini = minium.Minium({
 	"dev_tool_path": config.get("微信开发者工具路径"),
 	"test_port": config.get("端口号")
 })
-print(mini.get_system_info())
 
 if __name__=='__main__':
-	main(mini)
-	mini.close_project()
+	# 获取设备信息
+	info = mini.get_system_info()
+	if info.windowWidth==375:
+		run(mini)
+		mini.close_project()
+	else:
+		print("请将模拟器分辨率宽度设置为375(推荐使用iPhone 12/13 mini)")

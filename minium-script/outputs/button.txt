@@ -1,0 +1,21 @@
+2025-01-24 11:42:47 test start
+2025-01-24 11:42:47 to path: /mp/button-demo/button-demo
+2025-01-24 11:42:51 component-1:start
+2025-01-24 11:42:51 component-1:success
+2025-01-24 11:42:51 component-2:start
+2025-01-24 11:42:51 component-2:success
+2025-01-24 11:42:51 component-3:start
+2025-01-24 11:42:51 component-3:success
+2025-01-24 11:42:51 component-4:start
+2025-01-24 11:42:51 component-4:success
+2025-01-24 11:42:51 component-5:start
+2025-01-24 11:42:51 component-5:success
+2025-01-24 11:42:51 component-6:start
+2025-01-24 11:42:51 component-6:success
+2025-01-24 11:42:51 component-7:start
+2025-01-24 11:42:51 component-7:success
+2025-01-24 11:42:51 component-8:start
+2025-01-24 11:42:51 component-8:success
+2025-01-24 11:42:51 component-9:start
+2025-01-24 11:42:51 component-9:success
+2025-01-24 11:42:51 test success

@@ -1,1 +1,1 @@
-from script.main import main
+from script.run import run
