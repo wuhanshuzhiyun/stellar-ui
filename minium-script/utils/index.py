@@ -14,18 +14,27 @@ def replace_string(string, reg, new_str):
 	return re.sub(reg, new_str, string)
 
 
-def push_log(log: str, file_name="test.txt"):
+class Log:
 	'''
-	记录日志
-	:param log: 日志内容
-	:param file_name: 记录文件名
-	:return:
+	日志类
 	'''
-	# 获取当前时间yyyy-mm-dd hh:mm:ss
-	now = time.strftime("%Y-%m-%d %H:%M:%S", time.localtime())
-	# 记录日志到outputs
-	with open(f"outputs/{file_name}", "a", encoding="utf-8") as f:
-		f.write(f"{now} {log}\n")
+	_file_name: str
+
+	def __init__(self, file_name="test.txt"):
+		self._file_name = file_name
+
+	def push_log(self, log: str):
+		'''
+		记录日志
+		:param log: 日志内容
+		:param file_name: 记录文件名
+		:return:
+		'''
+		# 获取当前时间yyyy-mm-dd hh:mm:ss
+		now = time.strftime("%Y-%m-%d %H:%M:%S", time.localtime())
+		# 记录日志到outputs
+		with open(f"outputs/{self._file_name}", "a", encoding="utf-8") as f:
+			f.write(f"{now} {log}\n")
 
 
 def clear_logs():

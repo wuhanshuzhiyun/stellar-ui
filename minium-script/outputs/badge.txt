@@ -1,9 +1,0 @@
-2025-01-24 16:31:03 test start
-2025-01-24 16:31:03 to path: /mp/badge-demo/badge-demo
-2025-01-24 16:31:08 component-1:start
-2025-01-24 16:31:08 '14px' != '15px'
-- 14px
-?  ^
-+ 15px
-?  ^
- : 组件样式width不正确

@@ -10,3 +10,4 @@ yarn.lock
 minium-script/.idea/
 *.pyc
 /.github/
+minium-script/outputs/
