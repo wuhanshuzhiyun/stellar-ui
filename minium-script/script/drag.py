@@ -23,7 +23,7 @@ class DragTest(Test):
 		self.assertEqual(title.text, "拖拽", "页面标题不正确")
 		components = self._page.get_elements("view.ste-drag-root")
 		self.assertEqual(len(components), 5, "组件数量不正确")
-		log_str = self._test_components(STYLES, components)
+		log_str = self._test_components_style(STYLES, components)
 		log.push_log(f"test-components-styles:\n{log_str}")
 
 		log_str = "test-components-event:\ncomponent-1:start\n"

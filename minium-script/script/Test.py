@@ -10,7 +10,7 @@ class Test(MiniTest):
 		self._page = self._mini.app.navigate_to(page_name)
 		self._page.wait_for(1)
 
-	def _test_components(self, styles: list[dict], components: list[BaseElement]):
+	def _test_components_style(self, styles: list[dict], components: list[BaseElement]):
 		log_strs = ""
 		for i in range(len(styles)):
 			try:

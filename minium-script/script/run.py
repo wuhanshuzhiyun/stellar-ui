@@ -8,6 +8,6 @@ button = ButtonTest()
 drag = DragTest()
 
 def run(mini: WXMinium):
-	# badge.run_test(mini) # 测试badge组件
-	# button.run_test(mini) # 测试button组件
+	badge.run_test(mini) # 测试badge组件
+	button.run_test(mini) # 测试button组件
 	drag.run_test(mini) # 测试drag组件
