@@ -8,3 +8,4 @@ deploy.sh
 /package-lock.json
 yarn.lock
 /.github/
+/coverage
