@@ -165,7 +165,7 @@ let utils = {
 			try {
 				uni.createSelectorQuery()
 					.in(component)
-					[selectFn](selectors)
+				[selectFn](selectors)
 					.boundingClientRect((data) => {
 						resolve(data);
 					})
@@ -194,30 +194,31 @@ let utils = {
 		}
 		return scrollLeft;
 	},
-	// getChildrenProps(component, chilName) {
-	//     let propsList = [];
-	//     // #ifdef MP-WEIXIN | MP-ALIPAY
-	//     const children = component.$children?.filter((tab) => tab.$options.name === chilName) || [];
-	//     children.forEach((tab) =>
-	//         propsList.push({
-	//             ...tab.$props,
-	//         })
-	//     );
-	//     // #endif
-	//     // #ifdef H5
-	//     const children = component.$slots.default || [];
-	//     children.forEach((tab) =>
-	//         propsList.push({
-	//             ...tab.componentOptions.propsData,
-	//         })
-	//     );
-	//     // #endif
-	//     return propsList;
-	// },
+	getChildrenProps(component, chilName) {
+		let propsList = [];
+		let children
+		// #ifdef MP-WEIXIN | MP-ALIPAY
+		children = component.$children?.filter((tab) => tab.$options.name === chilName) || [];
+		children.forEach((tab) =>
+			propsList.push({
+				...tab.$props,
+			})
+		);
+		// #endif
+		// #ifdef H5
+		children = component.$slots.default || [];
+		children.forEach((tab) =>
+			propsList.push({
+				...tab.componentOptions.propsData,
+			})
+		);
+		// #endif
+		return propsList;
+	},
 	/**深拷贝
-    	/* obj 深拷贝对象
-    	/* keySort 是否对字段进行排序
-    	*/
+			/* obj 深拷贝对象
+			/* keySort 是否对字段进行排序
+			*/
 	deepClone(obj, keySort = false) {
 		if (obj === null || typeof obj !== 'object') {
 			return obj;
