@@ -547,7 +547,7 @@ let utils = {
 	 * @param {ignoreKeys} 忽略比较的key
 	 */
 	deepEqual(obj1, obj2, ignoreKeys = []) {
-		if (obj1 === obj2 || (this.isEmpty(obj1) && thi.isEmpty(obj2))) {
+		if (obj1 === obj2 || (this.isEmpty(obj1) && this.isEmpty(obj2))) {
 			return true; // 简单类型相等或引用相等
 		}
 
