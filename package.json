@@ -19,7 +19,8 @@
 		"markdown-it": "^14.0.0",
 		"markdown-it-highlightjs": "^4.0.1",
 		"uni-read-pages": "^1.0.5",
-		"uni-simple-router": "^2.0.8-beta.4"
+		"uni-simple-router": "^2.0.8-beta.4",
+		"vuex": "^4.1.0"
 	},
 	"devDependencies": {
 		"@vitejs/plugin-vue2": "^2.3.3",
