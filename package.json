@@ -4,7 +4,8 @@
 	"description": "",
 	"main": "main.js",
 	"scripts": {
-		"test": "vitest --config ./vitest.config.js"
+		"test": "vitest --config ./vitest.config.js",
+		"test:preview": "npx vite preview --outDir html"
 	},
 	"repository": {
 		"type": "git",
@@ -31,6 +32,7 @@
 		"ste-vue-inset-loader": "^1.0.1",
 		"vite": "^6.1.0",
 		"vitest": "^3.0.5",
+		"@vitest/ui": "^3.0.5",
 		"vue-template-compiler": "^2.7.16"
 	}
 }

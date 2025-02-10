@@ -5,5 +5,8 @@ export default defineConfig({
 	plugins: [vue()],
 	test: {
 		environment: 'jsdom', // 默认值: 'node'
+		globals: true,
+		dir: 'test',
+		reporter: 'html',
 	},
 });
