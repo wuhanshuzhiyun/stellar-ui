@@ -41,6 +41,33 @@ export default class System {
 	 * 获取窗口信息
 	 */
 	static getWindowInfo() {
+		// #ifdef MP-360
+		// 为了兼容测试环境没有uni，wx等, 使用360做条件编译，减少组件库包大小
+		if (process.env.NODE_ENV == 'test') {
+			let windowInfo = {
+				pixelRatio: 3,
+				safeArea: {
+					bottom: 778,
+					height: 731,
+					left: 0,
+					right: 375,
+					top: 47,
+					width: 375,
+				},
+				safeAreaInsets: { bottom: 34 },
+				screenHeight: 812,
+				screenTop: 82,
+				screenWidth: 375,
+				statusBarHeight: 47,
+				windowHeight: 730,
+				windowWidth: 375,
+			};
+			windowInfo.safeAreaInsets = {
+				bottom: windowInfo.screenHeight - windowInfo.safeArea.bottom,
+			};
+			return windowInfo;
+		}
+		// #endif
 		// #ifdef MP-WEIXIN
 		let windowInfo = wx.getWindowInfo();
 		windowInfo.safeAreaInsets = {
