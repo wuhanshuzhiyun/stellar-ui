@@ -41,6 +41,17 @@ export default class System {
 	 * 获取窗口信息
 	 */
 	static getWindowInfo() {
+		// #ifdef MP-360
+		// 为了兼容测试环境没有uni，wx等, 使用360做条件编译，减少组件库包大小
+		if (process.env.NODE_ENV == 'test') {
+			return {
+				windowWidth: 375,
+				windowHeight: 667,
+				statusBarHeight: 0,
+				pixelRatio: 2,
+			}
+		}
+		// #endif
 		// #ifdef MP-WEIXIN
 		let windowInfo = wx.getWindowInfo();
 		windowInfo.safeAreaInsets = {
@@ -92,6 +103,13 @@ export default class System {
 	 * 获取导航栏底部安全区域距离底部的距离（底部安全区距离状态栏的距离）
 	 */
 	static getNavbarBottom() {
+		// #ifdef MP-360
+		// 为了兼容测试环境没有uni，wx等, 使用360做条件编译，减少组件库包大小
+		if (process.env.NODE_ENV == 'test') {
+			return 0
+		}
+		// #endif
+		// #ifdef MP-WEIXIN
 		const menuButtonInfo = uni.getMenuButtonBoundingClientRect();
 		return menuButtonInfo.bottom + 8;
 	}

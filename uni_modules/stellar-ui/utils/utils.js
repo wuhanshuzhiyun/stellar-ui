@@ -163,6 +163,14 @@ let utils = {
 		const selectFn = all ? 'selectAll' : 'select';
 		return new Promise((resolve, reject) => {
 			try {
+				// #ifdef MP-360
+				// 为了兼容测试环境没有uni，wx等, 使用360做条件编译，减少组件库包大小
+				if (process.env.NODE_ENV == 'test') {
+					const query = all ? document.querySelectorAll(selectors) : document.querySelector(selectors);
+					resolve(query);
+					return;
+				}
+				// #endif
 				uni.createSelectorQuery()
 					.in(component)
 				[selectFn](selectors)
