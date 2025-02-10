@@ -1,5 +1,5 @@
 <template>
-	<view class="ste-icon-root" :style="[cmpCssVar]" @click="handleClick">
+	<view class="ste-icon-root" :style="[cmpCssVar]" @click="handleClick" data-test="icon">
 		{{ cmpCode }}
 	</view>
 </template>
@@ -39,10 +39,6 @@ export default {
 		size: {
 			type: [Number, String, null],
 			default: 28,
-		},
-		scale: {
-			type: [Number, null],
-			default: 1,
 		},
 		// 颜色
 		color: {
