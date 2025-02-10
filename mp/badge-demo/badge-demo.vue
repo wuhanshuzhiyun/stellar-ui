@@ -144,12 +144,12 @@
 				<view class="title">最大值</view>
 				<view class="item-block">
 					<view>
-						<ste-badge :content="100">
+						<ste-badge :content="100" :max="99">
 							<view class="avator"></view>
 						</ste-badge>
 					</view>
 					<view>
-						<ste-badge :content="99">
+						<ste-badge :content="99" :max="99">
 							<view class="avator"></view>
 						</ste-badge>
 					</view>
@@ -161,7 +161,8 @@
 					<view>
 						<ste-badge>
 							<template slot="content">
-								<ste-icon code="&#xe67a;" size="20"></ste-icon>
+								<!-- <ste-icon code="&#xe67a;" size="20"></ste-icon> -->
+								slot
 							</template>
 							<view class="avator"></view>
 						</ste-badge>
