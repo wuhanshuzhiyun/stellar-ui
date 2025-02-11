@@ -1,7 +1,7 @@
 <template>
 	<button
 		v-if="stopPropagation"
-		class="ste-button--root"
+		:class="[cmpBtnRootClass]"
 		:disabled="disabled"
 		:hover-class="!loading ? 'ste-button--root-active' : ''"
 		@click.stop="handleClick"
@@ -156,6 +156,20 @@ export default {
 	},
 	created() {},
 	computed: {
+		cmpBtnRootClass() {
+			let classes = ['ste-button--root'];
+			classes.push(`ste-button--mode-${this.mode}`);
+
+			if (this.round) {
+				classes.push('ste-button--round');
+			}
+
+			if (this.disabled) {
+				classes.push('ste-button--disabled');
+			}
+
+			return classes.join(' ');
+		},
 		cmpBtnStyle() {
 			let style = {};
 			// 为解决支付宝动态类名时不兼容，尽量使用内联样式
