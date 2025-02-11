@@ -1,6 +1,6 @@
 <template>
 	<!-- 富文本组件 -->
-	<view style="overflow: hidden">
+	<view style="overflow: hidden" data-test="rich-text">
 		<rich-text
 			:nodes="replaceVerticalAlign(text)"
 			:user-select="userSelect"
