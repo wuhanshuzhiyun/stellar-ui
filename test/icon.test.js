@@ -1,4 +1,3 @@
-import { expect, test, vi } from 'vitest';
 import { mount } from '@vue/test-utils';
 import { nextTick } from 'vue';
 import steIcon from '../uni_modules/stellar-ui/components/ste-icon/ste-icon.vue';
@@ -51,7 +50,7 @@ describe('Icon', async () => {
 
 	test('fontFamily', () => {
 		let fontFamily = 'iconfont';
-		expect(icon.element.style._values['--font-family']).toBe(inlineBlock);
+		expect(icon.element.style._values['--font-family']).toBe(fontFamily);
 	});
 
 	test('inlineBlock', () => {
