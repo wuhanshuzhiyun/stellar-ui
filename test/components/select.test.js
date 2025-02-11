@@ -1,4 +1,3 @@
-import { expect, test, vi, describe } from 'vitest';
 import { mount } from '@vue/test-utils';
 import { nextTick } from 'vue';
 import Select from '../../uni_modules/stellar-ui/components/ste-select/ste-select.vue';
@@ -46,5 +45,5 @@ describe('Select Component', () => {
 		expect(input.exists()).toBe(true);
 	})
 
-	
+
 });
