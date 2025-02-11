@@ -20,10 +20,11 @@
 		"markdown-it-highlightjs": "^4.0.1",
 		"uni-read-pages": "^1.0.5",
 		"uni-simple-router": "^2.0.8-beta.4",
-		"vuex": "^4.1.0"
+		"vuex": "^3.6.2"
 	},
 	"devDependencies": {
 		"@vitejs/plugin-vue2": "^2.3.3",
+		"@vitest/ui": "^3.0.5",
 		"@vue/test-utils": "^1.3.6",
 		"file-loader": "^6.2.0",
 		"jsdom": "^26.0.0",
@@ -31,7 +32,6 @@
 		"ste-vue-inset-loader": "^1.0.1",
 		"vite": "^6.1.0",
 		"vitest": "^3.0.5",
-		"@vitest/ui": "^3.0.5",
 		"vue-template-compiler": "^2.7.16"
 	}
 }

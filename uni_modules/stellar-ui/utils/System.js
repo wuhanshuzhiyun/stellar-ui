@@ -122,10 +122,9 @@ export default class System {
 		// #ifdef MP-360
 		// 为了兼容测试环境没有uni，wx等, 使用360做条件编译，减少组件库包大小
 		if (process.env.NODE_ENV == 'test') {
-			return 0
+			return 0;
 		}
 		// #endif
-		// #ifdef MP-WEIXIN
 		const menuButtonInfo = uni.getMenuButtonBoundingClientRect();
 		return menuButtonInfo.bottom + 8;
 	}
