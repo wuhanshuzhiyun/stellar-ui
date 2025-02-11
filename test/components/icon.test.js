@@ -1,6 +1,6 @@
 import { mount } from '@vue/test-utils';
 import { nextTick } from 'vue';
-import steIcon from '../uni_modules/stellar-ui/components/ste-icon/ste-icon.vue';
+import steIcon from '../../uni_modules/stellar-ui/components/ste-icon/ste-icon.vue';
 
 describe('Icon', async () => {
 	const wrapper = mount(steIcon, {
