@@ -33,7 +33,8 @@ describe('Search Component', () => {
 		});
 		await nextTick();
 
-		expect(wrapper.props('value')).toBe('RTX5060');
+		const input = wrapper.find('input');
+		expect(input.element.value).toBe('RTX5060');
 	});
 
 	test('Search placeholder', async () => {

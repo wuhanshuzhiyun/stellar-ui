@@ -5,63 +5,29 @@
 				<ste-icon code="&#xe695;" :color="prefixIconColor" size="44" />
 			</view>
 			<view class="input-box" v-if="!hiddenInput">
-				<ste-input
-					rootClass="ste-search-input"
-					placeholder-class="search-input-placeholder"
-					:disabled="disabled"
-					:placeholder="cmpPlaceholder"
-					v-model="dataValue"
-					@input="onInput"
-					@confirm="onSearch"
-					@focus="onFocus"
-					@blur="onBlur"
-					@clear="onClear"
-					:focus="focus"
-					:clearable="clearable"
-					:fontColor="inputTextColor"
-					background="transparent"
-					:cursor="cursorNumber"
-				/>
-				<swiper
-					v-if="cmpShowSwitch"
-					class="placeholder-list"
-					:current="switchIndex"
-					:autoplay="autoplay"
-					:interval="interval"
-					circular
-					vertical
-					@change="onSwitchChange"
-				>
+				<ste-input rootClass="ste-search-input" placeholder-class="search-input-placeholder" :disabled="disabled"
+					:placeholder="cmpPlaceholder" v-model="dataValue" @input="onInput" @confirm="onSearch" @focus="onFocus"
+					@blur="onBlur" @clear="onClear" :focus="focus" :clearable="clearable" :fontColor="inputTextColor"
+					background="transparent" :cursor="cursorNumber" />
+				<swiper v-if="cmpShowSwitch" class="placeholder-list" :current="switchIndex" :autoplay="autoplay"
+					:interval="interval" circular vertical @change="onSwitchChange">
 					<swiper-item class="placeholder-item" v-for="(item, i) in hotWords" :key="i">
 						{{ item }}
 					</swiper-item>
 				</swiper>
 			</view>
 			<view v-if="!cmpHiddenLine" class="secrch-line" :class="disabled ? 'disabled' : ''" />
-			<view
-				v-if="!hiddenBtn"
-				class="search-button"
-				:class="disabled ? 'disabled' : ''"
-				:style="[cmpbtnBackground]"
-				@click="onSearch"
-			>
+			<view v-if="!hiddenBtn" class="search-button" :class="disabled ? 'disabled' : ''" :style="[cmpbtnBackground]"
+				@click="onSearch">
 				{{ btnText }}
 			</view>
 		</view>
 		<view class="nav-box" v-if="type === 'nav'" />
 		<!-- 输入建议 -->
-		<view
-			v-if="suggestionList.length > 0"
-			class="suggestions-box"
-			:class="showSuggestionsBox == null ? '' : showSuggestionsBox ? 'show' : 'hide'"
-		>
+		<view v-if="suggestionList.length > 0" class="suggestions-box"
+			:class="showSuggestionsBox == null ? '' : showSuggestionsBox ? 'show' : 'hide'">
 			<scroll-view scroll-y class="scroll-box">
-				<view
-					class="item"
-					@click="handleSuggestionClick(item)"
-					v-for="(item, key) in suggestionList"
-					:key="key"
-				>
+				<view class="item" @click="handleSuggestionClick(item)" v-for="(item, key) in suggestionList" :key="key">
 					{{ item.label }}
 				</view>
 			</scroll-view>
@@ -71,6 +37,7 @@
 
 <script>
 import utils from '../../utils/utils.js';
+import SteInput from "../ste-input/ste-input.vue"
 /**
  * ste-search 搜索
  * @description 搜索组件
@@ -111,6 +78,7 @@ export default {
 	group: '表单组件',
 	title: 'Search 搜索',
 	name: 'ste-search',
+	components: { "ste-input": SteInput },
 	props: {
 		// 组件类型,"default"：正常搜索，"nav":导航栏
 		type: {
@@ -358,6 +326,7 @@ export default {
 	input {
 		box-sizing: border-box;
 	}
+
 	.content {
 		width: 100%;
 		height: 100%;
@@ -366,6 +335,7 @@ export default {
 		align-items: center;
 		justify-content: center;
 		position: relative;
+
 		.icon-box {
 			width: 28rpx;
 			height: 28rpx;
@@ -379,14 +349,16 @@ export default {
 				height: 100%;
 			}
 
-			& + .input-box {
+			&+.input-box {
 				margin-left: 16rpx;
 			}
 		}
+
 		.input-box {
 			position: relative;
 			flex: 1;
 			height: 100%;
+
 			/deep/ .search-input {
 				height: 100%;
 
@@ -415,6 +387,7 @@ export default {
 				position: absolute;
 				top: 0;
 				left: 0;
+
 				.placeholder-item {
 					font-size: 28rpx;
 					color: var(--search-placeholder-color);
@@ -424,6 +397,7 @@ export default {
 					align-items: center;
 				}
 			}
+
 			.clear-icon {
 				width: 48rpx;
 				height: 100%;
@@ -437,16 +411,19 @@ export default {
 				transform: translateY(-50%);
 			}
 		}
+
 		.secrch-line {
 			margin-left: 16rpx;
 			width: 2rpx;
 			flex-shrink: 0;
 			height: 24rpx;
 			background-color: var(--search-btn-text-color);
+
 			&.disabled {
 				background: #bbbbbb;
 			}
 		}
+
 		.search-button {
 			padding: 0 16rpx;
 			height: 40rpx;
@@ -460,11 +437,13 @@ export default {
 			border-radius: 20rpx;
 			background-repeat: no-repeat;
 			background-size: 100% 100%;
+
 			&.disabled {
 				color: #bbbbbb;
 			}
 		}
 	}
+
 	.nav-box {
 		position: absolute;
 		width: 100%;
@@ -532,6 +511,7 @@ export default {
 			max-height: 400rpx;
 		}
 	}
+
 	@keyframes suggestions-hide {
 		0% {
 			opacity: 1;
