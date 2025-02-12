@@ -1,5 +1,5 @@
 <template>
-	<view class="ste-swipe-action-root">
+	<view class="ste-swipe-action-root" data-test="swipe-action">
 		<view class="swipe-action-view" :style="[cmpTransform]">
 			<view class="swipe-action-left-icon" v-if="cmpLeftIcon" @click="iconOpen('left')">
 				<view class="swipe-icon" :class="{ active: dataTranslateX > 0 }">
