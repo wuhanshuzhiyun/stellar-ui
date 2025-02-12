@@ -1,5 +1,5 @@
 <template>
-	<view class="ste-number-keyboard-root" :style="[cmpRootStyle]">
+	<view class="ste-number-keyboard-root" :style="[cmpRootStyle]" data-test="number-keyboard">
 		<block v-if="mode === 'popup'">
 			<ste-popup :show.sync="dataShow" @close="onClose" position="bottom" :show-close="false" @open="onOpen">
 				<view style="padding: 30rpx 30rpx 60rpx 30rpx; background-color: #f5f5f5">
@@ -12,30 +12,14 @@
 							<ste-icon code="&#xe676;" size="36" />
 						</view>
 					</view>
-					<keyboard
-						:list="cmpNumbers"
-						:confirmText="confirmText"
-						:disabled="confirmDisabled"
-						:showClear="showClear"
-						:textColor="textColor"
-						:textSize="textSize"
-						:rightKeys="rightKeys"
-						@change="onChange"
-					/>
+					<keyboard :list="cmpNumbers" :confirmText="confirmText" :disabled="confirmDisabled" :showClear="showClear"
+						:textColor="textColor" :textSize="textSize" :rightKeys="rightKeys" @change="onChange" />
 				</view>
 			</ste-popup>
 		</block>
 		<block v-else>
-			<keyboard
-				:list="cmpNumbers"
-				:confirmText="confirmText"
-				:disabled="confirmDisabled"
-				:showClear="showClear"
-				:textColor="textColor"
-				:textSize="textSize"
-				:rightKeys="rightKeys"
-				@change="onChange"
-			/>
+			<keyboard :list="cmpNumbers" :confirmText="confirmText" :disabled="confirmDisabled" :showClear="showClear"
+				:textColor="textColor" :textSize="textSize" :rightKeys="rightKeys" @change="onChange" />
 		</block>
 	</view>
 </template>
@@ -44,6 +28,7 @@
 import keyboard from './keyboard.vue';
 import utils from '../../utils/utils.js';
 import useColor from '../../config/color.js';
+import SetPopup from "../ste-popup/ste-popup.vue";
 let color = useColor();
 /**
  * ste-number-keyboard 数字键盘
@@ -80,7 +65,7 @@ export default {
 	group: '展示组件',
 	title: 'NumberKeyboard 数字键盘',
 	name: 'ste-number-keyboard',
-	components: { keyboard },
+	components: { keyboard, "set-popup": SetPopup },
 	props: {
 		mode: { type: [String, null], default: () => 'popup' },
 		value: { type: [String, null], default: () => '' },
@@ -230,6 +215,7 @@ export default {
 		justify-content: space-between;
 		padding-bottom: 30rpx;
 		color: #888;
+
 		.keyboard-close {
 			&:active {
 				background: rgba(200, 200, 200, 0.5);

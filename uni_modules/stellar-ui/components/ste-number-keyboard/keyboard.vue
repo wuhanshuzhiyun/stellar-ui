@@ -2,15 +2,11 @@
 	<view class="number-keyboard" :style="[cmpRootStyle]">
 		<view class="number-keyboard-left">
 			<block v-for="(num, index) in list" :key="num">
-				<view
-					class="number-keyboard-item"
-					:class="{
-						span3: list.length % 3 == 1 && index === list.length - 1,
-						span2: list.length % 3 == 2 && index === list.length - 2,
-						clear: num === 'clear',
-					}"
-					@click="onChange(num)"
-				>
+				<view class="number-keyboard-item" data-test="number-keyboard-item" :class="{
+					span3: list.length % 3 == 1 && index === list.length - 1,
+					span2: list.length % 3 == 2 && index === list.length - 2,
+					clear: num === 'clear',
+				}" @click="onChange(num)">
 					<view v-if="['backspace', 'clear'].indexOf(num) !== -1">
 						<ste-icon v-if="num === 'backspace'" code="&#xe6a7;" :color="textColor" :size="textSize" />
 						<text v-else-if="num === 'clear'">清除</text>
@@ -22,11 +18,13 @@
 			</block>
 		</view>
 		<view class="number-keyboard-right" v-if="rightKeys">
-			<view class="number-keyboard-item" @click="onChange('backspace')">
+			<view class="number-keyboard-item" data-test="number-keyboard-item" @click="onChange('backspace')">
 				<ste-icon code="&#xe6a7;" :color="textColor" :size="textSize" />
 			</view>
-			<view class="number-keyboard-item clear" v-if="showClear" @click="onChange('clear')">清除</view>
-			<view class="number-keyboard-item confirm" :class="{ disabled }" @click="onChange('confirm')">
+			<view class="number-keyboard-item clear" data-test="number-keyboard-item" v-if="showClear"
+				@click="onChange('clear')">清除</view>
+			<view class="number-keyboard-item confirm" data-test="number-keyboard-item" :class="{ disabled }"
+				@click="onChange('confirm')">
 				{{ confirmText }}
 			</view>
 		</view>
@@ -84,16 +82,19 @@ export default {
 	display: grid;
 	background-color: #f9f9f9;
 	column-gap: 16rpx;
+
 	.number-keyboard-left {
 		display: grid;
 		grid-template-columns: repeat(3, 1fr);
 		gap: 16rpx;
 	}
+
 	.number-keyboard-right {
 		display: grid;
 		row-gap: 16rpx;
 		grid-template-rows: var(--ste-number-keyboard-rows);
 	}
+
 	.number-keyboard-item {
 		background-color: #fff;
 		width: 100%;
@@ -121,6 +122,7 @@ export default {
 			font-size: var(--ste-number-keyboard-confirm-text-size);
 			background: var(--ste-number-keyboard-confirm-bg);
 			color: #fff;
+
 			&:active {
 				background-color: var(--ste-number-keyboard-confirm-bg-active);
 			}
@@ -129,9 +131,11 @@ export default {
 				background: rgba(238, 238, 238, 0.4) !important;
 			}
 		}
+
 		&.span2 {
 			grid-column: span 2;
 		}
+
 		&.span3 {
 			grid-column: span 3;
 		}
