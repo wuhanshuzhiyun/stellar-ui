@@ -1,5 +1,5 @@
 <template>
-	<view class="ste-media-preview-root" v-if="dataShow">
+	<view class="ste-media-preview-root" v-if="dataShow" data-test="media-preview">
 		<view class="media-preview-content">
 			<swiper
 				style="width: 100%; height: 100%"
@@ -9,7 +9,7 @@
 				:current="dataIndex"
 				@change="onChange"
 			>
-				<swiper-item v-for="(item, index) in cmpUrls" :key="index">
+				<swiper-item v-for="(item, index) in cmpUrls" :key="index" data-test="media-preview-item">
 					<view
 						class="preview-item"
 						@click.stop="1"
