@@ -1,14 +1,10 @@
 <template>
-	<view class="ste-upload-root" :style="[cmpRootStyle]">
+	<view class="ste-upload-root" :style="[cmpRootStyle]" data-test="upload">
 		<view class="upload-list">
 			<block v-if="previewImage">
 				<view class="image-item" v-for="(item, index) in dataValue" :key="index" @click="toSelectFile">
-					<image
-						class="image"
-						:src="item.thumbPath || item.url || item.path"
-						mode="aspectFit"
-						@click="previewItem(index, item)"
-					/>
+					<image class="image" :src="item.thumbPath || item.url || item.path" mode="aspectFit"
+						@click="previewItem(index, item)" />
 					<view class="uploading" v-if="item.status === 'uploading'">
 						<view class="icon"><ste-icon code="&#xe69f;" size="48" color="#fff" /></view>
 						<view class="text">上传中</view>
@@ -17,11 +13,7 @@
 						<view class="icon"><ste-icon code="&#xe6a0;" size="48" color="#fff" /></view>
 						<view class="text">上传失败</view>
 					</view>
-					<view
-						class="delete"
-						v-if="cmpDeletable && item.status !== 'uploading'"
-						@click.stop="deleteItem(index)"
-					>
+					<view class="delete" v-if="cmpDeletable && item.status !== 'uploading'" @click.stop="deleteItem(index)">
 						<view class="icon">
 							<ste-icon code="&#xe67b;" size="20" color="#fff" />
 						</view>
@@ -31,22 +23,18 @@
 					</block>
 				</view>
 			</block>
-			<view class="add-file" v-if="cmpShowUpload" @click="selectFile">
+			<view class="add-file" v-if="cmpShowUpload" @click="selectFile" data-test="upload-add-file">
 				<slot>
-					<view class="image-item add-file">
+					<view class="image-item add-file" data-test="upload-item">
 						<view class="upload-btn">
 							<ste-icon :code="uploadIcon" :size="60" color="#ddd"></ste-icon>
-							<view class="upload-text">{{ uploadText }}</view>
+							<view class="upload-text" data-test="upload-text">{{ uploadText }}</view>
 						</view>
 						<!-- #ifdef MP-ALIPAY -->
 						<view class="delete" v-if="accept === 'media'" @click.stop="setMediaType">
 							<view class="icon">
 								<view :class="{ video: mediaType === 'video' }">
-									<ste-icon
-										:code="mediaType === 'video' ? '&#xe6a1;' : '&#xe69b;'"
-										size="20"
-										color="#fff"
-									/>
+									<ste-icon :code="mediaType === 'video' ? '&#xe6a1;' : '&#xe69b;'" size="20" color="#fff" />
 								</view>
 							</view>
 						</view>
@@ -55,12 +43,8 @@
 				</slot>
 			</view>
 		</view>
-		<ste-media-preview
-			:show="previewIndex || previewIndex === 0"
-			:urls="cmpPreviewList"
-			:index.sync="previewIndex"
-			@close="previewIndex = null"
-		/>
+		<ste-media-preview :show="previewIndex || previewIndex === 0" :urls="cmpPreviewList" :index.sync="previewIndex"
+			@close="previewIndex = null" />
 	</view>
 </template>
 
@@ -421,10 +405,12 @@ export default {
 	0% {
 		transform: rotate(0deg);
 	}
+
 	100% {
 		transform: rotate(360deg);
 	}
 }
+
 .ste-upload-root {
 	.image {
 		width: 100%;
@@ -432,6 +418,7 @@ export default {
 		max-width: 100%;
 		max-height: 100%;
 	}
+
 	.upload-list {
 		display: flex;
 		flex-direction: row;
@@ -457,17 +444,20 @@ export default {
 					align-items: center;
 					justify-content: center;
 					flex-direction: column;
+
 					.upload-text {
 						color: #ccc;
 						font-size: 24rpx;
 					}
 				}
+
 				.icon {
 					.video {
 						transform: rotateZ(-90deg);
 					}
 				}
 			}
+
 			.uploading,
 			.error {
 				position: absolute;
@@ -490,6 +480,7 @@ export default {
 					align-items: center;
 					text-align: center;
 				}
+
 				.text {
 					margin-top: 16rpx;
 					font-size: 28rpx;
@@ -500,6 +491,7 @@ export default {
 			.uploading .icon {
 				animation: ste-upload-rotate 1s linear infinite;
 			}
+
 			.delete {
 				position: absolute;
 				z-index: 10;
@@ -511,6 +503,7 @@ export default {
 				top: -45rpx;
 				right: -45rpx;
 				border-radius: 50%;
+
 				.icon {
 					position: absolute;
 					left: 16rpx;

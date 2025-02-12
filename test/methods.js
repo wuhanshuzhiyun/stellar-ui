@@ -6,5 +6,6 @@ export function style2obj(el) {
       style[key.trim()] = value.trim();
     }
   })
+  Object.assign(style, window.getComputedStyle(el.element))
   return style;
 }
