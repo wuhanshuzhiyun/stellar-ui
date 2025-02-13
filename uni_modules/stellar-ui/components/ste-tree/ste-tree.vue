@@ -4,6 +4,7 @@
 			v-for="(node, index) in viewList"
 			:key="node[valueKey]"
 			class="tree-item"
+			data-test="tree-item"
 			:class="{ open: node.open, children: node.hasChildren }"
 		>
 			<view class="tree-item-content" :style="{ paddingLeft: `${node.depth * cmpPaddingLeft}px` }">
