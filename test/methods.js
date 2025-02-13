@@ -1,4 +1,4 @@
-import Vue from "vue";
+import Vue from 'vue/dist/vue.js';
 export function style2obj(el) {
   const style = {}
   el.attributes().style.split(";").forEach(item => {
@@ -24,7 +24,7 @@ const createElm = function () {
  * 创建一个 Vue 的实例对象
  * @param  {Object|String}  Compo   组件配置，可直接传 template
  * @param  {Boolean=false} mounted 是否添加到 DOM 上
- * @return {Object} vm
+ * @return {Vue} vm
  */
 export function createVue(Compo, mounted = false) {
   if (Object.prototype.toString.call(Compo) === '[object String]') {
