@@ -76,10 +76,12 @@ describe('Tour Component', async () => {
 		expect(next.innerHTML.trim()).toBe("下一步")
 		expect(vm.$refs.tour.dataCurrent).toBe(0);
 		vm.$refs.tour.onNext() // 下一步事件
-		expect(vm.$refs.tour.dataCurrent).toBe(1);
 		await new Promise(resolve => setTimeout(resolve, 300));
+		expect(vm.$refs.tour.dataCurrent).toBe(1);
 		const prev1 = vm.$el.querySelector('[data-test="tour-prev"]')
 		expect(prev1.innerHTML.trim()).toBe("上一步");
+		const next1 = vm.$el.querySelector('[data-test="tour-next"]')
+		expect(next1.innerHTML.trim()).toBe("完成")
 	})
 
 });
