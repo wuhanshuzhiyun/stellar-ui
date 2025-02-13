@@ -3,7 +3,7 @@ import Tour from '../../uni_modules/stellar-ui/components/ste-tour/ste-tour.vue'
 import { createVue } from '../methods';
 
 describe('Tour Component', () => {
-	it('Tour show', async () => {
+	test('Tour show', async () => {
 		const vm = createVue({
 			components: { "ste-tour": Tour },
 			template: `<div>
@@ -28,6 +28,11 @@ describe('Tour Component', () => {
 		await nextTick();
 		const el = vm.$el.querySelector('[data-test="tour"]')
 		expect(el.classList.toString().indexOf('show') !== -1).toBe(true);
+
+		// 点击隐藏
+		vm.show = false;
+		await nextTick();
+		expect(el.classList.toString().indexOf('show') === -1).toBe(true);
 	});
 
 });
