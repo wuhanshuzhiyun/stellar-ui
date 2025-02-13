@@ -1,5 +1,5 @@
 <template>
-	<view class="ste-rate-root">
+	<view class="ste-rate-root" data-test="rate">
 		<view class="list" :style="[cmpListStyle]">
 			<view v-for="index in cmpCount" class="item" :key="index">
 				<view class="icon-box inactive" @click="onSelect(index)">
@@ -20,6 +20,7 @@
 <script>
 import utils from '../../utils/utils.js';
 import useColor from '../../config/color.js';
+import steIcon from '../ste-icon/ste-icon.vue';
 let color = useColor();
 /**
  * ste-rate 评分
@@ -44,6 +45,9 @@ export default {
 	group: '表单组件',
 	title: 'Rate 评分',
 	name: 'ste-rate',
+	components: {
+		steIcon,
+	},
 	props: {
 		value: {
 			type: [Number, null],
