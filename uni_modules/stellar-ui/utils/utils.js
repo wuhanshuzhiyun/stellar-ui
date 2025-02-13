@@ -166,8 +166,25 @@ let utils = {
 				// #ifdef MP-360
 				// 为了兼容测试环境没有uni，wx等, 使用360做条件编译，减少组件库包大小
 				if (process.env.NODE_ENV == 'test') {
-					const query = all ? document.querySelectorAll(selectors) : document.querySelector(selectors);
-					resolve(query);
+					let result = all ? document.querySelectorAll(selectors) : document.querySelector(selectors);
+					if (all) {
+						result = result.map((el) => {
+							return {
+								top: el.offsetTop,
+								left: el.offsetLeft,
+								width: el.offsetWidth,
+								height: el.offsetHeight,
+							};
+						})
+					} else if (result) {
+						result = {
+							top: result.offsetTop,
+							left: result.offsetLeft,
+							width: result.offsetWidth,
+							height: result.offsetHeight,
+						}
+					}
+					resolve(result);
 					return;
 				}
 				// #endif

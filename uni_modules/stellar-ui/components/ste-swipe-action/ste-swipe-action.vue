@@ -1,6 +1,6 @@
 <template>
 	<view class="ste-swipe-action-root" data-test="swipe-action">
-		<view class="swipe-action-view" :style="[cmpTransform]">
+		<view class="swipe-action-view" :style="[cmpTransform]" data-test="swipe-action-view">
 			<view class="swipe-action-left-icon" v-if="cmpLeftIcon" @click="iconOpen('left')">
 				<view class="swipe-icon" :class="{ active: dataTranslateX > 0 }">
 					<ste-icon code="&#xe674;" size="30rpx" />
@@ -129,7 +129,7 @@ export default {
 			};
 		},
 	},
-	mounted() {},
+	mounted() { },
 	methods: {
 		/**
 		 * 打开侧滑
@@ -254,6 +254,7 @@ export default {
 		display: flex;
 		align-items: center;
 		justify-content: center;
+
 		.swipe-icon {
 			width: 30rpx;
 			height: 30rpx;
@@ -261,22 +262,27 @@ export default {
 			align-items: center;
 			justify-content: center;
 			transition: 300ms;
+
 			&.active {
 				transform: rotate(180deg);
 			}
 		}
 	}
+
 	.swipe-action-left-icon {
 		left: 0;
 		border-radius: 0 30rpx 30rpx 0;
 	}
+
 	.swipe-action-right-icon {
 		right: 0;
 		border-radius: 30rpx 0 0 30rpx;
 	}
+
 	.swipe-action-view {
 		width: 100%;
 		position: relative;
+
 		.swipe-action-left {
 			position: absolute;
 			top: 0;
@@ -285,11 +291,13 @@ export default {
 			z-index: 2;
 			transform: translateX(-100%);
 		}
+
 		.swipe-action-content {
 			position: relative;
 			width: 100%;
 			z-index: 5;
 		}
+
 		.swipe-action-right {
 			position: absolute;
 			top: 0;
