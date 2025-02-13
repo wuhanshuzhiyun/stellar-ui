@@ -18,14 +18,16 @@
 						</view>
 					</slot>
 				</view>
-				<view class="message-step-footer" @click.stop="true" v-if="cmpShowFooter">
+				<view class="message-step-footer" date-test="tour-footer" @click.stop="true" v-if="cmpShowFooter">
 					<view class="step-num">{{ dataCurrent + 1 }}/{{ steps.length }}</view>
 					<view class="step-btns">
-						<ste-button :round="false" background="#fff" borderColor="#0090FF" color="#0090FF" style="margin-right: 12rpx"
-							mode="100" @click="onUp" v-if="cmpShowPrevStep" :rootStyle="{ padding: '0 10px' }">
+						<ste-button data-test="tour-prev" :round="false" background="#fff" borderColor="#0090FF" color="#0090FF"
+							style="margin-right: 12rpx" mode="100" @click="onUp" v-if="cmpShowPrevStep"
+							:rootStyle="{ padding: '0 10px' }">
 							{{ prevStepTxt }}
 						</ste-button>
-						<ste-button :round="false" :rootStyle="{ padding: '0 10px' }" mode="100" @click="onNext">
+						<ste-button data-test="tour-next" :round="false" :rootStyle="{ padding: '0 10px' }" mode="100"
+							@click="onNext">
 							{{ dataCurrent < steps.length - 1 ? nextStepTxt : completeTxt }} </ste-button>
 					</view>
 				</view>
