@@ -10,8 +10,6 @@ describe('RichText', async () => {
 	});
 	const richText = wrapper.get('[data-test="rich-text"]').get('.rich-text');
 	const nodes = richText.attributes().nodes;
-	const p = richText.find('div').exists();
-	const img = wrapper.find('img');
 	await nextTick();
 
 	test('text', () => {
