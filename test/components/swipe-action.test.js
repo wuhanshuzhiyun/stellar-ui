@@ -7,7 +7,7 @@ import { style2obj } from '../methods';
 
 describe('Test SwipeActionGroup', () => {
 
-	test('SwipeAction', async (done) => {
+	test('SwipeAction', async () => {
 		const wrapper = mount(SwipeAction, {
 			template: `<ste-swipe-action>
 				<view style="height: 90rpx;">内容区域</view>
