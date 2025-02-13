@@ -1,5 +1,5 @@
 <template>
-	<view class="ste-loading-root" :style="[cmpStyle]">
+	<view class="ste-loading-root" :style="[cmpStyle]" data-test="loading">
 		<view :class="'loading ' + 'loading-type-' + type" :style="[cmpLoadinStyle]">
 			<block v-if="type == 1">
 				<i
