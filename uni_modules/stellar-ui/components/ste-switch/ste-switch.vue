@@ -1,5 +1,5 @@
 <template>
-	<view class="ste-switch-root" :style="[cmpStyle]" @click="click">
+	<view class="ste-switch-root" :style="[cmpStyle]" @click="click" data-test="switch">
 		<view class="switch-node" :style="[cmpNodeStyle]">
 			<ste-loading
 				v-if="loading"
@@ -14,6 +14,7 @@
 <script>
 import utils from '../../utils/utils.js';
 import useColor from '../../config/color.js';
+import steLoading from '../ste-loading/ste-loading.vue';
 let color = useColor();
 /**
  * ste-switch 开关
@@ -34,6 +35,9 @@ export default {
 	group: '表单组件',
 	title: 'Switch 开关',
 	name: 'ste-switch',
+	components: {
+		steLoading,
+	},
 	props: {
 		value: {
 			type: [Boolean, null],

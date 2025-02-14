@@ -3,57 +3,61 @@ import { nextTick } from 'vue';
 import steLoading from '../../uni_modules/stellar-ui/components/ste-loading/ste-loading.vue';
 
 describe('Loading', async () => {
+	let color = 'red';
+	let typeValue = 2;
+	let size = 100;
+	let vertical = true;
+	let textValue = '加载中';
+	let textColor = 'blue';
+	let textSize = 30;
 	const wrapper = mount(steLoading, {
 		propsData: {
-			color: 'red',
-			textColor: 'blue',
-			textSize: 30,
-			type: 2,
-			size: 100,
-			vertical: true,
+			color,
+			textSize,
+			type: typeValue,
+			size,
+			vertical,
+			textColor,
 		},
 		slots: {
-			default: '加载中',
+			default: textValue,
 		},
 	});
 	const loading = wrapper.get('[data-test="loading"]');
 	const type = loading.find('.loading');
 	const text = wrapper.find('.text');
-	console.log('type', type.element.style._values);
-	console.log('text', text.element.style._values);
+	await nextTick();
+
 	test('color', () => {
-		let color = 'red';
 		expect(type.element.style._values.color).toBe(color);
 	});
 
 	test('type', () => {
-		let typeValue = 'loading-type-' + '2';
-		expect(type.classes(typeValue)).toBe(true);
+		let typeValue2 = 'loading-type-' + typeValue;
+		expect(type.classes(typeValue2)).toBe(true);
 	});
 
 	test('size', () => {
-		let size = 100 / 2 + 'px';
-		expect(type.element.style._values.width).toBe(size);
-		expect(type.element.style._values.height).toBe(size);
+		let size2 = size / 2 + 'px';
+		expect(type.element.style._values.width).toBe(size2);
+		expect(type.element.style._values.height).toBe(size2);
 	});
 
 	test('vertical', () => {
-		let vertical = 'column';
-		expect(loading.element.style._values['flex-direction']).toBe(vertical);
+		let vertical2 = vertical ? 'column' : 'row';
+		expect(loading.element.style._values['flex-direction']).toBe(vertical2);
 	});
 
 	test('slots', () => {
-		let textValue = '加载中';
 		expect(text.text()).toBe(textValue);
 	});
 
 	test('textColor', () => {
-		let textColor = 'blue';
 		expect(text.element.style._values.color).toBe(textColor);
 	});
 
 	test('textSize', () => {
-		let textSize = 30 / 2 + 'px';
-		expect(text.element.style._values['font-size']).toBe(textSize);
+		let textSize2 = textSize / 2 + 'px';
+		expect(text.element.style._values['font-size']).toBe(textSize2);
 	});
 });
