@@ -3,58 +3,63 @@ import { nextTick } from 'vue';
 import steIcon from '../../uni_modules/stellar-ui/components/ste-icon/ste-icon.vue';
 
 describe('Icon', async () => {
+	let code = '&#xe653;';
+	let size = 50;
+	let color = '#1989fa';
+	let bold = true;
+	let margin = 10;
+	let fontFamily = 'iconfont';
+	let inlineBlock = false;
 	const wrapper = mount(steIcon, {
 		propsData: {
-			code: '&#xe653;',
-			size: 50,
-			color: '#1989fa',
-			bold: true,
-			marginLeft: 10,
-			marginRight: 10,
-			marginTop: 10,
-			marginBottom: 10,
-			fontFamily: 'iconfont',
-			inlineBlock: false,
+			code,
+			size,
+			color,
+			bold,
+			marginLeft: margin,
+			marginRight: margin,
+			marginTop: margin,
+			marginBottom: margin,
+			fontFamily,
+			inlineBlock,
 		},
 	});
 	const icon = wrapper.get('[data-test="icon"]');
 	await nextTick();
 
 	test('code', () => {
-		let code = String.fromCharCode('&#xe653;'.replace('&#', '0').replace(';', ''));
-		expect(icon.text()).toBe(code);
+		let code1 = String.fromCharCode(code.replace('&#', '0').replace(';', ''));
+		expect(icon.text()).toBe(code1);
 	});
 
 	test('size', () => {
-		let size = 50 / 2 + 'px';
-		expect(icon.element.style._values['--size']).toBe(size);
+		let size1 = 50 / 2 + 'px';
+		expect(icon.element.style._values['--size']).toBe(size1);
 	});
 
 	test('color', () => {
-		let color = '#1989fa';
 		expect(icon.element.style._values['--color']).toBe(color);
 	});
 
 	test('bold', () => {
-		let weight = 'bold';
+		let weight = bold ? 'bold' : 'normal';
 		expect(icon.element.style._values['--weight']).toBe(weight);
 	});
 
 	test('margin', () => {
-		let margin = 10 / 2 + 'px';
-		expect(icon.element.style._values['--margin-left']).toBe(margin);
-		expect(icon.element.style._values['--margin-right']).toBe(margin);
-		expect(icon.element.style._values['--margin-top']).toBe(margin);
-		expect(icon.element.style._values['--margin-bottom']).toBe(margin);
+		let margin1 = margin / 2 + 'px';
+		expect(icon.element.style._values['--margin-left']).toBe(margin1);
+		expect(icon.element.style._values['--margin-right']).toBe(margin1);
+		expect(icon.element.style._values['--margin-top']).toBe(margin1);
+		expect(icon.element.style._values['--margin-bottom']).toBe(margin1);
 	});
 
 	test('fontFamily', () => {
-		let fontFamily = 'iconfont';
 		expect(icon.element.style._values['--font-family']).toBe(fontFamily);
 	});
 
 	test('inlineBlock', () => {
-		let inlineBlock = 'inline-flex';
-		expect(icon.element.style._values['--display']).toBe(inlineBlock);
+		let inlineBlock1 = inlineBlock ? 'inline-block' : 'inline-flex';
+		expect(icon.element.style._values['--display']).toBe(inlineBlock1);
 	});
 });
