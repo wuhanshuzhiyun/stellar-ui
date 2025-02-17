@@ -1,5 +1,5 @@
 <template>
-	<view class="ste-swiper-item-root" :style="[cmpStyle]">
+	<view class="ste-swiper-item-root" :style="[cmpStyle]" data-test="swiper-item">
 		<slot></slot>
 	</view>
 </template>
