@@ -1,13 +1,7 @@
 <template>
-	<scroll-view
-		class="ste-scroll-to-root"
-		scroll-y
-		scroll-anchoring
-		:scroll-top="scrollTop"
-		:style="[cmpRootStyle]"
-		@scroll="onScroll"
-	>
-		<view class="ste-scroll-to-content">
+	<scroll-view class="ste-scroll-to-root" scroll-y scroll-anchoring :scroll-top="scrollTop" :style="[cmpRootStyle]"
+		@scroll="onScroll">
+		<view class="ste-scroll-to-content" data-test="scroll-to">
 			<slot />
 		</view>
 	</scroll-view>

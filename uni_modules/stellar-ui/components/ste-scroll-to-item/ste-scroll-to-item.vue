@@ -1,5 +1,5 @@
 <template>
-	<view class="ste-scroll-to-item-root">
+	<view class="ste-scroll-to-item-root" data-test="scroll-to-item">
 		<slot />
 	</view>
 </template>
