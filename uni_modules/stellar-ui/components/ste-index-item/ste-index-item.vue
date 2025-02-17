@@ -1,5 +1,5 @@
 <template>
-	<view class="ste-scroll-to-item-root">
+	<view class="ste-scroll-to-item-root" data-test="index-item">
 		<slot name="title">
 			<block v-if="title">
 				<ste-sticky v-if="sticky">
@@ -10,7 +10,7 @@
 		</slot>
 		<slot>
 			<view class="index-item-text-list">
-				<view class="index-item-text" v-for="(text, i) in list" :key="i" @click="onClickItem(text)">
+				<view class="index-item-text" data-test="index-item-text" v-for="(text, i) in list" :key="i" @click="onClickItem(text)">
 					{{ text }}
 				</view>
 			</view>
@@ -66,6 +66,7 @@ export default {
 <style lang="scss" scoped>
 .ste-scroll-to-item-root {
 	width: 100%;
+
 	.index-item-title {
 		width: 100%;
 		height: 80rpx;
@@ -74,13 +75,16 @@ export default {
 		padding: 0 32rpx;
 		background-color: #f5f5f5;
 		color: var(--ste-index-list-inactive-color);
+
 		&.active {
 			color: var(--ste-index-list-active-color);
 		}
 	}
+
 	.index-item-text-list {
 		padding: 0 32rpx;
 		background-color: #fff;
+
 		.index-item-text {
 			width: 100%;
 			height: 92rpx;
@@ -92,5 +96,4 @@ export default {
 			border-bottom: 2rpx solid #f9f9f9;
 		}
 	}
-}
-</style>
+}</style>
