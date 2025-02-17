@@ -1,5 +1,5 @@
 <template>
-	<view class="ste-index-list-root" :style="[cmpRootStyle, cmpIndexRootStyle]">
+	<view class="ste-index-list-root" :style="[cmpRootStyle, cmpIndexRootStyle]" data-test="index-list">
 		<scroll-view class="ste-scroll-to-root" scroll-y scroll-anchoring :scroll-top="scrollTop" @scroll="onScroll">
 			<view class="ste-scroll-to-content">
 				<slot />

@@ -1,6 +1,6 @@
 import { nextTick } from 'vue';
 import Tree from '../../uni_modules/stellar-ui/components/ste-tree/ste-tree.vue';
-import { createVue, triggerClick } from '../methods';
+import { createVue } from '../methods';
 
 describe('Tree Component', async () => {
 	const vm = createVue({
