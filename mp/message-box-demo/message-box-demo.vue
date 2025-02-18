@@ -55,11 +55,7 @@
 				<view class="item-block">
 					<view>
 						<ste-button @click="customClick">插槽</ste-button>
-						<ste-message-box selector="myMsgBox">
-							<view style="display: flex; justify-content: center; padding-bottom: 48rpx; width: 570rpx">
-								<ste-rate v-model="rate"></ste-rate>
-							</view>
-						</ste-message-box>
+						<ste-message-box selector="myMsgBox">Slot message</ste-message-box>
 					</view>
 				</view>
 			</view>
