@@ -142,10 +142,10 @@ describe('Tabs Component', async () => {
 		expect(style['--tabs-active-title-color']).toBe('#00f');
 	})
 
-	test("Tabs titleHeight", async () => {
+	test("Tabs el-height", async () => {
 		const vm = createVue({
 			components: { "ste-tabs": Tabs, "ste-tab": Tab },
-			template: `<ste-tabs ref="tabs" titleHeight="90">
+			template: `<ste-tabs ref="tabs" titleHeight="90" subTitleHeight="60" subTitleRadius="30" imageWidth="60" imageHeight="60" imageRadius="10">
 				<ste-tab v-for="(item, index) in list" :key="index" :title="item.title" :index="index" >
 					<view>{{ item.title }}内容</view>
 					<image style="width: 100%; height: 300px" :src="item.content" />
@@ -158,8 +158,10 @@ describe('Tabs Component', async () => {
 		await new Promise(resolve => setTimeout(resolve, 1000));
 		const style = vm.$refs.tabs.cmpRootStyle;
 		expect(style['--tabs-title-height']).toBe('45px');
+		expect(style['--tabs-sub-title-height']).toBe('30px');
+		expect(style['--tabs-sub-title-radius']).toBe('15px');
+		expect(style['--tabs-image-width']).toBe('30px');
+		expect(style['--tabs-image-height']).toBe('30px');
+		expect(style['--tabs-image-radius']).toBe('5px');
 	})
-
-	
-
 });
