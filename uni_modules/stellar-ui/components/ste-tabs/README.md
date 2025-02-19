@@ -387,7 +387,7 @@ export default {
 	</ste-tab>
 </ste-tabs>
 ```
-
+---$
 ### API
 #### Tabs Props
 背景之外的颜色属性只支持`16进制`、`RGB`、`RGBA`格式
@@ -471,5 +471,5 @@ export default {
 | ---				| ---																				| ---			| ---			|
 | `default`	| 默认插槽，在插槽中的内容会展示在标签内容区域	| -				| -				|
 
-
+---$
 {{xuyajun}}
