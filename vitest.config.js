@@ -8,5 +8,6 @@ export default defineConfig({
 		globals: true,
 		dir: 'test',
 		reporter: 'html',
+		setupFiles: ['./test/setup.js'],
 	},
 });
