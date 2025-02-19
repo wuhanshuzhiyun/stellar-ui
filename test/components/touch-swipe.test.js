@@ -33,6 +33,10 @@ describe('TouchSwipe Component', async () => {
 		expect(vm.$refs.swiper.translateX).toBe(-375)
 	})
 
+	test("TouchSwipe children", async () => {
+		expect(vm.$refs.swiper.children.length).toBe(4)
+	})
+
 	test("TouchSwipe vertical", async () => {
 		const vm = createVue({
 			components: { "ste-touch-swipe": TouchSwipe, "ste-touch-swipe-item": TouchSwipeItem },

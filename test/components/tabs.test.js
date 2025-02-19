@@ -105,6 +105,61 @@ describe('Tabs Component', async () => {
 		expect(tabs.style._values["--tabs-card-background-active"]).toBe('rgba(255,0,0,0.1)');
 	})
 
+	test("Tabs background", async () => {
+		const vm = createVue({
+			components: { "ste-tabs": Tabs, "ste-tab": Tab },
+			template: `<ste-tabs ref="tabs" background="#f00">
+				<ste-tab v-for="(item, index) in list" :key="index" :title="item.title" :index="index" >
+					<view>{{ item.title }}内容</view>
+					<image style="width: 100%; height: 300px" :src="item.content" />
+					</ste-tab>
+			</ste-tabs>`,
+			data() {
+				return { list }
+			}
+		})
+		await new Promise(resolve => setTimeout(resolve, 1000));
+		const bg = vm.$refs.tabs.cmpListBackground.backgroundColor;
+		expect(bg).toBe('#f00');
+	})
 
+	test("Tabs titleColor and activeTitleColor", async () => {
+		const vm = createVue({
+			components: { "ste-tabs": Tabs, "ste-tab": Tab },
+			template: `<ste-tabs ref="tabs" titleColor="#f00" activeTitleColor="#00f">
+				<ste-tab v-for="(item, index) in list" :key="index" :title="item.title" :index="index" >
+					<view>{{ item.title }}内容</view>
+					<image style="width: 100%; height: 300px" :src="item.content" />
+				</ste-tab>
+			</ste-tabs>`,
+			data() {
+				return { list }
+			}
+		})
+		await new Promise(resolve => setTimeout(resolve, 1000));
+		const style = vm.$refs.tabs.cmpRootStyle;
+		expect(style['--tabs-title-color']).toBe('#f00');
+		expect(style['--tabs-active-title-color']).toBe('#00f');
+	})
+
+	test("Tabs titleHeight", async () => {
+		const vm = createVue({
+			components: { "ste-tabs": Tabs, "ste-tab": Tab },
+			template: `<ste-tabs ref="tabs" titleHeight="90">
+				<ste-tab v-for="(item, index) in list" :key="index" :title="item.title" :index="index" >
+					<view>{{ item.title }}内容</view>
+					<image style="width: 100%; height: 300px" :src="item.content" />
+				</ste-tab>
+			</ste-tabs>`,
+			data() {
+				return { list }
+			}
+		})
+		await new Promise(resolve => setTimeout(resolve, 1000));
+		const style = vm.$refs.tabs.cmpRootStyle;
+		expect(style['--tabs-title-height']).toBe('45px');
+	})
+
+	
 
 });
