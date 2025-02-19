@@ -26,6 +26,7 @@ const createUniMock = () => ({
 	createAnimation: vi.fn().mockImplementation(() => createAnimationMock()),
 	createCanvasContext: vi.fn(),
 	createIntersectionObserver: vi.fn(),
+	createVideoContext: vi.fn(),
 });
 
 global.uni = createUniMock();
