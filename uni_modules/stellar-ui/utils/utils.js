@@ -170,18 +170,18 @@ let utils = {
 					if (all) {
 						result = result.map((el) => {
 							return {
-								top: el.offsetTop,
-								left: el.offsetLeft,
-								width: el.offsetWidth,
-								height: el.offsetHeight,
+								top: el.offsetTop || 0,
+								left: el.offsetLeft || 0,
+								width: el.offsetWidth || 375,
+								height: el.offsetHeight || 667,
 							};
 						})
 					} else if (result) {
 						result = {
-							top: result.offsetTop,
-							left: result.offsetLeft,
-							width: result.offsetWidth,
-							height: result.offsetHeight,
+							top: result.offsetTop || 0,
+							left: result.offsetLeft || 0,
+							width: result.offsetWidth || 375,
+							height: result.offsetHeight || 667,
 						}
 					}
 					resolve(result);
