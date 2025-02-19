@@ -1,53 +1,27 @@
 <template>
-	<view class="ste-tabs-root" :class="type" :style="[cmpRootStyle]">
+	<view class="ste-tabs-root" :class="type" :style="[cmpRootStyle]" data-test="tabs">
 		<view class="tab-list-box" :style="[cmpListBackground, { paddingRight: cmpPullDown ? '70rpx' : 0 }]">
-			<scroll-view
-				class="tab-list view-list"
-				:class="{ 'open-down': openPullDown }"
-				enhanced
-				:scroll-x="cmpScrollX"
-				:scroll-with-animation="cmpScrollX"
-				:scroll-left="scrollLeft"
-				:show-scrollbar="false"
-				@scroll="onScroll"
-			>
+			<scroll-view class="tab-list view-list" :class="{ 'open-down': openPullDown }" enhanced :scroll-x="cmpScrollX"
+				:scroll-with-animation="cmpScrollX" :scroll-left="scrollLeft" :show-scrollbar="false" @scroll="onScroll">
 				<block v-for="(tab, index) in cmpTabList" :key="index">
-					<view
-						class="tab-space"
-						:class="{ 'show-tab-line': cmpShowLine }"
-						v-if="index > 0"
-						:style="{ height: `${cmpActiveTabEl.height}px` }"
-					>
+					<view class="tab-space" data-test="tab-space" :class="{ 'show-tab-line': cmpShowLine }" v-if="index > 0"
+						:style="{ height: `${cmpActiveTabEl.height}px` }">
 						<view class="space-line" />
 					</view>
-					<view
-						class="tab-item"
-						:class="{
-							active: tab.active,
-							disabled: tab.disabled || disabled,
-							start: index === 0,
-						}"
-						@click="onClickTab(tab, index)"
-					>
-						<view
-							class="tab-image"
-							v-if="showImage"
-							:style="{ backgroundImage: `url(${tab.image})` }"
-						></view>
-						<ste-badge
-							v-if="showTitle"
-							:isBlock="type === 'card'"
-							:showDot="tab.showDot"
-							:content="tab.badge"
-							:showZero="tab.showZeroBadge"
-							isInline
-							:rootStyle="{ maxWidth: '100%' }"
-						>
-							<view class="tab-title" :style="[cmpEllipsis, cmpTitleStyle]">
+					<view class="tab-item" :class="{
+						active: tab.active,
+						disabled: tab.disabled || disabled,
+						start: index === 0,
+					}" @click="onClickTab(tab, index)">
+						<view class="tab-image" v-if="showImage" date-test="tab-image"
+							:style="{ backgroundImage: `url(${tab.image})` }"></view>
+						<ste-badge v-if="showTitle" :isBlock="type === 'card'" :showDot="tab.showDot" :content="tab.badge"
+							:showZero="tab.showZeroBadge" isInline :rootStyle="{ maxWidth: '100%' }">
+							<view class="tab-title" data-test="tab-title" :style="[cmpEllipsis, cmpTitleStyle]">
 								{{ tab.title }}
 							</view>
 						</ste-badge>
-						<view class="tab-sub-title" v-if="showSubtitle" :style="[cmpEllipsis]">
+						<view class="tab-sub-title" data-test="tab-sub-title" v-if="showSubtitle" :style="[cmpEllipsis]">
 							{{ tab.subTitle }}
 						</view>
 					</view>
@@ -70,29 +44,20 @@
 						</view>
 					</view>
 					<view class="tab-list" :style="[cmpListBackground, cmpPullListTransform]">
-						<view
-							class="tab-item"
-							v-for="(tab, index) in cmpTabList"
-							:key="index"
-							:class="{
-								active: tab.active,
-								disabled: tab.disabled || disabled,
-							}"
-							@click="onClickTab(tab, index)"
-						>
-							<view
-								class="tab-image"
-								v-if="showImage"
-								:style="{ backgroundImage: `url(${tab.image})` }"
-							></view>
-							<view class="tab-title" v-if="showTitle" :style="[cmpEllipsis]">
+						<view class="tab-item" v-for="(tab, index) in cmpTabList" :key="index" :class="{
+							active: tab.active,
+							disabled: tab.disabled || disabled,
+						}" @click="onClickTab(tab, index)">
+							<view class="tab-image" date-test="tab-image" v-if="showImage"
+								:style="{ backgroundImage: `url(${tab.image})` }"></view>
+							<view class="tab-title" data-test="tab-title" v-if="showTitle" :style="[cmpEllipsis]">
 								{{ tab.title && tab.title.length > 4 ? `${tab.title.slice(0, 4)}...` : tab.title }}
 							</view>
-							<view class="tab-sub-title" v-if="showSubtitle" :style="[cmpEllipsis]">
+							<view class="tab-sub-title" data-test="tab-sub-title" v-if="showSubtitle" :style="[cmpEllipsis]">
 								{{
 									tab.subTitle && tab.subTitle.length > 4
-										? `${tab.subTitle.slice(0, 4)}...`
-										: tab.subTitle
+									? `${tab.subTitle.slice(0, 4)}...`
+									: tab.subTitle
 								}}
 							</view>
 						</view>
@@ -102,14 +67,8 @@
 		</view>
 		<view class="content">
 			<!-- 内容区域 -->
-			<ste-touch-swipe
-				:index="cmpActiveIndex"
-				:childrenLength="cmpTabList.length"
-				:duration="duration"
-				:disabledIndexs="cmpDisabledIndexs"
-				:disabled="!swipeable || lock || disabled"
-				@change="onSliding"
-			>
+			<ste-touch-swipe :index="cmpActiveIndex" :childrenLength="cmpTabList.length" :duration="duration"
+				:disabledIndexs="cmpDisabledIndexs" :disabled="!swipeable || lock || disabled" @change="onSliding">
 				<slot name="default" />
 			</ste-touch-swipe>
 		</view>
@@ -493,7 +452,8 @@ export default {
 	display: block;
 	width: 100%;
 	position: relative;
-	& > .tab-list-box {
+
+	&>.tab-list-box {
 		position: var(--tabs-sticky);
 		top: var(--tabs-offset-top);
 		width: 100%;
@@ -514,19 +474,23 @@ export default {
 				min-width: var(--tabs-tab-space-line);
 				align-items: center;
 				justify-content: center;
+
 				.space-line {
 					width: var(--tabs-tab-space-line);
 					background-color: rgba(180, 180, 180, 0.3);
 					height: 60%;
 				}
+
 				&.show-tab-line {
 					align-items: flex-end;
+
 					.space-line {
 						height: calc(100% - 36rpx);
 						transform: translateY(-6rpx);
 					}
 				}
 			}
+
 			.tab-item {
 				display: inline-flex;
 				flex-direction: column;
@@ -553,10 +517,12 @@ export default {
 					overflow: hidden;
 					background-size: 100% 100%;
 					margin: 0 auto;
-					& + .tab-sub-title {
+
+					&+.tab-sub-title {
 						margin-top: 8rpx;
 					}
 				}
+
 				.tab-title {
 					max-width: 100%;
 					height: var(--tabs-title-height);
@@ -566,10 +532,12 @@ export default {
 					color: var(--tabs-title-color);
 					word-break: break-all;
 					margin: 0 auto;
-					& + .tab-sub-title {
+
+					&+.tab-sub-title {
 						margin-top: 4rpx;
 					}
 				}
+
 				.tab-sub-title {
 					width: 100%;
 					height: var(--tabs-sub-title-height);
@@ -587,17 +555,21 @@ export default {
 					.tab-image {
 						border-width: var(--tabs-image-border-width);
 					}
+
 					.tab-title {
 						color: var(--tabs-active-title-color);
 						font-weight: bold;
 					}
+
 					.tab-sub-title {
 						background-color: var(--tabs-color);
 						color: var(--tabs-active-sub-color);
 					}
 				}
+
 				&.disabled {
 					cursor: no-drop;
+
 					.tab-title,
 					.tab-sub-title {
 						color: #bbb;
@@ -608,6 +580,7 @@ export default {
 			.tab-line-box {
 				width: 100%;
 				padding: 4rpx 0;
+
 				.tab-line {
 					background-color: var(--tabs-color);
 					transition-duration: var(--tabs-transition-duration);
@@ -622,6 +595,7 @@ export default {
 				pointer-events: none;
 			}
 		}
+
 		.tab-pull-down {
 			width: 70rpx;
 			position: absolute;
@@ -633,6 +607,7 @@ export default {
 			display: flex;
 			align-items: center;
 			justify-content: center;
+
 			.pull-down-icon {
 				width: 10px;
 				height: 10px;
@@ -642,6 +617,7 @@ export default {
 				transition-duration: 0.3s;
 			}
 		}
+
 		.tab-pull-down-box {
 			display: none;
 			position: fixed;
@@ -651,21 +627,25 @@ export default {
 			right: var(--tabs-mask-right);
 			bottom: var(--tabs-mask-bottom);
 			left: var(--tabs-mask-left);
+
 			&.open {
 				display: block;
 			}
+
 			.pull-down-content {
 				width: 100%;
 				position: fixed;
 				height: initial;
 				display: block;
 				overflow: hidden;
+
 				.content-tabs {
 					width: 100%;
 					height: var(--tabs-list-height);
 					position: relative;
 					z-index: 10;
 					background-color: #ffffff;
+
 					.placeholder {
 						display: flex;
 						height: 100%;
@@ -675,6 +655,7 @@ export default {
 						font-size: 28rpx;
 					}
 				}
+
 				.tab-list {
 					display: grid;
 					grid-template-columns: 25% 25% 25% 25%;
@@ -687,10 +668,12 @@ export default {
 					padding: 30rpx 0;
 					transition-duration: 0.3s;
 					transform: translateY(-100%);
+
 					.tab-item {
 						width: 100%;
 						margin: 0;
 						padding: 0 24rpx;
+
 						&.active {
 							.tab-title {
 								color: var(--tabs-color);
@@ -710,26 +693,31 @@ export default {
 	.tab-list-box {
 		.tab-list {
 			padding: 0;
+
 			.tab-item {
 				padding: 12rpx 24rpx;
 				background-color: var(--tabs-card-background);
 				border-width: var(--tabs-tab-border-width);
 				border-style: solid;
 				border-color: var(--tabs-color);
+
 				&.start {
 					border-width: var(--tabs-tab-border-width-start);
 				}
 
 				&.active {
 					background-color: var(--tabs-card-background-active);
+
 					.tab-sub-title {
 						background-color: var(--tabs-card-sub-bg);
 						color: var(--tabs-card-sub-color);
 					}
 				}
+
 				&.disabled {
 					cursor: no-drop;
 					background-color: #f5f5f5;
+
 					.tab-title,
 					.tab-sub-title {
 						color: #bbb;

@@ -1,5 +1,5 @@
 <template>
-	<view class="ste-tab-root">
+	<view class="ste-tab-root" data-test="tab">
 		<slot name="default" />
 	</view>
 </template>
