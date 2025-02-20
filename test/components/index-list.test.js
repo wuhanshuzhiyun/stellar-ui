@@ -1,3 +1,4 @@
+import { mount } from '@vue/test-utils';
 import { nextTick } from 'vue';
 import IndexList from '../../uni_modules/stellar-ui/components/ste-index-list/ste-index-list.vue';
 import IndexItem from '../../uni_modules/stellar-ui/components/ste-index-item/ste-index-item.vue';
@@ -44,14 +45,34 @@ describe('IndexList Component', async () => {
 			}
 		}
 	}, true)
-	await nextTick();
-	test("IndexList list-item", async () => {
+
+	const wrapper = mount(IndexList, {
+		propsData: {
+			sticky: true,
+			inactiveColor: "#666666",
+			activeColor: ""
+		},
+	})
+
+
+	await new Promise(p => setTimeout(p, 500));
+	test("list-item", async () => {
 		const list = vm.$el.querySelectorAll('[data-test="index-item"]');
 		expect(list.length).toBe(7)
 	})
 
-	test("IndexList item-item", async () => {
+	test("item-item", async () => {
 		const items = vm.$el.querySelectorAll('[data-test="index-item-text"]');
 		expect(items.length).toBe(56)
+	})
+
+	test("sticky", () => {
+		expect(wrapper.props("sticky")).toBe(true)
+	})
+	test("inactiveColor", () => {
+		expect(wrapper.props("inactiveColor")).toBe("#666666")
+	})
+	test("activeColor", () => {
+		expect(wrapper.props("activeColor")).toBe("")
 	})
 });
