@@ -1,15 +1,10 @@
 <template>
-	<view class="ste-checkbox--root" :style="[cmpStyle]" @click="click">
+	<view class="ste-checkbox--root" :style="[cmpStyle]" @click="click" data-test="checkbox">
 		<view class="icon">
 			<slot name="icon" :slotProps="cmpSlotProps">
-				<view class="input-icon" :style="[cmpInputStyle]">
-					<ste-icon
-						v-if="cmpChecked && cmpIconSize"
-						:size="cmpIconSize * 0.8"
-						code="&#xe67a;"
-						:color="cmpDisabled ? '#bbbbbb' : '#fff'"
-						bold
-					></ste-icon>
+				<view class="input-icon" data-test="checkbox-icon" :style="[cmpInputStyle]">
+					<ste-icon v-if="cmpChecked && cmpIconSize" :size="cmpIconSize * 0.8" code="&#xe67a;"
+						:color="cmpDisabled ? '#bbbbbb' : '#fff'" bold></ste-icon>
 				</view>
 			</slot>
 		</view>
@@ -288,14 +283,17 @@ export default {
 	height: 100%;
 	display: flex;
 	align-items: center;
+
 	.input-icon {
 		display: flex;
 		justify-content: center;
 		align-items: flex-end;
 	}
+
 	.icon {
 		pointer-events: all;
 	}
+
 	.text {
 		display: flex;
 		align-items: center;

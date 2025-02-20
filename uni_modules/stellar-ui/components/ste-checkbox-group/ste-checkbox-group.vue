@@ -1,5 +1,5 @@
 <template>
-	<view class="ste-checkbox-group-root" :style="[cmpStyle]">
+	<view class="ste-checkbox-group-root" data-test="checkbox-group" :style="[cmpStyle]">
 		<slot></slot>
 	</view>
 </template>
