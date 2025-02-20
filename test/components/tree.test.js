@@ -1,3 +1,4 @@
+import { mount } from '@vue/test-utils';
 import { nextTick } from 'vue';
 import Tree from '../../uni_modules/stellar-ui/components/ste-tree/ste-tree.vue';
 import { createVue } from '../methods';
@@ -44,7 +45,20 @@ describe('Tree Component', async () => {
 			}
 		}
 	}, true)
-	await nextTick();
+	const wrapper = mount(Tree, {
+		propsData: {
+			options: [],
+			valueKey: "value",
+			titleKey: "title",
+			childrenKey: "children",
+			accordion: true,
+			childrenPadding: 40,
+			openNodes: [],
+			searchTitle: "",
+		}
+	})
+
+	await new Promise(p => setTimeout(p, 500));
 	test("Tree default", async () => {
 		const rows = vm.$el.querySelectorAll('[data-test="tree-item"]');
 		expect(rows.length).toBe(2);
@@ -60,6 +74,38 @@ describe('Tree Component', async () => {
 		await new Promise(resolve => setTimeout(resolve, 500));
 		const rows = vm.$el.querySelectorAll('[data-test="tree-item"]');
 		expect(rows.length).toBe(3);
+	})
+
+	test("options", () => {
+		expect(wrapper.props("options")).toEqual([])
+	})
+
+	test("valueKey", () => {
+		expect(wrapper.props("valueKey")).toBe("value")
+	})
+
+	test("titleKey", () => {
+		expect(wrapper.props("titleKey")).toBe("title")
+	})
+
+	test("childrenKey", () => {
+		expect(wrapper.props("childrenKey")).toBe("children")
+	})
+
+	test("accordion", () => {
+		expect(wrapper.props("accordion")).toBe(true)
+	})
+
+	test("childrenPadding", () => {
+		expect(wrapper.props("childrenPadding")).toBe(40)
+	})
+
+	test("openNodes", () => {
+		expect(wrapper.props("openNodes")).toEqual([])
+	})
+
+	test("searchTitle", () => {
+		expect(wrapper.props("searchTitle")).toBe("")
 	})
 
 });
