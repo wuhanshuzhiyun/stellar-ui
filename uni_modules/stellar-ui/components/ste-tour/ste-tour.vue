@@ -4,7 +4,7 @@
 		<view class="ste-tour-view" :style="[dataStyle]"></view>
 		<view class="ste-tour-message" :style="[messageStyle]">
 			<view class="message-arrows" :style="[arrowsStyle]" />
-			<view class="message-content">
+			<view class="message-content" v-if="cmpStep">
 				<view class="message-head" v-if="showTitleBar" @click.stop="true">
 					<view class="head-title">{{ cmpStep.title }}</view>
 					<view class="head-close" @click="close">

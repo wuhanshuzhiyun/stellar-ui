@@ -85,7 +85,7 @@ describe('Tour Vue Component', async () => {
 		expect(next1.innerHTML.trim()).toBe("完成")
 	})
 
-	const wrapper = mount(Upload, {
+	const wrapper = mount(Tour, {
 		propsData: {
 			show: true,
 			steps: [{ message: '点这里', target: 'test-button1' }],
