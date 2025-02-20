@@ -1,5 +1,5 @@
 <template>
-	<view class="ste-sticky" :id="elId" :style="[cmpRootStyle]">
+	<view class="ste-sticky" data-test="sticky" :id="elId" :style="[cmpRootStyle]">
 		<slot />
 	</view>
 </template>
