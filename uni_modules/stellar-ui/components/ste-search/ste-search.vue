@@ -22,7 +22,7 @@
 				{{ btnText }}
 			</view>
 		</view>
-		<view class="nav-box" v-if="type === 'nav'" />
+		<view class="nav-box" data-test="nav-box" v-if="type === 'nav'" />
 		<!-- 输入建议 -->
 		<view v-if="suggestionList.length > 0" class="suggestions-box"
 			:class="showSuggestionsBox == null ? '' : showSuggestionsBox ? 'show' : 'hide'">
