@@ -1,5 +1,4 @@
 import { mount } from '@vue/test-utils';
-import { nextTick } from 'vue';
 import IndexList from '../../uni_modules/stellar-ui/components/ste-index-list/ste-index-list.vue';
 import IndexItem from '../../uni_modules/stellar-ui/components/ste-index-item/ste-index-item.vue';
 import { createVue } from '../methods';
