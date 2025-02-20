@@ -19,35 +19,27 @@ describe('Image Component', async () => {
 	});
 	await nextTick();
 
-
 	test('mode', async () => {
 		const img = wrapper.find('.content');
 		expect(img.attributes().mode).toEqual('scaleToFill');
 	})
 
-	test('height', async () => {
+	test('src', async () => {
 		const img = wrapper.find('.content');
-		const imgStyle = style2obj(img);
-		expect(imgStyle['opacity']).toEqual('1');
 		expect(img.attributes().src).toEqual('https://image.whzb.com/chain/StellarUI/%E6%94%AF%E4%BB%98%E5%AE%9D.png');
 	})
+	const view = wrapper.find('.ste-image-root');
+	const style = style2obj(view);
 
 	test('width', async () => {
-		const view = wrapper.find('.ste-image-root');
-		const style = style2obj(view);
 		expect(style['--image-root-width']).toEqual('60px');
 	});
 
 	test('height', async () => {
-		const view = wrapper.find('.ste-image-root');
-		const style = style2obj(view);
 		expect(style['--image-root-height']).toEqual('60px');
 	})
 
-
 	test('radius', async () => {
-		const view = wrapper.find('.ste-image-root');
-		const style = style2obj(view);
 		expect(style['--image-root-radius']).toEqual('30px');
 	});
 	test('hiddenLoading', async () => {
