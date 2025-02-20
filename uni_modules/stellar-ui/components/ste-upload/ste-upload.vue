@@ -219,7 +219,7 @@ export default {
 				'--ste-upload-width': utils.formatPx(this.previewWidth),
 				'--ste-upload-height': utils.formatPx(this.previewHeight),
 				'--ste-upload-radius': utils.formatPx(this.radius),
-				'--ste-upload-flex-wrap': utils.formatPx(this.flexWrap),
+				'--ste-upload-flex-wrap': this.flexWrap,
 				'--ste-upload-item-margin': this.maxCount.toString() === '1' ? 0 : utils.formatPx(18),
 			};
 			return style;
