@@ -65,7 +65,7 @@
 				</view>
 			</view>
 		</scroll-view>
-		<view v-if="cmpShowConfirm" class="confirm-button" @click="confirm">确定</view>
+		<view v-if="cmpShowConfirm" class="confirm-button" data-test="confirm-button" @click="confirm">确定</view>
 	</view>
 </template>
 
