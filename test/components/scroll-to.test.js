@@ -1,4 +1,5 @@
 import { nextTick } from 'vue';
+import { mount } from '@vue/test-utils';
 import ScrollTo from '../../uni_modules/stellar-ui/components/ste-scroll-to/ste-scroll-to.vue';
 import ScrollToItem from '../../uni_modules/stellar-ui/components/ste-scroll-to-item/ste-scroll-to-item.vue';
 import { createVue } from '../methods';
@@ -28,10 +29,26 @@ describe('ScrollTo Component', async () => {
 			}
 		}
 	}, true)
-	await nextTick();
-	test("ScrollTo list-item", async () => {
+
+	const wrapper = mount(ScrollTo, {
+		propsData: {
+			active: 0,
+			height: 1334,
+		}
+	})
+
+	await new Promise((resolve) => setTimeout(resolve, 500));
+
+	test("list-item", async () => {
 		const list = vm.$el.querySelectorAll('[data-test="scroll-to-item"]');
 		expect(list.length).toBe(8);
+	})
+
+	test("active", async () => {
+		expect(wrapper.props('active')).toBe(0);
+	})
+	test("height", async () => {
+		expect(wrapper.props('height')).toBe(1334);
 	})
 
 });
