@@ -209,6 +209,22 @@ let utils = {
 	getChildrenProps(component, chilName) {
 		let propsList = [];
 		let children;
+
+		// #ifdef MP-360
+		// 处理测试环境
+		if (process.env.NODE_ENV === 'test') {
+			children = component.$children || [];
+			children.forEach((child) => {
+				if (child.$options.name === chilName) {
+					propsList.push({
+						...child.$props,
+					});
+				}
+			});
+			return propsList;
+		}
+		// #endif
+
 		// #ifdef MP-WEIXIN | MP-ALIPAY
 		children = component.$children?.filter((tab) => tab.$options.name === chilName) || [];
 		children.forEach((tab) =>
