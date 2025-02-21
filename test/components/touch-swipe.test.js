@@ -1,4 +1,3 @@
-import { nextTick } from 'vue';
 import TouchSwipe from '../../uni_modules/stellar-ui/components/ste-touch-swipe/ste-touch-swipe.vue';
 import TouchSwipeItem from '../../uni_modules/stellar-ui/components/ste-touch-swipe-item/ste-touch-swipe-item.vue';
 import { createVue } from '../methods';
