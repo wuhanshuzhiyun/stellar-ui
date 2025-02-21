@@ -2,6 +2,7 @@ import { nextTick } from 'vue';
 import TouchSwipe from '../../uni_modules/stellar-ui/components/ste-touch-swipe/ste-touch-swipe.vue';
 import TouchSwipeItem from '../../uni_modules/stellar-ui/components/ste-touch-swipe-item/ste-touch-swipe-item.vue';
 import { createVue } from '../methods';
+import { mount } from '@vue/test-utils';
 
 describe('TouchSwipe Component', async () => {
 	const vm = createVue({
@@ -24,6 +25,21 @@ describe('TouchSwipe Component', async () => {
 			}
 		}
 	}, true)
+
+	const wrapper = mount(TouchSwipe, {
+		propsData: {
+			index: 0,
+			direction: "horizontal",
+			width: "100%",
+			height: "100%",
+			duration: 0.3,
+			swipeThreshold: 0.35,
+			disabled: false,
+			childrenLength: 0,
+			disabledIndexs: []
+		}
+	})
+
 	await new Promise(resolve => setTimeout(resolve, 500))
 
 	test("TouchSwipe index", async () => {
@@ -65,4 +81,28 @@ describe('TouchSwipe Component', async () => {
 		expect(vm.$refs.swiper.translateY).toBe(-667)
 	})
 
+	test("TouchSwipe disabled", () => {
+		expect(wrapper.props().disabled).toBe(false)
+	})
+	test("TouchSwipe direction", () => {
+		expect(wrapper.props().direction).toBe("horizontal")
+	})
+	test("TouchSwipe width", () => {
+		expect(wrapper.props().width).toBe("100%")
+	})
+	test("TouchSwipe height", () => {
+		expect(wrapper.props().height).toBe("100%")
+	})
+	test("TouchSwipe duration", () => {
+		expect(wrapper.props().duration).toBe(0.3)
+	})
+	test("TouchSwipe swipeThreshold", () => {
+		expect(wrapper.props().swipeThreshold).toBe(0.35)
+	})
+	test("TouchSwipe disabledIndexs", () => {
+		expect(wrapper.props().disabledIndexs).toEqual([])
+	})
+	test("TouchSwipe childrenLength", async () => {
+	  expect(wrapper.props().childrenLength).toBe(4)
+	})
 });
