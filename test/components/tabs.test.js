@@ -2,6 +2,7 @@ import { nextTick } from 'vue';
 import Tabs from '../../uni_modules/stellar-ui/components/ste-tabs/ste-tabs.vue';
 import Tab from '../../uni_modules/stellar-ui/components/ste-tab/ste-tab.vue';
 import { createVue, style2obj } from '../methods';
+import { mount } from '@vue/test-utils';
 const list = [
 	{
 		title: '标签1',
@@ -38,20 +39,65 @@ describe('Tabs Component', async () => {
 			return { list }
 		}
 	}, true)
+
+	const wrapper = mount(Tabs, {
+		propsData: {
+			active: 0,
+			type: "line",
+			showImage: false,
+			showTitle: true,
+			showSubtitle: false,
+			color: "#0090ff",
+			background: "#000000",
+			radius: 0,
+			duration: 0.3,
+			showLine: true,
+			lineWidth: 52,
+			lineHeight: 6,
+			border: false,
+			ellipsis: false,
+			tabWidth: "auto",
+			tabPadding: 24,
+			tabSpace: 0,
+			divideNum: 4,
+			sticky: false,
+			offsetTop: 0,
+			swipeable: false,
+			titleColor: "#000000",
+			activeTitleColor: "#000000",
+			titleHeight: 48,
+			subColor: "#000000",
+			activeSubColor: "#ffffff",
+			subTitleHeight: 42,
+			subTitleRadius: 21,
+			imageWidth: 80,
+			imageHeight: 80,
+			imageRadius: "50%",
+			imageBorderWidth: 4,
+			showGapLine: false,
+			lock: false,
+			disabled: false,
+			pullDown: false,
+			placeholder: "请选择",
+			maskTop: 0,
+			maskRight: 0,
+			maskBottom: 0,
+			maskLeft: 0,
+			maskZindex: 1001
+		}
+	})
+
+
 	await new Promise(resolve => setTimeout(resolve, 1000));
 
-	test("Tabs tab-item", async () => {
+	test("tab-item", async () => {
 		const tabs = vm.$el.querySelectorAll('[data-test="tab"]');
 		expect(tabs.length).toBe(4);
-
 		const titles = vm.$el.querySelectorAll('[data-test="tab-title"]');
 		expect(titles.length).toBe(4);
 	})
 
-
-
-
-	test("Tabs showImage", async () => {
+	test("showImage", async () => {
 		const vm = createVue({
 			components: { "ste-tabs": Tabs, "ste-tab": Tab },
 			template: `<ste-tabs ref="tabs" :showImage="true">
@@ -69,8 +115,7 @@ describe('Tabs Component', async () => {
 		expect(imgs.length).toBe(4);
 	})
 
-
-	test("Tabs showSubtitle", async () => {
+	test("showSubtitle", async () => {
 		const vm = createVue({
 			components: { "ste-tabs": Tabs, "ste-tab": Tab },
 			template: `<ste-tabs ref="tabs" :showSubtitle="true">
@@ -87,7 +132,8 @@ describe('Tabs Component', async () => {
 		const subtitles = vm.$el.querySelectorAll('[data-test="tab-sub-title"]');
 		expect(subtitles.length).toBe(4);
 	})
-	test("Tabs color", async () => {
+
+	test("color", async () => {
 		const vm = createVue({
 			components: { "ste-tabs": Tabs, "ste-tab": Tab },
 			template: `<ste-tabs ref="tabs" color="#f00">
@@ -105,7 +151,7 @@ describe('Tabs Component', async () => {
 		expect(tabs.style._values["--tabs-card-background-active"]).toBe('rgba(255,0,0,0.1)');
 	})
 
-	test("Tabs background", async () => {
+	test("background", async () => {
 		const vm = createVue({
 			components: { "ste-tabs": Tabs, "ste-tab": Tab },
 			template: `<ste-tabs ref="tabs" background="#f00">
@@ -123,7 +169,7 @@ describe('Tabs Component', async () => {
 		expect(bg).toBe('#f00');
 	})
 
-	test("Tabs titleColor and activeTitleColor", async () => {
+	test("titleColor and activeTitleColor", async () => {
 		const vm = createVue({
 			components: { "ste-tabs": Tabs, "ste-tab": Tab },
 			template: `<ste-tabs ref="tabs" titleColor="#f00" activeTitleColor="#00f">
@@ -142,7 +188,7 @@ describe('Tabs Component', async () => {
 		expect(style['--tabs-active-title-color']).toBe('#00f');
 	})
 
-	test("Tabs el-height", async () => {
+	test("el-height", async () => {
 		const vm = createVue({
 			components: { "ste-tabs": Tabs, "ste-tab": Tab },
 			template: `<ste-tabs ref="tabs" titleHeight="90" subTitleHeight="60" subTitleRadius="30" imageWidth="60" imageHeight="60" imageRadius="10">
@@ -163,5 +209,65 @@ describe('Tabs Component', async () => {
 		expect(style['--tabs-image-width']).toBe('30px');
 		expect(style['--tabs-image-height']).toBe('30px');
 		expect(style['--tabs-image-radius']).toBe('5px');
+	})
+
+	test("active", async () => {
+		expect(wrapper.props().active).toBe(0);
+	})
+	test("type", async () => {
+		expect(wrapper.props().type).toBe('line');
+	})
+	test("radius", () => {
+		expect(wrapper.props().radius).toBe(0);
+	})
+	test("titleColor", () => {
+		expect(wrapper.props().titleColor).toBe('#000000');
+	})
+	test("activeTitleColor", () => {
+		expect(wrapper.props().activeTitleColor).toBe('#000000');
+	})
+	test("titleHeight", () => {
+		expect(wrapper.props().titleHeight).toBe(48);
+	})
+	test("subTitleHeight", () => {
+		expect(wrapper.props().subTitleHeight).toBe(42);
+	})
+	test("imageBorderWidth", () => {
+		expect(wrapper.props().imageBorderWidth).toBe(4);
+	})
+	test("showGapLine", () => {
+		expect(wrapper.props().showGapLine).toBe(false);
+	})
+	test("lock", () => {
+		expect(wrapper.props().lock).toBe(false);
+	})
+
+	test("disabled", () => {
+		expect(wrapper.props().disabled).toBe(false);
+	})
+
+	test("pullDown", () => {
+		expect(wrapper.props().pullDown).toBe(false);
+	})
+
+	test("placeholder", () => {
+		expect(wrapper.props().placeholder).toBe("请选择");
+	})
+
+	test("maskTop", () => {
+		expect(wrapper.props().maskTop).toBe(0);
+	})
+
+	test("maskBottom", () => {
+		expect(wrapper.props().maskBottom).toBe(0)
+	})
+	test("maskRight", () => {
+		expect(wrapper.props().maskRight).toBe(0)
+	})
+	test("maskLeft", () => {
+		expect(wrapper.props().maskLeft).toBe(0)
+	})
+	test("maskZindex", () => {
+		expect(wrapper.props().maskZindex).toBe(1001)
 	})
 });
