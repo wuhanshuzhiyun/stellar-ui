@@ -21,6 +21,7 @@
 		@chooseavatar="chooseavatar"
 		@getAuthorize="getAuthorize"
 		@followLifestyle="followLifestyle"
+		data-test="button"
 	>
 		<view class="btn-box">
 			<text v-if="loading">加载中.......</text>

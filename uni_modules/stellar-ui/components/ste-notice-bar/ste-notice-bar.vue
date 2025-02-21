@@ -1,5 +1,5 @@
 <template>
-	<view v-if="closeShow" class="ste-notice-bar-root" :style="[cmpStyle]">
+	<view v-if="closeShow" class="ste-notice-bar-root" :style="[cmpStyle]" data-test="notice-bar">
 		<view class="msg-box-content" @touchstart="doPause" @touchend="doRun" @mousedown="doPause" @mouseup="doRun">
 			<view class="left">
 				<slot name="leftIcon">
@@ -7,7 +7,13 @@
 				</slot>
 			</view>
 			<view v-if="direction == 'across'" :class="'center ' + id" @click="handleClick">
-				<view :id="id" :class="cardMsgClass" :style="[cmpAcrossStyle]" @animationend="onAnimationEnd">
+				<view
+					:id="id"
+					class="speed"
+					:class="cardMsgClass"
+					:style="[cmpAcrossStyle]"
+					@animationend="onAnimationEnd"
+				>
 					<ste-rich-text :text="list[index]"></ste-rich-text>
 				</view>
 			</view>
@@ -34,6 +40,7 @@
 </template>
 
 <script>
+import steRichText from '../ste-rich-text/ste-rich-text.vue';
 import utils from '../../utils/utils.js';
 
 /**
@@ -66,6 +73,9 @@ export default {
 	name: 'ste-notice-bar',
 	options: {
 		virtualHost: true,
+	},
+	components: {
+		steRichText,
 	},
 	props: {
 		list: {

@@ -166,31 +166,18 @@ let utils = {
 				// #ifdef MP-360
 				// 为了兼容测试环境没有uni，wx等, 使用360做条件编译，减少组件库包大小
 				if (process.env.NODE_ENV == 'test') {
-					let result = all ? document.querySelectorAll(selectors) : document.querySelector(selectors);
-					if (all) {
-						result = result.map((el) => {
-							return {
-								top: el.offsetTop || 0,
-								left: el.offsetLeft || 0,
-								width: el.offsetWidth || 375,
-								height: el.offsetHeight || 667,
-							};
-						})
-					} else if (result) {
-						result = {
-							top: result.offsetTop || 0,
-							left: result.offsetLeft || 0,
-							width: result.offsetWidth || 375,
-							height: result.offsetHeight || 667,
-						}
-					}
+					let result = {
+						top: 0,
+						left: 0,
+						width: 375,
+						height: 667,
+					};
 					resolve(result);
-					return;
 				}
 				// #endif
 				uni.createSelectorQuery()
 					.in(component)
-				[selectFn](selectors)
+					[selectFn](selectors)
 					.boundingClientRect((data) => {
 						resolve(data);
 					})
@@ -221,7 +208,7 @@ let utils = {
 	},
 	getChildrenProps(component, chilName) {
 		let propsList = [];
-		let children
+		let children;
 		// #ifdef MP-WEIXIN | MP-ALIPAY
 		children = component.$children?.filter((tab) => tab.$options.name === chilName) || [];
 		children.forEach((tab) =>
