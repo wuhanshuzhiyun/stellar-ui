@@ -25,7 +25,7 @@
 						<block v-else>
 							<block v-if="confirmValue && confirmValue.length">
 								<block v-if="cmpMultiple">
-									<block v-for="(v, i) in cmpViewValue">
+									<block v-for="(v, i) in cmpViewValue" :key="i">
 										<view class="view-item" :key="v" v-if="v">
 											{{ v }}
 										</view>
