@@ -1,5 +1,5 @@
 <template>
-	<view class="ste-step" :class="[`ste-step-${cmpDirection}`]" :style="[cmpStyle]">
+	<view class="ste-step" data-test="step" :class="[`ste-step-${cmpDirection}`]" :style="[cmpStyle]">
 		<view class="ste-step-head" :class="cmpDot ? 'head-is-dot' : ''">
 			<view class="ste-step-line" v-if="cmpIndex < childrenLen"></view>
 			<view
