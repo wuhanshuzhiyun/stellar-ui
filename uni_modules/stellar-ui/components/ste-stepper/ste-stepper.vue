@@ -12,6 +12,7 @@
 		</ste-button>
 		<view v-if="theme != 'add'" class="input" :style="[cmpInputStyle]">
 			<input
+				data-test="input-el"
 				class="input-el"
 				:type="precision ? 'digit' : 'number'"
 				:value="value"
