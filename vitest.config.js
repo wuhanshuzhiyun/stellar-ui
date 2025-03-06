@@ -9,5 +9,6 @@ export default defineConfig({
 		dir: 'test',
 		reporter: 'html',
 		setupFiles: ['./test/setup.js'],
+		cache: false,
 	},
 });
