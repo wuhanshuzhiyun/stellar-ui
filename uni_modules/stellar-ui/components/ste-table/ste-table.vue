@@ -253,7 +253,7 @@ export default {
 				'--offset-top': this.offsetTop,
 				'--table-height': utils.addUnit(this.height),
 				'--table-max-height': utils.addUnit(this.maxHeight),
-				'--ste-theme-color': utils.Color.hex2rgba(color.getColor().steThemeColor),
+				'--ste-theme-color': utils.Color.hex2rgba(color.getColor().steThemeColor, 0.05),
 			};
 			return style;
 		},
