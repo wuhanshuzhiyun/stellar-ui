@@ -359,7 +359,7 @@ export default {
 			flex: 1;
 			height: 100%;
 
-			/deep/ .search-input {
+			::v-deep .search-input {
 				height: 100%;
 
 				font-size: 28rpx;

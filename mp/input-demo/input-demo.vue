@@ -215,11 +215,11 @@ export default {
 				> view {
 					margin: 0 16rpx 16rpx 0;
 
-					/deep/ .my-input {
+					::v-deep .my-input {
 						color: red;
 					}
 
-					// /deep/ .my-input-holder {
+					// ::v-deep .my-input-holder {
 					// 	color: pink !important;
 					// }
 				}

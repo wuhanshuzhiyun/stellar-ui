@@ -478,7 +478,7 @@ export default {
 <style lang="scss">
 .my-table {
 	
-	/deep/ .my-table-1 {
+	::v-deep .my-table-1 {
 		.ste-table-content {
 			border-left: none;
 	
@@ -491,7 +491,7 @@ export default {
 		}
 	}
 	
-	/deep/ .my-table-2 {
+	::v-deep .my-table-2 {
 		.ste-table-content {
 			border: 2rpx solid #ebebeb;
 		}
@@ -503,7 +503,7 @@ export default {
 		}
 	}
 	
-	/deep/ .my-table-3 {
+	::v-deep .my-table-3 {
 		.ste-table-header {
 			.ste-table-cell {
 				border: none;
@@ -517,7 +517,7 @@ export default {
 		}
 	}
 	
-	/deep/ .my-table-4 {
+	::v-deep .my-table-4 {
 		.ste-table-header {
 			.ste-table-cell {
 				border: none;

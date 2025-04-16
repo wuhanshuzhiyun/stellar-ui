@@ -17,81 +17,31 @@
 			<!-- <input v-model="v1" :cursor="cursorNumber" /> -->
 			<!-- <ste-button @click="click1">按钮执行</ste-button> -->
 		</view>
-		<!-- <ste-table-test></ste-table-test> -->
-		<!-- 	<ste-checkbox name="a" v-model="v2">复选框a</ste-checkbox>
-		<ste-icon code="&#xe6bc;" color="#e1e" /> -->
-		<!-- 		<ste-table :data="rows1" border>
+
+		<ste-table :data="testRows">
 			<template v-slot="{ row }">
-				<ste-table-column label="姓名" prop="name" width="200"></ste-table-column>
-				<ste-table-column label="生日" prop="birth" width="200"></ste-table-column>
-				<ste-table-column label="性别" prop="sex"></ste-table-column>
-				<ste-table-column label="状态" prop="state"></ste-table-column>
+				<ste-table-column
+					label="任务名称"
+					prop="taskName"
+					headerAlign="center"
+					align="center"
+				></ste-table-column>
+				<ste-table-column label="门店" prop="storeName" headerAlign="center" align="center"></ste-table-column>
+				<ste-table-column
+					label="完成状态"
+					prop="taskStoreStatusName"
+					headerAlign="center"
+					align="center"
+				></ste-table-column>
+				<ste-table-column
+					label="执行日期"
+					prop="date"
+					headerAlign="center"
+					align="center"
+					width="170"
+				></ste-table-column>
 			</template>
 		</ste-table>
-		<view>1111</view>
-		<ste-table :data="rows2" border>
-			<template v-slot="{ row }">
-				<ste-table-column label="姓名" prop="name"></ste-table-column>
-				<ste-table-column label="生日" prop="birth" width="200"></ste-table-column>
-				<ste-table-column label="性别" prop="sex"></ste-table-column>
-			</template>
-		</ste-table>
-		<view>2222</view>
-		<ste-table :data="rows3" border>
-			<template v-slot="{ row }">
-				<ste-table-column label="评价项目" prop="project"></ste-table-column>
-				<ste-table-column label="评价标准" prop="desc"></ste-table-column>
-				<ste-table-column label="分值" prop="score" width="150"></ste-table-column>
-				<ste-table-column label="得分" prop="sum" width="150"></ste-table-column>
-			</template>
-		</ste-table> -->
-		<!-- 		<ste-table :data="rows" :span-method="spanMethod">
-			<template v-slot="{ row }">
-				<ste-table-column label="项目" prop="project" width="200"></ste-table-column>
-				<ste-table-column label="描述" prop="desc" width="400"></ste-table-column>
-				<ste-table-column label="分值" prop="scroe" width="150"></ste-table-column>
-				<ste-table-column label="总分" prop="sum" width="150"></ste-table-column>
-			</template>
-		</ste-table> -->
-		<!-- <scroll-view scroll-y style="height: 390px; width: 100%">
-			<ste-table :data="topicList">
-				<template v-slot="{ row }" :offsetTop="0">
-					<ste-table-column
-						label="序号"
-						prop="index"
-						:width="130"
-						align="center"
-						headerAlign="center"
-					></ste-table-column>
-					<ste-table-column
-						label="评价项目"
-						prop="topic"
-						:width="220"
-						align="center"
-						headerAlign="center"
-					></ste-table-column>
-					<ste-table-column
-						label="评价标准"
-						prop="subheading"
-						:width="390"
-						align="center"
-						headerAlign="center"
-					></ste-table-column>
-					<ste-table-column
-						label="分值"
-						prop="scope"
-						:width="130"
-						align="center"
-						headerAlign="center"
-					></ste-table-column>
-					<ste-table-column label="得分" :width="130" align="center" headerAlign="center">
-						<view :style="{ color: row.scope > row.answerList[0].scope ? '#F53F3F' : '#000000' }">
-							{{ row.answerList[0].scope }}
-						</view>
-					</ste-table-column>
-				</template>
-			</ste-table>
-		</scroll-view> -->
 	</view>
 </template>
 
@@ -189,6 +139,20 @@ export default {
 					],
 					score: [5, 1],
 					sum: 0,
+				},
+			],
+			testRows: [
+				{
+					taskName: '巡店两家任务',
+					storeName: '墨水湖店',
+					taskStoreStatusName: '未执行',
+					date: '20250310-20250313',
+				},
+				{
+					taskName: '巡店两家任务',
+					storeName: '墨水湖店123',
+					taskStoreStatusName: '未执行',
+					date: '20250310-20250313',
 				},
 			],
 		};
