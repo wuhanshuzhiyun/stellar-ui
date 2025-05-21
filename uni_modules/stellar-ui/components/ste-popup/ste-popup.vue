@@ -4,12 +4,16 @@
 		:class="position"
 		:style="[cmpPageStyle]"
 		@click.stop="onMaskClick"
-		@touchmove.stop.prevent="touchmove"
 		:animation="overlayAnimationData"
 	>
 		<view class="content" :class="position" :style="[cmpContentStyle]" :animation="animationData" @click.stop>
 			<template v-if="keepContent || showContent">
-				<scroll-view style="width: 100%; height: 100%" v-if="height > 0" :scroll-y="true">
+				<scroll-view
+					style="width: 100%; height: 100%"
+					v-if="height > 0"
+					:scroll-y="true"
+					@touchmove.stop.prevent="touchmove"
+				>
 					<slot name="default"></slot>
 				</scroll-view>
 				<slot v-else name="default"></slot>
