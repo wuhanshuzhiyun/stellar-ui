@@ -5,27 +5,57 @@
 				<ste-icon code="&#xe695;" :color="prefixIconColor" size="44" />
 			</view>
 			<view class="input-box" v-if="!hiddenInput">
-				<ste-input rootClass="ste-search-input" placeholder-class="search-input-placeholder" :disabled="disabled"
-					:placeholder="cmpPlaceholder" v-model="dataValue" @input="onInput" @confirm="onSearch" @focus="onFocus"
-					@blur="onBlur" @clear="onClear" :focus="focus" :clearable="clearable" :fontColor="inputTextColor"
-					background="transparent" :cursor="cursorNumber" />
-				<swiper v-if="cmpShowSwitch" class="placeholder-list" :current="switchIndex" :autoplay="autoplay"
-					:interval="interval" circular vertical @change="onSwitchChange">
+				<ste-input
+					rootClass="ste-search-input"
+					placeholder-class="search-input-placeholder"
+					:disabled="disabled"
+					:placeholder="cmpPlaceholder"
+					v-model="dataValue"
+					@input="onInput"
+					@confirm="onSearch"
+					@focus="onFocus"
+					@blur="onBlur"
+					@clear="onClear"
+					:focus="focus"
+					:clearable="clearable"
+					:fontColor="inputTextColor"
+					background="transparent"
+					:cursor="cursorNumber"
+					:allowSpace="allowSpace"
+				/>
+				<swiper
+					v-if="cmpShowSwitch"
+					class="placeholder-list"
+					:current="switchIndex"
+					:autoplay="autoplay"
+					:interval="interval"
+					circular
+					vertical
+					@change="onSwitchChange"
+				>
 					<swiper-item class="placeholder-item" v-for="(item, i) in hotWords" :key="i">
 						{{ item }}
 					</swiper-item>
 				</swiper>
 			</view>
 			<view v-if="!cmpHiddenLine" class="secrch-line" :class="disabled ? 'disabled' : ''" />
-			<view v-if="!hiddenBtn" class="search-button" :class="disabled ? 'disabled' : ''" :style="[cmpbtnBackground]"
-				@click="onSearch">
+			<view
+				v-if="!hiddenBtn"
+				class="search-button"
+				:class="disabled ? 'disabled' : ''"
+				:style="[cmpbtnBackground]"
+				@click="onSearch"
+			>
 				{{ btnText }}
 			</view>
 		</view>
 		<view class="nav-box" data-test="nav-box" v-if="type === 'nav'" />
 		<!-- 输入建议 -->
-		<view v-if="suggestionList.length > 0" class="suggestions-box"
-			:class="showSuggestionsBox == null ? '' : showSuggestionsBox ? 'show' : 'hide'">
+		<view
+			v-if="suggestionList.length > 0"
+			class="suggestions-box"
+			:class="showSuggestionsBox == null ? '' : showSuggestionsBox ? 'show' : 'hide'"
+		>
 			<scroll-view scroll-y class="scroll-box">
 				<view class="item" @click="handleSuggestionClick(item)" v-for="(item, key) in suggestionList" :key="key">
 					{{ item.label }}
@@ -37,7 +67,7 @@
 
 <script>
 import utils from '../../utils/utils.js';
-import SteInput from "../ste-input/ste-input.vue"
+import SteInput from '../ste-input/ste-input.vue';
 /**
  * ste-search 搜索
  * @description 搜索组件
@@ -56,6 +86,7 @@ import SteInput from "../ste-input/ste-input.vue"
  * @property {String}			btnText	搜索按钮文字 ，默认值 搜索
  * @property {Boolean}		hiddenInput	是否隐藏输入框，默认值，false
  * @property {Boolean}		clearable	是否可清空，默认值，true
+ * @property {Boolean}		allowSpace	是否允许输入空格，默认值，true
  * @property {Number}			height	高度，单位rpx，默认值，64
  * @property {Number}			radius	圆角弧度，单位rpx，默认值，32
  * @property {String}			borderColor	边框颜色，默认值，#EEEEEE66
@@ -78,7 +109,7 @@ export default {
 	group: '表单组件',
 	title: 'Search 搜索',
 	name: 'ste-search',
-	components: { "ste-input": SteInput },
+	components: { 'ste-input': SteInput },
 	props: {
 		// 组件类型,"default"：正常搜索，"nav":导航栏
 		type: {
@@ -137,6 +168,11 @@ export default {
 		},
 		// 是否可清空
 		clearable: {
+			type: [Boolean, null],
+			default: () => true,
+		},
+		// 是否允许输入空格	
+		allowSpace: {
 			type: [Boolean, null],
 			default: () => true,
 		},
@@ -349,7 +385,7 @@ export default {
 				height: 100%;
 			}
 
-			&+.input-box {
+			& + .input-box {
 				margin-left: 16rpx;
 			}
 		}
