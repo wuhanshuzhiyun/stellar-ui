@@ -223,10 +223,10 @@ export default {
 	.ste-picker-view {
 		width: 100%;
 		border-radius: var(--border-radius);
-		/deep/ .uni-picker-view-wrapper {
+		::v-deep .uni-picker-view-wrapper {
 			border-radius: var(--border-radius);
 		}
-		/deep/ .ste-picker-column {
+		::v-deep .ste-picker-column {
 			border-radius: var(--border-radius);
 		}
 	}

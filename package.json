@@ -1,10 +1,11 @@
 {
 	"name": "stellar-ui-v2",
-	"version": "1.37.0",
+	"version": "1.38.0",
 	"description": "",
 	"main": "main.js",
 	"scripts": {
-		"test": "vitest  --config ./vitest.config.js  | npx vite preview --outDir html"
+		"test:build": "vitest  --config ./vitest.config.js",
+		"test": "npx vite preview --outDir html"
 	},
 	"repository": {
 		"type": "git",

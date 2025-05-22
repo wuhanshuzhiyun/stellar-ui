@@ -23,7 +23,7 @@
 #### 占位符
 - 支持`placeholderStyle`给占位符指定样式
 - 支持`placeholderClass`给占位符指定类名
-> 非H5平台上需要在类名前添加`/deep/`才生效
+> 非H5平台上需要在类名前添加`::v-deep`才生效
 ```html
 <ste-input placeholder="请输入" />
 <ste-input placeholder="请输入" placeholderStyle="color: #f00" />

@@ -256,7 +256,7 @@ export default {
 					margin: 0 12rpx 12rpx 0;
 				}
 			}
-			/deep/ .test-signs {
+			::v-deep .test-signs {
 				color: #fff;
 				background-color: #000;
 			}

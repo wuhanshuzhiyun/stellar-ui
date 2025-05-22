@@ -10,6 +10,7 @@
 			<view class="right">
 				<header-nav @change="handleHeaderNavChange" :mode.sync="navActive" />
 				<version-switcher style="margin-left: 32px"></version-switcher>
+				<append-link style="margin-left: 32px"></append-link>
 			</view>
 		</view>
 
@@ -81,13 +82,14 @@ import commentVue from './components/comment.vue';
 import HeaderNav from './components/header-nav.vue';
 import CompNav from './components/comp-nav.vue';
 import VersionSwitcher from './components/version-select.vue';
+import AppendLink from './components/append-link.vue';
 import { getInfo } from '@/common/account.js';
 import './mdStyle.scss';
 
 let timeout = 0;
 
 export default {
-	components: { commentVue, HeaderNav, CompNav, VersionSwitcher },
+	components: { commentVue, HeaderNav, CompNav, VersionSwitcher, AppendLink },
 	data() {
 		return {
 			content: '',

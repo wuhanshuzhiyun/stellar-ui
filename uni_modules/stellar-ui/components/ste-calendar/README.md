@@ -239,7 +239,7 @@ export default{
 }
 </script>
 <style>
-/deep/ .test-signs {
+::v-deep .test-signs {
 	color: #fff;
 	background-color: #000;
 }

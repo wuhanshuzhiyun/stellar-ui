@@ -400,7 +400,7 @@ export default {
 
 <style lang="scss" scoped>
 .ste-date-picker-root {
-	// /deep/ view {
+	// ::v-deep view {
 	// 	padding: 0 42rpx;
 	// }
 }

@@ -184,7 +184,7 @@ export default {
 						display: flex;
 						align-items: center;
 						justify-content: center;
-						/deep/ .ste-icon-root {
+						::v-deep .ste-icon-root {
 							/* #ifdef MP */
 							margin-top: 3rpx;
 							/* #endif */
