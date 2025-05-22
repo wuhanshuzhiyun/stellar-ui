@@ -216,32 +216,33 @@ export default {
 ---$
 ### API
 #### Props
-| 属性名			| 说明									| 类型		| 默认值			| 可选值									|支持版本		|
-| -----				|-----									|-----		|-----			|-----									|-----		|
-| `type`			| 组件类型								| `String`	| `"default"`	| `"default"`正常搜索<br/>`"nav"`导航栏	| -			|
-| `value`			| 输入框默认值，支持`v-model`双向绑定		| `String`	| `""`			| -										| -			|
-| `placeholder`		| 占位提示符								| `String`	| `""`			| -										| -			|
-| `hotWords`		| 热词列表								| `String[]`| `[]`			| -										| -			|
-| `interval`		| 热词列表自动切换时间间隔，单位`ms`			| `Number`	| `3000`		| -										| -			|
-| `disabled`		| 是否禁用状态							| `Boolean`	| `false`		| -										| -			|
-| `hiddenLine`		| 是否隐藏分割线							| `Boolean`	| `false`		| -										| -			|
-| `hiddenBtn`		| 是否隐藏按钮，同时也会隐藏分割线			| `Boolean`	| `false`		| -										| -			|
-| `btnText`			| 按钮文本内容							| `String`	| `"搜索"`		| -										| -			|
-| `hiddenInput`		| 是否隐藏输入框							| `Boolean`	| `false`		| -										| -			|
-| `clearable`		| 是否可清空内容							| `Boolean`	| `true`		| -										| -			|
-| `height`			| 搜索框高度，单位`rpx`					| `Number`	| `64`			| -										| -			|
-| `radius`			| 圆角弧度，单位`rpx`						| `Number`	| `32`			| -										| -			|
-| `borderColor`		| 边框颜色								| `String`	| `"#EEEEEE66"`	| -										| -			|
-| `background`		| 背景，可直接传颜色值或者图片				| `String`	| `"#FFFFFF"`	| -										| -			|
-| `placeholderColor`| 占位符文本颜色							| `String`	| `"#BBBBBB"`	| -										| -			|
-| `prefixIconColor`	| 前缀图标颜色							| `String`	| `"#BBBBBB"`	| -										| -			|
-| `inputTextColor`	| 输入框文本颜色							| `String`	| `"#000000"`	| -										| -			|
-| `clearIconColor`	| 清除图标颜色							| `String`	| `"#BBBBBB"`	| -										| -			|
-| `btnTextColor`	| 搜索按钮文本颜色，分割线会跟随文本颜色变化	| `String`	| `"#0090FF"`	| -										| -			|
-| `btnBackground`	| 搜索按钮背景，可直接传颜色值或者图片		| `String`	| -				| -										| -			|
-| `focus`			| 是否聚焦(双向绑定)						| `Boolean`	| `false`		| -										| `1.1.5`	|
-| `autoplay`		| 热词列表自动切换							| `Boolean`	| `true`		| -										| `1.11.1`	|
-| `suggestionList`	| 搜索建议对应的数据						| `Array`	| -				|										| `1.30.1`	|
+| 属性名						| 说明																		| 类型				| 默认值					| 可选值																|支持版本	|
+| -----							|-----																	|-----			|-----					|-----																|-----		|
+| `type`						| 组件类型																| `String`	| `"default"`		| `"default"`正常搜索<br/>`"nav"`导航栏	| -				|
+| `value`						| 输入框默认值，支持`v-model`双向绑定			| `String`	| `""`					| -																		| -				|
+| `placeholder`			| 占位提示符															| `String`	| `""`					| -																		| -				|
+| `hotWords`				| 热词列表																| `String[]`| `[]`					| -																		| -				|
+| `interval`				| 热词列表自动切换时间间隔，单位`ms`				| `Number`	| `3000`				| -																		| -				|
+| `disabled`				| 是否禁用状态														| `Boolean`	| `false`				| -																		| -				|
+| `hiddenLine`			| 是否隐藏分割线													| `Boolean`	| `false`				| -																		| -				|
+| `hiddenBtn`				| 是否隐藏按钮，同时也会隐藏分割线					| `Boolean`	| `false`				| -																		| -				|
+| `btnText`					| 按钮文本内容														| `String`	| `"搜索"`				| -																		| -				|
+| `hiddenInput`			| 是否隐藏输入框													| `Boolean`	| `false`				| -																		| -				|
+| `clearable`				| 是否可清空内容													| `Boolean`	| `true`				| -																		| -				|
+| `allowSpace`			| 是否允许输入空格												| `Boolean`	| `true`				| -																		| `1.37.1`|
+| `height`					| 搜索框高度，单位`rpx`										| `Number`	| `64`					| -																		| -				|
+| `radius`					| 圆角弧度，单位`rpx`											| `Number`	| `32`					| -																		| -				|
+| `borderColor`			| 边框颜色																| `String`	| `"#EEEEEE66"`	| -																		| -				|
+| `background`			| 背景，可直接传颜色值或者图片							| `String`	| `"#FFFFFF"`		| -																		| -				|
+| `placeholderColor`| 占位符文本颜色													| `String`	| `"#BBBBBB"`		| -																		| -				|
+| `prefixIconColor`	| 前缀图标颜色														| `String`	| `"#BBBBBB"`		| -																		| -				|
+| `inputTextColor`	| 输入框文本颜色													| `String`	| `"#000000"`		| -																		| -				|
+| `clearIconColor`	| 清除图标颜色														| `String`	| `"#BBBBBB"`		| -																		| -				|
+| `btnTextColor`		| 搜索按钮文本颜色，分割线会跟随文本颜色变化	| `String`	| `"#0090FF"`		| -																		| -				|
+| `btnBackground`		| 搜索按钮背景，可直接传颜色值或者图片				| `String`	| -							| -																		| -				|
+| `focus`						| 是否聚焦(双向绑定)											| `Boolean`	| `false`				| -																		| `1.1.5`	|
+| `autoplay`				| 热词列表自动切换												| `Boolean`	| `true`				| -																		| `1.11.1`|
+| `suggestionList`	| 搜索建议对应的数据												| `Array`		| -							|																			| `1.30.1`|
 
 #### Events
 您可以通过监听`input`事件，事件参数为用户输入的`value`值，您可以监听该事件获取用户输入的内容。<br/>
