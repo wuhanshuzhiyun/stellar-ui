@@ -3,7 +3,7 @@ import System from './System.js';
 import dayjs from './dayjs.min.js';
 let throLast = 0; // 节流方法用变量
 let throTimer = null; // 节流方法用的变量
-
+let debounceTimer = null;
 let utils = {
 	Color,
 	System,
@@ -151,12 +151,19 @@ let utils = {
 			}
 		}
 		let timer = null;
-		return function () {
-			clearTimeout(timer);
-			timer = setTimeout(() => {
-				fn.call(this, ...args);
-			}, delay);
-		};
+		// return function () {
+		// 	clearTimeout(timer);
+		// 	timer = setTimeout(() => {
+		// 		fn.call(this, ...args);
+		// 	}, delay);
+		// };
+
+		if (debounceTimer !== null) {
+			clearTimeout(debounceTimer);
+		}
+		debounceTimer = setTimeout(() => {
+			fn.call(this, ...args);
+		}, delay);
 	},
 
 	querySelector(selectors, component, all = false) {
