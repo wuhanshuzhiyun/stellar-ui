@@ -1,809 +1,823 @@
 {
-    "insetLoader": {
-        "config": {
-            "toast": "<ste-toast id='steToast'></ste-toast>",
-            "msgBox": "<ste-message-box id='steMessageBox'></ste-message-box>"
-        },
-        // 全局配置
-        "label": ["toast", "msgBox"],
-        "rootEle": "view"
-    },
-    "pages": [
-        //pages数组中第一项表示应用启动页，参考：https://uniapp.dcloud.io/collocation/pages
-        // #ifdef MP-WEIXIN
-        {
-            "path": "mp/index/index",
-            "style": {
-                "navigationStyle": "custom",
-                "mp-alipay": {
-                    "transparentTitle": "always",
-                    "titlePenetrate": "YES",
-                    "allowsBounceVertical": "NO",
-                    "navigationBarTitleText": ""
-                }
-            }
-        },
-        {
-            "path": "pages/login/login",
-            "name": "login",
-            "style": {
-                "navigationStyle": "custom",
-                "mp-alipay": {
-                    "transparentTitle": "always",
-                    "titlePenetrate": "YES",
-                    "allowsBounceVertical": "NO",
-                    "navigationBarTitleText": ""
-                }
-            }
-        },
-        {
-            "path": "pages/user/user",
-            "name": "user",
-            "style": {
-                "navigationStyle": "custom",
-                "mp-alipay": {
-                    "transparentTitle": "always",
-                    "titlePenetrate": "YES",
-                    "allowsBounceVertical": "NO",
-                    "navigationBarTitleText": ""
-                }
-            }
-        },
-        // #endif
-        // #ifndef MP-WEIXIN
-        {
-            "path": "pages/index/index",
-            "name": "home",
-            "style": {
-                "navigationStyle": "custom",
-                "mp-alipay": {
-                    "transparentTitle": "always",
-                    "titlePenetrate": "YES",
-                    "allowsBounceVertical": "NO",
-                    "navigationBarTitleText": ""
-                }
-            }
-        },
-        {
-            "path": "mp/index/index",
-            "style": {
-                "navigationStyle": "custom",
-                "mp-alipay": {
-                    "transparentTitle": "always",
-                    "titlePenetrate": "YES",
-                    "allowsBounceVertical": "NO",
-                    "navigationBarTitleText": ""
-                }
-            }
-        },
-        // #endif
-        // #ifdef H5
-        {
-            "path": "pc/index/index",
-            "style": {
-                "navigationBarTitleText": "Stellar UI",
-                "h5": {
-                    "titleNView": false
-                }
-            }
-        },
-        {
-            "path": "pages/404/404",
-            "name": "404",
-            "style": {
-                "navigationStyle": "custom",
-                "mp-alipay": {
-                    "transparentTitle": "always",
-                    "titlePenetrate": "YES",
-                    "allowsBounceVertical": "NO",
-                    "navigationBarTitleText": ""
-                }
-            }
-        },
-        {
-            "path": "pages/gitlab/gitlab",
-            "name": "gitlab",
-            "style": {
-                "navigationStyle": "custom",
-                "mp-alipay": {
-                    "transparentTitle": "always",
-                    "titlePenetrate": "YES",
-                    "allowsBounceVertical": "NO",
-                    "navigationBarTitleText": ""
-                }
-            }
-        },
-        {
-            "path": "pc/index/login",
-            "style": {
-                "navigationBarTitleText": "Stellar UI",
-                "h5": {
-                    "titleNView": false
-                }
-            }
-        },
-        // #endif
+	"insetLoader": {
+		"config": {
+			"toast": "<ste-toast id='steToast'></ste-toast>",
+			"msgBox": "<ste-message-box id='steMessageBox'></ste-message-box>"
+		},
+		// 全局配置
+		"label": ["toast", "msgBox"],
+		"rootEle": "view"
+	},
+	"pages": [
+		//pages数组中第一项表示应用启动页，参考：https://uniapp.dcloud.io/collocation/pages
+		// #ifdef MP-WEIXIN
+		{
+			"path": "mp/index/index",
+			"style": {
+				"navigationStyle": "custom",
+				"mp-alipay": {
+					"transparentTitle": "always",
+					"titlePenetrate": "YES",
+					"allowsBounceVertical": "NO",
+					"navigationBarTitleText": ""
+				}
+			}
+		},
+		{
+			"path": "pages/login/login",
+			"name": "login",
+			"style": {
+				"navigationStyle": "custom",
+				"mp-alipay": {
+					"transparentTitle": "always",
+					"titlePenetrate": "YES",
+					"allowsBounceVertical": "NO",
+					"navigationBarTitleText": ""
+				}
+			}
+		},
+		{
+			"path": "pages/user/user",
+			"name": "user",
+			"style": {
+				"navigationStyle": "custom",
+				"mp-alipay": {
+					"transparentTitle": "always",
+					"titlePenetrate": "YES",
+					"allowsBounceVertical": "NO",
+					"navigationBarTitleText": ""
+				}
+			}
+		},
+		// #endif
+		// #ifndef MP-WEIXIN
+		{
+			"path": "pages/index/index",
+			"name": "home",
+			"style": {
+				"navigationStyle": "custom",
+				"mp-alipay": {
+					"transparentTitle": "always",
+					"titlePenetrate": "YES",
+					"allowsBounceVertical": "NO",
+					"navigationBarTitleText": ""
+				}
+			}
+		},
+		{
+			"path": "mp/index/index",
+			"style": {
+				"navigationStyle": "custom",
+				"mp-alipay": {
+					"transparentTitle": "always",
+					"titlePenetrate": "YES",
+					"allowsBounceVertical": "NO",
+					"navigationBarTitleText": ""
+				}
+			}
+		},
+		// #endif
+		// #ifdef H5
+		{
+			"path": "pc/index/index",
+			"style": {
+				"navigationBarTitleText": "Stellar UI",
+				"h5": {
+					"titleNView": false
+				}
+			}
+		},
+		{
+			"path": "pages/404/404",
+			"name": "404",
+			"style": {
+				"navigationStyle": "custom",
+				"mp-alipay": {
+					"transparentTitle": "always",
+					"titlePenetrate": "YES",
+					"allowsBounceVertical": "NO",
+					"navigationBarTitleText": ""
+				}
+			}
+		},
+		{
+			"path": "pages/gitlab/gitlab",
+			"name": "gitlab",
+			"style": {
+				"navigationStyle": "custom",
+				"mp-alipay": {
+					"transparentTitle": "always",
+					"titlePenetrate": "YES",
+					"allowsBounceVertical": "NO",
+					"navigationBarTitleText": ""
+				}
+			}
+		},
+		{
+			"path": "pc/index/login",
+			"style": {
+				"navigationBarTitleText": "Stellar UI",
+				"h5": {
+					"titleNView": false
+				}
+			}
+		},
+		// #endif
 
-        {
-            "path": "mp/icon-demo/icon-demo",
-            "style": {
-                "navigationStyle": "custom",
-                "disableScroll": true,
-                "mp-alipay": {
-                    "transparentTitle": "always",
-                    "titlePenetrate": "YES",
-                    "allowsBounceVertical": "NO",
-                    "navigationBarTitleText": ""
-                }
-            }
-        },
-        {
-            "path": "mp/icon-demo/icon-vertical-align",
-            "style": {
-                "navigationStyle": "custom",
-                "disableScroll": true,
-                "mp-alipay": {
-                    "transparentTitle": "always",
-                    "titlePenetrate": "YES",
-                    "allowsBounceVertical": "NO",
-                    "navigationBarTitleText": ""
-                }
-            }
-        },
-        {
-            "path": "mp/button-demo/button-demo",
-            "style": {
-                "navigationStyle": "custom",
-                "disableScroll": true,
-                "mp-alipay": {
-                    "transparentTitle": "always",
-                    "titlePenetrate": "YES",
-                    "allowsBounceVertical": "NO",
-                    "navigationBarTitleText": ""
-                }
-            }
-        },
-        {
-            "path": "mp/search-demo/search-demo",
-            "style": {
-                "navigationStyle": "custom",
-                "disableScroll": true,
-                "mp-alipay": {
-                    "transparentTitle": "always",
-                    "titlePenetrate": "YES",
-                    "allowsBounceVertical": "NO",
-                    "navigationBarTitleText": ""
-                }
-            }
-        },
-        {
-            "path": "mp/tabs-demo/tabs-demo",
-            "style": {
-                "navigationStyle": "custom",
-                "disableScroll": true,
-                "mp-alipay": {
-                    "transparentTitle": "always",
-                    "titlePenetrate": "YES",
-                    "allowsBounceVertical": "NO",
-                    "navigationBarTitleText": ""
-                }
-            }
-        },
-        {
-            "path": "mp/rich-text-demo/rich-text-demo",
-            "style": {
-                "navigationStyle": "custom",
-                "mp-alipay": {
-                    "transparentTitle": "always",
-                    "titlePenetrate": "YES",
-                    "allowsBounceVertical": "NO",
-                    "navigationBarTitleText": ""
-                }
-            }
-        },
-        {
-            "path": "mp/image-demo/image-demo",
-            "style": {
-                "navigationStyle": "custom",
-                "disableScroll": true,
-                "mp-alipay": {
-                    "transparentTitle": "always",
-                    "titlePenetrate": "YES",
-                    "allowsBounceVertical": "NO",
-                    "navigationBarTitleText": ""
-                }
-            }
-        },
-        {
-            "path": "mp/price-demo/price-demo",
-            "style": {
-                "navigationStyle": "custom",
-                "disableScroll": true,
-                "mp-alipay": {
-                    "transparentTitle": "always",
-                    "titlePenetrate": "YES",
-                    "allowsBounceVertical": "NO",
-                    "navigationBarTitleText": ""
-                }
-            }
-        },
-        {
-            "path": "mp/badge-demo/badge-demo",
-            "style": {
-                "navigationStyle": "custom",
-                "disableScroll": true,
-                "mp-alipay": {
-                    "transparentTitle": "always",
-                    "titlePenetrate": "YES",
-                    "allowsBounceVertical": "NO",
-                    "navigationBarTitleText": ""
-                }
-            }
-        },
-        {
-            "path": "mp/progress-demo/progress-demo",
-            "style": {
-                "navigationStyle": "custom",
-                "disableScroll": true,
-                "mp-alipay": {
-                    "transparentTitle": "always",
-                    "titlePenetrate": "YES",
-                    "allowsBounceVertical": "NO",
-                    "navigationBarTitleText": ""
-                }
-            }
-        },
-        {
-            "path": "mp/rate-demo/rate-demo",
-            "style": {
-                "navigationStyle": "custom",
-                "disableScroll": true,
-                "mp-alipay": {
-                    "transparentTitle": "always",
-                    "titlePenetrate": "YES",
-                    "allowsBounceVertical": "NO",
-                    "navigationBarTitleText": ""
-                }
-            }
-        },
-        {
-            "path": "mp/text-demo/text-demo",
-            "style": {
-                "navigationStyle": "custom",
-                "disableScroll": true,
-                "mp-alipay": {
-                    "transparentTitle": "always",
-                    "titlePenetrate": "YES",
-                    "allowsBounceVertical": "NO",
-                    "navigationBarTitleText": ""
-                }
-            }
-        },
-        {
-            "path": "mp/input-demo/input-demo",
-            "style": {
-                "navigationStyle": "custom",
-                "disableScroll": true,
-                "mp-alipay": {
-                    "transparentTitle": "always",
-                    "titlePenetrate": "YES",
-                    "allowsBounceVertical": "NO",
-                    "navigationBarTitleText": ""
-                }
-            }
-        },
-        {
-            "path": "mp/checkbox-demo/checkbox-demo",
-            "style": {
-                "navigationStyle": "custom",
-                "disableScroll": true,
-                "mp-alipay": {
-                    "transparentTitle": "always",
-                    "titlePenetrate": "YES",
-                    "allowsBounceVertical": "NO",
-                    "navigationBarTitleText": ""
-                }
-            }
-        },
-        {
-            "path": "mp/touch-swipe-demo/touch-swipe-demo",
-            "style": {
-                "navigationStyle": "custom",
-                "disableScroll": true,
-                "mp-alipay": {
-                    "transparentTitle": "always",
-                    "titlePenetrate": "YES",
-                    "allowsBounceVertical": "NO",
-                    "navigationBarTitleText": ""
-                }
-            }
-        },
-        {
-            "path": "mp/scroll-to-demo/scroll-to-demo",
-            "style": {
-                "navigationStyle": "custom",
-                "disableScroll": true,
-                "mp-alipay": {
-                    "transparentTitle": "always",
-                    "titlePenetrate": "YES",
-                    "allowsBounceVertical": "NO",
-                    "navigationBarTitleText": ""
-                }
-            }
-        },
-        {
-            "path": "mp/test-demo/test-demo",
-            "style": {
-                "navigationStyle": "custom",
-                "disableScroll": true,
-                "mp-alipay": {
-                    "transparentTitle": "always",
-                    "titlePenetrate": "YES",
-                    "allowsBounceVertical": "NO",
-                    "navigationBarTitleText": ""
-                }
-            }
-        },
-        {
-            "path": "mp/radio-demo/radio-demo",
-            "style": {
-                "navigationStyle": "custom",
-                "disableScroll": true,
-                "mp-alipay": {
-                    "transparentTitle": "always",
-                    "titlePenetrate": "YES",
-                    "allowsBounceVertical": "NO",
-                    "navigationBarTitleText": ""
-                }
-            }
-        },
-        {
-            "path": "mp/upload-demo/upload-demo",
-            "style": {
-                "navigationStyle": "custom",
-                "disableScroll": true,
-                "mp-alipay": {
-                    "transparentTitle": "always",
-                    "titlePenetrate": "YES",
-                    "allowsBounceVertical": "NO",
-                    "navigationBarTitleText": ""
-                }
-            }
-        },
-        {
-            "path": "mp/swiper-demo/swiper-demo",
-            "style": {
-                "navigationStyle": "custom",
-                "disableScroll": true,
-                "mp-alipay": {
-                    "transparentTitle": "always",
-                    "titlePenetrate": "YES",
-                    "allowsBounceVertical": "NO",
-                    "navigationBarTitleText": ""
-                }
-            }
-        },
-        {
-            "path": "mp/media-preview-demo/media-preview-demo",
-            "style": {
-                "navigationStyle": "custom",
-                "disableScroll": true,
-                "mp-alipay": {
-                    "transparentTitle": "always",
-                    "titlePenetrate": "YES",
-                    "allowsBounceVertical": "NO",
-                    "navigationBarTitleText": ""
-                }
-            }
-        },
-        {
-            "path": "mp/switch-demo/switch-demo",
-            "style": {
-                "navigationStyle": "custom",
-                "disableScroll": true,
-                "mp-alipay": {
-                    "transparentTitle": "always",
-                    "titlePenetrate": "YES",
-                    "allowsBounceVertical": "NO",
-                    "navigationBarTitleText": ""
-                }
-            }
-        },
-        {
-            "path": "mp/stepper-demo/stepper-demo",
-            "style": {
-                "navigationStyle": "custom",
-                "disableScroll": true,
-                "mp-alipay": {
-                    "transparentTitle": "always",
-                    "titlePenetrate": "YES",
-                    "allowsBounceVertical": "NO",
-                    "navigationBarTitleText": ""
-                }
-            }
-        },
-        {
-            "path": "mp/slider-demo/slider-demo",
-            "style": {
-                "navigationStyle": "custom",
-                "disableScroll": true,
-                "mp-alipay": {
-                    "transparentTitle": "always",
-                    "titlePenetrate": "YES",
-                    "allowsBounceVertical": "NO",
-                    "navigationBarTitleText": ""
-                }
-            }
-        },
-        {
-            "path": "mp/popup-demo/popup-demo",
-            "style": {
-                "navigationStyle": "custom",
-                "disableScroll": true,
-                "mp-alipay": {
-                    "transparentTitle": "always",
-                    "titlePenetrate": "YES",
-                    "allowsBounceVertical": "NO",
-                    "navigationBarTitleText": ""
-                }
-            }
-        },
-        {
-            "path": "mp/notice-bar-demo/notice-bar-demo",
-            "style": {
-                "navigationStyle": "custom",
-                "disableScroll": true,
-                "mp-alipay": {
-                    "transparentTitle": "always",
-                    "titlePenetrate": "YES",
-                    "allowsBounceVertical": "NO",
-                    "navigationBarTitleText": ""
-                }
-            }
-        },
-        {
-            "path": "mp/calendar-demo/calendar-demo",
-            "style": {
-                "navigationStyle": "custom",
-                "disableScroll": true,
-                "mp-alipay": {
-                    "transparentTitle": "always",
-                    "titlePenetrate": "YES",
-                    "allowsBounceVertical": "NO",
-                    "navigationBarTitleText": ""
-                }
-            }
-        },
-        {
-            "path": "mp/dropdown-menu-demo/dropdown-menu-demo",
-            "style": {
-                "navigationStyle": "custom",
-                "disableScroll": true,
-                "mp-alipay": {
-                    "transparentTitle": "always",
-                    "titlePenetrate": "YES",
-                    "allowsBounceVertical": "NO",
-                    "navigationBarTitleText": ""
-                }
-            }
-        },
-        {
-            "path": "mp/loading-demo/loading-demo",
-            "style": {
-                "navigationStyle": "custom",
-                "disableScroll": true,
-                "mp-alipay": {
-                    "transparentTitle": "always",
-                    "titlePenetrate": "YES",
-                    "allowsBounceVertical": "NO",
-                    "navigationBarTitleText": ""
-                }
-            }
-        },
-        {
-            "path": "mp/sticky-demo/sticky-demo",
-            "style": {
-                "navigationStyle": "custom",
-                "disableScroll": true,
-                "mp-alipay": {
-                    "transparentTitle": "always",
-                    "titlePenetrate": "YES",
-                    "allowsBounceVertical": "NO",
-                    "navigationBarTitleText": ""
-                }
-            }
-        },
-        {
-            "path": "mp/index-list-demo/index-list-demo",
-            "style": {
-                "navigationStyle": "custom",
-                "disableScroll": true,
-                "mp-alipay": {
-                    "transparentTitle": "always",
-                    "titlePenetrate": "YES",
-                    "allowsBounceVertical": "NO",
-                    "navigationBarTitleText": ""
-                }
-            }
-        },
-        {
-            "path": "mp/date-picker-demo/date-picker-demo",
-            "style": {
-                "navigationStyle": "custom",
-                "disableScroll": true,
-                "mp-alipay": {
-                    "transparentTitle": "always",
-                    "titlePenetrate": "YES",
-                    "allowsBounceVertical": "NO",
-                    "navigationBarTitleText": ""
-                }
-            }
-        },
-        {
-            "path": "mp/swipe-action-demo/swipe-action-demo",
-            "style": {
-                "navigationStyle": "custom",
-                "disableScroll": true,
-                "mp-alipay": {
-                    "transparentTitle": "always",
-                    "titlePenetrate": "YES",
-                    "allowsBounceVertical": "NO",
-                    "navigationBarTitleText": ""
-                }
-            }
-        },
-        {
-            "path": "mp/read-more-demo/read-more-demo",
-            "style": {
-                "navigationStyle": "custom",
-                "disableScroll": true,
-                "mp-alipay": {
-                    "transparentTitle": "always",
-                    "titlePenetrate": "YES",
-                    "allowsBounceVertical": "NO",
-                    "navigationBarTitleText": ""
-                }
-            }
-        },
-        {
-            "path": "mp/number-keyboard-demo/number-keyboard-demo",
-            "style": {
-                "navigationStyle": "custom",
-                "disableScroll": true,
-                "mp-alipay": {
-                    "transparentTitle": "always",
-                    "titlePenetrate": "YES",
-                    "allowsBounceVertical": "NO",
-                    "navigationBarTitleText": ""
-                }
-            }
-        },
-        {
-            "path": "mp/code-input-demo/code-input-demo",
-            "style": {
-                "navigationStyle": "custom",
-                "disableScroll": true,
-                "mp-alipay": {
-                    "transparentTitle": "always",
-                    "titlePenetrate": "YES",
-                    "allowsBounceVertical": "NO",
-                    "navigationBarTitleText": ""
-                }
-            }
-        },
-        {
-            "path": "mp/toast-demo/toast-demo",
-            "style": {
-                "navigationStyle": "custom",
-                "disableScroll": true,
-                "mp-alipay": {
-                    "transparentTitle": "always",
-                    "titlePenetrate": "YES",
-                    "allowsBounceVertical": "NO",
-                    "navigationBarTitleText": ""
-                }
-            }
-        },
-        {
-            "path": "mp/tree-demo/tree-demo",
-            "style": {
-                "navigationStyle": "custom",
-                "disableScroll": true,
-                "mp-alipay": {
-                    "transparentTitle": "always",
-                    "titlePenetrate": "YES",
-                    "allowsBounceVertical": "NO",
-                    "navigationBarTitleText": ""
-                }
-            }
-        },
-        {
-            "path": "mp/tour-demo/tour-demo",
-            "style": {
-                "navigationStyle": "custom",
-                "disableScroll": true,
-                "mp-alipay": {
-                    "transparentTitle": "always",
-                    "titlePenetrate": "YES",
-                    "allowsBounceVertical": "NO",
-                    "navigationBarTitleText": ""
-                }
-            }
-        },
-        {
-            "path": "mp/select-demo/select-demo",
-            "style": {
-                "navigationStyle": "custom",
-                "disableScroll": true,
-                "mp-alipay": {
-                    "transparentTitle": "always",
-                    "titlePenetrate": "YES",
-                    "allowsBounceVertical": "NO",
-                    "navigationBarTitleText": ""
-                }
-            }
-        },
-        {
-            "path": "mp/signature-demo/signature-demo",
-            "style": {
-                "navigationStyle": "custom",
-                "disableScroll": true,
-                "mp-alipay": {
-                    "transparentTitle": "always",
-                    "titlePenetrate": "YES",
-                    "allowsBounceVertical": "NO",
-                    "navigationBarTitleText": ""
-                }
-            }
-        },
-        {
-            "path": "mp/drag-demo/drag-demo",
-            "style": {
-                "navigationStyle": "custom",
-                "disableScroll": true,
-                "mp-alipay": {
-                    "transparentTitle": "always",
-                    "titlePenetrate": "YES",
-                    "allowsBounceVertical": "NO",
-                    "navigationBarTitleText": ""
-                }
-            }
-        },
-        {
-            "path": "mp/steps-demo/steps-demo",
-            "style": {
-                "navigationStyle": "custom",
-                "disableScroll": true,
-                "mp-alipay": {
-                    "transparentTitle": "always",
-                    "titlePenetrate": "YES",
-                    "allowsBounceVertical": "NO",
-                    "navigationBarTitleText": ""
-                }
-            }
-        },
-        {
-            "path": "mp/video-demo/video-demo",
-            "style": {
-                "navigationStyle": "custom",
-                "disableScroll": true,
-                "mp-alipay": {
-                    "transparentTitle": "always",
-                    "titlePenetrate": "YES",
-                    "allowsBounceVertical": "NO",
-                    "navigationBarTitleText": ""
-                }
-            }
-        },
-        {
-            "path": "mp/table-demo/table-demo",
-            "style": {
-                "navigationStyle": "custom",
-                "disableScroll": true,
-                "mp-alipay": {
-                    "transparentTitle": "always",
-                    "titlePenetrate": "YES",
-                    "allowsBounceVertical": "NO",
-                    "navigationBarTitleText": ""
-                }
-            }
-        },
-        {
-            "path": "mp/message-box-demo/message-box-demo",
-            "style": {
-                "navigationStyle": "custom",
-                "disableScroll": true,
-                "mp-alipay": {
-                    "transparentTitle": "always",
-                    "titlePenetrate": "YES",
-                    "allowsBounceVertical": "NO",
-                    "navigationBarTitleText": ""
-                }
-            }
-        },
-        {
-            "path": "mp/animate-demo/animate-demo",
-            "style": {
-                "navigationStyle": "custom",
-                "disableScroll": true,
-                "mp-alipay": {
-                    "transparentTitle": "always",
-                    "titlePenetrate": "YES",
-                    "allowsBounceVertical": "NO",
-                    "navigationBarTitleText": ""
-                }
-            }
-        },
-        {
-            "path": "mp/color-demo/color-demo",
-            "style": {
-                "navigationStyle": "custom",
-                "disableScroll": true,
-                "mp-alipay": {
-                    "transparentTitle": "always",
-                    "titlePenetrate": "YES",
-                    "allowsBounceVertical": "NO",
-                    "navigationBarTitleText": ""
-                }
-            }
-        },
-        {
-            "path": "mp/barcode-demo/barcode-demo",
-            "style": {
-                "navigationStyle": "custom",
-                "disableScroll": true,
-                "mp-alipay": {
-                    "transparentTitle": "always",
-                    "titlePenetrate": "YES",
-                    "allowsBounceVertical": "NO",
-                    "navigationBarTitleText": ""
-                }
-            }
-        },
-        {
-            "path": "mp/qrcode-demo/qrcode-demo",
-            "style": {
-                "navigationStyle": "custom",
-                "disableScroll": true,
-                "mp-alipay": {
-                    "transparentTitle": "always",
-                    "titlePenetrate": "YES",
-                    "allowsBounceVertical": "NO",
-                    "navigationBarTitleText": ""
-                }
-            }
-        }
-    ],
-    "globalStyle": {
-        "navigationBarTextStyle": "black",
-        "navigationBarTitleText": "",
-        "navigationBarBackgroundColor": "#F8F8F8",
-        "backgroundColor": "#F8F8F8"
-    },
-    "uniIdRouter": {},
-    // #ifdef MP-WEIXIN
-    "tabBar": {
-        "color": "#000",
-        "selectedColor": "#0090FF",
-        "list": [{
-                "iconPath": "static/tabbars/home.png",
-                "selectedIconPath": "static/tabbars/home_fill.png",
-                "pagePath": "mp/index/index",
-                "text": "首页"
-            },
-            {
-                "iconPath": "static/tabbars/people.png",
-                "selectedIconPath": "static/tabbars/people_fill.png",
-                "pagePath": "pages/user/user",
-                "text": "我的"
-            }
-        ]
-    },
-    // #endif
-    "easycom": {
-        "autoscan": true,
-        "custom": {
-            "ste-(.*)": "@/uni_modules/stellar-ui/components/ste-$1/ste-$1.vue"
-        }
-    }
+		{
+			"path": "mp/icon-demo/icon-demo",
+			"style": {
+				"navigationStyle": "custom",
+				"disableScroll": true,
+				"mp-alipay": {
+					"transparentTitle": "always",
+					"titlePenetrate": "YES",
+					"allowsBounceVertical": "NO",
+					"navigationBarTitleText": ""
+				}
+			}
+		},
+		{
+			"path": "mp/icon-demo/icon-vertical-align",
+			"style": {
+				"navigationStyle": "custom",
+				"disableScroll": true,
+				"mp-alipay": {
+					"transparentTitle": "always",
+					"titlePenetrate": "YES",
+					"allowsBounceVertical": "NO",
+					"navigationBarTitleText": ""
+				}
+			}
+		},
+		{
+			"path": "mp/button-demo/button-demo",
+			"style": {
+				"navigationStyle": "custom",
+				"disableScroll": true,
+				"mp-alipay": {
+					"transparentTitle": "always",
+					"titlePenetrate": "YES",
+					"allowsBounceVertical": "NO",
+					"navigationBarTitleText": ""
+				}
+			}
+		},
+		{
+			"path": "mp/search-demo/search-demo",
+			"style": {
+				"navigationStyle": "custom",
+				"disableScroll": true,
+				"mp-alipay": {
+					"transparentTitle": "always",
+					"titlePenetrate": "YES",
+					"allowsBounceVertical": "NO",
+					"navigationBarTitleText": ""
+				}
+			}
+		},
+		{
+			"path": "mp/tabs-demo/tabs-demo",
+			"style": {
+				"navigationStyle": "custom",
+				"disableScroll": true,
+				"mp-alipay": {
+					"transparentTitle": "always",
+					"titlePenetrate": "YES",
+					"allowsBounceVertical": "NO",
+					"navigationBarTitleText": ""
+				}
+			}
+		},
+		{
+			"path": "mp/rich-text-demo/rich-text-demo",
+			"style": {
+				"navigationStyle": "custom",
+				"mp-alipay": {
+					"transparentTitle": "always",
+					"titlePenetrate": "YES",
+					"allowsBounceVertical": "NO",
+					"navigationBarTitleText": ""
+				}
+			}
+		},
+		{
+			"path": "mp/image-demo/image-demo",
+			"style": {
+				"navigationStyle": "custom",
+				"disableScroll": true,
+				"mp-alipay": {
+					"transparentTitle": "always",
+					"titlePenetrate": "YES",
+					"allowsBounceVertical": "NO",
+					"navigationBarTitleText": ""
+				}
+			}
+		},
+		{
+			"path": "mp/price-demo/price-demo",
+			"style": {
+				"navigationStyle": "custom",
+				"disableScroll": true,
+				"mp-alipay": {
+					"transparentTitle": "always",
+					"titlePenetrate": "YES",
+					"allowsBounceVertical": "NO",
+					"navigationBarTitleText": ""
+				}
+			}
+		},
+		{
+			"path": "mp/badge-demo/badge-demo",
+			"style": {
+				"navigationStyle": "custom",
+				"disableScroll": true,
+				"mp-alipay": {
+					"transparentTitle": "always",
+					"titlePenetrate": "YES",
+					"allowsBounceVertical": "NO",
+					"navigationBarTitleText": ""
+				}
+			}
+		},
+		{
+			"path": "mp/progress-demo/progress-demo",
+			"style": {
+				"navigationStyle": "custom",
+				"disableScroll": true,
+				"mp-alipay": {
+					"transparentTitle": "always",
+					"titlePenetrate": "YES",
+					"allowsBounceVertical": "NO",
+					"navigationBarTitleText": ""
+				}
+			}
+		},
+		{
+			"path": "mp/rate-demo/rate-demo",
+			"style": {
+				"navigationStyle": "custom",
+				"disableScroll": true,
+				"mp-alipay": {
+					"transparentTitle": "always",
+					"titlePenetrate": "YES",
+					"allowsBounceVertical": "NO",
+					"navigationBarTitleText": ""
+				}
+			}
+		},
+		{
+			"path": "mp/text-demo/text-demo",
+			"style": {
+				"navigationStyle": "custom",
+				"disableScroll": true,
+				"mp-alipay": {
+					"transparentTitle": "always",
+					"titlePenetrate": "YES",
+					"allowsBounceVertical": "NO",
+					"navigationBarTitleText": ""
+				}
+			}
+		},
+		{
+			"path": "mp/input-demo/input-demo",
+			"style": {
+				"navigationStyle": "custom",
+				"disableScroll": true,
+				"mp-alipay": {
+					"transparentTitle": "always",
+					"titlePenetrate": "YES",
+					"allowsBounceVertical": "NO",
+					"navigationBarTitleText": ""
+				}
+			}
+		},
+		{
+			"path": "mp/checkbox-demo/checkbox-demo",
+			"style": {
+				"navigationStyle": "custom",
+				"disableScroll": true,
+				"mp-alipay": {
+					"transparentTitle": "always",
+					"titlePenetrate": "YES",
+					"allowsBounceVertical": "NO",
+					"navigationBarTitleText": ""
+				}
+			}
+		},
+		{
+			"path": "mp/touch-swipe-demo/touch-swipe-demo",
+			"style": {
+				"navigationStyle": "custom",
+				"disableScroll": true,
+				"mp-alipay": {
+					"transparentTitle": "always",
+					"titlePenetrate": "YES",
+					"allowsBounceVertical": "NO",
+					"navigationBarTitleText": ""
+				}
+			}
+		},
+		{
+			"path": "mp/scroll-to-demo/scroll-to-demo",
+			"style": {
+				"navigationStyle": "custom",
+				"disableScroll": true,
+				"mp-alipay": {
+					"transparentTitle": "always",
+					"titlePenetrate": "YES",
+					"allowsBounceVertical": "NO",
+					"navigationBarTitleText": ""
+				}
+			}
+		},
+		{
+			"path": "mp/test-demo/test-demo",
+			"style": {
+				"navigationStyle": "custom",
+				"disableScroll": true,
+				"mp-alipay": {
+					"transparentTitle": "always",
+					"titlePenetrate": "YES",
+					"allowsBounceVertical": "NO",
+					"navigationBarTitleText": ""
+				}
+			}
+		},
+		{
+			"path": "mp/radio-demo/radio-demo",
+			"style": {
+				"navigationStyle": "custom",
+				"disableScroll": true,
+				"mp-alipay": {
+					"transparentTitle": "always",
+					"titlePenetrate": "YES",
+					"allowsBounceVertical": "NO",
+					"navigationBarTitleText": ""
+				}
+			}
+		},
+		{
+			"path": "mp/upload-demo/upload-demo",
+			"style": {
+				"navigationStyle": "custom",
+				"disableScroll": true,
+				"mp-alipay": {
+					"transparentTitle": "always",
+					"titlePenetrate": "YES",
+					"allowsBounceVertical": "NO",
+					"navigationBarTitleText": ""
+				}
+			}
+		},
+		{
+			"path": "mp/swiper-demo/swiper-demo",
+			"style": {
+				"navigationStyle": "custom",
+				"disableScroll": true,
+				"mp-alipay": {
+					"transparentTitle": "always",
+					"titlePenetrate": "YES",
+					"allowsBounceVertical": "NO",
+					"navigationBarTitleText": ""
+				}
+			}
+		},
+		{
+			"path": "mp/media-preview-demo/media-preview-demo",
+			"style": {
+				"navigationStyle": "custom",
+				"disableScroll": true,
+				"mp-alipay": {
+					"transparentTitle": "always",
+					"titlePenetrate": "YES",
+					"allowsBounceVertical": "NO",
+					"navigationBarTitleText": ""
+				}
+			}
+		},
+		{
+			"path": "mp/switch-demo/switch-demo",
+			"style": {
+				"navigationStyle": "custom",
+				"disableScroll": true,
+				"mp-alipay": {
+					"transparentTitle": "always",
+					"titlePenetrate": "YES",
+					"allowsBounceVertical": "NO",
+					"navigationBarTitleText": ""
+				}
+			}
+		},
+		{
+			"path": "mp/stepper-demo/stepper-demo",
+			"style": {
+				"navigationStyle": "custom",
+				"disableScroll": true,
+				"mp-alipay": {
+					"transparentTitle": "always",
+					"titlePenetrate": "YES",
+					"allowsBounceVertical": "NO",
+					"navigationBarTitleText": ""
+				}
+			}
+		},
+		{
+			"path": "mp/slider-demo/slider-demo",
+			"style": {
+				"navigationStyle": "custom",
+				"disableScroll": true,
+				"mp-alipay": {
+					"transparentTitle": "always",
+					"titlePenetrate": "YES",
+					"allowsBounceVertical": "NO",
+					"navigationBarTitleText": ""
+				}
+			}
+		},
+		{
+			"path": "mp/popup-demo/popup-demo",
+			"style": {
+				"navigationStyle": "custom",
+				"disableScroll": true,
+				"mp-alipay": {
+					"transparentTitle": "always",
+					"titlePenetrate": "YES",
+					"allowsBounceVertical": "NO",
+					"navigationBarTitleText": ""
+				}
+			}
+		},
+		{
+			"path": "mp/notice-bar-demo/notice-bar-demo",
+			"style": {
+				"navigationStyle": "custom",
+				"disableScroll": true,
+				"mp-alipay": {
+					"transparentTitle": "always",
+					"titlePenetrate": "YES",
+					"allowsBounceVertical": "NO",
+					"navigationBarTitleText": ""
+				}
+			}
+		},
+		{
+			"path": "mp/calendar-demo/calendar-demo",
+			"style": {
+				"navigationStyle": "custom",
+				"disableScroll": true,
+				"mp-alipay": {
+					"transparentTitle": "always",
+					"titlePenetrate": "YES",
+					"allowsBounceVertical": "NO",
+					"navigationBarTitleText": ""
+				}
+			}
+		},
+		{
+			"path": "mp/dropdown-menu-demo/dropdown-menu-demo",
+			"style": {
+				"navigationStyle": "custom",
+				"disableScroll": true,
+				"mp-alipay": {
+					"transparentTitle": "always",
+					"titlePenetrate": "YES",
+					"allowsBounceVertical": "NO",
+					"navigationBarTitleText": ""
+				}
+			}
+		},
+		{
+			"path": "mp/loading-demo/loading-demo",
+			"style": {
+				"navigationStyle": "custom",
+				"disableScroll": true,
+				"mp-alipay": {
+					"transparentTitle": "always",
+					"titlePenetrate": "YES",
+					"allowsBounceVertical": "NO",
+					"navigationBarTitleText": ""
+				}
+			}
+		},
+		{
+			"path": "mp/sticky-demo/sticky-demo",
+			"style": {
+				"navigationStyle": "custom",
+				"disableScroll": true,
+				"mp-alipay": {
+					"transparentTitle": "always",
+					"titlePenetrate": "YES",
+					"allowsBounceVertical": "NO",
+					"navigationBarTitleText": ""
+				}
+			}
+		},
+		{
+			"path": "mp/index-list-demo/index-list-demo",
+			"style": {
+				"navigationStyle": "custom",
+				"disableScroll": true,
+				"mp-alipay": {
+					"transparentTitle": "always",
+					"titlePenetrate": "YES",
+					"allowsBounceVertical": "NO",
+					"navigationBarTitleText": ""
+				}
+			}
+		},
+		{
+			"path": "mp/date-picker-demo/date-picker-demo",
+			"style": {
+				"navigationStyle": "custom",
+				"disableScroll": true,
+				"mp-alipay": {
+					"transparentTitle": "always",
+					"titlePenetrate": "YES",
+					"allowsBounceVertical": "NO",
+					"navigationBarTitleText": ""
+				}
+			}
+		},
+		{
+			"path": "mp/swipe-action-demo/swipe-action-demo",
+			"style": {
+				"navigationStyle": "custom",
+				"disableScroll": true,
+				"mp-alipay": {
+					"transparentTitle": "always",
+					"titlePenetrate": "YES",
+					"allowsBounceVertical": "NO",
+					"navigationBarTitleText": ""
+				}
+			}
+		},
+		{
+			"path": "mp/read-more-demo/read-more-demo",
+			"style": {
+				"navigationStyle": "custom",
+				"disableScroll": true,
+				"mp-alipay": {
+					"transparentTitle": "always",
+					"titlePenetrate": "YES",
+					"allowsBounceVertical": "NO",
+					"navigationBarTitleText": ""
+				}
+			}
+		},
+		{
+			"path": "mp/number-keyboard-demo/number-keyboard-demo",
+			"style": {
+				"navigationStyle": "custom",
+				"disableScroll": true,
+				"mp-alipay": {
+					"transparentTitle": "always",
+					"titlePenetrate": "YES",
+					"allowsBounceVertical": "NO",
+					"navigationBarTitleText": ""
+				}
+			}
+		},
+		{
+			"path": "mp/code-input-demo/code-input-demo",
+			"style": {
+				"navigationStyle": "custom",
+				"disableScroll": true,
+				"mp-alipay": {
+					"transparentTitle": "always",
+					"titlePenetrate": "YES",
+					"allowsBounceVertical": "NO",
+					"navigationBarTitleText": ""
+				}
+			}
+		},
+		{
+			"path": "mp/toast-demo/toast-demo",
+			"style": {
+				"navigationStyle": "custom",
+				"disableScroll": true,
+				"mp-alipay": {
+					"transparentTitle": "always",
+					"titlePenetrate": "YES",
+					"allowsBounceVertical": "NO",
+					"navigationBarTitleText": ""
+				}
+			}
+		},
+		{
+			"path": "mp/tree-demo/tree-demo",
+			"style": {
+				"navigationStyle": "custom",
+				"disableScroll": true,
+				"mp-alipay": {
+					"transparentTitle": "always",
+					"titlePenetrate": "YES",
+					"allowsBounceVertical": "NO",
+					"navigationBarTitleText": ""
+				}
+			}
+		},
+		{
+			"path": "mp/tour-demo/tour-demo",
+			"style": {
+				"navigationStyle": "custom",
+				"disableScroll": true,
+				"mp-alipay": {
+					"transparentTitle": "always",
+					"titlePenetrate": "YES",
+					"allowsBounceVertical": "NO",
+					"navigationBarTitleText": ""
+				}
+			}
+		},
+		{
+			"path": "mp/select-demo/select-demo",
+			"style": {
+				"navigationStyle": "custom",
+				"disableScroll": true,
+				"mp-alipay": {
+					"transparentTitle": "always",
+					"titlePenetrate": "YES",
+					"allowsBounceVertical": "NO",
+					"navigationBarTitleText": ""
+				}
+			}
+		},
+		{
+			"path": "mp/signature-demo/signature-demo",
+			"style": {
+				"navigationStyle": "custom",
+				"disableScroll": true,
+				"mp-alipay": {
+					"transparentTitle": "always",
+					"titlePenetrate": "YES",
+					"allowsBounceVertical": "NO",
+					"navigationBarTitleText": ""
+				}
+			}
+		},
+		{
+			"path": "mp/drag-demo/drag-demo",
+			"style": {
+				"navigationStyle": "custom",
+				"disableScroll": true,
+				"mp-alipay": {
+					"transparentTitle": "always",
+					"titlePenetrate": "YES",
+					"allowsBounceVertical": "NO",
+					"navigationBarTitleText": ""
+				}
+			}
+		},
+		{
+			"path": "mp/steps-demo/steps-demo",
+			"style": {
+				"navigationStyle": "custom",
+				"disableScroll": true,
+				"mp-alipay": {
+					"transparentTitle": "always",
+					"titlePenetrate": "YES",
+					"allowsBounceVertical": "NO",
+					"navigationBarTitleText": ""
+				}
+			}
+		},
+		{
+			"path": "mp/video-demo/video-demo",
+			"style": {
+				"navigationStyle": "custom",
+				"disableScroll": true,
+				"mp-alipay": {
+					"transparentTitle": "always",
+					"titlePenetrate": "YES",
+					"allowsBounceVertical": "NO",
+					"navigationBarTitleText": ""
+				}
+			}
+		},
+		{
+			"path": "mp/table-demo/table-demo",
+			"style": {
+				"navigationStyle": "custom",
+				"disableScroll": true,
+				"mp-alipay": {
+					"transparentTitle": "always",
+					"titlePenetrate": "YES",
+					"allowsBounceVertical": "NO",
+					"navigationBarTitleText": ""
+				}
+			}
+		},
+		{
+			"path": "mp/message-box-demo/message-box-demo",
+			"style": {
+				"navigationStyle": "custom",
+				"disableScroll": true,
+				"mp-alipay": {
+					"transparentTitle": "always",
+					"titlePenetrate": "YES",
+					"allowsBounceVertical": "NO",
+					"navigationBarTitleText": ""
+				}
+			}
+		},
+		{
+			"path": "mp/animate-demo/animate-demo",
+			"style": {
+				"navigationStyle": "custom",
+				"disableScroll": true,
+				"mp-alipay": {
+					"transparentTitle": "always",
+					"titlePenetrate": "YES",
+					"allowsBounceVertical": "NO",
+					"navigationBarTitleText": ""
+				}
+			}
+		},
+		{
+			"path": "mp/color-demo/color-demo",
+			"style": {
+				"navigationStyle": "custom",
+				"disableScroll": true,
+				"mp-alipay": {
+					"transparentTitle": "always",
+					"titlePenetrate": "YES",
+					"allowsBounceVertical": "NO",
+					"navigationBarTitleText": ""
+				}
+			}
+		},
+		{
+			"path": "mp/barcode-demo/barcode-demo",
+			"style": {
+				"navigationStyle": "custom",
+				"disableScroll": true,
+				"mp-alipay": {
+					"transparentTitle": "always",
+					"titlePenetrate": "YES",
+					"allowsBounceVertical": "NO",
+					"navigationBarTitleText": ""
+				}
+			}
+		},
+		{
+			"path": "mp/qrcode-demo/qrcode-demo",
+			"style": {
+				"navigationStyle": "custom",
+				"disableScroll": true,
+				"mp-alipay": {
+					"transparentTitle": "always",
+					"titlePenetrate": "YES",
+					"allowsBounceVertical": "NO",
+					"navigationBarTitleText": ""
+				}
+			}
+		},
+		{
+			"path": "mp/navbar-demo/navbar-demo",
+			"style": {
+				"navigationStyle": "custom",
+				"disableScroll": true,
+				"mp-alipay": {
+					"transparentTitle": "always",
+					"titlePenetrate": "YES",
+					"allowsBounceVertical": "NO",
+					"navigationBarTitleText": ""
+				}
+			}
+		}
+	],
+	"globalStyle": {
+		"navigationBarTextStyle": "black",
+		"navigationBarTitleText": "",
+		"navigationBarBackgroundColor": "#F8F8F8",
+		"backgroundColor": "#F8F8F8"
+	},
+	"uniIdRouter": {},
+	// #ifdef MP-WEIXIN
+	"tabBar": {
+		"color": "#000",
+		"selectedColor": "#0090FF",
+		"list": [
+			{
+				"iconPath": "static/tabbars/home.png",
+				"selectedIconPath": "static/tabbars/home_fill.png",
+				"pagePath": "mp/index/index",
+				"text": "首页"
+			},
+			{
+				"iconPath": "static/tabbars/people.png",
+				"selectedIconPath": "static/tabbars/people_fill.png",
+				"pagePath": "pages/user/user",
+				"text": "我的"
+			}
+		]
+	},
+	// #endif
+	"easycom": {
+		"autoscan": true,
+		"custom": {
+			"ste-(.*)": "@/uni_modules/stellar-ui/components/ste-$1/ste-$1.vue"
+		}
+	}
 }

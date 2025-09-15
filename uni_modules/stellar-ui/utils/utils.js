@@ -4,6 +4,8 @@ import dayjs from './dayjs.min.js';
 let throLast = 0; // 节流方法用变量
 let throTimer = null; // 节流方法用的变量
 let debounceTimer = null;
+
+let windowWidth = null;
 let utils = {
 	Color,
 	System,
@@ -29,6 +31,14 @@ let utils = {
 			px = (format * System.getWindowWidth()) / 750;
 		}
 		return restype === 'num' ? px : `${px}px`;
+	},
+	/**px转rpx*/
+	px2rpx(px) {
+		if (windowWidth == null) {
+			windowWidth = System.getWindowWidth();
+		}
+		let rpx = (px * 750) / windowWidth;
+		return rpx;
 	},
 	/**
 	 * 背景值转样式
