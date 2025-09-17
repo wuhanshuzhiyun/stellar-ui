@@ -98,11 +98,12 @@ export default {
 ### API
 #### Steps组件属性(Props)
 
-| 参数			| 说明		| 类型		| 默认值		| 可选值							| 支持版本	|
-| ---			| ---		| ---		| ---		| ---							| ---		|
-| `active`		| 步骤进度	| `Number`	| `0`		| -								| -			|
-| `direction`	| 步骤条方向	| `String`	| `row`		| `row`：横向 <br/>`column`：竖向	| -			|
-| `dot`			| 点状步骤条	| `Boolean`	| `false`	| -								| -			|
+| 参数				| 说明				| 类型				| 默认值		| 可选值													| 支持版本	|
+| ---					| ---				| ---				| ---			| ---														| ---			|
+| `active`		| 步骤进度		| `Number`	| `0`			| -															| -				|
+| `direction`	| 步骤条方向	| `String`	| `row`		| `row`：横向 <br/>`column`：竖向	| -				|
+| `dot`				| 点状步骤条	| `Boolean`	| `false`	| -															| -				|
+| `reverse`		| 方向反转		| `Boolean`	| `false`	| -															| -				|
 
 
 #### Steps Events
