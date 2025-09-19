@@ -1,5 +1,5 @@
 <template>
-	<view class="ste-steps-root" :class="[`ste-steps-${direction}`]">
+	<view class="ste-steps-root" :class="[`ste-steps-${direction}`, reverse ? 'reverse' : '']">
 		<slot></slot>
 	</view>
 </template>
@@ -38,6 +38,10 @@ export default {
 			type: [Boolean, null],
 			default: false,
 		},
+		reverse: {
+			type: Boolean,
+			default: false,
+		},
 	},
 	provide() {
 		return {
@@ -56,10 +60,16 @@ export default {
 .ste-steps-column {
 	flex-flow: column;
 	height: 100%;
+	&.reverse {
+		flex-direction: column-reverse;
+	}
 }
 
 .ste-steps-row {
 	flex-direction: row;
 	flex: 1;
+	&.reverse {
+		flex-direction: row-reverse;
+	}
 }
 </style>

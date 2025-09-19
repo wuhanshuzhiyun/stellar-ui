@@ -1,6 +1,11 @@
 <template>
-	<view class="ste-step" data-test="step" :class="[`ste-step-${cmpDirection}`]" :style="[cmpStyle]">
-		<view class="ste-step-head" :class="cmpDot ? 'head-is-dot' : ''">
+	<view
+		class="ste-step"
+		data-test="step"
+		:class="[`ste-step-${cmpDirection}`, cmpReverse ? 'reverse' : '']"
+		:style="[cmpStyle]"
+	>
+		<view class="ste-step-head" :class="{ 'head-is-dot': cmpDot }">
 			<view class="ste-step-line" v-if="cmpIndex < childrenLen"></view>
 			<view
 				class="ste-step-icon"
@@ -91,6 +96,9 @@ export default {
 		cmpDot() {
 			return this.steps.dot;
 		},
+		cmpReverse() {
+			return this.steps.reverse;
+		},
 		cmpIndex() {
 			this.$nextTick(() => {
 				// #ifdef H5
@@ -159,11 +167,21 @@ export default {
 <style lang="scss" scoped>
 .ste-step-row {
 	display: block;
+	&.reverse {
+		.ste-step-line {
+			left: -50% !important;
+			right: 50% !important;
+		}
+	}
 }
 
 .ste-step-column {
 	display: flex;
-
+	&.reverse {
+		.ste-step-line {
+			top: -100% !important;
+		}
+	}
 	.ste-step-line {
 		height: calc(4rpx + 100%) !important;
 		width: 2rpx !important;
