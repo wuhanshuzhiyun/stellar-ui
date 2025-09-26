@@ -1,5 +1,7 @@
 <template>
+	<!-- 轮播图根容器 -->
 	<view class="ste-swiper-root" :style="[cmpRootStyle, { opacity: initializing ? 0 : 1 }]">
+		<!-- 轮播内容区域，监听鼠标和触摸事件 -->
 		<view
 			class="swipe-content"
 			@mousedown="onTouchstart"
@@ -11,10 +13,12 @@
 			@touchend="onTouchend"
 			@touchcancel="onTouchend"
 		>
+			<!-- 轮播项容器，通过transform实现滑动效果 -->
 			<view class="swipe-content-view" :style="[cmpBoxStyle, cmpBoxTransform]">
 				<slot></slot>
 			</view>
 		</view>
+		<!-- 轮播指示点容器 -->
 		<view class="ste-swiper-dots" v-if="indicatorDots">
 			<view
 				class="swiper-dots-item"
@@ -76,58 +80,72 @@ export default {
 			type: [String, null],
 			default: () => 'horizontal',
 		},
+		// 是否禁用轮播
 		disabled: {
 			type: [Boolean, null],
 			default: () => false,
 		},
+		// 轮播图宽度
 		width: {
 			type: [Number, String, null],
 			default: () => null,
 		},
+		// 轮播图高度
 		height: {
 			type: [Number, String, null],
 			default: () => null,
 		},
+		// 切换动画持续时间（毫秒）
 		duration: {
 			type: [Number, null],
 			default: () => 300,
 		},
+		// 滑动阈值，控制滑动切换的灵敏度（0-1之间的小数）
 		swipeThreshold: {
 			type: [Number, null],
 			default: () => 0.35,
 		},
+		// 是否显示面板指示点
 		indicatorDots: {
 			type: [Boolean, null],
 			default: () => false,
 		},
+		// 指示点颜色
 		indicatorColor: {
 			type: [String, null],
 			default: () => '#fff',
 		},
+		// 当前选中指示点颜色
 		indicatorActiveColor: {
 			type: [String, null],
 			default: () => '#fff',
 		},
+		// 是否自动播放
 		autoplay: {
 			type: [Boolean, null],
 			default: () => false,
 		},
+		// 自动切换时间间隔（毫秒）
 		interval: {
 			type: [Number, null],
 			default: () => 3000,
 		},
+		// 是否采用衔接滑动（循环模式）
 		circular: {
 			type: [Boolean, null],
 			default: () => false,
 		},
+		// 前边距，可用于露出前一项的一小部分
 		previousMargin: {
 			type: [Number, String, null],
 			default: () => 0,
 		},
+		// 后边距，可用于露出后一项的一小部分
 		nextMargin: {
 			type: [Number, String, null],
 			default: () => 0,
 		},
+		// 是否启用突出显示模式（当前项正常大小，非当前项缩小）
 		highlightActive: {
 			type: [Boolean, null],
 			default: () => false,
@@ -135,31 +153,36 @@ export default {
 	},
 	data() {
 		return {
-			initializing: true,
-			moveing: false,
-			reseting: false,
-			dataIndex: 0,
-			touch: new TouchEvent(),
-			boxWidth: null,
-			boxHeight: null,
-			translateX: 0,
-			translateY: 0,
+			initializing: true, // 组件初始化状态标识
+			moveing: false, // 是否正在滑动中
+			reseting: false, // 是否正在重置边界位置
+			dataIndex: 0, // 当前显示项的索引
+			touch: new TouchEvent(), // 触摸事件处理对象
+			boxWidth: null, // 轮播容器宽度
+			boxHeight: null, // 轮播容器高度
+			translateX: 0, // X轴偏移量
+			translateY: 0, // Y轴偏移量
 			childrenTimeout: null, // 子元素更新定时器
 			durationTimeout: null, // 滑动动画时长定时器
 			autoplayTimeout: null, // 自动切换定时器
 			boundaryTimeout: null, // 边界检测定时器
-			source: 'autoplay',
+			source: 'autoplay', // 切换来源（autoplay:自动播放, touch:手动滑动）
 		};
 	},
 	computed: {
+		// 计算实际动画时长
 		cmpDuration() {
+			// 如果自动播放且duration大于等于interval，则使用interval作为动画时长
 			return this.autoplay && this.duration >= this.interval ? this.interval : this.duration;
 		},
+		// 根节点样式计算
 		cmpRootStyle() {
+			// 根据方向设置默认宽高
 			let width = this.direction === 'horizontal' ? '100%' : 'auto';
 			let height = this.direction === 'vertical' ? '100%' : 'auto';
-			if (this.width) width = utils.formatPx(this.width);
 
+			// 如果设置了width/height属性，则使用设置的值
+			if (this.width) width = utils.formatPx(this.width);
 			if (this.height) height = utils.formatPx(this.height);
 
 			return {
@@ -173,53 +196,70 @@ export default {
 						: `${utils.formatPx(this.previousMargin)} 0 ${utils.formatPx(this.nextMargin)} 0`,
 			};
 		},
+		// 轮播容器样式计算
 		cmpBoxStyle() {
 			let style = {};
+			// 根据方向设置网格布局
 			if (this.direction === 'horizontal') {
+				// 水平方向：每项占100%宽度
 				style.gridTemplateColumns = `repeat(${this.children.length || 'auto-fill'}, 100%)`;
 			} else if (this.direction === 'vertical') {
+				// 垂直方向：每项占100%高度
 				style.gridTemplateRows = `repeat(${this.children.length || 'auto-fill'}, 100%)`;
 			}
 			return style;
 		},
+		// 轮播容器变换样式计算
 		cmpBoxTransform() {
 			let transform = '';
+			// 根据方向设置变换方式
 			if (this.direction === 'horizontal') {
 				transform = `translateX(${this.translateX}px)`;
 			} else if (this.direction === 'vertical') {
 				transform = `translateY(${this.translateY}px)`;
 			}
+
+			// 设置过渡动画时长
 			const duration = this.initializing || this.moveing || this.reseting ? 'inherit' : `${this.cmpDuration}ms`;
 			return { transform, transitionDuration: duration };
 		},
+		// 第一个轮播项组件引用
 		cmpStartComponent() {
 			return this.children[0];
 		},
+		// 最后一个轮播项组件引用
 		cmpEndComponent() {
 			return this.children[this.children.length - 1];
 		},
 	},
 	watch: {
+		// 监听current属性变化
 		current: {
 			handler(v) {
+				// 如果没有子元素，直接设置dataIndex
 				if (!this.children.length) {
 					this.dataIndex = v;
 					return;
 				}
+				// 限制index范围在合法区间内
 				this.dataIndex = v < 0 ? 0 : v >= this.children.length ? this.children.length - 1 : v;
 			},
 			immediate: true,
 		},
+		// 监听dataIndex变化
 		dataIndex: {
 			handler() {
+				// 如果没有子元素则返回
 				if (!this.children.length) return;
 				this.$nextTick(async () => {
+					// 获取容器尺寸并设置变换
 					await this.getBoxSize();
 					this.setTransform();
 				});
 			},
 			immediate: true,
 		},
+		// 监听子元素变化
 		children: {
 			handler(v) {
 				if (!v || !v.length) return;
@@ -231,135 +271,213 @@ export default {
 		},
 	},
 	mounted() {
+		// 组件挂载后初始化
 		this.init();
 	},
 	beforeDestroy() {
-		// 确保清理所有定时器
+		// 组件销毁前清理所有定时器
 		this.clearAllTimeouts();
 	},
 	methods: {
+		// 初始化方法
 		init() {
+			// 清理所有定时器
 			this.clearAllTimeouts();
+			// 设置子元素更新定时器
 			this.childrenTimeout = setTimeout(async () => {
+				// 获取容器尺寸
 				await this.getBoxSize();
+				// 设置变换
 				this.setTransform();
+				// 重置边界
 				this.resetBoundary();
+				// 设置自动播放
 				this.setAutoplay();
+				// 清理子元素定时器
 				clearTimeout(this.childrenTimeout);
+				// 设置初始化完成定时器
 				this.childrenTimeout = setTimeout(() => {
 					this.initializing = false;
 				}, this.cmpDuration);
 			}, 25);
 		},
+		// 判断是否可以滑动
 		isMover(moveX = 0, moveY = 0) {
+			// 如果子元素少于2个则无法滑动
 			if (this.children.length < 2) return;
+			// 如果是循环模式可以直接滑动
 			if (this.circular) return true;
+
+			// 水平方向判断边界
 			if (
 				this.direction === 'horizontal' &&
 				((this.dataIndex === 0 && moveX > 0) || (this.dataIndex === this.children.length - 1 && moveX < 0))
 			) {
 				return false;
 			}
+
+			// 垂直方向判断边界
 			if (
 				this.direction === 'vertical' &&
 				((this.dataIndex === 0 && moveY > 0) || (this.dataIndex === this.children.length - 1 && moveY < 0))
 			) {
 				return false;
 			}
+
 			return true;
 		},
+		// 获取轮播容器尺寸
 		async getBoxSize() {
+			// 如果已经获取过尺寸则直接返回
 			if (this.boxWidth > 0 && this.boxHeight > 0) return;
+			// 查询轮播容器元素
 			const boxEl = await utils.querySelector('.swipe-content-view', this);
+			// 设置宽高
 			this.boxWidth = boxEl.width;
 			this.boxHeight = boxEl.height;
 		},
+		// 设置变换
 		setTransform(moveX = 0, moveY = 0) {
+			// 如果子元素少于2个则无需变换
 			if (this.children?.length < 2) return;
+			// 判断是否可以移动
 			const bool = this.isMover(moveX, moveY);
 			if (!bool) return;
+
+			// 水平方向处理
 			if (this.direction === 'horizontal') {
+				// 如果垂直移动距离大于水平移动距离则返回
 				if (Math.abs(moveX) < Math.abs(moveY)) return;
+				// 计算X轴偏移量
 				const translateX = -this.dataIndex * this.boxWidth + moveX;
+				// 如果移动距离过小则返回
 				if (moveX !== 0 && Math.abs(this.translateX - translateX) < 3) return;
+				// 更新X轴偏移量
 				this.translateX = translateX;
+				// 设置边界
 				this.setBoundary(moveX);
 
 				// 滑动时实时更新缩放效果（只支持水平方向）
 				if (this.highlightActive) {
 					this.updateLinearScale(moveX);
 				}
-			} else if (this.direction === 'vertical') {
+			}
+			// 垂直方向处理
+			else if (this.direction === 'vertical') {
+				// 如果水平移动距离大于垂直移动距离则返回
 				if (Math.abs(moveX) > Math.abs(moveY)) return;
+				// 计算Y轴偏移量
 				const translateY = -this.dataIndex * this.boxHeight + moveY;
+				// 如果移动距离过小则返回
 				if (moveY !== 0 && Math.abs(this.translateY - translateY) < 3) return;
+				// 更新Y轴偏移量
 				this.translateY = translateY;
+				// 设置边界
 				this.setBoundary(0, moveY);
 				// 纵向滑动不支持突出显示模式
 			}
 		},
+		// 触摸开始事件处理
 		async onTouchstart(e) {
+			// 如果禁用则返回
 			if (this.disabled) return;
+			// 如果子元素少于2个则返回
 			if (this.children?.length < 2) return;
+			// 设置滑动状态
 			this.moveing = true;
 
+			// 获取容器尺寸
 			await this.getBoxSize();
+			// 清理所有定时器
 			this.clearAllTimeouts();
+			// 重置边界
 			this.resetBoundary();
+			// 触摸开始处理
 			this.touch.touchStart(e);
 		},
+		// 触摸移动事件处理
 		onTouchmove(e) {
+			// 如果禁用则返回
 			if (this.disabled) return;
+			// 如果子元素少于2个则返回
 			if (this.children?.length < 2) return;
+			// 触摸移动处理
 			const res = this.touch.touchMove(e);
 			if (!res) return;
+			// 设置滑动状态
 			this.moveing = true;
+			// 获取移动距离
 			let { moveX, moveY } = res;
+			// 设置变换
 			this.setTransform(moveX, moveY);
 		},
+		// 触摸结束事件处理
 		onTouchend(e) {
+			// 设置滑动状态为false
 			this.moveing = false;
+			// 设置动画时长定时器
 			clearTimeout(this.durationTimeout);
 			this.durationTimeout = setTimeout(() => {
+				// 设置自动播放
 				this.setAutoplay();
+				// 重置边界
 				this.resetBoundary();
 			}, this.cmpDuration);
 
+			// 如果禁用则返回
 			if (this.disabled) return;
+			// 获取移动距离
 			const { moveX, moveY } = this.touch.touchEnd(e);
+			// 水平方向无移动或垂直方向无移动则返回
 			if (this.direction === 'horizontal' && !moveX) return;
 			else if (this.direction === 'vertical' && !moveY) return;
+			// 判断是否可以移动
 			const bool = this.isMover(moveX, moveY);
 			if (!bool) return;
 
+			// 计算目标索引
 			let index = this.dataIndex;
+			// 水平方向根据移动距离和阈值判断是否切换
 			if (this.direction === 'horizontal' && Math.abs(moveX) > this.boxWidth * this.swipeThreshold) {
 				index = moveX > 0 ? index - 1 : index + 1;
-			} else if (this.direction === 'vertical' && Math.abs(moveY) > this.boxHeight * this.swipeThreshold) {
+			}
+			// 垂直方向根据移动距离和阈值判断是否切换
+			else if (this.direction === 'vertical' && Math.abs(moveY) > this.boxHeight * this.swipeThreshold) {
 				index = moveY > 0 ? index - 1 : index + 1;
 			}
 
+			// 如果索引未变则重置变换
 			if (this.dataIndex === index) {
 				this.setTransform();
 				return;
 			}
+
+			// 设置来源为触摸
 			this.source = 'touch';
+			// 更新索引
 			this.dataIndex = index;
-			if (index < 0 || index >= this.children.length) return;
-			this.$emit('change', index, this.source);
+			// 触发change事件
+			if (next >= 0 && next <= this.children.length - 1) {
+				this.$emit('change', next, this.source);
+			}
 		},
+		// 设置自动播放
 		setAutoplay() {
 			// 只有在启用自动播放且有多个子元素时才启动定时器
 			if (!this.autoplay || this.children?.length < 2) {
 				return;
 			}
+			// 清理自动播放定时器
 			clearInterval(this.autoplayTimeout);
+			// 设置自动播放定时器
 			this.autoplayTimeout = setInterval(() => {
 				// 再次检查条件，确保组件仍然需要自动播放
 				if (!this.autoplay || this.children?.length < 2) {
 					clearInterval(this.autoplayTimeout);
 					return;
 				}
+
+				// 计算下一个索引
 				let next = 0;
 				if (this.circular) {
 					// 循环模式下正确处理索引
@@ -371,85 +489,142 @@ export default {
 					// 回到开头
 					next = 0;
 				}
+
+				// 设置边界
 				this.setBoundary(-1, -1);
+				// 设置来源为自动播放
 				this.source = 'autoplay';
+				// 更新索引
 				this.dataIndex = next;
-				if (next >= 0 && next <= this.children.length - 1) this.$emit('change', next, this.source);
+				// 触发change事件
+				if (next >= 0 && next <= this.children.length - 1) {
+					this.$emit('change', next, this.source);
+				}
+
+				// 设置动画时长定时器
 				clearTimeout(this.durationTimeout);
 				this.durationTimeout = setTimeout(() => {
+					// 重置边界
 					this.resetBoundary();
+					// 如果启用了突出显示模式
 					if (this.highlightActive) {
 						clearTimeout(this.durationTimeout);
 						this.durationTimeout = setTimeout(() => {
+							// 更新线性缩放
 							this.updateLinearScale();
 						}, this.cmpDuration / 3);
 					}
 				}, this.cmpDuration - 50);
 			}, this.interval);
 		},
+		// 设置边界位置
 		setBoundary(moveX = 0, moveY = 0) {
+			// 如果不是循环模式则返回
 			if (!this.circular) return;
+			// 如果子元素少于2个则返回
 			if (this.children?.length < 2) return;
+
+			// 获取首尾组件引用
 			const startComponent = this.cmpStartComponent;
 			const endComponent = this.cmpEndComponent;
+			// 获取子元素数量、宽度和高度
 			const length = this.children.length;
 			const width = this.boxWidth;
 			const height = this.boxHeight;
+
+			// 如果索引小于等于0（第一个元素）
 			if (this.dataIndex <= 0) {
+				// 重置起始组件变换
 				startComponent.setTransform({});
+				// 如果是水平方向且向右滑动
 				if (this.direction === 'horizontal' && moveX > 0) {
+					// 设置末尾组件位置到最左侧
 					endComponent.setTransform({ x: -length * width });
-				} else if (this.direction === 'vertical' && moveY > 0) {
+				}
+				// 如果是垂直方向且向下滑动
+				else if (this.direction === 'vertical' && moveY > 0) {
+					// 设置末尾组件位置到最顶部
 					endComponent.setTransform({ y: -length * height });
 				}
-			} else if (this.dataIndex >= length - 1) {
+			}
+			// 如果索引大于等于长度减1（最后一个元素）
+			else if (this.dataIndex >= length - 1) {
+				// 重置末尾组件变换
 				endComponent.setTransform({});
+				// 如果是水平方向且向左滑动
 				if (this.direction === 'horizontal' && moveX < 0) {
+					// 设置起始组件位置到最右侧
 					startComponent.setTransform({ x: length * width });
-				} else if (this.direction === 'vertical' && moveY < 0) {
+				}
+				// 如果是垂直方向且向上滑动
+				else if (this.direction === 'vertical' && moveY < 0) {
+					// 设置起始组件位置到最底部
 					startComponent.setTransform({ y: length * height });
 				}
 			}
 		},
+		// 重置边界
 		resetBoundary() {
-			this.reseting = true;
+			// 清理边界定时器
 			clearTimeout(this.boundaryTimeout);
-			this.boundaryTimeout = setTimeout(() => {
-				let change = false;
-				if (this.dataIndex === -1) {
-					this.dataIndex = this.children.length - 1;
-					change = true;
-				} else if (this.dataIndex === this.children.length) {
-					this.dataIndex = 0;
-					change = true;
-				}
-				if (change) {
-					this.$emit('change', this.dataIndex, this.source);
-				}
+			// 判断是否需要重置边界
+			let change = false;
+			// 如果索引为-1（从第一个滑到最后一个）
+			if (this.dataIndex === -1) {
+				this.dataIndex = this.children.length - 1;
+				change = true;
+			}
+			// 如果索引超出范围（从最后一个滑到第一个）
+			else if (this.dataIndex === this.children.length) {
+				this.dataIndex = 0;
+				change = true;
+			}
 
-				const length = this.children.length;
-				this.children.forEach((component, index) => {
-					let x = 0,
-						y = 0;
-					if (this.circular) {
-						if (index === length - 1 && this.dataIndex === 0 && length > 2) {
-							x = this.direction === 'horizontal' ? -length * this.boxWidth : 0;
-							y = this.direction === 'vertical' ? -length * this.boxHeight : 0;
-						} else if (index === 0 && this.dataIndex === length - 1 && length > 2) {
-							x = this.direction === 'horizontal' ? length * this.boxWidth : 0;
-							y = this.direction === 'vertical' ? length * this.boxHeight : 0;
-						}
-					}
-					component?.setTransform({ x, y });
-				});
-				clearTimeout(this.boundaryTimeout);
+			// 边界重置完成
+			if (change) {
+				// 触发change事件
+				this.$emit('change', this.dataIndex, this.source);
+				// 边界重置后，需要重新设置子元素位置
+				this.reseting = true;
+				// 设置边界定时器
 				this.boundaryTimeout = setTimeout(() => {
-					this.reseting = false;
+					const length = this.children.length;
+					// 遍历所有子元素设置变换
+					this.children.forEach((component, index) => {
+						// 只处理第一个和最后一个元素
+						if (index === 0 && index === length - 1) {
+							let x = 0,
+								y = 0;
+							// 如果是循环模式
+							if (this.circular) {
+								// 处理最后一个元素且当前索引为0的情况
+								if (index === length - 1 && this.dataIndex === 0 && length > 2) {
+									x = this.direction === 'horizontal' ? -length * this.boxWidth : 0;
+									y = this.direction === 'vertical' ? -length * this.boxHeight : 0;
+								}
+								// 处理第一个元素且当前索引为最后一个的情况
+								else if (index === 0 && this.dataIndex === length - 1 && length > 2) {
+									x = this.direction === 'horizontal' ? length * this.boxWidth : 0;
+									y = this.direction === 'vertical' ? length * this.boxHeight : 0;
+								}
+							}
+							// 设置组件变换
+							component?.setTransform({ x, y });
+						}
+					});
+					// 清理边界定时器
+					clearTimeout(this.boundaryTimeout);
+					// 设置重置完成定时器
+					this.boundaryTimeout = setTimeout(() => {
+						this.reseting = false;
+					}, 50);
 				}, 50);
-			}, 50);
+			}
 		},
 
+		// 更新线性缩放（突出显示模式）
 		updateLinearScale(moveX = 0) {
+			// 如果没有子元素则返回
 			if (!this.children.length) return;
 			// 只有水平方向支持突出显示
 			if (this.direction !== 'horizontal') return;
@@ -523,7 +698,7 @@ export default {
 					component?.setLinearScale(0.8);
 					return;
 				}
-				// console.log('index is ', index, ' ', new Date().getTime());
+
 				let itemCenter = index * itemSize;
 
 				// 在循环模式下，处理边界元素的特殊位置
@@ -557,6 +732,7 @@ export default {
 				component?.setLinearScale(scale);
 			});
 		},
+		// 清理所有定时器
 		clearAllTimeouts() {
 			clearTimeout(this.childrenTimeout);
 			clearTimeout(this.durationTimeout);
@@ -574,15 +750,18 @@ export default {
 	overflow: hidden;
 	padding: var(--swiper-root-padding);
 	position: relative;
+
 	.swipe-content {
 		width: var(--swiper-width);
 		height: var(--swiper-height);
+
 		.swipe-content-view {
 			width: var(--swiper-width);
 			height: var(--swiper-height);
 			display: grid;
 		}
 	}
+
 	.ste-swiper-dots {
 		position: absolute;
 		bottom: 18rpx;
@@ -591,15 +770,18 @@ export default {
 		transform: translateX(-50%);
 		display: flex;
 		align-items: center;
+
 		.swiper-dots-item {
 			width: 8rpx;
 			height: 8rpx;
 			border-radius: 6rpx;
 			background-color: var(--swiper-indicator-color);
+
 			&.active {
 				width: 24rpx;
 				background-color: var(--swiper-indicator-active-color);
 			}
+
 			& + .swiper-dots-item {
 				margin-left: 8rpx;
 			}
