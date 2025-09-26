@@ -430,7 +430,7 @@ export default {
 				});
 				setTimeout(() => {
 					this.reseting = false;
-				}, this.cmpDuration / 3);
+				}, 50);
 			}, 50);
 		},
 
