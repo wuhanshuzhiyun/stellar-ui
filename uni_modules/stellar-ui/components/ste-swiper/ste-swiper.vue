@@ -512,9 +512,9 @@ export default {
 						this.durationTimeout = setTimeout(() => {
 							// 更新线性缩放
 							this.updateLinearScale();
-						}, this.cmpDuration / 3);
+						});
 					}
-				}, this.cmpDuration - 50);
+				}, this.cmpDuration);
 			}, this.interval);
 		},
 		// 设置边界位置
@@ -586,40 +586,33 @@ export default {
 				this.$emit('change', this.dataIndex, this.source);
 				// 边界重置后，需要重新设置子元素位置
 				this.reseting = true;
-				// 设置边界定时器
-				this.boundaryTimeout = setTimeout(() => {
-					const length = this.children.length;
-					// 遍历所有子元素设置变换
-					this.children.forEach((component, index) => {
-						// 只处理第一个和最后一个元素
-						if (index === 0 && index === length - 1) {
-							let x = 0,
-								y = 0;
-							// 如果是循环模式
-							if (this.circular) {
-								// 处理最后一个元素且当前索引为0的情况
-								if (index === length - 1 && this.dataIndex === 0 && length > 2) {
-									x = this.direction === 'horizontal' ? -length * this.boxWidth : 0;
-									y = this.direction === 'vertical' ? -length * this.boxHeight : 0;
-								}
-								// 处理第一个元素且当前索引为最后一个的情况
-								else if (index === 0 && this.dataIndex === length - 1 && length > 2) {
-									x = this.direction === 'horizontal' ? length * this.boxWidth : 0;
-									y = this.direction === 'vertical' ? length * this.boxHeight : 0;
-								}
-							}
-							// 设置组件变换
-							component?.setTransform({ x, y });
-						}
-					});
-					// 清理边界定时器
-					clearTimeout(this.boundaryTimeout);
-					// 设置重置完成定时器
-					this.boundaryTimeout = setTimeout(() => {
-						this.reseting = false;
-					}, 50);
-				}, 50);
 			}
+
+			const length = this.children.length;
+			// 遍历所有子元素设置变换
+			this.children.forEach((component, index) => {
+				let x = 0,
+					y = 0;
+				// 如果是循环模式
+				if (this.circular) {
+					// 处理最后一个元素且当前索引为0的情况
+					if (index === length - 1 && this.dataIndex === 0 && length > 2) {
+						x = this.direction === 'horizontal' ? -length * this.boxWidth : 0;
+						y = this.direction === 'vertical' ? -length * this.boxHeight : 0;
+					}
+					// 处理第一个元素且当前索引为最后一个的情况
+					else if (index === 0 && this.dataIndex === length - 1 && length > 2) {
+						x = this.direction === 'horizontal' ? length * this.boxWidth : 0;
+						y = this.direction === 'vertical' ? length * this.boxHeight : 0;
+					}
+				}
+				// 设置组件变换
+				component?.setTransform({ x, y });
+			});
+			// 设置重置完成定时器
+			this.boundaryTimeout = setTimeout(() => {
+				this.reseting = false;
+			}, this.cmpDuration);
 		},
 
 		// 更新线性缩放（突出显示模式）
