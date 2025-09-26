@@ -22,7 +22,6 @@ export default {
 			return {
 				transform: `translate3d(${this.transformX}px,${this.transformY}px,${this.transformZ}px) scale(${this.linearScale})`,
 				transformOrigin: 'center center',
-				// transition: this.disableTransition ? 'none' : 'transform 0.3s ease',
 			};
 		},
 	},

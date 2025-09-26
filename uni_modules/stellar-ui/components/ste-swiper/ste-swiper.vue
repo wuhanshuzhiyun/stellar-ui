@@ -147,6 +147,7 @@ export default {
 			childrenTimeout: null, // 子元素更新定时器
 			durationTimeout: null, // 滑动动画时长定时器
 			autoplayTimeout: null, // 自动切换定时器
+			boundaryTimeout: null, // 边界检测定时器
 			source: 'autoplay',
 		};
 	},
@@ -233,22 +234,21 @@ export default {
 		this.init();
 	},
 	beforeDestroy() {
-		clearTimeout(this.childrenTimeout);
-		clearTimeout(this.durationTimeout);
-		clearInterval(this.autoplayTimeout);
+		// 确保清理所有定时器
+		this.clearAllTimeouts();
 	},
 	methods: {
 		init() {
-			clearTimeout(this.childrenTimeout);
+			this.clearAllTimeouts();
 			this.childrenTimeout = setTimeout(async () => {
 				await this.getBoxSize();
 				this.setTransform();
 				this.resetBoundary();
 				this.setAutoplay();
-
-				setTimeout(() => {
+				clearTimeout(this.childrenTimeout);
+				this.childrenTimeout = setTimeout(() => {
 					this.initializing = false;
-				}, 25);
+				}, this.cmpDuration);
 			}, 25);
 		},
 		isMover(moveX = 0, moveY = 0) {
@@ -304,7 +304,7 @@ export default {
 			this.moveing = true;
 
 			await this.getBoxSize();
-			clearInterval(this.autoplayTimeout);
+			this.clearAllTimeouts();
 			this.resetBoundary();
 			this.touch.touchStart(e);
 		},
@@ -349,15 +349,27 @@ export default {
 			this.$emit('change', index, this.source);
 		},
 		setAutoplay() {
+			// 只有在启用自动播放且有多个子元素时才启动定时器
+			if (!this.autoplay || this.children?.length < 2) {
+				return;
+			}
 			clearInterval(this.autoplayTimeout);
 			this.autoplayTimeout = setInterval(() => {
+				// 再次检查条件，确保组件仍然需要自动播放
 				if (!this.autoplay || this.children?.length < 2) {
 					clearInterval(this.autoplayTimeout);
 					return;
 				}
-				let next = this.dataIndex + 1 <= this.children.length - 1 ? this.dataIndex + 1 : 0;
+				let next = 0;
 				if (this.circular) {
+					// 循环模式下正确处理索引
 					next = this.dataIndex + 1;
+				} else if (this.dataIndex + 1 <= this.children.length - 1) {
+					// 普通模式下到达末尾后停止
+					next = this.dataIndex + 1;
+				} else {
+					// 回到开头
+					next = 0;
 				}
 				this.setBoundary(-1, -1);
 				this.source = 'autoplay';
@@ -367,11 +379,12 @@ export default {
 				this.durationTimeout = setTimeout(() => {
 					this.resetBoundary();
 					if (this.highlightActive) {
-						setTimeout(() => {
+						clearTimeout(this.durationTimeout);
+						this.durationTimeout = setTimeout(() => {
 							this.updateLinearScale();
 						}, this.cmpDuration / 3);
 					}
-				}, this.cmpDuration - 20);
+				}, this.cmpDuration - 50);
 			}, this.interval);
 		},
 		setBoundary(moveX = 0, moveY = 0) {
@@ -400,7 +413,8 @@ export default {
 		},
 		resetBoundary() {
 			this.reseting = true;
-			setTimeout(() => {
+			clearTimeout(this.boundaryTimeout);
+			this.boundaryTimeout = setTimeout(() => {
 				let change = false;
 				if (this.dataIndex === -1) {
 					this.dataIndex = this.children.length - 1;
@@ -428,7 +442,8 @@ export default {
 					}
 					component?.setTransform({ x, y });
 				});
-				setTimeout(() => {
+				clearTimeout(this.boundaryTimeout);
+				this.boundaryTimeout = setTimeout(() => {
 					this.reseting = false;
 				}, 50);
 			}, 50);
@@ -541,6 +556,12 @@ export default {
 
 				component?.setLinearScale(scale);
 			});
+		},
+		clearAllTimeouts() {
+			clearTimeout(this.childrenTimeout);
+			clearTimeout(this.durationTimeout);
+			clearTimeout(this.boundaryTimeout);
+			clearInterval(this.autoplayTimeout);
 		},
 	},
 };
