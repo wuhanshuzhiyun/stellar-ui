@@ -14,12 +14,15 @@ export default {
 			transformX: 0,
 			transformY: 0,
 			transformZ: 0,
+			linearScale: 1,
 		};
 	},
 	computed: {
 		cmpStyle() {
 			return {
-				transform: `translate3d(${this.transformX}px,${this.transformY}px,${this.transformZ}px)`,
+				transform: `translate3d(${this.transformX}px,${this.transformY}px,${this.transformZ}px) scale(${this.linearScale})`,
+				transformOrigin: 'center center',
+				// transition: this.disableTransition ? 'none' : 'transform 0.3s ease',
 			};
 		},
 	},
@@ -28,6 +31,9 @@ export default {
 			if (this.transformX !== x) this.transformX = x;
 			if (this.transformY !== y) this.transformY = y;
 			if (this.transformZ !== z) this.transformZ = z;
+		},
+		setLinearScale(scale) {
+			this.linearScale = scale;
 		},
 	},
 };

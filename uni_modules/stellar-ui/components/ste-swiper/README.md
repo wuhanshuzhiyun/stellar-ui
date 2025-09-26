@@ -123,51 +123,66 @@ export default{
 </ste-swiper>
 ```
 
+#### 突出显示
+
+需要搭配 `perviousMargin` 和 `nextMargin`属性给内容前后留出空间
+`highlightActive` 为 `true` 可突出显示当前内容（横向滑动时有效）
+
+```html
+<ste-swiper circular autoplay previousMargin="120" nextMargin="120" highlightActive>
+	<ste-swiper-item v-for="(m, index) in list2" :index="index" :key="index">
+		<image :src="m" class="item" />
+	</ste-swiper-item>
+</ste-swiper>
+```
 
 
 ---$
 ### API
 #### Swiper Props
 
-| 属性名								| 说明																				| 类型								| 默认值							| 可选值																													| 支持版本	|
-| -----									| -----																			| -----							| -----							| -----																													| -----		|
-| `current`							| 当前显示所在滑块的`index`									| `Number`					| `0`								| -																															| -				|
-| `direction`						| 滑动方向																		| `String`					| `horizontal`			| `horizontal`水平，必须固定宽度<br/>`vertical`垂直，必须固定高度	| -				|
-| `disabled`						| 禁用，所有功能失效													| `Boolean`					| `false`						| -																															| -				|
-| `width`								| 宽度																				| `String`/`Number`	| `100%`						| -																															| -				|
-| `height`							| 高度																				| `String`/`Number`	| `100%`						| -																															| -				|
-| `duration`						| 切换动画时常																| `Number`					| `300`							| -																															| -				|
-| `swipeThreshold`			| 滑动灵敏度（0-1之间的小数，数值越小越灵敏）	| `Number`					| `0.35`						| -																															| -				|
-| `indicatorDots`				| 是否显示面板指示点													| `Boolean`					| `false`						| -																															| -				|
-| `indicatorColor`			| 指示点颜色																	| `String`					| `#fff`	| -																															| -				|
-| `indicatorActiveColor`| 当前选中的指示点颜色												| `String`					| `#fff`					| -																															| -				|
-| `autoplay`						| 自动切换																		| `Boolean`					| `false`						| -																															| -				|
-| `interval`						| 自动切换时间间隔														| `Number`					| `3000`						| -																															| -				|
-| `circular`						| 首尾衔接滑动																| `Boolean`					| `false`						| -																															| -				|
-| `previousMargin`			| 前边距，可用于露出前一项的一小部分					| `String`/`Number`	| `0`								| -																															| -				|
-| `nextMargin`					| 后边距，可用于露出后一项的一小部分					| `String`/`Number`	| `0`								| -																															| -				|
+| 属性名				| 说明											| 类型				| 默认值			| 可选值														| 支持版本	|
+| -----					| -----											| -----				| -----			| -----														| -----		|
+| `current`				| 当前显示所在滑块的`index`						| `Number`			| `0`			| -															| -			|
+| `direction`			| 滑动方向										| `String`			| `horizontal`	| `horizontal`水平，必须固定宽度<br/>`vertical`垂直，必须固定高度	| -			|
+| `disabled`			| 禁用，所有功能失效								| `Boolean`			| `false`		| -															| -			|
+| `width`				| 宽度											| `String`/`Number`	| `100%`		| -															| -			|
+| `height`				| 高度											| `String`/`Number`	| `100%`		| -															| -			|
+| `duration`			| 切换动画时常									| `Number`			| `300`			| -															| -			|
+| `swipeThreshold`		| 滑动灵敏度（0-1之间的小数，数值越小越灵敏）			| `Number`			| `0.35`		| -															| -			|
+| `indicatorDots`		| 是否显示面板指示点								| `Boolean`			| `false`		| -															| -			|
+| `indicatorColor`		| 指示点颜色										| `String`			| `#fff`		| -															| -			|
+| `indicatorActiveColor`| 当前选中的指示点颜色								| `String`			| `#fff`		| -															| -			|
+| `autoplay`			| 自动切换										| `Boolean`			| `false`		| -															| -			|
+| `interval`			| 自动切换时间间隔									| `Number`			| `3000`		| -															| -			|
+| `circular`			| 首尾衔接滑动									| `Boolean`			| `false`		| -															| -			|
+| `previousMargin`		| 前边距，可用于露出前一项的一小部分					| `String`/`Number`	| `0`			| -															| -			|
+| `nextMargin`			| 后边距，可用于露出后一项的一小部分					| `String`/`Number`	| `0`			| -															| -			|
+| `highlightActive`		| 是否启用突出显示模式（当前项正常大小，非当前项缩小）	| `Boolean`			| `false`		| -															| `v1.38.5`	|
 
 
 #### Swiper Events
-|事件名		|说明						|事件参数																																													|支持版本											|
-| ---			| ---						| ---																																															| ---													|
-| `change`| 监听`item`切换	| 参数1`index`:当前轮播图下标<br/>参数2`source`:autoplay 自动播放导致swiper变化，touch 用户划动引起swiper变化。	|参数2`source`支持版本`1.14.5`	|
+|事件名		|说明			|事件参数																									|支持版本							|
+| ---		| ---			| ---																									| ---							|
+| `change`	| 监听`item`切换	| 参数1`index`:当前轮播图下标<br/>参数2`source`:autoplay 自动播放导致swiper变化，touch 用户划动引起swiper变化。	|参数2`source`支持版本`1.14.5`	|
 
 #### Swiper Slot
-|插槽名			|说明																			|插槽参数	|支持版本	|
-| ---				| ---																			| ---			| ---			|
-| `default`	| 默认插槽，请传入`ste-swiper-item`标签列表	| -				| -				|
+|插槽名		|说明									|插槽参数	|支持版本	|
+| ---		| ---									| ---	| ---	|
+| `default`	| 默认插槽，请传入`ste-swiper-item`标签列表	| -		| -		|
 
 #### Swiper Method
-| 方法名| 说明															|支持版本	|
-| -----	| -----														| -----		|
-| `init`| 初始化轮播信息，在渲染完成后调用	| -				|
+| 方法名| 说明							|支持版本	|
+| -----	| -----							| -----	|
+| `init`| 初始化轮播信息，在渲染完成后调用	| -		|
 
 #### SwiperItem Slot
-|插槽名			|说明																				|插槽参数	|支持版本	|
-| ---				| ---																				| ---			| ---			|
-| `default`	| 默认插槽，在插槽中的内容会展示在标签内容区域	| -				| -				|
+|插槽名		|说明									|插槽参数	|支持版本	|
+| ---		| ---									| ---	| ---	|
+| `default`	| 默认插槽，在插槽中的内容会展示在标签内容区域	| -		| -		|
 
 
 ---$
 {{xuyajun}}
+
+{{fuyuwei}}

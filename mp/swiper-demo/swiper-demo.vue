@@ -73,9 +73,19 @@
 				</view>
 			</view>
 			<view class="demo-item">
-				<view class="title">显示前后页</view>
+				<view class="title">显示前后页（普通模式）</view>
 				<view class="item-view">
-					<ste-swiper circular autoplay previousMargin="60" nextMargin="60">
+					<ste-swiper circular autoplay previousMargin="120" nextMargin="120">
+						<ste-swiper-item v-for="(m, index) in list2" :index="index" :key="index">
+							<image :src="m" class="item" />
+						</ste-swiper-item>
+					</ste-swiper>
+				</view>
+			</view>
+			<view class="demo-item">
+				<view class="title">显示前后页 + 缩放突出显示</view>
+				<view class="item-view">
+					<ste-swiper circular autoplay previousMargin="120" nextMargin="120" highlightActive>
 						<ste-swiper-item v-for="(m, index) in list2" :index="index" :key="index">
 							<image :src="m" class="item" />
 						</ste-swiper-item>

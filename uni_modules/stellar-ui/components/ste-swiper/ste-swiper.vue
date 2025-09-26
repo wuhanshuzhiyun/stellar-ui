@@ -57,6 +57,7 @@ import { parentMixin } from '../../utils/mixin.js';
  * @property {Boolean}						circular				是否采用衔接滑动，即播放到末尾后重新回到开头
  * @property {Number | String}		previousMargin	前边距，可用于露出前一项的一小部分
  * @property {Number | String}		nextMargin			后边距，可用于露出后一项的一小部分
+ * @property {Boolean}						highlightActive	是否启用突出显示模式（当前项正常大小，非当前项缩小）
  * @event {(index:number)=>void} change 切换事件
  */
 export default {
@@ -126,6 +127,10 @@ export default {
 		nextMargin: {
 			type: [Number, String, null],
 			default: () => 0,
+		},
+		highlightActive: {
+			type: [Boolean, null],
+			default: () => false,
 		},
 	},
 	data() {
@@ -279,18 +284,25 @@ export default {
 				if (moveX !== 0 && Math.abs(this.translateX - translateX) < 3) return;
 				this.translateX = translateX;
 				this.setBoundary(moveX);
+
+				// 滑动时实时更新缩放效果（只支持水平方向）
+				if (this.highlightActive) {
+					this.updateLinearScale(moveX);
+				}
 			} else if (this.direction === 'vertical') {
 				if (Math.abs(moveX) > Math.abs(moveY)) return;
 				const translateY = -this.dataIndex * this.boxHeight + moveY;
 				if (moveY !== 0 && Math.abs(this.translateY - translateY) < 3) return;
 				this.translateY = translateY;
 				this.setBoundary(0, moveY);
+				// 纵向滑动不支持突出显示模式
 			}
 		},
 		async onTouchstart(e) {
 			if (this.disabled) return;
 			if (this.children?.length < 2) return;
 			this.moveing = true;
+
 			await this.getBoxSize();
 			clearInterval(this.autoplayTimeout);
 			this.resetBoundary();
@@ -354,6 +366,11 @@ export default {
 				clearTimeout(this.durationTimeout);
 				this.durationTimeout = setTimeout(() => {
 					this.resetBoundary();
+					if (this.highlightActive) {
+						setTimeout(() => {
+							this.updateLinearScale();
+						}, this.cmpDuration / 3);
+					}
 				}, this.cmpDuration - 20);
 			}, this.interval);
 		},
@@ -415,6 +432,115 @@ export default {
 					this.reseting = false;
 				}, 50);
 			}, 50);
+		},
+
+		updateLinearScale(moveX = 0) {
+			if (!this.children.length) return;
+			// 只有水平方向支持突出显示
+			if (this.direction !== 'horizontal') return;
+
+			// 处理边界情况下的索引
+			let actualIndex = this.dataIndex;
+			const length = this.children.length;
+
+			// 处理循环边界情况
+			if (this.circular) {
+				if (actualIndex === -1) {
+					actualIndex = length - 1; // 从第一个滑到最后一个
+				} else if (actualIndex === length) {
+					actualIndex = 0; // 从最后一个滑到第一个
+				}
+			}
+
+			const itemSize = this.boxWidth;
+
+			// 计算当前视口中心位置，需要考虑边界切换的实际视觉位置
+			let currentPosition;
+			if (this.circular) {
+				if (this.dataIndex === -1) {
+					// 从第一个滑到最后一个，视觉中心在左边
+					currentPosition = -itemSize - moveX;
+				} else if (this.dataIndex === length) {
+					// 从最后一个滑到第一个，视觉中心在右边
+					currentPosition = length * itemSize - moveX;
+				} else {
+					// 正常情况
+					currentPosition = actualIndex * itemSize - moveX;
+				}
+			} else {
+				currentPosition = actualIndex * itemSize - moveX;
+			}
+
+			// 判断是否有前后边距（可以看到相邻元素）
+			const hasMargin = this.previousMargin > 0 || this.nextMargin > 0;
+
+			// 确定需要处理的元素索引
+			const visibleIndices = new Set();
+			visibleIndices.add(actualIndex); // 当前元素
+
+			if (hasMargin && length > 1) {
+				// 前一个元素
+				const prevIndex = (actualIndex - 1 + length) % length;
+				visibleIndices.add(prevIndex);
+
+				// 后一个元素
+				const nextIndex = (actualIndex + 1) % length;
+				visibleIndices.add(nextIndex);
+
+				// 如果正在滑动，可能需要处理更多元素
+				if (moveX !== 0) {
+					// 滑动过程中可能会看到第4个元素
+					if (moveX > itemSize / 2) {
+						const prevPrevIndex = (actualIndex - 2 + length) % length;
+						visibleIndices.add(prevPrevIndex);
+					}
+					if (moveX < -itemSize / 2) {
+						const nextNextIndex = (actualIndex + 2) % length;
+						visibleIndices.add(nextNextIndex);
+					}
+				}
+			}
+
+			// 只处理可见元素的缩放
+			this.children.forEach((component, index) => {
+				if (!visibleIndices.has(index)) {
+					// 不可见元素直接设为最小缩放
+					component?.setLinearScale(0.8);
+					return;
+				}
+				// console.log('index is ', index, ' ', new Date().getTime());
+				let itemCenter = index * itemSize;
+
+				// 在循环模式下，处理边界元素的特殊位置
+				if (this.circular && length > 2) {
+					// 当从第一个滑到最后一个时，最后一个元素在第一个元素左边
+					if (this.dataIndex === -1 && index === length - 1) {
+						itemCenter = -itemSize;
+					}
+					// 当从最后一个滑到第一个时，第一个元素在最后一个元素右边
+					else if (this.dataIndex === length && index === 0) {
+						itemCenter = length * itemSize;
+					}
+					// 处理正常循环中的边界情况
+					else if (actualIndex === 0 && index === length - 1 && moveX > 0) {
+						// 向右滑动查看最后一个元素
+						itemCenter = -itemSize;
+					} else if (actualIndex === length - 1 && index === 0 && moveX < 0) {
+						// 向左滑动查看第一个元素
+						itemCenter = length * itemSize;
+					}
+				}
+
+				// 计算相对于当前视口中心的距离
+				const distance = Math.abs(itemCenter - currentPosition);
+				// 将距离转换为相对于一个项目宽度的比例
+				const distanceRatio = distance / itemSize;
+
+				// 计算缩放比例：距离中心越近越大，最大1.0，最小0.8
+				let scale = Math.max(0.8, 1 - distanceRatio * 0.2);
+
+				component?.setLinearScale(scale);
+			});
 		},
 	},
 };
