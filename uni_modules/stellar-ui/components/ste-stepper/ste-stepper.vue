@@ -1,6 +1,12 @@
 <template>
-	<view class="ste-stepper-root" :style="[cmpStyle]">
-		<ste-button v-if="theme != 'add'" :rootStyle="cmpLeftButtonStyle" @click="minus" :disabled="cmpDisableMinus">
+	<view class="ste-stepper-root" :style="[cmpStyle]" :class="[theme]">
+		<!-- Simple 和 Circle 模式使用 view -->
+		<view v-if="theme != 'add' && (theme == 'simple' || theme == 'circle')" class="btn-view minus" @click="minus">
+			<ste-icon code="&#xe67c;" :size="cmpBtnSize * 0.8 * 0.65" :color="cmpDisableMinus ? '#cccccc' : cmpMainColor" :inlineBlock="false"></ste-icon>
+		</view>
+
+		<!-- 其他模式使用 ste-button -->
+		<ste-button v-else-if="theme != 'add'" class="btn-minus" :rootStyle="cmpLeftButtonStyle" @click="minus" :disabled="cmpDisableMinus">
 			<view class="button-icon">
 				<ste-icon
 					code="&#xe67c;"
@@ -11,17 +17,15 @@
 			</view>
 		</ste-button>
 		<view v-if="theme != 'add'" class="input" :style="[cmpInputStyle]">
-			<input
-				data-test="input-el"
-				class="input-el"
-				:type="precision ? 'digit' : 'number'"
-				:value="value"
-				@blur="blur"
-				@focus="focus"
-				:disabled="disabled || disableInput"
-			/>
+			<input data-test="input-el" class="input-el" :type="precision ? 'digit' : 'number'" :value="value" @blur="blur" @focus="focus" :disabled="disabled || disableInput" />
 		</view>
-		<ste-button v-if="theme != 'add'" :rootStyle="cmpRightButtonStyle" @click="plus" :disabled="cmpDisablePlus">
+		<!-- Simple 和 Circle 模式使用 view -->
+		<view v-if="theme != 'add' && (theme == 'simple' || theme == 'circle')" class="btn-view plus" @click="plus">
+			<ste-icon code="&#xe67e;" :size="cmpBtnSize * 0.8 * 0.65" :color="cmpDisablePlus ? '#cccccc' : cmpMainColor" :inlineBlock="false"></ste-icon>
+		</view>
+
+		<!-- 其他模式使用 ste-button -->
+		<ste-button v-else-if="theme != 'add'" :rootStyle="cmpRightButtonStyle" @click="plus" :disabled="cmpDisablePlus">
 			<view class="button-icon">
 				<ste-icon
 					code="&#xe67e;"
@@ -31,17 +35,7 @@
 				></ste-icon>
 			</view>
 		</ste-button>
-		<ste-badge
-			v-else
-			:content="value"
-			:background="background"
-			:showDot="showDot"
-			:position="position"
-			:offsetX="offsetX"
-			:offsetY="offsetY"
-			:showZero="showZero"
-			:max="badgeMax"
-		>
+		<ste-badge v-else :content="value" :background="background" :showDot="showDot" :position="position" :offsetX="offsetX" :offsetY="offsetY" :showZero="showZero" :max="badgeMax">
 			<ste-button :rootStyle="cmpRightButtonStyle" @click="plus" :disabled="cmpDisablePlus">
 				<view class="button-icon">
 					<ste-icon
@@ -215,9 +209,7 @@ export default {
 		cmpLeftButtonStyle() {
 			let style = {};
 			if (this.theme == 'card') {
-				style['border'] = `${utils.formatPx('2')} solid ${
-					(this.cmpDisableMinus ? '#cccccc' : this.cmpMainColor) + '80'
-				}`;
+				style['border'] = `${utils.formatPx('2')} solid ${(this.cmpDisableMinus ? '#cccccc' : this.cmpMainColor) + '80'}`;
 			}
 			if (this.theme == 'line') {
 				style['border'] = `none`;
@@ -354,7 +346,7 @@ export default {
 <style lang="scss" scoped>
 .ste-stepper-root {
 	display: flex;
-
+	align-items: center;
 	.input {
 		font-weight: bold;
 		color: #000000;
@@ -362,6 +354,30 @@ export default {
 		.input-el {
 			height: 100%;
 			font-size: 28rpx;
+		}
+	}
+
+	&.simple {
+		.btn-view {
+			border: none;
+			background-color: transparent;
+		}
+	}
+	&.circle {
+		.btn-view {
+			padding: 5rpx;
+			background-color: transparent;
+			border-radius: 50%;
+			border: solid 4rpx #f5f5f5;
+		}
+	}
+	.btn-view {
+		display: flex;
+		justify-content: center;
+		align-items: center;
+
+		&:active {
+			opacity: 0.7;
 		}
 	}
 
