@@ -108,7 +108,7 @@ export default {
 		},
 		// 退出登录
 		outlogin() {
-			this.showModal({
+			uni.showModal({
 				title: '提示',
 				content: '确定退出登录吗？',
 				success: async (res) => {
