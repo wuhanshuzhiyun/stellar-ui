@@ -466,7 +466,7 @@ export default {
 	mounted() {},
 	methods: {
 		scrollToLower() {
-			this.$showToast({
+			uni.showToast({
 				title: '到底了',
 			});
 		},

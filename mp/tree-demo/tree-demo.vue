@@ -115,10 +115,10 @@ export default {
 			}, 2000);
 		},
 		onOpen(node) {
-			this.$showToast({ title: `打开节点：${node.title}`, icon: 'none' });
+			uni.showToast({ title: `打开节点：${node.title}`, icon: 'none' });
 		},
 		onClose(node) {
-			this.$showToast({ title: `关闭节点：${node.title}`, icon: 'none' });
+			uni.showToast({ title: `关闭节点：${node.title}`, icon: 'none' });
 		},
 		openNode() {
 			this.$refs.accordion.open('2');

@@ -154,7 +154,7 @@ export default {
 			this.showMsgBox({
 				title: '提示1',
 				cancel: () => {
-					this.$showToast({
+					uni.showToast({
 						title: '点击了取消',
 					});
 				},
@@ -164,7 +164,7 @@ export default {
 			this.showMsgBox({
 				title: '提示2',
 				confirm: () => {
-					this.$showToast({
+					uni.showToast({
 						title: '点击了确认',
 					});
 				},
@@ -174,7 +174,7 @@ export default {
 			this.showMsgBox({
 				title: '提示3',
 				complete: () => {
-					this.$showToast({
+					uni.showToast({
 						title: '弹框完成',
 					});
 				},

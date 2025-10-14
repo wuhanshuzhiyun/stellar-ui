@@ -264,7 +264,7 @@ export default {
 		},
 		itemClick(stop, next, reject) {
 			stop();
-			this.$showToast({
+			uni.showToast({
 				title: '加载中...',
 				icon: 'loading',
 				duration: 600,

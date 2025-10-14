@@ -69,7 +69,7 @@ export default {
 	created() {},
 	methods: {
 		backClick() {
-			this.$showToast({
+			uni.showToast({
 				icon: 'none',
 				title: '导航栏点击事件',
 			});

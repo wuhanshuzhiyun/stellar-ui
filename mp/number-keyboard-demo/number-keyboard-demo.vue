@@ -108,7 +108,7 @@ export default {
 			if (v === '返回') {
 				// 阻止默认后续操作
 				stop();
-				this.$showToast({
+				uni.showToast({
 					title: '点击了返回',
 					icon: 'none',
 				});

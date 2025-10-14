@@ -178,13 +178,13 @@ export default {
 		},
 		onSearch(v) {
 			console.log('search', v);
-			this.$showToast({
+			uni.showToast({
 				icon: 'none',
 				title: `搜索：${v}`,
 			});
 		},
 		onClick(v) {
-			this.$showToast({
+			uni.showToast({
 				icon: 'none',
 				title: `点击触发：${v}`,
 			});
@@ -199,7 +199,7 @@ export default {
 			}
 		},
 		selectSuggestion(v) {
-			this.$showToast({
+			uni.showToast({
 				icon: 'none',
 				title: `选了：${v.label}`,
 			});

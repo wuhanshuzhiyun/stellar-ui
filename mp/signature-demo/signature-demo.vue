@@ -48,7 +48,7 @@ export default {
 					this.show = true;
 				},
 				(err) => {
-					this.$showToast({
+					uni.showToast({
 						title: err,
 						icon: 'none',
 					});

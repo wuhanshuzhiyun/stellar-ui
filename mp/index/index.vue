@@ -512,7 +512,7 @@ export default {
 			uni.setClipboardData({
 				data: 55555,
 				success() {
-					this.$showToast({
+					uni.showToast({
 						icon: 'none',
 						title: ' 复制成功。',
 						duration: 3000,

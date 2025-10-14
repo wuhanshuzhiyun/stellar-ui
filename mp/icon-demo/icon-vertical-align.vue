@@ -161,7 +161,7 @@ export default {
 			const regex = /url\(.*?\)\s*format\(.*?\)(?:,|;|$)/g;
 			const matches = text.match(regex);
 			if (matches == null) {
-				this.$showToast({
+				uni.showToast({
 					title: '字体地址格式不正确',
 					icon: 'none',
 				});
@@ -190,7 +190,7 @@ export default {
 				},
 				fail(err) {
 					console.error('err', err);
-					this.$showToast({ title: '加载字体失败', icon: 'none' });
+					uni.showToast({ title: '加载字体失败', icon: 'none' });
 				},
 			});
 		},

@@ -220,13 +220,13 @@ export default {
 	created() {},
 	methods: {
 		click1(value) {
-			this.$showToast({
+			uni.showToast({
 				icon: 'none',
 				title: `点击：${value} 复选框的值`,
 			});
 		},
 		click2(value, allowStop, resolve) {
-			this.$showToast({
+			uni.showToast({
 				icon: 'none',
 				title: `点击：${value} 复选框的值`,
 			});
@@ -235,7 +235,7 @@ export default {
 		},
 		change(value) {
 			setTimeout(() => {
-				this.$showToast({
+				uni.showToast({
 					icon: 'none',
 					title: `改变：${value} 复选框的值`,
 				});

@@ -310,7 +310,7 @@ export default {
 		click2() {},
 		syncClose(allowStop, resolve) {
 			allowStop();
-			this.$showToast({
+			uni.showToast({
 				title: '加载中...',
 				icon: 'loading',
 				duration: 2500,
