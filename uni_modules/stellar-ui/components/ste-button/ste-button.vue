@@ -251,8 +251,8 @@ export default {
 		getrealtimephonenumber(e) {
 			this.$emit('getrealtimephonenumber', e);
 		},
-		greeprivacyauthorization(e) {
-			this.$emit('greeprivacyauthorization', e);
+		agreeprivacyauthorization(e) {
+			this.$emit('agreeprivacyauthorization', e);
 		},
 		error(e) {
 			this.$emit('error', e);
