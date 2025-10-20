@@ -104,6 +104,7 @@ export default {
 | `direction`	| 步骤条方向	| `String`	| `row`		| `row`：横向 <br/>`column`：竖向	| -				|
 | `dot`				| 点状步骤条	| `Boolean`	| `false`	| -															| -				|
 | `reverse`		| 方向反转		| `Boolean`	| `false`	| -															| -				|
+| `lineStyle`	| 连接线样式	| `String`	| `solid`	| `border-style`所支持的所有值		| -				|
 
 
 #### Steps Events

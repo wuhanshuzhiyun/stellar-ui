@@ -1,44 +1,29 @@
 <template>
-	<view
-		class="ste-step"
-		data-test="step"
-		:class="[`ste-step-${cmpDirection}`, cmpReverse ? 'reverse' : '']"
-		:style="[cmpStyle]"
-	>
+	<view class="ste-step" data-test="step" :class="[`ste-step-${cmpDirection}`, cmpReverse ? 'reverse' : '']" :style="[cmpStyle]">
 		<view class="ste-step-head" :class="{ 'head-is-dot': cmpDot }">
-			<view class="ste-step-line" v-if="cmpIndex < childrenLen"></view>
-			<view
-				class="ste-step-icon"
-				:class="[!cmpDot ? ($slots.icon || icon ? '' : cmpStatusObj.icon ? 'is-icon' : 'is-text') : 'is-dot']"
-				@click="clickStep"
-			>
-				<template v-if="$slots.icon">
-					<slot name="icon"></slot>
-				</template>
-				<template v-else-if="cmpDot"></template>
-				<template v-else-if="cmpStatusObj.icon">
-					<ste-icon
-						class="ste-step-icon-inner"
-						:code="cmpStatusObj.icon"
-						:size="icon ? 40 : 20"
-						:color="cmpStatusObj.color"
-					></ste-icon>
-				</template>
-				<template v-else>
-					<view class="ste-step-inner">{{ cmpIndex }}</view>
-				</template>
+			<view class="ste-step-line" :style="{ 'border-top-style': cmpLineStyle }" v-if="cmpIndex < childrenLen"></view>
+			<view class="ste-step-icon" :class="[!cmpDot ? ($slots.icon || icon ? '' : cmpStatusObj.icon ? 'is-icon' : 'is-text') : 'is-dot']" @click="clickStep">
+				<slot name="icon">
+					<template v-if="cmpDot"></template>
+					<template v-else-if="cmpStatusObj.icon">
+						<ste-icon class="ste-step-icon-inner" :code="cmpStatusObj.icon" :size="icon ? 40 : 20" :color="cmpStatusObj.color"></ste-icon>
+					</template>
+					<template v-else>
+						<view class="ste-step-inner">{{ cmpIndex }}</view>
+					</template>
+				</slot>
 			</view>
 		</view>
 		<view class="ste-step-content" :class="[`ste-step-content-${steps.direction}`]">
 			<view class="ste-step-title" @click="clickStep">
-				<span v-if="!$slots.title">
-					{{ title ? title : `第${cmpIndex}步` }}
-				</span>
-				<slot name="title"></slot>
+				<slot name="title">
+					<span>
+						{{ title ? title : `第${cmpIndex}步` }}
+					</span>
+				</slot>
 			</view>
 			<view class="ste-step-desc" v-if="description || $slots.description">
-				<span v-if="!$slots.description" v-html="description"></span>
-				<slot name="description"></slot>
+				<slot name="description"><span v-html="description"></span></slot>
 			</view>
 		</view>
 	</view>
@@ -98,6 +83,9 @@ export default {
 		},
 		cmpReverse() {
 			return this.steps.reverse;
+		},
+		cmpLineStyle() {
+			return this.steps.lineStyle;
 		},
 		cmpIndex() {
 			this.$nextTick(() => {
@@ -226,13 +214,16 @@ export default {
 		position: relative;
 
 		.ste-step-line {
-			background: var(---line-color);
+			// background: var(---line-color);
 			display: inline-block;
 			position: absolute;
 			height: 2rpx;
 			left: 50%;
 			right: -50%;
 			top: 20rpx;
+			border-top-width: 2rpx;
+			border-top-color: var(---line-color);
+			border-top-style: solid;
 		}
 		.ste-step-icon.is-icon {
 			border-radius: 50%;

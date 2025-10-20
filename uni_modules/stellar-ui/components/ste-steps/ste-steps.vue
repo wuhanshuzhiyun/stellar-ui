@@ -42,6 +42,10 @@ export default {
 			type: Boolean,
 			default: false,
 		},
+		lineStyle: {
+			type: [String, null],
+			default: 'solid',
+		},
 	},
 	provide() {
 		return {
