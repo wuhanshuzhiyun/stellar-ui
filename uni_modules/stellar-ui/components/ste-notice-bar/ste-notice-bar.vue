@@ -7,23 +7,11 @@
 				</slot>
 			</view>
 			<view v-if="direction == 'across'" :class="'center ' + id" @click="handleClick">
-				<view
-					:id="id"
-					class="speed"
-					:class="cardMsgClass"
-					:style="[cmpAcrossStyle]"
-					@animationend="onAnimationEnd"
-				>
+				<view :id="id" class="speed" :class="cardMsgClass" :style="[cmpAcrossStyle]" @animationend="onAnimationEnd">
 					<ste-rich-text :text="list[index]"></ste-rich-text>
 				</view>
 			</view>
-			<view
-				v-else
-				:class="'center vertical ' + cardMsgClass"
-				@click="handleClick"
-				@animationend="onAnimationEnd"
-				:style="[cmpVerticalStyle]"
-			>
+			<view v-else :class="'center vertical ' + cardMsgClass" @click="handleClick" @animationend="onAnimationEnd" :style="[cmpVerticalStyle]">
 				<view v-for="(item, i) in copyList" :key="i">
 					<ste-rich-text :text="item"></ste-rich-text>
 				</view>
@@ -281,6 +269,7 @@ export default {
 		display: flex;
 		align-items: center;
 		overflow-x: hidden;
+		overflow-y: hidden;
 		justify-content: flex-start;
 		flex: 1;
 		height: 100%;
