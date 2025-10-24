@@ -44,7 +44,7 @@ export default {
 		async open(uuid) {
 			try {
 				const { code } = await wx.login();
-				await request('/openLogin', { uuid, code });
+				await request('/client/openLogin', { uuid, code });
 			} catch (e) {
 				//TODO handle the exception
 				console.error(e);
@@ -60,7 +60,7 @@ export default {
 				if (!token) {
 					await login();
 				}
-				await request('/wechatLogin', { uuid: this.uuid }, 'POST');
+				await request('/client/wechatLogin', { uuid: this.uuid }, 'POST');
 				uni.switchTab({ url: '/pages/user/user' });
 			} catch (e) {
 				//TODO handle the exception
@@ -113,7 +113,7 @@ export default {
 			margin-top: 64rpx;
 			width: 438rpx;
 			height: 80rpx;
-			background: #0090FF;
+			background: #0090ff;
 			box-shadow: 0rpx 12rpx 40rpx 2rpx rgba(0, 144, 255, 0.1);
 			border-radius: 48rpx;
 			font-family: PingFang SC, PingFang SC;
@@ -130,7 +130,7 @@ export default {
 			width: 240rpx;
 			height: 60rpx;
 			line-height: 60rpx;
-			color: #0090FF;
+			color: #0090ff;
 		}
 	}
 

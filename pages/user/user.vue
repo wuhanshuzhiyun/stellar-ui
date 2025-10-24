@@ -98,7 +98,7 @@ export default {
 			});
 		},
 		save() {
-			request('/account/update', this.userInfo, 'POST').then(() => {
+			request('/client/account/update', this.userInfo, 'POST').then(() => {
 				this.$showToast({
 					title: '保存成功',
 					icon: 'none',

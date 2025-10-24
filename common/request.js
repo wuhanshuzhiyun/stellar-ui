@@ -16,7 +16,7 @@ export default function (url, data, method = 'GET', header = {}) {
 			data,
 			success({ data }) {
 				console.log('----request-success==>', url, data);
-				if (data.code === 200) {
+				if (data.code === 0 || data.code === 200) {
 					resolve(data.data);
 					return;
 				} else if (data.code === 401) {
