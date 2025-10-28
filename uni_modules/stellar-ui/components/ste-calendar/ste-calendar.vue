@@ -15,7 +15,7 @@
 			:scroll-top="contentScrollTop"
 			@scroll="onScroll"
 			:show-scrollbar="showScrollbar"
-			:enhanced="!showScrollbar"
+			enhanced
 		>
 			<view class="month-item" v-for="m in cmpDates.monthDatas" :key="m.key" :id="`month-${m.key}`">
 				<view class="month-bg" v-if="showMark">
@@ -360,7 +360,6 @@ export default {
 	}
 	.date-content {
 		width: 100%;
-		overflow-y: auto;
 		height: calc(100% - 80rpx);
 		padding-bottom: 12rpx;
 		&.show-title {
