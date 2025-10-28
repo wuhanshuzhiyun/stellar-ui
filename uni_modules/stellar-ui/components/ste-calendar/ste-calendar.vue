@@ -129,7 +129,7 @@ export default {
 		width: { type: [Number, String, null], default: () => '100%' },
 		height: { type: [Number, String, null], default: () => '100%' },
 		signs: { type: Object, default: () => ({}) },
-		showScrollbar: { type: Boolean, default: () => false },
+		showScrollbar: { type: Boolean, default: () => true },
 	},
 	data() {
 		return {
