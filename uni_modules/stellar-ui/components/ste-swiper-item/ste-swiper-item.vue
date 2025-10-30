@@ -44,5 +44,16 @@ export default {
 	height: 100%;
 	/* 添加此行以确保在循环播放时不会出现闪烁 */
 	will-change: transform;
+	/* 隐藏背面，避免翻转时闪烁 */
+	backface-visibility: hidden;
+	/* CSS containment 优化 */
+	contain: layout style paint;
+	/* 抗锯齿 */
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
+	/* 优化图像渲染 */
+	image-rendering: -webkit-optimize-contrast;
+	/* 确保子元素也使用硬件加速 */
+	transform-style: flat;
 }
 </style>
