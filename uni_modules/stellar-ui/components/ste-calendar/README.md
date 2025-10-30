@@ -250,29 +250,30 @@ export default{
 ### API
 #### Tabs Props
 背景之外的颜色属性只支持`16进制`、`RGB`、`RGBA`格式
-| 属性名			| 说明																					| 类型			| 默认值					| 可选值														| 支持版本	|
-| -----				| -----																					| -----			| -----					| -----														| -----		|
-| `mode`			| 选择模式																				| `String`		| `"single"`			| `"single"`单选<br/>`"multiple"`多选<br/>`"range"`范围选择	| -			|
-| `title`			| 标题文本																				| `String`		| `"日期选择"`			| -															| -			|
-| `showTitle`		| 是否显示标题																			| `Boolean`		| `true`				| -															| -			|
-| `list`			| 已选中的日期																			| `Array<Date>`	| `[]`					| -															| -			|
-| `startText`		| 开始日期的提示文字，`mode`=`range`时生效													| `String`		| `[]`					| -															| -			|
-| `endText`			| 结束日期的提示文字，`mode`=`range`时生效													| `String`		| `[]`					| -															| -			|
-| `color`			| 主题颜色（选中日期背景、月份背景、当天日期颜色和确定按钮颜色）								| `String`		| `#0090FF`				| -															| -			|
-| `weekendColor`	| 周末日期颜色																			| `String`		| `#0090FF`				| -															| -			|
-| `minDate`			| 开始日期	（没有该属性的情况下，从`defaultDate`开始渲染）									| `Date`		| `0`					| -															| -			|
-| `maxDate`			| 结束日期	（没有该属性的情况下，从`minDate`或者`defaultDate`开始往后渲染`maxCount`个月）	| `Date`		| `0`					| -															| -			|
-| `defaultDate`		| 默认展示日期（不设置`minDate`和`maxDate`的情况下，列表展示从默认月份开始往后`maxCount`个月）	| `Date`		| `new Date()`			| -															| -			|
-| `monthCount`		| 渲染的月数（如果存在`maxDate`则该属性不生效）												| `Number`		| `12`					| -															| -			|
-| `maxCount`		| `mode`=`multiple`时，最多可选多少个日期													| `Number`		| `0`					| -															| -			|
-| `formatter`		| 日期格式化																				| `String`		| `"YYYY-MM-DD"`		| -															| -			|
-| `showMark`		| 是否显示月份背景色																		| `Boolean`		| `true`				| -															| -			|
-| `readonly`		| 是否为只读状态，只读状态下禁止选择日期														| `Boolean`		| `false`				| -															| -			|
-| `maxRange`		| 日期区间最多可选天数，`mode`=`range`时有效												| `Number`		| `0`					| -															| -			|
-| `rangePrompt`		| 范围选择超过最多可选天数时的提示文案														| `String`		| `"选择天数不能超过XX天"`	| -															| -			|
-| `showRangePrompt`	| 范围选择超过最多可选天数时，是否展示提示文案												| `Number`		| `0`					| -															| -			|
-| `allowSameDay`	| 是否允许日期范围的起止时间为同一天														| `Boolean`		| `true`				| -															| -			|
-| `signs`			| 标签对象（每一天的支持最多三条标签）														| `Signs`		| `true`				| -															| -			|
+| 属性名						| 说明																																										| 类型						| 默认值									| 可选值																										| 支持版本	|
+| -----							| -----																																									| -----					| -----									| -----																										| -----		|
+| `mode`						| 选择模式																																								| `String`			| `"single"`						| `"single"`单选<br/>`"multiple"`多选<br/>`"range"`范围选择	| -				|
+| `title`						| 标题文本																																								| `String`			| `"日期选择"`						| -																												| -				|
+| `showTitle`				| 是否显示标题																																						| `Boolean`			| `true`								| -																												| -				|
+| `list`						| 已选中的日期																																						| `Array<Date>`	| `[]`									| -																												| -				|
+| `startText`				| 开始日期的提示文字，`mode`=`range`时生效																									| `String`			| `[]`									| -																												| -				|
+| `endText`					| 结束日期的提示文字，`mode`=`range`时生效																									| `String`			| `[]`									| -																												| -				|
+| `color`						| 主题颜色（选中日期背景、月份背景、当天日期颜色和确定按钮颜色）																| `String`			| `#0090FF`							| -																												| -				|
+| `weekendColor`		| 周末日期颜色																																						| `String`			| `#0090FF`							| -																												| -				|
+| `minDate`					| 开始日期	（没有该属性的情况下，从`defaultDate`开始渲染）																		| `Date`				| `0`										| -																												| -				|
+| `maxDate`					| 结束日期	（没有该属性的情况下，从`minDate`或者`defaultDate`开始往后渲染`maxCount`个月）			| `Date`				| `0`										| -																												| -				|
+| `defaultDate`			| 默认展示日期（不设置`minDate`和`maxDate`的情况下，列表展示从默认月份开始往后`maxCount`个月）	| `Date`				| `new Date()`					| -																												| -				|
+| `monthCount`			| 渲染的月数（如果存在`maxDate`则该属性不生效）																							| `Number`			| `12`									| -																												| -				|
+| `maxCount`				| `mode`=`multiple`时，最多可选多少个日期																									| `Number`			| `0`										| -																												| -				|
+| `formatter`				| 日期格式化																																							| `String`			| `"YYYY-MM-DD"`				| -																												| -				|
+| `showMark`				| 是否显示月份背景色																																				| `Boolean`			| `true`								| -																												| -				|
+| `readonly`				| 是否为只读状态，只读状态下禁止选择日期																											| `Boolean`			| `false`								| -																												| -				|
+| `maxRange`				| 日期区间最多可选天数，`mode`=`range`时有效																								| `Number`			| `0`										| -																												| -				|
+| `rangePrompt`			| 范围选择超过最多可选天数时的提示文案																												| `String`			| `"选择天数不能超过XX天"`	| -																												| -				|
+| `showRangePrompt`	| 范围选择超过最多可选天数时，是否展示提示文案																								| `Number`			| `0`										| -																												| -				|
+| `allowSameDay`		| 是否允许日期范围的起止时间为同一天																												| `Boolean`			| `true`								| -																												| -				|
+| `signs`						| 标签对象（每一天的支持最多三条标签）																												| `Signs`				| `{}`									| -																												| -				|
+| `showScrollbar`		| 控制是否出现滚动条																																				| `Boolean`			| `true`								| -																												| 1.38.9	|
 
 ##### Signs 示例
 ```javascript

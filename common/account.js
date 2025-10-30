@@ -1,59 +1,50 @@
-import request from "./request"
-import {
-	getToken,
-	removeToken,
-	setToken
-} from "./token"
+import request from './request';
+import { getToken, removeToken, setToken } from './token';
 
 export const isLogin = async () => {
 	try {
-		const token = getToken()
-		if (!token) return false
+		const token = getToken();
+		if (!token) return false;
 		const info = await getInfo();
-		if (!info) return false
-		return token
+		if (!info) return false;
+		return token;
 	} catch (e) {
 		//TODO handle the exception
-		return false
+		return false;
 	}
-}
+};
 
 export const getInfo = async (pull = false) => {
 	try {
-		let info = pull ? null : uni.getStorageSync("user-info")
-		if (info) return JSON.parse(info)
-		const token = getToken()
-		if (!token) return null
-		info = await request('/account/info');
-		uni.setStorageSync("user-info", JSON.stringify(info))
-		return info
+		let info = pull ? null : uni.getStorageSync('user-info');
+		if (info) return JSON.parse(info);
+		const token = getToken();
+		if (!token) return null;
+		info = await request('/client/account/info');
+		uni.setStorageSync('user-info', JSON.stringify(info));
+		return info;
 	} catch (e) {
 		//TODO handle the exception
-		return null
+		return null;
 	}
-
-}
+};
 
 export const login = async () => {
 	try {
-		const {
-			code
-		} = await wx.login();
-		const token = await request('/account/login', {
-			code
-		}, 'POST');
+		const { code } = await wx.login();
+		const token = await request('/client/account/login', { code }, 'POST');
+		console.log('??????????', token);
 		setToken(token);
 	} catch (e) {
-		return false
+		return false;
 	}
-
-}
+};
 
 export const logout = async () => {
 	try {
-		await request("/account/logout")
-		removeToken()
+		await request('/client/account/logout');
+		removeToken();
 	} catch (e) {
 		//TODO handle the exception
 	}
-}
+};

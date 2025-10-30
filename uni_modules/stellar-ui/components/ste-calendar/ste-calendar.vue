@@ -3,12 +3,7 @@
 		<view v-if="showTitle" class="calendar-title">{{ title }}</view>
 		<view class="week-head">
 			<view class="week-row">
-				<view
-					class="week-item"
-					:class="{ weekend: index === 0 || index === 6 }"
-					v-for="(w, index) in cmpDates.weekTexts"
-					:key="index"
-				>
+				<view class="week-item" :class="{ weekend: index === 0 || index === 6 }" v-for="(w, index) in cmpDates.weekTexts" :key="index">
 					{{ w }}
 				</view>
 			</view>
@@ -19,6 +14,8 @@
 			scroll-y
 			:scroll-top="contentScrollTop"
 			@scroll="onScroll"
+			:show-scrollbar="showScrollbar"
+			enhanced
 		>
 			<view class="month-item" v-for="m in cmpDates.monthDatas" :key="m.key" :id="`month-${m.key}`">
 				<view class="month-bg" v-if="showMark">
@@ -49,13 +46,7 @@
 							<view class="day-range-foot" v-if="mode === 'range'"></view>
 							<view class="day-signs" v-if="cmpShowSigns">
 								<block v-if="d.signs">
-									<view
-										class="day-sign"
-										v-for="sign in d.signs"
-										:key="sign.key"
-										:style="[sign.style]"
-										:class="sign.className"
-									>
+									<view class="day-sign" v-for="sign in d.signs" :key="sign.key" :style="[sign.style]" :class="sign.className">
 										{{ sign.content }}
 									</view>
 								</block>
@@ -103,6 +94,7 @@ let color = useColor();
  * @property {Boolean} allowSameDay 是否允许日期范围的起止时间为同一天，mode = range时有效
  * @property {Boolean} showConfirm 是否显示确定按钮
  * @property {Object} signs 标签数据
+ * @property {Boolean} showScrollbar 控制是否出现滚动条
  * @event {Function} confirm 日期选择完成后触发，若showConfirm为true，则点击确认按钮后触发
  * @event {Function} select 点击/选择后触发
  * @event {Function} viewMonth 在视图区域的月份发生改变时触发
@@ -137,6 +129,7 @@ export default {
 		width: { type: [Number, String, null], default: () => '100%' },
 		height: { type: [Number, String, null], default: () => '100%' },
 		signs: { type: Object, default: () => ({}) },
+		showScrollbar: { type: Boolean, default: () => true },
 	},
 	data() {
 		return {
@@ -159,22 +152,10 @@ export default {
 				'--calendar-height': utils.formatPx(this.height),
 				'--calendar-color': this.color ? this.color : color.getColor().steThemeColor,
 				'--calendar-weekend-color': this.weekendColor ? this.weekendColor : color.getColor().steThemeColor,
-				'--calendar-bg-color': utils.Color.formatColor(
-					this.color ? this.color : color.getColor().steThemeColor,
-					0.1
-				),
-				'--calendar-range-color': utils.Color.formatColor(
-					this.color ? this.color : color.getColor().steThemeColor,
-					0.2
-				),
-				'--calendar-disabled-color': utils.Color.formatColor(
-					this.color ? this.color : color.getColor().steThemeColor,
-					0.3
-				),
-				'--calendar-sign-color': utils.Color.formatColor(
-					this.color ? this.color : color.getColor().steThemeColor,
-					0.7
-				),
+				'--calendar-bg-color': utils.Color.formatColor(this.color ? this.color : color.getColor().steThemeColor, 0.1),
+				'--calendar-range-color': utils.Color.formatColor(this.color ? this.color : color.getColor().steThemeColor, 0.2),
+				'--calendar-disabled-color': utils.Color.formatColor(this.color ? this.color : color.getColor().steThemeColor, 0.3),
+				'--calendar-sign-color': utils.Color.formatColor(this.color ? this.color : color.getColor().steThemeColor, 0.7),
 				'--calendar-start-text': `"${this.startText}"`,
 				'--calendar-end-text': `"${this.endText}"`,
 				'--calendar-line-height': `${rowHeight}px`,
@@ -183,14 +164,7 @@ export default {
 			return style;
 		},
 		cmpDates() {
-			const datas = getCalendarData(
-				this.minDate,
-				this.maxDate,
-				this.viewDate,
-				this.monthCount,
-				this.formatter,
-				this.signs
-			);
+			const datas = getCalendarData(this.minDate, this.maxDate, this.viewDate, this.monthCount, this.formatter, this.signs);
 			return datas;
 		},
 		cmpMonthTops() {
@@ -386,7 +360,6 @@ export default {
 	}
 	.date-content {
 		width: 100%;
-		overflow-y: auto;
 		height: calc(100% - 80rpx);
 		padding-bottom: 12rpx;
 		&.show-title {

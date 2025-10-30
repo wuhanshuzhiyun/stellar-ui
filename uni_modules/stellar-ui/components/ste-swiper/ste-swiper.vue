@@ -457,8 +457,8 @@ export default {
 			// 更新索引
 			this.dataIndex = index;
 			// 触发change事件
-			if (next >= 0 && next <= this.children.length - 1) {
-				this.$emit('change', next, this.source);
+			if (index >= 0 && index <= this.children.length - 1) {
+				this.$emit('change', index, this.source);
 			}
 		},
 		// 设置自动播放
