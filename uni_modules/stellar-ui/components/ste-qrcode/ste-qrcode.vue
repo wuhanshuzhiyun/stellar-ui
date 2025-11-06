@@ -1,7 +1,7 @@
 <template>
 	<view class="ste-qrcode-root" :style="{ width: `${size}px`, height: `${size}px` }">
 		<view class="canvas-wrapper">
-			<!-- #ifdef H5 -->
+			<!-- #ifdef H5 || APP -->
 			<canvas :style="[compCanvasStyle]" :canvas-id="canvasId" :id="canvasId" class="h5-canvas"></canvas>
 			<!-- #endif -->
 
@@ -108,7 +108,7 @@ export default {
 			this.$nextTick(() => {
 				const canvas = utils.getCanvasContext(this.canvasId, this).then((res) => {
 					let context = res;
-					// #ifndef H5
+					// #ifndef H5 || APP
 					context = res.getContext('2d');
 					// #endif
 
@@ -156,7 +156,7 @@ export default {
 			};
 			// #endif
 
-			// #ifdef H5
+			// #ifdef H5 || APP
 			this.canvasWidth = qr.dynamicSize;
 			this.canvasHeight = qr.dynamicSize;
 

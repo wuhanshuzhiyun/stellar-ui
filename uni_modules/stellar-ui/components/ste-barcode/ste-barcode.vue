@@ -1,21 +1,11 @@
 <template>
 	<view class="ste-barcode-root">
-		<!-- #ifdef H5 -->
-		<canvas
-			:style="{ width: width + 'px', height: height + 'px' }"
-			:canvas-id="canvasId"
-			:id="canvasId"
-			class="h5-canvas"
-		></canvas>
+		<!-- #ifdef H5 || APP -->
+		<canvas :style="{ width: width + 'px', height: height + 'px' }" :canvas-id="canvasId" :id="canvasId" class="h5-canvas"></canvas>
 		<!-- #endif -->
 
 		<!-- #ifdef MP-WEIXIN || MP-ALIPAY -->
-		<canvas
-			type="2d"
-			:id="canvasId"
-			:style="{ width: width + 'px', height: height + 'px' }"
-			class="mp-canvas"
-		></canvas>
+		<canvas type="2d" :id="canvasId" :style="{ width: width + 'px', height: height + 'px' }" class="mp-canvas"></canvas>
 		<!-- #endif -->
 	</view>
 </template>
@@ -85,7 +75,7 @@ export default {
 	methods: {
 		initCanvas() {
 			const canvas = utils.getCanvasContext(this.canvasId, this).then((res) => {
-				// #ifndef H5
+				// #ifndef H5 || APP
 				const context = res.getContext('2d');
 				const dpr = utils.System.getWindowInfo().pixelRatio;
 				res.width = this.width * dpr;
@@ -95,7 +85,7 @@ export default {
 
 				// #endif
 
-				// #ifdef H5
+				// #ifdef H5 || APP
 				this.drawBarcodeH5(res);
 				// #endif
 			});

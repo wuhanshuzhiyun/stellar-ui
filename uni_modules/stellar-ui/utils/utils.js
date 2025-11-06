@@ -441,14 +441,7 @@ let utils = {
 	 * @param {String} childrenKey 下级数组键
 	 * @param {Object | Function} otherAttributes 为每个对象添加的属性（可以是一个方法，参数是当前节点，返回的对象属性会被添加到当前节点中）
 	 */
-	formatTree(
-		tree,
-		valueKey = 'value',
-		childrenKey = 'children',
-		otherAttributes = {},
-		parentNode = '__root__',
-		depth = 0
-	) {
+	formatTree(tree, valueKey = 'value', childrenKey = 'children', otherAttributes = {}, parentNode = '__root__', depth = 0) {
 		const _formatTree = (tree, parentNode, depth) => {
 			const result = tree.map((item) => {
 				if (item[childrenKey] && item[childrenKey].length) {
@@ -622,12 +615,12 @@ let utils = {
 	getCanvasContext(canvasId, component) {
 		return new Promise((resolve, reject) => {
 			if (!canvasId || !component) reject();
-			// #ifdef H5
+			// #ifdef H5 || APP
 			resolve(uni.createCanvasContext(canvasId, component));
 			// #endif
 
 			// 小程序平台
-			// #ifndef H5
+			// #ifndef H5 || APP
 			const query = uni.createSelectorQuery().in(component);
 			query
 				.select(`#${canvasId}`)
