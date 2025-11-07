@@ -22,13 +22,7 @@
 						<ste-icon v-if="group.lock && !cmpLock" code="&#xe691;" size="16px" />
 					</view>
 					<view class="nav-children" v-if="group.children">
-						<view
-							class="nav-item"
-							v-for="nav in group.children"
-							:key="nav.key"
-							:class="activeName === nav.key ? 'active' : ''"
-							@click="toView(nav.key, group.lock)"
-						>
+						<view class="nav-item" v-for="nav in group.children" :key="nav.key" :class="activeName === nav.key ? 'active' : ''" @click="toView(nav.key, group.lock)">
 							<view class="name">
 								{{ nav.title || nav.name }}
 							</view>
@@ -36,13 +30,7 @@
 					</view>
 				</view>
 			</view>
-			<scroll-view
-				scroll-y
-				:data-markdown="content"
-				class="pc-content"
-				:scroll-top="contentScrollTop"
-				@scroll="handleContentScroll"
-			>
+			<scroll-view scroll-y :data-markdown="content" class="pc-content" :scroll-top="contentScrollTop" @scroll="handleContentScroll">
 				<!-- 组件预览页面 -->
 				<template v-if="cmpIsCompPage">
 					<view v-html="contentViews[0]" class="markdown-view"></view>
@@ -130,10 +118,7 @@ export default {
 			return this.navActive === config.NAV_KEY_COMP;
 		},
 		cmpShowH5() {
-			return (
-				this.navActive === config.NAV_KEY_COMP ||
-				config.SHOW_H5_PAGE.find((item) => this.activeName.indexOf(item) > -1)
-			);
+			return this.navActive === config.NAV_KEY_COMP || config.SHOW_H5_PAGE.find((item) => this.activeName.indexOf(item) > -1);
 		},
 	},
 	watch: {
