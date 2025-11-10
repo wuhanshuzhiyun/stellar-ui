@@ -136,13 +136,13 @@ export default {
 					if (com) {
 						// 如果是组件，获取组件预览地址
 						const name = v.slice(4);
-						src = `/mp/${name}-demo/${name}-demo`;
+						src = `/vue2/#/mp/${name}-demo/${name}-demo`;
 					} else {
-						src = '/mp/index/index';
+						src = '/vue2/#/mp/index/index';
 					}
 					// 自定义主题打开小程序
 					if (v.includes('自定义主题')) {
-						src = `/mp/color-demo/color-demo`;
+						src = `/vue2/#/mp/color-demo/color-demo`;
 					}
 					if (this.iframeUrl === src) return;
 					// #ifdef H5
@@ -203,7 +203,7 @@ export default {
 			this.activeName = key;
 			this.compNavActive = config.NAV_COMP_KEY_DEMO;
 			// 修改URL地址参数，不刷新当前页面
-			history.replaceState({}, '', `/pc/index/index?name=${key}`);
+			history.replaceState({}, '', `/vue2/#/pc/index/index?name=${key}`);
 		},
 		setAdminPwd() {
 			if (this.popupPwd === config.AdminPwd) {
@@ -215,7 +215,7 @@ export default {
 				this.navActive = this.groupKey;
 				this.datas = this.tmpGroupData;
 				// 修改URL地址参数，不刷新当前页面
-				history.replaceState({}, '', `/pc/index/index?name=${this.key}`);
+				history.replaceState({}, '', `/vue2/#/pc/index/index?name=${this.key}`);
 				return;
 			}
 			uni.showToast({
