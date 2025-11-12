@@ -95,17 +95,19 @@ export default {
 		},
 	},
 	methods: {
-		// #ifdef WEB
 		mouseDown(e) {
+			// #ifdef WEB
 			this.touchStart(e);
 			window.addEventListener('mousemove', this.touchMove);
 			window.addEventListener('mouseup', this.touchEnd);
+			// #endif
 		},
 		removeListenner() {
+			// #ifdef WEB
 			window.removeEventListener('mousemove', this.touchMove);
 			window.removeEventListener('mouseup', this.touchEnd);
+			// #endif
 		},
-		// #endif
 		touchStart(e) {
 			this.isMove = true;
 			this.$emit('start');

@@ -6,11 +6,7 @@
 		<view class="scroll-box">
 			<view class="top" @click="test">
 				<view class="top-1">
-					<ste-image
-						:src="joinSrc('https://image.whzb.com/chain/StellarUI/logo.png')"
-						:width="100"
-						:height="100"
-					/>
+					<ste-image :src="joinSrc('https://image.whzb.com/chain/StellarUI/logo.png')" :width="100" :height="100" />
 					<view class="title">
 						<view class="title-1">Stellar UI {{ version }}</view>
 						<view class="title-2">微信平台快速开发的UI框架</view>
@@ -527,7 +523,7 @@ export default {
 <style lang="scss" scoped>
 .page {
 	padding: 120rpx 20px 42px;
-	padding-top: 0;
+
 	padding-bottom: 0;
 	height: initial;
 
@@ -542,7 +538,6 @@ export default {
 	display: flex;
 	align-items: center;
 	justify-content: center;
-
 	font-size: 40rpx;
 }
 

@@ -1,12 +1,9 @@
 <template>
 	<div class="nav-box" :style="[pageStyle, { paddingTop: navbarTop + 'rpx' }]">
 		<div class="nav" :style="{ width: navbarWidth + 'rpx', height: navbarHeight + 'rpx' }">
-			<!-- #ifdef MP-WEIXIN || H5 -->
+			<!-- #ifdef MP-WEIXIN || H5 || APP -->
 			<div v-if="autoBack" class="back-box">
-				<div
-					class="back"
-					:style="{ backgroundColor: backBackgroundColor, borderColor: backBorderColor, opacity: opacity }"
-				>
+				<div class="back" :style="{ backgroundColor: backBackgroundColor, borderColor: backBorderColor, opacity: opacity }">
 					<ste-icon v-if="isFirstPage" code="&#xe68d;" weight="bold" :size="28" :color="backColor"></ste-icon>
 					<ste-icon v-else code="&#xe673;" weight="bold" :size="28" :color="backColor"></ste-icon>
 				</div>
@@ -107,12 +104,17 @@ export default {
 			navbarTop: 16, // 自定义导航栏 top
 			// #endif
 
-			//  #ifdef MP
+			//  #ifndef H5
 			navbarTop: pos.navbarTop, // 自定义导航栏 top
 			// #endif
-			navbarBottom: pos.navbarBottom, // 自定义导航栏 bottom
+			// #ifdef MP
 			navbarWidth: pos.navbarWidth, // 自定义导航栏 width
 			navbarHeight: pos.navbarHeight, // 自定义导航栏 height
+			// #endif
+			// #ifndef MP
+			navbarWidth: 750, // 自定义导航栏 width
+			navbarHeight: 88, // 自定义导航栏 height
+			// #endif
 			isFirstPage: false, // 是否为页面栈第一页
 			startX: 0,
 			touchRule: '左右左右左右', // 秘笈规则

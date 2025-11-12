@@ -47,7 +47,7 @@ function getData(menuButtonInfo) {
 		pxMenuBottomRight = 368;
 		// #endif
 
-		// #ifdef MP
+		// #ifndef H5
 		pxMenuButtonTop = menuButtonInfo.top;
 		pxMenuBottonBottom = menuButtonInfo.bottom;
 		pxMenuButtonWidth = menuButtonInfo.width;

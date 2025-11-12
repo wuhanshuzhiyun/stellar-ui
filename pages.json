@@ -10,7 +10,7 @@
 	},
 	"pages": [
 		//pages数组中第一项表示应用启动页，参考：https://uniapp.dcloud.io/collocation/pages
-		// #ifdef MP-WEIXIN
+		// #ifndef H5
 		{
 			"path": "mp/index/index",
 			"style": {
@@ -50,7 +50,7 @@
 			}
 		},
 		// #endif
-		// #ifndef MP-WEIXIN
+		// #ifdef H5
 		{
 			"path": "pages/index/index",
 			"name": "home",
@@ -76,8 +76,6 @@
 				}
 			}
 		},
-		// #endif
-		// #ifdef H5
 		{
 			"path": "pc/index/index",
 			"style": {
