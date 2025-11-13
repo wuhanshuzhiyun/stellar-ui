@@ -41,6 +41,9 @@ body {
 	height: 100vh;
 	overflow: hidden;
 	width: 100vw;
+	// #ifdef APP
+	padding-top: 20px;
+	// #endif
 
 	display: flex;
 	flex-direction: column;

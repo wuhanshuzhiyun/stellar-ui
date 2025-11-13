@@ -1,23 +1,6 @@
 <template>
-	<view
-		v-if="load"
-		class="ste-signature-root"
-		:style="[cmpRootStyle]"
-		:class="customClass"
-		@mousedown="onTouchStart"
-		@mousemove="onTouchMove"
-		@mouseup="onTouchEnd"
-		@mosueleave="onTouchEnd"
-	>
-		<canvas
-			disable-scroll
-			:id="canvasId"
-			:canvas-id="canvasId"
-			:style="[cmpRootStyle]"
-			@touchstart="onTouchStart"
-			@touchmove="onTouchMove"
-			@touchend="onTouchEnd"
-		/>
+	<view v-if="load" class="ste-signature-root" :style="[cmpRootStyle]" :class="customClass" @mousedown="onTouchStart" @mousemove="onTouchMove" @mouseup="onTouchEnd" @mosueleave="onTouchEnd">
+		<canvas disable-scroll :id="canvasId" :canvas-id="canvasId" :style="[cmpRootStyle]" @touchstart="onTouchStart" @touchmove="onTouchMove" @touchend="onTouchEnd" />
 	</view>
 </template>
 
@@ -175,7 +158,7 @@ export default {
 			ctx.draw(true);
 		},
 		async onTouchStart(e) {
-			// #ifdef MP
+			// #ifdef MP || APP
 			this.strokeing = [{ x: e.changedTouches[0].x, y: e.changedTouches[0].y }];
 			// #endif
 			// #ifdef H5
@@ -186,7 +169,7 @@ export default {
 		},
 		async onTouchMove(e) {
 			if (!this.strokeing?.length) return;
-			// #ifdef MP
+			// #ifdef MP || APP
 			this.strokeing.push({ x: e.changedTouches[0].x, y: e.changedTouches[0].y });
 			// #endif
 			// #ifdef H5
