@@ -191,7 +191,7 @@ export default {
 		// 动画结束
 		async onAnimationEnd() {
 			// 解决h5动画初始会触发结束事件
-			// #ifdef H5
+			// #ifdef H5 || APP
 			if (this.h5flag) {
 				// #endif
 				if (this.direction == 'across') {
@@ -222,7 +222,7 @@ export default {
 				}
 				this.firstDone = true;
 				this.$emit('end', this.index);
-				// #ifdef H5
+				// #ifdef H5 || APP
 			}
 			if (this.direction == 'across') {
 				this.h5flag = true;
