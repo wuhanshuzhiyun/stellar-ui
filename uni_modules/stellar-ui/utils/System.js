@@ -125,8 +125,13 @@ export default class System {
 			return 0;
 		}
 		// #endif
+		// #ifdef MP
 		const menuButtonInfo = uni.getMenuButtonBoundingClientRect();
 		return menuButtonInfo.bottom + 8;
+		// #endif
+		// #ifndef MP
+		return 0;
+		// #endif
 	}
 
 	static getElementBoundary(el) {

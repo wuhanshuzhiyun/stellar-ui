@@ -263,22 +263,21 @@ export default {
 				this.sliderRect = rect;
 			});
 		},
-		// #ifdef WEB
 		// 适配web端没有touch事件
 		onDown(e, isSecond) {
+			// #ifdef WEB
 			this.isMouseDown = true;
 			this.onTouchStart({ touches: [{ clientX: e.clientX, clientY: e.clientY }] }, isSecond);
 			window.addEventListener('mousemove', this.onTouchMove);
 			window.addEventListener('mouseup', this.onTouchEnd);
+			// #endif
 		},
 		removeListenner() {
+			// #ifdef WEB
 			window.removeEventListener('mousemove', this.onTouchMove);
 			window.removeEventListener('mouseup', this.onTouchEnd);
+			// #endif
 		},
-		// onMouseMove(e, isSecond) {
-		// 	this.ont
-		// }
-		// #endif
 		handleClick(e) {
 			if (this.readonly || this.disabled || this.range) return;
 			let offsetValue;
@@ -301,9 +300,7 @@ export default {
 		onTouchMove(e) {
 			if (this.readonly || this.disabled) return;
 			let touches = this.getPosition(e);
-			let distance = this.vertical
-				? touches.clientY - this.startPosition.clientY
-				: touches.clientX - this.startPosition.clientX;
+			let distance = this.vertical ? touches.clientY - this.startPosition.clientY : touches.clientX - this.startPosition.clientX;
 			let containerLength = this.vertical ? this.sliderRect.height : this.sliderRect.width;
 			let offsetValue = (distance / containerLength) * 100;
 			this.updateWidth(offsetValue, true);

@@ -24,13 +24,7 @@
 			</view>
 			<view class="demo-item">
 				<view class="title">自定义上传图标，限制上传数量2</view>
-				<ste-upload
-					v-model="fileList2"
-					uploadIcon="&#xe67e;"
-					:maxCount="2"
-					@open-preview="openPreview"
-					@close-preview="closePreview"
-				/>
+				<ste-upload v-model="fileList2" uploadIcon="&#xe67e;" :maxCount="2" @open-preview="openPreview" @close-preview="closePreview" />
 			</view>
 			<view class="demo-item">
 				<view class="title">限制文件大小2M</view>
@@ -120,6 +114,7 @@ export default {
 						item.status = 'error';
 					}
 				});
+				this.fileList = [...fileList];
 			}, 10000);
 		},
 		beforeRead(fileList, suspend, next, stop) {

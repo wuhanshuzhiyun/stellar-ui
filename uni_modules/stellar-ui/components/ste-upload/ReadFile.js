@@ -23,6 +23,38 @@ export function readMediaFile(options = {}) {
 			reject('count不能小于1');
 			return;
 		}
+		// #ifdef APP
+		uni.chooseMedia({
+			count,
+			mediaType: [accept],
+			sourceType: capture,
+			camera: camera,
+			sizeType: [compressed ? 'compressed' : 'original'],
+			maxDuration,
+			success(res) {
+				const tempFiles = res.tempFiles;
+				const result = tempFiles.map((item) => {
+					const m = {
+						name: null,
+						size: item.size,
+						path: item.tempFilePath,
+						type: res.type,
+					};
+					if (m.type === 'video') {
+						m.duration = item.duration;
+						m.height = item.height;
+						m.width = item.width;
+						m.thumbPath = item.thumbTempFilePath;
+					}
+					return m;
+				});
+				resolve(result);
+			},
+			fail: (err) => {
+				reject(err);
+			},
+		});
+		// #endif
 		// #ifdef MP-WEIXIN
 		wx.chooseMedia({
 			count,
