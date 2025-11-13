@@ -48,6 +48,8 @@ export default {
 						item.status = 'error';
 					}
 				});
+				// 如果状态没有及时更新，强制更新状态
+				this.fileList = [...fileList];
 			}, 1000);
 		},
 	}
@@ -81,6 +83,8 @@ export default {
 				fileList.forEach((item) => {
 					item.status = 'success';
 				});
+				// 如果状态没有及时更新，强制更新状态
+				this.fileList1 = [...fileList];
 			}, 1000);
 		},
 	}
@@ -106,6 +110,8 @@ export default {
 				fileList.forEach((item) => {
 					item.status = 'success';
 				});
+				// 如果状态没有及时更新，强制更新状态
+				this.fileList2 = [...fileList];
 			}, 1000);
 		},
 	}
@@ -191,6 +197,8 @@ export default{
 				v.forEach((item) => {
 					item.status = 'success';
 				});
+				// 如果状态没有及时更新，强制更新状态
+				this.fileList6 = [...fileList];
 			}, 1000);
 		},
 	},
