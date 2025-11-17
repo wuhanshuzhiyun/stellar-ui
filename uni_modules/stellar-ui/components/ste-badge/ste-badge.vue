@@ -117,20 +117,20 @@ export default {
 
 				switch (this.position) {
 					case 'topLeft':
-						style.left = utils.addUnit(this.offsetX);
-						style.top = utils.addUnit(this.offsetY);
+						style.left = utils.formatPx(this.offsetX);
+						style.top = utils.formatPx(this.offsetY);
 						break;
 					case 'bottomLeft':
-						style.left = utils.addUnit(this.offsetX);
-						style.bottom = utils.addUnit(this.offsetY);
+						style.left = utils.formatPx(this.offsetX);
+						style.bottom = utils.formatPx(this.offsetY);
 						break;
 					case 'bottomRight':
-						style.right = utils.addUnit(this.offsetX);
-						style.bottom = utils.addUnit(this.offsetY);
+						style.right = utils.formatPx(this.offsetX);
+						style.bottom = utils.formatPx(this.offsetY);
 						break;
 					default:
-						style.right = utils.addUnit(this.offsetX);
-						style.top = utils.addUnit(this.offsetY);
+						style.right = utils.formatPx(this.offsetX);
+						style.top = utils.formatPx(this.offsetY);
 						break;
 				}
 			}
