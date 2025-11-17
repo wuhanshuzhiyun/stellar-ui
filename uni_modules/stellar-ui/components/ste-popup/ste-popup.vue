@@ -24,7 +24,7 @@
 	/**
 	 * ste-popup 弹出层
 	 * @description 弹出层组件
-	 * @tutorial https://stellar-ui.intecloud.com.cn/pc/index/index?name=ste-popup
+	 * @tutorial https://stellar-ui.intecloud.com.cn/?projectName=stellar-ui&menu=%E7%BB%84%E4%BB%B6&active=ste-popup
 	 * @property {Boolean} show 是否显示弹出层,使用sync修饰符来双向绑定 默认 false
 	 * @property {String} backgroundColor 内容容器的背景色 默认 #ffffff
 	 * @property {Boolean} isMaskClick 是否可以点击遮罩层关闭 默认 true

@@ -18,7 +18,7 @@ import utils from '../../utils/utils.js';
 /**
  * ste-text 文本
  * @description 文本组件
- * @tutorial https://stellar-ui.intecloud.com.cn/pc/index/index?name=ste-text
+ * @tutorial https://stellar-ui.intecloud.com.cn/?projectName=stellar-ui&menu=%E7%BB%84%E4%BB%B6&active=ste-text
  * @property {Boolean} selectable 文本是否可选 默认 false
  * @property {String} space 以何种方式显示连续空格
  * @property {Boolean} decode 是否解码 默认 false

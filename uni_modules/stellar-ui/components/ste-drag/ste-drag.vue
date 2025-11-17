@@ -23,7 +23,7 @@ const DEFAULT_BOUNDARY = { top: 0, left: 0, right: 0, bottom: 0 };
 /**
  * ste-drag 拖拽
  * @description 拖拽
- * @tutorial https://stellar-ui.intecloud.com.cn/pc/index/index?name=ste-drag
+ * @tutorial https://stellar-ui.intecloud.com.cn/?projectName=stellar-ui&menu=%E7%BB%84%E4%BB%B6&active=ste-drag
  * @property {String} attract 是否开启自动吸边（根据 screenWidth 进行吸边）默认 false
  * @property {String} direction 拖拽元素的拖拽方向限制 默认 all
  * @value all 不限制方向 {String}
