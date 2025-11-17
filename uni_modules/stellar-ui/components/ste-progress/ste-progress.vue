@@ -98,8 +98,8 @@ export default {
 	computed: {
 		cmpRootCssVar() {
 			const style = {
-				'--progress-width': utils.addUnit(this.width),
-				'--progress-height': utils.addUnit(this.strokeWidth),
+				'--progress-width': utils.formatPx(this.width),
+				'--progress-height': utils.formatPx(this.strokeWidth),
 				// #ifdef MP-WEIXIN || MP-ALIPAY
 				'--progress-padding': this.$slots.default ? '0' : '0 16rpx',
 				// #endif
@@ -109,7 +109,7 @@ export default {
 				'--active-width': this.realPercentage + '%',
 				'--active-text-align': this.textAlign == 'right' ? 'flex-end' : this.textAlign,
 				'--active-text-color': this.textColor,
-				'--active-text-font-size': utils.addUnit(this.textSize),
+				'--active-text-font-size': utils.formatPx(this.textSize),
 				'--active-transition-duration': `${this.duration}s`,
 			};
 			return style;

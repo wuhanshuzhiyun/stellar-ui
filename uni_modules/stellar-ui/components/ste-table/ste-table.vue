@@ -251,8 +251,8 @@ export default {
 		cmpRootStyle() {
 			let style = {
 				'--offset-top': this.offsetTop,
-				'--table-height': utils.addUnit(this.height),
-				'--table-max-height': utils.addUnit(this.maxHeight),
+				'--table-height': utils.formatPx(this.height),
+				'--table-max-height': utils.formatPx(this.maxHeight),
 				'--ste-theme-color': utils.Color.hex2rgba(color.getColor().steThemeColor, 0.05),
 			};
 			return style;
@@ -471,12 +471,10 @@ export default {
 			if (!isProp) {
 				let style = {};
 				if (column.width) {
-					// style.width = utils.addUnit(column.width);
-					// style.flexBasis = utils.addUnit(column.width);
-					style.flex = `0 1 ${utils.addUnit(column.width)}`;
+					style.flex = `0 1 ${utils.formatPx(column.width)}`;
 				}
 				if (column.minWidth) {
-					style.minWidth = utils.addUnit(column.minWidth);
+					style.minWidth = utils.formatPx(column.minWidth);
 				}
 				return style;
 			} else {

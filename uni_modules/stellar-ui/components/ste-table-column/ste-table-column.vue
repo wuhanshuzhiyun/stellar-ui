@@ -134,12 +134,10 @@ export default {
 		cmpRootStyle() {
 			let style = {};
 			if (this.width) {
-				// style.width = utils.addUnit(this.width);
-				// style.flexBasis = utils.addUnit(this.width);
-				style.flex = `0 1 ${utils.addUnit(this.width)}`;
+				style.flex = `0 1 ${utils.formatPx(this.width)}`;
 			}
 			if (this.minWidth) {
-				style.minWidth = utils.addUnit(this.minWidth);
+				style.minWidth = utils.formatPx(this.minWidth);
 			}
 			return style;
 		},

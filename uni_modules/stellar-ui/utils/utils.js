@@ -64,24 +64,6 @@ let utils = {
 		}
 		return result;
 	},
-	/**兼容css中的单位
-	 * 如果值为数字，则拼接 'rpx'，否则直接返回字符串的值
-	 */
-	addUnit(val) {
-		let newVal;
-		if (this.isNumber(val)) {
-			newVal = val + 'rpx';
-		} else {
-			newVal = val;
-		}
-
-		// #ifdef H5
-		if (newVal && newVal.indexOf('rpx') >= 0) {
-			newVal = this.formatPx(newVal);
-		}
-		// #endif
-		return newVal;
-	},
 	/**字符串是否为数字
 	 *@value 要判断的字符串
 	 */
