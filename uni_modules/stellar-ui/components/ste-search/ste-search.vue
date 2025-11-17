@@ -71,7 +71,7 @@ import SteInput from '../ste-input/ste-input.vue';
 /**
  * ste-search 搜索
  * @description 搜索组件
- * @tutorial https://stellar-ui.intecloud.com.cn/pc/index/index?name=ste-search
+ * @tutorial https://stellar-ui.intecloud.com.cn/?projectName=stellar-ui&menu=%E7%BB%84%E4%BB%B6&active=ste-search
  * @property {String}			type				组件类型
  * @value default	正常搜索{String}
  * @value nav 		导航栏{String}

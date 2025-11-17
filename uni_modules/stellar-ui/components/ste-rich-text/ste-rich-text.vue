@@ -15,7 +15,7 @@ import utils from '../../utils/utils.js';
 /**
  * ste-rich-text 按钮
  * @description 富文本组件
- * @tutorial https://stellar-ui.intecloud.com.cn/pc/index/index?name=ste-rich-text
+ * @tutorial https://stellar-ui.intecloud.com.cn/?projectName=stellar-ui&menu=%E7%BB%84%E4%BB%B6&active=ste-rich-text
  * @property {String} text 富文本值
  * @property {String} space 显示连续空格 默认值 nbsp
  * @value ensp 中文字符空格一半大小 {String}

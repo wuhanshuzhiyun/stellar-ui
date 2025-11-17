@@ -25,7 +25,7 @@ let color = useColor();
 /**
  * ste-rate 评分
  * @description 评分组件,用于对事物进行评级操作。
- * @tutorial https://stellar-ui.intecloud.com.cn/pc/index/index?name=ste-rate
+ * @tutorial https://stellar-ui.intecloud.com.cn/?projectName=stellar-ui&menu=%E7%BB%84%E4%BB%B6&active=ste-rate
  * @property {Number} value 当前评分数（支持v-model双向绑定）默认 0
  * @property {Number} count 图标总数 默认 5
  * @property {Number} score 每颗星星代表的分数 默认 1

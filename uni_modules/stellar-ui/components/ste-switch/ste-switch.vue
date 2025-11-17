@@ -19,7 +19,7 @@ let color = useColor();
 /**
  * ste-switch 开关
  * @description 开关组件,表示两种相互对立的状态间的切换，多用于触发「开/关」。
- * @tutorial https://stellar-ui.intecloud.com.cn/pc/index/index?name=switch
+ * @tutorial https://stellar-ui.intecloud.com.cn/?projectName=stellar-ui&menu=%E7%BB%84%E4%BB%B6&active=ste-switch
  * @property {Boolean} value 开关状态（支持v-model双向绑定）默认 false
  * @property {Boolean} disabled 禁用 默认 false
  * @property {Boolean} readonly 只读（不置灰） 默认 false

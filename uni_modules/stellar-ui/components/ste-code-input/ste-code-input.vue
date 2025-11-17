@@ -24,7 +24,7 @@
 	/**
 	 * ste-code-input 验证码输入
 	 * @description 验证码输入组件
-	 * @tutorial https://stellar-ui.intecloud.com.cn/pc/index/index?name=ste-code-input
+	 * @tutorial https://stellar-ui.intecloud.com.cn/?projectName=stellar-ui&menu=%E7%BB%84%E4%BB%B6&active=ste-code-input
 	 * @property {Number|String} value 初始内容，支持双向绑定
 	 * @property {String} mode 输入框类型
 	 * @value box 盒子模式 {String}

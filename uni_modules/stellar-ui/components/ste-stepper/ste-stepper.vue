@@ -57,7 +57,7 @@ let color = useColor();
 /**
  * ste-stepper 步进器
  * @description 步进器组件,步进器由增加按钮、减少按钮和输入框组成，用于在一定范围内输入、调整数字。
- * @tutorial https://stellar-ui.intecloud.com.cn/pc/index/index?name=ste-stepper
+ * @tutorial https://stellar-ui.intecloud.com.cn/?projectName=stellar-ui&menu=%E7%BB%84%E4%BB%B6&active=ste-stepper
  * @property {Number} value 当前输入的值，支持双向绑定 默认 1
  * @property {Number} min 最小值 默认 0
  * @property {Number} max 最大值 默认 Infinity

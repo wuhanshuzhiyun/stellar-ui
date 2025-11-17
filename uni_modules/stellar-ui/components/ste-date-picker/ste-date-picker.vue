@@ -27,7 +27,7 @@ let color = useColor();
 /**
  * ste-date-picker 时间日期选择器
  * @description 此选择器用于时间日期
- * @tutorial https://stellar-ui.intecloud.com.cn/pc/index/index?name=ste-date-picker
+ * @tutorial https://stellar-ui.intecloud.com.cn/?projectName=stellar-ui&menu=%E7%BB%84%E4%BB%B6&active=ste-date-picker
  * @property {String | Number}	value				绑定值
  * @property {Boolean}			showToolbar			是否显示顶部的操作栏  ( 默认 true )
  * @property {String}			title				顶部标题

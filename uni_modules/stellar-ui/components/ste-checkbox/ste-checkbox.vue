@@ -21,7 +21,7 @@ let color = useColor();
 /**
  * ste-checkbox 复选框
  * @description 复选框组件,在一组备选项中进行多选。
- * @tutorial https://stellar-ui.intecloud.com.cn/pc/index/index?name=ste-checkbox
+ * @tutorial https://stellar-ui.intecloud.com.cn/?projectName=stellar-ui&menu=%E7%BB%84%E4%BB%B6&active=ste-checkbox
  * @property {Boolean} value 当前选中值（支持v-model双向绑定） 默认 false
  * @property {Number|String} name 选项的值
  * @property {Boolean} disabled 禁用 默认 false

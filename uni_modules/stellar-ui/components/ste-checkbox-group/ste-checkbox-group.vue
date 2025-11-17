@@ -8,7 +8,7 @@
 /**
  * ste-checkbox-group 复选框组
  * @description 复选框组组件,内部由多个checkbox组成。
- * @tutorial https://stellar-ui.intecloud.com.cn/pc/index/index?name=ste-checkbox
+ * @tutorial https://stellar-ui.intecloud.com.cn/?projectName=stellar-ui&menu=%E7%BB%84%E4%BB%B6&active=ste-checkbox
  * @property {Array} value 当前选中值（支持v-model双向绑定）
  * @property {String} direction 排列方式 默认 column
  * @value row 横向 默认 {{String}}

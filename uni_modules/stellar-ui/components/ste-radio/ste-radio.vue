@@ -21,7 +21,7 @@ let color = useColor();
 /**
  * ste-radio 单选框
  * @description 单选框组件,在一组备选项中进行单选。
- * @tutorial https://stellar-ui.intecloud.com.cn/pc/index/index?name=ste-radio
+ * @tutorial https://stellar-ui.intecloud.com.cn/?projectName=stellar-ui&menu=%E7%BB%84%E4%BB%B6&active=ste-radio
  * @property {String} value 当前选中值（支持v-model双向绑定
  * @property {Number|String} name 选项的值
  * @property {Boolean} disabled 禁用 默认 false

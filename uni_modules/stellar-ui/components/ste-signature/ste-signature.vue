@@ -9,7 +9,7 @@ import utils from '../../utils/utils';
 /**
  * ste-signature 签名
  * @description 签名组件
- * @tutorial https://stellar-ui.intecloud.com.cn/pc/index/index?name=ste-signature
+ * @tutorial https://stellar-ui.intecloud.com.cn/?projectName=stellar-ui&menu=%E7%BB%84%E4%BB%B6&active=ste-signature
  * @property {String} customClass 自定义 class
  * @property {Number} lineWidth 线条的宽度
  * @property {String} strokeColor 线条颜色，支持 rgb，rgba，hex，hsl，hsla，颜色名称等格式

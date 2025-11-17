@@ -58,7 +58,7 @@ let color = useColor();
 /**
  * ste-slider 滑块
  * @description 滑块组件
- * @tutorial https://stellar-ui.intecloud.com.cn/pc/index/index?name=ste-slider
+ * @tutorial https://stellar-ui.intecloud.com.cn/?projectName=stellar-ui&menu=%E7%BB%84%E4%BB%B6&active=ste-slider
  * @property {Number|String|Array} value 当前进度百分比，在双滑块模式下为数组格式（数组的值都是从小到大）
  * @property {Number|String} min 最小值
  * @property {Number|String} max 最大值

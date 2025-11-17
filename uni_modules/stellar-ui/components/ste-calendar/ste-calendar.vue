@@ -68,7 +68,7 @@ let color = useColor();
 /**
  * ste-calendar 日历
  * @description 日历组件
- * @tutorial https://stellar-ui.intecloud.com.cn/pc/index/index?name=ste-calendar
+ * @tutorial https://stellar-ui.intecloud.com.cn/?projectName=stellar-ui&menu=%E7%BB%84%E4%BB%B6&active=ste-calendar
  * @property {String} title 标题
  * @property {Boolean} showTitle 是否显示标题
  * @property {Array} list 默认选中的日期

@@ -54,7 +54,7 @@ import { readMediaFile, readFile } from './ReadFile.js';
 /**
  * ste-upload 文件上传
  * @description 文件上传组件
- * @tutorial https://stellar-ui.intecloud.com.cn/pc/index/index?name=ste-upload
+ * @tutorial https://stellar-ui.intecloud.com.cn/?projectName=stellar-ui&menu=%E7%BB%84%E4%BB%B6&active=ste-upload
  * @property {Array} 	value  已经上传的文件列表 {url:string;type:string;name?:string;status?:"uploading"|"error"|"success";path?:string;thumbPath?:string}[]
  * @property {String} accept 文件类型, 可选值为all media image file video
  * @value image 图片类型（默认）

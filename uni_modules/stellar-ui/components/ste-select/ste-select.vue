@@ -137,7 +137,7 @@ const isData = (d) => {
 /**
  * ste-select 下拉选
  * @description 下拉选组件
- * @tutorial https://stellar-ui.intecloud.com.cn/pc/index/index?name=ste-select
+ * @tutorial https://stellar-ui.intecloud.com.cn/?projectName=stellar-ui&menu=%E7%BB%84%E4%BB%B6&active=ste-select
  * @property {String} value 绑定的值,支持v-model双向绑定
  * @property {Array} list 数据列表，支持一维数组，二维数组，树形结构
  * @property {String} mode 选择模式
