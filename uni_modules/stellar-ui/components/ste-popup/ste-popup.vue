@@ -150,13 +150,13 @@ export default {
 				display: this.pageDisplay,
 				backgroundColor: this.showMask ? 'rgba(0, 0, 0, 0.6)' : 'transparent',
 				'--content-border-radius': utils.formatPx(this.round ? DEFAULT_BORDER_RADIUS : 0),
-				'--content-height': utils.addUnit(this.height / 2),
+				'--content-height': utils.formatPx(this.height / 2),
 			};
 		},
 		cmpContentStyle() {
 			let style = {
-				width: utils.addUnit(this.width),
-				height: utils.addUnit(this.height),
+				width: utils.formatPx(this.width),
+				height: utils.formatPx(this.height),
 				backgroundColor: this.backgroundColor,
 			};
 
