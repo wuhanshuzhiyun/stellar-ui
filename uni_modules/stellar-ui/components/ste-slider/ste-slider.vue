@@ -200,8 +200,8 @@ export default {
 		},
 		cmpRootCssVar() {
 			const style = {
-				'--progress-height': utils.addUnit(this.barHeight),
-				'--bar-size': utils.addUnit(this.buttonSize),
+				'--progress-height': utils.formatPx(this.barHeight),
+				'--bar-size': utils.formatPx(this.buttonSize),
 				'--active-color': this.activeColor ? this.activeColor : color.getColor().steThemeColor,
 			};
 			return style;
