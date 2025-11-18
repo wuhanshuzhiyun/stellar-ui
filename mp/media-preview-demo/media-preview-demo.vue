@@ -53,12 +53,7 @@
 				<view class="item-block">
 					<ste-button @click="show7 = true">关闭前/后事件</ste-button>
 					<view style="width: 100%">
-						<ste-media-preview
-							:urls="medias"
-							:show.sync="show7"
-							@beforeClose="onBeforeClose"
-							@close="onClose"
-						/>
+						<ste-media-preview :urls="medias" :show.sync="show7" @beforeClose="onBeforeClose" @close="onClose" />
 					</view>
 				</view>
 			</view>
@@ -67,73 +62,76 @@
 </template>
 
 <script>
-export default {
-	data() {
-		return {
-			medias: [
-				'https://image.whzb.com/chain/StellarUI/image/banner1.png',
-				'https://image.whzb.com/chain/StellarUI/竖屏1.mp4',
-				'https://image.whzb.com/chain/StellarUI/验证码背景.png',
-				'https://image.whzb.com/chain/StellarUI/bg4.jpg',
-				'https://image.whzb.com/chain/StellarUI/image/banner2.png',
-				'https://image.whzb.com/chain/StellarUI/bg3.jpg',
-			],
-			show: false,
-			show1: false,
-			show2: false,
-			show3: false,
-			show4: false,
-			show5: false,
-			show6: false,
-			show7: false,
-		};
-	},
-	methods: {
-		onLongpress(index) {
-			uni.showToast({
-				title: `长按了第【${index + 1}】个媒体资源`,
-				icon: 'none',
-			});
+	export default {
+		data() {
+			return {
+				medias: [
+					'https://image.whzb.com/chain/StellarUI/image/banner1.png',
+					'https://image.whzb.com/chain/StellarUI/验证码背景.png',
+					'https://image.whzb.com/chain/StellarUI/bg4.jpg',
+					'https://image.whzb.com/chain/StellarUI/image/banner2.png',
+					'https://image.whzb.com/chain/StellarUI/bg3.jpg',
+				],
+				show: false,
+				show1: false,
+				show2: false,
+				show3: false,
+				show4: false,
+				show5: false,
+				show6: false,
+				show7: false,
+			};
 		},
-		onBeforeClose(stop, next, prevent) {
-			stop();
-			uni.showModal({
-				title: '确定关闭弹窗吗？',
-				success({ cancel, confirm }) {
-					if (confirm) {
-						console.log('点了确定');
-						next();
-					}
-					if (cancel) {
-						console.log('点了取消');
+		methods: {
+			onLongpress(index) {
+				uni.showToast({
+					title: `长按了第【${index + 1}】个媒体资源`,
+					icon: 'none',
+				});
+			},
+			onBeforeClose(stop, next, prevent) {
+				stop();
+				uni.showModal({
+					title: '确定关闭弹窗吗？',
+					success({
+						cancel,
+						confirm
+					}) {
+						if (confirm) {
+							console.log('点了确定');
+							next();
+						}
+						if (cancel) {
+							console.log('点了取消');
+							prevent();
+						}
+					},
+					fail() {
 						prevent();
-					}
-				},
-				fail() {
-					prevent();
-				},
-			});
+					},
+				});
+			},
+			onClose() {
+				uni.showToast({
+					title: '弹窗关闭了',
+					icon: 'none',
+				});
+			},
 		},
-		onClose() {
-			uni.showToast({
-				title: '弹窗关闭了',
-				icon: 'none',
-			});
-		},
-	},
-};
+	};
 </script>
 <style lang="scss" scoped>
-.page {
-	.content {
-		background: #fbfbfc;
-		.demo-item {
-			.item-block {
-				> view {
-					margin: 0 16rpx 16rpx 0;
+	.page {
+		.content {
+			background: #fbfbfc;
+
+			.demo-item {
+				.item-block {
+					>view {
+						margin: 0 16rpx 16rpx 0;
+					}
 				}
 			}
 		}
 	}
-}
 </style>
