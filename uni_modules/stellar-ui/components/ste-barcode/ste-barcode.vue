@@ -14,7 +14,7 @@
 /**
  * ste-barcode 条形码
  * @description 条形码组件
- * @tutorial https://stellar-ui.intecloud.com.cn/pc/index/index?name=ste-barcode
+ * @tutorial https://stellar-ui.intecloud.com.cn/?projectName=stellar-ui&menu=%E7%BB%84%E4%BB%B6&active=ste-barcode
  * @property {String} content 条形码内容(仅支持数字和字母)
  * @property {Number} width 条形码宽度，单位`px`
  * @property {Number} height 条形码高度，单位`px`

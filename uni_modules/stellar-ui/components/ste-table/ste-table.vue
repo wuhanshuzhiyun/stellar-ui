@@ -126,7 +126,7 @@ import { DEFAULT_SUM_TEXT, selectionColorConfig } from './common';
 /**
  * ste-table 表格
  * @description 表格。
- * @tutorial https://stellar-ui.intecloud.com.cn/pc/index/index?name=ste-table
+ * @tutorial https://stellar-ui.intecloud.com.cn/?projectName=stellar-ui&menu=%E7%BB%84%E4%BB%B6&active=ste-table
  * @property {Array} data 表格数据，默认 []
  * @property {Boolean} fixed 表头是否定位为fixed	，默认 false
  * @property {Number|String} offsetTop 定位fixed时top的距离	 默认 0

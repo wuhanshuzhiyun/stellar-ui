@@ -58,7 +58,7 @@ const ICON_OBJ = {
 /**
  * ste-message-box 弹框
  * @description 模拟系统的消息提示框而实现的一套模态对话框组件，用于消息提示、确认消息和提交内容。
- * @tutorial https://stellar-ui.intecloud.com.cn/pc/index/index?name=ste-message-box
+ * @tutorial https://stellar-ui.intecloud.com.cn/?projectName=stellar-ui&menu=%E7%BB%84%E4%BB%B6&active=ste-message-box
  * @property {String} title 提示的标题
  * @property {String} content 提示的内容
  * @property {String} icon 提示区域显示图标，此时content会失效

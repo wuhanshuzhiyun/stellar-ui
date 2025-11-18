@@ -29,7 +29,7 @@ let $state = steToast.$state;
 /**
  * ste-toast 轻提示
  * @description 在页面中间弹出黑色半透明提示，用于消息通知、加载提示、操作结果提示等场景。
- * @tutorial https://stellar-ui.intecloud.com.cn/pc/index/index?name=ste-toast
+ * @tutorial https://stellar-ui.intecloud.com.cn/?projectName=stellar-ui&menu=%E7%BB%84%E4%BB%B6&active=ste-toast
  * @property {String} title 提示的内容
  * @property {String} icon 图标 默认值：success
  * @value success 显示成功图标 {String}

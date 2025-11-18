@@ -41,7 +41,7 @@ import utils from '../../utils/utils.js';
 /**
  * ste-tour 指引
  * @description 指引组件
- * @tutorial https://stellar-ui.intecloud.com.cn/pc/index/index?name=ste-tour
+ * @tutorial https://stellar-ui.intecloud.com.cn/?projectName=stellar-ui&menu=%E7%BB%84%E4%BB%B6&active=ste-tour
  * @property {Boolean} show 是否显示
  * @property {Number} current 当前步骤，多个步骤时有效
  * @property {Array} steps 步骤数组，格式为：[{title: '', message: '', target:'el-id'}]

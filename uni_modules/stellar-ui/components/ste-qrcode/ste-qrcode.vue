@@ -16,7 +16,7 @@
 /**
  * ste-qrcode 二维码
  * @description 二维码组件
- * @tutorial https://stellar-ui.intecloud.com.cn/pc/index/index?name=ste-qrcode
+ * @tutorial https://stellar-ui.intecloud.com.cn/?projectName=stellar-ui&menu=%E7%BB%84%E4%BB%B6&active=ste-qrcode
  * @property {String} content 二维码内容
  * @property {Number} size 二维码尺寸，单位`px`
  * @property {String} background 背景色

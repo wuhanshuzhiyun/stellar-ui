@@ -13,6 +13,11 @@
 </template>
 
 <script>
+	/**
+	 * ste-read-more 阅读更多
+	 * @description 阅读更多组件
+	 * @tutorial https://stellar-ui.intecloud.com.cn/?projectName=stellar-ui&menu=%E7%BB%84%E4%BB%B6&active=ste-read-more
+	 */
 	import utils from '../../utils/utils.js';
 	export default {
 		group: '展示组件',

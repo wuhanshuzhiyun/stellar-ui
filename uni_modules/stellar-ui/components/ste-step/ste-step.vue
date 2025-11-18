@@ -40,7 +40,7 @@
 	/**
 	 * ste-steps 步骤条
 	 * @description 步骤条组件,拆分展示某项流程的步骤，引导用户按流程完成任务或向用户展示当前状态。。
-	 * @tutorial https://stellar-ui.intecloud.com.cn/pc/index/index?name=ste-steps
+	 * @tutorial https://stellar-ui.intecloud.com.cn/?projectName=stellar-ui&menu=%E7%BB%84%E4%BB%B6&active=ste-steps
 	 * @property {String} title 流程步骤的标题
 	 * @property {String} description 流程步骤的描述性文字(支持 html 结构)
 	 * @property {String} icon 图标

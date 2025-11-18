@@ -9,7 +9,7 @@ import utils from '../../utils/utils.js';
 /**
  * ste-steps 步骤条
  * @description 步骤条组件,拆分展示某项流程的步骤，引导用户按流程完成任务或向用户展示当前状态。。
- * @tutorial https://stellar-ui.intecloud.com.cn/pc/index/index?name=ste-steps
+ * @tutorial https://stellar-ui.intecloud.com.cn/?projectName=stellar-ui&menu=%E7%BB%84%E4%BB%B6&active=ste-steps
  * @property {Number} active 步骤进度默认 0
  * @property {Boolean} direction 步骤条方向 默认 row
  * @value  row  横向 {{String}}

@@ -39,7 +39,7 @@ import utils from '../../utils/utils.js';
 /**
  * ste-tree 树形控件
  * @description 树形控件组件
- * @tutorial https://stellar-ui.intecloud.com.cn/pc/index/index?name=ste-tree
+ * @tutorial https://stellar-ui.intecloud.com.cn/?projectName=stellar-ui&menu=%E7%BB%84%E4%BB%B6&active=ste-tree
  * @property {Array} options 节点数组（支持树形结构）
  * @property {String} valueKey 节点的值字段名（默认：value）
  * @property {String} titleKey 节点的标题字段名（默认：title）

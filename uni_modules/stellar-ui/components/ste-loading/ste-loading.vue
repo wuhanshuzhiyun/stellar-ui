@@ -24,7 +24,7 @@ import utils from '../../utils/utils.js';
 /**
  * ste-loading 加载
  * @description 加载组件，用于表示加载中的过渡状态。
- * @tutorial https://stellar-ui.intecloud.com.cn/pc/index/index?name=ste-loading
+ * @tutorial https://stellar-ui.intecloud.com.cn/?projectName=stellar-ui&menu=%E7%BB%84%E4%BB%B6&active=ste-loading
  * @property {String} color 图标颜色，默认#999999
  * @property {String} textColor 提示文本颜色，默认和图标颜色同步
  * @property {Number} textSize 文本大小，单位rpx，默认28

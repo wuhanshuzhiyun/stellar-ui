@@ -9,7 +9,7 @@ import { parentMixin } from '../../utils/mixin.js';
 /**
  * SwipeAction 滑动单元格
  * @description 滑动单元格
- * @tutorial https://stellar-ui.intecloud.com.cn/pc/index/index?name=ste-swipe-action
+ * @tutorial https://stellar-ui.intecloud.com.cn/?projectName=stellar-ui&menu=%E7%BB%84%E4%BB%B6&active=ste-swipe-action
  * @property {String}	mode 模式
  * @value right 右侧滑动
  * @value left 左侧滑动

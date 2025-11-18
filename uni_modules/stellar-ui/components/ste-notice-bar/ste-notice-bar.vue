@@ -34,7 +34,7 @@ import utils from '../../utils/utils.js';
 /**
  * ste-notice-bar 公告栏
  * @description 用于循环播放展示一组消息通知。
- * @tutorial https://stellar-ui.intecloud.com.cn/pc/index/index?name=ste-notice-bar
+ * @tutorial https://stellar-ui.intecloud.com.cn/?projectName=stellar-ui&menu=%E7%BB%84%E4%BB%B6&active=ste-notice-bar
  * @property {Array} list 滚动数据列表，默认 []
  * @property {String} direction 滚动的方向，默认 across
  * @value across 水平 {String}

@@ -33,7 +33,7 @@ let color = useColor();
 /**
  * ste-number-keyboard 数字键盘
  * @description 数字键盘
- * @tutorial https://stellar-ui.intecloud.com.cn/pc/index/index?name=ste-number-keyboard
+ * @tutorial https://stellar-ui.intecloud.com.cn/?projectName=stellar-ui&menu=%E7%BB%84%E4%BB%B6&active=ste-number-keyboard
  * @property {String} mode 键盘模式，默认 popup弹窗模式
  * @value popup 弹窗模式（默认）
  * @value page 在dom文档流中直接展示

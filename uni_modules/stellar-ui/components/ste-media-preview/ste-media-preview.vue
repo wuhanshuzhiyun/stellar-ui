@@ -54,7 +54,7 @@ import TouchScaleing from './TouchScaleing.js';
 /**
  * ste-media-preview 媒体预览
  * @description 媒体预览组件
- * @tutorial https://stellar-ui.intecloud.com.cn/pc/index/index?name=ste-media-preview
+ * @tutorial https://stellar-ui.intecloud.com.cn/?projectName=stellar-ui&menu=%E7%BB%84%E4%BB%B6&active=ste-media-preview
  * @property {Boolean} show 是否显示
  * @property {Array<String>} urls 预览的媒体地址数组
  * @property {Number} autoplay 自动轮播时长，为0不自动轮播，单位ms
