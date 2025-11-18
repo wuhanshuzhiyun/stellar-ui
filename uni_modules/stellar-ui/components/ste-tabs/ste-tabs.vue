@@ -103,7 +103,7 @@ let color = useColor();
 /**
  * ste-tabs 标签页
  * @description 标签页组件
- * @tutorial https://stellar-ui.intecloud.com.cn/pc/index/index?name=ste-tabs
+ * @tutorial https://stellar-ui.intecloud.com.cn/?projectName=stellar-ui&menu=%E7%BB%84%E4%BB%B6&active=ste-tabs
  * @property {String | Number} 	active  当前激活的选项，支持sync双向绑定（类型为number时tab绑定index，类型为string时tab绑定name）
  * @property {String}			type				组件类型
  * @value line 线性（默认）

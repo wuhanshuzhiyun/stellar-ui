@@ -10,7 +10,7 @@ import { childMixin } from '../../utils/mixin.js';
 /**
  * ste-scroll-to-item 锚点项
  * @description 锚点项
- * @tutorial https://stellar-ui.intecloud.com.cn/pc/index/index?name=ste-scroll-to
+ * @tutorial https://stellar-ui.intecloud.com.cn/?projectName=stellar-ui&menu=%E7%BB%84%E4%BB%B6&active=ste-scroll-to
  */
 export default {
 	name: 'ste-scroll-to-item',

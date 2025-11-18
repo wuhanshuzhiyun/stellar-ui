@@ -22,9 +22,9 @@
 import utils from '../../utils/utils.js';
 import { childMixin } from '../../utils/mixin.js';
 /**
- * ste-index-item 锚点项
- * @description 锚点项
- * @tutorial https://stellar-ui.intecloud.com.cn/pc/index/index?name=ste-scroll-to
+ * ste-index-item 索引项
+ * @description 索引项
+ * @tutorial https://stellar-ui.intecloud.com.cn/?projectName=stellar-ui&menu=%E7%BB%84%E4%BB%B6&active=ste-index-list
  * @property {String}	title 分组标题
  * @property {Array<String>}	list 分组字符串列表
  */

@@ -15,7 +15,7 @@ import utils from '../../utils/utils.js';
 /**
  * ste-price 价格
  * @description 金额组件
- * @tutorial https://stellar-ui.intecloud.com.cn/pc/index/index?name=ste-price
+ * @tutorial https://stellar-ui.intecloud.com.cn/?projectName=stellar-ui&menu=%E7%BB%84%E4%BB%B6&active=ste-price
  * @property {Number|String} value 金额 默认值 0
  * @property {String} valueUnit 金额单位
  * @value fen 分(默认值){String}

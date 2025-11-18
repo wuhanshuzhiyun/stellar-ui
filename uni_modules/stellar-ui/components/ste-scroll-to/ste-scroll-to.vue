@@ -18,7 +18,7 @@ function isNum(num) {
 /**
  * ste-scroll-to 滚动锚点
  * @description 滚动锚点
- * @tutorial https://stellar-ui.intecloud.com.cn/pc/index/index?name=ste-scroll-to
+ * @tutorial https://stellar-ui.intecloud.com.cn/?projectName=stellar-ui&menu=%E7%BB%84%E4%BB%B6&active=ste-scroll-to
  * @property {Number}					active 当前激活的锚点index，支持sync双向绑定，默认值0
  * @property {String|Number}	height 高度，默认值100%
  * @event {Function}					change 滚动锚点时触发

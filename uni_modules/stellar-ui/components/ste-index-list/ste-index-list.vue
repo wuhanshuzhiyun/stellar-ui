@@ -28,7 +28,7 @@ let color = useColor();
 /**
  * ste-index-list 索引列表
  * @description 索引列表
- * @tutorial https://stellar-ui.intecloud.com.cn/pc/index/index?name=ste-index-list
+ * @tutorial https://stellar-ui.intecloud.com.cn/?projectName=stellar-ui&menu=%E7%BB%84%E4%BB%B6&active=ste-index-list
  * @property {Number}					active 当前激活的索引下标，支持sync双向绑定，默认值0
  * @property {String|Number}	height 高度，默认值100%
  * @property {Boolean}	sticky 默认标题是否粘性布局

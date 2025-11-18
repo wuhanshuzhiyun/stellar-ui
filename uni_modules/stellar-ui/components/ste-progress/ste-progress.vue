@@ -15,7 +15,7 @@ let color = useColor();
 /**
  * ste-progress 进度条
  * @description 进度条组件
- * @tutorial https://stellar-ui.intecloud.com.cn/pc/index/index?name=ste-progress
+ * @tutorial https://stellar-ui.intecloud.com.cn/?projectName=stellar-ui&menu=%E7%BB%84%E4%BB%B6&active=ste-progress
  * @property {String} activeBg 进度条激活部分的背景	 默认值 #0090FF
  * @property {String} inactiveBg 进度条未激活部分的背景	 默认值 #eeeeee
  * @property {Number} percentage 进度条百分比	默认值 0

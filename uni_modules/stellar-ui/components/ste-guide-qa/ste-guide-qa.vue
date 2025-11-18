@@ -73,7 +73,7 @@
 /**
  * ste-guide-qa 引导服务区
  * @description 问答组件，用于展示常见问题和答案
- * @tutorial https://stellar-ui.intecloud.com.cn/pc/index/index?name=ste-guide-qa
+ * @tutorial https://stellar-ui.intecloud.com.cn/?projectName=stellar-ui&menu=%E7%BB%84%E4%BB%B6&active=ste-guide-qa
  * @property {Array} data 问答数据列表 默认 []
  * @property {Boolean} hideTitleIcon 是否隐藏标题图标 默认 false
  * @property {String} mode 显示模式 默认 1

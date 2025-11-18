@@ -43,7 +43,7 @@ import { parentMixin } from '../../utils/mixin.js';
 /**
  * ste-swiper 轮播
  * @description 轮播组件
- * @tutorial https://stellar-ui.intecloud.com.cn/pc/index/index?name=ste-swiper
+ * @tutorial https://stellar-ui.intecloud.com.cn/?projectName=stellar-ui&menu=%E7%BB%84%E4%BB%B6&active=ste-swiper
  * @property {Number} 						current  				当前显示所在滑块的 index
  * @property {String}							direction				滑动方向  "horizontal" | "vertical"
  * @value horizontal 水平（默认,必须固定宽度）

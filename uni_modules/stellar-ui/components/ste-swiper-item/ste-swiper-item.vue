@@ -5,55 +5,66 @@
 </template>
 
 <script>
-import { childMixin } from '../../utils/mixin.js';
-export default {
-	name: 'ste-swiper-item',
-	mixins: [childMixin('ste-swiper')],
-	data() {
-		return {
-			transformX: 0,
-			transformY: 0,
-			transformZ: 0,
-			linearScale: 1,
-		};
-	},
-	computed: {
-		cmpStyle() {
+	/**
+	 * ste-swiper 轮播
+	 * @description 轮播组件
+	 * @tutorial https://stellar-ui.intecloud.com.cn/?projectName=stellar-ui&menu=%E7%BB%84%E4%BB%B6&active=ste-swiper
+	 * */
+	import {
+		childMixin
+	} from '../../utils/mixin.js';
+	export default {
+		name: 'ste-swiper-item',
+		mixins: [childMixin('ste-swiper')],
+		data() {
 			return {
-				transform: `translate3d(${this.transformX}px,${this.transformY}px,${this.transformZ}px) scale(${this.linearScale})`,
-				transformOrigin: 'center center',
+				transformX: 0,
+				transformY: 0,
+				transformZ: 0,
+				linearScale: 1,
 			};
 		},
-	},
-	methods: {
-		setTransform({ x = 0, y = 0, z = 0 }) {
-			if (this.transformX !== x) this.transformX = x;
-			if (this.transformY !== y) this.transformY = y;
-			if (this.transformZ !== z) this.transformZ = z;
+		computed: {
+			cmpStyle() {
+				return {
+					transform: `translate3d(${this.transformX}px,${this.transformY}px,${this.transformZ}px) scale(${this.linearScale})`,
+					transformOrigin: 'center center',
+				};
+			},
 		},
-		setLinearScale(scale) {
-			this.linearScale = scale;
+		methods: {
+			setTransform({
+				x = 0,
+				y = 0,
+				z = 0
+			}) {
+				if (this.transformX !== x) this.transformX = x;
+				if (this.transformY !== y) this.transformY = y;
+				if (this.transformZ !== z) this.transformZ = z;
+			},
+			setLinearScale(scale) {
+				this.linearScale = scale;
+			},
 		},
-	},
-};
+	};
 </script>
 
 <style>
-.ste-swiper-item-root {
-	width: 100%;
-	height: 100%;
-	/* 添加此行以确保在循环播放时不会出现闪烁 */
-	will-change: transform;
-	/* 隐藏背面，避免翻转时闪烁 */
-	backface-visibility: hidden;
-	/* CSS containment 优化 */
-	contain: layout style paint;
-	/* 抗锯齿 */
-	-webkit-font-smoothing: antialiased;
-	-moz-osx-font-smoothing: grayscale;
-	/* 优化图像渲染 */
-	image-rendering: -webkit-optimize-contrast;
-	/* 确保子元素也使用硬件加速 */
-	transform-style: flat;
-}
+	.ste-swiper-item-root {
+		width: 100%;
+		height: 100%;
+		/* 添加此行以确保在循环播放时不会出现闪烁 */
+		will-change: transform;
+		/* 隐藏背面，避免翻转时闪烁 */
+		backface-visibility: hidden;
+		/* CSS containment 优化 */
+		contain: layout style paint;
+		/* 抗锯齿 */
+		-webkit-font-smoothing: antialiased;
+		-moz-osx-font-smoothing: grayscale;
+		/* 优化图像渲染 */
+		image-rendering: -webkit-optimize-contrast;
+		/* 确保子元素也使用硬件加速 */
+		transform-style: flat;
+	}
 </style>

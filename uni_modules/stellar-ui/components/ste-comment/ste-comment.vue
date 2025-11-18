@@ -1,38 +1,43 @@
 <script>
-import steIcon from '../ste-icon/ste-icon.vue';
-export default {
-	name: 'ste-comment',
-	group: '业务组件',
-	title: 'Comment 评价',
-	props: {
-		/** 标签数据 */
-		tags: {
-			type: Array,
-			default: () => [],
+	/**
+	 * ste-comment 评价
+	 * @description 评价组件
+	 * @tutorial https://stellar-ui.intecloud.com.cn/?projectName=stellar-ui&menu=%E7%BB%84%E4%BB%B6&active=ste-comment
+	 */
+	import steIcon from '../ste-icon/ste-icon.vue';
+	export default {
+		name: 'ste-comment',
+		group: '业务组件',
+		title: 'Comment 评价',
+		props: {
+			/** 标签数据 */
+			tags: {
+				type: Array,
+				default: () => [],
+			},
+			/** 总数 */
+			total: {
+				type: Number,
+				default: 0,
+			},
+			/** 评论数据 */
+			comments: {
+				type: Array,
+				default: () => [],
+			},
 		},
-		/** 总数 */
-		total: {
-			type: Number,
-			default: 0,
+		computed: {
+			totalData() {
+				return Math.max(this.total, this.comments.length);
+			},
+			headRight() {
+				if (this.totalData === 0) {
+					return '期待你的首评';
+				}
+				return '全部评价';
+			},
 		},
-		/** 评论数据 */
-		comments: {
-			type: Array,
-			default: () => [],
-		},
-	},
-	computed: {
-		totalData() {
-			return Math.max(this.total, this.comments.length);
-		},
-		headRight() {
-			if (this.totalData === 0) {
-				return '期待你的首评';
-			}
-			return '全部评价';
-		},
-	},
-};
+	};
 </script>
 <template>
 	<view class="ste-comment-root" :class="{ not: totalData === 0 }">
@@ -56,11 +61,8 @@ export default {
 						<view class="comment-head-right">
 							<view class="comment-head-name">
 								{{ item.userName }}
-								<image
-									class="good-tag"
-									v-if="item.type === 1"
-									src="https://image.whzb.com/chain/StellarUI/component-icons/好评.png"
-								/>
+								<image class="good-tag" v-if="item.type === 1"
+									src="https://image.whzb.com/chain/StellarUI/component-icons/好评.png" />
 							</view>
 							<view class="comment-head-time">{{ item.date }}</view>
 						</view>
@@ -69,13 +71,8 @@ export default {
 						{{ item.evaluateText }}
 					</view>
 					<view class="comment-images">
-						<image
-							class="comment-image"
-							v-for="(image, index) in item.imgList"
-							:key="index"
-							:src="image"
-							mode="aspectFill"
-						/>
+						<image class="comment-image" v-for="(image, index) in item.imgList" :key="index" :src="image"
+							mode="aspectFill" />
 					</view>
 				</view>
 			</view>
@@ -84,117 +81,134 @@ export default {
 </template>
 
 <style lang="scss" scoped>
-.ste-comment-root {
-	width: 100%;
-	background: #fff;
-	&.not {
-		background: linear-gradient(161deg, #ffffff 0%, #ffffff 42%, #fff1ed 100%);
-	}
-	.comment-head {
+	.ste-comment-root {
 		width: 100%;
-		height: 92rpx;
-		display: flex;
-		flex-direction: row;
-		justify-content: space-between;
-		align-items: center;
-		padding: 0 20rpx 0 24rpx;
-		.comment-head-title {
-			font-weight: 800;
-			font-size: 32rpx;
-			color: #000000;
+		background: #fff;
+
+		&.not {
+			background: linear-gradient(161deg, #ffffff 0%, #ffffff 42%, #fff1ed 100%);
 		}
-		.comment-head-right {
-			font-size: 28rpx;
-			color: #858585;
-		}
-	}
-	.comment-content {
-		width: 100%;
-		padding: 0 24rpx 20rpx 24rpx;
-		.comment-tags {
+
+		.comment-head {
+			width: 100%;
+			height: 92rpx;
 			display: flex;
 			flex-direction: row;
-			flex-wrap: wrap;
-			font-weight: 500;
-			font-size: 24rpx;
-			color: #f65419;
-			margin-top: 4rpx;
-			.comment-tag {
-				background: rgba($color: #f65419, $alpha: 0.08);
-				padding: 10rpx 28rpx;
-				margin-right: 20rpx;
-				margin-bottom: 20rpx;
-				border-radius: 26rpx;
+			justify-content: space-between;
+			align-items: center;
+			padding: 0 20rpx 0 24rpx;
+
+			.comment-head-title {
+				font-weight: 800;
+				font-size: 32rpx;
+				color: #000000;
+			}
+
+			.comment-head-right {
+				font-size: 28rpx;
+				color: #858585;
 			}
 		}
 
-		.comment-list {
+		.comment-content {
 			width: 100%;
-			.comment-item {
+			padding: 0 24rpx 20rpx 24rpx;
+
+			.comment-tags {
+				display: flex;
+				flex-direction: row;
+				flex-wrap: wrap;
+				font-weight: 500;
+				font-size: 24rpx;
+				color: #f65419;
+				margin-top: 4rpx;
+
+				.comment-tag {
+					background: rgba($color: #f65419, $alpha: 0.08);
+					padding: 10rpx 28rpx;
+					margin-right: 20rpx;
+					margin-bottom: 20rpx;
+					border-radius: 26rpx;
+				}
+			}
+
+			.comment-list {
 				width: 100%;
-				background: #f9f9fb;
-				border-radius: 16rpx;
-				padding: 24rpx 18rpx 16rpx 18rpx;
-				.comment-head-info {
+
+				.comment-item {
 					width: 100%;
-					display: flex;
-					flex-direction: row;
-					align-items: center;
-					.comment-head-avatar {
-						width: 64rpx;
-						height: 64rpx;
-						border-radius: 50%;
-					}
-					.comment-head-right {
-						font-size: 24rpx;
-						line-height: 32rpx;
-						padding-left: 16rpx;
-						height: 64rpx;
+					background: #f9f9fb;
+					border-radius: 16rpx;
+					padding: 24rpx 18rpx 16rpx 18rpx;
+
+					.comment-head-info {
+						width: 100%;
 						display: flex;
-						flex-direction: column;
-						justify-content: space-between;
-						.comment-head-name {
-							color: #000000;
-							font-weight: bold;
+						flex-direction: row;
+						align-items: center;
+
+						.comment-head-avatar {
+							width: 64rpx;
+							height: 64rpx;
+							border-radius: 50%;
+						}
+
+						.comment-head-right {
+							font-size: 24rpx;
+							line-height: 32rpx;
+							padding-left: 16rpx;
+							height: 64rpx;
 							display: flex;
-							flex-direction: row;
-							align-items: center;
-							.good-tag {
-								width: 84rpx;
-								height: 32rpx;
-								margin-left: 16rpx;
+							flex-direction: column;
+							justify-content: space-between;
+
+							.comment-head-name {
+								color: #000000;
+								font-weight: bold;
+								display: flex;
+								flex-direction: row;
+								align-items: center;
+
+								.good-tag {
+									width: 84rpx;
+									height: 32rpx;
+									margin-left: 16rpx;
+								}
+							}
+
+							.comment-head-time {
+								color: #999999;
+								font-weight: 400;
 							}
 						}
-						.comment-head-time {
-							color: #999999;
-							font-weight: 400;
-						}
 					}
-				}
-				.comment-content {
-					font-size: 28rpx;
-					color: #000000;
-					line-height: 42rpx;
-					margin-top: 18rpx;
-					margin-bottom: 16rpx;
-				}
 
-				.comment-images {
-					display: flex;
-					flex-direction: row;
-					flex-wrap: wrap;
-					.comment-image {
-						width: 150rpx;
-						height: 150rpx;
-						margin-right: 8rpx;
-						margin-bottom: 8rpx;
-						&:nth-child(4n) {
-							margin-right: 0;
+					.comment-content {
+						font-size: 28rpx;
+						color: #000000;
+						line-height: 42rpx;
+						margin-top: 18rpx;
+						margin-bottom: 16rpx;
+					}
+
+					.comment-images {
+						display: flex;
+						flex-direction: row;
+						flex-wrap: wrap;
+
+						.comment-image {
+							width: 150rpx;
+							height: 150rpx;
+							margin-right: 8rpx;
+							margin-bottom: 8rpx;
+
+							&:nth-child(4n) {
+								margin-right: 0;
+							}
 						}
 					}
 				}
 			}
 		}
 	}
-}
 </style>

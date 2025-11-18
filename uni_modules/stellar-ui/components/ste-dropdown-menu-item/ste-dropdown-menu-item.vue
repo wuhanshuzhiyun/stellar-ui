@@ -12,7 +12,7 @@ import utils from '../../utils/utils.js';
 /**
  * ste-dropdown-menu-item 下拉菜单项
  * @description 下拉菜单项
- * @tutorial https://stellar-ui.intecloud.com.cn/pc/index/index?name=ste-dropdown-menu
+ * @tutorial https://stellar-ui.intecloud.com.cn/?projectName=stellar-ui&menu=%E7%BB%84%E4%BB%B6&active=ste-dropdown-menu
  * @property {String} value 选中项对应的值
  * @property {String} title 选中项对应的标题
  * @property {Boolean} disabled 是否禁用 默认 false

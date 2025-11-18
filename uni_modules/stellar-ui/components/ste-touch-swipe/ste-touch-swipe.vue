@@ -25,7 +25,7 @@ import { parentMixin } from '../../utils/mixin.js';
 /**
  * touch-swipe 手势切屏
  * @description 手势切屏组件
- * @tutorial https://stellar-ui.intecloud.com.cn/pc/index/index?name=ste-touch-swipe
+ * @tutorial https://stellar-ui.intecloud.com.cn/?projectName=stellar-ui&menu=%E7%BB%84%E4%BB%B6&active=ste-touch-swipe
  * @property {Number} 	index  当前展示的面板索引，支持sync双向绑定
  * @property {String} 	direction  滑动方向
  * @value horizontal 	（默认）水平方向：必须固定宽度

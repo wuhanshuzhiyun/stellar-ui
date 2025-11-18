@@ -10,7 +10,7 @@ import { childMixin } from '../../utils/mixin.js';
 /**
  * ste-tab 标签页选项
  * @description 标签页选项组件
- * @tutorial https://stellar-ui.intecloud.com.cn/pc/index/index?name=ste-tabs
+ * @tutorial https://stellar-ui.intecloud.com.cn/?projectName=stellar-ui&menu=%E7%BB%84%E4%BB%B6&active=ste-tabs
  * @property {String}			title				标题
  * @property {String}			subTitle		副标题
  * @property {String}			image				图片，同image的src属性

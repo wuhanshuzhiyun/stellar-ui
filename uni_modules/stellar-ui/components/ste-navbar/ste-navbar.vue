@@ -44,7 +44,7 @@ import utils from '../../utils/utils';
 /**
  * ste-navbar 导航栏
  * @description 导航栏组件，支持标题、返回按钮、安全区域适配等功能
- * @tutorial https://stellar-ui.intecloud.com.cn/pc/index/index?name=ste-navbar
+ * @tutorial https://stellar-ui.intecloud.com.cn/?projectName=stellar-ui&menu=%E7%BB%84%E4%BB%B6&active=ste-navbar
  * @property {Boolean} autoBack 是否显示返回按钮 默认 true
  * @property {String} backColor 返回按钮图标颜色 默认 #000
  * @property {String} backCode 返回按钮图标编码 默认 &#xe673;
