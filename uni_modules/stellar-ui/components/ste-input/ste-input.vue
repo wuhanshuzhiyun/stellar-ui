@@ -7,10 +7,9 @@
 			<view class="input-box">
 				<template v-if="type == 'textarea'">
 					<textarea class="ste-input-input textarea" :type="type" :focus="focus" v-model="dataValue"
-						:disabled="disabled || readonly" :placeholder="placeholder"
-						:placeholder-style="placeholderStyle" :placeholder-class="placeholderClass"
-						:confirm-type="confirmType" :cursor-spacing="cursorSpacing" @input="onInput" @focus="onFocus"
-						@blur="onBlur" @confirm="onConfirm" />
+						:disabled="disabled || readonly" :placeholder="placeholder" :placeholder-style="placeholderStyle"
+						:placeholder-class="placeholderClass" :confirm-type="confirmType" :cursor-spacing="cursorSpacing"
+						@input="onInput" @focus="onFocus" @blur="onBlur" @confirm="onConfirm" />
 					<!-- #ifdef H5 || MP-WEIXIN -->
 					<text class="count-text" :style="{
 							'background-color': 'transparent',
@@ -21,10 +20,9 @@
 				</template>
 				<template v-else>
 					<input class="ste-input-input" :type="type" :focus="focused" v-model="dataValue"
-						:disabled="disabled || readonly" :placeholder="placeholder"
-						:placeholder-style="placeholderStyle" :placeholder-class="placeholderClass"
-						:confirm-type="confirmType" @input="onInput" @focus="onFocus" @blur="onBlur"
-						@confirm="onConfirm"
+						:disabled="disabled || readonly" :placeholder="placeholder" :placeholder-style="placeholderStyle"
+						:placeholder-class="placeholderClass" :confirm-type="confirmType" @input="onInput" @focus="onFocus"
+						@blur="onBlur" @confirm="onConfirm"
 						:style="[{ width: cmpShowClear ? 'calc(100% - 48rpx)' : 'calc(100% - 8rpx)' }]"
 						:cursor-spacing="cursorSpacing" :cursor="cursorNumber" />
 					<view v-if="cmpShowClear" class="clear-icon" @click="onClear">
@@ -261,13 +259,14 @@
 		},
 		methods: {
 			onInput(e) {
+				let value = e?.detail?.value || ""
 				if (!this.disabled && !this.readonly) {
 					if (!this.allowSpace) {
-						e.detail.value = e.detail.value.replace(/\s*/g, '');
+						e.detail.value = value.replace(/\s*/g, '');
 					}
 					this.$nextTick(() => {
 						if (this.maxlength > 0) {
-							this.dataValue = e.detail.value.substring(0, this.maxlength);
+							this.dataValue = value.substring(0, this.maxlength) || '';
 						}
 						this.tmpDataValue = this.dataValue;
 						this.$emit('input', this.dataValue);

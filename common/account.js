@@ -33,7 +33,6 @@ export const login = async () => {
 	try {
 		const { code } = await wx.login();
 		const token = await request('/client/account/login', { code }, 'POST');
-		console.log('??????????', token);
 		setToken(token);
 	} catch (e) {
 		return false;
