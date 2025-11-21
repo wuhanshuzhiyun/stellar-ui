@@ -1,13 +1,12 @@
 <template>
 	<view class="ste-video-root" :class="cmpRootClass" :style="[cmpRootStyleVar]">
-		<!-- #ifndef MP-ALIPAY -->
-		<video class="ste-video" :id="id" :src="videoSrc" :controls="false" :show-center-play-btn="false"
-			:poster="poster" :autoplay="autoplay" :loop="loop" :muted="isMuted" :initialTime="initialTime"
-			:duration="duration" :enable-play-gesture="enablePlayGesture" :pageGesture="pageGesture"
-			:direction="direction" :enableProgressGesture="enableProgressGesture" :objectFit="objectFit"
-			:mobileNetHintType="mobileNetHintType" :autoPauseIfNavigate="autoPauseIfNavigate"
-			:autoPauseIfOpenNative="autoPauseIfOpenNative" :vslideGesture="vslideGesture"
-			:vslideGestureInFullscreen="vslideGestureInFullscreen" :adUnitId="adUnitId"
+		<!-- #ifdef H5 | MP-WEIXIN -->
+		<video class="ste-video" :id="id" :src="videoSrc" :controls="false" :show-center-play-btn="false" :poster="poster"
+			:autoplay="autoplay" :loop="loop" :muted="isMuted" :initialTime="initialTime" :duration="duration"
+			:enable-play-gesture="enablePlayGesture" :pageGesture="pageGesture" :direction="direction"
+			:enableProgressGesture="enableProgressGesture" :objectFit="objectFit" :mobileNetHintType="mobileNetHintType"
+			:autoPauseIfNavigate="autoPauseIfNavigate" :autoPauseIfOpenNative="autoPauseIfOpenNative"
+			:vslideGesture="vslideGesture" :vslideGestureInFullscreen="vslideGestureInFullscreen" :adUnitId="adUnitId"
 			:posterForCrawler="posterForCrawler" :codec="codec" :httpCache="httpCache" :playStrategy="playStrategy"
 			:header="header" :isLive="isLive" @click="handleClick" @play="play" @pause="pause" @ended="ended"
 			@timeupdate="timeupdate" @fullscreenchange="fullscreenchange" @waiting="waiting" @error="error"
@@ -16,8 +15,7 @@
 			<!-- <view class="ste-video-custom-content"> -->
 			<!-- 图片操作提示 -->
 			<view class="overlay-box" v-if="isFull && !firstFullDone">
-				<ste-image src="https://image.whzb.com/chain/StellarUI/video/overlay.png" mode="widthFix"
-					width="100%" />
+				<ste-image src="https://image.whzb.com/chain/StellarUI/video/overlay.png" mode="widthFix" width="100%" />
 			</view>
 			<!-- 顶部操作栏 -->
 			<view class="cover top" :style="{
@@ -34,15 +32,13 @@
 				@click="isClickControl = true">
 				<!-- 播放/暂停按钮 -->
 				<view v-if="showPlayBtn">
-					<ste-icon code="&#xe6a8;" size="36" color="#ffffff" v-if="!playState"
-						@click="handlePlay(true)"></ste-icon>
+					<ste-icon code="&#xe6a8;" size="36" color="#ffffff" v-if="!playState" @click="handlePlay(true)"></ste-icon>
 					<ste-icon code="&#xe6ab;" size="36" color="#ffffff" v-else @click="handlePlay(false)"></ste-icon>
 				</view>
 				<!-- 静音按钮 -->
 				<view class="muted-box">
 					<!-- 非静音 -->
-					<ste-icon code="&#xe6c2;" size="38" color="#ffffff" v-if="!isMuted"
-						@click="triggerMuted"></ste-icon>
+					<ste-icon code="&#xe6c2;" size="38" color="#ffffff" v-if="!isMuted" @click="triggerMuted"></ste-icon>
 					<!-- 静音 -->
 					<ste-icon code="&#xe6c3;" size="38" color="#ffffff" v-else @click="triggerMuted"></ste-icon>
 				</view>
@@ -65,8 +61,7 @@
 					<view class="time right">{{ formatTime(videoDuration) }}</view>
 				</view>
 				<template v-if="isFull">
-					<view class="text-box resolution" @click="handleResolutionClick"
-						v-if="resolution && resolution.length > 0">
+					<view class="text-box resolution" @click="handleResolutionClick" v-if="resolution && resolution.length > 0">
 						{{ resolution[resolutionIndex].text }}
 					</view>
 					<view class="text-box speed" @click="handleSpeedClick">
@@ -75,8 +70,7 @@
 				</template>
 				<!-- 全屏按钮 -->
 				<view v-if="showFullscreenBtn">
-					<ste-icon code="&#xe6a9;" size="36" color="#ffffff" v-if="!isFull"
-						@click="handleFull(true)"></ste-icon>
+					<ste-icon code="&#xe6a9;" size="36" color="#ffffff" v-if="!isFull" @click="handleFull(true)"></ste-icon>
 					<ste-icon code="&#xe6aa;" size="36" color="#ffffff" v-else @click="handleFull(false)"></ste-icon>
 				</view>
 			</view>
@@ -93,8 +87,7 @@
 					</view>
 				</view>
 				<view class="item-box" :style="{ display: popupState == 2 ? 'flex' : 'none' }">
-					<view class="choose-item" v-for="(e, index) in resolution" :key="index"
-						@click="handleChooseItem(e, index)">
+					<view class="choose-item" v-for="(e, index) in resolution" :key="index" @click="handleChooseItem(e, index)">
 						<text class="text">{{ e.text }}</text>
 						<view v-if="resolutionIndex == index" class="check-icon">
 							<ste-icon code="&#xe67a;" color="#fff" size="36"></ste-icon>
@@ -109,7 +102,7 @@
 			<!-- </view> -->
 		</video>
 		<!-- #endif -->
-		<!-- #ifdef MP-ALIPAY -->
+		<!-- #ifdef MP-ALIPAY | APP -->
 		<video class="ste-video" :id="id" :src="src" />
 		<!-- #endif -->
 	</view>
