@@ -37,6 +37,31 @@ let pxWindowWidth = systemInfo.windowWidth;
 let flag = false;
 function getData(menuButtonInfo) {
 	if (pxMenuButtonTop === -1) {
+		// #ifdef APP
+		// APP 环境：没有胶囊按钮，使用状态栏高度计算
+		const statusBarHeight = systemInfo.statusBarHeight || 0; // 状态栏高度 px（包含刘海屏/灵动岛）
+		const navContentHeight = systemInfo.platform === 'ios' ? 44 : 48; // 导航内容高度 px
+
+		navbarTop = statusBarHeight; // 导航栏从状态栏下方开始
+		navbarWidth = windowWidth; // 导航栏宽度为屏幕宽度
+		navbarHeight = utils.px2rpx(navContentHeight); // 导航内容高度
+		navbarBottom = statusBarHeight + utils.px2rpx(navContentHeight); // 导航栏底部位置
+
+		if (systemInfo.safeAreaInsets == null || systemInfo.safeAreaInsets.bottom == 0) {
+			safeAreaInsetBottom = 20;
+		} else {
+			safeAreaInsetBottom = utils.px2rpx(systemInfo.safeAreaInsets.bottom);
+		}
+
+		// 计算tabbar的总高度，包含安全距离 单位 rpx
+		tabbarHeight = 0;
+		tabbarHeight += 94;
+		tabbarHeight += safeAreaInsetBottom;
+
+		// APP 环境不需要背景图片适配
+		backgroundPositionY = 0;
+		// #endif
+
 		// #ifdef H5
 
 		pxMenuButtonTop = 55;
@@ -47,7 +72,7 @@ function getData(menuButtonInfo) {
 		pxMenuBottomRight = 368;
 		// #endif
 
-		// #ifndef H5
+		// #ifndef H5 || APP
 		pxMenuButtonTop = menuButtonInfo.top;
 		pxMenuBottonBottom = menuButtonInfo.bottom;
 		pxMenuButtonWidth = menuButtonInfo.width;
@@ -67,6 +92,7 @@ function getData(menuButtonInfo) {
 		}
 		// #endif
 
+		// #ifndef APP
 		navbarTop = utils.px2rpx(pxMenuButtonTop - uni.upx2px(addHeight));
 		navbarWidth = utils.px2rpx(pxMenuButtonLeft);
 		navbarHeight = utils.px2rpx(pxMenuButtonHeight + uni.upx2px(addHeight * 2));
@@ -82,6 +108,7 @@ function getData(menuButtonInfo) {
 		tabbarHeight += safeAreaInsetBottom;
 		// 背景图片精确适配胶囊按钮后的 background-position ypos的值，单位rpx
 		backgroundPositionY = -backgroundControlledHeight + utils.px2rpx(pxMenuBottonBottom) - designedMenuBottonBottom;
+		// #endif
 	}
 }
 // 仅支付宝用，支付宝偶尔会在第一时间拿不到数据，通过延迟方法得到数据
@@ -109,6 +136,11 @@ function refreshData(pageThis) {
 let usePosition = function () {
 	if (pxMenuButtonTop === -1) {
 		let menuButtonInfo = null;
+		// #ifdef APP
+		// APP 环境：直接调用 getData，不需要获取胶囊按钮信息
+		getData(menuButtonInfo);
+		// #endif
+
 		// #ifdef H5
 		getData(menuButtonInfo);
 		// #endif

@@ -62,6 +62,8 @@ body {
 		flex: 1;
 		overflow-y: auto;
 
+		padding-bottom: 20rpx;
+
 		.description {
 			.cmp-name {
 				font-size: 48rpx;
@@ -83,16 +85,16 @@ body {
 			color: #000000;
 		}
 
-		& > .demo-item {
+		.demo-item {
 			margin-bottom: 16px;
 
-			& > .title {
+			.title {
 				font-size: 26rpx;
 				color: #0009;
 				margin-bottom: 16rpx;
 			}
 
-			& > .item-block {
+			.item-block {
 				display: flex;
 				flex-direction: row;
 				flex-wrap: wrap;
