@@ -98,83 +98,183 @@ export default {
 	name: 'ste-stepper',
 	props: {
 		value: {
+			// #ifdef MP
 			type: [Number, null],
+			// #endif
+			// #ifndef MP
+			type: Number,
+			// #endif
 			default: 1,
 		},
 		min: {
+			// #ifdef MP
 			type: [Number, null],
+			// #endif
+			// #ifndef MP
+			type: Number,
+			// #endif
 			default: 0,
 		},
 		max: {
+			// #ifdef MP
 			type: [Number, null],
+			// #endif
+			// #ifndef MP
+			type: Number,
+			// #endif
 			default: Infinity,
 		},
 		step: {
+			// #ifdef MP
 			type: [Number, null],
+			// #endif
+			// #ifndef MP
+			type: Number,
+			// #endif
 			default: 1,
 		},
 		inputWidth: {
+			// #ifdef MP
 			type: [Number, String, null],
+			// #endif
+			// #ifndef MP
+			type: [Number, String],
+			// #endif
 			default: 64,
 		},
 		btnSize: {
+			// #ifdef MP
 			type: [Number, String, null],
+			// #endif
+			// #ifndef MP
+			type: [Number, String],
+			// #endif
 			default: null,
 		},
 		precision: {
+			// #ifdef MP
 			type: [Number, null],
+			// #endif
+			// #ifndef MP
+			type: Number,
+			// #endif
 			default: 0,
 		},
 		theme: {
+			// #ifdef MP
 			type: [String, null],
+			// #endif
+			// #ifndef MP
+			type: String,
+			// #endif
 			default: 'card',
 		},
 		mainColor: {
+			// #ifdef MP
 			type: [String, null],
+			// #endif
+			// #ifndef MP
+			type: String,
+			// #endif
 			default: '',
 		},
 		disabled: {
+			// #ifdef MP
 			type: [Boolean, null],
+			// #endif
+			// #ifndef MP
+			type: Boolean,
+			// #endif
 			default: false,
 		},
 		disablePlus: {
+			// #ifdef MP
 			type: [Boolean, null],
+			// #endif
+			// #ifndef MP
+			type: Boolean,
+			// #endif
 			default: false,
 		},
 		disableMinus: {
+			// #ifdef MP
 			type: [Boolean, null],
+			// #endif
+			// #ifndef MP
+			type: Boolean,
+			// #endif
 			default: false,
 		},
 		disableInput: {
+			// #ifdef MP
 			type: [Boolean, null],
+			// #endif
+			// #ifndef MP
+			type: Boolean,
+			// #endif
 			default: false,
 		},
 		background: {
+			// #ifdef MP
 			type: [String, null],
+			// #endif
+			// #ifndef MP
+			type: String,
+			// #endif
 			default: '#ee0a24',
 		},
 		showDot: {
+			// #ifdef MP
 			type: [Boolean, null],
+			// #endif
+			// #ifndef MP
+			type: Boolean,
+			// #endif
 			default: false,
 		},
 		offsetX: {
+			// #ifdef MP
 			type: [String, Number, null],
+			// #endif
+			// #ifndef MP
+			type: [String, Number],
+			// #endif
 			default: 'auto',
 		},
 		offsetY: {
+			// #ifdef MP
 			type: [String, Number, null],
+			// #endif
+			// #ifndef MP
+			type: [String, Number],
+			// #endif
 			default: 'auto',
 		},
 		showZero: {
+			// #ifdef MP
 			type: [Boolean, null],
+			// #endif
+			// #ifndef MP
+			type: Boolean,
+			// #endif
 			default: false,
 		},
 		position: {
+			// #ifdef MP
 			type: [String, null],
+			// #endif
+			// #ifndef MP
+			type: String,
+			// #endif
 			default: 'topRight',
 		},
 		badgeMax: {
+			// #ifdef MP
 			type: [Number, null],
+			// #endif
+			// #ifndef MP
+			type: Number,
+			// #endif
 			default: 99,
 		},
 	},
@@ -293,10 +393,12 @@ export default {
 		},
 		blur(event) {
 			let { value } = event.detail ?? 0;
+			// 先转换类型
+			value = this.handleValue(value);
 			// 解决实际值没有变化 显示值不刷新的问题
 			this.$emit('input', value);
-			value = this.handleValue(value);
 			this.$nextTick(() => {
+				this.$emit('update:value', value);
 				this.$emit('input', value);
 				event.detail.value = value;
 				this.$emit('blur', event);
@@ -316,6 +418,7 @@ export default {
 					await this.clickTask;
 				}
 				let value = this.handleValue(this.value + this.step);
+				this.$emit('update:value', value);
 				this.$emit('input', value);
 				this.$emit('change', value);
 			}
@@ -331,6 +434,7 @@ export default {
 					await this.clickTask;
 				}
 				let value = this.handleValue(this.value - this.step);
+				this.$emit('update:value', value);
 				this.$emit('input', value);
 				this.$emit('change', value);
 			}

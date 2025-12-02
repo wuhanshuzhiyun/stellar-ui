@@ -2,12 +2,7 @@
 	<view class="ste-table-root" :class="[cmpRootClass]" :style="[cmpRootStyle]">
 		<view class="ste-table-content">
 			<view class="fixed-placeholder" v-if="fixed || height || height > 0 || maxHeight || maxHeight > 0" />
-			<view
-				class="ste-table-header"
-				:class="[getHeaderRowClass()]"
-				:style="[getHeaderRowStyle()]"
-				v-if="showHeader"
-			>
+			<view class="ste-table-header" :class="[getHeaderRowClass()]" :style="[getHeaderRowStyle()]" v-if="showHeader">
 				<view
 					class="ste-table-cell"
 					:class="[getHeaderCellClass(column, columnIndex)]"
@@ -17,20 +12,9 @@
 					@click="headerClick(column, $event)"
 				>
 					<view class="cell-box" v-if="column.type == 'checkbox'">
-						<ste-icon
-							code="&#xe6ae;"
-							:color="selectionIconColor.disabled || selectionColor.disabled"
-							:size="checkIconSize"
-							v-if="canCheckStates.length === 0"
-						/>
+						<ste-icon code="&#xe6ae;" :color="selectionIconColor.disabled || selectionColor.disabled" :size="checkIconSize" v-if="canCheckStates.length === 0" />
 						<template v-else>
-							<ste-icon
-								code="&#xe6ac;"
-								:color="selectionIconColor.main || selectionColor.main"
-								:size="checkIconSize"
-								v-if="checkAllState == 'all'"
-								@click="changeCheckAll"
-							/>
+							<ste-icon code="&#xe6ac;" :color="selectionIconColor.main || selectionColor.main" :size="checkIconSize" v-if="checkAllState == 'all'" @click="changeCheckAll" />
 							<ste-icon
 								code="&#xe6ad;"
 								:color="selectionIconColor.main || selectionColor.main"
@@ -38,13 +22,7 @@
 								v-else-if="checkAllState == 'indeterminate'"
 								@click="changeCheckAll"
 							/>
-							<ste-icon
-								code="&#xe6af;"
-								:color="selectionIconColor.unSelected || selectionColor.unSelected"
-								:size="checkIconSize"
-								v-else
-								@click="changeCheckAll"
-							/>
+							<ste-icon code="&#xe6af;" :color="selectionIconColor.unSelected || selectionColor.unSelected" :size="checkIconSize" v-else @click="changeCheckAll" />
 						</template>
 					</view>
 					<view class="cell-box" :class="column.label ? '' : 'no-value'" v-else>
@@ -66,12 +44,7 @@
 							<slot :row="row"></slot>
 						</view>
 						<view class="ste-table-row sum" v-if="showSummary">
-							<view
-								class="ste-table-cell"
-								v-for="(column, index) in columns"
-								:key="index"
-								:class="[getHeaderCellClass(column)]"
-							>
+							<view class="ste-table-cell" v-for="(column, index) in columns" :key="index" :class="[getHeaderCellClass(column)]">
 								<view class="cell-box">
 									<view v-if="index === 0" class="sum-header">{{ sumText }}</view>
 									<view v-else>
@@ -96,12 +69,7 @@
 						<slot :row="row"></slot>
 					</view>
 					<view class="ste-table-row sum" v-if="showSummary">
-						<view
-							class="ste-table-cell"
-							v-for="(column, index) in columns"
-							:key="index"
-							:class="[getHeaderCellClass(column)]"
-						>
+						<view class="ste-table-cell" v-for="(column, index) in columns" :key="index" :class="[getHeaderCellClass(column)]">
 							<view class="cell-box">
 								<view v-if="index === 0" class="sum-header">{{ sumText }}</view>
 								<view v-else>
@@ -252,7 +220,7 @@ export default {
 			let style = {
 				'--offset-top': this.offsetTop,
 				'--table-height': utils.formatPx(this.height),
-				'--table-max-height': utils.formatPx(this.maxHeight),
+				'--table-max-height': utils.formatPx(this.maxHeight || this.height),
 				'--ste-theme-color': utils.Color.hex2rgba(color.getColor().steThemeColor, 0.05),
 			};
 			return style;
@@ -548,7 +516,9 @@ $default-border: 2rpx solid #ebebeb;
 			}
 			.ste-table-scroll {
 				height: calc(var(--table-height) - 80rpx);
+				// #ifndef APP
 				max-height: calc(var(--table-max-height) - 80rpx);
+				// #endif
 			}
 		}
 	}
