@@ -36,6 +36,10 @@
 		<img src="https://image.whzb.com/chain/StellarUI/微信.jpg"></img>
 		<img src="https://image.whzb.com/chain/StellarUI/支付宝.png"></img>
 	</div>
+	<p class="title">扫描下方安卓APP下载二维码，体验组件库示例：</p>
+	<div class="box">
+		<img src="https://image.whzb.com/chain/StellarUI/app/stellar-ui-apk.png"></img>
+	</div>
 	<div class="bottom">
 		<p>Tips: 为了便于预览组件效果，本文档的右侧内嵌了 H5 版的 StellarUI 页面作为参考。在实际使用中，个别组件的表现可能与小程序上的表现有差异，请以实际效果为准。</p>
 	</div>
