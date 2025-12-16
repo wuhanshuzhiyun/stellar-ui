@@ -5,6 +5,7 @@
 			<view class="description">
 				<view class="cmp-name">DatePicker 时间选择器</view>
 				<view class="cmp-desc">用于选择一个时间点或者一个时间段</view>
+				<view class="cmp-desc">支持版本：1.40.1</view>
 			</view>
 			<view class="type-block">
 				<view>01 组件状态</view>
@@ -13,11 +14,7 @@
 				<view class="title">基础使用</view>
 				<view class="item-block">
 					<view>
-						<ste-date-picker
-							@change="change"
-							title="基础使用"
-							value="2015-05-20 xxx:00:01"
-						></ste-date-picker>
+						<ste-date-picker @change="change" title="基础使用" value="2015-05-20 xxx:00:01"></ste-date-picker>
 					</view>
 				</view>
 			</view>
