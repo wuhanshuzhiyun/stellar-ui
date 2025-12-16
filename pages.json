@@ -126,7 +126,7 @@
 			"path": "mp/icon-demo/icon-demo",
 			"style": {
 				"navigationStyle": "custom",
-				"disableScroll": true,
+
 				"mp-alipay": {
 					"transparentTitle": "always",
 					"titlePenetrate": "YES",
@@ -139,7 +139,7 @@
 			"path": "mp/icon-demo/icon-vertical-align",
 			"style": {
 				"navigationStyle": "custom",
-				"disableScroll": true,
+
 				"mp-alipay": {
 					"transparentTitle": "always",
 					"titlePenetrate": "YES",
@@ -152,7 +152,7 @@
 			"path": "mp/button-demo/button-demo",
 			"style": {
 				"navigationStyle": "custom",
-				"disableScroll": true,
+
 				"mp-alipay": {
 					"transparentTitle": "always",
 					"titlePenetrate": "YES",
@@ -165,7 +165,7 @@
 			"path": "mp/search-demo/search-demo",
 			"style": {
 				"navigationStyle": "custom",
-				"disableScroll": true,
+
 				"mp-alipay": {
 					"transparentTitle": "always",
 					"titlePenetrate": "YES",
@@ -178,7 +178,7 @@
 			"path": "mp/tabs-demo/tabs-demo",
 			"style": {
 				"navigationStyle": "custom",
-				"disableScroll": true,
+
 				"mp-alipay": {
 					"transparentTitle": "always",
 					"titlePenetrate": "YES",
@@ -203,7 +203,7 @@
 			"path": "mp/image-demo/image-demo",
 			"style": {
 				"navigationStyle": "custom",
-				"disableScroll": true,
+
 				"mp-alipay": {
 					"transparentTitle": "always",
 					"titlePenetrate": "YES",
@@ -216,7 +216,7 @@
 			"path": "mp/price-demo/price-demo",
 			"style": {
 				"navigationStyle": "custom",
-				"disableScroll": true,
+
 				"mp-alipay": {
 					"transparentTitle": "always",
 					"titlePenetrate": "YES",
@@ -229,7 +229,7 @@
 			"path": "mp/badge-demo/badge-demo",
 			"style": {
 				"navigationStyle": "custom",
-				"disableScroll": true,
+
 				"mp-alipay": {
 					"transparentTitle": "always",
 					"titlePenetrate": "YES",
@@ -242,7 +242,7 @@
 			"path": "mp/progress-demo/progress-demo",
 			"style": {
 				"navigationStyle": "custom",
-				"disableScroll": true,
+
 				"mp-alipay": {
 					"transparentTitle": "always",
 					"titlePenetrate": "YES",
@@ -255,7 +255,7 @@
 			"path": "mp/rate-demo/rate-demo",
 			"style": {
 				"navigationStyle": "custom",
-				"disableScroll": true,
+
 				"mp-alipay": {
 					"transparentTitle": "always",
 					"titlePenetrate": "YES",
@@ -268,7 +268,7 @@
 			"path": "mp/text-demo/text-demo",
 			"style": {
 				"navigationStyle": "custom",
-				"disableScroll": true,
+
 				"mp-alipay": {
 					"transparentTitle": "always",
 					"titlePenetrate": "YES",
@@ -281,7 +281,7 @@
 			"path": "mp/input-demo/input-demo",
 			"style": {
 				"navigationStyle": "custom",
-				"disableScroll": true,
+
 				"mp-alipay": {
 					"transparentTitle": "always",
 					"titlePenetrate": "YES",
@@ -294,7 +294,7 @@
 			"path": "mp/checkbox-demo/checkbox-demo",
 			"style": {
 				"navigationStyle": "custom",
-				"disableScroll": true,
+
 				"mp-alipay": {
 					"transparentTitle": "always",
 					"titlePenetrate": "YES",
@@ -307,7 +307,7 @@
 			"path": "mp/touch-swipe-demo/touch-swipe-demo",
 			"style": {
 				"navigationStyle": "custom",
-				"disableScroll": true,
+
 				"mp-alipay": {
 					"transparentTitle": "always",
 					"titlePenetrate": "YES",
@@ -320,7 +320,7 @@
 			"path": "mp/scroll-to-demo/scroll-to-demo",
 			"style": {
 				"navigationStyle": "custom",
-				"disableScroll": true,
+
 				"mp-alipay": {
 					"transparentTitle": "always",
 					"titlePenetrate": "YES",
@@ -333,7 +333,7 @@
 			"path": "mp/test-demo/test-demo",
 			"style": {
 				"navigationStyle": "custom",
-				"disableScroll": true,
+
 				"mp-alipay": {
 					"transparentTitle": "always",
 					"titlePenetrate": "YES",
@@ -346,7 +346,7 @@
 			"path": "mp/radio-demo/radio-demo",
 			"style": {
 				"navigationStyle": "custom",
-				"disableScroll": true,
+
 				"mp-alipay": {
 					"transparentTitle": "always",
 					"titlePenetrate": "YES",
@@ -359,7 +359,7 @@
 			"path": "mp/upload-demo/upload-demo",
 			"style": {
 				"navigationStyle": "custom",
-				"disableScroll": true,
+
 				"mp-alipay": {
 					"transparentTitle": "always",
 					"titlePenetrate": "YES",
@@ -372,7 +372,7 @@
 			"path": "mp/swiper-demo/swiper-demo",
 			"style": {
 				"navigationStyle": "custom",
-				"disableScroll": true,
+
 				"mp-alipay": {
 					"transparentTitle": "always",
 					"titlePenetrate": "YES",
@@ -385,7 +385,7 @@
 			"path": "mp/media-preview-demo/media-preview-demo",
 			"style": {
 				"navigationStyle": "custom",
-				"disableScroll": true,
+
 				"mp-alipay": {
 					"transparentTitle": "always",
 					"titlePenetrate": "YES",
@@ -398,7 +398,7 @@
 			"path": "mp/switch-demo/switch-demo",
 			"style": {
 				"navigationStyle": "custom",
-				"disableScroll": true,
+
 				"mp-alipay": {
 					"transparentTitle": "always",
 					"titlePenetrate": "YES",
@@ -411,7 +411,7 @@
 			"path": "mp/stepper-demo/stepper-demo",
 			"style": {
 				"navigationStyle": "custom",
-				"disableScroll": true,
+
 				"mp-alipay": {
 					"transparentTitle": "always",
 					"titlePenetrate": "YES",
@@ -424,7 +424,7 @@
 			"path": "mp/slider-demo/slider-demo",
 			"style": {
 				"navigationStyle": "custom",
-				"disableScroll": true,
+
 				"mp-alipay": {
 					"transparentTitle": "always",
 					"titlePenetrate": "YES",
@@ -437,7 +437,7 @@
 			"path": "mp/popup-demo/popup-demo",
 			"style": {
 				"navigationStyle": "custom",
-				"disableScroll": true,
+
 				"mp-alipay": {
 					"transparentTitle": "always",
 					"titlePenetrate": "YES",
@@ -450,7 +450,7 @@
 			"path": "mp/notice-bar-demo/notice-bar-demo",
 			"style": {
 				"navigationStyle": "custom",
-				"disableScroll": true,
+
 				"mp-alipay": {
 					"transparentTitle": "always",
 					"titlePenetrate": "YES",
@@ -463,7 +463,7 @@
 			"path": "mp/calendar-demo/calendar-demo",
 			"style": {
 				"navigationStyle": "custom",
-				"disableScroll": true,
+
 				"mp-alipay": {
 					"transparentTitle": "always",
 					"titlePenetrate": "YES",
@@ -476,7 +476,7 @@
 			"path": "mp/dropdown-menu-demo/dropdown-menu-demo",
 			"style": {
 				"navigationStyle": "custom",
-				"disableScroll": true,
+
 				"mp-alipay": {
 					"transparentTitle": "always",
 					"titlePenetrate": "YES",
@@ -489,7 +489,7 @@
 			"path": "mp/loading-demo/loading-demo",
 			"style": {
 				"navigationStyle": "custom",
-				"disableScroll": true,
+
 				"mp-alipay": {
 					"transparentTitle": "always",
 					"titlePenetrate": "YES",
@@ -502,7 +502,7 @@
 			"path": "mp/sticky-demo/sticky-demo",
 			"style": {
 				"navigationStyle": "custom",
-				"disableScroll": true,
+
 				"mp-alipay": {
 					"transparentTitle": "always",
 					"titlePenetrate": "YES",
@@ -515,7 +515,7 @@
 			"path": "mp/index-list-demo/index-list-demo",
 			"style": {
 				"navigationStyle": "custom",
-				"disableScroll": true,
+
 				"mp-alipay": {
 					"transparentTitle": "always",
 					"titlePenetrate": "YES",
@@ -528,7 +528,7 @@
 			"path": "mp/date-picker-demo/date-picker-demo",
 			"style": {
 				"navigationStyle": "custom",
-				"disableScroll": true,
+
 				"mp-alipay": {
 					"transparentTitle": "always",
 					"titlePenetrate": "YES",
@@ -541,7 +541,7 @@
 			"path": "mp/swipe-action-demo/swipe-action-demo",
 			"style": {
 				"navigationStyle": "custom",
-				"disableScroll": true,
+
 				"mp-alipay": {
 					"transparentTitle": "always",
 					"titlePenetrate": "YES",
@@ -554,7 +554,7 @@
 			"path": "mp/read-more-demo/read-more-demo",
 			"style": {
 				"navigationStyle": "custom",
-				"disableScroll": true,
+
 				"mp-alipay": {
 					"transparentTitle": "always",
 					"titlePenetrate": "YES",
@@ -567,7 +567,7 @@
 			"path": "mp/number-keyboard-demo/number-keyboard-demo",
 			"style": {
 				"navigationStyle": "custom",
-				"disableScroll": true,
+
 				"mp-alipay": {
 					"transparentTitle": "always",
 					"titlePenetrate": "YES",
@@ -580,7 +580,7 @@
 			"path": "mp/code-input-demo/code-input-demo",
 			"style": {
 				"navigationStyle": "custom",
-				"disableScroll": true,
+
 				"mp-alipay": {
 					"transparentTitle": "always",
 					"titlePenetrate": "YES",
@@ -593,7 +593,7 @@
 			"path": "mp/toast-demo/toast-demo",
 			"style": {
 				"navigationStyle": "custom",
-				"disableScroll": true,
+
 				"mp-alipay": {
 					"transparentTitle": "always",
 					"titlePenetrate": "YES",
@@ -606,7 +606,7 @@
 			"path": "mp/tree-demo/tree-demo",
 			"style": {
 				"navigationStyle": "custom",
-				"disableScroll": true,
+
 				"mp-alipay": {
 					"transparentTitle": "always",
 					"titlePenetrate": "YES",
@@ -619,7 +619,7 @@
 			"path": "mp/tour-demo/tour-demo",
 			"style": {
 				"navigationStyle": "custom",
-				"disableScroll": true,
+
 				"mp-alipay": {
 					"transparentTitle": "always",
 					"titlePenetrate": "YES",
@@ -632,7 +632,7 @@
 			"path": "mp/select-demo/select-demo",
 			"style": {
 				"navigationStyle": "custom",
-				"disableScroll": true,
+
 				"mp-alipay": {
 					"transparentTitle": "always",
 					"titlePenetrate": "YES",
@@ -645,7 +645,7 @@
 			"path": "mp/signature-demo/signature-demo",
 			"style": {
 				"navigationStyle": "custom",
-				"disableScroll": true,
+
 				"mp-alipay": {
 					"transparentTitle": "always",
 					"titlePenetrate": "YES",
@@ -658,7 +658,7 @@
 			"path": "mp/drag-demo/drag-demo",
 			"style": {
 				"navigationStyle": "custom",
-				"disableScroll": true,
+
 				"mp-alipay": {
 					"transparentTitle": "always",
 					"titlePenetrate": "YES",
@@ -671,7 +671,7 @@
 			"path": "mp/steps-demo/steps-demo",
 			"style": {
 				"navigationStyle": "custom",
-				"disableScroll": true,
+
 				"mp-alipay": {
 					"transparentTitle": "always",
 					"titlePenetrate": "YES",
@@ -684,7 +684,7 @@
 			"path": "mp/video-demo/video-demo",
 			"style": {
 				"navigationStyle": "custom",
-				"disableScroll": true,
+
 				"mp-alipay": {
 					"transparentTitle": "always",
 					"titlePenetrate": "YES",
@@ -697,7 +697,7 @@
 			"path": "mp/table-demo/table-demo",
 			"style": {
 				"navigationStyle": "custom",
-				"disableScroll": true,
+
 				"mp-alipay": {
 					"transparentTitle": "always",
 					"titlePenetrate": "YES",
@@ -710,7 +710,7 @@
 			"path": "mp/message-box-demo/message-box-demo",
 			"style": {
 				"navigationStyle": "custom",
-				"disableScroll": true,
+
 				"mp-alipay": {
 					"transparentTitle": "always",
 					"titlePenetrate": "YES",
@@ -723,7 +723,7 @@
 			"path": "mp/animate-demo/animate-demo",
 			"style": {
 				"navigationStyle": "custom",
-				"disableScroll": true,
+
 				"mp-alipay": {
 					"transparentTitle": "always",
 					"titlePenetrate": "YES",
@@ -736,7 +736,7 @@
 			"path": "mp/color-demo/color-demo",
 			"style": {
 				"navigationStyle": "custom",
-				"disableScroll": true,
+
 				"mp-alipay": {
 					"transparentTitle": "always",
 					"titlePenetrate": "YES",
@@ -749,7 +749,7 @@
 			"path": "mp/barcode-demo/barcode-demo",
 			"style": {
 				"navigationStyle": "custom",
-				"disableScroll": true,
+
 				"mp-alipay": {
 					"transparentTitle": "always",
 					"titlePenetrate": "YES",
@@ -762,7 +762,7 @@
 			"path": "mp/qrcode-demo/qrcode-demo",
 			"style": {
 				"navigationStyle": "custom",
-				"disableScroll": true,
+
 				"mp-alipay": {
 					"transparentTitle": "always",
 					"titlePenetrate": "YES",
@@ -775,7 +775,7 @@
 			"path": "mp/comment-demo/comment-demo",
 			"style": {
 				"navigationStyle": "custom",
-				"disableScroll": true,
+
 				"mp-alipay": {
 					"transparentTitle": "always",
 					"titlePenetrate": "YES",
@@ -788,7 +788,7 @@
 			"path": "mp/navbar-demo/navbar-demo",
 			"style": {
 				"navigationStyle": "custom",
-				"disableScroll": true,
+
 				"mp-alipay": {
 					"transparentTitle": "always",
 					"titlePenetrate": "YES",
@@ -801,7 +801,7 @@
 			"path": "mp/guide-qa-demo/guide-qa-demo",
 			"style": {
 				"navigationStyle": "custom",
-				"disableScroll": true,
+
 				"mp-alipay": {
 					"transparentTitle": "always",
 					"titlePenetrate": "YES",

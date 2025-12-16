@@ -233,7 +233,7 @@ let utils = {
 			})
 		);
 		// #endif
-		// #ifdef H5
+		// #ifdef H5 || APP
 		children = component.$slots.default || [];
 		children.forEach((tab) =>
 			propsList.push({
