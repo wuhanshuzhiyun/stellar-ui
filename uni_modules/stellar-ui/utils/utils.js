@@ -174,7 +174,8 @@ let utils = {
 					resolve(result);
 				}
 				// #endif
-				uni.createSelectorQuery()
+				uni
+					.createSelectorQuery()
 					.in(component)
 					[selectFn](selectors)
 					.boundingClientRect((data) => {
@@ -620,6 +621,57 @@ let utils = {
 				});
 			// #endif
 		});
+	},
+	/**
+	 * 倒计时
+	 * @param {Date|string|number} endTime 倒计时的结束时间
+	 * @param {Function} callback 回调函数,如果返回false则停止倒计时
+	 * @returns {NodeJS.Timeout} 定时器ID
+	 */
+	countDown(endTime, callback) {
+		let interval = 0;
+		const end = new Date(endTime).getTime();
+		const now = new Date().getTime();
+		const time = Math.floor((end - now) / 1000);
+		if (time <= 0) {
+			clearInterval(interval);
+			if (callback) callback({ days: 0, hours: 0, minutes: 0, seconds: 0 }, 0);
+			return;
+		}
+		const bool = callback
+			? callback(
+					{
+						days: Math.floor(time / 86400),
+						hours: Math.floor((time / 3600) % 24),
+						minutes: Math.floor((time / 60) % 60),
+						seconds: Math.floor(time % 60),
+					},
+					time
+			  )
+			: true;
+		if (bool === false) return clearInterval(interval);
+		interval = setInterval(() => {
+			const now = new Date().getTime();
+			const time = Math.floor((end - now) / 1000);
+			if (time <= 0) {
+				clearInterval(interval);
+				if (callback) callback({ days: 0, hours: 0, minutes: 0, seconds: 0 }, 0);
+				return;
+			}
+			const bool = callback
+				? callback(
+						{
+							days: Math.floor(time / 86400),
+							hours: Math.floor((time / 3600) % 24),
+							minutes: Math.floor((time / 60) % 60),
+							seconds: Math.floor(time % 60),
+						},
+						time
+				  )
+				: true;
+			if (bool === false) clearInterval(interval);
+		}, 1000);
+		return interval;
 	},
 };
 

@@ -27,7 +27,7 @@
 			</view>
 			<view class="demo-item">
 				<view class="title">日期选择</view>
-				<ste-select mode="date" @change="onChange"></ste-select>
+				<ste-select mode="date" minDate="2025-11-28" @change="onChange"></ste-select>
 			</view>
 			<view class="demo-item">
 				<view class="title">时间选择</view>

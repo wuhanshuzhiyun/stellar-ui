@@ -483,6 +483,15 @@
 					<ste-image :src="joinSrc('组件图标/r-arrow.png')" :width="32" :height="32" />
 				</view>
 			</view>
+			<view class="com-box" @click="nav('coupon-list')">
+				<view class="com-title">
+					<ste-image :src="joinSrc('组件图标/guide.png')" :width="36" :height="36" />
+					<text>CouponList 券列表</text>
+				</view>
+				<view class="com-arrow">
+					<ste-image :src="joinSrc('组件图标/r-arrow.png')" :width="32" :height="32" />
+				</view>
+			</view>
 		</view>
 	</view>
 </template>
