@@ -287,10 +287,10 @@ export default {
 	},
 	methods: {
 		onInput(e) {
-			let value = e?.detail?.value || '';
+			let value = e.target?.value || e.detail?.value || '';
 			if (!this.disabled && !this.readonly) {
 				if (!this.allowSpace) {
-					e.detail.value = value.replace(/\s*/g, '');
+					value = value.replace(/\s*/g, '');
 				}
 				this.$nextTick(() => {
 					if (this.maxlength > 0) {
