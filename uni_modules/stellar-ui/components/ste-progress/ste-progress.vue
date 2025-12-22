@@ -27,7 +27,8 @@ let color = useColor();
  * @property {String} textColor 进度文字颜色		默认 #ffffff
  * @property {String} textAlign 文本对齐方式		默认 right
  * @property {String} textSize 文本字体大小，默认单位rpx		默认 16
- * @property {Number} textSize 默认文本显示阈值	默认 0
+ * @property {Number} displayTextThreshold 默认文本显示阈值	默认 0
+ * @property {Number|String} borderRadius 进度条圆角值（单位rpx） 默认 24
  */
 const MIN = 0;
 const MAX = 100;
@@ -84,6 +85,10 @@ export default {
 			type: [Number, null],
 			default: 0,
 		},
+		borderRadius: {
+			type: [String, Number, null],
+			default: 24,
+		},
 	},
 	data() {
 		return {
@@ -100,6 +105,7 @@ export default {
 			const style = {
 				'--progress-width': utils.formatPx(this.width),
 				'--progress-height': utils.formatPx(this.strokeWidth),
+				'--progress-border-radius': utils.formatPx(this.borderRadius),
 				// #ifdef MP-WEIXIN || MP-ALIPAY
 				'--progress-padding': this.$slots.default ? '0' : '0 16rpx',
 				// #endif
@@ -170,7 +176,7 @@ export default {
 	.active-box {
 		width: var(--progress-width);
 		height: var(--progress-height);
-		border-radius: 24rpx;
+		border-radius: var(--progress-border-radius);
 
 		background-repeat: repeat;
 		background-size: contain;

@@ -62,25 +62,26 @@
 ---$
 ### API
 #### Props
-| 参数					| 说明																												| 类型				| 默认值		| 可选值							| 支持版本	|
-| ---					| ---																												| ---				| ---		| ---							| ---		|
-|`activeBg`				| 进度条激活部分的背景																								| `String`			| `#0090FF`	| -								| -			|
-|`inactiveBg`			| 进度条未激活部分的背景																								| `String`			| `#eeeeee`	| -								| -			|
-|`percentage`			| 进度条百分比																										| `Number`			| `0`		| 0-100							| -			|
-|`strokeWidth`			| 进度条的粗细，默认单位rpx																							| `String/Number`	| `24rpx`	| -								| -			|
-|`disabled`				| 是否禁用																											| `Boolean`			| `false`	| -								| -			|
+| 参数					| 说明																										| 类型				| 默认值		| 可选值							| 支持版本	|
+| ---					| ---																										| ---				| ---		| ---							| ---		|
+|`activeBg`				| 进度条激活部分的背景																							| `String`			| `#0090FF`	| -								| -			|
+|`inactiveBg`			| 进度条未激活部分的背景																						| `String`			| `#eeeeee`	| -								| -			|
+|`percentage`			| 进度条百分比																								| `Number`			| `0`		| 0-100							| -			|
+|`strokeWidth`			| 进度条的粗细，默认单位rpx																						| `String/Number`	| `24rpx`	| -								| -			|
+|`disabled`				| 是否禁用																									| `Boolean`			| `false`	| -								| -			|
 |`width`				| 宽度 <br/>Number，单位rpx<br/>String，同原生<br/>默认宽度是`100%`，会根据父容器的宽度，如果父容器没有宽度将不会显示	| `String/Number`	| `100%`	| -								| -			|
-|`duration`				| 动画时间，单位秒，设置为 0 可以禁用动画																				| `Number`			| `0.3`		| -								| -			|
-|`pivotText`			| 进度文字内容																										| `String`			| -			| -								| -			|
-|`textColor`			| 进度文字颜色																										| `String`			| `#ffffff`	| -								| -			|
-|`textAlign`			| 文本对齐方式																										| `String`			| `right`	| `left` 居左<br/>`center` 居中	| -			|
-|`textSize`				| 文本字体大小，默认单位rpx																							| `String/Number`	| `16`		| -								| -			|
-|`displayTextThreshold`	| 默认文本显示阈值																									| `Number`			| `0`		| -								| -			|
+|`duration`				| 动画时间，单位秒，设置为 0 可以禁用动画																			| `Number`			| `0.3`		| -								| -			|
+|`pivotText`			| 进度文字内容																								| `String`			| -			| -								| -			|
+|`textColor`			| 进度文字颜色																								| `String`			| `#ffffff`	| -								| -			|
+|`textAlign`			| 文本对齐方式																								| `String`			| `right`	| `left` 居左<br/>`center` 居中	| -			|
+|`textSize`				| 文本字体大小，默认单位rpx																						| `String/Number`	| `16`		| -								| -			|
+|`displayTextThreshold`	| 默认文本显示阈值																								| `Number`			| `0`		| -								| -			|
+|`borderRadius`			| 进度条圆角值（单位rpx）																						| `String/Number`	| `24`		| -								| `v1.40.3`	|
 
 #### Slots
 |插槽名		|说明		|插槽参数	|支持版本	|
-| ---		| ---		| ---		| ---		|
-| `default`	| 进度条内容	|-			| -			|
+| ---		| ---		| ---	| ---	|
+| `default`	| 进度条内容	|-		| -		|
 
 ---$
 
