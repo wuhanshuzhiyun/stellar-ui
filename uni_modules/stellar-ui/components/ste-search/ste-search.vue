@@ -22,7 +22,11 @@
 					background="transparent"
 					:cursor="cursorNumber"
 					:allowSpace="allowSpace"
-				/>
+				>
+					<template #suffix>
+						<slot name="suffix"></slot>
+					</template>
+				</ste-input>
 				<swiper
 					v-if="cmpShowSwitch"
 					class="placeholder-list"

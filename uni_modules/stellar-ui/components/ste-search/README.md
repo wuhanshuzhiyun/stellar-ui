@@ -257,6 +257,12 @@ export default {
 | `click`			| 点击任意区域触发													| `value`: 输入框的值		| -		|
 | `selectSuggestion`| 点击搜索建议触发													| `value`: 对应的建议对象	| -		|
 
+#### 组件插槽(Slots)
+
+|插槽名		|说明		|插槽参数	|支持版本	|
+|---		|---		|---	|---	|
+|`suffix`	|输入框后插槽	|-		|-		|
+
 ---$
 {{xuyajun}}
 
