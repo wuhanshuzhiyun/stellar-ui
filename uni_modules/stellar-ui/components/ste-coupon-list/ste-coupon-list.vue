@@ -112,7 +112,7 @@ export default {
 		// #ifdef MP-ALIPAY || APP
 		drawProgressApp() {
 			// 使用uni.createCanvasContext创建绘图上下文
-			const ctx: UniApp.CanvasContext = uni.createCanvasContext(this.canvasId, this);
+			const ctx = uni.createCanvasContext(this.canvasId, this);
 
 			// 设置canvas尺寸 - 根据样式定义的96rpx*48rpx
 			const canvasWidth = utils.formatPx(96, 'num');

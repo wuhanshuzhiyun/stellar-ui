@@ -14,6 +14,13 @@
 				<ste-button @click="clear">清除</ste-button>
 				<ste-button @click="upstep">上一步</ste-button>
 				<ste-button @click="save">保存并预览</ste-button>
+				<ste-button background="#f00" @click="output('right')">输出旋转90°</ste-button>
+				<ste-button background="#f00" @click="output('down')">输出旋转180°</ste-button>
+				<ste-button background="#f00" @click="output('left')">输出旋转270°</ste-button>
+				<ste-button background="#f00" @click="output('up-mirrored')">输出镜像</ste-button>
+				<ste-button background="#f00" @click="output('right-mirrored')">输出旋转90°镜像</ste-button>
+				<ste-button background="#f00" @click="output('down-mirrored')">输出旋转180°镜像</ste-button>
+				<ste-button background="#f00" @click="output('left-mirrored')">输出旋转270°镜像</ste-button>
 				<ste-media-preview :show.sync="show" :urls="urls"></ste-media-preview>
 			</view>
 			<view class="demo-item">
@@ -54,6 +61,18 @@ export default {
 					});
 				}
 			);
+		},
+		output(orientation = 'up') {
+			this.$refs.signature.output({
+				orientation,
+				success: (res) => {
+					this.urls = [res];
+					this.show = true;
+				},
+				fail(e) {
+					console.error(':::::', e);
+				},
+			});
 		},
 	},
 };
