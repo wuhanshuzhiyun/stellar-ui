@@ -373,14 +373,12 @@ export default {
 						canvas.translate(canvasWidth, 0);
 						break;
 				}
-				console.log('ow,oh', originalWidth, originalHeight);
 				if (is90or270) {
 					const min = Math.min(originalWidth, originalHeight);
 					const max = Math.max(originalWidth, originalHeight);
 					let dx = -max / 2;
 					let dy = -min / 2;
 					if (['right', 'right-mirrored'].includes(orientation)) {
-						console.log('min-max', min, max);
 						if (originalWidth < originalHeight) {
 							const d = (max - min) / 2;
 							dx += d;
