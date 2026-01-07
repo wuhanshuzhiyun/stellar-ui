@@ -83,7 +83,7 @@ export default {
 		.demo-item {
 			.signature-box {
 				width: 100%;
-				height: 300rpx;
+				height: 330rpx;
 				background-color: #f5f5f5;
 				margin-bottom: 30rpx;
 			}

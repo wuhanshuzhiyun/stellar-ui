@@ -350,7 +350,7 @@ export default {
 						canvas.rotate(toRad(180)); // 180°
 						break;
 					case 'left':
-						canvas.rotate(toRad(-90)); // -90°
+						canvas.rotate(toRad(270)); // -90°
 						break;
 					case 'right':
 						canvas.rotate(toRad(90)); // 90°
@@ -364,14 +364,41 @@ export default {
 						break;
 					case 'left-mirrored':
 						canvas.rotate(toRad(270));
-						canvas.scale(1, -1);
+						canvas.scale(-1, 1);
+						canvas.translate(-canvasWidth, 0);
 						break;
 					case 'right-mirrored':
 						canvas.rotate(toRad(90));
-						canvas.scale(1, -1);
+						canvas.scale(-1, 1);
+						canvas.translate(canvasWidth, 0);
 						break;
 				}
-				canvas.drawImage(path, -originalWidth / 2, -originalHeight / 2, originalWidth, originalHeight);
+				console.log('ow,oh', originalWidth, originalHeight);
+				if (is90or270) {
+					const min = Math.min(originalWidth, originalHeight);
+					const max = Math.max(originalWidth, originalHeight);
+					let dx = -max / 2;
+					let dy = -min / 2;
+					if (['right', 'right-mirrored'].includes(orientation)) {
+						console.log('min-max', min, max);
+						if (originalWidth < originalHeight) {
+							const d = (max - min) / 2;
+							dx += d;
+							dy += d;
+						}
+						canvas.drawImage(path, dx, dy, min, min);
+					} else {
+						if (originalWidth > originalHeight) {
+							const d = max - min;
+							dx += d;
+							canvas.drawImage(path, dx, dy, min, min);
+						} else {
+							canvas.drawImage(path, dy, dx, min, min);
+						}
+					}
+				} else {
+					canvas.drawImage(path, -canvasWidth / 2, -canvasHeight / 2, canvasWidth, canvasHeight);
+				}
 				canvas.restore();
 				// 确保绘制完成
 				canvas.draw(false, () => {
