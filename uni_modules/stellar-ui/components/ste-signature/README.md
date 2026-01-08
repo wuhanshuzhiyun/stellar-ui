@@ -16,6 +16,7 @@
 	<ste-button @click="clear">清除</ste-button>
 	<ste-button @click="upstep">上一步</ste-button>
 	<ste-button @click="save">保存并预览</ste-button>
+	<ste-button background="#f00" @click="output('up')">默认输出不旋转</ste-button>
 	<ste-button background="#f00" @click="output('right')">输出旋转90°</ste-button>
 	<ste-button background="#f00" @click="output('down')">输出旋转180°</ste-button>
 	<ste-button background="#f00" @click="output('left')">输出旋转270°</ste-button>
@@ -117,7 +118,7 @@ methods: {
 |`clear`	| 清空画布		|-																															|-				|
 |`back`		| 回退				|-																															|-				|
 |`save`		| 保存为图片	|(base64)=>void,(err)=>void																			|-				|
-|`output`	| 自定义输出	|`{orientation:string;success:(base64)=>void;fail:(err)=>void}`	|`1.40.5`	|
+|`output`	| 自定义输出	|{orientation:string;success:(base64)=>void;fail:(err)=>void}	|`1.40.5`	|
 
 
 ---$
