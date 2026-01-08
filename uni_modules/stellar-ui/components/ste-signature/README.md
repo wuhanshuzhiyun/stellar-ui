@@ -118,7 +118,7 @@ methods: {
 |`clear`	| 清空画布		|-																															|-				|
 |`back`		| 回退				|-																															|-				|
 |`save`		| 保存为图片	|(base64)=>void,(err)=>void																			|-				|
-|`output`	| 自定义输出	|{orientation:string;success:(base64)=>void;fail:(err)=>void}	|`1.40.5`	|
+|`output`	| 自定义输出	|{orientation:string;success:(base64)=>void;fail:(err)=>void}	|`1.40.4`	|
 
 
 ---$
