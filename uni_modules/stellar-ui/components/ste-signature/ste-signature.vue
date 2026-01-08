@@ -364,13 +364,11 @@ export default {
 						break;
 					case 'left-mirrored':
 						canvas.rotate(toRad(270));
-						canvas.scale(-1, 1);
-						canvas.translate(-canvasWidth, 0);
+						canvas.scale(1, -1);
 						break;
 					case 'right-mirrored':
 						canvas.rotate(toRad(90));
-						canvas.scale(-1, 1);
-						canvas.translate(canvasWidth, 0);
+						canvas.scale(1, -1);
 						break;
 				}
 				if (is90or270) {
