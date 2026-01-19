@@ -145,7 +145,7 @@ export default {
 | `disabled`	| 是否禁用步进器														| `Boolean`			| `false`							| -																									| -			|
 | `disablePlus`	| 是否禁用增加按钮														| `Boolean`			| `false`							| -																									| -			|
 | `disableMinus`| 是否禁用减少按钮														| `Boolean`			| `false`							| -																									| -			|
-| `disablelnput`| 是否禁用输入框														| `Boolean`			| `false`							| -																									| -			|
+| `disableInput`| 是否禁用输入框														| `Boolean`			| `false`							| -																									| -			|
 | `theme`		| 是否禁用输入框														| `String`			| `card`							| `card`：面型</br>`line`：线型</br>`add`：纯加购按钮</br>`simple`：图标显示模式</br>`circle`：圆形按钮显示	| -			|
 徽标属性
 | `background`	| 背景																				| `String`			| `#ee0a24`	| -																			| -	|
