@@ -465,6 +465,15 @@
 			</view>
 			<!-- ***业务组件*** -->
 			<view class="group-title">业务组件</view>
+			<view class="com-box" @click="nav('app-update')">
+				<view class="com-title">
+					<ste-image :src="joinSrc('组件图标/导航栏.png')" :width="36" :height="36" />
+					<text>AppUpdate App更新</text>
+				</view>
+				<view class="com-arrow">
+					<ste-image :src="joinSrc('组件图标/r-arrow.png')" :width="32" :height="32" />
+				</view>
+			</view>
 			<view class="com-box" @click="nav('comment')">
 				<view class="com-title">
 					<ste-image :src="joinSrc('组件图标/导航栏.png')" :width="36" :height="36" />

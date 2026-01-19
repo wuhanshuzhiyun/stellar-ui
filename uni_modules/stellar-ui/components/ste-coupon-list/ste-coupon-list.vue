@@ -4,6 +4,8 @@ import utils from '../../utils/utils.js';
 let interval = 0;
 
 export default {
+	group: '业务组件',
+	title: 'CouponList 券列表',
 	props: {
 		/** 基础数据 */
 		data: { type: Object, default: () => ({}) },

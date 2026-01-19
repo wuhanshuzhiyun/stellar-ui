@@ -811,6 +811,19 @@
 			}
 		},
 		{
+			"path": "mp/app-update-demo/app-update-demo",
+			"style": {
+				"navigationStyle": "custom",
+
+				"mp-alipay": {
+					"transparentTitle": "always",
+					"titlePenetrate": "YES",
+					"allowsBounceVertical": "NO",
+					"navigationBarTitleText": ""
+				}
+			}
+		},
+		{
 			"path": "mp/coupon-list-demo/coupon-list-demo",
 			"style": {
 				"navigationStyle": "custom",
