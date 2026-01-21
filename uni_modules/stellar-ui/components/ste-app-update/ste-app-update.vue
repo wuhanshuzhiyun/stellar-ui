@@ -58,6 +58,9 @@ export default {
 			type: String,
 			default: '立即体验',
 		},
+		appVersion: {
+			type: String,
+		},
 	},
 	data() {
 		return {
@@ -137,10 +140,16 @@ export default {
 			// #ifdef APP-PLUS
 			plus.runtime.getProperty(plus.runtime.appid || '', (inf) => {
 				this.version = inf.version || '';
+				if (this.appVersion) {
+					this.version = this.appVersion;
+				}
 				this.getData(callback);
 			});
 			// #endif
 			// #ifndef APP-PLUS
+			if (this.appVersion) {
+				this.version = this.appVersion;
+			}
 			this.getData(callback);
 			// #endif
 		},

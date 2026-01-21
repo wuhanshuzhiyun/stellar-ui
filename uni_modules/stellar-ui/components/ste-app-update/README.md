@@ -46,11 +46,12 @@ export default {
 #### Props
 | 属性名 | 说明  | 类型 | 默认值  | 可选值 | 支持版本 |
 | ----- | ----- | --- | ------- | ------ | -------- |
-| `clientId` | 应用编码 | `string` | `` | - | - |
-| `clientSecret` | 应用密钥 | `string` | `` | - | - |
+| `clientId` | 应用编码 | `string` | - | - | - |
+| `clientSecret` | 应用密钥 | `string` | - | - | - |
 | `apiUrl` | 更新API地址 | `string` | `https://zboa.whzb.com/inte-cloud-dev/blade-system/api/inte/client/ver/currentDetail` | - | - |
-| `appType` | APP环境,版本号的最后一位为环境标识 | `string` | `` | - | - |
+| `appType` | APP环境,版本号的最后一位为环境标识 | `string` | - | - | - |
 | `btnText` | 立即体验按钮文本 | `string` | `立即体验` | - | - |
+| `appVersion` | 应用当前版本 | `string` | - | - | `1.40.9` |
 
 
 #### Events
