@@ -299,14 +299,11 @@ export default {
 		};
 	},
 	mounted() {
-		console.log('renderjs mounted')
 		this.initPopup();
 	},
 	methods: {
 		initPopup() {
-			console.log('renderjs init')
 			if (this.isInitialized || !this.$el) return;
-			console.log('renderjs do....')
 			const appendToBody = this.$ownerInstance.$vm.appendToBody
 			const uid = this.$el.className?.match(/ste-popup-(\d+)/)?.[1];
 			if (uid && appendToBody) {
