@@ -3,9 +3,7 @@
 		<view class="content" :style="[cmpPriceStyle]">
 			<text v-if="showUnit" class="unit" :style="[cmpUnitStyle]">{{ unitSymbol }}</text>
 			<text class="yuan-price" :style="[cmpYuanPriceStyle]">{{ cmpYuanValue }}</text>
-			<text v-if="valueUnit === 'fen'" class="fen-price" :style="[cmpFenPriceStyle]">
-				{{ cmpFenValue }}
-			</text>
+			<text v-if="valueUnit === 'fen'" class="fen-price" :style="[cmpFenPriceStyle]">{{ cmpFenValue }}</text>
 		</view>
 	</view>
 </template>
@@ -48,85 +46,85 @@ export default {
 		// 金额
 		value: {
 			type: [Number, String, null],
-			default: 0,
+			default: 0
 		},
 		// 金额单位，fen | yuan，当为fen（分）时，值除以100
 		valueUnit: {
 			type: [String, null],
-			default: 'fen',
+			default: 'fen'
 		},
 		// 精度 -1 不使用精度 0 保留0位小数 1 保留1位小数 2保留2位小数
 		digits: {
 			type: [Number, null],
-			default: -1,
+			default: -1
 		},
 		// 是否显示单位符号
 		showUnit: {
 			type: [Boolean, null],
-			default: true,
+			default: true
 		},
 		// 单位符号
 		unitSymbol: {
 			type: [String, null],
-			default: '¥',
+			default: '¥'
 		},
 		// 金额文字尺寸
 		fontSize: {
 			type: [Number, String, null],
-			default: 30,
+			default: 30
 		},
 		// 金额文字颜
 		color: {
 			type: [String, null, null],
-			default: '#FF1E19',
+			default: '#FF1E19'
 		},
 		// 划线价颜色
 		linePriceColor: {
 			type: [String, null, null],
-			default: '#999999',
+			default: '#999999'
 		},
 		// 行高，默认值为-1，当为-1是，line-height:1
 		lineHeight: {
 			type: [Number, String, null],
-			default: -1,
+			default: -1
 		},
 		// 是否是划线价
 		isSuggestPrice: {
 			type: [Boolean, null],
-			default: false,
+			default: false
 		},
 		// 左margin
 		marginLeft: {
 			type: [Number, String, null],
-			default: 0,
+			default: 0
 		}, // 右margin
 		marginRight: {
 			type: [Number, String, null],
-			default: 0,
+			default: 0
 		},
 		// 上margin
 		marginTop: {
 			type: [Number, String, null],
-			default: 0,
+			default: 0
 		}, // 下margin
 		marginBottom: {
 			type: [Number, String, null],
-			default: 0,
+			default: 0
 		},
 		// 金额样式 1 元和角分大小相等（特殊价格） 2 角分小于元（常规价格）3 价格符号和角，分相等
 		styleType: {
 			type: [Number, null],
-			default: 2,
+			default: 2
 		},
 		bold: {
 			type: [Boolean, null],
-			default: false,
+			default: false
 		},
 		// 过滤器
 		formatter: {
 			type: [Function, null],
-			default: undefined,
-		},
+			default: undefined
+		}
 	},
 	data() {
 		return {};
@@ -177,13 +175,13 @@ export default {
 				marginRight: utils.formatPx(this.marginRight),
 				marginTop: utils.formatPx(this.marginTop),
 				marginBottom: utils.formatPx(this.marginBottom),
-				fontWeight: this.bold ? 'bold' : 'normal',
+				fontWeight: this.bold ? 'bold' : 'normal'
 			};
 		},
 		cmpUnitStyle() {
 			let style = {
 				textDecoration: this.isSuggestPrice ? 'line-through' : 'none',
-				color: (this.isSuggestPrice ? this.linePriceColor : this.color) + ' !important',
+				color: (this.isSuggestPrice ? this.linePriceColor : this.color) + ' !important'
 			};
 
 			if (this.isSuggestPrice) {
@@ -197,7 +195,7 @@ export default {
 		cmpYuanPriceStyle() {
 			return {
 				fontSize: utils.formatPx(this.fontSize),
-				textDecoration: this.isSuggestPrice ? 'line-through' : 'none',
+				textDecoration: this.isSuggestPrice ? 'line-through' : 'none'
 			};
 		},
 		cmpFenPriceStyle() {
@@ -213,9 +211,9 @@ export default {
 			}
 			return {
 				fontSize,
-				textDecoration: this.isSuggestPrice ? 'line-through' : 'none',
+				textDecoration: this.isSuggestPrice ? 'line-through' : 'none'
 			};
-		},
+		}
 	},
 	methods: {
 		calcFontSize() {
@@ -237,8 +235,8 @@ export default {
 				}
 			}
 			return size;
-		},
-	},
+		}
+	}
 };
 </script>
 

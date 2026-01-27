@@ -1,13 +1,26 @@
 <template>
+	<!-- #ifndef H5 || APP-PLUS -->
 	<view
 		class="ste-popup"
 		:class="'ste-popup-' + _uid"
 		:style="[cmpPageStyle]"
 		@click.stop="onMaskClick"
 		:animation="overlayAnimationData"
-		:prop="show"
-		:change:prop="renderModule.handleShowChange"
 	>
+	<!-- #endif -->
+	<!-- #ifdef H5 || APP-PLUS -->
+	<view
+		class="ste-popup"
+		:class="'ste-popup-' + _uid"
+		:style="[cmpPageStyle]"
+		@click.stop="onMaskClick"
+		:animation="overlayAnimationData"
+		:prop-show="show"
+		:prop-appendToBody="appendToBody"
+		:change:prop-show="() => {}"
+		:change:prop-appendToBody="() => {}"
+	>
+		<!-- #endif -->
 		<view class="content" :class="position" :style="[cmpContentStyle]" :animation="animationData" @click.stop>
 			<template v-if="keepContent || showContent">
 				<scroll-view style="width: 100%; height: 100%" v-if="height > 0" :scroll-y="true" @touchmove.stop.prevent="touchmove">
@@ -49,6 +62,7 @@ const DEFAULT_BORDER_RADIUS = 32;
  * @property {Number} duration 动画持续时间，单位ms
  * @property {Number} zIndex 弹窗层级z-index
  * @property {Boolean} keepContent 隐藏后是否不销毁弹窗内容元素 默认 true
+ * @property {Boolean} appendToBody 是否将弹窗挂载到body下（仅H5|APP有效）默认 false
  * @event {Function} close 弹窗关闭动画执行完毕事件
  * @event {Function} open 弹窗打开动画执行完毕事件
  * @event {Function} maskClick 遮罩点击事件
@@ -122,6 +136,11 @@ export default {
 		keepContent: {
 			type: [Boolean, null],
 			default: true
+		},
+		// 是否将弹窗挂载到body下（仅H5|APP有效）
+		appendToBody: {
+			type: [Boolean, null],
+			default: false
 		}
 	},
 	data() {
@@ -269,50 +288,45 @@ export default {
 };
 </script>
 
+<!-- #ifdef H5 || APP-PLUS -->
 <script module="renderModule" lang="renderjs">
 export default {
 	data() {
 		return {
 			popupElement: null,
 			placeholder: null,
-			isMounted: false
+			isInitialized: false,
 		};
 	},
 	mounted() {
+		console.log('renderjs mounted')
 		this.initPopup();
 	},
 	methods: {
 		initPopup() {
-			// 获取当前 popup 元素
-			const uid = this.$el.className.match(/ste-popup-(\d+)/)?.[1];
-			if (uid) {
+			console.log('renderjs init')
+			if (this.isInitialized || !this.$el) return;
+			console.log('renderjs do....')
+			const appendToBody = this.$ownerInstance.$vm.appendToBody
+			const uid = this.$el.className?.match(/ste-popup-(\d+)/)?.[1];
+			if (uid && appendToBody) {
 				this.popupElement = document.querySelector(`.ste-popup-${uid}`);
+				this.isInitialized = true;
+				// 初始化完成后尝试挂载
+				this.tryMountToBody();
 			}
 		},
-		handleShowChange(newVal) {
-			if (!this.popupElement) {
-				this.initPopup();
-			}
-
-			if (newVal && this.popupElement && !this.isMounted) {
-				// 显示时挂载到 body
-				this.mountToBody();
-			}
-		},
-		mountToBody() {
-			if (!this.popupElement || this.isMounted) return;
-
+		tryMountToBody() {
 			// 创建占位元素
 			this.placeholder = document.createComment('popup-placeholder');
 			this.popupElement.parentNode.insertBefore(this.placeholder, this.popupElement);
-
 			// 移动到 body
 			document.body.appendChild(this.popupElement);
-			this.isMounted = true;
 		}
 	}
 };
 </script>
+<!-- #endif -->
 
 <style lang="scss" scoped>
 .ste-popup {

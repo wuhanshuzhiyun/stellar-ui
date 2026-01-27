@@ -112,22 +112,23 @@ export default {
 ### API
 #### 组件属性(Props)
 
-| 属性名		| 说明										| 类型				| 默认值		| 可选值							| 支持版本	|
-| ---			| ---										| ---				| ---		| ---							| ---		|
+| 属性名		| 说明									| 类型				| 默认值		| 可选值							| 支持版本	|
+| ---			| ---									| ---				| ---		| ---							| ---		|
 | `show`		| 是否显示弹出层,使用`sync`修饰符来双向绑定	| `Boolean`			| `false`	| -								| -			|
-| `backGround`	| 内容容器的背景色							| `String`			| `#ffffff`	| -								| -			|
-| `showMask`	| 是否显示遮罩								| `Boolean`			| `true`	| -								| -			|
-| `isMaskClick`	| 是否可以点击遮罩层关闭						| `Boolean`			| `true`	| -								| -			|
-| `width`		| 内容区宽度									| `Number/String`	| `auto`	| -								| -			|
-| `height`		| 内容区高度									| `Number/String`	| `auto`	| -								| -			|
-| `position`	| 弹出位置									| `String`			| `center`	| `top` `bottom` `left` `right`	| -			|
-| `round`		| 是否圆角									| `Boolean`			| `false`	| -								| -			|
-| `showClose`	| 是否右上角显示关闭图标						| `Boolean`			| `true`	| -								| -			|
-| `offsetX`		| 根据弹出位置，设置X轴偏移量，单位px			| `Number/String`	| `0`		| -								| -			|
-| `offsetY`		| 根据弹出位置，设置Y轴偏移量，单位px			| `Number/String`	| `0`		| -								| -			|
-| `duration`	| 动画持续时间								| `Number`			| `200`		| -								| -			|
-| `zIndex`		| 弹窗层级z-index							| `Number`			| `1000`	| -								| -			|
+| `backGround`	| 内容容器的背景色						| `String`			| `#ffffff`	| -								| -			|
+| `showMask`	| 是否显示遮罩							| `Boolean`			| `true`	| -								| -			|
+| `isMaskClick`	| 是否可以点击遮罩层关闭					| `Boolean`			| `true`	| -								| -			|
+| `width`		| 内容区宽度								| `Number/String`	| `auto`	| -								| -			|
+| `height`		| 内容区高度								| `Number/String`	| `auto`	| -								| -			|
+| `position`	| 弹出位置								| `String`			| `center`	| `top` `bottom` `left` `right`	| -			|
+| `round`		| 是否圆角								| `Boolean`			| `false`	| -								| -			|
+| `showClose`	| 是否右上角显示关闭图标					| `Boolean`			| `true`	| -								| -			|
+| `offsetX`		| 根据弹出位置，设置X轴偏移量，单位px		| `Number/String`	| `0`		| -								| -			|
+| `offsetY`		| 根据弹出位置，设置Y轴偏移量，单位px		| `Number/String`	| `0`		| -								| -			|
+| `duration`	| 动画持续时间							| `Number`			| `200`		| -								| -			|
+| `zIndex`		| 弹窗层级z-index						| `Number`			| `1000`	| -								| -			|
 | `keepContent`	| 隐藏后是否不销毁弹窗内容元素				| `Boolean`			| `true`	| -								| `v1.10.1`	|
+| `appendToBody`| 是否将弹窗挂载到body下（仅H5、APP有效）	| `Boolean`			| `false`	| -								| `v1.40.13`|
 
 #### 组件事件(Events)
 
