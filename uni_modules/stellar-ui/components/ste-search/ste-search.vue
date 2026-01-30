@@ -297,6 +297,7 @@ export default {
 			this.internalAutoplay = val;
 		}
 	},
+	// #ifdef MP-WEIXIN
 	mounted() {
 		// 监听应用显示/隐藏（小程序前后台切换）
 		this.appShowHandler = () => {
@@ -317,6 +318,7 @@ export default {
 			uni.offAppHide(this.appHideHandler);
 		}
 	},
+	// #endif
 	methods: {
 		onInput() {
 			if (this.disabled) return;
