@@ -1,11 +1,5 @@
 <template>
-	<view
-		class="ste-message-box-root"
-		:style="[cmpRootStyle]"
-		:class="[cmpRootClass]"
-		:animation="maskAnimationData"
-		v-if="show"
-	>
+	<view class="ste-message-box-root" :style="[cmpRootStyle]" :class="[cmpRootClass]" :animation="maskAnimationData" v-if="show">
 		<view class="ste-message-box-content" :animation="animationData">
 			<view class="content-box">
 				<view class="icon-box" v-if="icon">
@@ -19,13 +13,7 @@
 							<text class="placeholder-text" v-show="showInputPlaceholder">
 								{{ placeholderText }}
 							</text>
-							<input
-								:value="inputValue"
-								class="ste-message-box-input"
-								@input="handleInput"
-								@focus="handleInputFocus"
-								@blur="handleInputBlur"
-							/>
+							<input :value="inputValue" class="ste-message-box-input" @input="handleInput" @focus="handleInputFocus" @blur="handleInputBlur" />
 						</view>
 					</slot>
 				</view>
@@ -136,7 +124,7 @@ export default {
 			if (this.icon) {
 				classArr.push('icon-type');
 			}
-			if (!this.content && !this.$slots.default) {
+			if (!this.content && !this.$slots.default && !this.editable) {
 				classArr.push('no-content');
 			}
 
@@ -169,11 +157,7 @@ export default {
 					this.icon = $state.icon;
 					this.cancelText = $state.cancelText || this.cancelText;
 					this.confirmText = $state.confirmText || this.confirmText;
-					this.confirmColor = $state.confirmColor
-						? $state.confirmColor
-						: this.confirmColor
-						? this.confirmColor
-						: color.getColor().steThemeColor;
+					this.confirmColor = $state.confirmColor ? $state.confirmColor : this.confirmColor ? this.confirmColor : color.getColor().steThemeColor;
 					this.showCancel = $state.showCancel === false ? false : true;
 					this.cancelColor = $state.cancelColor || this.cancelColor;
 					this.editable = $state.editable === false ? false : true;
