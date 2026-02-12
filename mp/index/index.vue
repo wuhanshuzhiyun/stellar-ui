@@ -510,10 +510,10 @@
 					<ste-image :src="joinSrc('组件图标/r-arrow.png')" :width="32" :height="32" />
 				</view>
 			</view>
-			<view class="com-box" @click="nav('share')">
+			<view class="com-box" @click="nav('app-share')">
 				<view class="com-title">
 					<ste-image :src="joinSrc('组件图标/guide.png')" :width="36" :height="36" />
-					<text>Share 分享</text>
+					<text>AppShare 分享</text>
 				</view>
 				<view class="com-arrow">
 					<ste-image :src="joinSrc('组件图标/r-arrow.png')" :width="32" :height="32" />
