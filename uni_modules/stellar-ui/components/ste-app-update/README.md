@@ -1,6 +1,7 @@
 # AppUpdate App更新
 
-此组件用于APP更新功能
+- 此组件用于APP更新功能
+- 仅支持APP端
 
 ---$
 
@@ -9,8 +10,8 @@
 - 属性`clientId`用于设置APP的应用编码
 - 属性`clientSecret`用于设置APP的应用密钥
 - 函数`start`用于开始检查更新
-- 回调事`cancel`取消更新
-- 回调事`complete`取消，成功更新都会执行
+- 回调事件`cancel`取消更新
+- 回调事件`complete`取消，成功更新都会执行
 
 ```html
 <script>

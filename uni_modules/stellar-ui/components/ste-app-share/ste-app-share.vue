@@ -42,7 +42,9 @@ import { copyFileToPublicDir, drawPoster } from './draw';
 import { share } from './share';
 
 export default {
-	name: 'ste-share',
+	name: 'ste-app-share',
+	group: '业务组件',
+	title: 'AppShare 分享',
 	props: {
 		open: {
 			type: Boolean,
