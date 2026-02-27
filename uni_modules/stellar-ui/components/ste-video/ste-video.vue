@@ -137,7 +137,7 @@
 			<!-- </view> -->
 		</video>
 		<!-- #endif -->
-		<!-- #ifdef MP-ALIPAY | APP -->
+		<!-- #ifdef MP-ALIPAY -->
 		<video
 			class="ste-video"
 			:id="id"
@@ -151,6 +151,18 @@
 			:http-cache="true"
 			:play-btn-position="'center'"
 		/>
+		<!-- #endif -->
+		<!-- #ifdef APP -->
+		<view
+			class="ste-video ste-video-renderjs-container"
+			:id="id"
+			:data-src="src"
+			:data-poster="poster || ''"
+			:data-autoplay="autoplay ? 'true' : 'false'"
+			:data-loop="loop ? 'true' : 'false'"
+			:data-muted="isMuted ? 'true' : 'false'"
+			:data-object-fit="objectFit || 'contain'"
+		></view>
 		<!-- #endif -->
 	</view>
 </template>
@@ -201,7 +213,9 @@ export default {
 		}
 	},
 	mounted() {
+		// #ifndef APP
 		this.video = uni.createVideoContext(this.id, this);
+		// #endif
 	},
 	watch: {
 		muted: {
@@ -426,6 +440,114 @@ export default {
 	},
 };
 </script>
+
+<!-- #ifdef H5 || APP-PLUS -->
+<script module="videoRender" lang="renderjs">
+export default {
+	data() {
+		return {
+			rvVideo: null,
+			isInitialized: false,
+			isInitCapture: false,
+		};
+	},
+	mounted() {
+		this.initVideo();
+	},
+	methods: {
+		initVideo() {
+			if (this.isInitialized || !this.$el) return;
+			// 只在 APP 端执行，H5 端无此容器
+			const container = this.$el.querySelector('.ste-video-renderjs-container');
+			if (!container) return;
+
+			this.isInitialized = true;
+
+			// 从 data 属性读取配置，避免跨层访问 $vm 的兼容性问题
+			const ds = container.dataset;
+
+			const canvas = document.createElement('canvas');
+			canvas.width = 1;
+			canvas.height = 1;
+		    const ctx = canvas.getContext('2d');
+			ctx.fillStyle = '#000000';
+			ctx.fillRect(0, 0, 1, 1);
+			const blackPoster = canvas.toDataURL('image/png');
+
+			const video = document.createElement('video');
+			video.src = ds.src;
+			video.controls = true;
+			video.autoplay = ds.autoplay === 'true';
+			video.loop = ds.loop === 'true';
+			video.muted = ds.muted === 'true';
+			video.poster = ds.poster || blackPoster;
+			video.playsInline = true;
+			video.style.width = '100%';
+			video.style.height = '225px';
+			video.style.maxWidth = '100%';
+			video.style.display = 'block';
+			video.style.background = '#000';
+			video.style.objectFit = ds.objectFit || 'contain';
+			// video.style.objectFit = 'cover';
+			video.setAttribute('playsinline', '');
+			video.setAttribute('webkit-playsinline', '');
+			video.setAttribute('x5-playsinline', '');
+			video.setAttribute('x5-video-player-type', 'h5');
+
+			const ownerVm = this.$ownerInstance;
+			video.addEventListener('play', () => {
+				if (this.isInitCapture) return;
+				ownerVm.callMethod('play');
+			});
+			video.addEventListener('pause', () => {
+				if (this.isInitCapture) return;
+				ownerVm.callMethod('pause');
+			});
+			video.addEventListener('ended', () => ownerVm.callMethod('ended', { detail: {} }));
+			video.addEventListener('timeupdate', () => {
+				ownerVm.callMethod('timeupdate', {
+					detail: {
+						currentTime: video.currentTime,
+						duration: video.duration || 0,
+					},
+				});
+			});
+			video.addEventListener('error', () => ownerVm.callMethod('error', { detail: {} }));
+			video.addEventListener('loadedmetadata', () => {
+				ownerVm.callMethod('loadedMetaData', {
+					detail: { duration: video.duration },
+				});
+			});
+			video.addEventListener('waiting', () => ownerVm.callMethod('waiting', { detail: {} }));
+			video.addEventListener('loadeddata', () => {
+				ownerVm.callMethod('loadeddata', { detail: {} });
+				if (!ds.autoplay || ds.autoplay !== 'true') {
+					this.isInitCapture = true;
+					const p = video.play();
+					if (p !== undefined) {
+						p.then(() => {
+							video.pause();
+							video.currentTime = 0;
+							this.isInitCapture = false;
+						}).catch(() => {
+							this.isInitCapture = false;
+						});
+					} else {
+						this.isInitCapture = false;
+					}
+				}
+			});
+			video.addEventListener('loadstart', () => ownerVm.callMethod('loadstart', { detail: {} }));
+			video.addEventListener('seeked', () => ownerVm.callMethod('seeked', { detail: {} }));
+			video.addEventListener('seeking', () => ownerVm.callMethod('seeking', { detail: {} }));
+
+			container.appendChild(video);
+			this.rvVideo = video;
+		},
+	},
+};
+</script>
+<!-- #endif -->
 
 <style lang="scss" scoped>
 .ste-video-root {
