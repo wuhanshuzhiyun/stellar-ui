@@ -525,13 +525,15 @@ export default {
 					this.isInitCapture = true;
 					const p = video.play();
 					if (p !== undefined) {
-						p.then(() => {
-							video.pause();
-							video.currentTime = 0;
-							this.isInitCapture = false;
-						}).catch(() => {
-							this.isInitCapture = false;
-						});
+						setTimeout(() => {
+							p.then(() => {
+								video.pause();
+								video.currentTime = 0;
+								this.isInitCapture = false;
+							}).catch(() => {
+								this.isInitCapture = false;
+							});
+						}, 100)
 					} else {
 						this.isInitCapture = false;
 					}
