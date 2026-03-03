@@ -25,14 +25,12 @@
 						<image class="footer-icon" src="../../static/shoucang.png" mode="widthFix"></image>
 						<text>微信收藏</text>
 					</view>
+					<view class="footer-item" @click="downloadPoster" v-if="viewPoster">
+						<image class="footer-icon" src="../../static/haibao.png" mode="widthFix"></image>
+						<text>生成海报</text>
+					</view>
 				</view>
 			</scroll-view>
-			<view class="footer-share-list">
-				<view class="footer-item" @click="downloadPoster" v-if="viewPoster">
-					<image class="footer-icon" src="../../static/haibao.png" mode="widthFix"></image>
-					<text>生成海报</text>
-				</view>
-			</view>
 		</view>
 	</view>
 </template>
@@ -116,13 +114,13 @@ export default {
 						this.ctx.width = canvas.width;
 						this.ctx.height = canvas.height;
 
-						drawPoster(this.ctx, this.poster, this.data).then(() => {
+						drawPoster(this.ctx, this.poster, this.data).finally(() => {
 							this.loading = false;
 						});
 					})
 					.exec();
 			} else {
-				drawPoster(this.ctx, this.poster, this.data).then(() => {
+				drawPoster(this.ctx, this.poster, this.data).finally(() => {
 					this.loading = false;
 				});
 			}
@@ -166,8 +164,8 @@ export default {
 	.content-box {
 		position: absolute;
 		width: 660rpx;
-		height: 1020rpx;
-		top: 120rpx;
+		height: 960rpx;
+		top: 90rpx;
 		left: 50%;
 		transform: translateX(-50%);
 		z-index: 9;

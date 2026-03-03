@@ -1,3 +1,15 @@
+async function getImage(src) {
+	const image = await uni.getImageInfo({ src: src });
+	if (Array.isArray(image)) {
+		const [e, img] = image;
+		if (e) throw e;
+		return img;
+	} else if (image.path) {
+		return image;
+	}
+	throw new Error('获取图片失败');
+}
+
 /**
  * @param {UniApp.CanvasContext} ctx
  * @param {{background:string;title:string;message:string;qrcode:string}} poster
@@ -21,7 +33,7 @@ export function drawPoster(ctx, poster, data) {
 		// 绘制宽高一致的图片
 		if (data.image) {
 			try {
-				const image = await uni.getImageInfo({ src: data.image });
+				const image = await getImage(data.image);
 				ctx.drawImage(image.path, 0, 40, width, width);
 			} catch (e) {
 				console.error(e);
@@ -46,7 +58,7 @@ export function drawPoster(ctx, poster, data) {
 			ctx.setFontSize(20);
 			ctx.setFillStyle('#ff0000');
 			ctx.setTextAlign('left');
-			ctx.fillText(`￥${data.price}`, 10, width + 125);
+			ctx.fillText(`￥${data.price}`, 10, width + 130);
 		}
 
 		// 绘制文字
@@ -54,12 +66,12 @@ export function drawPoster(ctx, poster, data) {
 			ctx.setFontSize(12);
 			ctx.setFillStyle('#666666');
 			ctx.setTextAlign('left');
-			ctx.fillText(poster.message, 10, height - 20);
+			ctx.fillText(poster.message, 10, height - 25);
 		}
 		// 绘制qrcode
 		if (poster.qrcode) {
 			try {
-				const qrcode = await uni.getImageInfo({ src: poster.qrcode });
+				const qrcode = await getImage(poster.qrcode);
 				ctx.drawImage(qrcode.path, width - 80, width + 80, 70, 70);
 			} catch (e) {
 				console.error(e);
