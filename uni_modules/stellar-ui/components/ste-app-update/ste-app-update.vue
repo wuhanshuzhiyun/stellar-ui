@@ -1,7 +1,7 @@
 <template>
 	<view class="update-mask flex-center" v-if="open">
 		<view class="update-content">
-			<image class="update-image" src="../../static/app_update_img.png"></image>
+			<image class="update-image" src="https://image.whzb.com/chain/StellarUI/font/app_update_img.png"></image>
 
 			<view class="update-title">发现新版本</view>
 			<view class="update-version">v{{ data.name }}</view>

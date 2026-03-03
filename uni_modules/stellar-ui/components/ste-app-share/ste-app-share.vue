@@ -14,19 +14,19 @@
 			<scroll-view class="footer-scroll-view" scroll-x="true">
 				<view class="footer-share-list">
 					<view class="footer-item" @click="handShare('WXSceneSession')">
-						<image class="footer-icon" src="../../static/weixin.png" mode="widthFix"></image>
+						<image class="footer-icon" src="https://image.whzb.com/chain/StellarUI/font/weixin.png" mode="widthFix"></image>
 						<text>微信好友</text>
 					</view>
 					<view class="footer-item" @click="handShare('WXSceneTimeline')">
-						<image class="footer-icon" src="../../static/wxpyq.png" mode="widthFix"></image>
+						<image class="footer-icon" src="https://image.whzb.com/chain/StellarUI/font/wxpyq.png" mode="widthFix"></image>
 						<text>朋友圈</text>
 					</view>
 					<view class="footer-item" @click="handShare('WXSceneFavorite')">
-						<image class="footer-icon" src="../../static/shoucang.png" mode="widthFix"></image>
+						<image class="footer-icon" src="https://image.whzb.com/chain/StellarUI/font/shoucang.png" mode="widthFix"></image>
 						<text>微信收藏</text>
 					</view>
 					<view class="footer-item" @click="downloadPoster" v-if="viewPoster">
-						<image class="footer-icon" src="../../static/haibao.png" mode="widthFix"></image>
+						<image class="footer-icon" src="https://image.whzb.com/chain/StellarUI/font/haibao.png" mode="widthFix"></image>
 						<text>生成海报</text>
 					</view>
 				</view>
