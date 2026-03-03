@@ -58,7 +58,7 @@ export function drawPoster(ctx, poster, data) {
 			ctx.setFontSize(20);
 			ctx.setFillStyle('#ff0000');
 			ctx.setTextAlign('left');
-			ctx.fillText(`￥${data.price}`, 10, width + 130);
+			ctx.fillText(`￥${data.price}`, 10, width + 125);
 		}
 
 		// 绘制文字
@@ -66,7 +66,7 @@ export function drawPoster(ctx, poster, data) {
 			ctx.setFontSize(12);
 			ctx.setFillStyle('#666666');
 			ctx.setTextAlign('left');
-			ctx.fillText(poster.message, 10, height - 25);
+			ctx.fillText(poster.message, 10, width + 150);
 		}
 		// 绘制qrcode
 		if (poster.qrcode) {

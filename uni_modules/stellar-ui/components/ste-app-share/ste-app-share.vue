@@ -1,7 +1,7 @@
 <template>
 	<!-- 分享弹窗 -->
 	<view class="ste-share-root" :class="{ open: dataOpen }">
-		<view class="content-box" :style="{ opacity: viewPoster ? 1 : 0 }">
+		<view class="content-box" :style="canvasStyle">
 			<view class="loading" v-if="loading"></view>
 			<canvas id="content-poster" canvas-id="content-poster" />
 		</view>
@@ -38,7 +38,10 @@
 <script>
 import { copyFileToPublicDir, drawPoster } from './draw';
 import { share } from './share';
-
+import utils from '../../utils/utils';
+// #ifndef APP
+const notApp = '该功能仅在APP端有效';
+// #endif
 export default {
 	name: 'ste-app-share',
 	group: '业务组件',
@@ -77,6 +80,15 @@ export default {
 			canvas: null,
 		};
 	},
+	computed: {
+		canvasStyle() {
+			return {
+				width: utils.formatPx(660),
+				height: utils.formatPx(990),
+				opacity: this.viewPoster ? 1 : 0,
+			};
+		},
+	},
 	watch: {
 		open: {
 			handler(val) {
@@ -96,7 +108,8 @@ export default {
 		},
 		handShare(scene) {
 			// #ifndef APP
-			uni.showToast({ title: '暂不支持', icon: 'none', duration: 2000 });
+			console.error(notApp);
+			uni.showToast({ title: notApp, icon: 'none', duration: 2000 });
 			// #endif
 			// #ifdef APP
 			share(scene, this.miniProgram, this.data);
@@ -126,6 +139,7 @@ export default {
 			}
 		},
 		downloadPoster() {
+			// #ifdef APP
 			uni.canvasToTempFilePath({
 				canvasId: 'content-poster',
 				success: ({ tempFilePath }) => {
@@ -140,6 +154,11 @@ export default {
 					});
 				},
 			});
+			// #endif
+			// #ifndef APP
+			console.error(notApp);
+			uni.showToast({ title: notApp, icon: 'none', duration: 2000 });
+			// #endif
 		},
 	},
 };
@@ -152,7 +171,7 @@ export default {
 	left: 0;
 	width: 100%;
 	height: 100%;
-	z-index: 9999;
+	z-index: 1001;
 	background-color: rgba(0, 0, 0, 0.5);
 	opacity: 0;
 	pointer-events: none;
@@ -163,8 +182,6 @@ export default {
 	}
 	.content-box {
 		position: absolute;
-		width: 660rpx;
-		height: 960rpx;
 		top: 90rpx;
 		left: 50%;
 		transform: translateX(-50%);
