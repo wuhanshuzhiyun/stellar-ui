@@ -1,11 +1,16 @@
-async function getImage(src) {
+async function getImagePath(src) {
+	if (!src) {
+		throw new Error('图片路径不能为空');
+		return;
+	}
+	if (/^data\:image\/[a-zA-Z]+\;base64\,/.test(src)) return src;
 	const image = await uni.getImageInfo({ src: src });
 	if (Array.isArray(image)) {
 		const [e, img] = image;
 		if (e) throw e;
-		return img;
+		return img.path;
 	} else if (image.path) {
-		return image;
+		return image.path;
 	}
 	throw new Error('获取图片失败');
 }
@@ -33,8 +38,8 @@ export function drawPoster(ctx, poster, data) {
 		// 绘制宽高一致的图片
 		if (data.image) {
 			try {
-				const image = await getImage(data.image);
-				ctx.drawImage(image.path, 0, 40, width, width);
+				const path = await getImagePath(data.image);
+				ctx.drawImage(path, 0, 40, width, width);
 			} catch (e) {
 				console.error(e);
 			}
@@ -71,8 +76,8 @@ export function drawPoster(ctx, poster, data) {
 		// 绘制qrcode
 		if (poster.qrcode) {
 			try {
-				const qrcode = await getImage(poster.qrcode);
-				ctx.drawImage(qrcode.path, width - 80, width + 80, 70, 70);
+				const path = await getImagePath(poster.qrcode);
+				ctx.drawImage(path, width - 80, width + 80, 70, 70);
 			} catch (e) {
 				console.error(e);
 			}
