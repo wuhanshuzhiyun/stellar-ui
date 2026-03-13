@@ -1,5 +1,5 @@
 <template>
-	<view class="update-mask flex-center" v-if="open">
+	<view class="update-mask flex-center" :style="{ zIndex }" v-if="open">
 		<view class="update-content">
 			<image class="update-image" src="https://image.whzb.com/chain/StellarUI/font/app_update_img.png"></image>
 
@@ -60,6 +60,10 @@ export default {
 		},
 		appVersion: {
 			type: String,
+		},
+		zIndex: {
+			type: [String, Number],
+			default: () => 998,
 		},
 	},
 	data() {
@@ -238,7 +242,7 @@ export default {
 	right: 0;
 	bottom: 0;
 	background-color: rgba(0, 0, 0, 0.5);
-	z-index: 999999;
+	z-index: 998;
 	.update-content {
 		width: 694rpx;
 		background-color: #fff;
