@@ -83,6 +83,15 @@
 					<ste-image :src="joinSrc('组件图标/r-arrow.png')" :width="32" :height="32" />
 				</view>
 			</view>
+		<view class="com-box" @click="nav('page-container')">
+			<view class="com-title">
+				<ste-image :src="joinSrc('组件图标/popup.png')" :width="36" :height="36" />
+				<text>PageContainer 页面容器</text>
+			</view>
+			<view class="com-arrow">
+				<ste-image :src="joinSrc('组件图标/r-arrow.png')" :width="32" :height="32" />
+			</view>
+		</view>
 			<view class="com-box" @click="nav('sticky')">
 				<view class="com-title">
 					<ste-image :src="joinSrc('组件图标/sticky.png')" :width="36" :height="36" />

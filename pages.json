@@ -447,6 +447,19 @@
 			}
 		},
 		{
+			"path": "mp/page-container-demo/page-container-demo",
+			"style": {
+				"navigationStyle": "custom",
+
+				"mp-alipay": {
+					"transparentTitle": "always",
+					"titlePenetrate": "YES",
+					"allowsBounceVertical": "NO",
+					"navigationBarTitleText": ""
+				}
+			}
+		},
+		{
 			"path": "mp/notice-bar-demo/notice-bar-demo",
 			"style": {
 				"navigationStyle": "custom",
