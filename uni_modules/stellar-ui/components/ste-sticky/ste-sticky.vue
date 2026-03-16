@@ -53,6 +53,7 @@ export default {
 	data() {
 		return {
 			elId: utils.guid(),
+			contentObserver: null,
 		};
 	},
 	computed: {
@@ -115,7 +116,7 @@ export default {
 		},
 	},
 	destroyed() {
-		this.disconnectObserver();
+		this.disconnectObserver('contentObserver');
 	},
 };
 </script>
