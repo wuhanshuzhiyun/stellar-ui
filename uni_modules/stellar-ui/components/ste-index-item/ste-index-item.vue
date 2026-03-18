@@ -1,5 +1,5 @@
 <template>
-	<view class="ste-scroll-to-item-root" data-test="index-item">
+	<view class="ste-index-item-root" data-test="index-item">
 		<slot name="title">
 			<block v-if="title">
 				<ste-sticky v-if="sticky">
@@ -10,7 +10,8 @@
 		</slot>
 		<slot>
 			<view class="index-item-text-list">
-				<view class="index-item-text" data-test="index-item-text" v-for="(text, i) in list" :key="i" @click="onClickItem(text)">
+				<view class="index-item-text" data-test="index-item-text" v-for="(text, i) in list" :key="i"
+					@click="onClickItem(text)">
 					{{ text }}
 				</view>
 			</view>
@@ -30,7 +31,7 @@ import { childMixin } from '../../utils/mixin.js';
  */
 export default {
 	name: 'ste-index-item',
-	mixins: [childMixin('ste-index-list')],
+	mixins: [childMixin('ste-index-list', ['setActive', 'getView'])],
 	props: {
 		title: {
 			type: [String, null],
@@ -59,12 +60,15 @@ export default {
 		onClickItem(item) {
 			this.parent.onClickItem(this.title, item);
 		},
+		async getView() {
+			return await utils.querySelector('.ste-index-item-root', this)
+		}
 	},
 };
 </script>
 
 <style lang="scss" scoped>
-.ste-scroll-to-item-root {
+.ste-index-item-root {
 	width: 100%;
 
 	.index-item-title {
@@ -96,4 +100,5 @@ export default {
 			border-bottom: 2rpx solid #f9f9f9;
 		}
 	}
-}</style>
+}
+</style>

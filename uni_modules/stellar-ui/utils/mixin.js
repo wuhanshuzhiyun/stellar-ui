@@ -7,7 +7,7 @@ export function parentMixin(name) {
 		provide() {
 			return {
 				[name]: {
-					getParent: () => this
+					getParent: () => this,
 				},
 			};
 		},
@@ -23,7 +23,7 @@ export function parentMixin(name) {
  * 子组件混入对象
  * @param {String} parentName 父组件名称
  */
-export function childMixin(parentName) {
+export function childMixin(parentName, methodNames = []) {
 	return {
 		options: {
 			virtualHost: true,
@@ -31,35 +31,43 @@ export function childMixin(parentName) {
 		inject: {
 			[parentName]: {
 				value: parentName,
-				default: null
-			}
+				default: null,
+			},
 		},
 		data() {
 			return {
-				parent: {},
+				parent: {
+					children: [],
+				},
 			};
 		},
 		created() {
-			this.parent = this[parentName]?.getParent();
-			this.getParentData();
+			if (this[parentName] && this[parentName]?.getParent) {
+				this.parent = this[parentName].getParent();
+				this.setParentData();
+			}
 		},
 		beforeDestroy() {
 			// 判断当前页面是否存在parent和chldren，一般在checkbox和checkbox-group父子联动的场景会有此情况
 			// 组件销毁时，移除子组件在父组件children数组中的实例，释放资源，避免数据混乱
-			if (this.parent && Array.isArray(this.parent.children)) {
-				// 组件销毁时，移除父组件中的children数组中对应的实例
-				this.parent.children.map((child, index) => {
-					// 如果相等，则移除
-					if (child === this) {
-						this.parent.children.splice(index, 1);
-					}
-				});
+			const ids = this.parent.children.map((item) => item._uid);
+			if (ids.indexOf(this._uid) !== -1) {
+				this.parent.children.splice(ids.indexOf(this._uid), 1);
 			}
 		},
 		methods: {
-			getParentData() {
-				if (this.parent?.children && this.parent.children.indexOf(this) === -1) {
-					this.parent.children.push(this);
+			setParentData() {
+				const child = Object.assign({ _uid: this._uid }, this.$props);
+				methodNames.forEach((name) => {
+					child[name] = (...a) => {
+						if (this[name]) {
+							return this[name](...a);
+						}
+					};
+				});
+				const ids = this.parent.children.map((item) => item._uid);
+				if (ids.indexOf(child._uid) === -1) {
+					this.parent.children.push(child);
 				}
 			},
 		},

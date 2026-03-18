@@ -2,20 +2,10 @@
 	<view class="ste-table-cell" :class="[cmpRootClass]" :style="[cmpRootStyle, cmpCellStyle]" @click="cellClick">
 		<template v-if="type">
 			<view class="cell-box" v-if="type == 'checkbox'" @click.stop="changeCheck">
-				<check-box-icon
-					:disabled="cmpDisableCheck"
-					:readonly="cmpReadonlyCheck"
-					:checked="cmpShowCheck"
-					:iconColorConfig="cmpSelectionIconColor"
-				/>
+				<check-box-icon :disabled="cmpDisableCheck" :readonly="cmpReadonlyCheck" :checked="cmpShowCheck" :iconColorConfig="cmpSelectionIconColor" />
 			</view>
 			<view class="cell-box" v-if="type == 'radio'" @click.stop="changeCheck">
-				<radio-icon
-					:disabled="cmpDisableCheck"
-					:readonly="cmpReadonlyCheck"
-					:checked="cmpShowCheck"
-					:iconColorConfig="cmpSelectionIconColor"
-				/>
+				<radio-icon :disabled="cmpDisableCheck" :readonly="cmpReadonlyCheck" :checked="cmpShowCheck" :iconColorConfig="cmpSelectionIconColor" />
 			</view>
 			<view class="cell-box" v-if="type == 'index'">
 				{{ row.rowIndex + 1 }}
@@ -60,7 +50,7 @@ import { childMixin } from '../../utils/mixin.js';
  */
 export default {
 	name: 'ste-table-column',
-	mixins: [childMixin('ste-table')],
+	mixins: [childMixin('ste-table', ['setRow'])],
 	components: { RadioIcon, CheckBoxIcon, SubTable, TablePopover },
 	options: {
 		virtualHost: true,
@@ -235,6 +225,9 @@ export default {
 			if (this.type == 'checkbox' || this.type == 'radio') {
 				this.changeCheck();
 			}
+		},
+		setRow(row = {}) {
+			this.row = row;
 		},
 	},
 };

@@ -5,7 +5,6 @@
 </template>
 
 <script>
-import utils from '../../utils/utils.js';
 import { childMixin } from '../../utils/mixin.js';
 /**
  * ste-tab 标签页选项
@@ -67,14 +66,46 @@ export default {
 			default: () => false,
 		},
 	},
+	data() {
+		return {};
+	},
 	watch: {
-		$props: {
-			handler() {
-				this.$nextTick(() => {
-					this.parent.getChildrenProps();
-				});
-			},
-			deep: true,
+		title() {
+			this.updateParent();
+		},
+		subTitle() {
+			this.updateParent();
+		},
+		image() {
+			this.updateParent();
+		},
+		name() {
+			this.updateParent();
+		},
+		index() {
+			this.updateParent();
+		},
+		disabled() {
+			this.updateParent();
+		},
+		showDot() {
+			this.updateParent();
+		},
+		badge() {
+			this.updateParent();
+		},
+		showZeroBadge() {
+			this.updateParent();
+		},
+	},
+	onMounted() {
+		this.updateParent();
+	},
+	methods: {
+		updateParent() {
+			if (this.parent && typeof this.parent.getChildrenProps === 'function') {
+				this.parent.getChildrenProps();
+			}
 		},
 	},
 };

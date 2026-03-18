@@ -59,7 +59,7 @@ export default {
 	group: '展示组件',
 	title: 'SwipeAction 滑动单元格',
 	name: 'ste-swipe-action',
-	mixins: [childMixin('ste-swipe-action-group')],
+	mixins: [childMixin('ste-swipe-action-group', ['open', 'close', 'onchange'])],
 	props: {
 		mode: {
 			type: [String, null],
@@ -129,7 +129,7 @@ export default {
 			};
 		},
 	},
-	mounted() { },
+	mounted() {},
 	methods: {
 		/**
 		 * 打开侧滑

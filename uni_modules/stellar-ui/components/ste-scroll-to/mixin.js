@@ -55,6 +55,7 @@ export default {
 		},
 		childrenTops() {
 			if (!this.children.length) return;
+			if (this.scrollType === 'active') return;
 			this.scrollType = 'init';
 			this.setScrollTopByIndex(this.dataActive);
 		},
@@ -89,8 +90,8 @@ export default {
 				const childrenTops = [];
 				for (let i = 0; i < this.children.length; i++) {
 					const comp = this.children[i];
-					const child = await utils.querySelector('.ste-scroll-to-item-root', comp);
-					const top = child.top - box.top;
+					const childView = await comp.getView();
+					const top = childView.top - box.top;
 					childrenTops.push(top > max + 10 ? max + 10 : top);
 				}
 				let diff = this.childrenTops.length !== childrenTops.length;

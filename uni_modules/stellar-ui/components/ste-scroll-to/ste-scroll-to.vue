@@ -11,10 +11,6 @@
 import { parentMixin } from '../../utils/mixin.js';
 import mixin from './mixin.js';
 
-function isNum(num) {
-	return typeof num === 'number' && !isNaN(num);
-}
-
 /**
  * ste-scroll-to 滚动锚点
  * @description 滚动锚点

@@ -15,13 +15,7 @@
 						<ste-icon code="&#xe6ae;" :color="selectionIconColor.disabled || selectionColor.disabled" :size="checkIconSize" v-if="canCheckStates.length === 0" />
 						<template v-else>
 							<ste-icon code="&#xe6ac;" :color="selectionIconColor.main || selectionColor.main" :size="checkIconSize" v-if="checkAllState == 'all'" @click="changeCheckAll" />
-							<ste-icon
-								code="&#xe6ad;"
-								:color="selectionIconColor.main || selectionColor.main"
-								:size="checkIconSize"
-								v-else-if="checkAllState == 'indeterminate'"
-								@click="changeCheckAll"
-							/>
+							<ste-icon code="&#xe6ad;" :color="selectionIconColor.main || selectionColor.main" :size="checkIconSize" v-else-if="checkAllState == 'indeterminate'" @click="changeCheckAll" />
 							<ste-icon code="&#xe6af;" :color="selectionIconColor.unSelected || selectionColor.unSelected" :size="checkIconSize" v-else @click="changeCheckAll" />
 						</template>
 					</view>
@@ -33,14 +27,7 @@
 			<template v-if="height || height > 0">
 				<scroll-view scroll-y class="ste-table-scroll" @scrolltolower="handleScrollToLower">
 					<view class="ste-table-body">
-						<view
-							class="ste-table-row"
-							:class="[getRowClass(row, rowIndex)]"
-							:style="[getRowStyle(row, rowIndex)]"
-							v-for="(row, rowIndex) in tableData"
-							:key="rowIndex"
-							@click="rowClick(row, $event)"
-						>
+						<view class="ste-table-row" :class="[getRowClass(row, rowIndex)]" :style="[getRowStyle(row, rowIndex)]" v-for="(row, rowIndex) in tableData" :key="rowIndex" @click="rowClick(row, $event)">
 							<slot :row="row"></slot>
 						</view>
 						<view class="ste-table-row sum" v-if="showSummary">
@@ -58,14 +45,7 @@
 			</template>
 			<template v-else>
 				<view class="ste-table-body">
-					<view
-						class="ste-table-row"
-						:class="[getRowClass(row, rowIndex)]"
-						:style="[getRowStyle(row, rowIndex)]"
-						v-for="(row, rowIndex) in tableData"
-						:key="rowIndex"
-						@click="rowClick(row, $event)"
-					>
+					<view class="ste-table-row" :class="[getRowClass(row, rowIndex)]" :style="[getRowStyle(row, rowIndex)]" v-for="(row, rowIndex) in tableData" :key="rowIndex" @click="rowClick(row, $event)">
 						<slot :row="row"></slot>
 					</view>
 					<view class="ste-table-row sum" v-if="showSummary">
@@ -295,7 +275,7 @@ export default {
 				const rowIndex = Math.floor(index / colNums); // 计算出当前元素属于哪一行
 				const colIndex = index % colNums; // 计算出当前元素属于哪一列
 				const row = this.tableData[rowIndex];
-				child.row = { ...row, rowIndex, colIndex };
+				child.setRow({ ...row, rowIndex, colIndex });
 			});
 		},
 		initColumns(childs) {

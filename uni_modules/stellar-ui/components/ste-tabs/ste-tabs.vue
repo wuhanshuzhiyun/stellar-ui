@@ -170,6 +170,7 @@ export default {
 			pullTransform: false,
 			_updateChildrenTimeout: null,
 			_updateTabsTimeout: null,
+			_upadteChildrenTimeout: null,
 		};
 	},
 	computed: {
@@ -192,9 +193,11 @@ export default {
 		},
 		cmpDisabledIndexs() {
 			const list = [];
+
 			this.cmpTabList.forEach((m, i) => {
 				if (m.disabled) list.push(i);
 			});
+
 			return list;
 		},
 		cmpRootStyle() {
@@ -369,8 +372,7 @@ export default {
 			this.showComponent = false;
 			clearTimeout(this._updateChildrenTimeout);
 			this._updateChildrenTimeout = setTimeout(() => {
-				this.getChildrenProps();
-				this.$nextTick(async () => {
+				this.getChildrenProps().then(async () => {
 					this.listBoxEl = await utils.querySelector('.tab-list-box', this);
 					this.listEl = await utils.querySelector('.tab-list-box .tab-list.view-list', this);
 					this.tabEls = await utils.querySelector('.tab-list-box .tab-list.view-list .tab-item', this, true);
@@ -379,17 +381,27 @@ export default {
 			}, 100);
 		},
 		getChildrenProps() {
-			this.tabPropsList = this.children.map((m) => ({
-				title: m.title,
-				subTitle: m.subTitle,
-				image: m.image,
-				name: m.name,
-				index: m.index,
-				disabled: m.disabled,
-				showDot: m.showDot,
-				badge: m.badge,
-				showZeroBadge: m.showZeroBadge,
-			}));
+			return new Promise((resolve, reject) => {
+				clearTimeout(this._upadteChildrenTimeout);
+				this._upadteChildrenTimeout = setTimeout(() => {
+					try {
+						this.tabPropsList = this.children.map((m) => ({
+							title: m.title,
+							subTitle: m.subTitle,
+							image: m.image,
+							name: m.name,
+							index: m.index,
+							disabled: m.disabled,
+							showDot: m.showDot,
+							badge: m.badge,
+							showZeroBadge: m.showZeroBadge,
+						}));
+						resolve();
+					} catch (e) {
+						reject(e);
+					}
+				}, 100);
+			});
 		},
 		onClickTab(tab, index) {
 			this.$emit('click-tab', { index, ...tab });

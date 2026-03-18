@@ -5,8 +5,8 @@
 </template>
 
 <script>
-import utils from '../../utils/utils.js';
 import { childMixin } from '../../utils/mixin.js';
+import utils from '../../utils/utils.js';
 /**
  * ste-scroll-to-item 锚点项
  * @description 锚点项
@@ -14,7 +14,12 @@ import { childMixin } from '../../utils/mixin.js';
  */
 export default {
 	name: 'ste-scroll-to-item',
-	mixins: [childMixin('ste-scroll-to')],
+	mixins: [childMixin('ste-scroll-to', ['getView'])],
+	methods: {
+		async getView() {
+			return await utils.querySelector('.ste-scroll-to-item-root', this)
+		}
+	}
 };
 </script>
 
