@@ -157,16 +157,17 @@ export default {
 			isSecondSlider: false,
 		};
 	},
-	created() {},
 	mounted() {
-		this.handleWindowResize();
-		// #ifdef MP-360
-		// 为了兼容测试环境没有uni，wx等, 使用360做条件编译，减少组件库包大小
-		if (process.env.NODE_ENV !== 'test') {
-			uni.onWindowResize(this.handleWindowResize);
-		}
-		// #endif
-		this.calculateStepMarks();
+		setTimeout(() => {
+			this.handleWindowResize();
+			// #ifdef MP-360
+			// 为了兼容测试环境没有uni，wx等, 使用360做条件编译，减少组件库包大小
+			if (process.env.NODE_ENV !== 'test') {
+				uni.onWindowResize(this.handleWindowResize);
+			}
+			// #endif
+			this.calculateStepMarks();
+		}, 50);
 	},
 	beforeDestroy() {
 		// #ifdef MP-360

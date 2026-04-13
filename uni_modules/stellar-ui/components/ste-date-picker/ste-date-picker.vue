@@ -20,7 +20,6 @@
 </template>
 
 <script>
-import utils from '../../utils/utils.js';
 import dayjs from '../../utils/dayjs.min.js';
 import useColor from '../../config/color.js';
 let color = useColor();
@@ -178,9 +177,7 @@ export default {
 		},
 		updateColumns() {
 			const formatter = this.formatter || this.innerFormatter;
-			const result = this.getOriginColumns().map((column) =>
-				column.values.map((value) => formatter(column.type, value))
-			);
+			const result = this.getOriginColumns().map((column) => column.values.map((value) => formatter(column.type, value)));
 			this.columns = result;
 		},
 		// 更新索引
@@ -240,14 +237,8 @@ export default {
 		},
 		// 获取每列的最大和最小值
 		getRanges() {
-			const { maxYear, maxDate, maxMonth, maxHour, maxMinute, maxSecond } = this.getBoundary(
-				'max',
-				this.innerValue
-			);
-			const { minYear, minDate, minMonth, minHour, minMinute, minSecond } = this.getBoundary(
-				'min',
-				this.innerValue
-			);
+			const { maxYear, maxDate, maxMonth, maxHour, maxMinute, maxSecond } = this.getBoundary('max', this.innerValue);
+			const { minYear, minDate, minMonth, minHour, minMinute, minSecond } = this.getBoundary('min', this.innerValue);
 
 			const result = [
 				{
@@ -347,14 +338,7 @@ export default {
 			let selectValue = '';
 
 			// 取默认时间中的值，然后再通过mode和变化值来替换默认值
-			let dateArr = [
-				DEFAULT_DATE.year(),
-				DEFAULT_DATE.month() + 1,
-				DEFAULT_DATE.day(),
-				DEFAULT_DATE.hour(),
-				DEFAULT_DATE.minute(),
-				DEFAULT_DATE.second(),
-			];
+			let dateArr = [DEFAULT_DATE.year(), DEFAULT_DATE.month() + 1, DEFAULT_DATE.day(), DEFAULT_DATE.hour(), DEFAULT_DATE.minute(), DEFAULT_DATE.second()];
 			// 不同mode下的时间是连续值，需要计算不同mode下对应完整时间的初始替换下标即可
 			let startFlag = 0;
 			switch (this.mode) {
