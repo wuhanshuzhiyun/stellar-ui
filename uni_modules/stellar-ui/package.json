@@ -1,15 +1,23 @@
 {
 	"name": "stellar-ui-v2",
-	"version": "1.40.28",
-	"description": "StellarUI组件库",
-	"main": "stellar-ui/index.js",
+	"version": "1.40.29",
+	"description": "StellarUI组件库，支持全量引入和按需引入",
+	"main": "./index.js",
+	"module": "./index.js",
+	"types": "./index.d.ts",
 	"private": false,
 	"scripts": {},
 	"repository": {
 		"type": "git",
 		"url": "git+https://github.com/wuhanshuzhiyun/stellar-ui.git"
 	},
-	"keywords": [],
+	"keywords": [
+		"uniapp",
+		"vue2",
+		"component",
+		"ui",
+		"stellar-ui"
+	],
 	"author": "",
 	"license": "MIT",
 	"dependencies": {
