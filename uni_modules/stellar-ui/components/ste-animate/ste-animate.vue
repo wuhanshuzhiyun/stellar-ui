@@ -57,8 +57,10 @@
 			},
 			cmpRootStyle() {
 				let style = {};
-				if (this.duration) {
-					style.animationDuration = this.duration;
+				if (this.duration !== null && this.duration !== undefined) {
+					const duration = `${this.duration}ms`;
+					style.animationDuration = duration;
+					style['--ste-animate-duration'] = duration;
 				}
 				return style;
 			},
@@ -176,7 +178,7 @@
 				border: 4rpx solid rgba(255, 255, 255, 0.6);
 				border-radius: 30px;
 				transform: scale(0);
-				animation: twinkle 2s ease-out infinite;
+				animation: twinkle var(--ste-animate-duration, 2s) ease-out infinite;
 			}
 
 			&::after {
@@ -199,7 +201,7 @@
 				filter: blur(6rpx);
 				opacity: 0.73;
 				transform: skew(-20deg);
-				animation: flicker 1.5s linear infinite;
+				animation: flicker var(--ste-animate-duration, 1.5s) linear infinite;
 			}
 		}
 	}
