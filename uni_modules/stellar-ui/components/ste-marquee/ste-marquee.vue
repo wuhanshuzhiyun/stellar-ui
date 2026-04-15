@@ -251,8 +251,10 @@ export default {
 		},
 
 		// ─── 初始化 ────────────────────────────────────────────
-		async init(list) {
-			this.isPaused = false;
+		async init(list, { keepPaused = false } = {}) {
+			if (!keepPaused) {
+				this.isPaused = false;
+			}
 			await this.buildQueue(list);
 		},
 
@@ -268,7 +270,7 @@ export default {
 		},
 		async stop() {
 			this.isPaused = true;
-			await this.init(this.list);
+			await this.init(this.list, { keepPaused: true });
 		},
 
 		// ─── 交互事件 ──────────────────────────────────────────

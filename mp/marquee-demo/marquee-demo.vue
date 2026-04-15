@@ -19,28 +19,28 @@
 				</view>
 			</view>
 			<view class="demo-item">
-				<view class="title">自定义容器样式</view>
+				<view class="title">透明背景</view>
 				<view class="item-block">
 					<ste-marquee
 						:list="list"
-						containerBg="#FBF8DC"
-						containerPadding="20rpx"
-						containerRadius="16rpx"
+						containerBg="transparent"
+						containerPadding="0rpx"
+						containerRadius="0rpx"
 					></ste-marquee>
 				</view>
 			</view>
 			<view class="demo-item">
-				<view class="title">自定义消息项样式</view>
+				<view class="title">卡片样式</view>
 				<view class="item-block">
 					<ste-marquee
 						:list="list"
 						containerBg="#f5f5f5"
-						containerPadding="16rpx"
+						containerPadding="20rpx"
 						containerRadius="16rpx"
 						itemBg="#ffffff"
-						itemPadding="16rpx 24rpx"
+						itemPadding="12rpx 20rpx"
 						itemRadius="8rpx"
-						:gap="30"
+						:gap="24"
 					></ste-marquee>
 				</view>
 			</view>
@@ -116,33 +116,78 @@ export default {
 .page {
 	background: #f9f9f9;
 }
+
+.item-block {
+	& > view {
+		margin-bottom: 20rpx;
+		&:last-child {
+			margin-bottom: 0;
+		}
+	}
+}
+
 .btn-group {
 	display: flex;
 	flex-direction: row;
 	gap: 20rpx;
 	margin-top: 20rpx;
 }
+
 .ctrl-btn {
+	// 布局
 	flex: 1;
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	justify-content: center;
+	
+	// 尺寸
+	padding: 0 24rpx;
+	margin: 0;
+	min-height: 72rpx;
+	
+	// 文字
 	font-size: 28rpx;
-	padding: 16rpx 0;
-	border-radius: 8rpx;
+	color: #333;
+	line-height: 1;
+	
+	// 外观
 	background: #ffffff;
 	border: 1rpx solid #ddd;
+	border-radius: 8rpx;
+	
+	// 点击态
+	&:active {
+		opacity: 0.7;
+	}
+	
+	// 重置 button 默认样式（小程序）
+	&::after {
+		display: none;
+		border: none;
+	}
 }
+
 .custom-item {
 	display: flex;
 	flex-direction: row;
 	align-items: center;
-	margin-right: 40rpx;
+	padding: 8rpx 16rpx;
+	background: #fff;
+	border-radius: 8rpx;
+	margin-right: 20rpx;
+	box-shadow: 0 2rpx 8rpx rgba(0, 0, 0, 0.06);
 }
+
 .custom-avatar {
-	width: 48rpx;
-	height: 48rpx;
+	width: 40rpx;
+	height: 40rpx;
 	border-radius: 50%;
 	margin-right: 12rpx;
 }
+
 .custom-text {
-	font-size: 28rpx;
+	font-size: 26rpx;
+	font-weight: 500;
 }
 </style>
