@@ -10,7 +10,19 @@
 	>
 		<view class="ste-mq-wrapper" :class="{ 'is-paused': isPaused }">
 			<view class="ste-mq-content" :class="animationClass">
-				<view v-for="(item, index) in displayQueue" :key="item._key" class="ste-mq-item" :style="getItemStyle(item)" @click="handleClick(item, index)">
+				<view
+				v-for="(item, index) in displayQueue"
+				:key="item._key"
+				class="ste-mq-item"
+				:style="{
+					color: item.color || '',
+					background: item.background || itemBg,
+					padding: itemPadding,
+					borderRadius: itemRadius,
+					marginRight: gap + 'rpx',
+				}"
+				@click="handleClick(item, index)"
+			>
 					<slot name="item" :item="item" :index="index">
 						<image v-if="item.icon" class="ste-mq-icon" :src="item.icon" mode="aspectFit" />
 						<text class="ste-mq-text">{{ item.text }}</text>
@@ -177,17 +189,6 @@ export default {
 					.boundingClientRect((rect) => resolve(rect ? rect.width : 0))
 					.exec();
 			});
-		},
-
-		// ─── 获取消息项样式 ────────────────────────────────────
-		getItemStyle(item) {
-			return {
-				color: item.color || '',
-				background: item.background || this.itemBg,
-				padding: this.itemPadding,
-				borderRadius: this.itemRadius,
-				marginRight: `${this.gap}rpx`,
-			};
 		},
 
 		// ─── 构建队列 ──────────────────────────────────────────
