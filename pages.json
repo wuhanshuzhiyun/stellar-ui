@@ -473,6 +473,19 @@
 			}
 		},
 		{
+			"path": "mp/marquee-demo/marquee-demo",
+			"style": {
+				"navigationStyle": "custom",
+
+				"mp-alipay": {
+					"transparentTitle": "always",
+					"titlePenetrate": "YES",
+					"allowsBounceVertical": "NO",
+					"navigationBarTitleText": ""
+				}
+			}
+		},
+		{
 			"path": "mp/calendar-demo/calendar-demo",
 			"style": {
 				"navigationStyle": "custom",
