@@ -19,23 +19,23 @@
 		},
 		props: {
 			show: {
-				type: [Boolean, null],
+				type: Boolean,
 				default: false,
 			},
 			type: {
-				type: [String, null],
+				type: String,
 				default: '',
 			},
 			loop: {
-				type: [Boolean, null],
+				type: Boolean,
 				default: false,
 			},
 			duration: {
-				type: [Number, null],
+				type: [Number, String],
 				default: 300,
 			},
 			action: {
-				type: [String, null],
+				type: String,
 				default: '',
 			},
 		},
@@ -57,8 +57,8 @@
 			},
 			cmpRootStyle() {
 				let style = {};
-				if (this.duration !== null && this.duration !== undefined) {
-					const duration = `${this.duration}ms`;
+				const duration = this.normalizeDuration(this.duration);
+				if (duration) {
 					style.animationDuration = duration;
 					style['--ste-animate-duration'] = duration;
 				}
@@ -75,6 +75,25 @@
 			},
 		},
 		methods: {
+			normalizeDuration(duration) {
+				if (duration === null || duration === undefined || duration === '') {
+					return '';
+				}
+				if (typeof duration === 'number') {
+					return `${duration}ms`;
+				}
+				const val = String(duration).trim().toLowerCase();
+				if (!val) {
+					return '';
+				}
+				if (/^\d+(\.\d+)?$/.test(val)) {
+					return `${val}ms`;
+				}
+				if (/^\d+(\.\d+)?(ms|s)$/.test(val)) {
+					return val;
+				}
+				return '';
+			},
 			handleClick() {
 				if (this.action === 'click') {
 					this.animated();
