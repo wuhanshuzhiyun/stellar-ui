@@ -15,7 +15,7 @@ npm install ste-vue-inset-loader --save-dev
 ```
 "insetLoader": {
 	"config": {
-		"toast": "<root-portal><ste-toast id='steToast'></ste-toast></root-portal>"
+		"toast": "<ste-toast id='steToast'></ste-toast>"
 	},
 	// 全局配置  
 	"label": ["toast"],

@@ -12,7 +12,7 @@ npm install ste-vue-inset-loader --save-dev
 ```
 "insetLoader": {
 	"config": {
-		"msgBox": "<root-portal><ste-message-box id='steMessageBox'></ste-message-box></root-portal>"
+		"msgBox": "<ste-message-box id='steMessageBox'></ste-message-box>"
 	},
 	// 全局配置  
 	"label": ["msgBox"],
