@@ -2,6 +2,8 @@
 const TransformPages = require('uni-read-pages');
 const { webpack } = new TransformPages();
 const path = require('path');
+const DemoAutoRegisterPlugin = require('./scripts/demo-auto-register');
+
 module.exports = {
 	devServer: {
 		disableHostCheck: true, // 禁用 Host 头检查
@@ -19,6 +21,8 @@ module.exports = {
 	},
 	configureWebpack: {
 		plugins: [
+			// 自动同步 mp/ demo 路由到 pages.json 和 mp/index/index.vue
+			new DemoAutoRegisterPlugin(),
 			new webpack.DefinePlugin({
 				ROUTES: webpack.DefinePlugin.runtimeValue(() => {
 					const tfPages = new TransformPages({
