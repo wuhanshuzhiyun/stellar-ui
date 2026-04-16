@@ -90,7 +90,7 @@ export default {
 | `show`	| 控制动画，当值从`false`变为`true`时会触发一次动画					| `Boolean`	| `false`	| -		| -			|
 | `type`	| 动画类型，见下方`type`值说明										| `String`	| -			| -		| -			|
 | `loop`	| 是否循环执行。														| `Boolean`	| `false`	| -		| -			|
-| `duration`| 动画时长，单位 ms													| `Number`	|			| -		| -			|
+| `duration`| 动画时长，支持 `1500`/`"1500"`/`"1500ms"`/`"1.5s"`					| `Number/String`	| `300`		| -		| -			|
 | `action`	| 不能与 show 同时使用）触发方式，`initial`初始化执行; `click`点击执行	| `String`	| -			| -		| -			|
 
 #### 动画类型(type)
