@@ -18,7 +18,7 @@ let $state = Vue.observable({
 function useSteToast() {
 	return {
 		/*打开弹窗*/
-		showToast(params) {
+		showToast(params = {}) {
 			// 默认持续时间
 			let defaultDuration = 1500;
 			// 关闭前面的弹窗
@@ -48,10 +48,10 @@ function useSteToast() {
 				$state.image = params.image ?? '';
 				$state.duration = params.duration ?? defaultDuration;
 				$state.mask = params.mask ?? false;
-				$state.success = params.success ?? function () {};
-				$state.fail = params.fail ?? function () {};
-				$state.complete = params.complete ?? function () {};
-				$state.close = params.close ?? function () {};
+				$state.success = params.success ?? function() {};
+				$state.fail = params.fail ?? function() {};
+				$state.complete = params.complete ?? function() {};
+				$state.close = params.close ?? function() {};
 				$state.enableCrossPagePrompt = params.enableCrossPagePrompt ?? false;
 			}, time);
 			$state.timer.push(timer);

@@ -32,13 +32,13 @@ function useSteMsgBox(key) {
 
 	return {
 		// 显示消息弹框
-		showMsgBox(params) {
+		showMsgBox(params = {}) {
 			Object.assign(stateMap[key], {
 				...DEFAULT_CONFIG,
 				...params,
-				confirm: params.confirm ?? function () {},
-				cancel: params.cancel ?? function () {},
-				complete: params.complete ?? function () {},
+				confirm: params.confirm ?? function() {},
+				cancel: params.cancel ?? function() {},
+				complete: params.complete ?? function() {},
 				openBegin: true,
 			});
 		},
@@ -54,4 +54,6 @@ function useSteMsgBox(key) {
 }
 
 export default useSteMsgBox;
-export { DEFAULT_KEY };
+export {
+	DEFAULT_KEY
+};
