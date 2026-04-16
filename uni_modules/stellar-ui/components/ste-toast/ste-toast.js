@@ -1,21 +1,19 @@
-import store from '../../utils/store.js';
-import Vuex from 'vuex';
-let $state = new Vuex.Store({
-	state: {
-		openBegin: false,
-		title: '',
-		icon: '',
-		image: '',
-		duration: 1500,
-		mask: false,
-		success: null,
-		fail: null,
-		complete: null,
-		close: null,
-		enableCrossPagePrompt: false,
-		timer: [],
-	},
-}).state;
+import Vue from 'vue';
+
+let $state = Vue.observable({
+	openBegin: false,
+	title: '',
+	icon: '',
+	image: '',
+	duration: 1500,
+	mask: false,
+	success: null,
+	fail: null,
+	complete: null,
+	close: null,
+	enableCrossPagePrompt: false,
+	timer: [],
+});
 
 function useSteToast() {
 	return {

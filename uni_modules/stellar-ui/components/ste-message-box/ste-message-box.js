@@ -1,7 +1,5 @@
 import Vue from 'vue';
-import Vuex from 'vuex';
 
-Vue.use(Vuex);
 const DEFAULT_KEY = '$steMsgBoxKey';
 const DEFAULT_CONFIG = {
 	title: '',
@@ -19,52 +17,39 @@ const DEFAULT_CONFIG = {
 	complete: null,
 };
 
-const store = new Vuex.Store({
-	state: {},
-	mutations: {
-		initializeState(state, key) {
-			if (!state[key]) {
-				Vue.set(state, key, {
-					selector: key,
-					openBegin: false,
-					...DEFAULT_CONFIG,
-				});
-			}
-		},
-		setState(state, { key, params }) {
-			Object.assign(state[key], params);
-		},
-		resetState(state, key) {
-			Object.assign(state[key], {
-				openBegin: false,
-			});
-		},
-	},
-});
+const stateMap = Vue.observable({});
 
 function useSteMsgBox(key) {
 	key = key ?? DEFAULT_KEY;
-	store.commit('initializeState', key);
+	// 初始化状态
+	if (!stateMap[key]) {
+		Vue.set(stateMap, key, {
+			selector: key,
+			openBegin: false,
+			...DEFAULT_CONFIG,
+		});
+	}
 
 	return {
+		// 显示消息弹框
 		showMsgBox(params) {
-			store.commit('setState', {
-				key,
-				params: {
-					...DEFAULT_CONFIG,
-					...params,
-					confirm: params.confirm ?? function () {},
-					cancel: params.cancel ?? function () {},
-					complete: params.complete ?? function () {},
-					openBegin: true,
-				},
+			Object.assign(stateMap[key], {
+				...DEFAULT_CONFIG,
+				...params,
+				confirm: params.confirm ?? function () {},
+				cancel: params.cancel ?? function () {},
+				complete: params.complete ?? function () {},
+				openBegin: true,
 			});
 		},
+		// 关闭消息弹框
 		hideMsgBox() {
-			store.commit('resetState', key);
+			Object.assign(stateMap[key], {
+				openBegin: false,
+			});
 		},
-		$state: store.state[key],
-		$store: store,
+		// 响应式数据
+		$state: stateMap[key],
 	};
 }
 

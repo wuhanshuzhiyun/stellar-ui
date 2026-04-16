@@ -1,11 +1,9 @@
-import store from '../utils/store.js';
-import Vuex from 'vuex';
-let $state = new Vuex.Store({
-	state: {
-		steThemeColor: '#0090FF',
-		defaultColor: '#0090FF',
-	},
-}).state;
+import Vue from 'vue';
+
+let $state = Vue.observable({
+	steThemeColor: '#0090FF',
+	defaultColor: '#0090FF',
+});
 
 function useColor() {
 	return {
