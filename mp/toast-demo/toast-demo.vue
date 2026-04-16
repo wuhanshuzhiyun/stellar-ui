@@ -55,6 +55,8 @@
 </template>
 
 <script>
+import useSteToast from '@/uni_modules/stellar-ui/components/ste-toast/ste-toast.js';
+let steToast = useSteToast();
 export default {
 	data() {
 		return {};
@@ -63,71 +65,71 @@ export default {
 	mounted() {},
 	methods: {
 		click1() {
-			uni.showToast({
+			steToast.showToast({
 				title: '提示内容',
 			});
 		},
 		click2() {
-			uni.showToast({
+			steToast.showToast({
 				title: '多行内容，多行内容，多行内容，多行内容，多行内容，多行内容，多行内容，多行内容，多行内容，',
 			});
 		},
 		click3() {
-			uni.showToast({
+			steToast.showToast({
 				title: '换行\n内容',
 			});
 		},
 		click4() {
-			uni.showToast({
+			steToast.showToast({
 				title: '提示内容',
 			});
 		},
 		click5() {
-			uni.showToast({
+			steToast.showToast({
 				title: '提示内容',
 				icon: 'error',
 			});
 		},
 		click6() {
-			uni.showToast({
+			steToast.showToast({
 				title: '提示内容',
 				icon: 'loading',
 			});
 			setTimeout(() => {
-				this.hideToast();
+				steToast.hideToast();
 			}, 4000);
 		},
 		click7() {
-			uni.showToast({
+			steToast.showToast({
 				title: '提示内容',
 				icon: 'none',
 			});
 		},
 		click8() {
-			uni.showToast({
+			steToast.showToast({
 				title: '提示内容',
 				image: 'https://image.whzb.com/chain/StellarUI/组件图标/loading.png',
 			});
 		},
 		click9() {
-			uni.showToast({
+			steToast.showToast({
 				title: '提示内容',
 				mask: true,
 				duration: 5000,
 			});
 		},
 		click10() {
-			uni.showToast({
+			steToast.showToast({
 				title: '提示内容',
 				duration: 5000,
 			});
 		},
 		click11() {
-			uni.showToast({
+			steToast.showToast({
 				title: '提示内容',
 				success() {
 					setTimeout(() => {
-						uni.showToast({
+						steToast.showToast({
 							title: '成功',
 							icon: 'none',
 						});
@@ -136,11 +138,11 @@ export default {
 			});
 		},
 		click12() {
-			uni.showToast({
+			steToast.showToast({
 				title: '提示内容',
 				complete() {
 					setTimeout(() => {
-						uni.showToast({
+						steToast.showToast({
 							title: '结束',
 							icon: 'none',
 						});
@@ -149,10 +151,10 @@ export default {
 			});
 		},
 		click13() {
-			uni.showToast({
+			steToast.showToast({
 				title: '提示内容',
 				close() {
-					uni.showToast({
+					steToast.showToast({
 						title: '关闭',
 						icon: 'none',
 					});
@@ -160,16 +162,16 @@ export default {
 			});
 		},
 		click14() {
-			uni.showToast({
+			steToast.showToast({
 				title: '队列1',
 				order: true,
 			});
-			uni.showToast({
+			steToast.showToast({
 				title: '队列2',
 				duration: 4000,
 				order: true,
 			});
-			uni.showToast({
+			steToast.showToast({
 				title: '队列3',
 				order: true,
 			});

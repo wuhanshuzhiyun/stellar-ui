@@ -117,6 +117,9 @@ click6() {
 		title: '提示内容',
 		icon: 'loading',
 	});
+    setTimeout(() => {
+		this.hideToast();
+	}, 4000);
 },
 click7() {
 	this.showToast({
