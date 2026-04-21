@@ -17,6 +17,7 @@
 <script>
 import utils from '../../utils/utils.js';
 import useColor from '../../config/color.js';
+import { configChildMixin } from '../../utils/mixin.js';
 let color = useColor();
 /**
  * ste-radio 单选框
@@ -48,6 +49,8 @@ export default {
 	group: '表单组件',
 	title: 'Radio 单选框',
 	name: 'ste-radio',
+	// 使用 configChildMixin：通过 proxyProps 读取父组件配置，避免依赖父实例整体
+	mixins: [configChildMixin('radioGroup')],
 	props: {
 		value: {
 			type: [Number, String, null],
@@ -115,56 +118,50 @@ export default {
 		// 派发事件名，更新父组件数据
 		event: 'input',
 	},
-	inject: {
-		radioGroup: {
-			default: '',
-		},
-	},
 	data() {
-		return {
-			clickTask: null, // click完成任务和allowStopStatus搭配使用
-			allowStopStatus: false, // 允许阻止后续的事件触发
-		};
+		return {};
 	},
 	computed: {
+		// 各 prop 单独为一个 computed，精准依赖对应的 proxyProps 字段
+		// configChildMixin 提供的 getParentProp(key, default) 内部读取 this.$parentProxyProps[key]
 		cmpDisabled() {
-			return this.getDefaultData('disabled', false);
+			return this.getParentProp('disabled', false);
 		},
 		cmpReadonly() {
-			return this.getDefaultData('readonly', false);
+			return this.getParentProp('readonly', false);
 		},
 		cmpShape() {
-			return this.getDefaultData('shape', 'circle');
+			return this.getParentProp('shape', 'circle');
 		},
 		cmpIconSize() {
-			return this.getDefaultData('iconSize', 36);
+			return this.getParentProp('iconSize', 36);
 		},
 		cmpCheckedColor() {
-			return this.getDefaultData('checkedColor', color.getColor().steThemeColor);
+			return this.getParentProp('checkedColor', color.getColor().steThemeColor);
 		},
 		cmpTextPosition() {
-			return this.getDefaultData('textPosition', 'right');
+			return this.getParentProp('textPosition', 'right');
 		},
 		cmpTextSize() {
-			return this.getDefaultData('textSize', 28);
+			return this.getParentProp('textSize', 28);
 		},
 		cmpTextInactiveColor() {
-			return this.getDefaultData('textInactiveColor', '#000000');
+			return this.getParentProp('textInactiveColor', '#000000');
 		},
 		cmpTextActiveColor() {
-			return this.getDefaultData('textActiveColor', '#000000');
+			return this.getParentProp('textActiveColor', '#000000');
 		},
 		cmpTextDisabled() {
-			return this.getDefaultData('textDisabled', false);
+			return this.getParentProp('textDisabled', false);
 		},
 		cmpMarginLeft() {
-			return this.getDefaultData('marginLeft', '0');
+			return this.getParentProp('marginLeft', '0');
 		},
 		cmpMarginRight() {
-			return this.getDefaultData('marginRight', '0');
+			return this.getParentProp('marginRight', '0');
 		},
 		cmpColumnGap() {
-			return this.getDefaultData('columnGap', '16');
+			return this.getParentProp('columnGap', '16');
 		},
 		cmpSlotProps() {
 			return {
@@ -178,7 +175,6 @@ export default {
 			style['fontSize'] = utils.formatPx(this.cmpTextSize);
 			style['color'] = this.cmpChecked ? this.cmpTextActiveColor : this.cmpTextInactiveColor;
 			style['flexDirection'] = this.cmpTextPosition == 'right' ? 'row' : 'row-reverse';
-			style['columnGap'] = utils.formatPx(this.cmpColumnGap);
 			style['marginLeft'] = utils.formatPx(this.cmpMarginLeft);
 			style['marginRight'] = utils.formatPx(this.cmpMarginRight);
 			// #ifdef H5
@@ -195,9 +191,7 @@ export default {
 			}
 
 			// 在没有使用插槽内容时去掉边距
-			if (!this.$slots.default) {
-				style['columnGap'] = 0;
-			}
+			style['columnGap'] = this.$slots.default ? utils.formatPx(this.cmpColumnGap) : 0;
 
 			return style;
 		},
@@ -223,42 +217,46 @@ export default {
 			}
 			return style;
 		},
-		// 选中状态
+		// 选中状态：通过 proxyProps.value 读取父组件 value，不依赖父实例整体
 		cmpChecked() {
-			return this.cmpGroup ? this.radioGroup.value == this.name : this.value == this.name;
-		},
-		cmpGroup() {
-			return !!this.radioGroup;
+			return this.$hasParent
+				? this.$parentProxyProps?.value == this.name
+				: this.value == this.name;
 		},
 	},
 	methods: {
-		async click() {
-			if (!this.cmpDisabled && !this.cmpReadonly) {
-				this.allowStopStatus = false;
-				this.clickTask = new Promise((resolve) => {
-					this.$emit('click', this.value, this.allowStop, resolve);
-				});
-				if (this.allowStopStatus) {
-					await this.clickTask;
-				}
-				if (!this.cmpChecked) {
-					let value = this.name;
-					if (this.cmpGroup) {
-						this.radioGroup.$emit('input', value);
-						this.radioGroup.$emit('change', value);
-					} else {
-						this.$emit('input', value);
-					}
-					this.$emit('change', value);
+		click() {
+			if (this.cmpDisabled || this.cmpReadonly) {
+				return;
+			}
+
+			// 如果有 click 事件监听器，先触发事件
+			if (this.$listeners?.click) {
+				let stopped = false;
+				const next = () => {
+					// 不阻止后续操作
+				};
+				const stop = () => {
+					stopped = true;
+				};
+				// 同步触发 click 事件回调
+				this.$emit('click', this.value, next, stop);
+				// 如果用户调用了 stop()，则不执行后续逻辑
+				if (stopped) {
+					return;
 				}
 			}
-		},
-		// 允许阻止后续操作
-		allowStop() {
-			this.allowStopStatus = true;
-		},
-		getDefaultData(key, value) {
-			return this[key] != null ? this[key] : this.radioGroup[key] ? this.radioGroup[key] : value;
+
+			if (!this.cmpChecked) {
+				let value = this.name;
+				if (this.$hasParent) {
+					// 通过 mixin 提供的 updateParentValue 触发父组件 input/change
+					this.updateParentValue(value);
+				} else {
+					this.$emit('input', value);
+				}
+				this.$emit('change', value);
+			}
 		},
 	},
 };

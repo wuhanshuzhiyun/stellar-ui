@@ -37,7 +37,7 @@
 
 <script>
 import utils from '../../utils/utils.js';
-import { childMixin } from '../../utils/mixin.js';
+import { configChildMixin } from '../../utils/mixin.js';
 import TouchEvent from '../ste-touch-swipe/TouchEvent.js';
 /**
  * SwipeAction 滑动单元格
@@ -59,7 +59,7 @@ export default {
 	group: '展示组件',
 	title: 'SwipeAction 滑动单元格',
 	name: 'ste-swipe-action',
-	mixins: [childMixin('ste-swipe-action-group', ['open', 'close', 'onchange'])],
+	mixins: [configChildMixin('ste-swipe-action-group', ['open', 'close', 'onchange'])],
 	props: {
 		mode: {
 			type: [String, null],
@@ -99,7 +99,7 @@ export default {
 	},
 	computed: {
 		cmpMode() {
-			return this.mode || this.parent?.mode || 'right';
+			return this.getParentProp('mode', 'right');
 		},
 		cmpLeft() {
 			return ['all', 'left'].indexOf(this.cmpMode) !== -1;
@@ -108,19 +108,19 @@ export default {
 			return ['all', 'right'].indexOf(this.cmpMode) !== -1;
 		},
 		cmpDisabled() {
-			return this.disabled !== null ? this.disabled : this.parent?.disabled;
+			return this.getParentProp('disabled', false);
 		},
 		cmpSwipeThreshold() {
-			return this.swipeThreshold || this.parent?.swipeThreshold || 0.35;
+			return this.getParentProp('swipeThreshold', 0.35);
 		},
 		cmpDuration() {
-			return this.duration || this.parent?.duration || 300;
+			return this.getParentProp('duration', 300);
 		},
 		cmpLeftIcon() {
-			return this.leftIcon !== null ? this.leftIcon : this.parent?.leftIcon;
+			return this.getParentProp('leftIcon', false);
 		},
 		cmpRightIcon() {
-			return this.rightIcon !== null ? this.rightIcon : this.parent?.rightIcon;
+			return this.getParentProp('rightIcon', false);
 		},
 		cmpTransform() {
 			return {

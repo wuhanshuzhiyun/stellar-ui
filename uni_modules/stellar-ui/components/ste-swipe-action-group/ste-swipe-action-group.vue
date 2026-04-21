@@ -5,7 +5,10 @@
 </template>
 
 <script>
-import { parentMixin } from '../../utils/mixin.js';
+import { configParentMixin } from '../../utils/mixin.js';
+
+// 需要透传给子组件的配置项
+const SWIPE_ACTION_PROP_KEYS = ['mode', 'disabled', 'swipeThreshold', 'duration', 'leftIcon', 'rightIcon'];
 /**
  * SwipeAction 滑动单元格
  * @description 滑动单元格
@@ -25,7 +28,7 @@ import { parentMixin } from '../../utils/mixin.js';
  */
 export default {
 	name: 'ste-swipe-action-group',
-	mixins: [parentMixin('ste-swipe-action-group')],
+	mixins: [configParentMixin('ste-swipe-action-group', SWIPE_ACTION_PROP_KEYS)],
 	props: {
 		mode: {
 			type: [String, null],

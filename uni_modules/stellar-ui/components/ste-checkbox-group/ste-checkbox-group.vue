@@ -5,6 +5,25 @@
 </template>
 
 <script>
+import { configParentMixin } from '../../utils/mixin.js';
+
+// 需要透传给子组件的配置项
+const CHECKBOX_PROP_KEYS = [
+	'disabled',
+	'readonly',
+	'shape',
+	'iconSize',
+	'checkedColor',
+	'textPosition',
+	'textSize',
+	'textInactiveColor',
+	'textActiveColor',
+	'textDisabled',
+	'marginLeft',
+	'marginRight',
+	'columnGap',
+];
+
 /**
  * ste-checkbox-group 复选框组
  * @description 复选框组组件,内部由多个checkbox组成。
@@ -35,6 +54,7 @@
  */
 export default {
 	name: 'ste-checkbox-group',
+	mixins: [configParentMixin('checkboxGroup', CHECKBOX_PROP_KEYS)],
 	props: {
 		value: {
 			type: [Array, null],
@@ -62,7 +82,7 @@ export default {
 		},
 		checkedColor: {
 			type: [String, null],
-			default: '',
+			default: null,
 		},
 		textPosition: {
 			type: [String, null],
@@ -105,11 +125,6 @@ export default {
 		prop: 'value',
 		// 派发事件名，更新父组件数据
 		event: 'input',
-	},
-	provide() {
-		return {
-			checkboxGroup: this,
-		};
 	},
 	data() {
 		return {};

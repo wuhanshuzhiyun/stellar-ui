@@ -17,6 +17,7 @@
 <script>
 import utils from '../../utils/utils.js';
 import useColor from '../../config/color.js';
+import { configChildMixin } from '../../utils/mixin.js';
 let color = useColor();
 /**
  * ste-checkbox 复选框
@@ -48,6 +49,7 @@ export default {
 	group: '表单组件',
 	title: 'Checkbox 复选框',
 	name: 'ste-checkbox',
+	mixins: [configChildMixin('checkboxGroup')],
 	props: {
 		value: {
 			type: [Boolean, null],
@@ -115,64 +117,57 @@ export default {
 		// 派发事件名，更新父组件数据
 		event: 'input',
 	},
-	inject: {
-		checkboxGroup: {
-			default: '',
-		},
-	},
 	data() {
 		return {
-			clickTask: null, // click完成任务和allowStopStatus搭配使用
-			allowStopStatus: false, // 允许阻止后续的事件触发
 			num: 1, // 解决支付宝小程序checkboxGroup.value更新不触发计算属性的问题
 		};
 	},
 	computed: {
 		cmpDisabled() {
-			let disabled = this.getDefaultData('disabled', false);
+			let disabled = this.getParentProp('disabled', false);
 			// 限制最大可选数
-			if (this.cmpGroup && this.checkboxGroup.max) {
-				if (!this.cmpChecked && this.checkboxGroup.value.length >= this.checkboxGroup.max) {
+			if (this.$hasParent && this.parent.max) {
+				if (!this.cmpChecked && this.parent.value.length >= this.parent.max) {
 					disabled = true;
 				}
 			}
 			return disabled;
 		},
 		cmpReadonly() {
-			return this.getDefaultData('readonly', false);
+			return this.getParentProp('readonly', false);
 		},
 		cmpShape() {
-			return this.getDefaultData('shape', 'circle');
+			return this.getParentProp('shape', 'circle');
 		},
 		cmpIconSize() {
-			return this.getDefaultData('iconSize', 36);
+			return this.getParentProp('iconSize', 36);
 		},
 		cmpCheckedColor() {
-			return this.getDefaultData('checkedColor', color.getColor().steThemeColor);
+			return this.getParentProp('checkedColor', color.getColor().steThemeColor);
 		},
 		cmpTextPosition() {
-			return this.getDefaultData('textPosition', 'right');
+			return this.getParentProp('textPosition', 'right');
 		},
 		cmpTextSize() {
-			return this.getDefaultData('textSize', 28);
+			return this.getParentProp('textSize', 28);
 		},
 		cmpTextInactiveColor() {
-			return this.getDefaultData('textInactiveColor', '#000000');
+			return this.getParentProp('textInactiveColor', '#000000');
 		},
 		cmpTextActiveColor() {
-			return this.getDefaultData('textActiveColor', '#000000');
+			return this.getParentProp('textActiveColor', '#000000');
 		},
 		cmpTextDisabled() {
-			return this.getDefaultData('textDisabled', false);
+			return this.getParentProp('textDisabled', false);
 		},
 		cmpMarginLeft() {
-			return this.getDefaultData('marginLeft', '0');
+			return this.getParentProp('marginLeft', '0');
 		},
 		cmpMarginRight() {
-			return this.getDefaultData('marginRight', '0');
+			return this.getParentProp('marginRight', '0');
 		},
 		cmpColumnGap() {
-			return this.getDefaultData('columnGap', '16');
+			return this.getParentProp('columnGap', '16');
 		},
 		cmpSlotProps() {
 			return {
@@ -231,47 +226,54 @@ export default {
 			return style;
 		},
 		// 选中状态
+		// 注意：使用宽松相等比较，避免 value（字符串数组）和 name（数字）类型不一致导致匹配失败
 		cmpChecked() {
-			return this.num && this.cmpGroup ? this.checkboxGroup.value.includes(this.name) : this.value;
-		},
-		cmpGroup() {
-			return !!this.checkboxGroup;
+			if (this.num && this.$hasParent) {
+				return this.parent.value.some((v) => v == this.name);
+			}
+			return this.value;
 		},
 	},
 	methods: {
-		async click() {
-			if (!this.cmpDisabled && !this.cmpReadonly) {
-				this.allowStopStatus = false;
-				this.clickTask = new Promise((resolve) => {
-					this.$emit('click', this.value, this.allowStop, resolve);
-				});
-				if (this.allowStopStatus) {
-					await this.clickTask;
-				}
-				let value = null;
-				if (this.cmpGroup) {
-					value = this.checkboxGroup.value;
-					if (this.cmpChecked) {
-						value = value.filter((value) => value != this.name);
-					} else {
-						value.push(this.name);
-					}
-					this.checkboxGroup.$emit('input', value);
-					this.checkboxGroup.$emit('change', value);
-					this.num++;
-				} else {
-					value = !this.cmpChecked;
-					this.$emit('input', !this.cmpChecked);
-				}
-				this.$emit('change', value);
+		click() {
+			if (this.cmpDisabled || this.cmpReadonly) {
+				return;
 			}
-		},
-		// 允许阻止后续操作
-		allowStop() {
-			this.allowStopStatus = true;
-		},
-		getDefaultData(key, value) {
-			return this[key] != null ? this[key] : this.checkboxGroup[key] ? this.checkboxGroup[key] : value;
+
+			// 如果有 click 事件监听器，先触发事件
+			// 使用 $listeners 判断是否有 click 事件回调
+			if (this.$listeners?.click) {
+				let stopped = false;
+				const next = () => {
+					// 不阻止后续操作
+				};
+				const stop = () => {
+					stopped = true;
+				};
+				// 同步触发 click 事件回调
+				this.$emit('click', this.value, next, stop);
+				// 如果用户调用了 stop()，则不执行后续逻辑
+				if (stopped) {
+					return;
+				}
+			}
+
+			let value = null;
+			if (this.$hasParent) {
+				value = this.parent.value;
+				if (this.cmpChecked) {
+					value = value.filter((value) => value != this.name);
+				} else {
+					value.push(this.name);
+				}
+				this.parent.$emit('input', value);
+				this.parent.$emit('change', value);
+				this.num++;
+			} else {
+				value = !this.cmpChecked;
+				this.$emit('input', !this.cmpChecked);
+			}
+			this.$emit('change', value);
 		},
 	},
 };

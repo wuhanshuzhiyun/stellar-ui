@@ -5,6 +5,26 @@
 </template>
 
 <script>
+import { configParentMixin } from '../../utils/mixin.js';
+
+// 所有需要透传给子 radio 的 prop 名称
+const RADIO_GROUP_PROP_KEYS = [
+	'value',
+	'disabled',
+	'readonly',
+	'shape',
+	'iconSize',
+	'checkedColor',
+	'textPosition',
+	'textSize',
+	'textInactiveColor',
+	'textActiveColor',
+	'textDisabled',
+	'marginLeft',
+	'marginRight',
+	'columnGap',
+];
+
 /**
  * ste-radio-group 单选框组
  * @description 单选框组组件,内部由多个radio组成。
@@ -34,6 +54,8 @@
  */
 export default {
 	name: 'ste-radio-group',
+	// 使用 configParentMixin：provide proxyProps，避免子组件依赖父实例整体
+	mixins: [configParentMixin('radioGroup', RADIO_GROUP_PROP_KEYS)],
 	props: {
 		value: {
 			type: [Number, String, null],
@@ -61,7 +83,7 @@ export default {
 		},
 		checkedColor: {
 			type: [String, null],
-			default: '#0090FF',
+			default: null,
 		},
 		textPosition: {
 			type: [String, null],
@@ -101,14 +123,6 @@ export default {
 		// 派发事件名，更新父组件数据
 		event: 'input',
 	},
-	provide() {
-		return {
-			radioGroup: this,
-		};
-	},
-	data() {
-		return {};
-	},
 	computed: {
 		cmpStyle() {
 			let style = {};
@@ -126,3 +140,4 @@ export default {
 	row-gap: 16rpx;
 }
 </style>
+

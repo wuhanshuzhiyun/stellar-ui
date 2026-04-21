@@ -1,3 +1,6 @@
+// 模块级缓存，所有实例共享，App 生命周期内只调用一次系统 API
+let _cachedWindowInfo = null;
+
 export default class System {
 	/**
 	 * 获取设备设置
@@ -38,9 +41,11 @@ export default class System {
 	}
 
 	/**
-	 * 获取窗口信息
+	 * 获取窗口信息（结果已缓存，同一 App 生命周期内只调用一次系统 API）
 	 */
 	static getWindowInfo() {
+		if (_cachedWindowInfo) return _cachedWindowInfo;
+
 		// #ifdef MP-360
 		// 为了兼容测试环境没有uni，wx等, 使用360做条件编译，减少组件库包大小
 		if (process.env.NODE_ENV == 'test') {
@@ -65,7 +70,8 @@ export default class System {
 			windowInfo.safeAreaInsets = {
 				bottom: windowInfo.screenHeight - windowInfo.safeArea.bottom,
 			};
-			return windowInfo;
+			_cachedWindowInfo = windowInfo;
+			return _cachedWindowInfo;
 		}
 		// #endif
 		// #ifdef MP-WEIXIN
@@ -73,12 +79,21 @@ export default class System {
 		windowInfo.safeAreaInsets = {
 			bottom: windowInfo.screenHeight - windowInfo.safeArea.bottom,
 		};
-		return windowInfo;
+		_cachedWindowInfo = windowInfo;
+		return _cachedWindowInfo;
 		// #endif
 
 		// #ifndef MP-WEIXIN
-		return uni.getSystemInfoSync();
+		_cachedWindowInfo = uni.getSystemInfoSync();
+		return _cachedWindowInfo;
 		// #endif
+	}
+
+	/**
+	 * 清除窗口信息缓存（屏幕旋转或窗口尺寸变化时调用）
+	 */
+	static clearWindowInfoCache() {
+		_cachedWindowInfo = null;
 	}
 
 	/**
