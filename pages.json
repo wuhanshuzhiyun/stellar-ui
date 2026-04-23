@@ -292,6 +292,18 @@
 			}
 		},
 		{
+			"path": "mp/drag-sort-demo/drag-sort-demo",
+			"style": {
+				"navigationStyle": "custom",
+				"mp-alipay": {
+					"transparentTitle": "always",
+					"titlePenetrate": "YES",
+					"allowsBounceVertical": "NO",
+					"navigationBarTitleText": ""
+				}
+			}
+		},
+		{
 			"path": "mp/dropdown-menu-demo/dropdown-menu-demo",
 			"style": {
 				"navigationStyle": "custom",

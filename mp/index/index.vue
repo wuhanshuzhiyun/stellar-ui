@@ -624,6 +624,15 @@
 					<ste-image :src="joinSrc('组件图标/r-arrow.png')" :width="32" :height="32" />
 				</view>
 			</view>
+			<view class="com-box" @click="nav('drag-sort')">
+				<view class="com-title">
+					<ste-image :src="joinSrc('组件图标/drag.png?1722389562846')" :width="36" :height="36" />
+					<text>DragSort 拖拽排序</text>
+				</view>
+				<view class="com-arrow">
+					<ste-image :src="joinSrc('组件图标/r-arrow.png')" :width="32" :height="32" />
+				</view>
+			</view>
 			<view class="com-box" @click="nav('icon')">
 				<view class="com-title">
 					<ste-image :src="joinSrc('组件图标/icon.png')" :width="36" :height="36" />
