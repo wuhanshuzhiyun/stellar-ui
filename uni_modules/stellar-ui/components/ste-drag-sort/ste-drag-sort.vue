@@ -1,16 +1,15 @@
 <template>
-	<view class="ste-drag-sort-root" :class="[rootClass, { 'ste-drag-sort-root-dragging': dragging }]"
+	<view class="ste-drag-sort-root"
+		:class="{ 'ste-drag-sort-root-dragging': dragging ,'ste-drag-sort-columns': cmpColumns > 1}"
 		data-test="drag-sort">
-		<view v-for="(current, index) in list" :key="current.uid" class="ste-drag-sort-item"
-			:class="{
+		<view v-for="(current, index) in list" :key="current.uid" class="ste-drag-sort-item" :class="{
 				'ste-drag-sort-item-disabled': disabled || !!(list[index] && list[index].raw && list[index].raw.disabled),
 				'ste-drag-sort-item-ready': dragging && dragIndex === index && !sortingStarted,
 				'ste-drag-sort-item-dragging': dragging && dragIndex === index,
 				'ste-drag-sort-item-animating': dragging && dragIndex !== index
-			}" :style="itemStyles[index]"
-			@touchstart="onTouchStart($event, index, 'touch')" @longpress="onTouchStart($event, index, 'longpress')"
-			@touchmove="onTouchMove" @touchend="onTouchEnd" @touchcancel="onTouchEnd"
-			@mousedown.prevent="mouseDown($event, index)">
+			}" :style="[itemStyles[index]]" @touchstart="onTouchStart($event, index, 'touch')"
+			@longpress="onTouchStart($event, index, 'longpress')" @touchmove="onTouchMove" @touchend="onTouchEnd"
+			@touchcancel="onTouchEnd" @mousedown.prevent="mouseDown($event, index)">
 			<slot name="item" :item="current.raw" :index="index" :dragging="dragging" :dragIndex="dragIndex"
 				:insertIndex="insertIndex"></slot>
 		</view>
@@ -81,11 +80,7 @@
 				const value = Math.floor(Number(this.columns) || 1);
 				return value > 0 ? value : 1;
 			},
-			rootClass() {
-				return {
-					'ste-drag-sort-columns': this.cmpColumns > 1,
-				};
-			},
+
 			itemStyles() {
 				return this.list.map((_, index) => {
 					const style = {};
@@ -132,9 +127,6 @@
 			// ---- 触摸事件兼容 ----
 			getTouchX(touch) {
 				if (!touch) return 0;
-				// #ifdef APP
-				if (typeof touch.x === 'number') return touch.x;
-				// #endif
 				if (typeof touch.pageX === 'number') return touch.pageX;
 				if (typeof touch.clientX === 'number') return touch.clientX;
 				if (typeof touch.x === 'number') return touch.x;
@@ -142,9 +134,6 @@
 			},
 			getTouchY(touch) {
 				if (!touch) return 0;
-				// #ifdef APP
-				if (typeof touch.y === 'number') return touch.y;
-				// #endif
 				if (typeof touch.pageY === 'number') return touch.pageY;
 				if (typeof touch.clientY === 'number') return touch.clientY;
 				if (typeof touch.y === 'number') return touch.y;
@@ -276,7 +265,8 @@
 					// 直接使用 setTimeout 确保在 DOM 更新后再测量
 					setTimeout(() => {
 						utils.querySelector('.ste-drag-sort-root', this).then((rootRect) => {
-							utils.querySelector('.ste-drag-sort-item', this, true).then((rects) => {
+							utils.querySelector('.ste-drag-sort-item', this, true).then((
+								rects) => {
 								let items = [];
 								// 处理不同端的返回值结构
 								if (Array.isArray(rects)) {
@@ -293,23 +283,27 @@
 									} else {
 										// 其他对象结构
 										Object.keys(rects).forEach(key => {
-											if (!isNaN(Number(key)) && rects[key]) {
+											if (!isNaN(Number(key)) && rects[
+													key]) {
 												items.push(rects[key]);
 											}
 										});
 									}
 								}
-								
+
 								// 确保 items 数组按顺序排列
 								items.sort((a, b) => {
 									if (a && b) {
-										return (a.top || 0) - (b.top || 0) || (a.left || 0) - (b.left || 0);
+										return (a.top || 0) - (b.top || 0) || (a
+											.left || 0) - (b.left || 0);
 									}
 									return 0;
 								});
-								
-								this.itemWidth = this.cmpColumns > 1 ? (rootRect ? rootRect.width :
-									0) / this.cmpColumns : (items[0] ? items[0].width : 0);
+
+								this.itemWidth = this.cmpColumns > 1 ? (rootRect ? rootRect
+									.width :
+									0) / this.cmpColumns : (items[0] ? items[0].width :
+									0);
 								this.itemHeight = items[0] ? items[0].height : 0;
 								this.itemPositions = items.map((rect) => ({
 									top: rect.top || 0,
@@ -324,22 +318,33 @@
 				});
 			},
 
-			// ---- 插入位置计算 ----
-			calculateGridInsertIndex(centerX, centerY) {
+	// ---- 插入位置计算（网格模式：按行列对齐判断） ----
+		calculateGridInsertIndex(centerX, centerY) {
 				if (!this.itemPositions.length) return this.dragIndex;
+				const cols = this.cmpColumns;
+				// 计算拖拽元素所在的行列
+				const dragRow = Math.floor(this.dragIndex / cols);
+				const dragCol = this.dragIndex % cols;
+
 				let closestIndex = this.dragIndex;
 				let minDistance = Infinity;
+
 				this.itemPositions.forEach((position, index) => {
 					if (this.getItemDisabled(index)) return;
+					if (index === this.dragIndex) return;
+
 					const itemCenterX = position.left + position.width / 2;
 					const itemCenterY = position.top + position.height / 2;
-					const distance = Math.sqrt(Math.pow(centerX - itemCenterX, 2) + Math.pow(centerY - itemCenterY,
-						2));
+
+					// 使用曼哈顿距离（更适合网格对齐）
+					const distance = Math.abs(centerX - itemCenterX) + Math.abs(centerY - itemCenterY);
+
 					if (distance < minDistance) {
 						minDistance = distance;
 						closestIndex = index;
 					}
 				});
+
 				return closestIndex;
 			},
 			calculateSingleColumnInsertIndex(centerY) {
@@ -564,10 +569,7 @@
 				this.startDrag(index, this.getTouchX(touch), this.getTouchY(touch)).then((started) => {
 					if (!started) return;
 					event.stopPropagation && event.stopPropagation();
-					// 在小程序端，需要谨慎使用 preventDefault
-					// #ifdef APP || H5
 					event.preventDefault && event.preventDefault();
-					// #endif
 				});
 			},
 			onTouchMove(event) {
@@ -575,10 +577,7 @@
 				const touch = this.getFirstTouch(event);
 				if (!touch) return;
 				this.moveDrag(this.getTouchX(touch), this.getTouchY(touch));
-				// 在小程序端，需要谨慎使用 preventDefault
-				// #ifdef APP || H5
 				event.preventDefault && event.preventDefault();
-				// #endif
 			},
 			onTouchEnd() {
 				this.finishDrag();
