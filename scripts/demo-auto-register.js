@@ -189,14 +189,51 @@ function syncPagesJson(mpPages) {
  * - 区域内内容每次全量重新生成（幂等）
  * - 仅对 isMain === true 且有 config.json 的页面生成入口
  * - 按 group 分组，自动生成分组标题
+ * - 检测并清理锚点区域之外的重复内容
  */
 function syncIndexVue(mpPages) {
     const raw = fs.readFileSync(INDEX_VUE, 'utf-8');
     const { normalized, restore } = normalizeLineEndings(raw);
     let content = normalized;
 
-    // 过滤出主 demo 页，且有 config.json
-    const mainPages = mpPages
+    // 检测锚点区域之外是否存在重复的组件内容
+     const anchorStartPos = content.indexOf(INDEX_ANCHOR_START);
+     const anchorEndPos = content.indexOf(INDEX_ANCHOR_END);
+     
+     if (anchorStartPos !== -1 && anchorEndPos !== -1 && anchorEndPos > anchorStartPos) {
+         // 检查锚点之前的内容是否有重复组件
+         const beforeContent = content.slice(0, anchorStartPos);
+         const badgeCount = (beforeContent.match(/Badge 徽标/g) || []).length;
+         const buttonCount = (beforeContent.match(/Button 按钮/g) || []).length;
+         
+         if (badgeCount > 0 || buttonCount > 0) {
+             console.warn('[DemoAutoRegisterPlugin] 检测到锚点区域之外存在重复组件内容，将进行清理');
+             
+             // 找到模板部分的结束位置（scroll-box 结束）
+             const scrollBoxEnd = beforeContent.lastIndexOf('\t\t</view>\n\t</view>');
+             if (scrollBoxEnd !== -1) {
+                 // 提取模板的头部部分（不包含重复的组件内容）
+                 const templateHeader = beforeContent.slice(0, scrollBoxEnd);
+                 const afterContent = content.slice(anchorEndPos + INDEX_ANCHOR_END.length);
+                 
+                 // 创建清理后的内容结构
+                 const cleanContent = templateHeader + 
+                                     '\n\t\t\t' + INDEX_ANCHOR_START + '\n' + 
+                                     '\t\t\t' + INDEX_ANCHOR_END + '\n' + 
+                                     '\t\t</view>\n\t</view>' + 
+                                     afterContent;
+                 
+                 fs.writeFileSync(INDEX_VUE, restore(cleanContent), 'utf-8');
+                 console.log('[DemoAutoRegisterPlugin] 已清理锚点区域之外的重复内容');
+                 
+                 // 重新读取清理后的文件
+                 return syncIndexVue(mpPages);
+             }
+         }
+     }
+ 
+     // 过滤出主 demo 页，且有 config.json
+     const mainPages = mpPages
         .filter((p) => p.isMain)
         .map((p) => ({ ...p, config: readComponentConfig(p.demoName) }))
         .filter((p) => p.config !== null);
@@ -247,7 +284,30 @@ function syncIndexVue(mpPages) {
     const autoStart = content.indexOf(INDEX_ANCHOR_START);
     const autoEnd = content.indexOf(INDEX_ANCHOR_END);
 
-    if (autoStart !== -1 && autoEnd !== -1) {
+    // 检查是否存在重复的锚点标记
+    const autoStartCount = (content.match(new RegExp(INDEX_ANCHOR_START, 'g')) || []).length;
+    const autoEndCount = (content.match(new RegExp(INDEX_ANCHOR_END, 'g')) || []).length;
+
+    if (autoStartCount > 1 || autoEndCount > 1) {
+        console.warn('[DemoAutoRegisterPlugin] 检测到重复的锚点标记，将清理并重新生成内容');
+        // 清理重复的锚点区域，只保留第一个有效的锚点对
+        const firstStart = content.indexOf(INDEX_ANCHOR_START);
+        const firstEnd = content.indexOf(INDEX_ANCHOR_END);
+        
+        if (firstStart !== -1 && firstEnd !== -1 && firstEnd > firstStart) {
+            // 保留第一个锚点对，删除其他内容
+            const before = content.slice(0, firstStart);
+            const after = content.slice(firstEnd + INDEX_ANCHOR_END.length);
+            const cleanContent = before + INDEX_ANCHOR_START + '\n' + INDEX_ANCHOR_END + after;
+            fs.writeFileSync(INDEX_VUE, restore(cleanContent), 'utf-8');
+            console.log('[DemoAutoRegisterPlugin] 已清理重复的锚点标记');
+            // 重新读取清理后的文件
+            return syncIndexVue(mpPages);
+        }
+    }
+
+    // 强制清理并重新生成内容，确保不会保留旧内容
+    if (autoStart !== -1 && autoEnd !== -1 && autoEnd > autoStart) {
         // 已有锚点区域，直接替换
         const before = content.slice(0, autoStart);
         const after = content.slice(autoEnd + INDEX_ANCHOR_END.length);
