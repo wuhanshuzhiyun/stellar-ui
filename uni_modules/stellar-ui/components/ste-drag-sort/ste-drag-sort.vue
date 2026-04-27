@@ -62,6 +62,13 @@
 				startY: 0,
 				offsetX: 0,
 				offsetY: 0,
+				/**
+				 * 所有下标对应的位置信息
+				 * 格式：{ [index: string]: { top: number, left: number, right: number, bottom: number } }
+				 * 在长按/触摸触发拖拽前计算，用于 hit-test 判断手指进入哪个元素
+				 */
+				itemRects: {},
+				// 兼容旧逻辑保留，存储宽高用于样式偏移计算
 				itemPositions: [],
 				itemWidth: 0,
 				itemHeight: 0,
@@ -82,6 +89,9 @@
 			},
 
 			itemStyles() {
+				// 强制追踪 sortingStarted，确保所有元素在 sortingStarted 变化时重新计算
+				const sortingStarted = this.sortingStarted;
+
 				return this.list.map((_, index) => {
 					const style = {};
 
@@ -95,7 +105,7 @@
 					if (!this.dragging) return style;
 
 					if (index === this.dragIndex) {
-						const dragScale = this.sortingStarted ? 1.03 : 1.02;
+						const dragScale = sortingStarted ? 1.03 : 1.02;
 						style.transform = `translate(${this.offsetX}px, ${this.offsetY}px) scale(${dragScale})`;
 						style.zIndex = 100;
 						return style;
@@ -122,31 +132,32 @@
 		beforeDestroy() {
 			this.clearMouseLongPress();
 			this.removeMouseListeners();
+			this.enablePageScroll();
 		},
 		methods: {
 			// ---- 触摸事件兼容 ----
+			// 注意：rect.boundingClientRect 是视口坐标（clientX/clientY）
+			// hit-test 用 rect 边界做命中检测，此处优先取 clientX/clientY 与之对齐
 			getTouchX(touch) {
 				if (!touch) return 0;
-				if (typeof touch.pageX === 'number') return touch.pageX;
 				if (typeof touch.clientX === 'number') return touch.clientX;
+				if (typeof touch.pageX === 'number') return touch.pageX;
 				if (typeof touch.x === 'number') return touch.x;
 				return 0;
 			},
 			getTouchY(touch) {
 				if (!touch) return 0;
-				if (typeof touch.pageY === 'number') return touch.pageY;
 				if (typeof touch.clientY === 'number') return touch.clientY;
+				if (typeof touch.pageY === 'number') return touch.pageY;
 				if (typeof touch.y === 'number') return touch.y;
 				return 0;
 			},
 			toTouchArray(touches) {
 				if (!touches) return [];
-				// 处理微信小程序的触摸事件对象
 				if (Array.isArray(touches)) {
 					return touches.filter(Boolean);
 				} else if (touches && typeof touches === 'object') {
 					if (touches.length !== undefined) {
-						// 类似数组的对象
 						const result = [];
 						for (let i = 0; i < touches.length; i++) {
 							if (touches[i]) {
@@ -155,7 +166,6 @@
 						}
 						return result;
 					} else {
-						// 其他对象结构
 						return Object.keys(touches)
 							.filter(k => !isNaN(Number(k)))
 							.map(k => touches[k])
@@ -164,6 +174,7 @@
 				}
 				return [];
 			},
+
 			// ---- uid 池管理 ----
 			getUidPools(items) {
 				const pools = new Map();
@@ -196,10 +207,43 @@
 				this.startY = 0;
 				this.offsetX = 0;
 				this.offsetY = 0;
+				this.itemRects = {};
 				this.itemPositions = [];
 				this.itemWidth = 0;
 				this.itemHeight = 0;
 				this.sortingStarted = false;
+			},
+
+			// ---- 禁用/恢复页面滚动 ----
+			disablePageScroll() {
+				try {
+					// #ifdef MP-WEIXIN
+					wx.setPageScrollEnabled && wx.setPageScrollEnabled({ enabled: false });
+					// #endif
+					// #ifdef WEB
+					if (typeof document !== 'undefined') {
+						document.body.style.overflow = 'hidden';
+						document.documentElement.style.overflow = 'hidden';
+					}
+					// #endif
+				} catch (e) {
+					// 忽略不支持的平台
+				}
+			},
+			enablePageScroll() {
+				try {
+					// #ifdef MP-WEIXIN
+					wx.setPageScrollEnabled && wx.setPageScrollEnabled({ enabled: true });
+					// #endif
+					// #ifdef WEB
+					if (typeof document !== 'undefined') {
+						document.body.style.overflow = '';
+						document.documentElement.style.overflow = '';
+					}
+					// #endif
+				} catch (e) {
+					// 忽略不支持的平台
+				}
 			},
 
 			// ---- 鼠标长按相关 ----
@@ -234,18 +278,26 @@
 				}, []);
 			},
 
-			// ---- 重排预览 ----
+			// ---- 排序预览（基于新排序规则）----
+			/**
+			 * 排序规则说明：
+			 * 示例1：[0,1,2,3,4,5]，拖拽元素1，手指移入4，结果 [0,2,3,4,1,5]
+			 * 示例2：[0,1,2,3,4,5]，拖拽元素5，手指移入1，结果 [0,5,1,2,3,4]
+			 * 规则：将 dragIndex 元素从原位置移除，插入到 targetIndex 位置，其他元素顺序平移
+			 */
 			getReorderPreview(dragIdx, targetIdx) {
 				const enabledIndices = this.getEnabledIndices();
-				const dragEnabledIndex = enabledIndices.indexOf(dragIdx);
-				const targetEnabledIndex = enabledIndices.indexOf(targetIdx);
+				const dragEnabledPos = enabledIndices.indexOf(dragIdx);
+				const targetEnabledPos = enabledIndices.indexOf(targetIdx);
 
-				if (dragEnabledIndex < 0 || targetEnabledIndex < 0) return null;
+				if (dragEnabledPos < 0 || targetEnabledPos < 0) return null;
 
+				// 将 dragIdx 从原位置移除，插入到 targetIdx 对应的启用位置
 				const nextEnabledSourceIndices = enabledIndices.slice();
-				const spliced = nextEnabledSourceIndices.splice(dragEnabledIndex, 1);
-				nextEnabledSourceIndices.splice(targetEnabledIndex, 0, spliced[0]);
+				const spliced = nextEnabledSourceIndices.splice(dragEnabledPos, 1);
+				nextEnabledSourceIndices.splice(targetEnabledPos, 0, spliced[0]);
 
+				// 构建原始下标 -> 最终槽位下标的映射
 				const finalIndexMap = new Map();
 				this.list.forEach((_, index) => finalIndexMap.set(index, index));
 				enabledIndices.forEach((slotIndex, orderIndex) => {
@@ -259,58 +311,73 @@
 				};
 			},
 
-			// ---- 位置测量 ----
+			// ---- 位置测量（长按触发前调用，计算所有下标对应的 {top,left,right,bottom}）----
 			measureItemPositions() {
 				return new Promise((resolve) => {
-					// 直接使用 setTimeout 确保在 DOM 更新后再测量
 					setTimeout(() => {
 						utils.querySelector('.ste-drag-sort-root', this).then((rootRect) => {
-							utils.querySelector('.ste-drag-sort-item', this, true).then((
-								rects) => {
+							utils.querySelector('.ste-drag-sort-item', this, true).then((rects) => {
 								let items = [];
-								// 处理不同端的返回值结构
 								if (Array.isArray(rects)) {
 									items = rects;
 								} else if (rects && typeof rects === 'object') {
-									// 微信小程序可能返回的是一个对象
 									if (rects.length !== undefined) {
-										// 类似数组的对象
 										for (let i = 0; i < rects.length; i++) {
-											if (rects[i]) {
-												items.push(rects[i]);
-											}
+											if (rects[i]) items.push(rects[i]);
 										}
 									} else {
-										// 其他对象结构
 										Object.keys(rects).forEach(key => {
-											if (!isNaN(Number(key)) && rects[
-													key]) {
+											if (!isNaN(Number(key)) && rects[key]) {
 												items.push(rects[key]);
 											}
 										});
 									}
 								}
 
-								// 确保 items 数组按顺序排列
-								items.sort((a, b) => {
-									if (a && b) {
-										return (a.top || 0) - (b.top || 0) || (a
-											.left || 0) - (b.left || 0);
-									}
-									return 0;
+								// 建立 DOM 位置 → list 索引的映射
+								// querySelectorAll 返回 DOM 顺序的 rects，与 list 渲染顺序一致
+								// 用 uid 找到每个 rect 对应的 list 下标，确保 itemRects 的 key 是 list 索引
+								const uidToListIndex = {};
+								this.list.forEach((item, idx) => {
+									uidToListIndex[item.uid] = idx;
 								});
 
-								this.itemWidth = this.cmpColumns > 1 ? (rootRect ? rootRect
-									.width :
-									0) / this.cmpColumns : (items[0] ? items[0].width :
-									0);
+								// DOM 顺序与 list 顺序一致，不需要按视觉排序
+								// items[i] 对应 list[uidToListIndex[uid]]（即 list[i]，因为 uid 顺序与 DOM 顺序一致）
+								// 直接用 list 索引 i 作为 itemRects 的 key，保持与 hitTestIndex / insertIndex 的索引一致
+								this.itemWidth = this.cmpColumns > 1
+									? (rootRect ? rootRect.width : 0) / this.cmpColumns
+									: (items[0] ? items[0].width : 0);
 								this.itemHeight = items[0] ? items[0].height : 0;
-								this.itemPositions = items.map((rect) => ({
+
+								// 兼容旧逻辑的 itemPositions（用于样式偏移计算）
+								this.itemPositions = items.map((rect, index) => ({
 									top: rect.top || 0,
 									left: rect.left || 0,
 									width: rect.width || this.itemWidth,
 									height: rect.height || this.itemHeight,
 								}));
+
+								/**
+								 * itemRects 格式：{ [listIndex: string]: { top, left, right, bottom } }
+								 * key 是 list 的下标索引，与 hitTestIndex / insertIndex 的索引体系完全一致
+								 */
+								const rects2 = {};
+								items.forEach((rect, index) => {
+									const top = rect.top || 0;
+									const left = rect.left || 0;
+									const width = rect.width || this.itemWidth;
+									const height = rect.height || this.itemHeight;
+									// 直接用数组下标 index 作为 list 索引（DOM 顺序 = list 顺序）
+									rects2[String(index)] = {
+										top,
+										left,
+										right: left + width,
+										bottom: top + height,
+									};
+								});
+								this.itemRects = rects2;
+
 								resolve();
 							});
 						});
@@ -318,82 +385,79 @@
 				});
 			},
 
-	// ---- 插入位置计算（网格模式：按行列对齐判断） ----
-		calculateGridInsertIndex(centerX, centerY) {
-				if (!this.itemPositions.length) return this.dragIndex;
-				const cols = this.cmpColumns;
-				// 计算拖拽元素所在的行列
-				const dragRow = Math.floor(this.dragIndex / cols);
-				const dragCol = this.dragIndex % cols;
+			// ---- hit-test：根据手指坐标判断进入了哪个下标 ----
+			/**
+			 * 命中策略（按优先级顺序）：
+			 * 1. 死区安全区：手指在 dragIndex rect ± 死区范围内 → 不触发排序
+			 * 2. rect 命中：手指落在某个其他元素的 rect 内 → 返回该元素 index
+			 * 3. 中心点距离：手指不在任何 rect 内 → 找中心点曼哈顿距离最近的元素
+			 *
+			 * @param {number} x 手指 clientX
+			 * @param {number} y 手指 clientY
+			 * @returns {number} 命中的下标
+			 */
+			hitTestIndex(x, y) {
+				const keys = Object.keys(this.itemRects);
+				if (!keys.length) return this.dragIndex;
 
-				let closestIndex = this.dragIndex;
-				let minDistance = Infinity;
+				const dragRect = this.itemRects[String(this.dragIndex)];
+				if (!dragRect) return this.dragIndex;
 
-				this.itemPositions.forEach((position, index) => {
-					if (this.getItemDisabled(index)) return;
-					if (index === this.dragIndex) return;
+				// 阶段一：安全区。手指在 dragIndex rect + 死区范围内，不触发排序
+				const DEAD_ZONE = 10;
+				const inDeadZone = x >= dragRect.left - DEAD_ZONE &&
+					x <= dragRect.right + DEAD_ZONE &&
+					y >= dragRect.top - DEAD_ZONE &&
+					y <= dragRect.bottom + DEAD_ZONE;
+				if (inDeadZone) return this.dragIndex;
 
-					const itemCenterX = position.left + position.width / 2;
-					const itemCenterY = position.top + position.height / 2;
-
-					// 使用曼哈顿距离（更适合网格对齐）
-					const distance = Math.abs(centerX - itemCenterX) + Math.abs(centerY - itemCenterY);
-
-					if (distance < minDistance) {
-						minDistance = distance;
-						closestIndex = index;
+				// 阶段二：遍历 itemRects，手指落在哪个 rect 内则命中（排除 dragIndex）
+				let hit = null;
+				for (let i = 0; i < keys.length; i++) {
+					const idx = Number(keys[i]);
+					if (this.getItemDisabled(idx)) continue;
+					if (idx === this.dragIndex) continue;
+					const rect = this.itemRects[keys[i]];
+					if (x >= rect.left && x <= rect.right && y >= rect.top && y <= rect.bottom) {
+						hit = idx;
+						break;
 					}
-				});
-
-				return closestIndex;
-			},
-			calculateSingleColumnInsertIndex(centerY) {
-				let closestIndex = this.dragIndex;
-				let minDistance = Infinity;
-				this.itemPositions.forEach((position, index) => {
-					if (this.getItemDisabled(index)) return;
-					const itemCenterY = position.top + position.height / 2;
-					const distance = Math.abs(centerY - itemCenterY);
-					if (distance < minDistance) {
-						minDistance = distance;
-						closestIndex = index;
-					}
-				});
-				return closestIndex;
-			},
-			calculateInsertIndex() {
-				if (!this.itemPositions.length || this.dragIndex < 0) return this.dragIndex;
-				const dragPosition = this.itemPositions[this.dragIndex];
-				const centerX = dragPosition.left + dragPosition.width / 2 + this.offsetX;
-				const centerY = dragPosition.top + dragPosition.height / 2 + this.offsetY;
-				if (this.cmpColumns > 1) {
-					return this.calculateGridInsertIndex(centerX, centerY);
 				}
-				return this.calculateSingleColumnInsertIndex(centerY);
+				if (hit !== null) return hit;
+
+				// 阶段三：手指不在任何 rect 内（越出列表边界等），找中心点最近距离（排除 dragIndex）
+				let closestIndex = this.dragIndex;
+				let minDist = Infinity;
+				for (let i = 0; i < keys.length; i++) {
+					const idx = Number(keys[i]);
+					if (this.getItemDisabled(idx)) continue;
+					if (idx === this.dragIndex) continue;
+					const rect = this.itemRects[keys[i]];
+					const cx = (rect.left + rect.right) / 2;
+					const cy = (rect.top + rect.bottom) / 2;
+					const dist = Math.abs(x - cx) + Math.abs(y - cy);
+					if (dist < minDist) {
+						minDist = dist;
+						closestIndex = idx;
+					}
+				}
+				return closestIndex;
 			},
 
 			// ---- 样式计算 ----
 			getItemTranslateOffset(index) {
-				if (!this.dragging || !this.sortingStarted) return {
-					x: 0,
-					y: 0
-				};
-				if (this.getItemDisabled(index)) return {
-					x: 0,
-					y: 0
-				};
-				if (index === this.dragIndex || this.dragIndex === this.insertIndex) return {
-					x: 0,
-					y: 0
-				};
+				if (!this.dragging || !this.sortingStarted) return { x: 0, y: 0 };
+				if (this.getItemDisabled(index)) return { x: 0, y: 0 };
+				if (index === this.dragIndex || this.dragIndex === this.insertIndex) return { x: 0, y: 0 };
+
+				// 复用 itemStyles 中捕获的 sortingStarted，确保依赖一致
+				const currentSortingStarted = this.sortingStarted;
+				if (!currentSortingStarted) return { x: 0, y: 0 };
 
 				const reorderPreview = this.getReorderPreview(this.dragIndex, this.insertIndex);
 				const nextIndex = reorderPreview && reorderPreview.finalIndexMap.get(index);
 
-				if (typeof nextIndex !== 'number' || nextIndex === index) return {
-					x: 0,
-					y: 0
-				};
+				if (typeof nextIndex !== 'number' || nextIndex === index) return { x: 0, y: 0 };
 
 				if (this.cmpColumns > 1) {
 					const cols = this.cmpColumns;
@@ -412,41 +476,6 @@
 					y: (nextIndex - index) * this.itemHeight
 				};
 			},
-			getItemStyle(index) {
-				const style = {};
-
-				if (this.cmpColumns > 1) {
-					const width = (100 / this.cmpColumns).toFixed(6) + '%';
-					style.flexBasis = width;
-					style.width = width;
-					style.boxSizing = 'border-box';
-				}
-
-				if (!this.dragging) return style;
-
-				if (index === this.dragIndex) {
-					const dragScale = this.sortingStarted ? 1.03 : 1.02;
-					style.transform = `translate(${this.offsetX}px, ${this.offsetY}px) scale(${dragScale})`;
-					style.zIndex = 100;
-					return style;
-				}
-
-				const offset = this.getItemTranslateOffset(index);
-				if (offset.x || offset.y) {
-					style.transform = `translate(${offset.x}px, ${offset.y}px)`;
-				}
-
-				return style;
-			},
-			getItemClass(index) {
-				return {
-					'ste-drag-sort-item-disabled': this.disabled || !!(this.list[index] && this.list[index].raw && this
-						.list[index].raw.disabled),
-					'ste-drag-sort-item-ready': this.dragging && this.dragIndex === index && !this.sortingStarted,
-					'ste-drag-sort-item-dragging': this.dragging && this.dragIndex === index,
-					'ste-drag-sort-item-animating': this.dragging && this.dragIndex !== index,
-				};
-			},
 
 			// ---- 触觉反馈 ----
 			triggerReadyHaptic() {
@@ -460,32 +489,6 @@
 				} catch (e) {
 					// 忽略不支持的平台
 				}
-			},
-
-			// ---- 是否移动到其他元素 ----
-			checkMovedToOtherElement() {
-				if (!this.itemPositions.length || this.dragIndex < 0) return false;
-				const dragPosition = this.itemPositions[this.dragIndex];
-				const centerX = dragPosition.left + dragPosition.width / 2 + this.offsetX;
-				const centerY = dragPosition.top + dragPosition.height / 2 + this.offsetY;
-
-				if (this.cmpColumns > 1) {
-					return this.itemPositions.some((position, index) => {
-						if (index === this.dragIndex) return false;
-						return centerX >= position.left && centerX <= position.left + position.width && centerY >=
-							position.top && centerY <= position.top + position.height;
-					});
-				}
-
-				if (this.dragIndex > 0) {
-					const prev = this.itemPositions[this.dragIndex - 1];
-					if (prev && centerY <= prev.top + prev.height / 2) return true;
-				}
-				if (this.dragIndex < this.itemPositions.length - 1) {
-					const next = this.itemPositions[this.dragIndex + 1];
-					if (next && centerY >= next.top + next.height / 2) return true;
-				}
-				return false;
 			},
 
 			// ---- 拖拽核心流程 ----
@@ -508,31 +511,43 @@
 				this.triggerReadyHaptic();
 				this.$emit('start', index);
 
+				// 禁用页面滚动
+				this.disablePageScroll();
+
+				// 在开始拖拽时测量所有元素位置（计算 itemRects）
 				return this.measureItemPositions().then(() => {
 					return this.dragging && this.dragSessionId === sessionId && this.dragIndex === index;
 				});
 			},
+
 			moveDrag(clientX, clientY) {
 				if (!this.dragging) return;
 				this.offsetX = clientX - this.startX;
 				this.offsetY = clientY - this.startY;
 
-				// 只要有一定的偏移就认为开始排序，确保能够触发过渡效果
+				// 移动超过阈值才开始排序
 				if (!this.sortingStarted && (Math.abs(this.offsetX) > 5 || Math.abs(this.offsetY) > 5)) {
 					this.sortingStarted = true;
 				}
+
 				if (this.sortingStarted) {
-					this.insertIndex = this.calculateInsertIndex();
+					// 使用手指实际坐标进行 hit-test，获取当前进入的下标
+					const hitIdx = this.hitTestIndex(clientX, clientY);
+					if (hitIdx !== this.insertIndex) {
+						this.insertIndex = hitIdx;
+					}
 				}
 			},
+
 			finishDrag() {
 				if (!this.dragging) return;
 
 				const oldIndex = this.dragIndex;
 				const targetInsert = this.insertIndex >= 0 ? this.insertIndex : oldIndex;
 				const reorderPreview = this.getReorderPreview(oldIndex, targetInsert);
-				const newIndex = (reorderPreview && reorderPreview.finalIndexMap.get(oldIndex)) !== undefined ?
-					reorderPreview.finalIndexMap.get(oldIndex) : oldIndex;
+				const newIndex = (reorderPreview && reorderPreview.finalIndexMap.get(oldIndex)) !== undefined
+					? reorderPreview.finalIndexMap.get(oldIndex)
+					: oldIndex;
 
 				if (oldIndex !== newIndex && oldIndex >= 0) {
 					const nextList = new Array(this.list.length);
@@ -553,6 +568,9 @@
 					this.$emit('input', result);
 					this.$emit('change', result);
 				}
+
+				// 恢复页面滚动
+				this.enablePageScroll();
 
 				this.resetDragState();
 				this.$emit('end', newIndex);
@@ -601,7 +619,6 @@
 				this.mousePendingX = event.clientX;
 				this.mousePendingY = event.clientY;
 
-				// 绑定到实例方法，方便移除
 				this._onMouseMove = this._onMouseMove || ((e) => this.onMouseMove(e));
 				this._onMouseUp = this._onMouseUp || (() => this.onMouseUp());
 
@@ -667,7 +684,7 @@
 	.ste-drag-sort-item {
 		position: relative;
 		z-index: 10;
-		transition: opacity 0.12s ease, transform 0.2s ease;
+		transition: opacity 0.12s ease;
 
 		&.ste-drag-sort-item-dragging {
 			opacity: 0.95;
