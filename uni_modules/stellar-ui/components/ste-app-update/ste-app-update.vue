@@ -39,7 +39,7 @@
 	</view>
 </template>
 <script>
-import { download, getDeviceId, getPlatform, getAppId, getVersion } from './method';
+import { download, getDeviceId, getPlatform, getAppId, getVersion, saveDownloadState, getDownloadState, clearDownloadState, isDownloadStateExpired, findExistingDownloadTask } from './method';
 
 const STORAGE_KEY = 'skipped_app_versions';
 
@@ -86,6 +86,11 @@ export default {
 			type: String,
 			default: 'https://stellar-public-prd.intecloud.com.cn/api/app-update/check',
 		},
+		/** 严格版本检查，设为true时只有新版本大于当前版本才触发更新 */
+		strictVersionCheck: {
+			type: Boolean,
+			default: false,
+		},
 	},
 	data() {
 		return {
@@ -107,6 +112,9 @@ export default {
 			skippedVersions: [], // 跳过的版本列表
 			timeoutTimer: null, // 超时计时器
 			downloadTask: null, // 下载任务引用
+			nativeDownloadTask: null, // 原生下载任务引用
+			nativeDownloadListener: null, // 原生下载监听器
+			progressPollTimer: null, // 进度轮询计时器
 		};
 	},
 	methods: {
@@ -134,6 +142,19 @@ export default {
 		isVersionSkipped(versionCode) {
 			return this.skippedVersions.includes(versionCode);
 		},
+		// 版本比较函数
+		compareVersions(newVersion, currentVersion) {
+			const newParts = newVersion.split('.').map(function(v) { return parseInt(v) || 0; });
+			const currentParts = currentVersion.split('.').map(function(v) { return parseInt(v) || 0; });
+			const maxLength = Math.max(newParts.length, currentParts.length);
+			for (let i = 0; i < maxLength; i++) {
+				const newPart = newParts[i] || 0;
+				const currentPart = currentParts[i] || 0;
+				if (newPart > currentPart) return 1;
+				if (newPart < currentPart) return -1;
+			}
+			return 0;
+		},
 		// 跳过当前版本
 		skipVersion() {
 			if (!this.data.code) return;
@@ -152,7 +173,100 @@ export default {
 				clearTimeout(this.timeoutTimer);
 				this.timeoutTimer = null;
 			}
+			this.stopProgressPolling();
+			// #ifdef APP-PLUS
+			if (this.nativeDownloadTask && this.nativeDownloadListener) {
+				try {
+					this.nativeDownloadTask.removeEventListener('statechanged', this.nativeDownloadListener);
+				} catch (_) {}
+			}
+			// #endif
 			this.downloadTask = null;
+			this.nativeDownloadTask = null;
+			this.nativeDownloadListener = null;
+		},
+		// 停止进度轮询
+		stopProgressPolling() {
+			if (this.progressPollTimer) {
+				clearInterval(this.progressPollTimer);
+				this.progressPollTimer = null;
+			}
+		},
+		// 恢复下载进度
+		resumeDownloadProgress(task) {
+			// #ifdef APP-PLUS
+			if (this.nativeDownloadTask && this.nativeDownloadListener) {
+				this.nativeDownloadTask.removeEventListener('statechanged', this.nativeDownloadListener);
+			}
+			this.stopProgressPolling();
+
+			this.nativeDownloadTask = task;
+
+			var self = this;
+			var updateProgress = function() {
+				if (task.downloadedSize !== undefined && task.totalSize > 0) {
+					self.percent = Math.round((task.downloadedSize / task.totalSize) * 100);
+					self.downloadedSize = (task.downloadedSize / Math.pow(1024, 2)).toFixed(2);
+					self.packageFileSize = (task.totalSize / Math.pow(1024, 2)).toFixed(2);
+				}
+			};
+			updateProgress();
+
+			this.nativeDownloadListener = function(download) {
+				if (download.state === 4) {
+					self.stopProgressPolling();
+					self.percent = 100;
+					self.downloadedSize = self.packageFileSize;
+					self.tempFilePath = download.filename;
+					if (self.open && self.data.package_type === 1 && download.filename) {
+						self.installWgt(download.filename);
+					}
+				} else if (download.state === -1) {
+					self.stopProgressPolling();
+					self.updateBtn = true;
+					clearDownloadState();
+					self.cleanup();
+				}
+			};
+
+			task.addEventListener('statechanged', this.nativeDownloadListener);
+
+			if (task.state === 3) {
+				this.progressPollTimer = setInterval(updateProgress, 500);
+			}
+
+			if (task.state === 0) {
+				task.start();
+			}
+			// #endif
+		},
+		// 安装wgt包
+		installWgt(filePath) {
+			// #ifdef APP-PLUS
+			plus.runtime.install(
+				filePath,
+				{ force: true },
+				function() {
+					uni.showModal({
+						title: '提示',
+						content: '升级成功，请重新启动！',
+						confirmText: '确定',
+						showCancel: false,
+						success: function() {
+							clearDownloadState();
+							plus.runtime.restart();
+						},
+					});
+				},
+				function(e) {
+					uni.showModal({
+						title: '安装失败',
+						content: e.message || '安装过程中出现错误',
+						showCancel: false,
+					});
+				}
+			);
+			// #endif
 		},
 		// 获取跳过版本列表
 		getSkippedVersions() {
@@ -237,7 +351,7 @@ export default {
 				header: {
 					Authorization: `Basic ${btoa(this.clientId + ':' + this.clientSecret)}`,
 				},
-				success: (res) => {
+				success: async (res) => {
 					try {
 						const _data = res.data;
 						if (_data.code == 200 && _data.data) {
@@ -278,7 +392,40 @@ export default {
 								nvs.splice(nvs.length - 1);
 								this.data.name = nvs.join('.');
 							}
-							if (this.data.updateFile && this.data.code !== this.version) {
+							const shouldUpdate = this.strictVersionCheck
+								? this.compareVersions(this.data.name, this.version) > 0
+								: this.data.code !== this.version;
+							if (this.data.updateFile && shouldUpdate) {
+								const downloadState = getDownloadState();
+								const hasValidDownloadState = downloadState
+									&& downloadState.versionCode === this.data.code
+									&& downloadState.updateFile === this.data.updateFile
+									&& !isDownloadStateExpired(downloadState);
+
+								if (hasValidDownloadState) {
+									const existing = await findExistingDownloadTask(this.data.updateFile);
+
+									if (existing) {
+										this.open = true;
+										this.$emit('update');
+										if (existing.state === 0 || existing.state === 1 || existing.state === 2 || existing.state === 3) {
+											this.updateBtn = false;
+											this.resumeDownloadProgress(existing.task);
+										} else if (existing.state === 4) {
+											this.updateBtn = false;
+											this.tempFilePath = existing.filename;
+											if (this.data.package_type === 1 && existing.filename) {
+												this.installWgt(existing.filename);
+											}
+										}
+										return;
+									}
+								}
+
+								if (downloadState) {
+									clearDownloadState();
+								}
+
 								this.open = true;
 								this.$emit('update');
 								// 如果是强制更新，直接开始下载
@@ -330,7 +477,7 @@ export default {
 			}
 		},
 
-		confirm() {
+		async confirm() {
 			// 先清理之前的任务
 			this.cleanup();
 
@@ -339,6 +486,20 @@ export default {
 				uni.showToast({ title: '更新文件地址不能为空', icon: 'none' });
 				return;
 			}
+
+			// #ifdef APP-PLUS
+			var self = this;
+			var stale = await findExistingDownloadTask(this.data.updateFile);
+			if (stale) {
+				try { stale.task.abort(); } catch (_) {}
+			}
+			// #endif
+
+			saveDownloadState({
+				versionCode: this.data.code,
+				updateFile: this.data.updateFile,
+				startTime: Date.now(),
+			});
 
 			if (this.data.package_type == 0) {
 				// apk整包升级 下载地址必须以.apk结尾
@@ -349,9 +510,11 @@ export default {
 						downloadSuccess: (path) => (this.tempFilePath = path),
 						error: () => {
 							this.updateBtn = true;
+							clearDownloadState();
 							this.cleanup();
 						},
 						success: () => {
+							clearDownloadState();
 							this.cleanup();
 						},
 					});
@@ -370,9 +533,11 @@ export default {
 					downloadSuccess: (path) => (this.tempFilePath = path),
 					error: () => {
 						this.updateBtn = true;
+						clearDownloadState();
 						this.cleanup();
 					},
 					success: () => {
+						clearDownloadState();
 						this.cleanup();
 					},
 				});
@@ -430,6 +595,7 @@ export default {
 						if (this.downloadTask) {
 							this.downloadTask.abort();
 						}
+						clearDownloadState();
 						this.cleanup();
 						this.updateBtn = true;
 						this.percent = 0;

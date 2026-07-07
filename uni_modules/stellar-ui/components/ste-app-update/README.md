@@ -2,14 +2,16 @@
 
 - 此组件用于APP更新功能
 - 仅支持APP端
+- 支持整包升级(apk)和资源包升级(wgt)
 
----$
+---
 
 ### 基础用法
 
 - 属性`clientId`用于设置APP的应用编码
 - 属性`clientSecret`用于设置APP的应用密钥
 - 属性`fallbackApiUrl`用于设置兜底检查接口地址
+- 属性`strictVersionCheck`用于设置严格版本检查模式
 - 函数`start`用于开始检查更新
 - 函数`getSkippedVersions`用于获取跳过版本列表
 - 函数`clearSkippedVersions`用于清空跳过版本记录
@@ -59,6 +61,7 @@ export default {
         clientId="workbench_android" 
         clientSecret="gkS6lEEncqAocYK2qsrvPQZykm3ISeMx"
         fallbackApiUrl="https://example.com/api/app-update/check"
+        :strictVersionCheck="true"
         @skip-version="onSkipVersion"
         @fallback="onFallback"
     ></ste-app-update>
@@ -68,7 +71,7 @@ export default {
 </template>
 ```
 
----$
+---
 
 ### API
 
@@ -82,7 +85,8 @@ export default {
 | `btnText`			| 立即体验按钮文本											| `string`					| `立即体验`																																			| -			| -				|
 | `appVersion`	| 应用当前版本															| `string`					| -																																								| -			| `1.40.9`|
 | `zIndex`			| 弹窗层级																		| `string/number`	| `998`																																							| -			| `1.40.9`|
-| `fallbackApiUrl`| 兜底检查接口地址										| `string`					| -																																								| -			| `1.41.0`|
+| `fallbackApiUrl`| 兜底检查接口地址										| `string`					| `https://stellar-public-prd.intecloud.com.cn/api/app-update/check`			| -			| `1.41.0`|
+| `strictVersionCheck`| 严格版本检查，设为true时只有新版本大于当前版本才触发更新 | `boolean` | `false` | `true/false` | - |
 
 
 #### Events
@@ -101,7 +105,50 @@ export default {
 | `start(callback)` | 开始检查更新 | - | - |
 | `getSkippedVersions()` | 获取已跳过的版本列表 | string[] | `1.41.0` |
 | `clearSkippedVersions()` | 清空跳过版本记录 | - | `1.41.0` |
+| `cancelDownload()` | 取消当前下载任务 | - | - |
+| `install()` | 安装已下载的更新包（仅整包升级时可用） | - | - |
 
 
----$
-{{xuyajun}}
+---
+
+### API 返回数据格式
+
+更新接口(`apiUrl`)返回数据格式：
+
+```json
+{
+  "code": 200,
+  "data": {
+    "code": "101",
+    "name": "1.0.1",
+    "desc": "更新内容描述",
+    "isForce": false,
+    "entireFile": "https://example.com/app.apk",
+    "updateFile": "https://example.com/app.wgt"
+  }
+}
+```
+
+| 字段 | 类型 | 说明 |
+| ----- | ----- | ----- |
+| `code` | string | 版本号 |
+| `name` | string | 版本名称 |
+| `desc` | string | 更新内容描述 |
+| `isForce` | boolean | 是否强制更新 |
+| `entireFile` | string | 整包升级文件地址(apk) |
+| `updateFile` | string | 资源包升级文件地址(wgt) |
+
+> 当 `entireFile` 存在时，优先使用整包升级(`package_type=0`)，否则使用资源包升级(`package_type=1`)
+
+---
+
+### 更新流程说明
+
+1. 调用 `start()` 方法开始检查更新
+2. 先检查兜底接口(`fallbackApiUrl`)，命中则触发兜底更新流程
+3. 调用正常更新接口(`apiUrl`)获取版本信息
+4. 检查是否已跳过该版本
+5. 检查版本是否需要更新（根据 `strictVersionCheck` 决定比较方式）
+6. 检查是否存在未完成的下载任务，有则恢复下载
+7. 弹出更新弹窗，用户可选择立即更新、跳过版本或取消
+8. 下载完成后自动安装(wgt)或提示安装(apk)
