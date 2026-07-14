@@ -13,11 +13,11 @@ describe('Test Button', () => {
 
 		await wrapper.setProps({ mode: 300 });
 		rootEl = wrapper.get('.ste-button--root');
-		expect(rootEl.classes()).toContain('ste-button--mode-100');
+		expect(rootEl.classes()).toContain('ste-button--mode-300');
 
 		await wrapper.setProps({ mode: 400 });
 		rootEl = wrapper.get('.ste-button--root');
-		expect(rootEl.classes()).toContain('ste-button--mode-100');
+		expect(rootEl.classes()).toContain('ste-button--mode-400');
 	});
 
 	test('round', () => {

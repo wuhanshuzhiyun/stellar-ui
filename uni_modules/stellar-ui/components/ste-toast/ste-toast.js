@@ -46,7 +46,8 @@ function useSteToast() {
 				$state.title = params.title ?? '';
 				$state.icon = params.icon ?? 'success';
 				$state.image = params.image ?? '';
-				$state.duration = params.duration ?? defaultDuration;
+				let icon = params.icon ?? 'success';
+				$state.duration = params.duration ?? (icon === 'loading' ? 0 : defaultDuration);
 				$state.mask = params.mask ?? false;
 				$state.success = params.success ?? function() {};
 				$state.fail = params.fail ?? function() {};

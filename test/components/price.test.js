@@ -20,10 +20,8 @@ describe('Test Price', () => {
 	});
 
 	test('value', () => {
-		// ¥95 .27
 		const realValue = utils.fenToYuan(propsData.value, 2, '', 0);
-		const valueArr = realValue.split('.');
-		expect(wrapper.text()).toBe(`${propsData.unitSymbol}${valueArr[0]} .${valueArr[1]}`);
+		expect(wrapper.text()).toBe(`${propsData.unitSymbol}${realValue}`);
 	});
 
 	test('unit', async () => {
@@ -44,15 +42,13 @@ describe('Test Price', () => {
 		wrapper.setProps({ showUnit: false });
 		await wrapper.vm.$nextTick();
 		const realValue = utils.fenToYuan(propsData.value, 2, '', 0);
-		const valueArr = realValue.split('.');
-		expect(wrapper.text()).toBe(`${valueArr[0]} .${valueArr[1]}`);
+		expect(wrapper.text()).toBe(`${realValue}`);
 	});
 
-	test('unitSymbol', () => {
-		wrapper.setProps({ unitSymbol: '$' });
+	test('unitSymbol', async () => {
+		await wrapper.setProps({ unitSymbol: '$' });
 		const realValue = utils.fenToYuan(propsData.value, 2, '', 0);
-		const valueArr = realValue.split('.');
-		expect(wrapper.text()).toBe(`${propsData.unitSymbol}${valueArr[0]} .${valueArr[1]}`);
+		expect(wrapper.text()).toBe(`$${realValue}`);
 	});
 
 	test('fontSize', () => {
