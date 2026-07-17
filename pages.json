@@ -604,6 +604,18 @@
 			}
 		},
 		{
+			"path": "mp/select-seat-demo/select-seat-demo",
+			"style": {
+				"navigationStyle": "custom",
+				"mp-alipay": {
+					"transparentTitle": "always",
+					"titlePenetrate": "YES",
+					"allowsBounceVertical": "NO",
+					"navigationBarTitleText": ""
+				}
+			}
+		},
+		{
 			"path": "mp/signature-demo/signature-demo",
 			"style": {
 				"navigationStyle": "custom",

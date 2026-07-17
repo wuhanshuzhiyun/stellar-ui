@@ -292,6 +292,15 @@
 					<ste-image :src="joinSrc('组件图标/r-arrow.png')" :width="32" :height="32" />
 				</view>
 			</view>
+			<view class="com-box" @click="nav('select-seat')">
+				<view class="com-title">
+					<ste-image :src="joinSrc('组件图标/select-seat.png')" :width="36" :height="36" />
+					<text>SelectSeat 座位选择</text>
+				</view>
+				<view class="com-arrow">
+					<ste-image :src="joinSrc('组件图标/r-arrow.png')" :width="32" :height="32" />
+				</view>
+			</view>
 			<view class="com-box" @click="nav('steps')">
 				<view class="com-title">
 					<ste-image :src="joinSrc('组件图标/steps.png')" :width="36" :height="36" />
