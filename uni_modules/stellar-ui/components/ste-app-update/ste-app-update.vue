@@ -369,6 +369,28 @@ export default {
 							this.data.updateFile = _data.data.entireFile ? _data.data.entireFile : _data.data.updateFile;
 							this.data.package_type = _data.data.entireFile ? 0 : 1;
 
+							// strictVersionCheck 为 true 时，优先检查是否需要先升级到最近一次全量包
+							const lastAllDetail = _data.data.lastAllDetail;
+							if (this.strictVersionCheck && lastAllDetail && lastAllDetail.entireFile && lastAllDetail.name && lastAllDetail.code) {
+								let allName = lastAllDetail.name;
+								if (this.appType) {
+									const nvs = allName.split('.');
+									const nevn = nvs[nvs.length - 1];
+									if (this.appType === nevn) {
+										nvs.splice(nvs.length - 1);
+										allName = nvs.join('.');
+									}
+								}
+								if (this.compareVersions(allName, this.version) > 0) {
+									this.data.code = lastAllDetail.code;
+									this.data.name = lastAllDetail.name;
+									this.data.content = (lastAllDetail.desc || '').replace(/\n+/g, '<br />');
+									this.data.isForce = !!lastAllDetail.isForce;
+									this.data.updateFile = lastAllDetail.entireFile;
+									this.data.package_type = 0;
+								}
+							}
+
 							// 检查是否已跳过该版本
 							if (this.isVersionSkipped(this.data.code)) {
 								console.log(`版本 ${this.data.code} 已被跳过`);
@@ -460,9 +482,11 @@ export default {
 			const v = await getVersion(this.appVersion);
 			if (v) this.version = v;
 
+			// #ifdef APP-PLUS
 			// 兜底检查：如果配置了 fallbackApiUrl，先调兜底接口
 			const hit = await this.checkFallback();
 			if (hit) return; // 命中兜底，不继续正常流程
+			// #endif
 
 			// 正常更新流程
 			this.getData(callback);
@@ -560,6 +584,7 @@ export default {
 				this.tempFilePath,
 				{ force: true },
 				() => {
+					clearDownloadState();
 					// wgt升级
 					if (this.data.package_type == 1) {
 						uni.showModal({

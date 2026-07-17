@@ -86,7 +86,7 @@ export default {
 | `appVersion`	| 应用当前版本															| `string`					| -																																								| -			| `1.40.9`|
 | `zIndex`			| 弹窗层级																		| `string/number`	| `998`																																							| -			| `1.40.9`|
 | `fallbackApiUrl`| 兜底检查接口地址										| `string`					| `https://stellar-public-prd.intecloud.com.cn/api/app-update/check`			| -			| `1.41.0`|
-| `strictVersionCheck`| 严格版本检查，设为true时只有新版本大于当前版本才触发更新 | `boolean` | `false` | `true/false` | - |
+| `strictVersionCheck`| 严格版本检查，设为true时只有新版本大于当前版本才触发更新；若接口返回 `lastAllDetail`，会优先检查是否需要升级到最近一次全量包 | `boolean` | `false` | `true/false` | - |
 
 
 #### Events
@@ -137,8 +137,10 @@ export default {
 | `isForce` | boolean | 是否强制更新 |
 | `entireFile` | string | 整包升级文件地址(apk) |
 | `updateFile` | string | 资源包升级文件地址(wgt) |
+| `lastAllDetail` | object | 最近一次全量包信息，包含 `code`、`name`、`desc`、`isForce`、`entireFile` 字段 |
 
 > 当 `entireFile` 存在时，优先使用整包升级(`package_type=0`)，否则使用资源包升级(`package_type=1`)
+> 当 `strictVersionCheck` 为 `true` 且 `lastAllDetail` 存在时，会优先检查是否需要先升级到最近一次全量包
 
 ---
 
