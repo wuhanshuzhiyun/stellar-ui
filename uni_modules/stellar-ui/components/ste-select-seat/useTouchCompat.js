@@ -50,9 +50,7 @@ export var getTouchCenter = function(touches) {
 export var getTouchLocalPoint = function(touch, rect) {
     if (!touch) return { x: 0, y: 0 };
     if (typeof touch.x === 'number' && typeof touch.y === 'number') {
-        var systemInfo = uni.getSystemInfoSync();
-        var dpr = systemInfo.pixelRatio || 1;
-        return { x: touch.x / dpr, y: touch.y / dpr };
+        return { x: touch.x, y: touch.y };
     }
     return {
         x: getTouchX(touch) - (rect && rect.left != null ? rect.left : 0),

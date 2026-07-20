@@ -273,7 +273,9 @@ export default {
 					var seat = this.dataManager.getSeat(r, c);
 					if (!seat || seat.empty) continue;
 
-					var selected = this.dataManager.isSelected(r, c);
+					var selected = this._localSelected.some(function (v) {
+						return v.row === r && v.col === c;
+					});
 
 					// #ifndef APP
 					var x = labelWidth + c * (size + gap) + gap / 2;
@@ -352,18 +354,51 @@ export default {
 			});
 		},
 		getTouchSeat(touchX, touchY) {
-			var scale = this.clampScale(this.touchHandler.scale);
-			var size = this.seatSizePx;
-			var gap = this.seatGapPx;
-			var labelWidth = this.labelWidthPx;
-			var tx = this.touchHandler.translateX;
-			var ty = this.touchHandler.translateY;
+			console.log('[ste-select-seat] getTouchSeat called, touchX=' + touchX + ', touchY=' + touchY);
+			try {
+				var scale = this.clampScale(this.touchHandler.scale);
+				var size = this.seatSizePx;
+				var gap = this.seatGapPx;
+				var labelWidth = this.labelWidthPx;
+				var tx = this.touchHandler.translateX;
+				var ty = this.touchHandler.translateY;
 
-			var col = Math.floor((touchX / scale - tx - labelWidth - gap / 2) / (size + gap));
-			var row = Math.floor((touchY / scale - ty - gap / 2) / (size + gap));
+				var col = Math.floor((touchX / scale - tx - labelWidth - gap / 2) / (size + gap));
+				var row = Math.floor((touchY / scale - ty - gap / 2) / (size + gap));
 
-			if (row < 0 || row >= this.safeRows || col < 0 || col >= this.safeCols) return null;
-			return this.dataManager.getSeat(row, col) || null;
+				console.log(
+					'[ste-select-seat] getTouchSeat: touchX=' +
+						touchX +
+						', touchY=' +
+						touchY +
+						', scale=' +
+						scale +
+						', size=' +
+						size +
+						', gap=' +
+						gap +
+						', labelWidth=' +
+						labelWidth +
+						', tx=' +
+						tx +
+						', ty=' +
+						ty +
+						', col=' +
+						col +
+						', row=' +
+						row +
+						', safeRows=' +
+						this.safeRows +
+						', safeCols=' +
+						this.safeCols
+				);
+
+				if (row < 0 || row >= this.safeRows || col < 0 || col >= this.safeCols) return null;
+				return this.dataManager.getSeat(row, col) || null;
+			} catch (e) {
+				console.error('[ste-select-seat] getTouchSeat error:', e);
+				return null;
+			}
 		},
 		getTouchLocalPoint(touch, rect) {
 			return getTouchLocalPoint(touch, rect);
