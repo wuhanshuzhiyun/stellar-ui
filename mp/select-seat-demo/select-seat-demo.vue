@@ -1,8 +1,11 @@
 <template>
-	<page-layout title="座位选择">
-		<view class="description">
-			<view class="cmp-name">SelectSeat 座位选择</view>
-			<view class="cmp-desc">用于电影院、演出等场景的座位选择，支持缩放和拖拽。</view>
+	<view class="page">
+		<page-nav :autoBack="true" backColor="#000" titleAlignment="2" title="选择框"></page-nav>
+		<view class="content">
+			<view class="description">
+				<view class="cmp-name">SelectSeat 座位选择</view>
+				<view class="cmp-desc">用于电影院、演出等场景的座位选择，支持缩放和拖拽。</view>
+			</view>
 		</view>
 
 		<view class="demo-item">
@@ -43,7 +46,7 @@
 				<text class="nav-arrow">›</text>
 			</view>
 		</view>
-	</page-layout>
+	</view>
 </template>
 
 <script>

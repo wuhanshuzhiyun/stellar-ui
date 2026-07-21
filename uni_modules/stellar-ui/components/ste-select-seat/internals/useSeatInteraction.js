@@ -278,28 +278,20 @@ export function useSeatInteraction(options) {
     };
 
     const selectSeatByPoint = (x, y) => {
-        console.log('[ste-select-seat] selectSeatByPoint called, x=' + x + ', y=' + y);
         const seat = getTouchSeat(x, y);
-        console.log('[ste-select-seat] selectSeatByPoint: seat=' + JSON.stringify(seat));
         if (seat && !seat.disabled && !seat.empty) {
             emitSeatSelection(seat);
-            console.log('[ste-select-seat] selectSeatByPoint: row=' + seat.row + ', col=' + seat.col);
             draw();
-        } else {
-            console.log('[ste-select-seat] selectSeatByPoint: seat is null, disabled, or empty');
         }
     };
 
     const selectSeatFromTouch = (touch) => {
-        console.log('[ste-select-seat] selectSeatFromTouch called, touch.x=' + touch.x + ', touch.y=' + touch.y);
         uni.createSelectorQuery()
             .in(instance)
             .select(`#${canvasId}`)
             .boundingClientRect((rect) => {
-                console.log('[ste-select-seat] boundingClientRect callback, rect=' + JSON.stringify(rect));
                 if (!rect) return;
                 const { x: localX, y: localY } = getTouchLocalPoint(touch, rect);
-                console.log('[ste-select-seat] localX=' + localX + ', localY=' + localY);
                 selectSeatByPoint(localX, localY);
             })
             .exec();

@@ -257,10 +257,9 @@ export default {
 			var labelWidth = this.labelWidthPx;
 			var defaultSelectedBg = this.selectedBgColor || themeColor;
 
-			console.log('[ste-select-seat] draw: modelValue=' + JSON.stringify(this.modelValue));
-			console.log('[ste-select-seat] draw: isSelected(0,4)=' + this.dataManager.isSelected(0, 4));
-
 			ctx.clearRect(0, 0, this.width, this.height);
+
+			console.log('[ste-select-seat] draw: scale=' + userScale + ', tx=' + tx + ', ty=' + ty + ', _localSelected=' + JSON.stringify(this._localSelected));
 
 			// #ifndef APP
 			ctx.save();
@@ -276,6 +275,20 @@ export default {
 					var selected = this._localSelected.some(function (v) {
 						return v.row === r && v.col === c;
 					});
+
+					if (selected) {
+						console.log(
+							'[ste-select-seat] draw: seat(' +
+								r +
+								',' +
+								c +
+								') is selected, drawing at canvas (' +
+								(tx + labelWidth + c * (size + gap) + gap / 2) +
+								',' +
+								(ty + r * (size + gap) + gap / 2) +
+								')'
+						);
+					}
 
 					// #ifndef APP
 					var x = labelWidth + c * (size + gap) + gap / 2;
@@ -354,51 +367,42 @@ export default {
 			});
 		},
 		getTouchSeat(touchX, touchY) {
-			console.log('[ste-select-seat] getTouchSeat called, touchX=' + touchX + ', touchY=' + touchY);
-			try {
-				var scale = this.clampScale(this.touchHandler.scale);
-				var size = this.seatSizePx;
-				var gap = this.seatGapPx;
-				var labelWidth = this.labelWidthPx;
-				var tx = this.touchHandler.translateX;
-				var ty = this.touchHandler.translateY;
+			var scale = this.clampScale(this.touchHandler.scale);
+			var size = this.seatSizePx;
+			var gap = this.seatGapPx;
+			var labelWidth = this.labelWidthPx;
+			var tx = this.touchHandler.translateX;
+			var ty = this.touchHandler.translateY;
 
-				var col = Math.floor((touchX / scale - tx - labelWidth - gap / 2) / (size + gap));
-				var row = Math.floor((touchY / scale - ty - gap / 2) / (size + gap));
+			var col = Math.floor((touchX / scale - tx - labelWidth - gap / 2) / (size + gap));
+			var row = Math.floor((touchY / scale - ty - gap / 2) / (size + gap));
 
-				console.log(
-					'[ste-select-seat] getTouchSeat: touchX=' +
-						touchX +
-						', touchY=' +
-						touchY +
-						', scale=' +
-						scale +
-						', size=' +
-						size +
-						', gap=' +
-						gap +
-						', labelWidth=' +
-						labelWidth +
-						', tx=' +
-						tx +
-						', ty=' +
-						ty +
-						', col=' +
-						col +
-						', row=' +
-						row +
-						', safeRows=' +
-						this.safeRows +
-						', safeCols=' +
-						this.safeCols
-				);
+			var seatLeft = (tx + labelWidth + col * (size + gap) + gap / 2) * scale;
+			var seatTop = (ty + row * (size + gap) + gap / 2) * scale;
+			console.log(
+				'[ste-select-seat] getTouchSeat: touch(' +
+					touchX +
+					',' +
+					touchY +
+					'), scale=' +
+					scale +
+					', seat(' +
+					row +
+					',' +
+					col +
+					') at screen (' +
+					seatLeft +
+					',' +
+					seatTop +
+					') to (' +
+					(seatLeft + size * scale) +
+					',' +
+					(seatTop + size * scale) +
+					')'
+			);
 
-				if (row < 0 || row >= this.safeRows || col < 0 || col >= this.safeCols) return null;
-				return this.dataManager.getSeat(row, col) || null;
-			} catch (e) {
-				console.error('[ste-select-seat] getTouchSeat error:', e);
-				return null;
-			}
+			if (row < 0 || row >= this.safeRows || col < 0 || col >= this.safeCols) return null;
+			return this.dataManager.getSeat(row, col) || null;
 		},
 		getTouchLocalPoint(touch, rect) {
 			return getTouchLocalPoint(touch, rect);
