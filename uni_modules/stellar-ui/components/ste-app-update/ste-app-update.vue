@@ -450,7 +450,6 @@ export default {
 								// 如果是强制更新，直接开始下载
 								if (this.data.isForce) this.confirm();
 								return;
-							}
 						} else {
 							console.log(_data.msg || '获取版本信息失败');
 						}
