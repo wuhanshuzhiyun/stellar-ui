@@ -226,16 +226,24 @@ export default {
 					self.updateBtn = true;
 					clearDownloadState();
 					self.cleanup();
+					uni.showToast({ title: "下载失败，请重新下载", icon: "none" });
 				}
 			};
 
 			task.addEventListener('statechanged', this.nativeDownloadListener);
 
-			if (task.state === 3) {
+			if (task.state === 1 || task.state === 2 || task.state === 3) {
 				this.progressPollTimer = setInterval(updateProgress, 500);
+				if (task.state === 3) {
+					try {
+						task.start();
+					} catch (e) {
+						console.warn("尝试重启下载任务:", e);
+					}
+				}
 			}
 
-			if (task.state === 0) {
+			if (task.state === 0 || task.state === 1 || task.state === 2) {
 				task.start();
 			}
 			// #endif
@@ -371,18 +379,9 @@ export default {
 
 							// strictVersionCheck 为 true 时，优先检查是否需要先升级到最近一次全量包
 							const lastAllDetail = _data.data.lastAllDetail;
-							if (this.strictVersionCheck && lastAllDetail && lastAllDetail.entireFile && lastAllDetail.name && lastAllDetail.code) {
-								let allName = lastAllDetail.name;
-								if (this.appType) {
-									const nvs = allName.split('.');
-									const nevn = nvs[nvs.length - 1];
-									if (this.appType === nevn) {
-										nvs.splice(nvs.length - 1);
-										allName = nvs.join('.');
-									}
-								}
-								if (this.compareVersions(allName, this.version) > 0) {
-									this.data.code = lastAllDetail.code;
+                                                    if (this.strictVersionCheck && lastAllDetail && lastAllDetail.entireFile && lastAllDetail.code) {
+                                                            if (this.compareVersions(lastAllDetail.code, this.version) > 0) {
+                                                                    this.data.code = lastAllDetail.code;
 									this.data.name = lastAllDetail.name;
 									this.data.content = (lastAllDetail.desc || '').replace(/\n+/g, '<br />');
 									this.data.isForce = !!lastAllDetail.isForce;
@@ -414,10 +413,9 @@ export default {
 								nvs.splice(nvs.length - 1);
 								this.data.name = nvs.join('.');
 							}
-							const shouldUpdate = this.strictVersionCheck
-								? this.compareVersions(this.data.name, this.version) > 0
-								: this.data.code !== this.version;
-							if (this.data.updateFile && shouldUpdate) {
+                                                    const shouldUpdate = this.strictVersionCheck
+                                                            ? this.compareVersions(this.data.code, this.version) > 0
+                                                            : this.data.code !== this.version;
 								const downloadState = getDownloadState();
 								const hasValidDownloadState = downloadState
 									&& downloadState.versionCode === this.data.code
@@ -426,7 +424,7 @@ export default {
 
 								if (hasValidDownloadState) {
 									const existing = await findExistingDownloadTask(this.data.updateFile);
-
+									
 									if (existing) {
 										this.open = true;
 										this.$emit('update');
@@ -441,12 +439,11 @@ export default {
 											}
 										}
 										return;
+									} else {
+										clearDownloadState();
 									}
 								}
-
-								if (downloadState) {
-									clearDownloadState();
-								}
+								
 
 								this.open = true;
 								this.$emit('update');
