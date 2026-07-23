@@ -153,8 +153,8 @@ export default {
 				height: this.height,
 				seatSize: this.seatSizePx,
 				seatGap: this.seatGapPx,
-				translateY: this.viewportTranslateY,
-				scale: this.viewportScale,
+				translateY: this.touchHandler.translateY,
+				scale: this.clampScale(this.touchHandler.scale),
 			});
 		},
 		rowLabelTrackStyle() {
@@ -246,6 +246,10 @@ export default {
 			var ctx = this.canvasCtx;
 			if (!ctx) return;
 
+			if (this.interactionHandler && this.interactionHandler.rowLabelsVisible !== undefined) {
+				this.rowLabelsVisible = this.interactionHandler.rowLabelsVisible;
+			}
+
 			var userScale = this.clampScale(this.touchHandler.scale);
 			this.viewportTranslateY = this.touchHandler.translateY;
 			this.viewportScale = userScale;
@@ -258,8 +262,6 @@ export default {
 			var defaultSelectedBg = this.selectedBgColor || themeColor;
 
 			ctx.clearRect(0, 0, this.width, this.height);
-
-			console.log('[ste-select-seat] draw: scale=' + userScale + ', tx=' + tx + ', ty=' + ty + ', _localSelected=' + JSON.stringify(this._localSelected));
 
 			// #ifndef APP
 			ctx.save();
@@ -275,20 +277,6 @@ export default {
 					var selected = this._localSelected.some(function (v) {
 						return v.row === r && v.col === c;
 					});
-
-					if (selected) {
-						console.log(
-							'[ste-select-seat] draw: seat(' +
-								r +
-								',' +
-								c +
-								') is selected, drawing at canvas (' +
-								(tx + labelWidth + c * (size + gap) + gap / 2) +
-								',' +
-								(ty + r * (size + gap) + gap / 2) +
-								')'
-						);
-					}
 
 					// #ifndef APP
 					var x = labelWidth + c * (size + gap) + gap / 2;
@@ -345,6 +333,7 @@ export default {
 				self.dpr = 1;
 				self.applyDefaultViewport();
 				self.draw();
+				self.reset();
 				// #endif
 
 				// #ifdef MP-WEIXIN || MP-ALIPAY
@@ -361,6 +350,7 @@ export default {
 						self.canvasCtx.scale(self.dpr, self.dpr);
 						self.applyDefaultViewport();
 						self.draw();
+						self.reset();
 					})
 					.exec();
 				// #endif
@@ -379,27 +369,6 @@ export default {
 
 			var seatLeft = (tx + labelWidth + col * (size + gap) + gap / 2) * scale;
 			var seatTop = (ty + row * (size + gap) + gap / 2) * scale;
-			console.log(
-				'[ste-select-seat] getTouchSeat: touch(' +
-					touchX +
-					',' +
-					touchY +
-					'), scale=' +
-					scale +
-					', seat(' +
-					row +
-					',' +
-					col +
-					') at screen (' +
-					seatLeft +
-					',' +
-					seatTop +
-					') to (' +
-					(seatLeft + size * scale) +
-					',' +
-					(seatTop + size * scale) +
-					')'
-			);
 
 			if (row < 0 || row >= this.safeRows || col < 0 || col >= this.safeCols) return null;
 			return this.dataManager.getSeat(row, col) || null;
@@ -484,6 +453,9 @@ export default {
 			this.touchHandler.baseTranslateY = viewport.translateY;
 		},
 		setShowRowLabelsVisible(value) {
+			if (this.interactionHandler && this.interactionHandler.setShowRowLabelsVisible) {
+				this.interactionHandler.setShowRowLabelsVisible(value);
+			}
 			this.rowLabelsVisible = value;
 		},
 		onTouchStart(e) {
@@ -506,6 +478,9 @@ export default {
 		},
 		reset() {
 			this.interactionHandler.reset();
+			if (this.interactionHandler.rowLabelsVisible !== undefined) {
+				this.rowLabelsVisible = this.interactionHandler.rowLabelsVisible;
+			}
 		},
 		setSeat(row, col, data) {
 			this.dataManager.setSeat(row, col, data);
@@ -583,7 +558,7 @@ export default {
 	left: 6px;
 	top: 0;
 	bottom: 0;
-	width: v-bind(labelOverlayWidth);
+	width: 18px;
 	pointer-events: none;
 	opacity: 0;
 	transform: translateX(-4px);

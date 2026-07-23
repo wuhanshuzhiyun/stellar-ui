@@ -99,4 +99,20 @@ export default class TouchScaleing {
 		}
 		return !this.identifiers.length;
 	}
+
+	reset() {
+		this.identifiers = [];
+		this.startParam = {
+			id1: null,
+			x1: null,
+			y1: null,
+			id2: null,
+			x2: null,
+			y2: null,
+		};
+		this.scale = 1;
+		this.rotate = 0;
+		this.translateX = 0;
+		this.translateY = 0;
+	}
 }
