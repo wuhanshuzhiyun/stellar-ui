@@ -1,6 +1,6 @@
 import { getSafeGridSize, isInteger, isSeatInBounds } from './internals/gridUtils'
 
-export function useData(props) {
+export function useData(instance) {
   var seatMap = new Map()
   var warnedMessages = new Set()
 
@@ -13,14 +13,14 @@ export function useData(props) {
   }
 
   var getGridSize = function() {
-    var shouldWarn = props.rows !== 0 || props.cols !== 0 || (props.seats && props.seats.length > 0) || (props._localSelected && props._localSelected.length > 0)
-    var _a = getSafeGridSize(props.rows, props.cols), rows = _a.rows, cols = _a.cols
+    var shouldWarn = instance.rows !== 0 || instance.cols !== 0 || (instance.seats && instance.seats.length > 0) || (instance._localSelected && instance._localSelected.length > 0)
+    var _a = getSafeGridSize(instance.rows, instance.cols), rows = _a.rows, cols = _a.cols
 
     if (!rows && shouldWarn) {
-      warn('rows 应为大于 0 的整数，当前值为 ' + String(props.rows))
+      warn('rows 应为大于 0 的整数，当前值为 ' + String(instance.rows))
     }
     if (!cols && shouldWarn) {
-      warn('cols 应为大于 0 的整数，当前值为 ' + String(props.cols))
+      warn('cols 应为大于 0 的整数，当前值为 ' + String(instance.cols))
     }
 
     return { rows, cols }
@@ -49,9 +49,9 @@ export function useData(props) {
       return
     }
 
-    if (props.seats && props.seats.length > 0) {
-      for (var index = 0; index < props.seats.length; index++) {
-        var seat = normalizeSeat(props.seats[index], index, rows, cols)
+    if (instance.seats && instance.seats.length > 0) {
+      for (var index = 0; index < instance.seats.length; index++) {
+        var seat = normalizeSeat(instance.seats[index], index, rows, cols)
         if (!seat) continue
 
         var key = getKey(seat.row, seat.col)
@@ -125,16 +125,16 @@ export function useData(props) {
   }
 
   var isSelected = function(row, col) {
-    if (!props._localSelected) return false
-    return props._localSelected.some(function(v) { return v.row === row && v.col === col })
+    if (!instance._localSelected) return false
+    return instance._localSelected.some(function(v) { return v.row === row && v.col === col })
   }
 
   var toggleSeat = function(row, col) {
     var seat = getSeat(row, col)
-    if (!seat || seat.disabled || seat.empty) return props._localSelected ? props._localSelected.slice() : []
+    if (!seat || seat.disabled || seat.empty) return instance._localSelected ? instance._localSelected.slice() : []
 
-    var idx = props._localSelected.findIndex(function(v) { return v.row === row && v.col === col })
-    var newValue = props._localSelected ? props._localSelected.slice() : []
+    var idx = instance._localSelected.findIndex(function(v) { return v.row === row && v.col === col })
+    var newValue = instance._localSelected ? instance._localSelected.slice() : []
     if (idx >= 0) {
       newValue.splice(idx, 1)
     } else {

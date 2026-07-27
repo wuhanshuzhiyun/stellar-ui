@@ -225,6 +225,60 @@ export default {
 	created() {
 		this.dataManager = useData(this);
 		this.dataManager.initSeats();
+		var self = this;
+		this.interactionHandler = useSeatInteraction({
+			instance: this,
+			canvasId: this.canvasId,
+			getShowRowLabels: function () {
+				return self.showRowLabels;
+			},
+			touchHandler: this.touchHandler,
+			clampScale: function (scale) {
+				return self.clampScale(scale);
+			},
+			applyTranslateResistance: function (x, y, scale) {
+				return self.applyTranslateResistance(x, y, scale);
+			},
+			clampTranslate: function (x, y, scale) {
+				return self.clampTranslate(x, y, scale);
+			},
+			getTouchSeat: function (x, y) {
+				return self.getTouchSeat(x, y);
+			},
+			getTouchLocalPoint: function (touch, rect) {
+				return self.getTouchLocalPoint(touch, rect);
+			},
+			applyDefaultViewport: function () {
+				self.applyDefaultViewport();
+			},
+			draw: function () {
+				self.draw();
+			},
+			emitMove: function () {
+				self.emitMove();
+			},
+			emitSeatClick: function (seat) {
+				self.$emit('seat-click', seat);
+			},
+			emitModelValue: function (value) {
+				console.log('[ste-select-seat] emitModelValue debug:', {
+					currentLocalSelected: self._localSelected,
+					newValue: value,
+					newValueLength: value.length
+				});
+				self._localSelected = value;
+				console.log('[ste-select-seat] $emit called with:', { valueLength: value.length });
+				self.$emit('update:modelValue', value);
+				console.log('[ste-select-seat] emitModelValue after:', {
+					localSelectedLength: self._localSelected.length,
+					modelValueLength: self.modelValue ? self.modelValue.length : 0
+				});
+				if (self.canvasCtx) self.draw();
+			},
+			toggleSeat: function (row, col) {
+				return self.dataManager.toggleSeat(row, col);
+			},
+		});
 	},
 	mounted() {
 		this.initCanvas();
@@ -247,7 +301,7 @@ export default {
 			if (!ctx) return;
 
 			if (this.interactionHandler && this.interactionHandler.rowLabelsVisible !== undefined) {
-				this.rowLabelsVisible = this.interactionHandler.rowLabelsVisible;
+				this.rowLabelsVisible = this.interactionHandler.rowLabelsVisible.value;
 			}
 
 			var userScale = this.clampScale(this.touchHandler.scale);
@@ -329,8 +383,23 @@ export default {
 			var self = this;
 			this.$nextTick(function () {
 				// #ifdef H5 || APP
-				self.canvasCtx = uni.createCanvasContext(self.canvasId, self);
-				self.dpr = 1;
+				var canvasElement = document.getElementById(self.canvasId);
+				if (!canvasElement) {
+					canvasElement = document.querySelector('canvas[canvas-id="' + self.canvasId + '"]');
+				}
+				if (!canvasElement) {
+					canvasElement = document.querySelector('canvas.seat-canvas');
+				}
+				if (canvasElement) {
+					self.dpr = window.devicePixelRatio || 1;
+					canvasElement.width = self.width * self.dpr;
+					canvasElement.height = self.height * self.dpr;
+					self.canvasCtx = canvasElement.getContext('2d');
+					self.canvasCtx.scale(self.dpr, self.dpr);
+				} else {
+					self.canvasCtx = uni.createCanvasContext(self.canvasId, self);
+					self.dpr = 1;
+				}
 				self.applyDefaultViewport();
 				self.draw();
 				self.reset();
@@ -357,18 +426,33 @@ export default {
 			});
 		},
 		getTouchSeat(touchX, touchY) {
-			var scale = this.clampScale(this.touchHandler.scale);
+			var userScale = this.clampScale(this.touchHandler.scale);
 			var size = this.seatSizePx;
 			var gap = this.seatGapPx;
 			var labelWidth = this.labelWidthPx;
 			var tx = this.touchHandler.translateX;
 			var ty = this.touchHandler.translateY;
 
-			var col = Math.floor((touchX / scale - tx - labelWidth - gap / 2) / (size + gap));
-			var row = Math.floor((touchY / scale - ty - gap / 2) / (size + gap));
+			var col = Math.floor((touchX / userScale - tx - labelWidth - gap / 2) / (size + gap));
+			var row = Math.floor((touchY / userScale - ty - gap / 2) / (size + gap));
 
-			var seatLeft = (tx + labelWidth + col * (size + gap) + gap / 2) * scale;
-			var seatTop = (ty + row * (size + gap) + gap / 2) * scale;
+			console.log('[ste-select-seat] getTouchSeat debug:', {
+				touchX: touchX,
+				touchY: touchY,
+				userScale: userScale,
+				tx: tx,
+				ty: ty,
+				size: size,
+				gap: gap,
+				labelWidth: labelWidth,
+				computedRow: row,
+				computedCol: col,
+				canvasWidth: this.width,
+				canvasHeight: this.height,
+				safeRows: this.safeRows,
+				safeCols: this.safeCols,
+				dpr: this.dpr,
+			});
 
 			if (row < 0 || row >= this.safeRows || col < 0 || col >= this.safeCols) return null;
 			return this.dataManager.getSeat(row, col) || null;
@@ -459,27 +543,55 @@ export default {
 			this.rowLabelsVisible = value;
 		},
 		onTouchStart(e) {
+			if (!this.interactionHandler) {
+				console.warn('[ste-select-seat] interactionHandler is null, touch event ignored');
+				return;
+			}
 			this.interactionHandler.onTouchStart(e);
 		},
 		onTouchMove(e) {
+			if (!this.interactionHandler) {
+				console.warn('[ste-select-seat] interactionHandler is null, touch event ignored');
+				return;
+			}
 			this.interactionHandler.onTouchMove(e);
 		},
 		onTouchEnd(e) {
+			if (!this.interactionHandler) {
+				console.warn('[ste-select-seat] interactionHandler is null, touch event ignored');
+				return;
+			}
 			this.interactionHandler.onTouchEnd(e);
 		},
 		onMouseDown(e) {
+			if (!this.interactionHandler) {
+				console.warn('[ste-select-seat] interactionHandler is null, mouse event ignored');
+				return;
+			}
 			this.interactionHandler.onMouseDown(e);
 		},
 		onMouseMove(e) {
+			if (!this.interactionHandler) {
+				console.warn('[ste-select-seat] interactionHandler is null, mouse event ignored');
+				return;
+			}
 			this.interactionHandler.onMouseMove(e);
 		},
 		onMouseUp(e) {
+			if (!this.interactionHandler) {
+				console.warn('[ste-select-seat] interactionHandler is null, mouse event ignored');
+				return;
+			}
 			this.interactionHandler.onMouseUp(e);
 		},
 		reset() {
+			if (!this.interactionHandler) {
+				console.warn('[ste-select-seat] interactionHandler is null, reset ignored');
+				return;
+			}
 			this.interactionHandler.reset();
 			if (this.interactionHandler.rowLabelsVisible !== undefined) {
-				this.rowLabelsVisible = this.interactionHandler.rowLabelsVisible;
+				this.rowLabelsVisible = this.interactionHandler.rowLabelsVisible.value;
 			}
 		},
 		setSeat(row, col, data) {
@@ -492,51 +604,6 @@ export default {
 		getSeats() {
 			return this.dataManager.getSeats();
 		},
-	},
-	beforeMount() {
-		var self = this;
-		this.interactionHandler = useSeatInteraction({
-			instance: this,
-			canvasId: this.canvasId,
-			getShowRowLabels: function () {
-				return self.showRowLabels;
-			},
-			touchHandler: this.touchHandler,
-			clampScale: function (scale) {
-				return self.clampScale(scale);
-			},
-			applyTranslateResistance: function (x, y, scale) {
-				return self.applyTranslateResistance(x, y, scale);
-			},
-			clampTranslate: function (x, y, scale) {
-				return self.clampTranslate(x, y, scale);
-			},
-			getTouchSeat: function (x, y) {
-				return self.getTouchSeat(x, y);
-			},
-			getTouchLocalPoint: function (touch, rect) {
-				return self.getTouchLocalPoint(touch, rect);
-			},
-			applyDefaultViewport: function () {
-				self.applyDefaultViewport();
-			},
-			draw: function () {
-				self.draw();
-			},
-			emitMove: function () {
-				self.emitMove();
-			},
-			emitSeatClick: function (seat) {
-				self.$emit('seat-click', seat);
-			},
-			emitModelValue: function (value) {
-				self._localSelected = value;
-				self.$emit('update:modelValue', value);
-			},
-			toggleSeat: function (row, col) {
-				return self.dataManager.toggleSeat(row, col);
-			},
-		});
 	},
 };
 </script>

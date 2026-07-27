@@ -11,7 +11,7 @@
 				<view class="title">基础用法</view>
 				<view class="desc">5 行 8 列座位</view>
 				<view class="selected-info">已选: {{ basicSelected.length }} 个</view>
-				<ste-select-seat v-model="basicSelected" :rows="rows" :cols="cols" :width="stageWidth" :height="stageHeight" @seat-click="onSeatClick" />
+				<ste-select-seat v-model="basicSelected" :rows="rows" :cols="cols" :width="stageWidth" :height="stageHeight" @seat-click="onSeatClick" @update:modelValue="onModelUpdate" />
 			</view>
 
 			<view class="demo-item">
@@ -81,6 +81,11 @@ export default {
 	methods: {
 		onSeatClick(seat) {
 			console.log('座位点击:', seat);
+		},
+		onModelUpdate(value) {
+			console.log('[demo] onModelUpdate:', { value: value, length: value.length });
+			this.$set(this, 'basicSelected', [...value]);
+			console.log('[demo] basicSelected after update:', { length: this.basicSelected.length });
 		},
 		goDemo5() {
 			uni.navigateTo({ url: '/mp/select-seat-demo/demo/demo.vue' });
