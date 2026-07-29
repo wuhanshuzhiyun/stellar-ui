@@ -264,14 +264,14 @@ export default {
 				console.log('[ste-select-seat] emitModelValue debug:', {
 					currentLocalSelected: self._localSelected,
 					newValue: value,
-					newValueLength: value.length
+					newValueLength: value.length,
 				});
 				self._localSelected = value;
 				console.log('[ste-select-seat] $emit called with:', { valueLength: value.length });
 				self.$emit('update:modelValue', value);
 				console.log('[ste-select-seat] emitModelValue after:', {
 					localSelectedLength: self._localSelected.length,
-					modelValueLength: self.modelValue ? self.modelValue.length : 0
+					modelValueLength: self.modelValue ? self.modelValue.length : 0,
 				});
 				if (self.canvasCtx) self.draw();
 			},
@@ -316,6 +316,11 @@ export default {
 			var defaultSelectedBg = this.selectedBgColor || themeColor;
 
 			ctx.clearRect(0, 0, this.width, this.height);
+
+			console.log('[ste-select-seat] draw debug:', {
+				_localSelected: this._localSelected,
+				_localSelectedLength: this._localSelected.length
+			});
 
 			// #ifndef APP
 			ctx.save();
@@ -433,8 +438,16 @@ export default {
 			var tx = this.touchHandler.translateX;
 			var ty = this.touchHandler.translateY;
 
-			var col = Math.floor((touchX / userScale - tx - labelWidth - gap / 2) / (size + gap));
-			var row = Math.floor((touchY / userScale - ty - gap / 2) / (size + gap));
+			// 获取内容尺寸和默认视口
+			var contentSize = this.getContentSize();
+			var defaultViewport = this.getDefaultViewport();
+
+			// touchX/touchY 已经是逻辑像素坐标，直接使用
+			var adjustedX = touchX / userScale - tx - labelWidth - gap / 2;
+			var adjustedY = touchY / userScale - ty - gap / 2;
+			var seatSizePlusGap = size + gap;
+			var col = Math.floor(adjustedX / seatSizePlusGap);
+			var row = Math.floor(adjustedY / seatSizePlusGap);
 
 			console.log('[ste-select-seat] getTouchSeat debug:', {
 				touchX: touchX,
@@ -445,6 +458,9 @@ export default {
 				size: size,
 				gap: gap,
 				labelWidth: labelWidth,
+				adjustedX: adjustedX,
+				adjustedY: adjustedY,
+				seatSizePlusGap: seatSizePlusGap,
 				computedRow: row,
 				computedCol: col,
 				canvasWidth: this.width,
@@ -452,7 +468,23 @@ export default {
 				safeRows: this.safeRows,
 				safeCols: this.safeCols,
 				dpr: this.dpr,
+				contentSize: contentSize,
+				defaultViewport: defaultViewport,
 			});
+
+			// 打印所有座位的实际位置供调试
+			var seatPositions = [];
+			for (var r = 0; r < this.safeRows; r++) {
+				for (var c = 0; c < this.safeCols; c++) {
+					var seat = this.dataManager.getSeat(r, c);
+					if (seat && !seat.empty) {
+						var seatX = tx + labelWidth + c * (size + gap) + gap / 2;
+						var seatY = ty + r * (size + gap) + gap / 2;
+						seatPositions.push({ row: r, col: c, x: seatX, y: seatY, width: size, height: size });
+					}
+				}
+			}
+			console.log('[ste-select-seat] seat positions:', seatPositions);
 
 			if (row < 0 || row >= this.safeRows || col < 0 || col >= this.safeCols) return null;
 			return this.dataManager.getSeat(row, col) || null;

@@ -286,10 +286,7 @@ function useSeatInteraction(options) {
 			var clientY = typeof touch.clientY === 'number' ? touch.clientY : typeof touch.pageY === 'number' ? touch.pageY : 0;
 			var localX = clientX - rect.left;
 			var localY = clientY - rect.top;
-			// 将CSS像素转换为逻辑像素，与渲染坐标系统保持一致
-			var dpr = canvasElement.width / rect.width;
-			localX = localX / dpr;
-			localY = localY / dpr;
+			// clientX/clientY 已经是 CSS 像素（逻辑像素），直接使用
 			selectSeatByPoint(localX, localY);
 			return;
 		}
@@ -312,15 +309,7 @@ function useSeatInteraction(options) {
 		if (!rect) return;
 		var localX = event.clientX - rect.left;
 		var localY = event.clientY - rect.top;
-		// #ifdef H5
-		// 将CSS像素转换为逻辑像素，与渲染坐标系统保持一致
-		var canvasElement = document.getElementById(canvasId);
-		if (canvasElement) {
-			var dpr = canvasElement.width / rect.width;
-			localX = localX / dpr;
-			localY = localY / dpr;
-		}
-		// #endif
+		// clientX/clientY 已经是 CSS 像素（逻辑像素），直接使用
 		selectSeatByPoint(localX, localY);
 	};
 	// ─── Pointer Events ───────────────────────────────────────────────────────
