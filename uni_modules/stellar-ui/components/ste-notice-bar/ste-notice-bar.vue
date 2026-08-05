@@ -178,11 +178,11 @@ export default {
 	},
 	methods: {
 		// 执行滚动动画
-		handleAnimation() {
+		async handleAnimation() {
 			if (!this.scrollable) return;
 			if (this.direction == 'across') {
 				// 获取滚动消息的长度来计算动画的执行时间
-				let dom = utils.querySelector('#' + this.id, this);
+				let dom = await utils.querySelector('#' + this.id, this);
 				if (dom) {
 					this.acrossDuration = ((dom.width + this.textTranslate) / Number(this.acrossSpeed)) * 1000;
 					this.cardMsgClass = 'across-play-infinite';
