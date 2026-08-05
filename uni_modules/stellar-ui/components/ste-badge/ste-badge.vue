@@ -1,17 +1,8 @@
 <template>
-	<view class="ste-badge-root" :style="[rootStyle, { display: isInline ? 'inline-block' : 'block' }]">
-		<view
-			class="ste-badge-content"
-			:style="[cmpContentStyle]"
-			:class="'ste-badge-' + position"
-			v-if="showDot || cmpShowContent || $slots.content"
-		>
+	<view class="ste-badge-root" :style="[cmpRootStyle]">
+		<view class="ste-badge-content" :style="[cmpContentStyle]" :class="'ste-badge-' + position" v-if="showDot || cmpShowContent || $slots.content || background">
 			<view v-if="showDot" class="dot-box" />
-			<view
-				v-else
-				class="content-box"
-				:class="{ 'no-padding': $slots.content || (content && (content.length == 1 || content < 10)) }"
-			>
+			<view v-else class="content-box" :class="{ 'no-padding': $slots.content || isSingleChar }">
 				<slot name="content">
 					<view class="ste-badge-content-text">{{ cmpContent }}</view>
 				</slot>
@@ -28,7 +19,7 @@ import utils from '../../utils/utils.js';
  * @description 徽标组件
  * @tutorial https://stellar-ui.intecloud.com.cn/?projectName=stellar-ui&menu=%E7%BB%84%E4%BB%B6&active=ste-badge
  * @property {Number|String} content 徽标内容
- * @property {String} background 背景 默认 #ee0a24
+ * @property {String} background 背景，未设置时使用 CSS 默认色 #ee0a24
  * @property {Boolean} showDot 是否展示为小红点 默认 false
  * @property {Number|String} offsetX 根据徽标位置,设置x轴偏移量 默认 auto
  * @property {Number|String} offsetY 根据徽标位置,设置y轴偏移量 默认 auto
@@ -59,7 +50,7 @@ export default {
 		},
 		background: {
 			type: [String, null],
-			default: '#ee0a24',
+			default: null,
 		},
 		showDot: {
 			type: [Boolean, null],
@@ -107,30 +98,35 @@ export default {
 		},
 	},
 	computed: {
+		cmpRootStyle() {
+			return { display: this.isInline ? 'inline-block' : 'block', ...this.rootStyle };
+		},
 		cmpContentStyle() {
 			let style = {};
 			if (this.background) {
 				style = { backgroundColor: 'transparent', ...utils.bg2style(this.background) };
 			}
-			if (this.offsetX != 'auto' || this.offsetY != 'auto' || this.offsetX == 0 || this.offsetY == 0) {
+			let hasOffset = this.offsetX != 'auto' || this.offsetY != 'auto' || this.offsetX == 0 || this.offsetY == 0;
+			if (hasOffset) {
 				style.transform = 'translate(0,0)';
-
+				let pxX = utils.formatPx(this.offsetX);
+				let pxY = utils.formatPx(this.offsetY);
 				switch (this.position) {
 					case 'topLeft':
-						style.left = utils.formatPx(this.offsetX);
-						style.top = utils.formatPx(this.offsetY);
+						style.left = pxX;
+						style.top = pxY;
 						break;
 					case 'bottomLeft':
-						style.left = utils.formatPx(this.offsetX);
-						style.bottom = utils.formatPx(this.offsetY);
+						style.left = pxX;
+						style.bottom = pxY;
 						break;
 					case 'bottomRight':
-						style.right = utils.formatPx(this.offsetX);
-						style.bottom = utils.formatPx(this.offsetY);
+						style.right = pxX;
+						style.bottom = pxY;
 						break;
 					default:
-						style.right = utils.formatPx(this.offsetX);
-						style.top = utils.formatPx(this.offsetY);
+						style.right = pxX;
+						style.top = pxY;
 						break;
 				}
 			}
@@ -138,18 +134,33 @@ export default {
 				style.border = 'solid 1px ' + this.borderColor;
 			}
 			style['z-index'] = this.zIndex;
-
 			return style;
 		},
 		cmpShowContent() {
-			return this.showZero ? true : this.content && this.content != '0';
+			if (typeof this.content === 'boolean') {
+				return false;
+			}
+			return this.showZero ? true : !!(this.content && this.content != '0');
 		},
 		cmpContent() {
-			if (utils.isNumber(this.content) && this.content > this.max) {
-				return `${this.max}+`;
-			} else {
-				return String(this.content);
+			let content = this.content;
+			if (typeof content === 'boolean') {
+				return '';
 			}
+			if (utils.isNumber(content) && content > this.max) {
+				return `${this.max}+`;
+			}
+			return String(content);
+		},
+		isSingleChar() {
+			let content = this.content;
+			if (typeof content === 'boolean') {
+				return false;
+			}
+			if (utils.isNumber(content)) {
+				return content < 10;
+			}
+			return !!(content && (content.length == 1 || content < 10));
 		},
 	},
 };
