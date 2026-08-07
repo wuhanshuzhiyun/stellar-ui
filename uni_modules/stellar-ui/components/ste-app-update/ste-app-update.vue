@@ -144,8 +144,12 @@ export default {
 		},
 		// 版本比较函数
 		compareVersions(newVersion, currentVersion) {
-			const newParts = newVersion.split('.').map(function(v) { return parseInt(v) || 0; });
-			const currentParts = currentVersion.split('.').map(function(v) { return parseInt(v) || 0; });
+			const newParts = newVersion.split('.').map(function (v) {
+				return parseInt(v) || 0;
+			});
+			const currentParts = currentVersion.split('.').map(function (v) {
+				return parseInt(v) || 0;
+			});
 			const maxLength = Math.max(newParts.length, currentParts.length);
 			for (let i = 0; i < maxLength; i++) {
 				const newPart = newParts[i] || 0;
@@ -203,7 +207,7 @@ export default {
 			this.nativeDownloadTask = task;
 
 			var self = this;
-			var updateProgress = function() {
+			var updateProgress = function () {
 				if (task.downloadedSize !== undefined && task.totalSize > 0) {
 					self.percent = Math.round((task.downloadedSize / task.totalSize) * 100);
 					self.downloadedSize = (task.downloadedSize / Math.pow(1024, 2)).toFixed(2);
@@ -212,7 +216,7 @@ export default {
 			};
 			updateProgress();
 
-			this.nativeDownloadListener = function(download) {
+			this.nativeDownloadListener = function (download) {
 				if (download.state === 4) {
 					self.stopProgressPolling();
 					self.percent = 100;
@@ -226,7 +230,7 @@ export default {
 					self.updateBtn = true;
 					clearDownloadState();
 					self.cleanup();
-					uni.showToast({ title: "下载失败，请重新下载", icon: "none" });
+					uni.showToast({ title: '下载失败，请重新下载', icon: 'none' });
 				}
 			};
 
@@ -238,7 +242,7 @@ export default {
 					try {
 						task.start();
 					} catch (e) {
-						console.warn("尝试重启下载任务:", e);
+						console.warn('尝试重启下载任务:', e);
 					}
 				}
 			}
@@ -254,19 +258,19 @@ export default {
 			plus.runtime.install(
 				filePath,
 				{ force: true },
-				function() {
+				function () {
 					uni.showModal({
 						title: '提示',
 						content: '升级成功，请重新启动！',
 						confirmText: '确定',
 						showCancel: false,
-						success: function() {
+						success: function () {
 							clearDownloadState();
 							plus.runtime.restart();
 						},
 					});
 				},
-				function(e) {
+				function (e) {
 					uni.showModal({
 						title: '安装失败',
 						content: e.message || '安装过程中出现错误',
@@ -379,9 +383,9 @@ export default {
 
 							// strictVersionCheck 为 true 时，优先检查是否需要先升级到最近一次全量包
 							const lastAllDetail = _data.data.lastAllDetail;
-                                                    if (this.strictVersionCheck && lastAllDetail && lastAllDetail.entireFile && lastAllDetail.code) {
-                                                            if (this.compareVersions(lastAllDetail.code, this.version) > 0) {
-                                                                    this.data.code = lastAllDetail.code;
+							if (this.strictVersionCheck && lastAllDetail && lastAllDetail.entireFile && lastAllDetail.code) {
+								if (this.compareVersions(lastAllDetail.code, this.version) > 0) {
+									this.data.code = lastAllDetail.code;
 									this.data.name = lastAllDetail.name;
 									this.data.content = (lastAllDetail.desc || '').replace(/\n+/g, '<br />');
 									this.data.isForce = !!lastAllDetail.isForce;
@@ -413,18 +417,16 @@ export default {
 								nvs.splice(nvs.length - 1);
 								this.data.name = nvs.join('.');
 							}
-                                                    const shouldUpdate = this.strictVersionCheck
-                                                            ? this.compareVersions(this.data.code, this.version) > 0
-                                                            : this.data.code !== this.version;
+							const shouldUpdate = this.strictVersionCheck ? this.compareVersions(this.data.code, this.version) > 0 : this.data.code !== this.version;
+
+							if (this.data.updateFile && shouldUpdate) {
 								const downloadState = getDownloadState();
-								const hasValidDownloadState = downloadState
-									&& downloadState.versionCode === this.data.code
-									&& downloadState.updateFile === this.data.updateFile
-									&& !isDownloadStateExpired(downloadState);
+								const hasValidDownloadState =
+									downloadState && downloadState.versionCode === this.data.code && downloadState.updateFile === this.data.updateFile && !isDownloadStateExpired(downloadState);
 
 								if (hasValidDownloadState) {
 									const existing = await findExistingDownloadTask(this.data.updateFile);
-									
+
 									if (existing) {
 										this.open = true;
 										this.$emit('update');
@@ -439,17 +441,19 @@ export default {
 											}
 										}
 										return;
-									} else {
-										clearDownloadState();
 									}
 								}
-								
+
+								if (downloadState) {
+									clearDownloadState();
+								}
 
 								this.open = true;
 								this.$emit('update');
 								// 如果是强制更新，直接开始下载
 								if (this.data.isForce) this.confirm();
 								return;
+							}
 						} else {
 							console.log(_data.msg || '获取版本信息失败');
 						}
@@ -511,7 +515,9 @@ export default {
 			var self = this;
 			var stale = await findExistingDownloadTask(this.data.updateFile);
 			if (stale) {
-				try { stale.task.abort(); } catch (_) {}
+				try {
+					stale.task.abort();
+				} catch (_) {}
 			}
 			// #endif
 
