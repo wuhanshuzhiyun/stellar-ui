@@ -3,8 +3,7 @@
 		<view class="icon">
 			<slot name="icon" :slotProps="cmpSlotProps">
 				<view class="input-icon" data-test="radio-icon" :style="[cmpInputStyle]">
-					<ste-icon v-if="cmpChecked && cmpIconSize" :size="cmpIconSize * 0.8" code="&#xe67a;"
-						:color="cmpDisabled ? '#bbbbbb' : '#fff'" bold></ste-icon>
+					<ste-icon v-if="cmpChecked && cmpIconSize" :size="cmpIconSize * 0.8" code="&#xe67a;" :color="cmpDisabled ? '#bbbbbb' : '#fff'" bold></ste-icon>
 				</view>
 			</slot>
 		</view>
@@ -219,9 +218,7 @@ export default {
 		},
 		// 选中状态：通过 proxyProps.value 读取父组件 value，不依赖父实例整体
 		cmpChecked() {
-			return this.$hasParent
-				? this.$parentProxyProps?.value == this.name
-				: this.value == this.name;
+			return this.$hasParent ? this.$parentProxyProps?.value == this.name : this.value == this.name;
 		},
 	},
 	methods: {
@@ -231,20 +228,18 @@ export default {
 			}
 
 			// 如果有 click 事件监听器，先触发事件
-			if (this.$listeners?.click) {
-				let stopped = false;
-				const next = () => {
-					// 不阻止后续操作
-				};
-				const stop = () => {
-					stopped = true;
-				};
-				// 同步触发 click 事件回调
-				this.$emit('click', this.value, next, stop);
-				// 如果用户调用了 stop()，则不执行后续逻辑
-				if (stopped) {
-					return;
-				}
+			let stopped = false;
+			const next = () => {
+				// 不阻止后续操作
+			};
+			const stop = () => {
+				stopped = true;
+			};
+			// 同步触发 click 事件回调
+			this.$emit('click', this.value, next, stop);
+			// 如果用户调用了 stop()，则不执行后续逻辑
+			if (stopped) {
+				return;
 			}
 
 			if (!this.cmpChecked) {
