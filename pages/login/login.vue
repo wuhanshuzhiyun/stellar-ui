@@ -41,6 +41,7 @@ export default {
 	},
 	mounted() {},
 	methods: {
+		// #ifdef MP-WEIXIN
 		async open(uuid) {
 			try {
 				const { code } = await wx.login();
@@ -50,6 +51,7 @@ export default {
 				console.error(e);
 			}
 		},
+		// #endif
 		async login() {
 			// #ifdef MP-WEIXIN
 			if (!this.uuid) return;

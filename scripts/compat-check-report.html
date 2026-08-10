@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>stellar-ui 跨平台兼容性检查器 — 评估报告</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif; background: #f5f5f5; color: #333; line-height: 1.7; }
+  .container { max-width: 900px; margin: 0 auto; padding: 40px 24px; }
+  h1 { font-size: 26px; font-weight: 600; color: #1a1a1a; margin-bottom: 8px; }
+  .subtitle { color: #888; font-size: 14px; margin-bottom: 32px; }
+  h2 { font-size: 20px; font-weight: 600; color: #1a1a1a; margin: 32px 0 16px; padding-bottom: 8px; border-bottom: 2px solid #e0e0e0; }
+  h3 { font-size: 16px; font-weight: 600; color: #333; margin: 20px 0 10px; }
+  p { margin-bottom: 12px; font-size: 14px; }
+  code { font-family: 'SF Mono', 'Fira Code', 'Consolas', monospace; background: #f0f0f0; padding: 2px 6px; border-radius: 3px; font-size: 13px; }
+  pre { background: #1e1e1e; color: #d4d4d4; padding: 16px; border-radius: 8px; overflow-x: auto; margin: 12px 0; font-size: 13px; line-height: 1.5; }
+  pre code { background: none; padding: 0; color: inherit; }
+  .verdict { background: #e8f5e9; border-left: 4px solid #4caf50; padding: 16px 20px; border-radius: 4px; margin: 20px 0; }
+  .verdict h3 { margin-top: 0; color: #2e7d32; }
+  .stat-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin: 20px 0; }
+  .stat-card { background: #fff; border-radius: 8px; padding: 20px; text-align: center; box-shadow: 0 1px 3px rgba(0,0,0,0.08); }
+  .stat-card .num { font-size: 32px; font-weight: 600; }
+  .stat-card .label { font-size: 12px; color: #888; margin-top: 4px; }
+  .stat-card.error .num { color: #e53935; }
+  .stat-card.warning .num { color: #fb8c00; }
+  .stat-card.pass .num { color: #43a047; }
+  table { width: 100%; border-collapse: collapse; margin: 16px 0; font-size: 13px; }
+  th { background: #f5f5f5; text-align: left; padding: 10px 12px; font-weight: 600; border-bottom: 2px solid #e0e0e0; }
+  td { padding: 10px 12px; border-bottom: 1px solid #eee; }
+  tr:hover { background: #fafafa; }
+  .badge { display: inline-block; padding: 2px 8px; border-radius: 3px; font-size: 11px; font-weight: 600; }
+  .badge-error { background: #ffebee; color: #c62828; }
+  .badge-warning { background: #fff3e0; color: #ef6c00; }
+  .badge-pass { background: #e8f5e9; color: #2e7d32; }
+  .file-list { font-family: monospace; font-size: 13px; background: #fafafa; padding: 12px 16px; border-radius: 6px; margin: 8px 0; }
+  .file-list li { margin: 4px 0; list-style: none; }
+  .section-card { background: #fff; border-radius: 8px; padding: 20px 24px; margin: 16px 0; box-shadow: 0 1px 3px rgba(0,0,0,0.06); }
+  ul, ol { margin-left: 24px; margin-bottom: 12px; font-size: 14px; }
+  li { margin-bottom: 6px; }
+  .toc { background: #fff; border-radius: 8px; padding: 16px 20px; margin-bottom: 32px; }
+  .toc a { color: #1976d2; text-decoration: none; font-size: 14px; }
+  .toc a:hover { text-decoration: underline; }
+  .toc li { margin-bottom: 4px; }
+</style>
+</head>
+<body>
+<div class="container">
+  <h1>stellar-ui 跨平台兼容性检查器</h1>
+  <p class="subtitle">评估报告 — 2026-08-10 — stellar-ui v1.40.36</p>
+
+  <div class="toc">
+    <ol>
+      <li><a href="#verdict">结论</a></li>
+      <li><a href="#stats">检测统计</a></li>
+      <li><a href="#rules">规则清单</a></li>
+      <li><a href="#bugs">检测到的真实 BUG</a></li>
+      <li><a href="#usage">使用方式</a></li>
+      <li><a href="#limits">局限性</a></li>
+      <li><a href="#files">文件清单</a></li>
+    </ol>
+  </div>
+
+  <div class="verdict" id="verdict">
+    <h3>结论：方案可行，已落地</h3>
+    <p>在 git pre-commit 阶段通过静态分析检测跨平台兼容性问题是<b>可行的</b>。已实现轻量级检查器（零依赖、纯 Node.js），覆盖 9 条规则，成功检测出 3 个真实 BUG 和 24 个需人工确认的风险点。检查器已安装为 pre-commit hook，将在每次 <code>git commit</code> 时自动运行。</p>
+  </div>
+
+  <h2 id="stats">检测统计</h2>
+  <div class="stat-grid">
+    <div class="stat-card error"><div class="num">2</div><div class="label">ERROR（阻断提交）</div></div>
+    <div class="stat-card warning"><div class="num">24</div><div class="label">WARNING（允许提交）</div></div>
+    <div class="stat-card pass"><div class="num">282</div><div class="label">检查文件总数</div></div>
+  </div>
+  <p>全项目 282 个 .vue/.js 文件中，第三方 SDK 和 H5 专属文件已通过文件级豁免排除，仅检查组件库核心代码和业务页面。</p>
+
+  <h2 id="rules">规则清单</h2>
+  <div class="section-card">
+    <table>
+      <thead>
+        <tr><th>规则</th><th>名称</th><th>级别</th><th>检测内容</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>R1</td><td>DOM API 裸露</td><td><span class="badge badge-error">ERROR</span></td><td>document.* / window.* / navigator.* 在条件编译块外使用</td></tr>
+        <tr><td>R2</td><td>wx.* API 裸露</td><td><span class="badge badge-error">ERROR</span></td><td>wx.* 调用在 #ifdef MP-WEIXIN 块外</td></tr>
+        <tr><td>R3</td><td>条件编译指令不配对</td><td><span class="badge badge-error">ERROR</span></td><td>#ifdef / #ifndef 缺少匹配的 #endif</td></tr>
+        <tr><td>R4</td><td>addEventListener 裸露</td><td><span class="badge badge-error">ERROR</span></td><td>addEventListener / removeEventListener 在 H5 块外</td></tr>
+        <tr><td>R5</td><td>renderjs 缺失平台守护</td><td><span class="badge badge-error">ERROR</span></td><td>renderjs script 块缺少 #ifdef H5 || APP-PLUS</td></tr>
+        <tr><td>R6</td><td>CSS 固定定位</td><td><span class="badge badge-warning">WARN</span></td><td>position:fixed 在 MP scroll-view 内可能失效</td></tr>
+        <tr><td>R7</td><td>事件绑定拼写错误</td><td><span class="badge badge-warning">WARN</span></td><td>@mosueleave 等常见拼写错误检测</td></tr>
+        <tr><td>R8</td><td>平台覆盖缺失</td><td><span class="badge badge-warning">WARN</span></td><td>条件编译仅覆盖部分平台</td></tr>
+        <tr><td>R9</td><td>window.open 使用</td><td><span class="badge badge-warning">WARN</span></td><td>window.open() 在非 H5 环境会报错</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h2 id="bugs">检测到的真实 BUG</h2>
+  <div class="section-card">
+    <h3>BUG 1: wx.login 裸露 <span class="badge badge-error">ERROR</span></h3>
+    <p><b>文件:</b> <code>pages/login/login.vue</code> L46</p>
+    <pre><code>const { code } = await wx.login();</code></pre>
+    <p>问题：<code>wx.login()</code> 是微信小程序专有 API，在 H5 和 App 端会直接报错。该方法未被 <code>#ifdef MP-WEIXIN</code> 包裹。</p>
+    <p>修复建议：用 <code>// #ifdef MP-WEIXIN</code> 包裹，或改用 <code>uni.login()</code> 跨平台 API。</p>
+  </div>
+
+  <div class="section-card">
+    <h3>BUG 2: window.open 在非 App 块中 <span class="badge badge-error">ERROR</span></h3>
+    <p><b>文件:</b> <code>uni_modules/stellar-ui/components/ste-app-update/ste-app-update.vue</code> L327-332</p>
+    <pre><code>// #ifdef APP-PLUS
+plus.runtime.openURL(resp.data.downloadUrl);
+// #endif
+// #ifndef APP-PLUS
+window.open(resp.data.downloadUrl, '_blank');
+// #endif</code></pre>
+    <p>问题：<code>#ifndef APP-PLUS</code> 覆盖了 H5 + 所有小程序平台，但 <code>window.open()</code> 仅在 H5 可用。小程序端会崩溃。</p>
+    <p>修复建议：将 <code>#ifndef APP-PLUS</code> 改为 <code>#ifdef H5</code>。</p>
+  </div>
+
+  <div class="section-card">
+    <h3>BUG 3: 事件绑定拼写错误 <span class="badge badge-warning">WARN</span></h3>
+    <p><b>文件:</b> <code>uni_modules/stellar-ui/components/ste-signature/ste-signature.vue</code> L2</p>
+    <pre><code>@mosueleave="onTouchEnd"</code></pre>
+    <p>问题：<code>@mosueleave</code> 应为 <code>@mouseleave</code>。当前 H5 端鼠标离开签名区域时事件不会触发，导致签名画布无法正确结束。</p>
+  </div>
+
+  <h2 id="usage">使用方式</h2>
+  <div class="section-card">
+    <h3>npm 命令</h3>
+    <pre><code>npm run compat:check         # 检查 staged 文件（pre-commit 默认）
+npm run compat:check:all     # 检查全项目 .vue/.js 文件
+npm run compat:check:file -- --file path/to/file.vue  # 检查指定文件</code></pre>
+
+    <h3>pre-commit 自动检查</h3>
+    <p>hook 已安装。每次 <code>git commit</code> 时自动运行：</p>
+    <ul>
+      <li>无 ERROR → 提交成功（有 WARNING 也会通过）</li>
+      <li>有 ERROR → 提交被阻断，需修复后重新提交</li>
+      <li>跳过检查（不推荐）：<code>git commit --no-verify</code></li>
+    </ul>
+
+    <h3>新环境安装</h3>
+    <p>clone 项目后执行 <code>npm install</code>，<code>prepare</code> 脚本会自动安装 hook。</p>
+    <p>手动安装：<code>node scripts/setup-compat-hook.js</code></p>
+
+    <h3>扩展规则</h3>
+    <p>在 <code>scripts/compat-rules.js</code> 中添加新规则对象即可：</p>
+    <pre><code>{
+    id: 'R10',
+    name: '新规则名称',
+    severity: 'error',
+    platforms: ['MP-WEIXIN'],
+    blockTypes: ['script', 'template'],
+    pattern: /somePattern/g,
+    exempt: ['H5'],
+    message: '问题描述: {match}',
+}</code></pre>
+  </div>
+
+  <h2 id="limits">局限性</h2>
+  <div class="section-card">
+    <h3>能检测的</h3>
+    <ul>
+      <li>DOM/BOM API 是否在正确的条件编译块内</li>
+      <li>平台专有 API（wx.*）是否被守护</li>
+      <li>条件编译指令配对性</li>
+      <li>renderjs 块的平台守护</li>
+      <li>已知拼写错误的模式匹配</li>
+      <li>CSS 固定定位使用提醒</li>
+    </ul>
+
+    <h3>不能检测的</h3>
+    <ul>
+      <li>运行时行为差异（如 fixed 在 scroll-view 内实际是否失效）</li>
+      <li>CSS 渲染差异（各端默认值不同）</li>
+      <li>事件传播冒泡差异</li>
+      <li>逻辑分支的正确性（条件编译覆盖了所有平台但逻辑有误）</li>
+      <li>性能特征差异</li>
+    </ul>
+    <p>这些需要通过端到端测试和真机/模拟器回归测试来覆盖，不属于静态检查的范畴。</p>
+  </div>
+
+  <h2 id="files">文件清单</h2>
+  <div class="section-card">
+    <ul class="file-list">
+      <li><b>scripts/compat-rules.js</b> — 规则定义模块（9 条规则，可扩展）</li>
+      <li><b>scripts/compat-check.js</b> — 主检查脚本（SFC 解析 + 条件编译上下文追踪 + 规则匹配）</li>
+      <li><b>scripts/setup-compat-hook.js</b> — pre-commit hook 安装脚本</li>
+      <li><b>package.json</b> — 添加 compat:check 系列命令和 prepare 脚本</li>
+      <li><b>.git/hooks/pre-commit</b> — 已安装的 pre-commit hook</li>
+    </ul>
+  </div>
+</div>
+</body>
+</html>

@@ -327,9 +327,17 @@ export default {
 											// #ifdef APP-PLUS
 											plus.runtime.openURL(resp.data.downloadUrl);
 											// #endif
-											// #ifndef APP-PLUS
-											window.open(resp.data.downloadUrl, '_blank');
-											// #endif
+										// #ifdef H5
+										window.open(resp.data.downloadUrl, '_blank');
+										// #endif
+										// #ifndef H5 || APP-PLUS
+										uni.setClipboardData({
+											data: resp.data.downloadUrl,
+											success: () => {
+												uni.showToast({ title: '下载链接已复制，请在浏览器打开', icon: 'none' });
+											},
+										});
+										// #endif
 										}
 									},
 								});

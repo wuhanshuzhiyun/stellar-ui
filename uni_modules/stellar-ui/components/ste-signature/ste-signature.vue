@@ -1,5 +1,5 @@
 <template>
-	<view v-if="load" class="ste-signature-root" :style="[cmpRootStyle]" :class="customClass" @mousedown="onTouchStart" @mousemove="onTouchMove" @mouseup="onTouchEnd" @mosueleave="onTouchEnd">
+	<view v-if="load" class="ste-signature-root" :style="[cmpRootStyle]" :class="customClass" @mousedown="onTouchStart" @mousemove="onTouchMove" @mouseup="onTouchEnd" @mouseleave="onTouchEnd">
 		<canvas disable-scroll :id="canvasId" :canvas-id="canvasId" :style="[cmpRootStyle]" @touchstart="onTouchStart" @touchmove="onTouchMove" @touchend="onTouchEnd" />
 		<!-- #ifdef APP | APP-PLUS -->
 		<canvas style="pointer-events: none; opacity: 0" :style="[cmpRootStyle]" id="ste-signature-app-canvas-output" canvas-id="ste-signature-app-canvas-output" />

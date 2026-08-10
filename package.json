@@ -5,7 +5,11 @@
 	"main": "main.js",
 	"scripts": {
 		"test:build": "vitest  --config ./vitest.config.js",
-		"test": "npx vite preview --outDir html"
+		"test": "npx vite preview --outDir html",
+		"compat:check": "node scripts/compat-check.js",
+		"compat:check:all": "node scripts/compat-check.js --all",
+		"compat:check:file": "node scripts/compat-check.js --file",
+		"prepare": "node scripts/setup-compat-hook.js"
 	},
 	"repository": {
 		"type": "git",
