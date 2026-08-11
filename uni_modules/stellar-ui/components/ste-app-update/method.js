@@ -238,41 +238,7 @@ export const getVersion = (appVersion) => {
 	});
 };
 
-const DOWNLOAD_STATE_KEY = 'app_update_download_state';
-export const DOWNLOAD_TIMEOUT = 30 * 60 * 1000;
-
-export const saveDownloadState = (state) => {
-	try {
-		uni.setStorageSync(DOWNLOAD_STATE_KEY, JSON.stringify(state));
-	} catch (e) {
-		console.warn('保存下载状态失败:', e);
-	}
-};
-
-export const getDownloadState = () => {
-	try {
-		const stored = uni.getStorageSync(DOWNLOAD_STATE_KEY);
-		if (stored) {
-			return JSON.parse(stored);
-		}
-	} catch (e) {
-		console.warn('读取下载状态失败:', e);
-	}
-	return null;
-};
-
-export const clearDownloadState = () => {
-	try {
-		uni.removeStorageSync(DOWNLOAD_STATE_KEY);
-	} catch (e) {
-		console.warn('清除下载状态失败:', e);
-	}
-};
-
-export const isDownloadStateExpired = (state) => {
-	return Date.now() - state.startTime > DOWNLOAD_TIMEOUT;
-};
-
+// 查找同 URL 的已有下载任务（用于下载前取消残留任务，避免重复下载）
 export const findExistingDownloadTask = (url) => {
 	return new Promise(function(resolve) {
 		// #ifdef APP-PLUS

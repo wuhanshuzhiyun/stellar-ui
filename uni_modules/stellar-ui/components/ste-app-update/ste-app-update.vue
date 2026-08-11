@@ -39,7 +39,7 @@
 	</view>
 </template>
 <script>
-import { download, getDeviceId, getPlatform, getAppId, getVersion, saveDownloadState, getDownloadState, clearDownloadState, isDownloadStateExpired, findExistingDownloadTask } from './method';
+import { download, getDeviceId, getPlatform, getAppId, getVersion, findExistingDownloadTask } from './method';
 
 const STORAGE_KEY = 'skipped_app_versions';
 
@@ -112,9 +112,6 @@ export default {
 			skippedVersions: [], // 跳过的版本列表
 			timeoutTimer: null, // 超时计时器
 			downloadTask: null, // 下载任务引用
-			nativeDownloadTask: null, // 原生下载任务引用
-			nativeDownloadListener: null, // 原生下载监听器
-			progressPollTimer: null, // 进度轮询计时器
 		};
 	},
 	methods: {
@@ -177,80 +174,7 @@ export default {
 				clearTimeout(this.timeoutTimer);
 				this.timeoutTimer = null;
 			}
-			this.stopProgressPolling();
-			// #ifdef APP-PLUS
-			if (this.nativeDownloadTask && this.nativeDownloadListener) {
-				try {
-					this.nativeDownloadTask.removeEventListener('statechanged', this.nativeDownloadListener);
-				} catch (_) {}
-			}
-			// #endif
 			this.downloadTask = null;
-			this.nativeDownloadTask = null;
-			this.nativeDownloadListener = null;
-		},
-		// 停止进度轮询
-		stopProgressPolling() {
-			if (this.progressPollTimer) {
-				clearInterval(this.progressPollTimer);
-				this.progressPollTimer = null;
-			}
-		},
-		// 恢复下载进度
-		resumeDownloadProgress(task) {
-			// #ifdef APP-PLUS
-			if (this.nativeDownloadTask && this.nativeDownloadListener) {
-				this.nativeDownloadTask.removeEventListener('statechanged', this.nativeDownloadListener);
-			}
-			this.stopProgressPolling();
-
-			this.nativeDownloadTask = task;
-
-			var self = this;
-			var updateProgress = function () {
-				if (task.downloadedSize !== undefined && task.totalSize > 0) {
-					self.percent = Math.round((task.downloadedSize / task.totalSize) * 100);
-					self.downloadedSize = (task.downloadedSize / Math.pow(1024, 2)).toFixed(2);
-					self.packageFileSize = (task.totalSize / Math.pow(1024, 2)).toFixed(2);
-				}
-			};
-			updateProgress();
-
-			this.nativeDownloadListener = function (download) {
-				if (download.state === 4) {
-					self.stopProgressPolling();
-					self.percent = 100;
-					self.downloadedSize = self.packageFileSize;
-					self.tempFilePath = download.filename;
-					if (self.open && self.data.package_type === 1 && download.filename) {
-						self.installWgt(download.filename);
-					}
-				} else if (download.state === -1) {
-					self.stopProgressPolling();
-					self.updateBtn = true;
-					clearDownloadState();
-					self.cleanup();
-					uni.showToast({ title: '下载失败，请重新下载', icon: 'none' });
-				}
-			};
-
-			task.addEventListener('statechanged', this.nativeDownloadListener);
-
-			if (task.state === 1 || task.state === 2 || task.state === 3) {
-				this.progressPollTimer = setInterval(updateProgress, 500);
-				if (task.state === 3) {
-					try {
-						task.start();
-					} catch (e) {
-						console.warn('尝试重启下载任务:', e);
-					}
-				}
-			}
-
-			if (task.state === 0 || task.state === 1 || task.state === 2) {
-				task.start();
-			}
-			// #endif
 		},
 		// 安装wgt包
 		installWgt(filePath) {
@@ -265,7 +189,6 @@ export default {
 						confirmText: '确定',
 						showCancel: false,
 						success: function () {
-							clearDownloadState();
 							plus.runtime.restart();
 						},
 					});
@@ -428,34 +351,6 @@ export default {
 							const shouldUpdate = this.strictVersionCheck ? this.compareVersions(this.data.code, this.version) > 0 : this.data.code !== this.version;
 
 							if (this.data.updateFile && shouldUpdate) {
-								const downloadState = getDownloadState();
-								const hasValidDownloadState =
-									downloadState && downloadState.versionCode === this.data.code && downloadState.updateFile === this.data.updateFile && !isDownloadStateExpired(downloadState);
-
-								if (hasValidDownloadState) {
-									const existing = await findExistingDownloadTask(this.data.updateFile);
-
-									if (existing) {
-										this.open = true;
-										this.$emit('update');
-										if (existing.state === 0 || existing.state === 1 || existing.state === 2 || existing.state === 3) {
-											this.updateBtn = false;
-											this.resumeDownloadProgress(existing.task);
-										} else if (existing.state === 4) {
-											this.updateBtn = false;
-											this.tempFilePath = existing.filename;
-											if (this.data.package_type === 1 && existing.filename) {
-												this.installWgt(existing.filename);
-											}
-										}
-										return;
-									}
-								}
-
-								if (downloadState) {
-									clearDownloadState();
-								}
-
 								this.open = true;
 								this.$emit('update');
 								// 如果是强制更新，直接开始下载
@@ -520,20 +415,14 @@ export default {
 			}
 
 			// #ifdef APP-PLUS
-			var self = this;
-			var stale = await findExistingDownloadTask(this.data.updateFile);
+			// 下载前先取消同 URL 的残留下载任务，避免重复下载
+			const stale = await findExistingDownloadTask(this.data.updateFile);
 			if (stale) {
 				try {
 					stale.task.abort();
 				} catch (_) {}
 			}
 			// #endif
-
-			saveDownloadState({
-				versionCode: this.data.code,
-				updateFile: this.data.updateFile,
-				startTime: Date.now(),
-			});
 
 			if (this.data.package_type == 0) {
 				// apk整包升级 下载地址必须以.apk结尾
@@ -544,11 +433,9 @@ export default {
 						downloadSuccess: (path) => (this.tempFilePath = path),
 						error: () => {
 							this.updateBtn = true;
-							clearDownloadState();
 							this.cleanup();
 						},
 						success: () => {
-							clearDownloadState();
 							this.cleanup();
 						},
 					});
@@ -567,11 +454,9 @@ export default {
 					downloadSuccess: (path) => (this.tempFilePath = path),
 					error: () => {
 						this.updateBtn = true;
-						clearDownloadState();
 						this.cleanup();
 					},
 					success: () => {
-						clearDownloadState();
 						this.cleanup();
 					},
 				});
@@ -594,7 +479,6 @@ export default {
 				this.tempFilePath,
 				{ force: true },
 				() => {
-					clearDownloadState();
 					// wgt升级
 					if (this.data.package_type == 1) {
 						uni.showModal({
@@ -630,7 +514,6 @@ export default {
 						if (this.downloadTask) {
 							this.downloadTask.abort();
 						}
-						clearDownloadState();
 						this.cleanup();
 						this.updateBtn = true;
 						this.percent = 0;
