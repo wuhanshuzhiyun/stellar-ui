@@ -1,0 +1,8 @@
+{
+  "serverUrl": "http://localhost:3002",
+  "apiToken": "",
+  "blockOnError": 1,
+  "requireServer": 0,
+  "timeout": 90000,
+  "maxDiff": 200000
+}

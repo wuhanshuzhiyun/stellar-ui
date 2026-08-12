@@ -11,7 +11,16 @@
  * 依赖：verify-server 已启动（由 stellar-server 的 main.ts fork 拉起，默认端口 3002）。
  *       零三方依赖，使用 Node 内置 http/https 发送请求。
  *
- * 环境变量（均可选，带默认值）：
+ * 配置来源（优先级从高到低）：
+ *   1. 环境变量（见下方列表，可临时覆盖）
+ *   2. scripts/ai-verify.config.local.json  （私人覆盖，已被 gitignore，不入库）
+ *   3. scripts/ai-verify.config.json        （入库默认，默认指向本地 http://localhost:3002）
+ *   4. 代码内置兜底默认值
+ *
+ * 想「一劳永逸」设置服务器地址：直接改 scripts/ai-verify.config.json（或建一个
+ * .local.json 私有覆盖），写一次即可，之后提交无需再管地址。
+ *
+ * 环境变量（均可选，仍可用于临时覆盖）：
  *   VERIFY_SERVER_URL         默认 http://localhost:3002
  *   VERIFY_API_TOKEN          若 verify-server 设置了 VERIFY_API_TOKEN，须填一致
  *   AI_VERIFY_BLOCK           默认 1 —— AI 发现 error 级问题时阻断提交（0 = 仅警告）
@@ -22,17 +31,41 @@
 
 'use strict';
 
+const fs = require('fs');
+const path = require('path');
 const { execSync } = require('child_process');
 const http = require('http');
 const https = require('https');
 const url = require('url');
 
-const SERVER_URL = process.env.VERIFY_SERVER_URL || 'http://localhost:3002';
-const API_TOKEN = process.env.VERIFY_API_TOKEN || '';
-const BLOCK_ON_ERROR = (process.env.AI_VERIFY_BLOCK || '1') !== '0';
-const REQUIRE_SERVER = (process.env.AI_VERIFY_REQUIRE_SERVER || '0') === '1';
-const TIMEOUT = parseInt(process.env.AI_VERIFY_TIMEOUT || '90000', 10);
-const MAX_DIFF = parseInt(process.env.AI_VERIFY_MAX_DIFF || '200000', 10);
+/**
+ * 加载客户端持久化配置。
+ * 优先级：环境变量 > .local.json（私有） > .json（入库默认） > 兜底。
+ */
+function loadClientConfig() {
+  const dir = __dirname;
+  const files = ['ai-verify.config.json', 'ai-verify.config.local.json'];
+  let merged = {};
+  for (const name of files) {
+    const p = path.join(dir, name);
+    try {
+      const parsed = JSON.parse(fs.readFileSync(p, 'utf-8'));
+      if (parsed && typeof parsed === 'object') merged = Object.assign(merged, parsed);
+    } catch (e) {
+      // 文件不存在或 JSON 非法：忽略，继续用下一来源/兜底
+    }
+  }
+  return merged;
+}
+
+const CLIENT = loadClientConfig();
+
+const SERVER_URL = process.env.VERIFY_SERVER_URL || CLIENT.serverUrl || 'http://localhost:3002';
+const API_TOKEN = process.env.VERIFY_API_TOKEN || (CLIENT.apiToken != null ? CLIENT.apiToken : '');
+const BLOCK_ON_ERROR = (process.env.AI_VERIFY_BLOCK || String(CLIENT.blockOnError != null ? CLIENT.blockOnError : 1)) !== '0';
+const REQUIRE_SERVER = (process.env.AI_VERIFY_REQUIRE_SERVER || String(CLIENT.requireServer != null ? CLIENT.requireServer : 0)) === '1';
+const TIMEOUT = parseInt(process.env.AI_VERIFY_TIMEOUT || String(CLIENT.timeout != null ? CLIENT.timeout : 90000), 10);
+const MAX_DIFF = parseInt(process.env.AI_VERIFY_MAX_DIFF || String(CLIENT.maxDiff != null ? CLIENT.maxDiff : 200000), 10);
 
 const COLORS = !!process.stdout.isTTY;
 const c = {
