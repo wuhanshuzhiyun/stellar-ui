@@ -20,11 +20,11 @@ const HOOK_DIR = path.join(ROOT, '.git', 'hooks');
 const HOOK_FILE = path.join(HOOK_DIR, 'pre-commit');
 
 const HOOK_CONTENT = `#!/bin/sh
-# stellar-ui pre-commit hook: 跨平台兼容性检查
+# stellar-ui pre-commit hook: 第一道跨平台兼容性检查 (本地规则) + 第二道 AI 代码审查 (verify-server)
 # 由 scripts/setup-compat-hook.js 自动生成，请勿手动修改
 # 跳过: git commit --no-verify
 
-echo "[pre-commit] 运行跨平台兼容性检查..."
+echo "[pre-commit] 第一道：运行跨平台兼容性检查 (本地规则)..."
 node scripts/compat-check.js
 RESULT=$?
 
@@ -32,6 +32,17 @@ if [ $RESULT -ne 0 ]; then
     echo ""
     echo "[pre-commit] 兼容性检查未通过，提交已阻断。"
     echo "[pre-commit] 修复上述 ERROR 后重新提交，或使用 git commit --no-verify 跳过。"
+    exit 1
+fi
+
+echo "[pre-commit] 第二道：运行 AI 代码审查 (verify-server)..."
+node scripts/ai-verify-hook.js
+RESULT=$?
+
+if [ $RESULT -ne 0 ]; then
+    echo ""
+    echo "[pre-commit] AI 代码审查未通过，提交已阻断。"
+    echo "[pre-commit] 修复上述问题后重新提交，或使用 git commit --no-verify 跳过。"
     exit 1
 fi
 
