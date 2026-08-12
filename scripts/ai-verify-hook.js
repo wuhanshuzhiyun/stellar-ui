@@ -17,12 +17,14 @@
  *   3. scripts/ai-verify.config.json        （入库默认，默认指向本地 http://localhost:3002）
  *   4. 代码内置兜底默认值
  *
- * 想「一劳永逸」设置服务器地址：直接改 scripts/ai-verify.config.json（或建一个
- * .local.json 私有覆盖），写一次即可，之后提交无需再管地址。
+ * 想「一劳永逸」设置：直接改 scripts/ai-verify.config.json（或建一个 .local.json
+ * 私有覆盖），写一次即可，之后提交无需再管——该文件连同本脚本一起复制到其它前端
+ * 项目即可复用（只需改 serverUrl / platforms）。
  *
  * 环境变量（均可选，仍可用于临时覆盖）：
  *   VERIFY_SERVER_URL         默认 http://localhost:3002
  *   VERIFY_API_TOKEN          若 verify-server 设置了 VERIFY_API_TOKEN，须填一致
+ *   AI_VERIFY_PLATFORMS       逗号分隔的目标平台，覆盖配置文件，如 MP-WEIXIN,H5,APP-PLUS,APP,IOS
  *   AI_VERIFY_BLOCK           默认 1 —— AI 发现 error 级问题时阻断提交（0 = 仅警告）
  *   AI_VERIFY_REQUIRE_SERVER  默认 0 —— 服务器不可达时仅警告放行（1 = 强制阻断）
  *   AI_VERIFY_TIMEOUT         默认 90000 (ms)
@@ -66,6 +68,12 @@ const BLOCK_ON_ERROR = (process.env.AI_VERIFY_BLOCK || String(CLIENT.blockOnErro
 const REQUIRE_SERVER = (process.env.AI_VERIFY_REQUIRE_SERVER || String(CLIENT.requireServer != null ? CLIENT.requireServer : 0)) === '1';
 const TIMEOUT = parseInt(process.env.AI_VERIFY_TIMEOUT || String(CLIENT.timeout != null ? CLIENT.timeout : 90000), 10);
 const MAX_DIFF = parseInt(process.env.AI_VERIFY_MAX_DIFF || String(CLIENT.maxDiff != null ? CLIENT.maxDiff : 200000), 10);
+
+// 目标平台：环境变量 AI_VERIFY_PLATFORMS（逗号分隔）> 配置文件 platforms > 代码兜底
+const RAW_PLATFORMS = process.env.AI_VERIFY_PLATFORMS || (Array.isArray(CLIENT.platforms) ? CLIENT.platforms.join(',') : '');
+const PLATFORMS = RAW_PLATFORMS
+  ? RAW_PLATFORMS.split(',').map((s) => s.trim()).filter(Boolean)
+  : ['MP-WEIXIN', 'H5', 'APP-PLUS', 'APP'];
 
 const COLORS = !!process.stdout.isTTY;
 const c = {
@@ -113,7 +121,7 @@ function postReview(diff) {
 
     const payload = {
       diff,
-      platforms: ['MP-WEIXIN', 'H5', 'APP-PLUS', 'APP'],
+      platforms: PLATFORMS,
       context: {
         repo: 'stellar-ui',
         branch: getBranch(),

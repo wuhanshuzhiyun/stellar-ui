@@ -1,6 +1,7 @@
 {
   "serverUrl": "http://localhost:3002",
   "apiToken": "",
+  "platforms": ["MP-WEIXIN", "H5", "APP-PLUS", "APP"],
   "blockOnError": 1,
   "requireServer": 0,
   "timeout": 90000,
