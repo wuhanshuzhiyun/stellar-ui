@@ -163,7 +163,8 @@ async function main() {
     process.exit(0);
   }
   const branch = getBranch();
-  let notified = 0;
+  let requested = 0;
+  let failed = 0;
   for (const r of refs) {
     let diff = combinedDiff(r.localSha, r.remoteSha);
     if (!diff || !diff.trim()) continue;
@@ -185,13 +186,41 @@ async function main() {
 
     log(`分支 ${branch} 本次 push ${commits.length} 个提交，调用 verify-server 做评审并推送企微...`);
     try {
-      await postReview(diff, ctx);
-      notified++;
+      const { json } = await postReview(diff, ctx);
+      requested++;
+      if (json && json.data && json.data.queued) {
+        // notify 模式下企微消息由服务端异步发出，钩子无从同步感知是否成功
+        log('已请求服务端异步评审推送（企微消息由服务端发出，详情见企微群）。');
+      } else {
+        log(`评审请求已完成（llmEnabled=${json && json.data ? json.data.llmEnabled : '?'}）。`);
+      }
     } catch (e) {
-      log(c.yellow + '⚠ 推送评审失败（不阻塞 push）：' + (e && e.message ? e.message : e) + c.reset);
+      failed++;
+      log(
+        c.yellow +
+          '⚠ 评审请求发送失败（服务器不可达或返回非 JSON 响应，不阻塞 push）：' +
+          (e && e.message ? e.message : e) +
+          c.reset
+      );
+      log(
+        c.yellow +
+          '   若服务端已收到请求，企微推送仍可能由服务端异步发出，请留意企微群消息。' +
+          c.reset
+      );
     }
   }
-  log(`本次 push 处理完成，已发起 ${notified} 条企微评审推送（详情见企微群）。`);
+
+  let tail;
+  if (requested === 0 && failed === 0) {
+    tail = '本次 push 处理完成：无代码文件变更，未发起评审请求。';
+  } else if (failed > 0) {
+    tail =
+      `本次 push 处理完成：已发出 ${requested} 次请求，${failed} 次失败` +
+      `（服务端若已接收，企微推送仍可能异步发出，详情见企微群）。`;
+  } else {
+    tail = `本次 push 处理完成：已发出 ${requested} 次评审请求，企微消息由服务端异步推送（详情见企微群）。`;
+  }
+  log(tail);
   process.exit(0);
 }
 

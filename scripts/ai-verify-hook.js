@@ -121,6 +121,8 @@ function postReview(diff) {
     const payload = {
       diff,
       platforms: PLATFORMS,
+      // 提交阶段不推送企微：notify 仅在 pre-push 钩子（聚合本次 push）置为 true 时触发
+      notify: false,
       context: {
         repo: 'stellar-ui',
         branch: getBranch(),
