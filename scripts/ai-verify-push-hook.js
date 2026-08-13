@@ -47,6 +47,20 @@ const API_TOKEN = process.env.VERIFY_API_TOKEN || (CLIENT.apiToken != null ? CLI
 const TIMEOUT = parseInt(process.env.AI_VERIFY_TIMEOUT || String(CLIENT.timeout != null ? CLIENT.timeout : 90000), 10);
 const MAX_DIFF = parseInt(process.env.AI_VERIFY_MAX_DIFF || String(CLIENT.maxDiff != null ? CLIENT.maxDiff : 200000), 10);
 
+// 送审排除：构建/工具脚本、依赖与产物目录不进入 AI 审查（与 compat-check 的 scripts 豁免一致）。
+// 配置优先级：ai-verify.config.json 的 exclude > 内置默认。
+function getExcludePrefixes() {
+  const fromConfig = Array.isArray(CLIENT.exclude) ? CLIENT.exclude : null;
+  const defaults = ['scripts/', 'node_modules/', 'dist/', 'unpackage/', '.workbuddy/'];
+  const list = fromConfig && fromConfig.length ? fromConfig : defaults;
+  return list.map((s) => String(s).replace(/\\/g, '/')).filter(Boolean);
+}
+const EXCLUDE_PREFIXES = getExcludePrefixes();
+function isExcluded(p) {
+  const norm = String(p).replace(/\\/g, '/');
+  return EXCLUDE_PREFIXES.some((pre) => norm === pre || norm.startsWith(pre));
+}
+
 const COLORS = !!process.stdout.isTTY;
 const c = {
   reset: COLORS ? '\x1b[0m' : '',
@@ -126,6 +140,7 @@ function collectReviewFiles(localSha, paths) {
   let total = 0;
   for (const p of paths) {
     if (!REVIEWABLE_EXT.test(p)) continue;
+    if (isExcluded(p)) continue;
     let content = null;
     try {
       content = execSync(`git show ${localSha}:${p}`, { encoding: 'utf-8', maxBuffer: 64 * 1024 * 1024 });
@@ -204,9 +219,17 @@ async function main() {
   const platforms = platformsRaw.split(',').map((s) => s.trim()).filter(Boolean);
   let requested = 0;
   let failed = 0;
+  let totalChanged = 0;
+  let excludedCount = 0;
+  let nonReviewableCount = 0;
   for (const r of refs) {
     const paths = changedPaths(r.localSha, r.remoteSha);
     if (!paths.length) continue;
+    totalChanged += paths.length;
+    for (const p of paths) {
+      if (isExcluded(p)) excludedCount++;
+      else if (!REVIEWABLE_EXT.test(p)) nonReviewableCount++;
+    }
     if (!paths.some((p) => REVIEWABLE_EXT.test(p))) continue;
     const files = collectReviewFiles(r.localSha, paths);
     if (!files.length) continue;
@@ -221,7 +244,7 @@ async function main() {
       commitRange:
         (isZero(r.remoteSha) ? 'init' : r.remoteSha.slice(0, 8)) + '..' + r.localSha.slice(0, 8),
       commits,
-      pusher: process.env.USER || process.env.USERNAME || '',
+      pusher: getPusher(),
     };
 
     const payload = { files, notify: true, platforms, context: ctx };
@@ -253,7 +276,15 @@ async function main() {
 
   let tail;
   if (requested === 0 && failed === 0) {
-    tail = '本次 push 处理完成：无代码文件变更，未发起评审请求。';
+    if (totalChanged === 0) {
+      tail = '本次 push 处理完成：推送区间内无文件变更，未发起评审请求。';
+    } else {
+      tail =
+        `本次 push 处理完成：共 ${totalChanged} 个变更文件，` +
+        `${excludedCount} 个位于排除目录（${EXCLUDE_PREFIXES.join(' / ')} 等）、` +
+        `${nonReviewableCount} 个为非源码类型（.json/.md 等），` +
+        `无进入 AI 审查的源码文件（.vue/.js/.ts…），未发起评审请求。`;
+    }
   } else if (failed > 0) {
     tail =
       `本次 push 处理完成：已发出 ${requested} 次请求，${failed} 次失败` +

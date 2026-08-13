@@ -74,6 +74,22 @@ const PLATFORMS = RAW_PLATFORMS
   ? RAW_PLATFORMS.split(',').map((s) => s.trim()).filter(Boolean)
   : ['MP-WEIXIN', 'H5', 'APP-PLUS', 'APP'];
 
+// 送审排除：构建/工具脚本、依赖与产物目录不进入 AI 审查。
+// 与 compat-check.js 的 scripts 豁免保持一致——这些 Node 工具脚本里出现的
+// document./window./wx. 是规则引擎要匹配的「模式字符串」，并非真实跨端调用。
+// 配置优先级：ai-verify.config.json 的 exclude > 内置默认。
+function getExcludePrefixes() {
+  const fromConfig = Array.isArray(CLIENT.exclude) ? CLIENT.exclude : null;
+  const defaults = ['scripts/', 'node_modules/', 'dist/', 'unpackage/', '.workbuddy/'];
+  const list = fromConfig && fromConfig.length ? fromConfig : defaults;
+  return list.map((s) => String(s).replace(/\\/g, '/')).filter(Boolean);
+}
+const EXCLUDE_PREFIXES = getExcludePrefixes();
+function isExcluded(p) {
+  const norm = String(p).replace(/\\/g, '/');
+  return EXCLUDE_PREFIXES.some((pre) => norm === pre || norm.startsWith(pre));
+}
+
 const COLORS = !!process.stdout.isTTY;
 const c = {
   reset: COLORS ? '\x1b[0m' : '',
@@ -110,6 +126,7 @@ function getStagedFiles() {
   let total = 0;
   for (const p of paths) {
     if (!REVIEWABLE_EXT.test(p)) continue;
+    if (isExcluded(p)) continue;
     let content = null;
     try {
       content = execSync('git show :' + p, { encoding: 'utf-8', maxBuffer: 64 * 1024 * 1024 });
@@ -131,6 +148,18 @@ function getStagedFiles() {
 function hasReviewableFiles(diff) {
   // 只看是否包含代码类文件的改动（与 verify-server 的 isReviewable 对齐）
   return /\+\+\+ b\/.+\.(vue|js|jsx|mjs|cjs|ts|tsx|css|scss|less)(\s|$)/.test(diff);
+}
+
+// 是否存在「既可审查、又未被排除」的文件改动。
+// 用于在无完整文件可取时，判断应回退到 diff 审查，还是直接跳过（改动全在排除目录）。
+function hasReviewableNonExcludedFiles(diff) {
+  const re = /\+\+\+ b\/(.+?)(?:\s|$)/g;
+  let m;
+  while ((m = re.exec(diff))) {
+    const p = m[1].trim();
+    if (REVIEWABLE_EXT.test(p) && !isExcluded(p)) return true;
+  }
+  return false;
 }
 
 function getBranch() {
@@ -235,18 +264,24 @@ async function main() {
 
   // 优先发送完整文件内容（partial=false）：LLM 看到完整上下文，避免基于 diff 片段误报
   // 「缺少 require / 未定义 / 缺括号」等；收集不到可审查文件时回退到 diff（截断），保证不漏审。
+  // 但若暂存改动全在排除目录（如 scripts/），则直接跳过，避免对构建脚本做审查而产生误报。
   const stagedFiles = getStagedFiles();
   const ctx = { repo: 'stellar-ui', branch: getBranch(), commit: getCommit() };
-  const payload = stagedFiles.length
-    ? { files: stagedFiles, platforms: PLATFORMS, notify: false, context: ctx }
-    : (() => {
-        let d = stagedDiff;
-        if (d.length > MAX_DIFF) {
-          log('diff 过大 (' + d.length + ' > ' + MAX_DIFF + ')，已截断前 ' + MAX_DIFF + ' 字符。');
-          d = d.slice(0, MAX_DIFF);
-        }
-        return { diff: d, platforms: PLATFORMS, notify: false, context: ctx };
-      })();
+
+  let payload;
+  if (stagedFiles.length) {
+    payload = { files: stagedFiles, platforms: PLATFORMS, notify: false, context: ctx };
+  } else if (hasReviewableNonExcludedFiles(stagedDiff)) {
+    let d = stagedDiff;
+    if (d.length > MAX_DIFF) {
+      log('diff 过大 (' + d.length + ' > ' + MAX_DIFF + ')，已截断前 ' + MAX_DIFF + ' 字符。');
+      d = d.slice(0, MAX_DIFF);
+    }
+    payload = { diff: d, platforms: PLATFORMS, notify: false, context: ctx };
+  } else {
+    log('暂存改动均在排除目录（如 scripts/），无需 AI 核查，跳过。');
+    process.exit(0);
+  }
 
   log('连接 verify-server (' + SERVER_URL + ') 进行 AI 深度审查...');
 
