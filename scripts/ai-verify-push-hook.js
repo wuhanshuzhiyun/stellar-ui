@@ -138,9 +138,14 @@ function postReview(diff, ctx) {
       SERVER_URL,
       { method: 'POST', headers, timeout: TIMEOUT },
       (res) => {
-        let data = '';
-        res.on('data', (chunk) => (data += chunk));
+        const chunks = [];
+        res.on('data', (chunk) => chunks.push(chunk));
         res.on('end', () => {
+          const data = Buffer.concat(chunks).toString('utf-8');
+          if (res.statusCode && res.statusCode >= 400) {
+            reject(new Error('HTTP ' + res.statusCode + ' 服务端返回错误'));
+            return;
+          }
           try {
             resolve({ status: res.statusCode, json: JSON.parse(data) });
           } catch (e) {

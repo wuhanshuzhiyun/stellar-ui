@@ -141,9 +141,10 @@ function postReview(diff) {
       SERVER_URL,
       { method: 'POST', headers, timeout: TIMEOUT },
       (res) => {
-        let data = '';
-        res.on('data', (chunk) => (data += chunk));
+        const chunks = [];
+        res.on('data', (chunk) => chunks.push(chunk));
         res.on('end', () => {
+          const data = Buffer.concat(chunks).toString('utf-8');
           try {
             const json = JSON.parse(data);
             resolve({ status: res.statusCode, json });
