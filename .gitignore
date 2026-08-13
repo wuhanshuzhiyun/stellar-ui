@@ -12,3 +12,4 @@ yarn.lock
 /html
 null
 .workbuddy/
+scripts/ai-verify.config.local.json
