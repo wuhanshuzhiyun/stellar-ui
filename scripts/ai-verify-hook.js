@@ -14,7 +14,7 @@
  * 配置来源（优先级从高到低）：
  *   1. 环境变量（见下方列表，可临时覆盖）
  *   2. scripts/ai-verify.config.local.json  （私人覆盖，已被 gitignore，不入库）
- *   3. scripts/ai-verify.config.json        （入库默认，默认指向本地 http://localhost:3002）
+ *   3. scripts/ai-verify.config.json        （入库默认，默认指向本地 http://localhost:3002/api/verify/review）
  *   4. 代码内置兜底默认值
  *
  * 想「一劳永逸」设置：直接改 scripts/ai-verify.config.json（或建一个 .local.json
@@ -22,7 +22,7 @@
  * 项目即可复用（只需改 serverUrl / platforms）。
  *
  * 环境变量（均可选，仍可用于临时覆盖）：
- *   VERIFY_SERVER_URL         默认 http://localhost:3002
+ *   VERIFY_SERVER_URL         默认 http://localhost:3002/api/verify/review（须为完整接口地址，含 /api/verify/review 路径）
  *   VERIFY_API_TOKEN          若 verify-server 设置了 VERIFY_API_TOKEN，须填一致
  *   AI_VERIFY_PLATFORMS       逗号分隔的目标平台，覆盖配置文件，如 MP-WEIXIN,H5,APP-PLUS,APP,IOS
  *   AI_VERIFY_BLOCK           默认 1 —— AI 发现 error 级问题时阻断提交（0 = 仅警告）
@@ -38,7 +38,6 @@ const path = require('path');
 const { execSync } = require('child_process');
 const http = require('http');
 const https = require('https');
-const url = require('url');
 
 /**
  * 加载客户端持久化配置。
@@ -62,7 +61,7 @@ function loadClientConfig() {
 
 const CLIENT = loadClientConfig();
 
-const SERVER_URL = process.env.VERIFY_SERVER_URL || CLIENT.serverUrl || 'http://localhost:3002';
+const SERVER_URL = process.env.VERIFY_SERVER_URL || CLIENT.serverUrl || 'http://localhost:3002/api/verify/review';
 const API_TOKEN = process.env.VERIFY_API_TOKEN || (CLIENT.apiToken != null ? CLIENT.apiToken : '');
 const BLOCK_ON_ERROR = (process.env.AI_VERIFY_BLOCK || String(CLIENT.blockOnError != null ? CLIENT.blockOnError : 1)) !== '0';
 const REQUIRE_SERVER = (process.env.AI_VERIFY_REQUIRE_SERVER || String(CLIENT.requireServer != null ? CLIENT.requireServer : 0)) === '1';
@@ -116,8 +115,8 @@ function getCommit() {
 
 function postReview(diff) {
   return new Promise((resolve, reject) => {
-    const parsed = url.parse(SERVER_URL);
-    const lib = parsed.protocol === 'https:' ? https : http;
+    // SERVER_URL 即完整接口地址（含 /api/verify/review 路径），由配置/环境变量直接提供，脚本不再拼接
+    const lib = /^https:/i.test(SERVER_URL) ? https : http;
 
     const payload = {
       diff,
@@ -137,15 +136,8 @@ function postReview(diff) {
     if (API_TOKEN) headers['x-verify-token'] = API_TOKEN;
 
     const req = lib.request(
-      {
-        protocol: parsed.protocol,
-        hostname: parsed.hostname,
-        port: parsed.port,
-        path: '/api/verify/review',
-        method: 'POST',
-        headers,
-        timeout: TIMEOUT,
-      },
+      SERVER_URL,
+      { method: 'POST', headers, timeout: TIMEOUT },
       (res) => {
         let data = '';
         res.on('data', (chunk) => (data += chunk));

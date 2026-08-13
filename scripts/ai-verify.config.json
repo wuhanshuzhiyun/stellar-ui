@@ -1,5 +1,5 @@
 {
-  "serverUrl": "http://localhost:3002",
+  "serverUrl": "https://stellar-ui.intecloud.com.cn/verify/review",
   "apiToken": "",
   "platforms": ["MP-WEIXIN", "MP-ALIPAY", "MP-TOUTIAO", "MP-QQ", "H5", "APP-PLUS", "APP"],
   "blockOnError": 1,
