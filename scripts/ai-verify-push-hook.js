@@ -110,23 +110,52 @@ function hasReviewableFiles(diff) {
   return /\+\+\+ b\/.+\.(vue|js|jsx|mjs|cjs|ts|tsx|css|scss|less)(\s|$)/.test(diff);
 }
 
+const REVIEWABLE_EXT = /\.(vue|js|jsx|mjs|cjs|ts|tsx|css|scss|less)$/;
+
+// 取本次 push 区间内的变更文件路径（仅文件名，避免物化巨大 diff）
+function changedPaths(localSha, remoteSha) {
+  const base = isZero(remoteSha) ? EMPTY_TREE : remoteSha;
+  const out = runGit(`diff --name-only ${base} ${localSha}`);
+  return out ? out.split('\n').filter(Boolean) : [];
+}
+
+// 读取变更文件在 localSha 时的完整内容，作为 partial=false 的审查输入；
+// 总内容超过 MAX_DIFF 时停止收集（按整文件取舍，避免截断文件导致误报）。
+function collectReviewFiles(localSha, paths) {
+  const files = [];
+  let total = 0;
+  for (const p of paths) {
+    if (!REVIEWABLE_EXT.test(p)) continue;
+    let content = null;
+    try {
+      content = execSync(`git show ${localSha}:${p}`, { encoding: 'utf-8', maxBuffer: 64 * 1024 * 1024 });
+    } catch (e) {
+      content = null;
+    }
+    if (content == null) continue;
+    if (total + content.length > MAX_DIFF) {
+      if (files.length === 0 && content.length > MAX_DIFF) continue;
+      break;
+    }
+    files.push({ path: p, content });
+    total += content.length;
+  }
+  return files;
+}
+
 function getBranch() {
   return runGit('rev-parse --abbrev-ref HEAD') || '';
 }
 
-function postReview(diff, ctx) {
+// 操作人：优先取 git 提交身份（git config user.name），回退到 OS 登录名
+function getPusher() {
+  const name = runGit('config user.name');
+  return name || process.env.USER || process.env.USERNAME || '';
+}
+
+function postReview(payload) {
   return new Promise((resolve, reject) => {
     const lib = /^https:/i.test(SERVER_URL) ? https : http;
-    const platformsRaw =
-      process.env.AI_VERIFY_PLATFORMS ||
-      (Array.isArray(CLIENT.platforms) ? CLIENT.platforms.join(',') : '') ||
-      'MP-WEIXIN,H5,APP-PLUS,APP';
-    const payload = {
-      diff,
-      notify: true,
-      platforms: platformsRaw.split(',').map((s) => s.trim()).filter(Boolean),
-      context: ctx,
-    };
     const body = JSON.stringify(payload);
     const headers = {
       'Content-Type': 'application/json',
@@ -168,13 +197,19 @@ async function main() {
     process.exit(0);
   }
   const branch = getBranch();
+  const platformsRaw =
+    process.env.AI_VERIFY_PLATFORMS ||
+    (Array.isArray(CLIENT.platforms) ? CLIENT.platforms.join(',') : '') ||
+    'MP-WEIXIN,H5,APP-PLUS,APP';
+  const platforms = platformsRaw.split(',').map((s) => s.trim()).filter(Boolean);
   let requested = 0;
   let failed = 0;
   for (const r of refs) {
-    let diff = combinedDiff(r.localSha, r.remoteSha);
-    if (!diff || !diff.trim()) continue;
-    if (!hasReviewableFiles(diff)) continue;
-    if (diff.length > MAX_DIFF) diff = diff.slice(0, MAX_DIFF);
+    const paths = changedPaths(r.localSha, r.remoteSha);
+    if (!paths.length) continue;
+    if (!paths.some((p) => REVIEWABLE_EXT.test(p))) continue;
+    const files = collectReviewFiles(r.localSha, paths);
+    if (!files.length) continue;
 
     const commits = commitList(r.localSha, r.remoteSha).map((line) => {
       const sp = line.indexOf(' ');
@@ -189,9 +224,10 @@ async function main() {
       pusher: process.env.USER || process.env.USERNAME || '',
     };
 
+    const payload = { files, notify: true, platforms, context: ctx };
     log(`分支 ${branch} 本次 push ${commits.length} 个提交，调用 verify-server 做评审并推送企微...`);
     try {
-      const { json } = await postReview(diff, ctx);
+      const { json } = await postReview(payload);
       requested++;
       if (json && json.data && json.data.queued) {
         // notify 模式下企微消息由服务端异步发出，钩子无从同步感知是否成功

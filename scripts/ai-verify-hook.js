@@ -100,6 +100,34 @@ function getStagedDiff() {
   return runGit('diff --cached');
 }
 
+// 收集暂存区中可审查文件的完整内容（partial=false），让 LLM 看到完整上下文，
+// 避免基于 diff 片段误报「缺少 require / 未定义 / 缺括号」等问题。
+const REVIEWABLE_EXT = /\.(vue|js|jsx|mjs|cjs|ts|tsx|css|scss|less)$/;
+function getStagedFiles() {
+  const out = runGit('diff --cached --name-only');
+  const paths = out ? out.split('\n').filter(Boolean) : [];
+  const files = [];
+  let total = 0;
+  for (const p of paths) {
+    if (!REVIEWABLE_EXT.test(p)) continue;
+    let content = null;
+    try {
+      content = execSync('git show :' + p, { encoding: 'utf-8', maxBuffer: 64 * 1024 * 1024 });
+    } catch (e) {
+      content = null;
+    }
+    if (content == null) continue;
+    if (total + content.length > MAX_DIFF) {
+      // 单文件超限则跳过；整体超额则停止收集（避免截断文件导致误报）
+      if (files.length === 0 && content.length > MAX_DIFF) continue;
+      break;
+    }
+    files.push({ path: p, content });
+    total += content.length;
+  }
+  return files;
+}
+
 function hasReviewableFiles(diff) {
   // 只看是否包含代码类文件的改动（与 verify-server 的 isReviewable 对齐）
   return /\+\+\+ b\/.+\.(vue|js|jsx|mjs|cjs|ts|tsx|css|scss|less)(\s|$)/.test(diff);
@@ -113,22 +141,11 @@ function getCommit() {
   return runGit('rev-parse HEAD') || '';
 }
 
-function postReview(diff) {
+function postReview(payload) {
   return new Promise((resolve, reject) => {
     // SERVER_URL 即完整接口地址（含 /api/verify/review 路径），由配置/环境变量直接提供，脚本不再拼接
     const lib = /^https:/i.test(SERVER_URL) ? https : http;
 
-    const payload = {
-      diff,
-      platforms: PLATFORMS,
-      // 提交阶段不推送企微：notify 仅在 pre-push 钩子（聚合本次 push）置为 true 时触发
-      notify: false,
-      context: {
-        repo: 'stellar-ui',
-        branch: getBranch(),
-        commit: getCommit(),
-      },
-    };
     const body = JSON.stringify(payload);
 
     const headers = {
@@ -145,6 +162,10 @@ function postReview(diff) {
         res.on('data', (chunk) => chunks.push(chunk));
         res.on('end', () => {
           const data = Buffer.concat(chunks).toString('utf-8');
+          if (res.statusCode && res.statusCode >= 400) {
+            reject(new Error('HTTP ' + res.statusCode + ' 服务端返回错误'));
+            return;
+          }
           try {
             const json = JSON.parse(data);
             resolve({ status: res.statusCode, json });
@@ -202,25 +223,36 @@ function printResult(result) {
 }
 
 async function main() {
-  const diff = getStagedDiff();
-  if (!diff || !diff.trim()) {
+  const stagedDiff = getStagedDiff();
+  if (!stagedDiff || !stagedDiff.trim()) {
     log('无暂存改动，跳过 AI 核查。');
     process.exit(0);
   }
-  if (!hasReviewableFiles(diff)) {
+  if (!hasReviewableFiles(stagedDiff)) {
     log('暂存改动不含可审查的代码文件，跳过 AI 核查。');
     process.exit(0);
   }
-  if (diff.length > MAX_DIFF) {
-    log('diff 过大 (' + diff.length + ' > ' + MAX_DIFF + ')，已截断前 ' + MAX_DIFF + ' 字符以避免超出模型上下文。');
-    diff = diff.slice(0, MAX_DIFF);
-  }
+
+  // 优先发送完整文件内容（partial=false）：LLM 看到完整上下文，避免基于 diff 片段误报
+  // 「缺少 require / 未定义 / 缺括号」等；收集不到可审查文件时回退到 diff（截断），保证不漏审。
+  const stagedFiles = getStagedFiles();
+  const ctx = { repo: 'stellar-ui', branch: getBranch(), commit: getCommit() };
+  const payload = stagedFiles.length
+    ? { files: stagedFiles, platforms: PLATFORMS, notify: false, context: ctx }
+    : (() => {
+        let d = stagedDiff;
+        if (d.length > MAX_DIFF) {
+          log('diff 过大 (' + d.length + ' > ' + MAX_DIFF + ')，已截断前 ' + MAX_DIFF + ' 字符。');
+          d = d.slice(0, MAX_DIFF);
+        }
+        return { diff: d, platforms: PLATFORMS, notify: false, context: ctx };
+      })();
 
   log('连接 verify-server (' + SERVER_URL + ') 进行 AI 深度审查...');
 
   let resp;
   try {
-    resp = await postReview(diff);
+    resp = await postReview(payload);
   } catch (e) {
     if (REQUIRE_SERVER) {
       log('verify-server 不可达，已设置 AI_VERIFY_REQUIRE_SERVER=1，提交被阻断：' + e.message);
