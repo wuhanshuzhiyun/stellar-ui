@@ -6,6 +6,9 @@
 
 <script>
 import utils from '../../utils/utils.js';
+
+const DEFAULT_FONT_FAMILY = 'ste-iconfont-1709689042473'; // 和iconfont项目中的字体名保持一致
+
 /**
  * ste-icon 图标
  * @description  图标组件 基于字体的图标集，包含了大多数常见场景的图标
@@ -84,12 +87,6 @@ export default {
 			default: true,
 		},
 	},
-	data() {
-		return {
-			defaultFontFamily: 'ste-iconfont-1709689042473', // 和iconfont项目中的字体名保持一致
-		};
-	},
-	mounted() {},
 	computed: {
 		cmpCode() {
 			// unicode编码转字符
@@ -105,7 +102,7 @@ export default {
 				'--margin-right': utils.formatPx(this.marginRight),
 				'--margin-top': utils.formatPx(this.marginTop),
 				'--margin-bottom': utils.formatPx(this.marginBottom),
-				'--font-family': this.fontFamily === '' ? this.defaultFontFamily : this.fontFamily,
+				'--font-family': this.fontFamily === '' ? DEFAULT_FONT_FAMILY : this.fontFamily,
 				'--display': this.inlineBlock ? 'inline-block' : 'inline-flex',
 			};
 		},
