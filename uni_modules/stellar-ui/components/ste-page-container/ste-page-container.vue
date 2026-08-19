@@ -33,7 +33,7 @@
 		:width="popupWidth"
 		:height="popupHeight"
 		:round="round"
-		:isMaskClick="overlay"
+		:isMaskClick="false"
 		:showClose="false"
 		@clickMask="onClickOverlay"
 		@open-after="onPopupOpenAfter"
@@ -142,6 +142,9 @@ export default {
 		},
 		onClickOverlay(e) {
 			this.$emit('clickoverlay', e);
+			// 由本组件统一控制关闭，避免 ste-popup 内部 close() 的 endAnimation
+			// 与后续 show watcher 的 endAnimation 双重调用产生竞态
+			this.$emit('update:show', false);
 		},
 		onPopupOpenAfter(e) {
 			this.$emit('afterenter', e);
