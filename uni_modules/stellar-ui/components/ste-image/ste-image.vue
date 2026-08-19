@@ -6,17 +6,7 @@
 			</slot>
 		</view>
 
-		<image
-			class="content"
-			:style="{ opacity: status === 1 ? '1' : '0' }"
-			:src="src"
-			:mode="mode"
-			:lazy-load="lazyLoad"
-			:show-menu-by-longpress="showMenuByLongpress"
-			@load="onLoadOver"
-			@error="onFault"
-			@click="click"
-		></image>
+		<image class="content" :style="imgStyle" :src="src" :mode="mode" :lazy-load="lazyLoad" :show-menu-by-longpress="showMenuByLongpress" @load="onLoadOver" @error="onFault" @click="click"></image>
 
 		<view class="loading-icon" v-if="!hiddenError && status === 2">
 			<slot name="error">
@@ -109,6 +99,8 @@ export default {
 			status: 1,
 			initializing: true,
 			iconSize: 60,
+			initTimer: null,
+			destroyed: false,
 		};
 	},
 	computed: {
@@ -136,31 +128,39 @@ export default {
 				'--image-root-background-color': this.status === 1 ? 'none' : 'rgba(127,127,127,.05)',
 			};
 		},
+		imgStyle() {
+			return { opacity: this.status === 1 ? '1' : '0' };
+		},
 	},
 	watch: {
 		src() {
 			this.status = 0;
+			this.initializing = true;
 		},
-		hiddenLoading: {
-			handler(v) {
-				if (v && this.hiddenError) this.status = 1;
-			},
-			immediate: true,
+		hiddenLoading() {
+			this.updateStatusIfAllHidden();
 		},
-		hiddenError: {
-			handler(v) {
-				if (v && this.hiddenLoading) this.status = 1;
-			},
-			immediate: true,
+		hiddenError() {
+			this.updateStatusIfAllHidden();
 		},
 	},
 	mounted() {
 		this.setIconSize();
-		setTimeout(() => {
-			if (this.initializing) this.status = 0;
+		this.initTimer = setTimeout(() => {
+			if (this.initializing && !this.destroyed) this.status = 0;
 		}, 25);
 	},
+	beforeDestroy() {
+		this.destroyed = true;
+		if (this.initTimer) {
+			clearTimeout(this.initTimer);
+			this.initTimer = null;
+		}
+	},
 	methods: {
+		updateStatusIfAllHidden() {
+			if (this.hiddenLoading && this.hiddenError) this.status = 1;
+		},
 		click(e) {
 			this.$emit('click', e);
 		},
@@ -176,9 +176,10 @@ export default {
 		},
 		setIconSize() {
 			this.$nextTick(async () => {
+				if (this.destroyed) return;
 				const dom = await utils.querySelector('.ste-image-root', this);
 				// 因为查找dom为异步方法 组件销毁后，该方法继续执行导致报错
-				if (!dom) return;
+				if (!dom || this.destroyed) return;
 				const size = dom.width <= dom.height ? dom.width : dom.height;
 				if (size <= 30) this.iconSize = 12 * 2;
 				else if (size <= 50) this.iconSize = 20 * 2;

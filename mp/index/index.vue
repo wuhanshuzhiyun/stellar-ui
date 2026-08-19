@@ -108,6 +108,15 @@
 					<ste-image :src="joinSrc('组件图标/r-arrow.png')" :width="32" :height="32" />
 				</view>
 			</view>
+			<view class="com-box" @click="nav('image')">
+				<view class="com-title">
+					<ste-image :src="joinSrc('组件图标/image.png')" :width="36" :height="36" />
+					<text>Image 图片</text>
+				</view>
+				<view class="com-arrow">
+					<ste-image :src="joinSrc('组件图标/r-arrow.png')" :width="32" :height="32" />
+				</view>
+			</view>
 			<view class="com-box" @click="nav('page-container')">
 				<view class="com-title">
 					<ste-image :src="joinSrc('组件图标/popup.png')" :width="36" :height="36" />
@@ -419,15 +428,6 @@
 				<view class="com-title">
 					<ste-image :src="joinSrc('组件图标/datetime.png?1722499736018')" :width="36" :height="36" />
 					<text>DatePicker 时间选择器</text>
-				</view>
-				<view class="com-arrow">
-					<ste-image :src="joinSrc('组件图标/r-arrow.png')" :width="32" :height="32" />
-				</view>
-			</view>
-			<view class="com-box" @click="nav('image')">
-				<view class="com-title">
-					<ste-image :src="joinSrc('组件图标/image.png')" :width="36" :height="36" />
-					<text>Image 图片</text>
 				</view>
 				<view class="com-arrow">
 					<ste-image :src="joinSrc('组件图标/r-arrow.png')" :width="32" :height="32" />
