@@ -525,3 +525,48 @@ UniApp 编译器会将 `?.` 转译为兼容代码，无需手动替换。
 -   Last-Seen: 2026-08-12
 
 ---
+
+## [LRN-20260819-001] correction
+
+**Logged**: 2026-08-19T17:30:00+08:00
+**Priority**: critical
+**Status**: pending
+**Area**: frontend
+
+### Summary
+
+uni-app 条件编译是源码的一部分，绝对不能修改源代码中的条件编译注释
+
+### Details
+
+在优化 ste-popup 组件时，为了解决 Vitest 测试环境中条件编译注释不被处理的问题，错误地修改了源代码中的条件编译结构：
+
+1. 将模板中的 `#ifndef H5 || APP-PLUS` / `#ifdef H5 || APP-PLUS` 双分支合并为单个 `<view>`
+2. 新增 `renderjsBindProps` / `renderjsBindEvents` 计算属性，尝试用 JS 层条件编译替代模板层条件编译
+
+用户明确指出：条件编译是 uni-app 提供的功能，源代码中的条件编译注释必须保留。
+
+**正确做法**：
+- 源代码中的条件编译注释完全不动（这是 uni-app 跨端编译的核心机制）
+- 在 Vitest 测试环境中，通过 Vite 插件在 transform 阶段模拟条件编译行为
+- 插件负责：移除 renderjs 脚本块、对条件编译进行求值（保留匹配 H5 的分支，丢弃不匹配的分支）
+- 测试构建和生产构建完全隔离，互不影响
+
+### Suggested Action
+
+1. **永远不要修改源代码中的 uni-app 条件编译注释**（`#ifdef`、`#ifndef`、`#endif`）
+2. 测试环境中处理条件编译的正确方式：在 Vitest/Vite 插件的 transform 阶段进行代码转换
+3. 插件策略：模拟目标平台（如 H5），保留匹配条件的分支，丢弃不匹配的分支
+4. 同时处理 renderjs 脚本块（在测试中会被 Vite 当作第二组件）
+
+### Metadata
+
+-   Source: user_feedback
+-   Related Files: uni_modules/stellar-ui/components/ste-popup/ste-popup.vue, vitest.config.js
+-   Tags: uni-app, conditional-compilation, vitest, testing, source-code-integrity
+-   Pattern-Key: uni-app.preserve_conditional_compilation
+-   Recurrence-Count: 1
+-   First-Seen: 2026-08-19
+-   Last-Seen: 2026-08-19
+
+---
