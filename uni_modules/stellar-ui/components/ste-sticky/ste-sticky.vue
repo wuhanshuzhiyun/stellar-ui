@@ -1,5 +1,5 @@
 <template>
-	<view class="ste-sticky" data-test="sticky" :id="elId" :style="[cmpRootStyle]">
+	<view class="ste-sticky" data-test="sticky" :id="elId" :style="[rootStyle]">
 		<slot />
 	</view>
 </template>
@@ -54,21 +54,47 @@ export default {
 		return {
 			elId: utils.guid(),
 			contentObserver: null,
+			initTimer: null,
+			isFixed: false,
+			relativeToViewportTop: 0,
+			rootStyle: {},
 		};
 	},
-	computed: {
-		cmpRootStyle() {
-			const style = {
-				...utils.bg2style(this.background),
-			};
-			if (!this.disabled) {
-				style.position = 'sticky';
-				style.zIndex = this.zIndex;
-				style.top = utils.formatPx(this.offsetTop);
-			}
-			return style;
+	watch: {
+		offsetTop() {
+			this.calcRelativeTop();
+			this.updateRootStyle();
+			this.scheduleInit();
 		},
-		relativeToViewportTop() {
+		customNavHeight() {
+			this.calcRelativeTop();
+			this.scheduleInit();
+		},
+		disabled() {
+			this.updateRootStyle();
+			if (!this.disabled) {
+				this.scheduleInit();
+			} else {
+				this.disconnectObserver();
+			}
+		},
+		background() {
+			this.updateRootStyle();
+		},
+		zIndex() {
+			this.updateRootStyle();
+		},
+	},
+	created() {
+		this.calcRelativeTop();
+		this.updateRootStyle();
+	},
+	mounted() {
+		if (this.disabled) return;
+		this.scheduleInit();
+	},
+	methods: {
+		calcRelativeTop() {
 			let customNavHeight = 0;
 			if (this.customNavHeight === null) {
 				// #ifdef H5
@@ -80,43 +106,65 @@ export default {
 			} else {
 				customNavHeight = utils.formatPx(this.customNavHeight, 'num');
 			}
-			return customNavHeight + utils.formatPx(this.offsetTop, 'num');
+			this.relativeToViewportTop = customNavHeight + utils.formatPx(this.offsetTop, 'num');
 		},
-	},
-	mounted() {
-		if (this.disabled) return;
-		setTimeout(() => {
-			this.observeContent();
-		}, 20);
-	},
-	methods: {
+		updateRootStyle() {
+			const style = {
+				...utils.bg2style(this.background),
+			};
+			if (!this.disabled) {
+				style.position = 'sticky';
+				style.zIndex = this.zIndex;
+				style.top = utils.formatPx(this.offsetTop);
+			}
+			this.rootStyle = style;
+		},
+		scheduleInit() {
+			if (this.initTimer) {
+				clearTimeout(this.initTimer);
+			}
+			this.initTimer = setTimeout(() => {
+				this.initTimer = null;
+				if (!this.disabled) {
+					this.observeContent();
+				}
+			}, 20);
+		},
 		observeContent() {
-			// 先断掉之前的观察
-			this.disconnectObserver('contentObserver');
+			this.disconnectObserver();
 			const contentObserver = uni.createIntersectionObserver(this, {
 				thresholds: [0.8, 1],
 			});
-			// 到屏幕顶部的高度时触发
 			contentObserver.relativeToViewport({ top: -(this.relativeToViewportTop + 1) });
-			// 绑定观察的元素
 			contentObserver.observe(`#${this.elId}`, (res) => {
 				this.setFixed(res.boundingClientRect.top);
 			});
 			this.contentObserver = contentObserver;
 		},
 		setFixed(top) {
-			const bool = top <= this.relativeToViewportTop;
-			// 判断是否处于吸顶条件范围
-			if (bool) this.$emit('fixed');
-			else this.$emit('unfixed');
+			const shouldFixed = top <= this.relativeToViewportTop;
+			if (shouldFixed !== this.isFixed) {
+				this.isFixed = shouldFixed;
+				if (shouldFixed) {
+					this.$emit('fixed');
+				} else {
+					this.$emit('unfixed');
+				}
+			}
 		},
-		disconnectObserver(observerName) {
-			const observer = this[observerName];
-			observer && observer.disconnect();
+		disconnectObserver() {
+			if (this.contentObserver) {
+				this.contentObserver.disconnect();
+				this.contentObserver = null;
+			}
 		},
 	},
-	destroyed() {
-		this.disconnectObserver('contentObserver');
+	beforeDestroy() {
+		if (this.initTimer) {
+			clearTimeout(this.initTimer);
+			this.initTimer = null;
+		}
+		this.disconnectObserver();
 	},
 };
 </script>
