@@ -257,16 +257,12 @@ function useSeatInteraction(options) {
 		animate();
 	};
 	var emitSeatSelection = function (seat) {
-		console.log('[ste-select-seat] emitSeatSelection:', { seat: seat });
 		emitSeatClick(seat);
 		var newValue = toggleSeat(seat.row, seat.col);
-		console.log('[ste-select-seat] toggleSeat returned:', { newValue: newValue, length: newValue.length });
 		emitModelValue(newValue);
 	};
 	var selectSeatByPoint = function (x, y) {
-		console.log('[ste-select-seat] selectSeatByPoint:', { x: x, y: y });
 		var seat = getTouchSeat(x, y);
-		console.log('[ste-select-seat] getTouchSeat returned:', { seat: seat });
 		if (seat && !seat.disabled && !seat.empty) {
 			emitSeatSelection(seat);
 		}

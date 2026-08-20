@@ -42,12 +42,14 @@
 			@touchcancel="onTouchEnd"
 		/>
 		<!-- #endif -->
+		<!-- #ifdef H5 || APP -->
 		<view v-if="showRowLabels" class="row-label-overlay" :class="{ 'is-visible': rowLabelsVisible }">
 			<view class="row-label-track" :style="rowLabelTrackStyle" />
 			<view v-for="item in rowLabelItems" :key="item.row" class="row-label-item" :style="item.style">
 				{{ item.row + 1 }}
 			</view>
 		</view>
+		<!-- #endif -->
 	</view>
 </template>
 
@@ -81,6 +83,9 @@ export default {
 	name: 'ste-select-seat',
 	group: '表单组件',
 	title: 'SelectSeat 座位选择',
+	options: {
+		virtualHost: true,
+	},
 	props: propsData,
 	model: {
 		prop: 'modelValue',
@@ -129,10 +134,7 @@ export default {
 			return this.rowLabelTrackWidthPx + 'px';
 		},
 		canvasStyle() {
-			return {
-				width: this.width + 'px',
-				height: this.height + 'px',
-			};
+			return 'width: ' + this.width + 'px; height: ' + this.height + 'px;';
 		},
 		fitScale() {
 			var contentSize = this.getContentSize();
@@ -153,8 +155,8 @@ export default {
 				height: this.height,
 				seatSize: this.seatSizePx,
 				seatGap: this.seatGapPx,
-				translateY: this.touchHandler.translateY,
-				scale: this.clampScale(this.touchHandler.scale),
+				translateY: this.viewportTranslateY,
+				scale: this.viewportScale,
 			});
 		},
 		rowLabelTrackStyle() {
@@ -261,18 +263,8 @@ export default {
 				self.$emit('seat-click', seat);
 			},
 			emitModelValue: function (value) {
-				console.log('[ste-select-seat] emitModelValue debug:', {
-					currentLocalSelected: self._localSelected,
-					newValue: value,
-					newValueLength: value.length,
-				});
 				self._localSelected = value;
-				console.log('[ste-select-seat] $emit called with:', { valueLength: value.length });
 				self.$emit('update:modelValue', value);
-				console.log('[ste-select-seat] emitModelValue after:', {
-					localSelectedLength: self._localSelected.length,
-					modelValueLength: self.modelValue ? self.modelValue.length : 0,
-				});
 				if (self.canvasCtx) self.draw();
 			},
 			toggleSeat: function (row, col) {
@@ -316,11 +308,6 @@ export default {
 			var defaultSelectedBg = this.selectedBgColor || themeColor;
 
 			ctx.clearRect(0, 0, this.width, this.height);
-
-			console.log('[ste-select-seat] draw debug:', {
-				_localSelected: this._localSelected,
-				_localSelectedLength: this._localSelected.length
-			});
 
 			// #ifndef APP
 			ctx.save();
@@ -378,6 +365,10 @@ export default {
 
 			// #ifndef APP
 			ctx.restore();
+			// #endif
+
+			// #ifdef MP-WEIXIN || MP-ALIPAY
+			this.drawMpRowLabels(ctx);
 			// #endif
 
 			// #ifdef H5 || APP
@@ -438,59 +429,53 @@ export default {
 			var tx = this.touchHandler.translateX;
 			var ty = this.touchHandler.translateY;
 
-			// 获取内容尺寸和默认视口
-			var contentSize = this.getContentSize();
-			var defaultViewport = this.getDefaultViewport();
-
-			// touchX/touchY 已经是逻辑像素坐标，直接使用
 			var adjustedX = touchX / userScale - tx - labelWidth - gap / 2;
 			var adjustedY = touchY / userScale - ty - gap / 2;
 			var seatSizePlusGap = size + gap;
 			var col = Math.floor(adjustedX / seatSizePlusGap);
 			var row = Math.floor(adjustedY / seatSizePlusGap);
 
-			console.log('[ste-select-seat] getTouchSeat debug:', {
-				touchX: touchX,
-				touchY: touchY,
-				userScale: userScale,
-				tx: tx,
-				ty: ty,
-				size: size,
-				gap: gap,
-				labelWidth: labelWidth,
-				adjustedX: adjustedX,
-				adjustedY: adjustedY,
-				seatSizePlusGap: seatSizePlusGap,
-				computedRow: row,
-				computedCol: col,
-				canvasWidth: this.width,
-				canvasHeight: this.height,
-				safeRows: this.safeRows,
-				safeCols: this.safeCols,
-				dpr: this.dpr,
-				contentSize: contentSize,
-				defaultViewport: defaultViewport,
-			});
-
-			// 打印所有座位的实际位置供调试
-			var seatPositions = [];
-			for (var r = 0; r < this.safeRows; r++) {
-				for (var c = 0; c < this.safeCols; c++) {
-					var seat = this.dataManager.getSeat(r, c);
-					if (seat && !seat.empty) {
-						var seatX = tx + labelWidth + c * (size + gap) + gap / 2;
-						var seatY = ty + r * (size + gap) + gap / 2;
-						seatPositions.push({ row: r, col: c, x: seatX, y: seatY, width: size, height: size });
-					}
-				}
-			}
-			console.log('[ste-select-seat] seat positions:', seatPositions);
-
 			if (row < 0 || row >= this.safeRows || col < 0 || col >= this.safeCols) return null;
 			return this.dataManager.getSeat(row, col) || null;
 		},
 		getTouchLocalPoint(touch, rect) {
 			return getTouchLocalPoint(touch, rect);
+		},
+		drawMpRowLabels(ctx) {
+			if (!this.showRowLabels) return;
+
+			var items = buildRowLabelItems({
+				rows: this.safeRows,
+				height: this.height,
+				seatSize: this.seatSizePx,
+				seatGap: this.seatGapPx,
+				translateY: this.viewportTranslateY,
+				scale: this.viewportScale,
+			});
+			if (!items.length) return;
+
+			var first = items[0];
+			var last = items[items.length - 1];
+			var padding = 8;
+			var trackTop = Math.max(0, first.top - padding);
+			var trackBottom = Math.min(this.height, last.top + last.rowHeight + padding);
+			var trackWidth = 18;
+
+			ctx.save();
+			ctx.fillStyle = 'rgba(199, 199, 199, 0.68)';
+			drawRoundRect(ctx, 6, trackTop, trackWidth, Math.max(32, trackBottom - trackTop), trackWidth / 2);
+			ctx.fill();
+			ctx.fillStyle = 'rgba(255, 255, 255, 0.98)';
+			ctx.textAlign = 'center';
+			ctx.textBaseline = 'middle';
+
+			for (var index = 0; index < items.length; index++) {
+				var item = items[index];
+				var fontSize = Math.max(10, Math.min(13, item.rowHeight * 0.3));
+				ctx.font = fontSize + 'px sans-serif';
+				ctx.fillText(String(item.row + 1), 6 + trackWidth / 2, item.top + item.rowHeight / 2);
+			}
+			ctx.restore();
 		},
 		getScreenTranslateX(scale, translateX) {
 			if (scale == null) scale = this.clampScale(this.touchHandler.scale);
